@@ -1,12 +1,6 @@
 \begin{figure}
    {\small
    \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
-      &\textit{Typing context}&
-      \\
-      $\Gamma ::=$
-      &
-      $\cxtEmpty \mid \cxtExtend{\Gamma}{x}{A}$
-      \\[2mm]
       &\textit{Kind}&
       \\
       $K ::=$
@@ -24,14 +18,7 @@
       \\
       $T ::=$
       &
-      $A$
-      &
-      values
-      \\
-      &
-      $C$
-      &
-      computations
+      $A \mid C$
       \\[2mm]
       &\textit{Value type}&
 %      \lowlight{\Type}
@@ -46,8 +33,18 @@
       $\tyFun{A}{C}$
       &
       functions
+      \\[2mm]
+      &\textit{Kinding context}&
       \\
+      $\Delta ::=$
       &
+      $\cxtEmpty \mid \cxtExtend{\Delta}{\upalpha}{K}$
+      \\[2mm]
+      &\textit{Typing context}&
+      \\
+      $\Gamma ::=$
+      &
+      $\cxtEmpty \mid \cxtExtend{\Gamma}{x}{A}$
    \end{tabularx}
    }
    \caption{Syntax of kinds and types}
