@@ -1,0 +1,110 @@
+\begin{figure}
+   {\small
+   \begin{minipage}[t]{0.46\textwidth}
+   \begin{tabularx}{\textwidth}{rL{2.6cm}L{3cm}}
+      &\textit{Kind}&
+      \\
+      $K ::=$
+      &
+      $\kiVal$
+      &
+      value types
+      \\
+      &
+      $\kiComp$
+      &
+      computation types
+      \\[2mm]
+      &\textit{Type}&
+      \\
+      $T ::=$
+      &
+      $A$
+      &
+      value type
+      \\
+      &
+      $C$
+      &
+      computation type
+      \\
+      &
+      $\alpha$
+      &
+      type variable
+      \\[2mm]
+      &\textit{Value type}&
+      \\
+      $A, B ::=$
+      &
+      $\tyInt$
+      &
+      integers
+      \\
+      &
+      $\tyFun{A}{C}$
+      &
+      functions
+      \\
+      &
+      $\tyHandler{C}{D}$
+      &
+      handlers
+      \\[2mm]
+      &\textit{Computation type}&
+      \\
+      $C, D ::=$
+      &
+      $\tyEffect{E}{A}$
+      &
+      effect
+      \\[2mm]
+      &\textit{Kinding context}&
+      \\
+      $\Delta ::=$
+      &
+      $\cxtEmpty \mid \cxtExtend{\Delta}{\upalpha}{K}$
+      \\[2mm]
+      &\textit{Typing context}&
+      \\
+      $\Gamma ::=$
+      &
+      $\cxtEmpty \mid \cxtExtend{\Gamma}{x}{A}$
+   \end{tabularx}
+   \end{minipage}%
+   \hspace{4mm}
+   \begin{minipage}[t]{0.46\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+         &\textit{Value}&
+         \\
+         $V ::=$
+         &
+         $\exVar{x}$
+         &
+         variable
+         \\
+         &
+         $\exInt{n}$
+         &
+         integer
+%         \\
+%         &
+%         $\exHandler{\hReturn{x}{N}}\;\disjunion$
+%         &
+%         handler
+%         \\
+%         &
+%         $\exHandler{}$
+         \\[2mm]
+         &\textit{Computation}&
+         \\
+         $M ::=$
+         &
+         $\exReturn{V}$
+         &
+         variable
+      \end{tabularx}
+   \end{minipage}
+   }
+   \caption{Syntax of kinds and types}
+\end{figure}

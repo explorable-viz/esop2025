@@ -1,0 +1,26 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\Delta, \Gamma \vdash V: A$}%
+   \hfill \textbfit{$V$ has well-kinded value type $A$ in $\Gamma$, where $A$ is well-kinded in $\Delta$}}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \Delta, \Gamma \vdash \exInt{n}: \tyInt
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
+   \hfill \textbfit{$M$ has computation type $C$ in $\Gamma$, where $C$ is well-kinded in $\Delta$}}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash V: A
+      }
+      {
+         \Delta, \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
+      }
+   \end{smathpar}
+   \caption{Typing rules}
+   \end{figure}

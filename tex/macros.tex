@@ -1,0 +1,35 @@
+% Use this in place of \mathsf.
+\newcommand*{\mathSf}[1]{\textup{\textsf{#1}}}
+\newcommand*{\Set}[1]{\mathSf{#1}}
+
+% sequences, maps
+\newcommand{\seqEmpty}{\varepsilon}
+\newcommand{\bind}[2]{{#1}:{#2}}
+
+% contexts
+\newcommand{\cxtEmpty}{\seqEmpty}
+\newcommand{\cxtExtend}[3]{{#1}, \bind{#2}{#3}}
+
+% kinds
+\newcommand*{\kiComp}{\kw{Comp}}
+\newcommand*{\kiVal}{\kw{Val}}
+
+% types
+\newcommand*{\tyEffect}[2]{[#1]{#2}}
+\newcommand*{\tyFun}[2]{{#1} \to {#2}}
+\newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
+\newcommand*{\tyInt}{\kw{Int}}
+
+% values
+\newcommand*{\exVar}[1]{#1}
+\newcommand*{\exInt}[1]{#1}
+\newcommand*{\exHandler}[1]{\set{#1}}
+
+% handlers
+\newcommand*{\hReturn}[2]{\kw{return}\;x\mapsto{#2}}
+
+% computations
+\newcommand*{\exReturn}[1]{\kw{return}\;#1}
+
+% sets
+\newcommand{\Type}{\Set{Type}}
