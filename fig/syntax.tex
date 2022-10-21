@@ -1,7 +1,7 @@
 \begin{figure}
    {\small
-   \begin{minipage}[t]{0.48\textwidth}
-   \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+   \begin{minipage}[t]{0.46\textwidth}
+   \begin{tabularx}{\textwidth}{rL{2.6cm}L{3cm}}
       &\textit{Kind}&
       \\
       $K ::=$
@@ -46,6 +46,11 @@
       $\tyFun{A}{C}$
       &
       functions
+      \\
+      &
+      $\tyHandler{C}{D}$
+      &
+      handlers
       \\[2mm]
       &\textit{Kinding context}&
       \\
@@ -60,8 +65,8 @@
       $\cxtEmpty \mid \cxtExtend{\Gamma}{x}{A}$
    \end{tabularx}
    \end{minipage}%
-   \hspace{2mm}
-   \begin{minipage}[t]{0.48\textwidth}
+   \hspace{4mm}
+   \begin{minipage}[t]{0.46\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
          &\textit{Value}&
          \\
@@ -75,6 +80,14 @@
          $\exInt{n}$
          &
          integer
+         \\
+         &
+         $\exHandler{\hReturn{x}{N}}\;\disjunion$
+         &
+         handler
+         \\
+         &
+         $\exHandler{}$
          \\[2mm]
          &\textit{Computation}&
          \\
