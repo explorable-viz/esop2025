@@ -19,6 +19,16 @@
       {
          \Delta, \Gamma \vdash \exVar{x}: A
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash V: A
+      }
+      {
+         \Delta, \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\ell}{A}}
+      }
    \end{smathpar}
    \\[2mm]
    {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
