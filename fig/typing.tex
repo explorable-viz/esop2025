@@ -59,6 +59,18 @@
       {
          \Delta; \Gamma \vdash \exHandler{\hReturn{x}{M}}: \tyHandler{\tyEffect{}{A}}{D}
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \cxtExtend{\cxtExtend{\Gamma}{x}{A}}{k}{\tyHandler{B}{D}} \vdash M: D
+         \\
+         \Delta; \Gamma \vdash \set{\seq{c}}: \tyHandler{\tyEffect{R}{A}}{D}
+      }
+      {
+         \Delta; \Gamma \vdash \exHandler{\hEffect{\ell}{x}{k}{M}, \seq{c}}: \tyHandler{\tyEffect{R}{A}}{D}
+      }
    \end{smathpar}
    \\[2mm]
    {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
