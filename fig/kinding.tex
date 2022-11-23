@@ -9,6 +9,30 @@
    {
       \Delta \vdash \tyInt: \kiVal
    }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A: \kiVal
+      \\
+      \Delta \vdash C: \kiComp
+   }
+   {
+      \Delta \vdash \tyFun{A}{C}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash C: \kiComp
+      \\
+      \Delta \vdash D: \kiComp
+   }
+   {
+      \Delta \vdash \tyHandler{C}{D}: \kiVal
+   }
 \end{smathpar}
 \caption{Kinding rules}
 \end{figure}
