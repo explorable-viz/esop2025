@@ -4,10 +4,100 @@
 \begin{smathpar}
    \inferrule*
    {
+      \bind{\alpha}{K} \in \Delta
+   }
+   {
+      \Delta \vdash \tyVar{\alpha}: K
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
       \strut
    }
    {
       \Delta \vdash \tyInt: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A: \kiVal
+      \\
+      \Delta \vdash C: \kiComp
+   }
+   {
+      \Delta \vdash \tyFun{A}{C}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash C: \kiComp
+      \\
+      \Delta \vdash D: \kiComp
+   }
+   {
+      \Delta \vdash \tyHandler{C}{D}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash C: \kiComp
+      \\
+      \Delta \vdash D: \kiComp
+   }
+   {
+      \Delta \vdash \tyHandler{C}{D}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A_i: \kiVal
+      \quad
+      (\forall i \in \length{\seq{A}})
+   }
+   {
+      \Delta \vdash \seq{\bind{\ell}{A}}: \kiRow
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash R: \kiRow
+   }
+   {
+      \Delta \vdash \tyRecord{R}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash R: \kiRow
+   }
+   {
+      \Delta \vdash \tyVariant{R}: \kiVal
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash R: \kiRow
+      \\
+      \Delta \vdash A: \kiVal
+   }
+   {
+      \Delta \vdash \tyEffect{R}{A}: \kiComp
    }
 \end{smathpar}
 \caption{Kinding rules}

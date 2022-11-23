@@ -1,5 +1,7 @@
 % Use this in place of \mathsf.
+\newcommand*{\length}[1]{|#1|}
 \newcommand*{\mathSf}[1]{\textup{\textsf{#1}}}
+\newcommand*{\seq}[1]{\vv{#1}}
 \newcommand*{\Set}[1]{\mathSf{#1}}
 
 % sequences, maps
@@ -12,18 +14,30 @@
 
 % kinds
 \newcommand*{\kiComp}{\kw{Comp}}
-\newcommand*{\kiVal}{\kw{Val}}
+\newcommand*{\kiEffect}{\kw{Effect}}
+\newcommand*{\kiRow}{\kw{Row}}
+\newcommand*{\kiVal}{\kw{Type}}
 
 % types
-\newcommand*{\tyEffect}[2]{[#1]{#2}}
+\newcommand*{\tyEffect}[2]{\tyVariant{#1}{#2}}
 \newcommand*{\tyFun}[2]{{#1} \to {#2}}
 \newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
 \newcommand*{\tyInt}{\kw{Int}}
+\newcommand*{\tyVar}[1]{#1}
+\newcommand*{\tyVariant}[1]{[#1]}
+\newcommand*{\tyRecord}[1]{\exRecord{#1}}
+
+% rows
+\newcommand{\rowEmpty}{\seqEmpty}
+\newcommand{\rowExtend}[3]{{#1}, \bind{#2}{#3}}
 
 % values
-\newcommand*{\exVar}[1]{#1}
 \newcommand*{\exInt}[1]{#1}
 \newcommand*{\exHandler}[1]{\set{#1}}
+\newcommand*{\exLambda}[2]{\lambda{#1}.{#2}}
+\newcommand*{\exRecord}[1]{\set{#1}}
+\newcommand*{\exVar}[1]{#1}
+\newcommand*{\exVariant}[2]{[{#1}:{#2}]}
 
 % handlers
 \newcommand*{\hReturn}[2]{\kw{return}\;x\mapsto{#2}}

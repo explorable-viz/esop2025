@@ -14,6 +14,16 @@
       $\kiComp$
       &
       computation types
+      \\
+      &
+      $\kiEffect$
+      &
+      effect types
+      \\
+      &
+      $\kiRow$
+      &
+      row types
       \\[2mm]
       &\textit{Type}&
       \\
@@ -29,7 +39,7 @@
       computation type
       \\
       &
-      $\alpha$
+      $\tyVar{\alpha}$
       &
       type variable
       \\[2mm]
@@ -40,6 +50,16 @@
       $\tyInt$
       &
       integers
+      \\
+      &
+      $\tyRecord{R}$
+      &
+      records
+      \\
+      &
+      $\tyVariant{R}$
+      &
+      variants
       \\
       &
       $\tyFun{A}{C}$
@@ -55,21 +75,28 @@
       \\
       $C, D ::=$
       &
-      $\tyEffect{E}{A}$
+      $\tyEffect{R}{A}$
       &
       effect
+      \\[2mm]
+      &\textit{Row type}&
+      \\
+      $R ::=$
+      &
+      $\seq{\bind{\ell}{A}}$
+      &
       \\[2mm]
       &\textit{Kinding context}&
       \\
       $\Delta ::=$
       &
-      $\cxtEmpty \mid \cxtExtend{\Delta}{\upalpha}{K}$
+      $\seq{\bind{\upalpha}{K}}$
       \\[2mm]
       &\textit{Typing context}&
       \\
       $\Gamma ::=$
       &
-      $\cxtEmpty \mid \cxtExtend{\Gamma}{x}{A}$
+      $\seq{\bind{x}{A}}$
    \end{tabularx}
    \end{minipage}%
    \hspace{4mm}
@@ -87,6 +114,16 @@
          $\exInt{n}$
          &
          integer
+         \\
+         &
+         $\exVariant{\ell}{V}$
+         &
+         variant
+         \\
+         &
+         $\exRecord{\seq{\bind{\ell}{V}}}$
+         &
+         record
 %         \\
 %         &
 %         $\exHandler{\hReturn{x}{N}}\;\disjunion$

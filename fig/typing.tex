@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\Delta, \Gamma \vdash V: A$}%
+   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash V: A$}%
    \hfill \textbfit{$V$ has well-kinded value type $A$ in $\Gamma$, where $A$ is well-kinded in $\Delta$}}
    \begin{smathpar}
       \inferrule*
@@ -7,7 +7,47 @@
          \strut
       }
       {
-         \Delta, \Gamma \vdash \exInt{n}: \tyInt
+         \Delta; \Gamma \vdash \exInt{n}: \tyInt
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \bind{x}{A} \in \Gamma
+      }
+      {
+         \Delta; \Gamma \vdash \exVar{x}: A
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash V: A
+      }
+      {
+         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\ell}{A}}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \Delta; \Gamma \vdash \exRecord{}: \tyRecord{}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: C
+      }
+      {
+         \Delta; \Gamma \vdash \exLambda{x}{M}: \tyFun{A}{C}
       }
    \end{smathpar}
    \\[2mm]
