@@ -4,6 +4,16 @@
 \begin{smathpar}
    \inferrule*
    {
+      \bind{\alpha}{K} \in \Delta
+   }
+   {
+      \Delta \vdash \tyVar{\alpha}: K
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
       \strut
    }
    {
@@ -38,12 +48,12 @@
    %
    \inferrule*
    {
-      \Delta \vdash C: \kiComp
+      \Delta \vdash E: \kiComp
       \\
-      \Delta \vdash D: \kiComp
+      \Delta \vdash A: \kiVal
    }
    {
-      \Delta \vdash \tyEffect{C}{A}: \kiVal
+      \Delta \vdash \tyEffect{E}{A}: \kiVal
    }
 \end{smathpar}
 \caption{Kinding rules}
