@@ -55,11 +55,14 @@
    {
       \Delta \vdash \tyHandler{C}{D}: \kiVal
    }
+   %
+   \and
+   %
    \inferrule*
    {
-      \Delta \vdash R: \kiRow
-      \\
-      \Delta \vdash A: \kiVal
+      \Delta \vdash A_i: \kiVal
+      \quad
+      (\forall i \in \length{\seq{A}})
    }
    {
       \Delta \vdash \seq{\bind{\ell}{A}}: \kiRow
