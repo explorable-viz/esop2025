@@ -56,6 +56,18 @@
       %
       \inferrule*
       {
+         \cxtExtend{\Delta}{\alpha}{K}; \Gamma \vdash M: C
+         \\
+         \alpha \notin \FV(\Gamma)
+      }
+      {
+         \Delta; \Gamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{C}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
          \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: D
       }
       {
