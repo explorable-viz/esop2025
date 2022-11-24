@@ -49,6 +49,31 @@
       {
          \Delta; \Gamma \vdash \exLambda{x}{M}: \tyFun{A}{C}
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: D
+      }
+      {
+         \Delta; \Gamma \vdash \exHandler{\hReturn{x}{M}}: \tyHandler{A}{D}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \cxtExtend{\cxtExtend{\Gamma}{x}{A}}{k}{\tyFun{B}{D}} \vdash M: D
+         \\
+         \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{R}{A}}{D}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         (\hEffect{\ell}{x}{k}{M}) \cons H:
+         \tyHandler{\tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{A}}{D}
+      }
    \end{smathpar}
    \\[2mm]
    {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
@@ -61,6 +86,40 @@
       {
          \Delta, \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash U: \tyFun{A}{C}
+         \\
+         \Delta, \Gamma \vdash V: A
+      }
+      {
+         \Delta, \Gamma \vdash \exApp{U}{V}: C
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash V: A
+      }
+      {
+         \Delta, \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash M: C
+         \\
+         \Delta, \Gamma \vdash V: \tyHandler{C}{D}
+      }
+      {
+         \Delta, \Gamma \vdash \exHandle{M}{V}: D
+      }
    \end{smathpar}
    \caption{Typing rules}
-   \end{figure}
+\end{figure}

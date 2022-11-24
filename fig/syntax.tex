@@ -104,9 +104,9 @@
       \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
          &\textit{Value}&
          \\
-         $V ::=$
+         $U, V ::=$
          &
-         $\exVar{x}$
+         $\exVar{x}, \exVar{k}$
          &
          variable
          \\
@@ -124,14 +124,16 @@
          $\exRecord{\seq{\bind{\ell}{V}}}$
          &
          record
-%         \\
-%         &
-%         $\exHandler{\hReturn{x}{N}}\;\disjunion$
-%         &
-%         handler
-%         \\
-%         &
-%         $\exHandler{}$
+         \\
+         &
+         $\exLambda{x}{M}$
+         &
+         function
+         \\
+         &
+         $H$
+         &
+         handler
          \\[2mm]
          &\textit{Computation}&
          \\
@@ -140,6 +142,34 @@
          $\exReturn{V}$
          &
          variable
+         \\
+         &
+         $\exApp{U}{V}$
+         &
+         application
+         \\
+         &
+         $\exOp{\ell}{V}$
+         &
+         operation
+         \\
+         &
+         $\exHandle{M}{V}$
+         &
+         handle
+         \\[2mm]
+         &\textit{Handler}&
+         \\
+         $H ::=$
+         &
+         $\set{\hReturn{x}{M}}$
+         &
+         return
+         \\
+         &
+         $(\hEffect{\ell}{x}{k}{M}) \cons H$
+         &
+         effect
       \end{tabularx}
    \end{minipage}
    }
