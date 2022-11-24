@@ -34,10 +34,12 @@
       %
       \inferrule*
       {
-         \strut
+         \Delta; \Gamma \vdash V_i: A_i
+         \quad
+         (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecord{}: \tyRecord{}
+         \Delta; \Gamma \vdash \exRecord{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
       }
       %
       \and
