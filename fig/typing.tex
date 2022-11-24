@@ -103,6 +103,16 @@
       %
       \inferrule*
       {
+         \Delta, \Gamma \vdash V: A
+      }
+      {
+         \Delta, \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
          \Delta, \Gamma \vdash M: C
          \\
          \Delta, \Gamma \vdash V: \tyHandler{C}{D}
