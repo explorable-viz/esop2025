@@ -34,10 +34,12 @@
       %
       \inferrule*
       {
-         \strut
+         \Delta; \Gamma \vdash V_i: A_i
+         \quad
+         (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecord{}: \tyRecord{}
+         \Delta; \Gamma \vdash \exRecord{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
       }
       %
       \and
@@ -47,7 +49,19 @@
          \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: C
       }
       {
-         \Delta; \Gamma \vdash \exLambda{x}{M}: \tyFun{A}{C}
+         \Delta; \Gamma \vdash \exFun{x}{M}: \tyFun{A}{C}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \cxtExtend{\Delta}{\alpha}{K}; \Gamma \vdash M: C
+         \\
+         \alpha \notin \FV(\Gamma)
+      }
+      {
+         \Delta; \Gamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{K}{C}
       }
       %
       \and
