@@ -66,12 +66,12 @@
       {
          \Delta; \cxtExtend{\cxtExtend{\Gamma}{x}{A}}{k}{\tyFun{B}{D}} \vdash M: D
          \\
-         \Delta; \Gamma \vdash \set{\seq{c}}: \tyHandler{\tyEffect{R}{A}}{D}
+         \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{R}{A}}{D}
       }
       {
          \Delta; \Gamma
          \vdash
-         \exHandler{\hEffect{\ell}{x}{k}{M}, \seq{c}}:
+         (\hEffect{\ell}{x}{k}{M}) \concat H:
          \tyHandler{\tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{A}}{D}
       }
    \end{smathpar}
