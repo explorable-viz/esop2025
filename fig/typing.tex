@@ -98,6 +98,18 @@
       {
          \Delta, \Gamma \vdash \exApp{U}{V}: C
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta, \Gamma \vdash M: C
+         \\
+         \Delta, \Gamma \vdash V: \tyHandler{C}{D}
+      }
+      {
+         \Delta, \Gamma \vdash \exHandle{M}{V}: D
+      }
    \end{smathpar}
    \caption{Typing rules}
 \end{figure}
