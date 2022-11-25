@@ -2,7 +2,7 @@
 {-# LANGUAGE NoRebindableSyntax #-}
 {-# OPTIONS_GHC -fno-warn-missing-import-lists #-}
 {-# OPTIONS_GHC -w #-}
-module Paths_statemonad (
+module Paths_hgraphs (
     version,
     getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir,
     getDataFileName, getSysconfDir
@@ -43,18 +43,18 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 bindir     = "/home/oz20977/.cabal/bin"
-libdir     = "/home/oz20977/.cabal/lib/x86_64-linux-ghc-9.2.4/statemonad-0.1.0.0-inplace-statemonad"
+libdir     = "/home/oz20977/.cabal/lib/x86_64-linux-ghc-9.2.4/hgraphs-0.1.0.0-inplace-hgraphs"
 dynlibdir  = "/home/oz20977/.cabal/lib/x86_64-linux-ghc-9.2.4"
-datadir    = "/home/oz20977/.cabal/share/x86_64-linux-ghc-9.2.4/statemonad-0.1.0.0"
-libexecdir = "/home/oz20977/.cabal/libexec/x86_64-linux-ghc-9.2.4/statemonad-0.1.0.0"
+datadir    = "/home/oz20977/.cabal/share/x86_64-linux-ghc-9.2.4/hgraphs-0.1.0.0"
+libexecdir = "/home/oz20977/.cabal/libexec/x86_64-linux-ghc-9.2.4/hgraphs-0.1.0.0"
 sysconfdir = "/home/oz20977/.cabal/etc"
 
-getBinDir     = catchIO (getEnv "statemonad_bindir")     (\_ -> return bindir)
-getLibDir     = catchIO (getEnv "statemonad_libdir")     (\_ -> return libdir)
-getDynLibDir  = catchIO (getEnv "statemonad_dynlibdir")  (\_ -> return dynlibdir)
-getDataDir    = catchIO (getEnv "statemonad_datadir")    (\_ -> return datadir)
-getLibexecDir = catchIO (getEnv "statemonad_libexecdir") (\_ -> return libexecdir)
-getSysconfDir = catchIO (getEnv "statemonad_sysconfdir") (\_ -> return sysconfdir)
+getBinDir     = catchIO (getEnv "hgraphs_bindir")     (\_ -> return bindir)
+getLibDir     = catchIO (getEnv "hgraphs_libdir")     (\_ -> return libdir)
+getDynLibDir  = catchIO (getEnv "hgraphs_dynlibdir")  (\_ -> return dynlibdir)
+getDataDir    = catchIO (getEnv "hgraphs_datadir")    (\_ -> return datadir)
+getLibexecDir = catchIO (getEnv "hgraphs_libexecdir") (\_ -> return libexecdir)
+getSysconfDir = catchIO (getEnv "hgraphs_sysconfdir") (\_ -> return sysconfdir)
 
 
 

@@ -1,4 +1,4 @@
-# Revision history for statemonad
+# Revision history for hgraphs
 
 ## 0.1.0.0 -- YYYY-mm-dd
 
