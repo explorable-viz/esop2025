@@ -107,56 +107,68 @@
    \begin{smathpar}
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: A
+         \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta, \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
+         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: \tyFun{A}{C}
+         \Delta; \Gamma \vdash V: \tyFun{A}{C}
          \\
-         \Delta, \Gamma \vdash U: A
+         \Delta; \Gamma \vdash U: A
       }
       {
-         \Delta, \Gamma \vdash \exApp{V}{U}: C
+         \Delta; \Gamma \vdash \exApp{V}{U}: C
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: \tyForall{\alpha}{K}{C}
+         \Delta; \Gamma \vdash V: \tyFun{A}{C}
+         \\
+         \Delta; \Gamma \vdash N: C
+      }
+      {
+         \Delta; \Gamma \vdash \exCase{V}{\ell}{x}{M}{y}{N}: C
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash V: \tyForall{\alpha}{K}{C}
          \\
          \Delta \vdash T: K
       }
       {
-         \Delta, \Gamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
+         \Delta; \Gamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: A
+         \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta, \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
+         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash M: C
+         \Delta; \Gamma \vdash M: C
          \\
-         \Delta, \Gamma \vdash V: \tyHandler{C}{D}
+         \Delta; \Gamma \vdash V: \tyHandler{C}{D}
       }
       {
-         \Delta, \Gamma \vdash \exHandle{M}{V}: D
+         \Delta; \Gamma \vdash \exHandle{M}{V}: D
       }
    \end{smathpar}
    \caption{Typing rules}
