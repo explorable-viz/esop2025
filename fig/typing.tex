@@ -34,12 +34,22 @@
       %
       \inferrule*
       {
+         \strut
+      }
+      {
+         \Delta; \Gamma \vdash \exRecEmpty: \tyRecord{}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
          \Delta; \Gamma \vdash V_i: A_i
          \quad
          (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecord{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash \exRecExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
       }
       %
       \and
