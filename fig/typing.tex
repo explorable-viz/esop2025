@@ -129,9 +129,11 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyFun{A}{C}
+         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\ell}{A}}
          \\
-         \Delta; \Gamma \vdash N: C
+         \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: C
+         \\
+         \Delta; \cxtExtend{\Gamma}{y}{\tyVariant{R}} \vdash N: C
       }
       {
          \Delta; \Gamma \vdash \exCase{V}{\ell}{x}{M}{y}{N}: C
