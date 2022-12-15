@@ -32,7 +32,8 @@
 \newcommand*{\tyFun}[2]{{#1} \to {#2}}
 \newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
 \newcommand*{\tyInt}{\kw{Int}}
-\newcommand*{\tyRecord}[1]{\exRecExtend{}{#1}}
+\newcommand*{\tyRecord}[1]{\tyRecordExtend{}{#1}}
+\newcommand*{\tyRecordExtend}[2]{\exRecordExtend{#1}{#2}}
 \newcommand*{\tyVar}[1]{#1}
 \newcommand*{\tyVariant}[1]{[#1]}
 
@@ -50,8 +51,8 @@
 \newcommand*{\exOp}[2]{{#1}\,{#2}}
 \newcommand*{\exPolyApp}[2]{\exApp{#1}{#2}}
 \newcommand*{\exPolyFun}[2]{\Lambda{#1}.{#2}}
-\newcommand*{\exRecEmpty}{\set{}}
-\newcommand*{\exRecExtend}[2]{{#1}\set{#2}}
+\newcommand*{\exRecordEmpty}{\set{}}
+\newcommand*{\exRecordExtend}[2]{{#1}\set{#2}}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\exVariant}[2]{[{#1}:{#2}]}

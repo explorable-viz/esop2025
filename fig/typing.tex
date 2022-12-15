@@ -37,19 +37,21 @@
          \strut
       }
       {
-         \Delta; \Gamma \vdash \exRecEmpty: \tyRecord{}
+         \Delta; \Gamma \vdash \exRecordEmpty: \tyRecord{}
       }
       %
       \and
       %
       \inferrule*
       {
+         \Delta; \Gamma \vdash U: \tyRecord{R}
+         \\
          \Delta; \Gamma \vdash V_i: A_i
          \quad
          (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecordExtend{\tyRecord{R}}{\seq{\bind{\ell}{A}}}
       }
       %
       \and
