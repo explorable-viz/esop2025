@@ -51,7 +51,7 @@
          (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecordExtend{\tyRecord{R}}{\seq{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
       }
       %
       \and
@@ -143,7 +143,7 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
          \\
          \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{y}{\tyRecord{R}}}}{\seq{\bind{x}{A}}} \vdash N: C
       }
