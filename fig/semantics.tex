@@ -46,6 +46,17 @@
       \exHandle{\exReturn{V}}{(\hReturn{x}{M}) \cons H}
       &\reduce
       \subst{M}{V}{x}
+      \\
+      \begin{split}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{H}
+      &\reduce
+      \subst{\subst{M}{V}{x}}{\exFun{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}{k}
+      \\
+      &\quad\,\,\,\;\textit{iff }
+      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
+      \text{ and }
+      \ell \notin \BL(\mathcal{E})
+      \end{split}
    \end{salign}
    \caption{Evaluation contexts and small-step operational semantics}
 \end{figure}
