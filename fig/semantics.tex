@@ -23,6 +23,14 @@
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
    \begin{salign}
+      \exApp{(\exFun{x}{M})}{V}
+      &\reduce
+      \subst{M}{V}{x}
+      \\
+      \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
+      &\reduce
+      \subst{M}{T}{\alpha}
+      \\
       \exCase{\exVariant{\ell}{V}}{\ell}{x}{M}{y}{N}
       &\reduce
       \subst{M}{V}{x}
