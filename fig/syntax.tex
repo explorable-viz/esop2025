@@ -23,7 +23,7 @@
       &
       $\kiRow$
       &
-      row types
+      type rows
       \\[2mm]
       &\textit{Type}&
       \\
@@ -84,7 +84,7 @@
       &
       effect
       \\[2mm]
-      &\textit{Row type}&
+      &\textit{Type row}&
       \\
       $R ::=$
       &
@@ -105,8 +105,8 @@
    \end{tabularx}
    \end{minipage}%
    \hspace{4mm}
-   \begin{minipage}[t]{0.46\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+   \begin{minipage}[t]{0.50\textwidth}
+      \begin{tabularx}{\textwidth}{rL{3.9cm}L{3cm}}
          &\textit{Value}&
          \\
          $U, V ::=$
@@ -126,12 +126,12 @@
          variant
          \\
          &
-         $\exRecord{}$
+         $\exRecordEmpty{}$
          &
          empty record
          \\
          &
-         $\exRecord{\seq{\bind{\ell}{V}}}$
+         $\exRecordExtend{U}{\seq{\bind{\ell}{V}}}$
          &
          record extension
          \\
@@ -162,6 +162,16 @@
          $\exApp{V}{U}$
          &
          application
+         \\
+         &
+         $\exCase{V}{\ell}{x}{M}{y}{N}$
+         &
+         case
+         \\
+         &
+         $\exSplit{V}{y}{\ell}{x}{N}$
+         &
+         split
          \\
          &
          $\exPolyApp{V}{T}$

@@ -27,26 +27,38 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\ell}{A}}
+         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
       }
       %
       \and
       %
       \inferrule*
       {
+         \strut
+      }
+      {
+         \Delta; \Gamma \vdash \exRecordEmpty: \tyRecord{}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash U: \tyRecord{R}
+         \\
          \Delta; \Gamma \vdash V_i: A_i
          \quad
          (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecord{\seq{\bind{\ell}{V}}}: \tyRecord{\seq{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: C
+         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
       }
       {
          \Delta; \Gamma \vdash \exFun{x}{M}: \tyFun{A}{C}
@@ -56,7 +68,7 @@
       %
       \inferrule*
       {
-         \cxtExtend{\Delta}{\alpha}{K}; \Gamma \vdash M: C
+         \cxtExtend{\Delta}{\bind{\alpha}{K}}; \Gamma \vdash M: C
          \\
          \alpha \notin \FV(\Gamma)
       }
@@ -68,7 +80,7 @@
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\Gamma}{x}{A} \vdash M: D
+         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: D
       }
       {
          \Delta; \Gamma \vdash \exHandler{\hReturn{x}{M}}: \tyHandler{A}{D}
@@ -78,7 +90,7 @@
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{x}{A}}{k}{\tyFun{B}{D}} \vdash M: D
+         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{x}{A}}}{\bind{k}{\tyFun{B}{D}}} \vdash M: D
          \\
          \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{R}{A}}{D}
       }
@@ -86,7 +98,7 @@
          \Delta; \Gamma
          \vdash
          (\hEffect{\ell}{x}{k}{M}) \cons H:
-         \tyHandler{\tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{A}}{D}
+         \tyHandler{\tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{A}}{D}
       }
    \end{smathpar}
    \\[2mm]
@@ -95,56 +107,82 @@
    \begin{smathpar}
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: A
+         \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta, \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
+         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: \tyFun{A}{C}
+         \Delta; \Gamma \vdash V: \tyFun{A}{C}
          \\
-         \Delta, \Gamma \vdash U: A
+         \Delta; \Gamma \vdash U: A
       }
       {
-         \Delta, \Gamma \vdash \exApp{V}{U}: C
+         \Delta; \Gamma \vdash \exApp{V}{U}: C
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: \tyForall{\alpha}{K}{C}
+         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
+         \\
+         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
+         \\
+         \Delta; \cxtExtend{\Gamma}{\bind{y}{\tyVariant{R}}} \vdash N: C
+      }
+      {
+         \Delta; \Gamma \vdash \exCase{V}{\ell}{x}{M}{y}{N}: C
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
+         \\
+         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{y}{\tyRecord{R}}}}{\seq{\bind{x}{A}}} \vdash N: C
+      }
+      {
+         \Delta; \Gamma \vdash \exSplit{V}{y}{\ell}{x}{N}: C
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash V: \tyForall{\alpha}{K}{C}
          \\
          \Delta \vdash T: K
       }
       {
-         \Delta, \Gamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
+         \Delta; \Gamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash V: A
+         \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta, \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
+         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{B}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta, \Gamma \vdash M: C
+         \Delta; \Gamma \vdash M: C
          \\
-         \Delta, \Gamma \vdash V: \tyHandler{C}{D}
+         \Delta; \Gamma \vdash V: \tyHandler{C}{D}
       }
       {
-         \Delta, \Gamma \vdash \exHandle{M}{V}: D
+         \Delta; \Gamma \vdash \exHandle{M}{V}: D
       }
    \end{smathpar}
    \caption{Typing rules}

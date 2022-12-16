@@ -15,7 +15,7 @@
 
 % contexts
 \newcommand{\cxtEmpty}{\seqEmpty}
-\newcommand{\cxtExtend}[3]{{#1}, \bind{#2}{#3}}
+\newcommand{\cxtExtend}[2]{{#1}, {#2}}
 
 % substitution
 \newcommand{\subst}[3]{{#1}[{#2}/{#3}]}
@@ -32,16 +32,17 @@
 \newcommand*{\tyFun}[2]{{#1} \to {#2}}
 \newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
 \newcommand*{\tyInt}{\kw{Int}}
-\newcommand*{\tyRecord}[1]{\exRecord{#1}}
+\newcommand*{\tyRecord}[1]{\exRecordExtend{}{#1}}
 \newcommand*{\tyVar}[1]{#1}
 \newcommand*{\tyVariant}[1]{[#1]}
 
 % rows
 \newcommand{\rowEmpty}{\seqEmpty}
-\newcommand{\rowExtend}[3]{{#1}, \bind{#2}{#3}}
+\newcommand{\rowExtend}[2]{{#1}, {#2}}
 
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
+\newcommand*{\exCase}[6]{\kw{pm}\;{#1}\;\kw{as}\;\{\bind{#2}{#3}\mapsto{#4};\;{#5}\mapsto{#6}\}}
 \newcommand*{\exFun}[2]{\lambda{#1}.{#2}}
 \newcommand*{\exHandle}[2]{\kw{handle}\;{#1}\;\kw{with}\;{#2}}
 \newcommand*{\exHandler}[1]{\set{#1}}
@@ -49,8 +50,10 @@
 \newcommand*{\exOp}[2]{{#1}\,{#2}}
 \newcommand*{\exPolyApp}[2]{\exApp{#1}{#2}}
 \newcommand*{\exPolyFun}[2]{\Lambda{#1}.{#2}}
-\newcommand*{\exRecord}[1]{\set{#1}}
+\newcommand*{\exRecordEmpty}{\set{}}
+\newcommand*{\exRecordExtend}[2]{{#1}\set{#2}}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
+\newcommand*{\exSplit}[5]{\kw{pm}\;{#1}\;\kw{as}\;\exRecordExtend{#2}{\seq{\bind{#3}{#4}}}\mapsto{#5}}
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\exVariant}[2]{[{#1}:{#2}]}
 
