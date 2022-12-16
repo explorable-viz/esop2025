@@ -1,0 +1,63 @@
+\begin{figure}
+   \small
+   \begin{tabularx}{\textwidth}{rL{2.6cm}L{3cm}}
+      &\textit{Evaluation context}&
+      \\
+      $\mathcal{E} ::=$
+      &
+      $\evalCxtEmpty$
+      &
+      empty
+      \\
+      &
+      $\evalCxtHandle{\mathcal{E}}{V}$
+      &
+      handle
+   \end{tabularx}
+   \\[3mm]
+   {\small \flushleft \shadebox{$M \reduce N$}%
+   \hfill \textbfit{$M$ reduces to $N$}}
+   \begin{salign}
+      \exApp{(\exFun{x}{M})}{V}
+      &\reduce
+      \subst{M}{V}{x}
+      \\
+      \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
+      &\reduce
+      \subst{M}{T}{\alpha}
+      \\
+      \exCase{\exVariant{\ell}{V}}{\ell}{x}{M}{y}{N}
+      &\reduce
+      \subst{M}{V}{x}
+      \\
+      \exCase{\exVariant{\ell}{V}}{\ell'}{x}{M}{y}{N}
+      &\reduce
+      \subst{N}{\exVariant{\ell}{V}}{y}
+      \quad
+      \textit{if }\ell \neq \ell'
+      \\
+      \exSplit{\exRecordExtend{U}{\seq{\bind{\ell}{V}}}}{y}{\ell}{x}{N}
+      &\reduce
+      \subst{\subst{N}{U}{y}}{\seq{V}}{\seq{x}}
+      \\
+      \exHandle{\exReturn{V}}{(\hReturn{x}{M}) \cons H}
+      &\reduce
+      \subst{M}{V}{x}
+      \\
+      \begin{split}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{H}
+      &\reduce
+      \subst{\subst{M}{V}{x}}{\exFun{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}{k}
+      \\
+      &\quad\,\,\,\;\textit{if }
+      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
+      \text{ and }
+      \ell \notin \BL(\mathcal{E})
+      \end{split}
+      \\
+      M &\reduce N
+      \quad\hfill
+      \textit{if }\plug{\mathcal{E}}{M} \reduce \plug{\mathcal{E}}{N}
+   \end{salign}
+   \caption{Evaluation contexts and small-step operational semantics}
+\end{figure}
