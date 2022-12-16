@@ -38,6 +38,8 @@
       \exCase{\exVariant{\ell}{V}}{\ell'}{x}{M}{y}{N}
       &\reduce
       \subst{N}{\exVariant{\ell}{V}}{y}
+      \quad
+      \text{if }\ell \neq \ell'
       \\
       \exSplit{\exRecordExtend{U}{\seq{\bind{\ell}{V}}}}{y}{\ell}{x}{N}
       &\reduce
@@ -57,6 +59,10 @@
       \text{ and }
       \ell \notin \BL(\mathcal{E})
       \end{split}
+      \\
+      M
+      &\reduce
+      N
    \end{salign}
    \caption{Evaluation contexts and small-step operational semantics}
 \end{figure}
