@@ -27,7 +27,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\ell}{A}}
+         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
       }
       %
       \and
@@ -98,7 +98,7 @@
          \Delta; \Gamma
          \vdash
          (\hEffect{\ell}{x}{k}{M}) \cons H:
-         \tyHandler{\tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{A}}{D}
+         \tyHandler{\tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{A}}{D}
       }
    \end{smathpar}
    \\[2mm]
@@ -129,7 +129,7 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\ell}{A}}
+         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
          \\
          \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
          \\
@@ -143,7 +143,7 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\ell}{A}}
+         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\bind{\ell}{A}}}
          \\
          \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{y}{\tyRecord{R}}}}{\seq{\bind{x}{A}}} \vdash N: C
       }
@@ -170,7 +170,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\ell}{\tyFun{A}{B}}}{B}
+         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{B}
       }
       %
       \and
