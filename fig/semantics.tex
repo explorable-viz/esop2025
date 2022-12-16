@@ -30,6 +30,10 @@
       \exCase{\exVariant{\ell}{V}}{\ell'}{x}{M}{y}{N}
       &\reduce
       \subst{N}{\exVariant{\ell}{V}}{y}
+      \\
+      \exSplit{\exRecordExtend{U}{\seq{\bind{\ell}{V}}}}{y}{\ell}{x}{N}
+      &\reduce
+      \subst{\subst{N}{U}{y}}{\seq{V}}{\seq{x}}
    \end{salign}
    \caption{Evaluation contexts and small-step operational semantics}
 \end{figure}
