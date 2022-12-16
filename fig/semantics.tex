@@ -1,10 +1,31 @@
 \begin{figure}
+   \small
    \begin{tabularx}{\textwidth}{rL{2.6cm}L{3cm}}
       &\textit{Evaluation context}&
       \\
       $\mathcal{E} ::=$
       &
+      $\evalCxtEmpty$
+      &
+      empty
+      \\
+      &
+      $\evalCxtHandle{\mathcal{E}}{N}$
+      &
+      handle left
+      \\
+      &
+      $\evalCxtHandle{V}{\mathcal{E}}$
+      &
+      handle right
    \end{tabularx}
+   \\[3mm]
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
+   \begin{salign}
+      \exCase{\exVariant{\ell}{V}}{\ell}{x}{M}{y}{N}
+      &\reduce
+      \subst{M}{V}{x}
+   \end{salign}
+   \caption{Evaluation contexts and small-step operational semantics}
 \end{figure}
