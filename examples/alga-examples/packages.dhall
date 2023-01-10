@@ -122,7 +122,7 @@ with alga =
     , "tuples"
     , "unfoldable"
   ]
-  , repo = "https://github.com/JosephBond/purescript-alga.git"
+  , repo = "https://github.com/explorable-viz/purescript-alga.git"
   , version = "main"
     
   }
