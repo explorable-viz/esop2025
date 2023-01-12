@@ -1,4 +1,4 @@
-# desugar-debug
+# debug-effects
 
 Notes on debugging languages with syntactic sugar and possible interaction with Galois slicing.
 
