@@ -1,8 +1,7 @@
 module Graph.Utils where
 
 
-import Algebra.Graph (Graph(..), edge, overlay)
-import Algebra.Graph.AdjacencyMap (vertices, clique)
+import Algebra.Graph (Graph(..), edge, overlay, vertex, connect, vertices, clique)
 import Algebra.Graph.Internal (fromArray)
 import Control.Apply (class Apply)
 import Control.Bind (class Bind)
@@ -36,3 +35,7 @@ boolList :: Int -> Int -> List Int -> Effect (List Boolean)
 boolList numNodes maxNum edgeCounts = do
   randoms :: List Int <- replicateA numNodes (randomInt 1 maxNum)
   pure (compareLists randoms edgeCounts)
+
+
+addVertex :: Graph Int -> Int -> Array Int -> Graph Int
+addVertex prevGraph newNodeId newNeighbours = overlay prevGraph (connect (vertex newNodeId) (vertices (fromArray newNeighbours)))
