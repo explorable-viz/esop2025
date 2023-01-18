@@ -1,11 +1,11 @@
 name: CI
 
-on: 
-  push: 
+on:
+  push:
     branches: ["joe-dev"]
   pull_request:
     branches: ["joe-dev"]
-  
+
 jobs:
   build:
     strategy:
@@ -28,13 +28,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
-      
+
       - name: Install NPM dependencies
         run: |
           cd examples/alga-examples
-          npm install -g spago
           npm install
-      
+
       - name: Build project
         run: |
           cd examples/alga-examples
