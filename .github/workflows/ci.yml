@@ -13,7 +13,7 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
-    steps: 
+    steps:
       - uses: actions/checkout@v2
 
       - uses: purescript-contrib/setup-purescript@main
@@ -22,7 +22,6 @@ jobs:
           purs-tidy: "0.9.2"
           psa: "0.8.2"
           spago: "0.20.9"
-          psa: "0.7.2"
 
 
       - name: Setup Node toolchain
@@ -35,7 +34,7 @@ jobs:
           npm install -g spago
           npm install
       
-      -name: Build project
+      - name: Build project
         run: |
           cd examples/alga-examples
           spago build
