@@ -15,7 +15,7 @@ import Data.Eq ((==))
 import Data.Function ((#))
 import Data.Functor (class Functor)
 import Data.List.Types (List(..), (:))
-import Data.List (zipWIth)
+import Data.List (zipWith)
 import Data.Ord ((>=))
 import Data.Tuple (Tuple(..))
 import Data.Unfoldable (replicateA)
@@ -33,4 +33,4 @@ main :: Effect Unit
 main = runTest do
   suite "graph utils" do
     test "compareLists ex" do
-    Assert.equal (compareLists (1:2:3:4:Nil) (2:2:4:5:Nil)) (True : True : False : False : Nil)
+      Assert.equal (compareLists (1:2:3:4:Nil) (2:2:4:5:Nil)) (false : true : false : false : Nil)
