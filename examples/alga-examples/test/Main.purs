@@ -35,3 +35,5 @@ main = runTest do
       Assert.equal (compareLists (1:2:3:4:Nil) (2:2:4:5:Nil)) (false : true : false : false : Nil)
     test "addVertex correct" do
       Assert.equal (edgeList (addVertex Empty 1 [2,3,4,5])) (fromArray [(Tuple 1 2) , (Tuple 1 3) , (Tuple 1 4) , (Tuple 1 5)] )
+    -- test "boolLists correct" do
+    --   Assert.equal () ()
