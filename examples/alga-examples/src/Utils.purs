@@ -61,13 +61,14 @@ newNeighbours numNodes maxNum edgeCounts m = do
   out
 
 -- baNewnode :: Graph Int -> State (Graph Int) (Graph Int)
--- baNewnode prev =
+-- baNewnode prev m =
 --   let
 --     normalizer      = edgeCount prev
 --     newId           = 1 + (vertexCount prev)
 --     degrees         = outDegrees prev
---     newConnections  = boolList newId normalizer degrees
---   in
+--     neighbours      = newNeighbours (vertexCount prev) normalizer degrees m
+--   in do
+--   
 -- baUpdate step will have this type sig
 -- baUpdate :: StateT (Graph Int) Effect (List (Tuple Int))
 
