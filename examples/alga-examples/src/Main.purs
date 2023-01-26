@@ -8,22 +8,25 @@ import Control.Apply (class Apply)
 import Control.Bind (class Bind)
 import Control.Monad (pure)
 import Control.Monad.State (State)
-import Control.Monad.State.Trans (StateT(..))
 import Control.Monad.State.Class (state)
+import Control.Monad.State.Trans (StateT(..))
 import Data.Eq ((==))
 import Data.Function ((#))
 import Data.Functor (class Functor)
-import Data.List.Types (List(..), (:))
 import Data.List (zipWith)
+import Data.List.Types (List(..), (:))
+import Data.Map.Internal (showTree)
+import Data.Newtype (unwrap)
 import Data.Ord ((>=))
 import Data.Tuple (Tuple(..))
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Console (log)
 import Effect.Random (randomInt)
+import Graph.Utils (toAdjacencyMap)
 import Node.ReadLine (createConsoleInterface, noCompletion, prompt, setLineHandler, setPrompt, close)
 import Prelude (class Applicative, Unit, bind, discard)
-  
+
 main :: Effect Unit
 main = do
   inputInterface <- createConsoleInterface noCompletion
@@ -31,10 +34,10 @@ main = do
   prompt inputInterface
   inputInterface # setLineHandler \s ->
     if s == "quit"
-    then 
+    then
       close inputInterface
     else do
-      let list = fromArray [1,2,3,4,5] -- range    :: Int -> Int -> List Int
+      let list = fromArray [1,2,3,4] -- range    :: Int -> Int -> List Int
       let initGraph = clique list       -- vertices :: List a -> Graph a
-      log s
+      log (showTree (unwrap initGraph))
       log "logged and loaded"
