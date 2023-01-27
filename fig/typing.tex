@@ -75,31 +75,6 @@
       {
          \Delta; \Gamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{K}{C}
       }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: D
-      }
-      {
-         \Delta; \Gamma \vdash \exHandler{\hReturn{x}{M}}: \tyHandler{A}{D}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{x}{A'}}}{\bind{k}{\tyFun{B}{D}}} \vdash M: D
-         \\
-         \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{A}{R}}{D}
-      }
-      {
-         \Delta; \Gamma
-         \vdash
-         (\hEffect{\ell}{x}{k}{M}) \cons H:
-         \tyHandler{\tyEffect{A}{\rowExtend{R}{\bind{\ell}{\tyFun{A'}{B}}}}}{D}
-      }
    \end{smathpar}
    \\[2mm]
    {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
@@ -110,7 +85,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{A}{E}
+         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{A}{R}
       }
       %
       \and
