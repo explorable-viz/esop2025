@@ -129,26 +129,12 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash V: A
          \\
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
-         \\
-         \Delta; \cxtExtend{\Gamma}{\bind{y}{\tyVariant{R}}} \vdash N: C
+         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exCase{V}{\ell}{x}{M}{y}{N}: C
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
-         \\
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{y}{\tyRecord{R}}}}{\seq{\bind{x}{A}}} \vdash M: C
-      }
-      {
-         \Delta; \Gamma \vdash \exSplit{V}{y}{\ell}{x}{M}: C
+         \Delta; \Gamma \vdash \exMatch{V}{\sigma}: C
       }
       %
       \and
