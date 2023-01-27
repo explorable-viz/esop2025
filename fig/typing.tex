@@ -58,10 +58,10 @@
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
+         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exFun{x}{M}: \tyFun{A}{C}
+         \Delta; \Gamma \vdash \exFun{x}{\sigma}: \tyFun{A}{C}
       }
       %
       \and
