@@ -34,6 +34,7 @@
 \newcommand*{\elimmapsto}{\mapsto}
 \newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
+\newcommand*{\elimRec}[2]{\record{#1}_{#2}}
 
 % types
 \newcommand*{\tyEffect}[2]{{#1}!\tyVariant{#2}}
@@ -59,8 +60,9 @@
 \newcommand*{\exOp}[2]{{#1}\,{#2}}
 \newcommand*{\exPolyApp}[2]{\exApp{#1}{#2}}
 \newcommand*{\exPolyFun}[2]{\Lambda{#1}.{#2}}
-\newcommand*{\exRecordEmpty}{\langle\rangle}
-\newcommand*{\exRecordExtend}[2]{{#1}\langle#2\rangle}
+\newcommand*{\record}[1]{\langle{#1}\rangle}
+\newcommand*{\exRecordEmpty}{\record{}}
+\newcommand*{\exRecordExtend}[2]{{#1}\record{#2}}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exSplit}[5]{\kw{pm}\;{#1}\;\kw{as}\;\exRecordExtend{#2}{\seq{\bind{#3}{#4}}}\mapsto{#5}}
 \newcommand*{\exVar}[1]{#1}
