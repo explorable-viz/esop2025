@@ -12,6 +12,19 @@
       %
       \and
       %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash P_i: \elimTy{A_i}{E}
+         \quad
+         (\forall i \leq \length{\seq{P}})
+         \\
+         \Delta; \Gamma \vdash P': \elimTy{\tyVariant{R}}{E}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimVariant{\ell}{P}{P'}: \elimTy{\tyVariant{\rowExtend{R}{\seq{\bind{\ell}{A}}}}}{E}
+      }
    \end{smathpar}
    \\[2mm]
    {\small \flushleft \shadebox{$\Delta; \Gamma \vdash V: A$}%
