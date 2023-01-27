@@ -90,7 +90,7 @@
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{x}{A}}}{\bind{k}{\tyFun{B}{D}}} \vdash M: D
+         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{x}{A'}}}{\bind{k}{\tyFun{B}{D}}} \vdash M: D
          \\
          \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{R}{A}}{D}
       }
@@ -98,7 +98,7 @@
          \Delta; \Gamma
          \vdash
          (\hEffect{\ell}{x}{k}{M}) \cons H:
-         \tyHandler{\tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{A}}{D}
+         \tyHandler{\tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A'}{B}}}}{A}}{D}
       }
    \end{smathpar}
    \\[2mm]
