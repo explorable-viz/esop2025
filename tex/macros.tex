@@ -34,7 +34,8 @@
 \newcommand*{\elimmapsto}{\mapsto}
 \newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
-\newcommand*{\elimRec}[2]{\record{#1}_{#2}}
+\newcommand*{\elimRecord}[2]{\record{#1}_{#2}}
+\newcommand*{\elimVariant}[3]{\variant{\seq{\bind{\ell}{P}};P'}}
 
 % types
 \newcommand*{\tyEffect}[2]{{#1}!\tyVariant{#2}}
@@ -66,7 +67,8 @@
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exSplit}[5]{\kw{pm}\;{#1}\;\kw{as}\;\exRecordExtend{#2}{\seq{\bind{#3}{#4}}}\mapsto{#5}}
 \newcommand*{\exVar}[1]{#1}
-\newcommand*{\exVariant}[2]{[{#1}:{#2}]}
+\newcommand*{\variant}[1]{[#1]}
+\newcommand*{\exVariant}[2]{\variant{\bind{#1}{#2}}}
 
 % handler clauses
 \newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
