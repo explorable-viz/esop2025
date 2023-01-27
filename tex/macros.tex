@@ -30,6 +30,11 @@
 \newcommand*{\elimTyArrow}{\rightarrowtail}
 \newcommand*{\elimTy}[2]{{#1}\elimTyArrow{#2}}
 
+% eliminators
+\newcommand*{\elimmapsto}{\mapsto}
+\newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
+\newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
+
 % types
 \newcommand*{\tyEffect}[2]{{#1}!\tyVariant{#2}}
 \newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
