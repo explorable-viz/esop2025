@@ -8,17 +8,15 @@ import Algebra.Graph.Internal (fromArray)
 import Control.Apply (class Apply)
 import Control.Bind (class Bind)
 import Control.Monad (pure)
-import Control.Monad.State (State)
+import Control.Monad.State (State, runState)
 import Control.Monad.State.Class (state)
 import Control.Monad.State.Trans (StateT(..))
-import Data.Array (filter, sortWith, take, zipWith, zip)
--- import Data.Array.NonEmpty (NonEmptyArray, filter, index, toArray, zip, zipWith)
--- import Data.Array.NonEmpty.Internal (NonEmptyArray(..))
+import Data.Array (filter, fromFoldable, sortWith, take, zip, zipWith)
 import Data.Eq ((==))
 import Data.Function ((#), ($))
 import Data.Functor (class Functor, map)
 import Data.List.Types (List(..), (:))
-import Data.Map (Map)
+import Data.Map (Map, values)
 import Data.Newtype (unwrap)
 import Data.NonEmpty (NonEmpty)
 import Data.Ord ((>=), class Ord)
@@ -28,7 +26,7 @@ import Data.Tuple (Tuple(..), fst, snd)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Random (random, randomInt)
-import Prelude (bind, (<<<), (<$>))
+import Prelude (bind, (<<<), (<$>), (+))
 
 
 
@@ -60,17 +58,17 @@ newNeighbours numNodes maxNum edgeCounts m = do
   out <- pure $ ((take m) <$> shuffled)
   out
 
--- baNewnode :: Graph Int -> State (Graph Int) (Graph Int)
--- baNewnode prev m =
---   let
---     normalizer      = edgeCount prev
---     newId           = 1 + (vertexCount prev)
---     degrees         = outDegrees prev
---     neighbours      = newNeighbours (vertexCount prev) normalizer degrees m
---   in do
---   
--- baUpdate step will have this type sig
--- baUpdate :: StateT (Graph Int) Effect (List (Tuple Int))
+baNewnode :: Graph Int -> Int -> (State (Graph Int) (Graph Int))
+baNewnode prev m =
+  let
+    normalizer      = edgeCount prev
+    newId           = 1 + (vertexCount prev)
+    degrees         = fromFoldable (values (outDegrees prev))
+  in do
+    neighbours <- newNeighbours (vertexCount prev) normalizer degrees m
+    addVertexST prev newId neighbours
+
+
 
 -- Needed to reexport these for constructing degree functions
 
@@ -85,3 +83,9 @@ inDegrees g = outDegrees (transpose g)
 
 addVertex :: Graph Int -> Int -> Array Int -> Graph Int
 addVertex prevGraph newNodeId newNeighbours = overlay prevGraph (connect (vertex newNodeId) (vertices (fromArray newNeighbours)))
+
+addVertexST :: Graph Int -> Int -> Array Int -> State (Graph Int) (Graph Int)
+addVertexST prev newId neighbours = state (\s -> Tuple newEdges newGraph)
+  where
+    newEdges = (connect (vertex newId) (vertices (fromArray neighbours)))
+    newGraph = overlay prev newEdges 
