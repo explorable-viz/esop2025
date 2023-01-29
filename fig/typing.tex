@@ -14,6 +14,19 @@
       %
       \inferrule*
       {
+         \Delta; \Gamma \vdash P: \elimRecord{R, \seq{\bind{\ell}{A}}}{E}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimRecord{P}{\seq{\ell}, \ell'}:
+         \elimRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}, \bind{\ell'}{B}}}{E}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
          \Delta; \Gamma \vdash P_i: \elimTy{A_i}{E}
          \quad
          (\forall i \leq \length{\seq{P}})
