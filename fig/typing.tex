@@ -14,13 +14,17 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash P: \elimRecord{R, \seq{\bind{\ell}{A}}}{E}
+         \Delta; \Gamma
+         \vdash
+         \elimRecord{P}{\seq{\ell}}:
+         \elimTy{\tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}}{\elimTy{B}{E}}
       }
       {
          \Delta; \Gamma
          \vdash
          \elimRecord{P}{\seq{\ell}, \ell'}:
-         \elimRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}, \bind{\ell'}{B}}}{E}
+         \elimTy{\tyRecord{\rowExtend{\rowExtend{R}{\seq{\bind{\ell}{A}}}}{\bind{\ell'}{B}}}}
+                {E}
       }
       %
       \and
