@@ -102,9 +102,9 @@
    \begin{salign}
       \exApp{(\exFun{\sigma})}{V}
       &\reduce
-      \substNew{\rho}{M}
+      \substNew{\gamma}{M}
       \quad
-      \textit{if }V, \sigma \match \rho, M
+      \textit{if }V, \sigma \match \gamma, M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
@@ -112,13 +112,15 @@
       \\
       \exMatch{V}{\sigma}
       &\reduce
-      \substNew{\rho}{M}
+      \substNew{\gamma}{M}
       \quad
-      \textit{if }V, \sigma \match \rho, M
+      \textit{if }V, \sigma \match \gamma, M
       \\
-      \exHandle{\exReturn{V}}{(\hReturn{x}{M}) \cons H}
+      \exHandle{\exReturn{V}}{\exFun{\sigma}}
       &\reduce
-      \subst{M}{V}{x}
+      \substNew{\gamma}{M}
+      \quad
+      \textit{if }\exReturn{V}, \sigma \match \gamma, M
       \\
       \begin{split}
       \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{H}
