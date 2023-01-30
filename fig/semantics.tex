@@ -122,16 +122,26 @@
       \quad
       \textit{if }\exReturn{V}, \sigma \match \gamma, M
       \\
-      \begin{split}
-      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{H}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
-      \subst{\subst{M}{V}{x}}{\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}}{k}
-      \\
-      &\quad\,\,\,\;\textit{if }
-      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
-      \text{ and }
+      \substNew{\gamma'}{M}
+      \quad
+      \textit{if }\exOp{\ell}{V}, \sigma \match \gamma, M
+      \textit{ and }
       \ell \notin \BL(\mathcal{E})
-      \end{split}
+      \textit{ and }
+      \gamma' = \cxtExtend{\gamma}{\bind{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}}
+%      \\
+%      \begin{split}
+%      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
+%      &\reduce
+%      \subst{\subst{M}{V}{x}}{\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}}{k}
+%      \\
+%      &\quad\,\,\,\;\textit{if }
+%      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
+%      \textit{ and }
+%      \ell \notin \BL(\mathcal{E})
+%      \end{split}
       \\
       M &\reduce N
       \quad\hfill
