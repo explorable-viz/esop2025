@@ -30,13 +30,15 @@
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
    \begin{salign}
-      \exApp{(\exFun{x}{M})}{V}
+      \exApp{(\exFunNew{\sigma})}{V}
       &\reduce
-      \subst{M}{V}{x}
+      \substNew{\rho}{M}
+      \quad
+      \textit{if }V, \sigma \match \rho, M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
-      \subst{M}{T}{\alpha}
+      \substNew{(\seqEmpty,\bind{\alpha}{T})}{M}
       \\
       \exCase{\exVariant{\ell}{V}}{\ell}{x}{M}{y}{N}
       &\reduce
