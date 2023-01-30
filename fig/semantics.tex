@@ -25,6 +25,18 @@
       {
          V, \elimVar{x}{P} \match (\seqEmpty, \bind{x}{V}), P
       }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         i \leq \length{\seq{P}}
+         \\
+         V, P_i \match \gamma, Q
+      }
+      {
+         \exVariant{\ell_i}{V}, \elimVariant{\ell}{P}{P'} \match \gamma, Q
+      }
    \end{smathpar}
    \\[3mm]
    {\small \flushleft \shadebox{$M \reduce N$}%
