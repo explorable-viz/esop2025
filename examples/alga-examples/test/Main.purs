@@ -17,7 +17,7 @@ import Data.List (zipWith)
 import Data.List.Types (List(..), (:))
 import Data.Map (Map, fromFoldable)
 import Data.Ord ((>=))
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple(..), snd)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Console (log)
@@ -34,6 +34,6 @@ main = runTest do
     test "compareLists ex" do
       Assert.equal (compareArrays [1,2,3,4] [2,2,4,5]) [false , true , false , false ]
     test "Correctness of addVertex" do
-      Assert.equal (edgeList (addVertex Empty 1 [2,3,4,5])) (fromArray [(Tuple 1 2) , (Tuple 1 3) , (Tuple 1 4) , (Tuple 1 5)] )
+      Assert.equal (edgeList (snd (addVertex Empty 1 [2,3,4,5]))) (fromArray [(Tuple 1 2) , (Tuple 1 3) , (Tuple 1 4) , (Tuple 1 5)] )
     test "outDegrees correct" do -- odd, due to the directional nature of the graphs
       Assert.equal (outDegrees (clique (fromArray [1, 2, 3, 4]))) (fromFoldable ((Tuple 1 3):(Tuple 2 2): (Tuple 3 1): (Tuple 4 0): Nil))

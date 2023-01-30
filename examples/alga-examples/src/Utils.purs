@@ -1,35 +1,27 @@
 module Graph.Utils where
 
 
-import Algebra.Graph (Graph(..), clique, connect, edge, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
-import Algebra.Graph.AdjacencyMap (gmap)
+import Algebra.Graph (Graph(..), connect, edge, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
 import Algebra.Graph.AdjacencyMap as AM
 import Algebra.Graph.Internal (fromArray)
-import Control.Apply (class Apply)
-import Control.Bind (class Bind)
 import Control.Monad (pure)
-import Control.Monad.State (State, StateT, get, put, runState)
+import Control.Monad.State (State)
 import Control.Monad.State.Class (state)
 import Control.Monad.State.Trans (StateT(..))
-import Control.Monad.Trans.Class (lift)
 import Data.Array (filter, fromFoldable, sortWith, take, zip, zipWith)
-import Data.Eq ((==))
-import Data.Function ((#), ($))
-import Data.Functor (class Functor, map)
-import Data.List.Types (List(..), (:))
-import Data.Map (Map, values)
+import Data.Function (($))
+import Data.Functor (map)
+import Data.Map (Map, intersectionWith, values)
 import Data.Newtype (unwrap)
-import Data.NonEmpty (NonEmpty)
 import Data.Ord ((>=), class Ord)
-import Data.Set (Set, size, insert, empty)
-import Data.String.Regex (flags)
+import Data.Set (size)
 import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..), fst, snd)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Effect.Random (random, randomInt)
-import Prelude (bind, (<<<), (<$>), (+), Unit)
+import Prelude (bind, (<<<), (<$>), (+), (*))
 
 
 
@@ -52,23 +44,19 @@ shuffle xs = map fst <<< sortWith snd <$> traverse (\x -> Tuple x <$> random) xs
 
 newNeighbours :: Int -> Int -> Array Int -> Int -> Effect (Array Int)
 newNeighbours numNodes maxNum nodeDegrees m = do
-  randoms <- replicateA numNodes (randomInt 1 maxNum)                 -- imperative random numbers
+  randoms <- replicateA numNodes (randomInt 1 maxNum)        -- imperative random numbers
   let
-      flags          = compareArrays randoms nodeDegrees            -- Array Boolean
-      selectionPairs = zip nodeDegrees flags                         -- Array (Tuple Int Boolean)
-      selected       = map fst (filter snd selectionPairs)  -- Array Int
-      shuffled       = shuffle selected                               -- Effect (Array Int) imperative because of randoms
+      flags          = compareArrays randoms nodeDegrees     -- Array Boolean
+      selectionPairs = zip nodeDegrees flags                 -- Array (Tuple Int Boolean)
+      selected       = map fst (filter snd selectionPairs)   -- Array Int
+      shuffled       = shuffle selected                      -- Effect (Array Int) imperative because of randoms
   take m <$> shuffled
-
-
 
 addVertexST :: Graph Int -> Int -> Array Int -> StateT (Graph Int) Effect (Graph Int)
 addVertexST prev newId neighbours = state (\_ -> Tuple newEdges newGraph)
   where
     newEdges = (connect (vertex newId) (vertices (fromArray neighbours)))
     newGraph = overlay prev newEdges
-
-
 
 baNewnode :: Graph Int -> Int -> StateT (Graph Int) Effect (Graph Int)
 baNewnode prev m =
@@ -93,22 +81,34 @@ baNewnode' m prev =
       newGraph  = overlay diffGraph
     state (\s -> Tuple diffGraph (newGraph s))
 
-baNewnode'' :: Int ->  Graph Int -> StateT (Graph Int) Effect (Graph Int)
-baNewnode'' m prev =
+neighboursTT :: Int -> Graph Int ->  Effect (Array Int)
+neighboursTT m prev = 
   let
     normalizer      = edgeCount prev
-    newId           = 1 + (vertexCount prev)
+    -- newId           = 1 + (vertexCount prev)
     degrees         = fromFoldable (values (outDegrees prev))
   in do
+    neighbours <- newNeighbours (vertexCount prev) normalizer degrees m 
+    pure neighbours
+
+baNewnode'' :: Int -> (Graph Int -> Effect (Tuple (Graph Int) (Graph Int))) -- State (Graph Int) (Graph Int)
+baNewnode'' m = (\prev ->
+  do
+    let
+      normalizer      = 2 * (edgeCount prev)
+      newId           = 1 + (vertexCount prev)
+      degrees         = fromFoldable (values (totDegrees prev))
     neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
     let
-      diffGraph  = addVertex' newId neighbours :: Graph Int
-      newGraph  = overlay diffGraph            :: Graph Int -> Graph Int
-    pure newGraph
-  -- (Tuple diffGraph (newGraph prev)
+      diffGraph  = addVertex' newId neighbours
+      newGraph  = overlay diffGraph prev
+    pure (Tuple (diffGraph) (newGraph)))
+
+baNewNodeST :: Int -> StateT (Graph Int) Effect (Graph Int)
+baNewNodeST m = StateT (baNewnode'' m)
+
 
 -- Needed to reexport these for constructing degree functions
-
 toAdjacencyMap :: forall a. Ord a => Graph a -> AM.AdjacencyMap a
 toAdjacencyMap = foldg AM.empty AM.vertex AM.overlay AM.connect
 
@@ -118,6 +118,8 @@ outDegrees g = map size (unwrap (toAdjacencyMap g))
 inDegrees :: forall a. Ord a => Graph a -> Map a Int
 inDegrees g = outDegrees (transpose g)
 
+totDegrees :: forall a. Ord a => Graph a -> Map a Int
+totDegrees g = intersectionWith (+) (inDegrees g) (outDegrees g)
 addVertex :: Graph Int -> Int -> Array Int -> Tuple (Graph Int) (Graph Int)
 addVertex prevGraph newNodeId neighbours = Tuple diffGraph newGraph
   where
