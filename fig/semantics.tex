@@ -64,9 +64,14 @@
       %
       \inferrule*
       {
+         V, \elimRecord{P}{\seq{\ell}} \match \gamma, \sigma
+         \\
+         U, \sigma \match \gamma', Q
       }
       {
-         \exRecordExtend{V}{\bind{\ell}{U}}
+         \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{P}{\seq{\ell}, \ell'}
+         \match
+         \gamma \concat \gamma', Q
       }
    \end{smathpar}
    \\[3mm]
