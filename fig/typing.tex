@@ -1,6 +1,79 @@
 \begin{figure}
+   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash \sigma: \elimTy{A}{E}$}%
+   \hfill \textbfit{$\sigma$ has eliminator type $\elimTy{A}{E}$ in $\Gamma$, where $A$ and $C$ are well-kinded in $\Delta$}}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash P: E
+      }
+      {
+         \Delta; \Gamma \vdash \elimVar{x}{P}: \elimTy{A}{E}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash P: E
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimRecord{P}{\seqEmpty}:
+         \elimTy{\tyRecord{R}}{E}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimRecord{P}{\seq{\ell}}:
+         \elimTy{\tyRecord{R}}{\elimTy{B}{E}}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimRecord{P}{\seq{\ell}, \ell'}:
+         \elimTy{\tyRecord{\rowExtend{R}{\bind{\ell'}{B}}}}{E}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash P_i: \elimTy{A_i}{E}
+         \quad
+         (\forall i \leq \length{\seq{P}})
+         \\
+         \Delta; \Gamma \vdash P': \elimTy{\tyVariant{R}}{E}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimVariant{\ell}{P}{P'}: \elimTy{\tyVariant{\rowExtend{R}{\seq{\bind{\ell}{A}}}}}{E}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Delta; \Gamma \vdash P_i: \elimTy{A_i}{\tyFun{(\tyFun{B_i}{C})}{C}}
+         \quad
+         (\forall i \in \length{\seq{P}})
+         \\
+         \Delta; \Gamma \vdash P': \elimTy{A'}{C}
+      }
+      {
+         \Delta; \Gamma
+         \vdash
+         \elimComp{\ell}{P}{P'}: \elimTy{\tyEffect{A'}{\seq{\bind{\ell}{\tyFun{A}{B}}}}}{C}
+      }
+   \end{smathpar}
+   \\[2mm]
    {\small \flushleft \shadebox{$\Delta; \Gamma \vdash V: A$}%
-   \hfill \textbfit{$V$ has well-kinded value type $A$ in $\Gamma$, where $A$ is well-kinded in $\Delta$}}
+   \hfill \textbfit{$V$ has type $A$ in $\Gamma$, where $A$ is well-kinded in $\Delta$}}
    \begin{smathpar}
       \inferrule*
       {
@@ -58,10 +131,10 @@
       %
       \inferrule*
       {
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
+         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exFun{x}{M}: \tyFun{A}{C}
+         \Delta; \Gamma \vdash \exFun{x}{\sigma}: \tyFun{A}{C}
       }
       %
       \and
@@ -75,34 +148,9 @@
       {
          \Delta; \Gamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{K}{C}
       }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: D
-      }
-      {
-         \Delta; \Gamma \vdash \exHandler{\hReturn{x}{M}}: \tyHandler{A}{D}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{x}{A'}}}{\bind{k}{\tyFun{B}{D}}} \vdash M: D
-         \\
-         \Delta; \Gamma \vdash H: \tyHandler{\tyEffect{R}{A}}{D}
-      }
-      {
-         \Delta; \Gamma
-         \vdash
-         (\hEffect{\ell}{x}{k}{M}) \cons H:
-         \tyHandler{\tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A'}{B}}}}{A}}{D}
-      }
    \end{smathpar}
    \\[2mm]
-   {\small \flushleft \shadebox{$\Delta, \Gamma \vdash M: C$}%
+   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash M: C$}%
    \hfill \textbfit{$M$ has computation type $C$ in $\Gamma$, where $C$ is well-kinded in $\Delta$}}
    \begin{smathpar}
       \inferrule*
@@ -110,7 +158,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{E}{A}
+         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{A}{R}
       }
       %
       \and
@@ -129,26 +177,12 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
+         \Delta; \Gamma \vdash V: A
          \\
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash M: C
-         \\
-         \Delta; \cxtExtend{\Gamma}{\bind{y}{\tyVariant{R}}} \vdash N: C
+         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exCase{V}{\ell}{x}{M}{y}{N}: C
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \Gamma \vdash V: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
-         \\
-         \Delta; \cxtExtend{\cxtExtend{\Gamma}{\bind{y}{\tyRecord{R}}}}{\seq{\bind{x}{A}}} \vdash M: C
-      }
-      {
-         \Delta; \Gamma \vdash \exSplit{V}{y}{\ell}{x}{M}: C
+         \Delta; \Gamma \vdash \exMatch{V}{\sigma}: C
       }
       %
       \and
@@ -170,7 +204,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}{B}
+         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{B}{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}
       }
       %
       \and

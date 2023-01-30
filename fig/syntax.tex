@@ -6,7 +6,7 @@
       \\
       $K ::=$
       &
-      $\kiVal$
+      $\kiType$
       &
       value types
       \\
@@ -16,9 +16,9 @@
       computation types
       \\
       &
-      $\kiEffect$
+      $\kiCont$
       &
-      effect types
+      continuation types
       \\
       &
       $\kiRow$
@@ -42,6 +42,19 @@
       $\tyVar{\alpha}$
       &
       type variable
+      \\[2mm]
+      &\textit{Continuation type}&
+      \\
+      $E ::=$
+      &
+      $C$
+      &
+      computation type
+      \\
+      &
+      $\elimTy{A}{E}$
+      &
+      eliminator type
       \\[2mm]
       &\textit{Value type}&
       \\
@@ -80,7 +93,7 @@
       \\
       $C, D ::=$
       &
-      $\tyEffect{R}{A}$
+      $\tyEffect{A}{R}$
       &
       effect
       \\[2mm]
@@ -91,22 +104,58 @@
       $\seq{\bind{\ell}{A}}$
       &
       \\[2mm]
-      &\textit{Kinding context}&
-      \\
-      $\Delta ::=$
-      &
-      $\seq{\bind{\upalpha}{K}}$
-      \\[2mm]
       &\textit{Typing context}&
       \\
       $\Gamma ::=$
       &
       $\seq{\bind{x}{A}}$
-   \end{tabularx}
+      \\[2mm]
+      &\textit{Kinding context}&
+      \\
+      $\Delta ::=$
+      &
+      $\seq{\bind{\upalpha}{K}}$
+\end{tabularx}
    \end{minipage}%
    \hspace{4mm}
    \begin{minipage}[t]{0.50\textwidth}
       \begin{tabularx}{\textwidth}{rL{3.9cm}L{3cm}}
+         &\textit{Continuation}&
+         \\
+         $P ::=$
+         &
+         $M$
+         &
+         computation
+         \\
+         &
+         $\sigma$
+         &
+         eliminator
+         \\[2mm]
+         &\textit{Eliminator}&
+         \\
+         $\sigma, \tau ::=$
+         &
+         $\elimVar{x}{P}$
+         &
+         variable
+         \\
+         &
+         $\elimRecord{P}{\seq{\ell}}$
+         &
+         record
+         \\
+         &
+         $\elimVariant{\ell}{P}{P'}$
+         &
+         variant
+         \\
+         &
+         $\elimComp{\ell}{P}{P'}$
+         &
+         computation
+         \\[2mm]
          &\textit{Value}&
          \\
          $U, V ::=$
@@ -144,11 +193,6 @@
          $\exPolyFun{\alpha}{M}$
          &
          type abstraction
-         \\
-         &
-         $H$
-         &
-         handler
          \\[2mm]
          &\textit{Computation}&
          \\
@@ -169,14 +213,9 @@
          type application
          \\
          &
-         $\exCase{V}{\ell}{x}{M}{y}{N}$
+         $\exMatch{V}{\sigma}$
          &
-         case
-         \\
-         &
-         $\exSplit{V}{y}{\ell}{x}{M}$
-         &
-         split
+         match
          \\
          &
          $\exOp{\ell}{V}$
@@ -187,20 +226,7 @@
          $\exHandle{M}{V}$
          &
          handle
-         \\[2mm]
-         &\textit{Handler}&
-         \\
-         $H ::=$
-         &
-         $\set{\hReturn{x}{M}}$
-         &
-         return
-         \\
-         &
-         $(\hEffect{\ell}{x}{k}{M}) \cons H$
-         &
-         effect
-         \\[24mm]
+%         \\[24mm]
       \end{tabularx}
    \end{minipage}
    }
