@@ -122,6 +122,7 @@
       \quad
       \textit{if }\exReturn{V}, \sigma \match \gamma, M
       \\
+      \begin{split}
       \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
       \substNew{\gamma'}{M}
@@ -129,19 +130,11 @@
       \textit{if }\exOp{\ell}{V}, \sigma \match \gamma, M
       \textit{ and }
       \ell \notin \BL(\mathcal{E})
+      \\
+      &\qquad\quad\quad\;\;
       \textit{ and }
       \gamma' = \cxtExtend{\gamma}{\bind{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}}
-%      \\
-%      \begin{split}
-%      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
-%      &\reduce
-%      \subst{\subst{M}{V}{x}}{\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}}{k}
-%      \\
-%      &\quad\,\,\,\;\textit{if }
-%      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
-%      \textit{ and }
-%      \ell \notin \BL(\mathcal{E})
-%      \end{split}
+      \end{split}
       \\
       M &\reduce N
       \quad\hfill
