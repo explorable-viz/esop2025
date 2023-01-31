@@ -68,7 +68,7 @@
       {
          \Delta; \Gamma
          \vdash
-         \elimComp{\ell}{P}{P'}: \elimTy{\tyEffect{A'}{\seq{\bind{\ell}{\tyFun{A}{B}}}}}{C}
+         \elimComp{\ell}{P}{P'}: \elimTy{\tyComp{A'}{\seq{\bind{\ell}{\tyFun{A}{B}}}}}{C}
       }
    \end{smathpar}
    \\[2mm]
@@ -158,7 +158,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exReturn{V}: \tyEffect{A}{R}
+         \Delta; \Gamma \vdash \exReturn{V}: \tyComp{A}{R}
       }
       %
       \and
@@ -204,7 +204,7 @@
          \Delta; \Gamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyEffect{B}{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}
+         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyComp{B}{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}
       }
       %
       \and

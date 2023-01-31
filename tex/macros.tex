@@ -34,13 +34,13 @@
 % eliminators
 \newcommand*{\elimmapsto}{\mapsto}
 \newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
-\newcommand*{\elimComp}[3]{\variant{\seq{\elimBind{\ell}{P}};\elimBind{\kw{return}}{P'}}}
+\newcommand*{\elimComp}[3]{\set{\seq{\elimBind{\ell}{P}};\elimBind{\kw{return}}{P'}}}
 \newcommand*{\elimRecord}[2]{\record{#1}_{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 
 % types
-\newcommand*{\tyEffect}[2]{{#1}!\tyVariant{#2}}
+\newcommand*{\tyComp}[2]{{#1}!\set{#2}}
 \newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
 \newcommand*{\tyFun}[2]{{#1} \to {#2}}
 \newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
