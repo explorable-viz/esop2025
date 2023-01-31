@@ -125,15 +125,12 @@
       \begin{split}
       \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
-      \substNew{\gamma'}{M}
-      \quad
+      (\substNew{\gamma}{M})(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})
+      \\
+      &\quad\;\;\,
       \textit{if }\exOp{\ell}{V}, \sigma \match \gamma, M
       \textit{ and }
       \ell \notin \BL(\mathcal{E})
-      \\
-      &\qquad\quad\quad\;\;
-      \textit{ and }
-      \gamma' = \cxtExtend{\gamma}{\bind{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}}
       \end{split}
       \\
       M &\reduce N
