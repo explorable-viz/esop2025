@@ -73,16 +73,6 @@
          \match
          Q
       }
-%      %
-%      \and
-%      %
-%      \inferrule*
-%      {
-%         V, P' \match \gamma, Q
-%      }
-%      {
-%         \exReturn{V}, \elimComp{\ell}{P}{P'} \match \gamma, Q
-%      }
       %
       \and
       %
@@ -102,9 +92,9 @@
    \begin{salign}
       \exApp{(\exFun{\sigma})}{V}
       &\reduce
-      \substNew{\gamma}{M}
+      M
       \quad
-      \textit{if }V, \sigma \match \gamma, M
+      \textit{if }V, \sigma \match M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
@@ -112,15 +102,15 @@
       \\
       \exMatch{V}{\sigma}
       &\reduce
-      \substNew{\gamma}{M}
+      M
       \quad
-      \textit{if }V, \sigma \match \gamma, M
+      \textit{if }V, \sigma \match M
       \\
       \exHandle{\exReturn{V}}{\exFun{\sigma}}
       &\reduce
-      \substNew{\gamma}{M}
+      M
       \quad
-      \textit{if }\exReturn{V}, \sigma \match \gamma, M
+      \textit{if }\exReturn{V}, \sigma \match M
       \\
       \begin{split}
       \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
