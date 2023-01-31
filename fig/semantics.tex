@@ -15,15 +15,15 @@
       handle
    \end{tabularx}
    \\[3mm]
-   {\small \flushleft \shadebox{$V, \sigma \match \gamma, P$}%
-   \hfill \textbfit{$\sigma$ matches $V$ and yields $\rho$ and $P$}}
+   {\small \flushleft \shadebox{$V, \sigma \match P$}%
+   \hfill \textbfit{$\sigma$ matches $V$ and yields closed $P$}}
    \begin{smathpar}
       \inferrule*
       {
          \strut
       }
       {
-         V, \elimVar{x}{P} \match (\seqEmpty, \bind{x}{V}), P
+         V, \elimVar{x}{P} \match \subst{P}{V}{x}
       }
       %
       \and
@@ -32,7 +32,7 @@
       {
          i \leq \length{\seq{P}}
          \\
-         V, P_i \match \gamma, Q
+         V, P_i \match Q
       }
       {
          \exVariant{\ell_i}{V}, \elimVariant{\ell}{P}{P'} \match \gamma, Q
@@ -44,10 +44,10 @@
       {
          \ell' \notin \set{\seq{\ell}}
          \quad
-         \exVariant{\ell'}{V}, P' \match \gamma, Q
+         \exVariant{\ell'}{V}, P' \match Q
       }
       {
-         \exVariant{\ell'}{V}, \elimVariant{\ell}{P}{P'} \match \gamma, Q
+         \exVariant{\ell'}{V}, \elimVariant{\ell}{P}{P'} \match Q
       }
       %
       \and
@@ -57,21 +57,21 @@
          \strut
       }
       {
-         V, \elimRecord{P}{\seqEmpty} \match \seqEmpty, P
+         V, \elimRecord{P}{\seqEmpty} \match P
       }
       %
       \and
       %
       \inferrule*
       {
-         V, \elimRecord{P}{\seq{\ell}} \match \gamma, \sigma
+         V, \elimRecord{P}{\seq{\ell}} \match \sigma
          \\
-         U, \sigma \match \gamma', Q
+         U, \sigma \match Q
       }
       {
          \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{P}{\seq{\ell}, \ell'}
          \match
-         \gamma \concat \gamma', Q
+         Q
       }
 %      %
 %      \and
@@ -90,10 +90,10 @@
       {
          i \leq \length{\seq{P}}
          \\
-         V, P_i \match \gamma, Q
+         V, P_i \match Q
       }
       {
-         \exOp{\ell_i}{V}, \elimComp{\ell}{P} \match \gamma, Q
+         \exOp{\ell_i}{V}, \elimComp{\ell}{P} \match Q
       }
    \end{smathpar}
    \\[3mm]
