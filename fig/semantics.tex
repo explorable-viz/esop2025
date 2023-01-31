@@ -98,7 +98,7 @@
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
-      \substNew{(\seqEmpty,\bind{\alpha}{T})}{M}
+      \subst{M}{T}{\alpha}
       \\
       \exMatch{V}{\sigma}
       &\reduce
@@ -115,10 +115,10 @@
       \begin{split}
       \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
-      (\substNew{\gamma}{M})(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})
+      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})}
       \\
       &\quad\;\;\,
-      \textit{if }\exOp{\ell}{V}, \sigma \match \gamma, M
+      \textit{if }\exOp{\ell}{V}, \sigma \match M
       \textit{ and }
       \ell \notin \BL(\mathcal{E})
       \end{split}
