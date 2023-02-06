@@ -1,59 +1,69 @@
 module Graph.Utils where
 
-
-import Algebra.Graph (Graph(..), clique, connect, edge, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
-import Algebra.Graph.AdjacencyMap (gmap)
+import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
 import Algebra.Graph.AdjacencyMap as AM
 import Algebra.Graph.Internal (fromArray)
-import Control.Apply (class Apply)
-import Control.Bind (class Bind)
 import Control.Monad (pure)
-import Control.Monad.State (State)
-import Control.Monad.State.Class (state)
-import Control.Monad.State.Trans (StateT(..))
-import Data.Array.NonEmpty (index)
-import Data.Eq ((==))
-import Data.Function ((#))
-import Data.Functor (class Functor, map)
-import Data.List (zipWith)
-import Data.List.Types (List(..), (:))
-import Data.Map (Map)
+import Control.Monad.State
+import Data.Array (filter, fromFoldable, sortWith, take, zip, zipWith)
+import Data.Functor (map)
+import Data.Map (Map, intersectionWith, values)
 import Data.Newtype (unwrap)
 import Data.Ord ((>=), class Ord)
-import Data.Set (Set, size, insert, empty)
-import Data.Tuple (Tuple(..))
+import Data.Set (size)
+import Data.Traversable (traverse)
+import Data.Tuple (Tuple(..), fst, snd)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
-import Effect.Random (randomInt)
-import Prelude (bind)
+import Effect.Random (random, randomInt)
+import Prelude (bind, (<<<), (<$>), (+), (*), discard)
 
--- Add edge within state
-addEdge :: forall a. a -> a -> State (Graph a) (Graph a)
-addEdge s t = state (\g -> let e = edge s t in Tuple e (overlay g e))
 
-addNode :: forall a. a -> State (Graph a) (Graph a)
-addNode n = state (\g -> let newV = Vertex n in Tuple newV (overlay g newV))
 
--- Utility functions to compare lists for the addition of new vertices
-compareLists :: List Int -> List Int -> List Boolean
-compareLists xs ys = zipWith (>=) xs ys
 
-boolList :: Int -> Int -> List Int -> Effect (List Boolean)
-boolList numNodes maxNum edgeCounts = do
-  randoms :: List Int <- replicateA numNodes (randomInt 1 maxNum)
-  pure (compareLists randoms edgeCounts)
+-- -- Utility functions to compare lists for the addition of new vertices
+compareArrays :: Array Int -> Array Int -> Array Boolean
+compareArrays xs ys = zipWith (>=) xs ys
 
--- baNewnode :: Graph Int -> State (Graph Int) (Graph Int)
--- baNewnode prev =
---   let
---     normalizer      = edgeCount prev
---     newId           = 1 + (vertexCount prev)
---     degrees         = -- TODO
---     newConnections  = boolList newId normalizer degrees
---   in
--- -- baUpdate step will have this type sig
--- -- baUpdate :: StateT (Graph Int) Effect (List (Tuple Int))
+shuffle :: forall a. Array a -> Effect (Array a)
+shuffle xs = map fst <<< sortWith snd <$> traverse (\x -> Tuple x <$> random) xs
 
+-- compareNonEmptys :: NonEmptyArray Int -> NonEmptyArray Int -> NonEmptyArray Boolean
+-- compareNonEmptys xs ys = zipWith (>=) xs ys
+
+newNeighbours :: Int -> Int -> Array Int -> Int -> Effect (Array Int)
+newNeighbours numNodes maxNum nodeDegrees m = do
+  randoms <- replicateA numNodes (randomInt 1 maxNum)        -- imperative random numbers
+  let
+      flags          = compareArrays randoms nodeDegrees     :: Array Boolean
+      selectionPairs = zip nodeDegrees flags                 :: Array (Tuple Int Boolean)
+      selected       = map fst (filter snd selectionPairs)   :: Array Int
+      shuffled       = shuffle selected                      :: Effect (Array Int) -- imperative because of randoms
+  take m <$> shuffled
+
+deltaGraph :: Int -> Graph Int -> Effect (Graph Int) -- State (Graph Int) (Graph Int)
+deltaGraph m prev =
+  do
+    let
+      normalizer      = 2 * (edgeCount prev)
+      newId           = 1 + (vertexCount prev)
+      degrees         = fromFoldable (values (totDegrees prev))
+    neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
+    let
+      diffGraph  = outStarG newId neighbours
+    pure diffGraph
+
+baNewNodeST :: Int -> StateT (Graph Int) Effect (Graph Int)
+baNewNodeST m = do
+  prev <- get
+  diffNew <- lift (deltaGraph m prev)
+  let
+    newGraph = overlay prev diffNew
+  put newGraph
+  pure diffNew
+
+
+-- Utilities Which Make deltaGraph and baNewNodeST work
 -- Needed to reexport these for constructing degree functions
 toAdjacencyMap :: forall a. Ord a => Graph a -> AM.AdjacencyMap a
 toAdjacencyMap = foldg AM.empty AM.vertex AM.overlay AM.connect
@@ -62,7 +72,18 @@ outDegrees :: forall a. Ord a => Graph a -> Map a Int
 outDegrees g = map size (unwrap (toAdjacencyMap g))
 
 inDegrees :: forall a. Ord a => Graph a -> Map a Int
-inDegrees g = map size (unwrap (toAdjacencyMap (transpose g)))
+inDegrees g = outDegrees (transpose g)
 
-addVertex :: Graph Int -> Int -> Array Int -> Graph Int
-addVertex prevGraph newNodeId newNeighbours = overlay prevGraph (connect (vertex newNodeId) (vertices (fromArray newNeighbours)))
+totDegrees :: forall a. Ord a => Graph a -> Map a Int
+totDegrees g = intersectionWith (+) (inDegrees g) (outDegrees g)
+
+-- deltaGraph construction
+outStarG :: Int -> Array Int -> Graph Int
+outStarG newId neighbours = connect (vertex newId) (vertices (fromArray neighbours))
+
+-- version required for test case in test/Main.purs
+addVertex :: Graph Int -> Int -> Array Int -> Tuple (Graph Int) (Graph Int)
+addVertex prevGraph newNodeId neighbours = Tuple diffGraph newGraph
+  where
+    diffGraph = connect (vertex newNodeId) (vertices (fromArray neighbours))
+    newGraph  = overlay prevGraph diffGraph
