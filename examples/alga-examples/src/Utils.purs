@@ -80,3 +80,10 @@ totDegrees g = intersectionWith (+) (inDegrees g) (outDegrees g)
 -- deltaGraph construction
 outStarG :: Int -> Array Int -> Graph Int
 outStarG newId neighbours = connect (vertex newId) (vertices (fromArray neighbours))
+
+-- version required for test case in test/Main.purs
+addVertex :: Graph Int -> Int -> Array Int -> Tuple (Graph Int) (Graph Int)
+addVertex prevGraph newNodeId neighbours = Tuple diffGraph newGraph
+  where
+    diffGraph = connect (vertex newNodeId) (vertices (fromArray neighbours))
+    newGraph  = overlay prevGraph diffGraph
