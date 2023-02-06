@@ -2,27 +2,18 @@ module Test.Main where
 
 import Prelude
 
-import Algebra.Graph (Graph(..), edge, overlay, edgeList, vertices, clique)
+import Algebra.Graph (Graph(..), edgeList, clique)
 import Algebra.Graph.Internal (fromArray)
-import Control.Apply (class Apply)
-import Control.Bind (class Bind)
-import Control.Monad (pure)
-import Control.Monad.State (State)
-import Control.Monad.State.Class (state)
-import Control.Monad.State.Trans (StateT(..))
-import Data.Eq ((==))
-import Data.Function ((#))
-import Data.Functor (class Functor)
-import Data.List (zipWith)
+
 import Data.List.Types (List(..), (:))
-import Data.Map (Map, fromFoldable)
-import Data.Ord ((>=))
+import Data.Map (fromFoldable)
+
 import Data.Tuple (Tuple(..), snd)
-import Data.Unfoldable (replicateA)
+
 import Effect (Effect)
-import Effect.Console (log)
+
 import Graph.Utils (addVertex, compareArrays, outDegrees)
-import Prim.RowList (Nil)
+
 import Test.Unit (suite, test)
 import Test.Unit.Assert as Assert
 import Test.Unit.Main (runTest)
