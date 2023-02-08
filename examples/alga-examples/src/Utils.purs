@@ -1,29 +1,40 @@
-module Graph.Utils where
+module Graph.Utils
+  ( addVertex
+  , baNewNodeST
+  , baRunT
+  , cmpSnd
+  , compareArrays
+  , deltaGraph
+  , inDegrees
+  , newNeighbours
+  , outDegrees
+  , outStarG
+  , shuffle
+  , toAdjacencyMap
+  , totDegrees
+  , printGraph
+  )
+  where
 
-import Control.Monad.State
+import Control.Monad.Reader (Reader, runReader)
+import Control.Monad.Reader.Trans (ask)
+import Control.Monad.State (StateT, get, put, lift, runStateT)
 import Prelude
-import Random.PseudoRandom
-
+import Random.PseudoRandom (Seed, randomRs)
 import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
 import Algebra.Graph.AdjacencyMap as AM
 import Algebra.Graph.Internal (fromArray)
-import Control.Monad (pure)
 import Data.Array (filter, fromFoldable, sortBy, take, zip, zipWith, length)
-import Data.Functor (map)
 import Data.List (List)
 import Data.Map (Map, intersectionWith, values)
 import Data.Map.Internal (showTree)
 import Data.Newtype (unwrap)
-import Data.Ord ((>=), class Ord)
 import Data.Set (size)
-import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..), fst, snd)
-import Data.Unfoldable (replicateA)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Console (log)
-import Effect.Random (random, randomInt)
-import Random.LCG (mkSeed)
+
 
 
 
@@ -35,30 +46,31 @@ compareArrays xs ys = zipWith (>=) xs ys
 cmpSnd :: forall a. Tuple a Number -> Tuple a Number -> Ordering
 cmpSnd left right = compare (snd left) (snd right)
 
-shuffle :: forall a. Array a -> Effect (Array a)
-shuffle xs =
-  pure (map fst (sortBy cmpSnd zipped))
-  where
-    seed = mkSeed 1263236177
-    randomDraws = randomRs 0.0 1.0 (length xs) seed :: Array Number
-    zipped = zip xs randomDraws :: Array (Tuple a Number)
+shuffle :: forall a. Array a -> Reader Seed (Array a)
+shuffle xs = do
+    seed <- ask
+    let
+      randomDraws = randomRs 0.0 1.0 (length xs) seed :: Array Number
+      zipped = zip xs randomDraws :: Array (Tuple a Number)
+    pure (map fst (sortBy cmpSnd zipped))
+
+
 
 -- compareNonEmptys :: NonEmptyArray Int -> NonEmptyArray Int -> NonEmptyArray Boolean
 -- compareNonEmptys xs ys = zipWith (>=) xs ys
 
-newNeighbours :: Int -> Int -> Array Int -> Int -> Effect (Array Int)
-newNeighbours numNodes maxNum nodeDegrees m =
+newNeighbours :: Int -> Int -> Array Int -> Int -> Reader Seed (Array Int)
+newNeighbours numNodes maxNum nodeDegrees m = do
+  seed <- ask
   let
-    seed           = mkSeed 1386124136
     randomDraws    = randomRs 1 maxNum numNodes seed         -- imperative random numbers
     flags          = compareArrays randomDraws nodeDegrees     :: Array Boolean
     selectionPairs = zip nodeDegrees flags                 :: Array (Tuple Int Boolean)
     selected       = map fst (filter snd selectionPairs)   :: Array Int
-    shuffled       = shuffle selected                      :: Effect (Array Int) -- imperative because of randoms
-  in
-    take m <$> shuffled
+    shuffled       = shuffle selected
+  take m <$> shuffled
 
-deltaGraph :: Int -> Graph Int -> Effect (Graph Int) -- State (Graph Int) (Graph Int)
+deltaGraph :: Int -> Graph Int -> Reader Seed (Graph Int) -- State (Graph Int) (Graph Int)
 deltaGraph m prev =
   do
     let
@@ -70,7 +82,7 @@ deltaGraph m prev =
       diffGraph  = outStarG newId neighbours
     pure diffGraph
 
-baNewNodeST :: Int -> StateT (Graph Int) Effect (Graph Int)
+baNewNodeST :: Int -> StateT (Graph Int) (Reader Seed ) (Graph Int)
 baNewNodeST m = do
   prev <- get
   diffNew <- lift (deltaGraph m prev)
@@ -79,9 +91,9 @@ baNewNodeST m = do
   put newGraph
   pure diffNew
 
-baRunT ∷ Int → Int → Graph Int → Effect (Tuple (List (Graph Int)) (Graph Int))
-baRunT m numSteps initG =
-  runStateT (replicateA numSteps (baNewNodeST m)) initG
+baRunT ∷ Int → Int → Graph Int -> Seed → Tuple (List (Graph Int)) (Graph Int)
+baRunT m numSteps initG seed =
+  runReader (runStateT (replicateA numSteps (baNewNodeST m)) initG) seed
 
 
 printGraph :: Graph Int -> Effect Unit
