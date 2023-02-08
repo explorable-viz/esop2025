@@ -1,22 +1,29 @@
 module Graph.Utils where
 
+import Control.Monad.State
+import Prelude
+import Random.PseudoRandom
+
 import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
 import Algebra.Graph.AdjacencyMap as AM
 import Algebra.Graph.Internal (fromArray)
 import Control.Monad (pure)
-import Control.Monad.State
-import Data.Array (filter, fromFoldable, sortWith, take, zip, zipWith)
+import Data.Array (filter, fromFoldable, sortBy, take, zip, zipWith, length)
 import Data.Functor (map)
+import Data.List (List)
 import Data.Map (Map, intersectionWith, values)
+import Data.Map.Internal (showTree)
 import Data.Newtype (unwrap)
 import Data.Ord ((>=), class Ord)
 import Data.Set (size)
 import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..), fst, snd)
 import Data.Unfoldable (replicateA)
+import Data.Unfoldable (replicateA)
 import Effect (Effect)
+import Effect.Console (log)
 import Effect.Random (random, randomInt)
-import Prelude (bind, (<<<), (<$>), (+), (*), discard)
+import Random.LCG (mkSeed)
 
 
 
@@ -25,21 +32,31 @@ import Prelude (bind, (<<<), (<$>), (+), (*), discard)
 compareArrays :: Array Int -> Array Int -> Array Boolean
 compareArrays xs ys = zipWith (>=) xs ys
 
+cmpSnd :: forall a. Tuple a Number -> Tuple a Number -> Ordering
+cmpSnd left right = compare (snd left) (snd right)
+
 shuffle :: forall a. Array a -> Effect (Array a)
-shuffle xs = map fst <<< sortWith snd <$> traverse (\x -> Tuple x <$> random) xs
+shuffle xs =
+  pure (map fst (sortBy cmpSnd zipped))
+  where
+    seed = mkSeed 1263236177
+    randomDraws = randomRs 0.0 1.0 (length xs) seed :: Array Number
+    zipped = zip xs randomDraws :: Array (Tuple a Number)
 
 -- compareNonEmptys :: NonEmptyArray Int -> NonEmptyArray Int -> NonEmptyArray Boolean
 -- compareNonEmptys xs ys = zipWith (>=) xs ys
 
 newNeighbours :: Int -> Int -> Array Int -> Int -> Effect (Array Int)
-newNeighbours numNodes maxNum nodeDegrees m = do
-  randoms <- replicateA numNodes (randomInt 1 maxNum)        -- imperative random numbers
+newNeighbours numNodes maxNum nodeDegrees m =
   let
-      flags          = compareArrays randoms nodeDegrees     :: Array Boolean
-      selectionPairs = zip nodeDegrees flags                 :: Array (Tuple Int Boolean)
-      selected       = map fst (filter snd selectionPairs)   :: Array Int
-      shuffled       = shuffle selected                      :: Effect (Array Int) -- imperative because of randoms
-  take m <$> shuffled
+    seed           = mkSeed 1386124136
+    randomDraws    = randomRs 1 maxNum numNodes seed         -- imperative random numbers
+    flags          = compareArrays randomDraws nodeDegrees     :: Array Boolean
+    selectionPairs = zip nodeDegrees flags                 :: Array (Tuple Int Boolean)
+    selected       = map fst (filter snd selectionPairs)   :: Array Int
+    shuffled       = shuffle selected                      :: Effect (Array Int) -- imperative because of randoms
+  in
+    take m <$> shuffled
 
 deltaGraph :: Int -> Graph Int -> Effect (Graph Int) -- State (Graph Int) (Graph Int)
 deltaGraph m prev =
@@ -47,7 +64,7 @@ deltaGraph m prev =
     let
       normalizer      = 2 * (edgeCount prev)
       newId           = 1 + (vertexCount prev)
-      degrees         = fromFoldable (values (totDegrees prev))
+      degrees         = fromFoldable (values (totDegrees prev)) -- Array Integers
     neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
     let
       diffGraph  = outStarG newId neighbours
@@ -62,6 +79,14 @@ baNewNodeST m = do
   put newGraph
   pure diffNew
 
+baRunT ∷ Int → Int → Graph Int → Effect (Tuple (List (Graph Int)) (Graph Int))
+baRunT m numSteps initG =
+  runStateT (replicateA numSteps (baNewNodeST m)) initG
+
+
+printGraph :: Graph Int -> Effect Unit
+printGraph g = log (showTree (unwrap $ toAdjacencyMap g))
+-- test m initial = runStateT (baNewNodeST m) initial
 
 -- Utilities Which Make deltaGraph and baNewNodeST work
 -- Needed to reexport these for constructing degree functions
