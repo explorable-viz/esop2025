@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "build": "spago build --purs-args '--censor-lib --strict --censor-codes=UserDefinedWarning'",
-    "tidy": "yarn purs-tidy format-in-place examples/alga-examples/src/**/*.purs examples/alga-examples/test/**/*.purs"
+    "build": "purs-tidy check examples/alga-examples/**/*.purs && spago build --purs-args '--censor-lib --strict --censor-codes=UserDefinedWarning'",
+    "tidy": "purs-tidy format-in-place examples/alga-examples/**/*.purs"
   },
   "keywords": [],
   "author": "",
