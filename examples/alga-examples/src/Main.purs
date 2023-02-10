@@ -25,10 +25,11 @@ main = do
          let initGraph = clique list
          -- log "T = 0"
          -- logShow (totDegrees initGraph)
-         let m = 3 :: Int
-             initSeed = mkSeed 1234598134
-             graphOne = baRunT m 20 initGraph initSeed
-             graphTwo = baRunT m 20 initGraph initSeed
+         let
+            m = 3 :: Int
+            initSeed = mkSeed 1234598134
+            graphOne = baRunT m 20 initGraph initSeed
+            graphTwo = baRunT m 20 initGraph initSeed
          log "T = 20"
          logShow (totDegrees $ snd graphOne)
          logShow (graphTwo == graphOne)
