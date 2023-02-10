@@ -1,20 +1,19 @@
 module Graph.Utils
-  ( addVertex
-  , baNewNodeST
-  , baRunT
-  , cmpSnd
-  , compareArrays
-  , deltaGraph
-  , inDegrees
-  , newNeighbours
-  , outDegrees
-  , outStarG
-  , shuffle
-  , toAdjacencyMap
-  , totDegrees
-  , printGraph
-  )
-  where
+   ( addVertex
+   , baNewNodeST
+   , baRunT
+   , cmpSnd
+   , compareArrays
+   , deltaGraph
+   , inDegrees
+   , newNeighbours
+   , outDegrees
+   , outStarG
+   , shuffle
+   , toAdjacencyMap
+   , totDegrees
+   , printGraph
+   ) where
 
 import Control.Monad.Reader (Reader, runReader)
 import Control.Monad.Reader.Trans (ask)
@@ -35,10 +34,6 @@ import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Console (log)
 
-
-
-
-
 -- -- Utility functions to compare lists for the addition of new vertices
 compareArrays :: Array Int -> Array Int -> Array Boolean
 compareArrays xs ys = zipWith (>=) xs ys
@@ -48,56 +43,54 @@ cmpSnd left right = compare (snd left) (snd right)
 
 shuffle :: forall a. Array a -> Reader Seed (Array a)
 shuffle xs = do
-    seed <- ask
-    let
+   seed <- ask
+   let
       randomDraws = randomRs 0.0 1.0 (length xs) seed :: Array Number
       zipped = zip xs randomDraws :: Array (Tuple a Number)
-    pure (map fst (sortBy cmpSnd zipped))
-
-
+   pure (map fst (sortBy cmpSnd zipped))
 
 -- compareNonEmptys :: NonEmptyArray Int -> NonEmptyArray Int -> NonEmptyArray Boolean
 -- compareNonEmptys xs ys = zipWith (>=) xs ys
 
 newNeighbours :: Int -> Int -> Array Int -> Int -> Reader Seed (Array Int)
 newNeighbours numNodes maxNum nodeDegrees m = do
-  seed <- ask
-  let
-    randomDraws    = randomRs 1 maxNum numNodes seed         -- imperative random numbers
-    flags          = compareArrays randomDraws nodeDegrees     :: Array Boolean
-    selectionPairs = zip nodeDegrees flags                 :: Array (Tuple Int Boolean)
-    selected       = map fst (filter snd selectionPairs)   :: Array Int
-    shuffled       = shuffle selected
-  take m <$> shuffled
+   seed <- ask
+   let
+      randomDraws = randomRs 1 maxNum numNodes seed -- imperative random numbers
+      flags = compareArrays randomDraws nodeDegrees :: Array Boolean
+      selectionPairs = zip nodeDegrees flags :: Array (Tuple Int Boolean)
+      selected = map fst (filter snd selectionPairs) :: Array Int
+      shuffled = shuffle selected
+   take m <$> shuffled
 
 deltaGraph :: Int -> Graph Int -> Reader Seed (Graph Int) -- State (Graph Int) (Graph Int)
 deltaGraph m prev =
-  do
-    let
-      normalizer      = 2 * (edgeCount prev)
-      newId           = 1 + (vertexCount prev)
-      degrees         = fromFoldable (values (totDegrees prev)) -- Array Integers
-    neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
-    let
-      diffGraph  = outStarG newId neighbours
-    pure diffGraph
+   do
+      let
+         normalizer = 2 * (edgeCount prev)
+         newId = 1 + (vertexCount prev)
+         degrees = fromFoldable (values (totDegrees prev)) -- Array Integers
+      neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
+      let
+         diffGraph = outStarG newId neighbours
+      pure diffGraph
 
-baNewNodeST :: Int -> StateT (Graph Int) (Reader Seed ) (Graph Int)
+baNewNodeST :: Int -> StateT (Graph Int) (Reader Seed) (Graph Int)
 baNewNodeST m = do
-  prev <- get
-  diffNew <- lift (deltaGraph m prev)
-  let
-    newGraph = overlay prev diffNew
-  put newGraph
-  pure diffNew
+   prev <- get
+   diffNew <- lift (deltaGraph m prev)
+   let
+      newGraph = overlay prev diffNew
+   put newGraph
+   pure diffNew
 
 baRunT ∷ Int → Int → Graph Int -> Seed → Tuple (List (Graph Int)) (Graph Int)
 baRunT m numSteps initG seed =
-  runReader (runStateT (replicateA numSteps (baNewNodeST m)) initG) seed
-
+   runReader (runStateT (replicateA numSteps (baNewNodeST m)) initG) seed
 
 printGraph :: Graph Int -> Effect Unit
 printGraph g = log (showTree (unwrap $ toAdjacencyMap g))
+
 -- test m initial = runStateT (baNewNodeST m) initial
 
 -- Utilities Which Make deltaGraph and baNewNodeST work
@@ -121,6 +114,6 @@ outStarG newId neighbours = connect (vertex newId) (vertices (fromArray neighbou
 -- version required for test case in test/Main.purs
 addVertex :: Graph Int -> Int -> Array Int -> Tuple (Graph Int) (Graph Int)
 addVertex prevGraph newNodeId neighbours = Tuple diffGraph newGraph
-  where
-    diffGraph = connect (vertex newNodeId) (vertices (fromArray neighbours))
-    newGraph  = overlay prevGraph diffGraph
+   where
+   diffGraph = connect (vertex newNodeId) (vertices (fromArray neighbours))
+   newGraph = overlay prevGraph diffGraph

@@ -16,25 +16,17 @@ to generate this file without the comments in this block.
   , "arrays"
   , "console"
   , "effect"
-  , "foldable-traversable"
-  , "functions"
-  , "identity"
-  , "lcg"
   , "lists"
-  , "maybe"
   , "newtype"
   , "node-readline"
-  , "nonempty"
   , "ordered-collections"
   , "prelude"
   , "pseudo-random"
-  , "random"
-  , "strings"
   , "test-unit"
   , "transformers"
   , "tuples"
   , "unfoldable"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "examples/alga-examples/src/**/*.purs", "examples/alga-examples/test/**/*.purs" ]
 }

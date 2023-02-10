@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "purs-tidy check examples/alga-examples/**/*.purs && spago build --purs-args '--censor-lib --strict --censor-codes=UserDefinedWarning'",
+    "tidy": "purs-tidy format-in-place examples/alga-examples/**/*.purs"
   },
   "keywords": [],
   "author": "",
