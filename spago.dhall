@@ -36,5 +36,5 @@ to generate this file without the comments in this block.
   , "unfoldable"
   ]
 , packages = ./packages.dhall
-, sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, sources = [ "examples/alga-examples/src/**/*.purs", "examples/alga-examples/test/**/*.purs" ]
 }
