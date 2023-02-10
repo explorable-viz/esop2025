@@ -17,31 +17,19 @@
       \strut
    }
    {
-      \Delta \vdash \tyInt: \kiVal
+      \Delta \vdash \tyInt: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \Delta \vdash A: \kiVal
+      \Delta \vdash A: \kiType
       \\
       \Delta \vdash C: \kiComp
    }
    {
-      \Delta \vdash \tyFun{A}{C}: \kiVal
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \Delta \vdash C: \kiComp
-      \\
-      \Delta \vdash D: \kiComp
-   }
-   {
-      \Delta \vdash \tyHandler{C}{D}: \kiVal
+      \Delta \vdash \tyFun{A}{C}: \kiType
    }
    %
    \and
@@ -53,14 +41,26 @@
       \Delta \vdash D: \kiComp
    }
    {
-      \Delta \vdash \tyHandler{C}{D}: \kiVal
+      \Delta \vdash \tyHandler{C}{D}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \Delta \vdash A_i: \kiVal
+      \Delta \vdash C: \kiComp
+      \\
+      \Delta \vdash D: \kiComp
+   }
+   {
+      \Delta \vdash \tyHandler{C}{D}: \kiType
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A_i: \kiType
       \quad
       (\forall i \in \length{\seq{A}})
    }
@@ -75,7 +75,7 @@
       \Delta \vdash R: \kiRow
    }
    {
-      \Delta \vdash \tyRecord{R}: \kiVal
+      \Delta \vdash \tyRecord{R}: \kiType
    }
    %
    \and
@@ -85,7 +85,7 @@
       \Delta \vdash R: \kiRow
    }
    {
-      \Delta \vdash \tyVariant{R}: \kiVal
+      \Delta \vdash \tyVariant{R}: \kiType
    }
    %
    \and
@@ -94,10 +94,10 @@
    {
       \Delta \vdash R: \kiRow
       \\
-      \Delta \vdash A: \kiVal
+      \Delta \vdash A: \kiType
    }
    {
-      \Delta \vdash \tyEffect{R}{A}: \kiComp
+      \Delta \vdash \tyComp{A}{R}: \kiComp
    }
    %
    \and
@@ -107,7 +107,29 @@
       \cxtExtend{\Delta}{\bind{\alpha}{K}} \vdash C: \kiComp
    }
    {
-      \Delta \vdash \tyForall{\alpha}{K}{C}: \kiVal
+      \Delta \vdash \tyForall{\alpha}{K}{C}: \kiType
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash C: \kiComp
+   }
+   {
+      \Delta \vdash C: \kiCont
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A: \kiType
+      \\
+      \Delta \vdash E: \kiCont
+   }
+   {
+      \Delta \vdash \elimTy{A}{E}: \kiCont
    }
 \end{smathpar}
 \caption{Kinding rules}

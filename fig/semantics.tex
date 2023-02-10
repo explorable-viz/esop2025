@@ -15,43 +15,111 @@
       handle
    \end{tabularx}
    \\[3mm]
+   {\small \flushleft \shadebox{$V, \sigma \match P$}%
+   \hfill \textbfit{$\sigma$ matches $V$ and yields closed $P$}}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         V, \elimVar{x}{P} \match \subst{P}{V}{x}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         i \leq \length{\seq{P}}
+         \\
+         V, P_i \match Q
+      }
+      {
+         \exVariant{\ell_i}{V}, \elimVariant{\ell}{P}{P'} \match \gamma, Q
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \ell' \notin \set{\seq{\ell}}
+         \quad
+         \exVariant{\ell'}{V}, P' \match Q
+      }
+      {
+         \exVariant{\ell'}{V}, \elimVariant{\ell}{P}{P'} \match Q
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         V, \elimRecord{P}{\seqEmpty} \match P
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         V, \elimRecord{P}{\seq{\ell}} \match \sigma
+         \\
+         U, \sigma \match Q
+      }
+      {
+         \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{P}{\seq{\ell}, \ell'}
+         \match
+         Q
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         i \leq \length{\seq{P}}
+         \\
+         V, P_i \match Q
+      }
+      {
+         \exOp{\ell_i}{V}, \elimComp{\ell}{P} \match Q
+      }
+   \end{smathpar}
+   \\[3mm]
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
    \begin{salign}
-      \exApp{(\exFun{x}{M})}{V}
+      \exApp{(\exFun{\sigma})}{V}
       &\reduce
-      \subst{M}{V}{x}
+      M
+      \quad
+      \textit{if }V, \sigma \match M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
       \subst{M}{T}{\alpha}
       \\
-      \exCase{\exVariant{\ell}{V}}{\ell}{x}{M}{y}{N}
+      \exMatch{V}{\sigma}
       &\reduce
-      \subst{M}{V}{x}
-      \\
-      \exCase{\exVariant{\ell}{V}}{\ell'}{x}{M}{y}{N}
-      &\reduce
-      \subst{N}{\exVariant{\ell}{V}}{y}
+      M
       \quad
-      \textit{if }\ell \neq \ell'
+      \textit{if }V, \sigma \match M
       \\
-      \exSplit{\exRecordExtend{U}{\seq{\bind{\ell}{V}}}}{y}{\ell}{x}{N}
+      \exHandle{\exReturn{V}}{\exFun{\sigma}}
       &\reduce
-      \subst{\subst{N}{U}{y}}{\seq{V}}{\seq{x}}
-      \\
-      \exHandle{\exReturn{V}}{(\hReturn{x}{M}) \cons H}
-      &\reduce
-      \subst{M}{V}{x}
+      M
+      \quad
+      \textit{if }\exReturn{V}, \sigma \match M
       \\
       \begin{split}
-      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{H}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
-      \subst{\subst{M}{V}{x}}{\exFun{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{H}}}{k}
+      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})}
       \\
-      &\quad\,\,\,\;\textit{if }
-      H = (\hEffect{\ell}{x}{k}{M}) \cons H'
-      \text{ and }
+      &\quad\;\;\,
+      \textit{if }\exOp{\ell}{V}, \sigma \match M
+      \textit{ and }
       \ell \notin \BL(\mathcal{E})
       \end{split}
       \\

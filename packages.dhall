@@ -124,6 +124,17 @@ with alga =
   ]
   , repo = "https://github.com/explorable-viz/purescript-alga.git"
   , version = "main"
-    
+  }
+with pseudo-random =
+  { dependencies =
+  [ "prelude"
+  , "console"
+  , "effect"
+  , "lcg"
+  , "arrays"
+  , "st"
+  ]
+  , repo = "https://github.com/opyapeus/purescript-pseudo-random.git"
+  , version = "master"
   }
 in  upstream

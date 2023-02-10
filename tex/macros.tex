@@ -19,15 +19,28 @@
 
 % substitution
 \newcommand{\subst}[3]{{#1}[{#2}/{#3}]}
+\newcommand{\substNew}[2]{{#1}^*{#2}}
 
 % kinds
 \newcommand*{\kiComp}{\kw{Comp}}
-\newcommand*{\kiEffect}{\kw{Effect}}
+\newcommand*{\kiCont}{\kw{Cont}}
 \newcommand*{\kiRow}{\kw{Row}}
-\newcommand*{\kiVal}{\kw{Type}}
+\newcommand*{\kiType}{\kw{Type}}
+
+% eliminator types
+\newcommand*{\elimTyArrow}{\rightarrowtail}
+\newcommand*{\elimTy}[2]{{#1}\elimTyArrow{#2}}
+
+% eliminators
+\newcommand*{\elimmapsto}{\mapsto}
+\newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
+\newcommand*{\elimComp}[2]{\set{\seq{\elimBind{#1}{#2}}}}
+\newcommand*{\elimRecord}[2]{\record{#1}_{#2}}
+\newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
+\newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 
 % types
-\newcommand*{\tyEffect}[2]{\tyVariant{#1}{#2}}
+\newcommand*{\tyComp}[2]{{#1}!\set{#2}}
 \newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
 \newcommand*{\tyFun}[2]{{#1} \to {#2}}
 \newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
@@ -42,20 +55,21 @@
 
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
-\newcommand*{\exCase}[6]{\kw{pm}\;{#1}\;\kw{as}\;\{\bind{#2}{#3}\mapsto{#4};\;{#5}\mapsto{#6}\}}
-\newcommand*{\exFun}[2]{\lambda{#1}.{#2}}
+\newcommand*{\exFun}[1]{\lambda{#1}}
 \newcommand*{\exHandle}[2]{\kw{handle}\;{#1}\;\kw{with}\;{#2}}
 \newcommand*{\exHandler}[1]{\set{#1}}
 \newcommand*{\exInt}[1]{#1}
 \newcommand*{\exOp}[2]{{#1}\,{#2}}
+\newcommand*{\exMatch}[2]{\kw{match}\;{#1}\;\kw{as}\;{#2}}
 \newcommand*{\exPolyApp}[2]{\exApp{#1}{#2}}
 \newcommand*{\exPolyFun}[2]{\Lambda{#1}.{#2}}
-\newcommand*{\exRecordEmpty}{\set{}}
-\newcommand*{\exRecordExtend}[2]{{#1}\set{#2}}
+\newcommand*{\record}[1]{\langle{#1}\rangle}
+\newcommand*{\exRecordEmpty}{\record{}}
+\newcommand*{\exRecordExtend}[2]{{#1}\record{#2}}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
-\newcommand*{\exSplit}[5]{\kw{pm}\;{#1}\;\kw{as}\;\exRecordExtend{#2}{\seq{\bind{#3}{#4}}}\mapsto{#5}}
 \newcommand*{\exVar}[1]{#1}
-\newcommand*{\exVariant}[2]{[{#1}:{#2}]}
+\newcommand*{\variant}[1]{[#1]}
+\newcommand*{\exVariant}[2]{\variant{\bind{#1}{#2}}}
 
 % handler clauses
 \newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
@@ -75,3 +89,4 @@
 
 % semantics
 \newcommand{\reduce}{\rightsquigarrow}
+\newcommand{\match}{\looparrowright}
