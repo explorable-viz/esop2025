@@ -2,6 +2,7 @@ module Graph.Utils
    ( addVertex
    , baNewNodeST
    , baRunT
+   , baRunTest
    , cmpSnd
    , compareArrays
    , deltaGraph
@@ -15,14 +16,14 @@ module Graph.Utils
    , printGraph
    ) where
 
+import Prelude
+
+import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices, clique)
+import Algebra.Graph.AdjacencyMap as AM
+import Algebra.Graph.Internal (fromArray)
 import Control.Monad.Reader (Reader, runReader)
 import Control.Monad.Reader.Trans (ask)
 import Control.Monad.State (StateT, get, put, lift, runStateT)
-import Prelude
-import Random.PseudoRandom (Seed, randomRs)
-import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices)
-import Algebra.Graph.AdjacencyMap as AM
-import Algebra.Graph.Internal (fromArray)
 import Data.Array (filter, fromFoldable, sortBy, take, zip, zipWith, length)
 import Data.List (List)
 import Data.Map (Map, intersectionWith, values)
@@ -33,6 +34,7 @@ import Data.Tuple (Tuple(..), fst, snd)
 import Data.Unfoldable (replicateA)
 import Effect (Effect)
 import Effect.Console (log)
+import Random.PseudoRandom (Seed, mkSeed, randomRs)
 
 -- -- Utility functions to compare lists for the addition of new vertices
 compareArrays :: Array Int -> Array Int -> Array Boolean
@@ -117,3 +119,12 @@ addVertex prevGraph newNodeId neighbours = Tuple diffGraph newGraph
    where
    diffGraph = connect (vertex newNodeId) (vertices (fromArray neighbours))
    newGraph = overlay prevGraph diffGraph
+
+baRunTest :: Int -> Int -> Int -> Map Int Int
+baRunTest m t seedI =
+   let
+      seed = mkSeed seedI
+      initGraph = clique (fromArray [ 1, 2, 3, 4 ])
+      outGraph = baRunT m t initGraph seed
+   in
+      totDegrees $ snd outGraph

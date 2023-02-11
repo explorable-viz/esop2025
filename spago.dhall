@@ -16,7 +16,9 @@ to generate this file without the comments in this block.
   , "arrays"
   , "console"
   , "effect"
+  , "integers"
   , "lists"
+  , "maybe"
   , "newtype"
   , "node-readline"
   , "ordered-collections"
@@ -28,5 +30,8 @@ to generate this file without the comments in this block.
   , "unfoldable"
   ]
 , packages = ./packages.dhall
-, sources = [ "examples/alga-examples/src/**/*.purs", "examples/alga-examples/test/**/*.purs" ]
+, sources =
+  [ "examples/alga-examples/src/**/*.purs"
+  , "examples/alga-examples/test/**/*.purs"
+  ]
 }
