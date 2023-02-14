@@ -18,7 +18,7 @@ module Graph.Utils
 
 import Prelude
 
-import Algebra.Graph (Graph, connect, edgeCount, foldg, overlay, transpose, vertex, vertexCount, vertices, clique)
+import Algebra.Graph (Graph, connect, foldg, overlay, transpose, vertex, vertexCount, vertices, clique)
 import Algebra.Graph.AdjacencyMap as AM
 import Algebra.Graph.Internal (fromArray)
 import Control.Monad.Reader (Reader, runReader)
