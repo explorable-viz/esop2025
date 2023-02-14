@@ -25,6 +25,7 @@ import Control.Monad.Reader (Reader, runReader)
 import Control.Monad.Reader.Trans (ask)
 import Control.Monad.State (StateT, get, put, lift, runStateT)
 import Data.Array (filter, fromFoldable, sortBy, take, zip, zipWith, length)
+import Data.Foldable (foldl)
 import Data.List (List)
 import Data.Map (Map, intersectionWith, values)
 import Data.Map.Internal (showTree)
@@ -54,10 +55,12 @@ shuffle xs = do
 -- compareNonEmptys :: NonEmptyArray Int -> NonEmptyArray Int -> NonEmptyArray Boolean
 -- compareNonEmptys xs ys = zipWith (>=) xs ys
 
-newNeighbours :: Int -> Int -> Array Int -> Int -> Reader Seed (Array Int)
-newNeighbours numNodes maxNum nodeDegrees m = do
+newNeighbours :: Array Int -> Int -> Reader Seed (Array Int)
+newNeighbours nodeDegrees m = do
    seed <- ask
    let
+      numNodes = length nodeDegrees
+      maxNum = foldl (+) 0 nodeDegrees
       randomDraws = randomRs 1 maxNum numNodes seed -- imperative random numbers
       flags = compareArrays randomDraws nodeDegrees :: Array Boolean
       selectionPairs = zip nodeDegrees flags :: Array (Tuple Int Boolean)
@@ -69,10 +72,9 @@ deltaGraph :: Int -> Graph Int -> Reader Seed (Graph Int) -- State (Graph Int) (
 deltaGraph m prev =
    do
       let
-         normalizer = 2 * (edgeCount prev)
          newId = 1 + (vertexCount prev)
          degrees = fromFoldable (values (totDegrees prev)) -- Array Integers
-      neighbours :: Array Int <- newNeighbours (vertexCount prev) normalizer degrees m
+      neighbours :: Array Int <- newNeighbours degrees m
       let
          diffGraph = outStarG newId neighbours
       pure diffGraph
