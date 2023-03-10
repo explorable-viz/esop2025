@@ -7,11 +7,11 @@ import Algebra.Graph.Internal (fromArray)
 import Data.Array (range)
 import Data.Int (fromString)
 import Data.Maybe (Maybe(..))
-import Data.Tuple (snd)
+import Data.Tuple (fst)
 import Effect (Effect)
 import Effect.Class.Console (logShow)
 import Effect.Console (log)
-import Graph.Utils (baRunT, totDegrees)
+import Graph.Utils.Run (baRunT, totDegrees)
 import Node.ReadLine (createConsoleInterface, noCompletion, prompt, setLineHandler, setPrompt, close, question)
 import Random.PseudoRandom (mkSeed)
 
@@ -51,7 +51,7 @@ main = do
                         graphOne = baRunT m' t' initGraph initSeed
                         graphTwo = baRunT m' t' initGraph initSeed
                      log ("T = " <> t)
-                     logShow (totDegrees $ snd graphOne)
+                     logShow (totDegrees $ fst graphOne)
                      logShow (graphTwo == graphOne)
                      log "Test complete, start again?"
 --printGraph (snd graphOne)

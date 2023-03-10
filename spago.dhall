@@ -25,10 +25,13 @@ to generate this file without the comments in this block.
   , "ordered-collections"
   , "prelude"
   , "pseudo-random"
+  , "run"
   , "test-unit"
   , "transformers"
   , "tuples"
+  , "typelevel-prelude"
   , "unfoldable"
+  , "variant"
   ]
 , packages = ./packages.dhall
 , sources =
