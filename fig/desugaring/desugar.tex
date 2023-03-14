@@ -8,10 +8,16 @@
       \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
       &\desugarFwdR
       \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
-      \quad\text{where }
+      \quad\textit{where }
       \seq{c_i} \clausesFwdR \sigma_i
       \quad
       (\forall i \leq j)
+      \\
+      \exMatch{e}{\seq{c}}
+      &\desugarFwdR
+      \exApp{\exFun{\sigma}}{e}
+      \quad\textit{where }
+      \seq{c} \clausesFwdR \sigma
    \end{salign}
    \caption{Desugaring}
 \end{figure}
