@@ -1,0 +1,131 @@
+\begin{figure}
+   {\small
+   \begin{minipage}[t]{0.48\textwidth}
+   \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+      &\textbfit{Sugar term}&
+      \\
+      $s ::=$
+      &
+      $\exBinaryApp{e}{\oplus}{e'}$
+      &
+      binary application
+      \\
+      &
+      $\exLetRecPiecewise{\seq{g}}{e}$
+      &
+      recursive functions
+      \\
+      &
+      $\exIfThenElse{e}{e_1}{e_2}$
+      &
+      if
+      \\
+      &
+      $\exMatch{e}{\seq{\clauseUncurried{p}{e}}}$
+      &
+      match
+      \\
+      &
+      $\exList{e}{r}$
+      &
+      non-empty list
+      \\
+      &
+      $\exListEnum{e}{e'}$
+      &
+      list enum
+      \\
+      &
+      $\exListComp{e}{\seq{q}}$
+      &
+      list comprehension
+      \\[2mm]
+      &\textbfit{List rest term}&
+      \\
+      $r ::=$
+      &
+      $\exListEnd$
+      &
+      end
+      \\
+      &
+      $\exListNext{e}{r}$
+      &
+      cons
+      \\[2mm]
+      &\textbfit{Recursive function}&
+      \\
+      $g ::=$
+      &
+      $\bind{x}{\seq{c}}$
+      &
+      \\[5mm]
+      \end{tabularx}
+   \end{minipage}%
+   \begin{minipage}[t]{0.5\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{2.9cm}}
+      &\textbfit{Clause}&
+      \\
+      $c ::=$
+      &
+      $\clause{\seq{p}}{e}$
+      &
+      \\
+      &\textbfit{Pattern}&
+      \\[2mm]
+      $p ::=$
+      &
+      $\pattVar{x}$
+      &
+      variable
+      \\
+      &
+      $\pattRecord{\seq{\bind{x}{p}}}$
+      &
+      record
+      \\
+      &
+      $\pattConstr{c}{\seq{p}}$
+      &
+      constructor
+      \\
+      &
+      $\pattList{p}{o}$
+      &
+      non-empty list
+      \\[2mm]
+      &\textbfit{List rest pattern}&
+      \\
+      $o ::=$
+      &
+      $\pattListEnd$
+      &
+      end
+      \\
+      &
+      $\pattListNext{p}{o}$
+      &
+      cons
+      \\[2mm]
+      &\textbfit{Qualifier}&
+      \\
+      $q ::=$
+      &
+      $\qualGuard{e}$
+      &
+      guard
+      \\
+      &
+      $\qualDeclaration{p}{e}$
+      &
+      declaration
+      \\
+      &
+      $\qualGenerator{p}{e}$
+      &
+      generator
+      \end{tabularx}
+   \end{minipage}
+   }
+   \caption{Syntax (full terms and sugar terms)}
+\end{figure}

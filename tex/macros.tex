@@ -9,6 +9,10 @@
 \newcommand*{\seqRangeOp}[3]{{#1} #3 \iter #3 {#2}}
 \newcommand*{\Set}[1]{\mathSf{#1}}
 
+\newcommand*{\sym}[1]{\textbf{\kw{#1}}}
+\newcommand*{\equal}{\mathrel{\kw{=}}}
+\newcommand*{\comma}{\sym{,}}
+
 % sequences, maps
 \newcommand{\seqEmpty}{\varepsilon}
 \newcommand{\bind}[2]{{#1}:{#2}}
@@ -39,6 +43,19 @@
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 
+% patterns
+\newcommand*{\pattVar}[1]{#1}
+\newcommand*{\pattConstr}[2]{\exConstr{#1}{#2}}
+\newcommand*{\pattList}[2]{\exList{#1}{#2}}
+\newcommand*{\pattListNext}[2]{\exListNext{#1}{#2}}
+\newcommand*{\pattListEnd}{\exListEnd}
+\newcommand*{\pattRecord}[1]{\exRecord{#1}}
+
+% qualifiers
+\newcommand*{\qualGuard}[1]{{#1}}
+\newcommand*{\qualDeclaration}[2]{\kw{let}\;{#1}\equal{#2}}
+\newcommand*{\qualGenerator}[2]{{#1}\;\kw{$\leftarrow$}\;{#2}}
+
 % types
 \newcommand*{\tyComp}[2]{{#1}!\set{#2}}
 \newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
@@ -55,21 +72,35 @@
 
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
+\newcommand*{\exBinaryApp}[3]{{#1} \mathbin{#2} {#3}}
+\newcommand*{\exConstr}[2]{#1(#2)}
 \newcommand*{\exFun}[1]{\lambda{#1}}
 \newcommand*{\exHandle}[2]{\kw{handle}\;{#1}\;\kw{with}\;{#2}}
 \newcommand*{\exHandler}[1]{\set{#1}}
+\newcommand*{\exIfThenElse}[3]{\kw{if}\;{#1}\;\kw{then}\;{#2}\;\kw{else}\;{#3}}
 \newcommand*{\exInt}[1]{#1}
+\newcommand*{\exLetRecPiecewise}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
+\newcommand*{\exList}[2]{\kw{[}\;#1 \ #2}
+\newcommand*{\exListComp}[2]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\kw{]}}
+\newcommand*{\exListEnum}[2]{\kw{[}\,{#1}\;\kw{..}\;{#2}\,\kw{]}}
+\newcommand*{\exListEnd}{\kw{]}}
+\newcommand*{\exListNext}[2]{\comma\;#1 \ #2}
 \newcommand*{\exOp}[2]{{#1}\,{#2}}
 \newcommand*{\exMatch}[2]{\kw{match}\;{#1}\;\kw{as}\;{#2}}
 \newcommand*{\exPolyApp}[2]{\exApp{#1}{#2}}
 \newcommand*{\exPolyFun}[2]{\Lambda{#1}.{#2}}
 \newcommand*{\record}[1]{\langle{#1}\rangle}
+\newcommand*{\exRecord}[1]{\record{#1}}
 \newcommand*{\exRecordEmpty}{\record{}}
 \newcommand*{\exRecordExtend}[2]{{#1}\record{#2}}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\variant}[1]{[#1]}
 \newcommand*{\exVariant}[2]{\variant{\bind{#1}{#2}}}
+
+% clauses
+\newcommand*{\clause}[2]{{#1}\equal{#2}}
+\newcommand*{\clauseUncurried}[2]{{#1}\equal{#2}}
 
 % handler clauses
 \newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
