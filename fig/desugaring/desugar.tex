@@ -26,6 +26,10 @@
       \exIfThenElse{e}{e_1}{e_2}
       &\desugarFwdR
       \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
+      \\
+      \exListEnum{e}{e'}
+      &\desugarFwdR
+      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
    \end{salign}
    \caption{Desugaring}
 \end{figure}
