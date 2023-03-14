@@ -31,9 +31,13 @@
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       \\
-      \exListComp{s}{\seqEmpty}
+      \exListComp{e}{\seqEmpty}
       &\desugarFwdR
       \exConstr{\cCons}{e, \exConstr{\cNil}{}}
+      \\
+      \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
    \end{salign}
    \caption{Desugaring}
 \end{figure}
