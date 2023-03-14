@@ -38,6 +38,14 @@
       \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
       &\desugarFwdR
       \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{\exListComp{s}{\seq{q}}}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
+      \\
+      \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exFun{\sigma}}{\exListComp{e}{\seq{q}}}
+      \\
+      \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma'}}}{e'}
    \end{salign}
    \caption{Desugaring}
 \end{figure}
