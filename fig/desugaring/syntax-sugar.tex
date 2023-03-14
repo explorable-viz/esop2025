@@ -57,22 +57,50 @@
       \end{tabularx}
    \end{minipage}%
    \begin{minipage}[t]{0.5\textwidth}
-   \begin{tabularx}{\textwidth}{rL{2.8cm}L{2.9cm}}
-   &\textbfit{Recursive function}&
-   \\
-   $g ::=$
-   &
-   $\bind{x}{\seq{c}}$
-   &
-   \\[2mm]
-   &\textbfit{Clause}&
-   \\
-   $c ::=$
-   &
-   $\clause{\seq{p}}{s}$
-   &
-   \\[2mm]
-   \end{tabularx}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{2.9cm}}
+      &\textbfit{Recursive function}&
+      \\
+      $g ::=$
+      &
+      $\bind{x}{\seq{c}}$
+      &
+      \\[2mm]
+      &\textbfit{Clause}&
+      \\
+      $c ::=$
+      &
+      $\clause{\seq{p}}{s}$
+      &
+      \\[2mm]
+      &\textbfit{Pattern}&
+      \\
+      $p ::=$
+      &
+      $\pattVar{x}$
+      &
+      variable
+      \\
+      &
+      $\pattRec{\vec{\bind{x}{p}}}$
+      &
+      record
+      \\
+      &
+      $\pattNil$
+      &
+      nil
+      \\
+      &
+      $\pattCons{p}{p}$
+      &
+      cons
+      \\
+      &
+      $\pattList{p}{o}$
+      &
+      non-empty list
+      \\[2mm]
+      \end{tabularx}
    \end{minipage}
    }
    \caption{Syntax (full terms and sugar terms)}
