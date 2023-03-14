@@ -21,7 +21,7 @@
       \\
       \exList{e}{r}
       &\desugarFwdR
-      \exConstr{(\symCons)}{e,r}
+      \exConstr{\cCons}{e,r}
       \\
       \exIfThenElse{e}{e_1}{e_2}
       &\desugarFwdR
@@ -30,6 +30,10 @@
       \exListEnum{e}{e'}
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+      \\
+      \exListComp{s}{\seqEmpty}
+      &\desugarFwdR
+      \exConstr{\cCons}{e, \exConstr{\cNil}{}}
    \end{salign}
    \caption{Desugaring}
 \end{figure}
