@@ -9,6 +9,11 @@
       \\[2mm]
       \clauseF(\pattVar{x}, \kappa)
       &=
+      \elimVar{x}{\kappa}
+      \\
+      \clauseF(\pattList{p}{o}, \kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
       \\[2mm]
       \totaliseF(\kappa)
       &=
