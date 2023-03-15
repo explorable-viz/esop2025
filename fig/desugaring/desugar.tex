@@ -15,7 +15,7 @@
       \\
       \exMatch{e}{\seq{c}}
       &\desugarFwdR
-      \exApp{(\exFun{\clausesF(\seq{c})})}{e}
+      \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
       \\
       \exList{e}{r}
       &\desugarFwdR
@@ -39,9 +39,7 @@
       \\
       \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
       &\desugarFwdR
-      \exApp{\exFun{\sigma}}{e'}
-      \quad\textit{where }
-      p, \exSugar{\exListComp{s}{\vec{q}}} \clauseFwdR \sigma
+      \exApp{\exFun{(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}))}}{e'}
       \\
       \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
       &\desugarFwdR
