@@ -18,6 +18,12 @@
       \clauseF(\pattRecord{\seqEmpty}, \kappa)
       &=
       \elimRecord{\seqEmpty}{\kappa}
+      \\
+      \clauseF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \kappa)
+      &=
+      \elimRecord{\seq{x} \cons y}{\sigma}
+      \quad\textit{where }
+      \clauseF(\pattRecord{\seq{\bind{x}p}}, \clauseF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
       \\[2mm]
       \totaliseF(\kappa)
       &=
