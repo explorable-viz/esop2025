@@ -37,8 +37,13 @@
       &=
       \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
       \\[2mm]
-      \totaliseF(\kappa)
+      \totaliseF(e)
       &=
+      \totaliseF(e)
+      \\
+      \totaliseF(\elimVar{x}{\kappa})
+      &=
+      \elimVar{x}{\totaliseF(\kappa)}
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
