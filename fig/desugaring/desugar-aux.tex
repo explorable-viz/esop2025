@@ -1,9 +1,13 @@
 \begin{figure}
    \begin{salign}
-      \clausesF(\seq{p}, e)
+      \clausesF(\clause{\seq{p}}{e})
       &= \clauseF(\seq{p}, e)
+      \\
+      \clauseF(c \cons \seq{c}, e)
+      &=
+      \clausesF(c) \disjjoin \clausesF(\seq{c})
       \\[2mm]
-      \clauseF(\seq{p}, e)
+      \clauseF(\pattVar{x}, \kappa)
       &=
       \\[2mm]
       \totaliseF(\kappa)
