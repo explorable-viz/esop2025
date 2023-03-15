@@ -37,28 +37,28 @@
       &=
       \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
       \\[2mm]
-      \totaliseF(e)
+      \orElseF(e, e')
       &=
-      \totaliseF(e)
+      e
       \\
-      \totaliseF(\elimVar{x}{\kappa})
+      \orElseF(\elimVar{x}{\kappa}, e)
       &=
-      \elimVar{x}{\totaliseF(\kappa)}
+      \elimVar{x}{\orElseF(\kappa, e)}
       \\
-      \totaliseF(\elimRecord{\seq{x}}{\kappa})
+      \orElseF(\elimRecord{\seq{x}}{\kappa}, e)
       &=
-      \elimRecord{\seq{x}}{\totaliseF(\kappa)}
+      \elimRecord{\seq{x}}{\orElseF(\kappa, e)}
       \\
       \begin{split}
-      \totaliseF(\elimConstr{\elimBind{c}{\kappa}})
+      \orElseF(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\totaliseF(\kappa)}}
+      \elimConstr{\elimBind{c}{\orElseF(\kappa, e)}}
       \disjjoin
       \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
       \\
       &
       \textit{where }
-      \opName{elimArgs}(0) = \exConstr{\cNil}{}
+      \opName{elimArgs}(0) = e
       \\
       &
       \phantom{\textit{where }}
