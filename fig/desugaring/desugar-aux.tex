@@ -29,6 +29,14 @@
       &=
       \clauseF(p, \exFun{(\clauseF(\seq{p}, e))})
       \\[2mm]
+      \clauseF(\pattListEnd, \kappa)
+      &=
+      \elimConstr{\elimBind{\cNil}{\kappa}}
+      \\
+      \clauseF((\pattListNext{p}{o}), \kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
+      \\[2mm]
       \totaliseF(\kappa)
       &=
    \end{salign}
