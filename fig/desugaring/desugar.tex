@@ -9,15 +9,13 @@
       &\desugarFwdR
       \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       \quad\textit{where }
-      \seq{c_i} \clausesFwdR \sigma_i
+      \sigma_i = \clausesF(\seq{c_i})
       \quad
       (\forall i \leq j)
       \\
       \exMatch{e}{\seq{c}}
       &\desugarFwdR
-      \exApp{\exFun{\sigma}}{e}
-      \quad\textit{where }
-      \seq{c} \clausesFwdR \sigma
+      \exApp{(\exFun{\clausesF(\seq{c})})}{e}
       \\
       \exList{e}{r}
       &\desugarFwdR
