@@ -48,6 +48,22 @@
       \totaliseF(\elimRecord{\seq{x}}{\kappa})
       &=
       \elimRecord{\seq{x}}{\totaliseF(\kappa)}
+      \\
+      \begin{split}
+      \totaliseF(\elimConstr{c}{\kappa})
+      &=
+      \elimConstr{\elimBind{c}{\totaliseF(\kappa)}}
+      \disjjoin
+      \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
+      \\
+      &
+      \textit{where }
+      \opName{elimArgs}(0) = \exConstr{\cNil}{}
+      \\
+      &
+      \phantom{\textit{where }}
+      \opName{elimArgs}(n + 1) = \elimVar{x}{\opName{elimArgs}(n)}
+      \end{split}
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
