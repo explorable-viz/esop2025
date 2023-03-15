@@ -24,6 +24,10 @@
       \elimRecord{\seq{x} \cons y}{\sigma}
       \quad\textit{where }
       \clauseF(\pattRecord{\seq{\bind{x}p}}, \clauseF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \\
+      \clauseF(p \cons \seq{p}, e)
+      &=
+      \clauseF(p, \exFun{(\clauseF(\seq{p}, e))})
       \\[2mm]
       \totaliseF(\kappa)
       &=
