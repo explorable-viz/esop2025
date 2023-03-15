@@ -37,22 +37,22 @@
       &=
       \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
       \\[2mm]
-      \totaliseF(e)
+      \orElseF(e)
       &=
-      \totaliseF(e)
+      e
       \\
-      \totaliseF(\elimVar{x}{\kappa})
+      \orElseF(\elimVar{x}{\kappa})
       &=
-      \elimVar{x}{\totaliseF(\kappa)}
+      \elimVar{x}{\orElseF(\kappa)}
       \\
-      \totaliseF(\elimRecord{\seq{x}}{\kappa})
+      \orElseF(\elimRecord{\seq{x}}{\kappa})
       &=
-      \elimRecord{\seq{x}}{\totaliseF(\kappa)}
+      \elimRecord{\seq{x}}{\orElseF(\kappa)}
       \\
       \begin{split}
-      \totaliseF(\elimConstr{\elimBind{c}{\kappa}})
+      \orElseF(\elimConstr{\elimBind{c}{\kappa}})
       &=
-      \elimConstr{\elimBind{c}{\totaliseF(\kappa)}}
+      \elimConstr{\elimBind{c}{\orElseF(\kappa)}}
       \disjjoin
       \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
       \\
