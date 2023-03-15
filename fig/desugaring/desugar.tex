@@ -41,11 +41,17 @@
       \\
       \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
       &\desugarFwdR
-      \exApp{\exFun{\sigma}}{\exListComp{e}{\seq{q}}}
+      \exApp{\exFun{\sigma}}{e'}
+      \quad\textit{where }
+      p, \exSugar{\exListComp{s}{\vec{q}}} \clauseFwdR \sigma
       \\
       \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
       &\desugarFwdR
       \exApp{\exApp{\varConcatMap}{\exFun{\sigma'}}}{e'}
+      \quad\textit{where }
+      p, \exSugar{\exListComp{s}{\vec{q}}} \clauseFwdR \sigma
+      \textit{ and }
+      \sigma \totaliseFwdR{p} \sigma'
    \end{salign}
    \flushleft \shadebox{$r \desugarFwdR e$}
    \begin{salign}
