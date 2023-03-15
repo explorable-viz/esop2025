@@ -19,7 +19,7 @@
       {
          \Delta; \Gamma
          \vdash
-         \elimRecord{P}{\seqEmpty}:
+         \elimRecord{\seqEmpty}{P}:
          \elimTy{\tyRecord{R}}{E}
       }
       %
@@ -29,13 +29,13 @@
       {
          \Delta; \Gamma
          \vdash
-         \elimRecord{P}{\seq{\ell}}:
+         \elimRecord{\seq{\ell}}{P}:
          \elimTy{\tyRecord{R}}{\elimTy{B}{E}}
       }
       {
          \Delta; \Gamma
          \vdash
-         \elimRecord{P}{\seq{\ell}, \ell'}:
+         \elimRecord{\seq{\ell}, \ell'}{P}:
          \elimTy{\tyRecord{\rowExtend{R}{\bind{\ell'}{B}}}}{E}
       }
       %

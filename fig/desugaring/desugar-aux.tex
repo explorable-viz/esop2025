@@ -1,0 +1,69 @@
+\begin{figure}
+   \begin{salign}
+      \clausesF(\clause{\seq{p}}{e})
+      &= \clauseF(\seq{p}, e)
+      \\
+      \clauseF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
+      &=
+      \clauseF(\seq{p}, e) \disjjoin \clausesF(\seq{c})
+      \\[2mm]
+      \clauseF(\pattVar{x}, \kappa)
+      &=
+      \elimVar{x}{\kappa}
+      \\
+      \clauseF(\pattList{p}{o}, \kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
+      \\
+      \clauseF(\pattRecord{\seqEmpty}, \kappa)
+      &=
+      \elimRecord{\seqEmpty}{\kappa}
+      \\
+      \clauseF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \kappa)
+      &=
+      \elimRecord{\seq{x} \cons y}{\sigma}
+      \quad\textit{where }
+      \clauseF(\pattRecord{\seq{\bind{x}p}}, \clauseF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \\
+      \clauseF(p \cons \seq{p}, e)
+      &=
+      \clauseF(p, \exFun{(\clauseF(\seq{p}, e))})
+      \\[2mm]
+      \clauseF(\pattListEnd, \kappa)
+      &=
+      \elimConstr{\elimBind{\cNil}{\kappa}}
+      \\
+      \clauseF((\pattListNext{p}{o}), \kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
+      \\[2mm]
+      \totaliseF(e)
+      &=
+      \totaliseF(e)
+      \\
+      \totaliseF(\elimVar{x}{\kappa})
+      &=
+      \elimVar{x}{\totaliseF(\kappa)}
+      \\
+      \totaliseF(\elimRecord{\seq{x}}{\kappa})
+      &=
+      \elimRecord{\seq{x}}{\totaliseF(\kappa)}
+      \\
+      \begin{split}
+      \totaliseF(\elimConstr{c}{\kappa})
+      &=
+      \elimConstr{\elimBind{c}{\totaliseF(\kappa)}}
+      \disjjoin
+      \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
+      \\
+      &
+      \textit{where }
+      \opName{elimArgs}(0) = \exConstr{\cNil}{}
+      \\
+      &
+      \phantom{\textit{where }}
+      \opName{elimArgs}(n + 1) = \elimVar{x}{\opName{elimArgs}(n)}
+      \end{split}
+   \end{salign}
+   \caption{Desugaring: auxiliary functions}
+\end{figure}

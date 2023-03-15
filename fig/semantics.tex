@@ -57,19 +57,19 @@
          \strut
       }
       {
-         V, \elimRecord{P}{\seqEmpty} \match P
+         V, \elimRecord{\seqEmpty}{P} \match P
       }
       %
       \and
       %
       \inferrule*
       {
-         V, \elimRecord{P}{\seq{\ell}} \match \sigma
+         V, \elimRecord{\seq{\ell}}{P} \match \sigma
          \\
          U, \sigma \match Q
       }
       {
-         \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{P}{\seq{\ell}, \ell'}
+         \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{\seq{\ell}, \ell'}{P}
          \match
          Q
       }

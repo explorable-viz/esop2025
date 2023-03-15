@@ -12,6 +12,7 @@
 \newcommand*{\sym}[1]{\textbf{\kw{#1}}}
 \newcommand*{\equal}{\mathrel{\kw{=}}}
 \newcommand*{\comma}{\sym{,}}
+\newcommand*{\symCons}{\sym{:}}
 
 % sequences, maps
 \newcommand{\seqEmpty}{\varepsilon}
@@ -20,6 +21,9 @@
 % contexts
 \newcommand{\cxtEmpty}{\seqEmpty}
 \newcommand{\cxtExtend}[2]{{#1}, {#2}}
+
+% datatypes
+\newcommand*{\datatype}[2]{\opName{datatype}_{#1}(#2)}
 
 % substitution
 \newcommand{\subst}[3]{{#1}[{#2}/{#3}]}
@@ -39,7 +43,8 @@
 \newcommand*{\elimmapsto}{\mapsto}
 \newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
 \newcommand*{\elimComp}[2]{\set{\seq{\elimBind{#1}{#2}}}}
-\newcommand*{\elimRecord}[2]{\record{#1}_{#2}}
+\newcommand*{\elimConstr}[1]{\set{#1}}
+\newcommand*{\elimRecord}[2]{\elimBind{\exRecord{}_{#1}}{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 
@@ -70,6 +75,16 @@
 \newcommand{\rowEmpty}{\seqEmpty}
 \newcommand{\rowExtend}[2]{{#1}, {#2}}
 
+% constructors
+\newcommand*{\cCons}{\kw{Cons}}
+\newcommand*{\cNil}{\kw{Nil}}
+\newcommand*{\cFalse}{\kw{False}}
+\newcommand*{\cTrue}{\kw{True}}
+
+% prelude identifiers
+\newcommand*{\varConcatMap}{\exVar{\kw{concatMap}}}
+\newcommand*{\varEnumFromTo}{\exVar{\kw{enumFromTo}}}
+
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
 \newcommand*{\exBinaryApp}[3]{{#1} \mathbin{#2} {#3}}
@@ -93,6 +108,7 @@
 \newcommand*{\exRecord}[1]{\record{#1}}
 \newcommand*{\exRecordEmpty}{\record{}}
 \newcommand*{\exRecordExtend}[2]{{#1}\record{#2}}
+\newcommand*{\exSugar}[1]{{\downarrow}#1}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\variant}[1]{[#1]}
@@ -119,5 +135,21 @@
 \newcommand{\BL}{\opName{BL}}
 
 % semantics
+\newcommand{\evalR}{\Rightarrow}
 \newcommand{\reduce}{\rightsquigarrow}
 \newcommand{\match}{\looparrowright}
+
+% desugaring
+\newcommand*{\desugarFwdS}{\twoheadrightarrow}
+\newcommand*{\desugarBwdS}{\twoheadleftarrow}
+\newcommand*{\desugarFwdR}{\desugarFwdS}
+\newcommand*{\desugarBwdR}[1]{\sub{\desugarBwdS}{#1}}
+
+% desugaring-aux
+\newcommand*{\clauseF}{\opName{clause}}
+\newcommand*{\clausesF}{\opName{clauses}}
+\newcommand*{\totaliseF}{\opName{totalise}}
+
+% lattices
+\newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
+   \hfil\raise0.42ex\hbox{$\scriptscriptstyle+$}\hfil\cr}}}

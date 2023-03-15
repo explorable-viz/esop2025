@@ -1,0 +1,59 @@
+\begin{figure}
+   \flushleft \shadebox{$s \desugarFwdR e$}
+   \begin{salign}
+      \exBinaryApp{e}{\oplus}{e'}
+      &\desugarFwdR
+      \exApp{(\exApp{\oplus}{e})}{e'}
+      \\
+      \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
+      &\desugarFwdR
+      \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+      \quad\textit{where }
+      \sigma_i = \clausesF(\seq{c_i})
+      \quad
+      (\forall i \leq j)
+      \\
+      \exMatch{e}{\seq{c}}
+      &\desugarFwdR
+      \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
+      \\
+      \exList{e}{r}
+      &\desugarFwdR
+      \exConstr{\cCons}{e,\exSugar{r}}
+      \\
+      \exIfThenElse{e}{e_1}{e_2}
+      &\desugarFwdR
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
+      \\
+      \exListEnum{e}{e'}
+      &\desugarFwdR
+      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+      \\
+      \exListComp{e}{\seqEmpty}
+      &\desugarFwdR
+      \exConstr{\cCons}{e, \exConstr{\cNil}{}}
+      \\
+      \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{\exListComp{e}{\seq{q}}}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
+      \\
+      \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exFun{(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}))}}{e'}
+      \\
+      \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
+      &\desugarFwdR
+      \exApp{\exApp{\varConcatMap}{\exFun{(\totaliseF(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}})))}}}{e'}
+   \end{salign}
+   \flushleft \shadebox{$r \desugarFwdR e$}
+   \begin{salign}
+      \exListEnd
+      &\desugarFwdR
+      \exConstr{\cNil}{}
+      \\
+      \exListNext{e}{r}
+      &\desugarFwdR
+      \exConstr{\cCons}{e,\exSugar{r}}
+   \end{salign}
+   \caption{Desugaring}
+\end{figure}
