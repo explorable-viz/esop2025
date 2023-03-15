@@ -43,9 +43,7 @@
       \\
       \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
       &\desugarFwdR
-      \exApp{\exApp{\varConcatMap}{\exFun{\sigma'}}}{e'}
-      \quad\textit{where }
-      \clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}) \totaliseFwdR{p} \sigma'
+      \exApp{\exApp{\varConcatMap}{\exFun{(\totaliseF(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}})))}}}{e'}
    \end{salign}
    \flushleft \shadebox{$r \desugarFwdR e$}
    \begin{salign}
