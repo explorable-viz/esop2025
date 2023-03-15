@@ -3,9 +3,9 @@
       \clausesF(\clause{\seq{p}}{e})
       &= \clauseF(\seq{p}, e)
       \\
-      \clauseF(c \cons \seq{c}, e)
+      \clauseF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
       &=
-      \clausesF(c) \disjjoin \clausesF(\seq{c})
+      \clauseF(\seq{p}, e) \disjjoin \clausesF(\seq{c})
       \\[2mm]
       \clauseF(\pattVar{x}, \kappa)
       &=
