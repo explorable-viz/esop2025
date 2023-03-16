@@ -5,6 +5,7 @@
       &:
       (\Clause\;\Gamma\;A\;B)^* \to \Elim\;\Gamma\;A\;B
       \\
+      %========================================
       \clausesF(\clause{\seq{p}}{e})
       &= \clauseF(\seq{p}, e)
       \\
@@ -15,8 +16,9 @@
       %========================================
       \clauseF
       &:
-      \Clause\;\Gamma\;A\;B \to \Elim\;\Gamma\;A\;B
+      \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
+      %========================================
       \clauseF(\pattVar{x}, \kappa)
       &=
       \elimVar{x}{\kappa}
@@ -44,6 +46,7 @@
       &:
       \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
+      %========================================
       \clauseF(\pattListEnd, \kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
@@ -57,6 +60,7 @@
       &:
       \Expr\;\Gamma\;A \to \Expr\;\cxtEmpty\;A \to \Expr\;\Gamma\;A
       \\
+      %========================================
       \orElseF(e, e')
       &=
       e
@@ -66,6 +70,7 @@
       &:
       \Elim\;\Gamma\;A\;B \to \Expr\;\cxtEmpty\;B \to \Elim\;\Gamma\;A\;B
       \\
+      %========================================
       \orElseF(\elimVar{x}{\kappa}, e)
       &=
       \elimVar{x}{\orElseF(\kappa, e)}
