@@ -44,6 +44,10 @@
       \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
       &\desugarFwdR
       \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}), \exConstr{\cNil}{}))}}}{e'}
+      \\
+      \smash{\exDo{(e \cons \seq{d})}}
+      &\desugarFwdR
+      \smash{\exApp{\exApp{\varBind}{e}}{\exFun{(\elimVar{\varAnon}{\exSugar{(\exDo{\seq{d}})}})}}}
    \end{salign}
    \flushleft \shadebox{$r \desugarFwdR e$}
    \begin{salign}
