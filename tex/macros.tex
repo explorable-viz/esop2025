@@ -61,6 +61,11 @@
 \newcommand*{\qualDeclaration}[2]{\kw{let}\;{#1}\equal{#2}}
 \newcommand*{\qualGenerator}[2]{{#1}\;\kw{$\leftarrow$}\;{#2}}
 
+% do statements
+\newcommand*{\stmtVoid}[1]{{#1}}
+\newcommand*{\stmtDeclaration}[2]{\qualDeclaration{#1}{#2}}
+\newcommand*{\stmtBind}[2]{\qualGenerator{#1}{#2}}
+
 % types
 \newcommand*{\tyComp}[2]{{#1}!\set{#2}}
 \newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
