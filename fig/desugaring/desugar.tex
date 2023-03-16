@@ -45,9 +45,19 @@
       &\desugarFwdR
       \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}), \exConstr{\cNil}{}))}}}{e'}
       \\
+      \exDo{e}
+      &\desugarFwdR
+      e
+      \\
       \smash{\exDo{(e \cons \seq{d})}}
       &\desugarFwdR
       \smash{\exApp{\exApp{\varBind}{e}}{\exFun{(\elimVar{\varAnon}{\exSugar{(\exDo{\seq{d}})}})}}}
+      \\
+      \smash{\exDo{(\stmtBind{p}{e} \cons \seq{d})}}
+      &\desugarFwdR
+      \smash{\exApp
+         {\exApp{\varBind}{e}}
+         {\exFun{(\orElseF(\clauseF(p, \exSugar{(\exDo{\seq{d}})}),\exError)}}}
    \end{salign}
    \flushleft \shadebox{$r \desugarFwdR e$}
    \begin{salign}
