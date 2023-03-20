@@ -39,11 +39,11 @@
       \\
       \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
       &\desugarFwdR
-      \exApp{\exFun{(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}))}}{e'}
+      \exApp{\exFun{(\clauseF(p, \exSugar{\exListComp{e}{\vec{q}}}))}}{e'}
       \\
       \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
       &\desugarFwdR
-      \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\clauseF(p, \exSugar{\exListComp{s}{\vec{q}}}), \exConstr{\cNil}{}))}}}{e'}
+      \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\clauseF(p, \exSugar{\exListComp{e}{\vec{q}}}), \exConstr{\cNil}{}))}}}{e'}
       \\
       \exDo{e}
       &\desugarFwdR
