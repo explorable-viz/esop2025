@@ -1,31 +1,27 @@
 \begin{figure}
    \begin{salign}
       %========================================
-      \clausesF
+      \clausesFwdF
       &::
-      (\Clause\;\Gamma\;A\;B)^* \to \Elim\;\Gamma\;A\;B
+      (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clausesF(\clause{\seq{p}}{e})
-      &= \clauseF(\seq{p}, e)
+      \clausesFwdF(\clause{\seq{p}}{e})
+      &= \clauseFwdF(\seq{p}, e)
       \\
-      \clausesF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
+      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
       &=
-      \clauseF(\seq{p}, e) \disjjoin \clausesF(\seq{c})
+      \clauseFwdF(\seq{p}, e) \disjjoin \clausesFwdF(\seq{c})
       \\[2mm]
       %========================================
       \clausesBwdF
       &::
-      (\Raw{\Clause}\;\Gamma\;A\;B)^* \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^*
+      (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
       \\
       %========================================
       \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
       &=
       \clauseBwdF(\seq{p}, e)
-      \\
-      \clausesF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
-      &=
-      \clauseF(\seq{p}, e) \disjjoin \clausesF(\seq{c})
       \\[2mm]
       %========================================
       \clauseF
