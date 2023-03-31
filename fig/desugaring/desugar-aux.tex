@@ -16,9 +16,11 @@
       %========================================
       \clausesBwdF
       &::
-      (\Clause\;\Gamma\;A\;B)^* \to \Elim\;\Gamma\;A\;B
+      (\Raw{\Clause}\;\Gamma\;A\;B)^* \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^*
       \\
       %========================================
+      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
+      &= \clauseBwdF(\seq{p}, e)
       \\[2mm]
       %========================================
       \clauseF
