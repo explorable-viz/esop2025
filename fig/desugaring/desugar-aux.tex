@@ -20,7 +20,12 @@
       \\
       %========================================
       \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
-      &= \clauseBwdF(\seq{p}, e)
+      &=
+      \clauseBwdF(\seq{p}, e)
+      \\
+      \clausesF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
+      &=
+      \clauseF(\seq{p}, e) \disjjoin \clausesF(\seq{c})
       \\[2mm]
       %========================================
       \clauseF
