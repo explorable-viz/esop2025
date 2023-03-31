@@ -1,7 +1,32 @@
 \begin{figure}
-\flushleft \shadebox{$e \desugarBwdR{\raw{s}} s$\text{ }}
-\hfill \textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}
-\begin{salign}
-\end{salign}
+{\flushleft \shadebox{$e \desugarBwdR{\raw{s}} s$\text{ }}
+\hfill \textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}}
+\begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-binary-apply}}
+   ]
+   {
+      \strut
+   }
+   {
+      \exBinaryApp{s}{\oplus}{s'}
+      \desugarBwdR{\exBinaryApp{\raw{s}}{\oplus}{\raw{s}'}}
+      \exApp{\exApp{(\oplus)}{e}}{e'}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-non-empty-list}}
+   ]
+   {
+      r \desugarBwdR{\raw{r}} e'
+   }
+   {
+      \annList{s}{r}{\alpha}
+      \desugarBwdR{\exList{t}{\raw{r}}}
+      \annCons{e}{e'}{\alpha}
+   }
+\end{smathpar}
 \caption{Backward desugaring}
 \end{figure}
