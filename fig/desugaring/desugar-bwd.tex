@@ -27,6 +27,22 @@
       \desugarBwdR{\exList{t}{\raw{r}}}
       \annCons{e}{e'}{\alpha}
    }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-let-rec}}
+   ]
+   {
+      \sigma_i = \clausesBwdF(\seq{\raw{c}_i}, \seq{c_i})
+      \quad
+      (\forall i \leq j)
+   }
+   {
+      \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
+      \desugarBwdR{\exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{\raw{c}_1}}}{\bind{x_j}{\seq{\raw{c}_j}}}}{\raw{s}}}
+      \exLetRecElim{\seq{\bind{x}{\sigma}}}{e}
+   }
 \end{smathpar}
 \caption{Backward desugaring}
 \end{figure}

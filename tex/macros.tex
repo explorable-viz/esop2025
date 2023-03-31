@@ -103,6 +103,7 @@
 \newcommand*{\exHandler}[1]{\set{#1}}
 \newcommand*{\exIfThenElse}[3]{\kw{if}\;{#1}\;\kw{then}\;{#2}\;\kw{else}\;{#3}}
 \newcommand*{\exInt}[1]{#1}
+\newcommand*{\exLetRecElim}[2]{\exLetRecPiecewise{#1}{#2}}
 \newcommand*{\exLetRecPiecewise}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
 \newcommand*{\exList}[2]{\kw{[}\;#1 \ #2}
 \newcommand*{\exListComp}[2]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\kw{]}}
@@ -160,6 +161,9 @@
 \newcommand{\reduce}{\rightsquigarrow}
 \newcommand{\match}{\looparrowright}
 
+% fwd/bwd notation
+\newcommand*{\opBwd}[1]{#1^{\triangleleft}}
+
 % desugaring
 \newcommand*{\desugarFwdS}{\twoheadrightarrow}
 \newcommand*{\desugarBwdS}{\twoheadleftarrow}
@@ -169,6 +173,7 @@
 % desugaring-aux
 \newcommand*{\clauseF}{\opName{clause}}
 \newcommand*{\clausesF}{\opName{clauses}}
+\newcommand*{\clausesBwdF}{\opBwd{\opName{clauses}}}
 \newcommand*{\orElseF}{\opName{orElse}}
 
 % lattices
