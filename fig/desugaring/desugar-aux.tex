@@ -56,6 +56,10 @@
       \clauseFwdF(\pattRecord{\seq{\bind{x}p}}, \clauseFwdF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
       \\[2mm]
       %========================================
+      \intertext{
+      \flushleft\shadebox{$\clauseF :: \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
+      }
+      %========================================
       \clauseFwdF
       &::
       \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
@@ -70,6 +74,11 @@
       \elimConstr{\elimBind{\cCons}{\clauseFwdF(p, \clauseFwdF(o, \kappa))}}
       \\[2mm]
       %========================================
+      \intertext{
+      \flushleft\shadebox{$\clauseF :: \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
+      }
+      %========================================
+      %========================================
       \clauseFwdF
       &::
       \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
@@ -78,46 +87,6 @@
       \clauseFwdF(p \cons \seq{p}, e)
       &=
       \clauseFwdF(p, \exFun{(\clauseFwdF(\seq{p}, e))})
-      \\[2mm]
-      %========================================
-      \orElseF
-      &::
-      \Expr\;\Gamma\;A \to \Expr\;\cxtEmpty\;A \to \Expr\;\Gamma\;A
-      \\
-      %========================================
-      \orElseF(e, e')
-      &=
-      e
-      \\[2mm]
-      %========================================
-      \orElseF
-      &::
-      \Elim\;\Gamma\;A\;B \to \Expr\;\cxtEmpty\;B \to \Elim\;\Gamma\;A\;B
-      \\
-      %========================================
-      \orElseF(\elimVar{x}{\kappa}, e)
-      &=
-      \elimVar{x}{\orElseF(\kappa, e)}
-      \\
-      \orElseF(\elimRecord{\seq{x}}{\kappa}, e)
-      &=
-      \elimRecord{\seq{x}}{\orElseF(\kappa, e)}
-      \\
-      \begin{split}
-      \orElseF(\elimConstr{\elimBind{c}{\kappa}}, e)
-      &=
-      \elimConstr{\elimBind{c}{\orElseF(\kappa, e)}}
-      \disjjoin
-      \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
-      \\
-      &
-      \textit{where }
-      \opName{elimArgs}(0) = e
-      \\
-      &
-      \phantom{\textit{where }}
-      \opName{elimArgs}(n + 1) = \elimVar{x}{\opName{elimArgs}(n)}
-      \end{split}
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
