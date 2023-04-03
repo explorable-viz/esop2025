@@ -92,6 +92,10 @@
       \pattContBwdF(\pattListEnd)(\elimConstr{\elimBind{\cNil}{\kappa}})
       &=
       \kappa
+      \\
+      \pattContBwdF(\pattListNext{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
+      &=
+      \pattContBwdF(o, \pattContBwdF(p, \sigma))
       %========================================
       \\[2mm]
       %========================================
