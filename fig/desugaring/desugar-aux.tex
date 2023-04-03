@@ -16,6 +16,7 @@
       \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c})
       &=
       \pattContFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
+      \quad\textit{ where }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
       \clausesBwdF
@@ -29,7 +30,8 @@
       \\
       \clausesBwdF((\clause{\seq{p}}{\raw{e}}) \cons \seq{\raw{c}}, \sigma \disjjoin \tau)
       &=
-      (\clause{\seq{p}}{e}) \cons \seq{c}
+      (\clause{\seq{p}}{\pattContBwdF(\seq{p})(\sigma)}) \cons \clausesBwdF(\raw{c}, \tau)
+      \quad\textit{ where }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
       \intertext{
