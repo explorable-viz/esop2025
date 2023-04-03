@@ -55,7 +55,7 @@
    {
       \annList{e}{r}{\alpha}
       \desugarBwdR{\exList{\raw{e}}{\raw{r}}}
-      \annCons{e}{e'}{\alpha}
+      \annConstr{\cCons}{e, e'}{\alpha}
    }
    %
    \and
@@ -84,6 +84,18 @@
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       \desugarBwdR{\exListEnum{\raw{e}}{\raw{e}'}}
       \exListEnum{e}{e'}
+   }
+   %
+   \and
+   %
+   \inferrule*[lab={\ruleName{$\desugarBwdR{}$-list-comp-done}}]
+   {
+      \strut
+   }
+   {
+      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha'}
+      \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
+      \annListComp{e}{\seqEmpty}{\alpha \join \alpha'}
    }
 \end{smathpar}
 \caption{Backward desugaring}
