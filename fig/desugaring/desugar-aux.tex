@@ -13,7 +13,7 @@
       \clausesFwdF(\clause{\seq{p}}{e})
       &= \pattContFwdF(\seq{p})(e)
       \\
-      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
+      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c})
       &=
       \pattContFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
       \\[2mm]
@@ -26,6 +26,9 @@
       \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \sigma)
       &=
       \clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}
+      \\
+      \clausesBwdF((\clause{\seq{p}}{e}) \cons \seq{c}, \sigma)
+      &=
       \\[2mm]
       %========================================
       \intertext{
