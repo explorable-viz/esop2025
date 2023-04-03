@@ -10,12 +10,13 @@
       (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      &= \pattContFwdF(\seq{p})(e)
       \clausesFwdF(\clause{\seq{p}}{e})
+      &= \pattContFwdF(\seq{p})(e)
       \\
-      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
+      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c})
       &=
       \pattContFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
+      \quad\textit{ if }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
       \clausesBwdF
@@ -23,9 +24,14 @@
       (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
       \\
       %========================================
-      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
+      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \sigma)
       &=
-      %\pattContBwdF(\seq{p},e)
+      \clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}
+      \\
+      \clausesBwdF((\clause{\seq{p}}{\raw{e}}) \cons \seq{\raw{c}}, \sigma \disjjoin \tau)
+      &=
+      (\clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}) \cons \clausesBwdF(\seq{\raw{c}}, \tau)
+      \quad\textit{ if }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
       \intertext{
@@ -55,6 +61,11 @@
       \quad\textit{where }
       \pattContFwdF(\pattRecord{\seq{\bind{x}p}})(\pattContFwdF(p')(\kappa)) = \elimRecord{\seq{x}}{\sigma}
       \\[2mm]
+      %========================================
+      \pattContBwdF
+      &::
+      \Patt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
