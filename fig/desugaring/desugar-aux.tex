@@ -26,26 +26,26 @@
       %========================================
       \clauseF
       &::
-      \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \Clause\;\Gamma\;A\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clauseF(\pattVar{x}, \kappa)
+      \clauseF(\clause{\pattVar{x}}{\kappa})
       &=
       \elimVar{x}{\kappa}
       \\
-      \clauseF(\pattList{p}{o}, \kappa)
+      \clauseF(\clause{\pattList{p}{o}}{\kappa})
       &=
-      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
+      \elimConstr{\elimBind{\cCons}{\clauseF(\clause{p}{\clauseF(\clause{o}{\kappa})})}}
       \\
-      \clauseF(\pattRecord{\seqEmpty}, \kappa)
+      \clauseF(\clause{\pattRecord{\seqEmpty}}{\kappa})
       &=
       \elimRecord{\seqEmpty}{\kappa}
       \\
-      \clauseF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \kappa)
+      \clauseF(\clause{\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}}{\kappa})
       &=
       \elimRecord{\seq{x} \cons y}{\sigma}
       \quad\textit{where }
-      \clauseF(\pattRecord{\seq{\bind{x}p}}, \clauseF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \clauseF(\clause{\pattRecord{\seq{\bind{x}p}}}{\clauseF(\clause{p'}{\kappa})}) = \elimRecord{\seq{x}}{\sigma}
       \\
       \clauseF(p \cons \seq{p}, e)
       &=
