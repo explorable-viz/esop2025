@@ -74,6 +74,16 @@
       \elimConstr{\elimBind{\cCons}{\pattContFwdF(p, \pattContFwdF(o, \kappa))}}
       \\[2mm]
       %========================================
+      \pattContBwdF
+      &::
+      \ListRestPatt\;A\;\Gamma' \times \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to
+      \\
+      &\phantom{an}
+      \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
+      %========================================
+      \\[2mm]
+      %========================================
       \intertext{
       \flushleft\shadebox{$\pattsExprF :: \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
       }
@@ -86,7 +96,7 @@
       %========================================
       \pattsExprFwdF(p, e)
       &=
-      \pattContFwdF(p_1, e)
+      \pattContFwdF(p, e)
       \\
       \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}', e)
       &=
@@ -101,6 +111,9 @@
       \phantom{an}
       \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B
       \\
+      \pattsExprBwdF((p, \raw{e}), \sigma)
+      &=
+      (p, \pattContBwdF())
       %========================================
    \end{salign}
    \caption{Desugaring: auxiliary functions}
