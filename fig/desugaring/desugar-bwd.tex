@@ -17,20 +17,6 @@
    \and
    %
    \inferrule*[
-      lab={\ruleName{$\desugarBwdR{}$-non-empty-list}}
-   ]
-   {
-      r \desugarBwdR{\raw{r}} e'
-   }
-   {
-      \annList{s}{r}{\alpha}
-      \desugarBwdR{\exList{t}{\raw{r}}}
-      \annCons{e}{e'}{\alpha}
-   }
-   %
-   \and
-   %
-   \inferrule*[
       lab={\ruleName{$\desugarBwdR{}$-let-rec}}
    ]
    {
@@ -42,6 +28,34 @@
       \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
       \desugarBwdR{\exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{\raw{c}_1}}}{\bind{x_j}{\seq{\raw{c}_j}}}}{\raw{s}}}
       \exLetRecElim{\seq{\bind{x}{\sigma}}}{e}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-match}}
+   ]
+   {
+       \strut
+   }
+   {
+      \exMatch{e}{\clausesBwdF(\seq{\raw{c}}, \sigma)}
+      \desugarBwdR{\exMatch{\raw{e}}{\seq{\raw{c}}}}
+      \exApp{\exFun{\sigma}}{e}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-non-empty-list}}
+   ]
+   {
+      r \desugarBwdR{\raw{r}} e'
+   }
+   {
+      \annList{s}{r}{\alpha}
+      \desugarBwdR{\exList{t}{\raw{r}}}
+      \annCons{e}{e'}{\alpha}
    }
 \end{smathpar}
 \caption{Backward desugaring}
