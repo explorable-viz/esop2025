@@ -27,8 +27,9 @@
       &=
       \clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}
       \\
-      \clausesBwdF((\clause{\seq{p}}{e}) \cons \seq{c}, \sigma)
+      \clausesBwdF((\clause{\seq{p}}{\raw{e}}) \cons \seq{\raw{c}}, \sigma \disjjoin \tau)
       &=
+      (\clause{\seq{p}}{e}) \cons \seq{c}
       \\[2mm]
       %========================================
       \intertext{
@@ -61,7 +62,7 @@
       %========================================
       \pattContBwdF
       &::
-      \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \Patt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
       \\
       %========================================
       \intertext{
