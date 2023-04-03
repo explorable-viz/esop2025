@@ -90,35 +90,30 @@
       %========================================
       \pattsExprFwdF
       &::
-      \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \PattSeq\;A\;\Gamma' \to \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattsExprFwdF(p, e)
+      \pattsExprFwdF(p)(e)
       &=
       \pattContFwdF(p, e)
       \\
-      \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}', e)
+      \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}')(e)
       &=
       \pattContFwdF(p_1, \exFun{(\pattsExprFwdF(p_2 \cons \seq{p}', e))})
       \\[2mm]
       %========================================
       \pattsExprBwdF
       &::
-      \PattSeq\;A\;\Gamma' \times \Raw{\Expr}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to
+      \PattSeq\;A\;\Gamma' \to \Raw{\Expr}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Expr\;(\Gamma \cons \Gamma')\;B
       \\
-      &
-      \phantom{an}
-      \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B
-      \\
-      \pattsExprBwdF((p, \raw{e}), \sigma)
+      \pattsExprBwdF(p)(\raw{e}, \sigma)
       &=
-      (p, \pattContBwdF((p, \raw{e}), \sigma))
+      \pattContBwdF((p, \raw{e}), \sigma)
       \\
-      \pattsExprBwdF((p_1 \cons p_2 \cons \seq{p}', \raw{e}), \sigma)
+      \pattsExprBwdF(p_1 \cons p_2 \cons \seq{p}')(\raw{e}, \sigma)
       &=
-      (p_1 \cons p_2 \cons \seq{p}', \pi_2(\pattsExprBwdF((p_2 \cons \seq{p}', \raw{e}), \sigma')))
-      \\
-      &\quad\textit{ where }
+      \pattsExprBwdF((p_2 \cons \seq{p}', \raw{e}), \sigma')
+      \quad\textit{ where }
       \pattContBwdF(p_1, \sigma) = \exFun{\sigma'}
       %========================================
    \end{salign}
