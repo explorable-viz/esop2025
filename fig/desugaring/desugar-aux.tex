@@ -84,9 +84,24 @@
       \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattsExprFwdF(p \cons \seq{p}, e)
+      \pattsExprFwdF(p, e)
       &=
-      \pattContFwdF(p, \exFun{(\pattsExprFwdF(\seq{p}, e))})
+      \pattContFwdF(p_1, e)
+      \\
+      \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}', e)
+      &=
+      \pattContFwdF(p_1, \exFun{(\pattsExprFwdF(p_2 \cons \seq{p}', e))})
+      \\[2mm]
+      %========================================
+      \pattsExprBwdF
+      &::
+      \PattSeq\;A\;\Gamma' \times \Raw{\Expr}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to
+      \\
+      &
+      \phantom{an}
+      \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B
+      \\
+      %========================================
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
