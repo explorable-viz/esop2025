@@ -29,7 +29,7 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
+      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B$}
       }
       %========================================
       \pattContFwdF
@@ -57,7 +57,7 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
+      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B$}
       }
       %========================================
       \pattContFwdF
@@ -88,7 +88,6 @@
       \flushleft\shadebox{$\pattsExprF :: \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
       }
       %========================================
-      %========================================
       \pattsExprFwdF
       &::
       \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
@@ -117,7 +116,9 @@
       \\
       \pattsExprBwdF((p_1 \cons p_2 \cons \seq{p}', \raw{e}), \sigma)
       &=
-      \textit{ where }
+      (p_1 \cons p_2 \cons \seq{p}', \pi_2(\pattsExprBwdF((p_2 \cons \seq{p}', \raw{e}), \sigma')))
+      \\
+      &\quad\textit{ where }
       \pattContBwdF(p_1, \sigma) = \exFun{\sigma'}
       %========================================
    \end{salign}
