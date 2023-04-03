@@ -71,6 +71,20 @@
       \desugarBwdR{\exIfThenElse{\raw{e}}{\raw{e}_1}{\raw{e}_2}}
       \exIfThenElse{e}{e_1}{e_2}
    }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-enum}},
+   ]
+   {
+      \strut
+   }
+   {
+      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+      \desugarBwdR{\exListEnum{\raw{e}}{\raw{e}'}}
+      \exListEnum{e}{e'}
+   }
 \end{smathpar}
 \caption{Backward desugaring}
 \end{figure}
