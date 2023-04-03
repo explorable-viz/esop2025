@@ -13,7 +13,7 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
          \annListComp{e}{\seq{q}}{\alpha} \desugarFwdR e^\dagger
       }
@@ -21,6 +21,30 @@
          \annListComp{e}{\qualGuard{e'} \concat \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
+      {
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
+      }
+      {
+         \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
+         \desugarFwdR
+         \exApp{\exFun{(\pattContF(p)(e^\dagger))}}{e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
+      {
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
+      }
+      {
+         \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
+         \desugarFwdR
+         \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\pattContF(p)(e^\dagger)), \annConstr{\cNil}{}{\alpha}))}}}{e'}
       }
    \end{smathpar}
 
@@ -54,14 +78,6 @@
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       \\
-      \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
-      &\desugarFwdR
-      \exApp{\exFun{(\clauseF(p, \exSugar{\exListComp{e}{\vec{q}}}))}}{e'}
-      \\
-      \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
-      &\desugarFwdR
-      \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\clauseF(p, \exSugar{\exListComp{e}{\vec{q}}}), \exConstr{\cNil}{}))}}}{e'}
-      \\
       \exDo{e}
       &\desugarFwdR
       e
@@ -74,11 +90,11 @@
       &\desugarFwdR
       \smash{\exApp
          {\exApp{\varBind}{e}}
-         {\exFun{(\orElseF(\clauseF(p, \exSugar{(\exDo{\seq{d}})}),\exError)}}}
+         {\exFun{(\orElseF(\pattContF(p)(\exSugar{(\exDo{\seq{d}})}),\exError)}}}
       \\
       \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
       &\desugarFwdR
-      \smash{\exApp{\exFun{(\orElseF(\clauseF(p, \exSugar{(\exDo{\seq{d}})}), \exError))}}{e}}
+      \smash{\exApp{\exFun{(\orElseF(\pattContF(p)(\exSugar{(\exDo{\seq{d}})}), \exError))}}{e}}
    \end{salign}
    \flushleft \shadebox{$r \desugarFwdR e$}
    \begin{salign}
