@@ -2,7 +2,18 @@
    {\flushleft \shadebox{$s \desugarFwdR e$}
    \hfill \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      {
+      }
+      {
+         \exListComp{e}{\seqEmpty}
+         \desugarFwdR
+         \exConstr{\cCons}{e, \exConstr{\cNil}{}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
          \exListComp{e}{\seq{q}} \desugarFwdR e^\dagger
       }
@@ -42,10 +53,6 @@
       \exListEnum{e}{e'}
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
-      \\
-      \exListComp{e}{\seqEmpty}
-      &\desugarFwdR
-      \exConstr{\cCons}{e, \exConstr{\cNil}{}}
       \\
       \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
       &\desugarFwdR
