@@ -23,9 +23,9 @@
       (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
       \\
       %========================================
-      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
+      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \sigma)
       &=
-      %\pattContBwdF(\seq{p},e)
+      \pattContBwdF(\seq{p})(\raw{e}, \sigma)
       \\[2mm]
       %========================================
       \intertext{
@@ -55,6 +55,11 @@
       \quad\textit{where }
       \pattContFwdF(\pattRecord{\seq{\bind{x}p}})(\pattContFwdF(p')(\kappa)) = \elimRecord{\seq{x}}{\sigma}
       \\[2mm]
+      %========================================
+      \pattContBwdF
+      &::
+      \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
