@@ -1,0 +1,42 @@
+\begin{figure}
+   \begin{salign}
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\orElseF :: \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \partialGCto \Expr\;\Gamma\;A$}
+      }
+      %========================================
+      \orElseF
+      &::
+      \Cont\;\Gamma\;A \to \Expr\;\cxtEmpty\;A \to \Expr\;\Gamma\;A
+      \\
+      %========================================
+      \orElseF(e, e')
+      &=
+      e
+      \\
+      \orElseF(\elimVar{x}{\kappa}, e)
+      &=
+      \elimVar{x}{\orElseF(\kappa, e)}
+      \\
+      \orElseF(\elimRecord{\seq{x}}{\kappa}, e)
+      &=
+      \elimRecord{\seq{x}}{\orElseF(\kappa, e)}
+      \\
+      \begin{split}
+      \orElseF(\elimConstr{\elimBind{c}{\kappa}}, e)
+      &=
+      \elimConstr{\elimBind{c}{\orElseF(\kappa, e)}}
+      \disjjoin
+      \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
+      \\
+      &
+      \textit{where }
+      \opName{elimArgs}(0) = e
+      \\
+      &
+      \phantom{\textit{where }}
+      \opName{elimArgs}(n + 1) = \elimVar{x}{\opName{elimArgs}(n)}
+      \end{split}
+   \end{salign}
+   \caption{Desugaring: $\orElseF$ auxiliary function}
+\end{figure}
