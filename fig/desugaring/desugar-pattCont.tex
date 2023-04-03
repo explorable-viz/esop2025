@@ -1,0 +1,92 @@
+\begin{figure}
+   \begin{salign}
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      }
+      %========================================
+      \pattContFwdF
+      &::
+      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      %========================================
+      \pattContFwdF(\pattVar{x})(\kappa)
+      &=
+      \elimVar{x}{\kappa}
+      \\
+      %\pattContFwdF(\pattConstr{c}{\seq{p}})()
+      %&=
+      \\
+      \pattContFwdF(\pattList{p}{o})(\kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
+      \\
+      \pattContFwdF(\pattRecord{\seqEmpty})(\kappa)
+      &=
+      \elimRecord{\seqEmpty}{\kappa}
+      \\
+      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\kappa)
+      &=
+      \elimRecord{\seq{x} \cons y}{\sigma}
+      \\
+      &
+      \quad\textit{where }
+      \pattContFwdF(\pattRecord{\seq{\bind{x}p}})(\pattContFwdF(p')(\kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \\[2mm]
+      %========================================
+      \pattContBwdF
+      &::
+      \Patt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
+      \pattContBwdF(\pattVar{x})(\elimVar{x}{\kappa})
+      &=
+      \kappa
+      \\
+      \pattContBwdF(\pattList{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
+      &=
+      \pattContBwdF(o, \pattContBwdF(p, \sigma))
+      \\
+      \pattContBwdF(\pattRecord{\seqEmpty})(\elimRecord{\seqEmpty}{\kappa})
+      &=
+      \kappa
+      \\
+      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\elimRecord{\seq{x} \cons y}{\sigma})
+      &=
+      \pattContBwdF(p', \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\sigma}))
+      \\
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      }
+      %========================================
+      \pattContFwdF
+      &::
+      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      %========================================
+      \pattContFwdF(\pattListEnd)(\kappa)
+      &=
+      \elimConstr{\elimBind{\cNil}{\kappa}}
+      \\
+      \pattContFwdF(\pattListNext{p}{o})(\kappa)
+      &=
+      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
+      \\[2mm]
+      %========================================
+      \pattContBwdF
+      &::
+      \ListRestPatt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \\
+      &\phantom{an}
+      \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
+      \pattContBwdF(\pattListEnd)(\elimConstr{\elimBind{\cNil}{\kappa}})
+      &=
+      \kappa
+      \\
+      \pattContBwdF(\pattListNext{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
+      &=
+      \pattContBwdF(o, \pattContBwdF(p, \sigma))
+      %========================================
+   \end{salign}
+   \caption{Desugaring: $\pattContF$ auxiliary function}
+\end{figure}
