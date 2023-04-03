@@ -74,6 +74,14 @@
       &=
       \pattContBwdF(o, \pattContBwdF(p, \sigma))
       \\
+      \pattContBwdF(\pattRecord{\seqEmpty})(\elimRecord{\seqEmpty}{\kappa})
+      &=
+      \kappa
+      \\
+      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\elimRecord{\seq{x} \cons y}{\sigma})
+      &=
+      \pattContBwdF(p', \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\sigma}))
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
