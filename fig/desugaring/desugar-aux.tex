@@ -79,14 +79,14 @@
       }
       %========================================
       %========================================
-      \clauseFwdF
+      \pattsExprFwdF
       &::
       \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clauseFwdF(p \cons \seq{p}, e)
+      \pattsExprFwdF(p \cons \seq{p}, e)
       &=
-      \clauseFwdF(p, \exFun{(\clauseFwdF(\seq{p}, e))})
+      \clauseFwdF(p, \exFun{(\pattsExprFwdF(\seq{p}, e))})
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
