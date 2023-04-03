@@ -14,6 +14,9 @@
 \newcommand*{\comma}{\sym{,}}
 \newcommand*{\symCons}{\sym{:}}
 
+% Galois connections
+\newcommand{\partialGCto}{\rightleftharpoons}
+
 % sequences, maps
 \newcommand{\seqEmpty}{\varepsilon}
 \newcommand{\bind}[2]{{#1}:{#2}}
@@ -98,11 +101,12 @@
 \newcommand*{\exConstr}[2]{#1(#2)}
 \newcommand*{\exDo}[1]{\kw{do}\;#1}
 \newcommand*{\exError}{\kw{error}}
-\newcommand*{\exFun}[1]{\lambda{#1}}
+\newcommand*{\exFun}[1]{\bm{\lambda}{#1}}
 \newcommand*{\exHandle}[2]{\kw{handle}\;{#1}\;\kw{with}\;{#2}}
 \newcommand*{\exHandler}[1]{\set{#1}}
 \newcommand*{\exIfThenElse}[3]{\kw{if}\;{#1}\;\kw{then}\;{#2}\;\kw{else}\;{#3}}
 \newcommand*{\exInt}[1]{#1}
+\newcommand*{\exLetRecElim}[2]{\exLetRecPiecewise{#1}{#2}}
 \newcommand*{\exLetRecPiecewise}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
 \newcommand*{\exList}[2]{\kw{[}\;#1 \ #2}
 \newcommand*{\exListComp}[2]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\kw{]}}
@@ -143,6 +147,7 @@
 \newcommand{\ListRest}{\Set{ListRest}}
 \newcommand{\ListRestPatt}{\Set{ListRestPatt}}
 \newcommand{\Patt}{\Set{Patt}}
+\newcommand{\PattSeq}{\Set{PattSeq}}
 \newcommand{\SExpr}{\Set{SExpr}}
 \newcommand{\Type}{\Set{Type}}
 
@@ -160,6 +165,10 @@
 \newcommand{\reduce}{\rightsquigarrow}
 \newcommand{\match}{\looparrowright}
 
+% fwd/bwd notation
+\newcommand*{\opBwd}[1]{#1^{\triangleleft}}
+\newcommand*{\opFwd}[1]{#1^{\triangleright}}
+
 % desugaring
 \newcommand*{\desugarFwdS}{\twoheadrightarrow}
 \newcommand*{\desugarBwdS}{\twoheadleftarrow}
@@ -168,8 +177,19 @@
 
 % desugaring-aux
 \newcommand*{\clauseF}{\opName{clause}}
+\newcommand*{\clauseFwdF}{\opFwd{\clauseF}}
+\newcommand*{\clauseBwdF}{\opBwd{\clauseF}}
+\newcommand*{\pattContF}{\opName{pattCont}}
+\newcommand*{\pattContFwdF}{\opFwd{\pattContF}}
+\newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
 \newcommand*{\clausesF}{\opName{clauses}}
+\newcommand*{\clausesFwdF}{\opFwd{\clausesF}}
+\newcommand*{\clausesBwdF}{\opBwd{\clausesF}}
 \newcommand*{\orElseF}{\opName{orElse}}
+\newcommand*{\orElseFwdF}{\opFwd{\orElseF}}
+\newcommand*{\pattsExprF}{\opName{pattsExpr}}
+\newcommand*{\pattsExprFwdF}{\opFwd{\pattsExprF}}
+\newcommand*{\pattsExprBwdF}{\opBwd{\pattsExprF}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
@@ -177,3 +197,4 @@
 
 % annotations
 \newcommand*{\raw}[1]{\bm{#1}}
+\newcommand*{\Raw}[1]{\textbf{#1}}
