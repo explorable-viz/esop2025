@@ -11,7 +11,7 @@
       \\
       \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
       &=
-      \clauseFwdF(\seq{p}, e) \disjjoin \clausesFwdF(\seq{c})
+      \clauseFwdF(\clause{\seq{p}}{e}) \disjjoin \clausesFwdF(\seq{c})
       \\[2mm]
       %========================================
       \clausesBwdF
@@ -19,9 +19,9 @@
       (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
       \\
       %========================================
-      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
+      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \clause{\seq{p}}{e})
       &=
-      \clauseBwdF(\seq{p}, e)
+      \clauseBwdF(\clause{\seq{p}}{e})
       \\[2mm]
       %========================================
       \clauseF
