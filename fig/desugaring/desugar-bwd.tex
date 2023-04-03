@@ -104,11 +104,11 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
    {
-      e \desugarBwdR{\exListComp{t}{\vec{q}}} \annListComp{s}{\vec{q}'}{\beta}
+      e \desugarBwdR{\exListComp{\raw{e}}{\vec{q}}} \annListComp{s}{\vec{q}'}{\beta}
    }
    {
       \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
-      \desugarBwdR{\exListComp{\raw{t}}{\qualGuard{\raw{e}'} \concat \vec{q}}}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{q}}}
       \annListComp{s}{\qualGuard{s'} \concat \vec{q}'}{\alpha \join \beta}
    }
 \end{smathpar}
