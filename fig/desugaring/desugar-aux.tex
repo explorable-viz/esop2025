@@ -1,6 +1,10 @@
 \begin{figure}
    \begin{salign}
       %========================================
+      \intertext{
+      \flushleft\shadebox{$\clausesF :: (\Clause\;\Gamma\;A\;B)^+ \partialGCto \Elim\;\Gamma\;A\;B$}
+      }
+      %========================================
       \clausesFwdF
       &::
       (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
@@ -11,7 +15,7 @@
       \\
       \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
       &=
-      \clauseFwdF(\clause{\seq{p}}{e}) \disjjoin \clausesFwdF(\seq{c})
+      \clauseFwdF(\seq{p}, e) \disjjoin \clausesFwdF(\seq{c})
       \\[2mm]
       %========================================
       \clausesBwdF
@@ -19,51 +23,61 @@
       (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
       \\
       %========================================
-      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \clause{\seq{p}}{e})
+      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, (\seq{p}, e))
       &=
-      \clauseBwdF(\clause{\seq{p}}{e})
+      \clauseBwdF(\seq{p},e)
       \\[2mm]
       %========================================
-      \clauseF
+      \intertext{
+      \flushleft\shadebox{$\clauseF :: \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B$}
+      }
+      %========================================
+      \clauseFwdF
       &::
-      \Clause\;\Gamma\;A\;B \to \Elim\;\Gamma\;A\;B
+      \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clauseF(\clause{\pattVar{x}}{\kappa})
+      \clauseFwdF(\pattVar{x}, \kappa)
       &=
       \elimVar{x}{\kappa}
       \\
-      \clauseF(\clause{\pattList{p}{o}}{\kappa})
+      \clauseFwdF(\pattList{p}{o}, \kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\clauseF(\clause{p}{\clauseF(\clause{o}{\kappa})})}}
+      \elimConstr{\elimBind{\cCons}{\clauseFwdF(p, \clauseFwdF(o, \kappa))}}
       \\
-      \clauseF(\clause{\pattRecord{\seqEmpty}}{\kappa})
+      \clauseFwdF(\pattRecord{\seqEmpty}, \kappa)
       &=
       \elimRecord{\seqEmpty}{\kappa}
       \\
-      \clauseF(\clause{\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}}{\kappa})
+      \clauseFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \kappa)
       &=
       \elimRecord{\seq{x} \cons y}{\sigma}
       \quad\textit{where }
-      \clauseF(\clause{\pattRecord{\seq{\bind{x}p}}}{\clauseF(\clause{p'}{\kappa})}) = \elimRecord{\seq{x}}{\sigma}
-      \\
-      \clauseF(p \cons \seq{p}, e)
-      &=
-      \clauseF(p, \exFun{(\clauseF(\seq{p}, e))})
+      \clauseFwdF(\pattRecord{\seq{\bind{x}p}}, \clauseFwdF(p', \kappa)) = \elimRecord{\seq{x}}{\sigma}
       \\[2mm]
       %========================================
-      \clauseF
+      \clauseFwdF
       &::
       \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clauseF(\pattListEnd, \kappa)
+      \clauseFwdF(\pattListEnd, \kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
       \\
-      \clauseF((\pattListNext{p}{o}), \kappa)
+      \clauseFwdF((\pattListNext{p}{o}), \kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\clauseF(p, \clauseF(o, \kappa))}}
+      \elimConstr{\elimBind{\cCons}{\clauseFwdF(p, \clauseFwdF(o, \kappa))}}
+      \\[2mm]
+      %========================================
+      \clauseFwdF
+      &::
+      \PattSeq\;A\;\Gamma' \times \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      %========================================
+      \clauseFwdF(p \cons \seq{p}, e)
+      &=
+      \clauseFwdF(p, \exFun{(\clauseFwdF(\seq{p}, e))})
       \\[2mm]
       %========================================
       \orElseF
