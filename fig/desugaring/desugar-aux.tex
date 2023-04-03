@@ -10,12 +10,12 @@
       (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
+      &= \pattContFwdF(\seq{p})(e)
       \clausesFwdF(\clause{\seq{p}}{e})
-      &= \pattContFwdF(\seq{p}, e)
       \\
       \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c}, e)
       &=
-      \pattContFwdF(\seq{p}, e) \disjjoin \clausesFwdF(\seq{c})
+      \pattContFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
       \\[2mm]
       %========================================
       \clausesBwdF
@@ -34,7 +34,7 @@
       %========================================
       \pattContFwdF
       &::
-      \Patt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
       \pattContFwdF(\pattVar{x})(\kappa)
@@ -57,21 +57,21 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B$}
+      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \pattContFwdF
       &::
-      \ListRestPatt\;A\;\Gamma' \times \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattContFwdF(\pattListEnd, \kappa)
+      \pattContFwdF(\pattListEnd)(\kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
       \\
-      \pattContFwdF((\pattListNext{p}{o}), \kappa)
+      \pattContFwdF(\pattListNext{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p, \pattContFwdF(o, \kappa))}}
+      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
       \\[2mm]
       %========================================
       \pattContBwdF
@@ -96,7 +96,7 @@
       \\
       \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}')(e)
       &=
-      \pattContFwdF(p_1)(\exFun{(\pattsExprFwdF(p_2 \cons \seq{p}', e))})
+      \pattContFwdF(p_1)(\exFun{(\pattsExprFwdF(p_2 \cons \seq{p}')(e))})
       \\[2mm]
       %========================================
       \pattsExprBwdF
