@@ -57,6 +57,20 @@
       \desugarBwdR{\exList{t}{\raw{r}}}
       \annCons{e}{e'}{\alpha}
    }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-if}}
+   ]
+   {
+      \strut
+   }
+   {
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
+      \desugarBwdR{\exIfThenElse{\raw{e}}{\raw{e}_1}{\raw{e}_2}}
+      \exIfThenElse{e}{e_1}{e_2}
+   }
 \end{smathpar}
 \caption{Backward desugaring}
 \end{figure}
