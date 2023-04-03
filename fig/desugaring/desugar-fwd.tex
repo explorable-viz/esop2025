@@ -6,21 +6,21 @@
       {
       }
       {
-         \exListComp{e}{\seqEmpty}
+         \annListComp{e}{\seqEmpty}{\alpha}
          \desugarFwdR
-         \exConstr{\cCons}{e, \exConstr{\cNil}{}}
+         \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \exListComp{e}{\seq{q}} \desugarFwdR e^\dagger
+         \annListComp{e}{\seq{q}}{\alpha} \desugarFwdR e^\dagger
       }
       {
-         \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
+         \annListComp{e}{\qualGuard{e'} \concat \seq{q}}{\alpha}
          \desugarFwdR
-         \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
+         \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
       }
    \end{smathpar}
 
