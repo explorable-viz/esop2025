@@ -1,4 +1,18 @@
 \begin{figure}
+   {\flushleft \shadebox{$s \desugarFwdR e$}
+   \hfill \textbfit{$s$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \exListComp{e}{\seq{q}} \desugarFwdR e^\dagger
+      }
+      {
+         \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
+         \desugarFwdR
+         \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
+      }
+   \end{smathpar}
+
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
       \exBinaryApp{e}{\oplus}{e'}
@@ -32,10 +46,6 @@
       \exListComp{e}{\seqEmpty}
       &\desugarFwdR
       \exConstr{\cCons}{e, \exConstr{\cNil}{}}
-      \\
-      \exListComp{e}{\qualGuard{e'} \concat \seq{q}}
-      &\desugarFwdR
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{\exSugar{\exListComp{e}{\seq{q}}}}, \elimBind{\cFalse}{\exConstr{\cNil}{}}}}}{e'}
       \\
       \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
       &\desugarFwdR
