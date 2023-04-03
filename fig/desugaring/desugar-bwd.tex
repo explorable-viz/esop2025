@@ -67,9 +67,9 @@
       \strut
    }
    {
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
-      \desugarBwdR{\exIfThenElse{\raw{e}}{\raw{e}_1}{\raw{e}_2}}
       \exIfThenElse{e}{e_1}{e_2}
+      \desugarBwdR{\exIfThenElse{\raw{e}}{\raw{e}_1}{\raw{e}_2}}
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
    }
    %
    \and
@@ -81,9 +81,9 @@
       \strut
    }
    {
-      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
-      \desugarBwdR{\exListEnum{\raw{e}}{\raw{e}'}}
       \exListEnum{e}{e'}
+      \desugarBwdR{\exListEnum{\raw{e}}{\raw{e}'}}
+      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
    }
    %
    \and
@@ -93,9 +93,9 @@
       \strut
    }
    {
-      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha'}
-      \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
       \annListComp{e}{\seqEmpty}{\alpha \join \alpha'}
+      \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
+      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha'}
    }
    %
    \and
@@ -104,12 +104,28 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
    {
-      e^\dagger \desugarBwdR{\exListComp{\raw{e}}{\vec{\raw{q}}}} \annListComp{e}{\vec{q}}{\beta}
+      \annListComp{e}{\vec{q}}{\beta} \desugarBwdR{\exListComp{\raw{e}}{\vec{\raw{q}}}} e^\dagger
    }
    {
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{\raw{q}}}}
       \annListComp{e}{\qualGuard{e'} \concat \vec{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{\raw{q}}}}
+      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-comp-decl}},
+   ]
+   {
+      \annListComp{e}{\vec{q}}{\beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\vec{\raw{q}}}}
+      \pattContBwdF(p, \sigma)
+   }
+   {
+      \annListComp{e}{\qualDeclaration{p}{e'} \concat \vec{q}}{\beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \concat \vec{\raw{q}}}}
+      \exApp{\exFun{\sigma}}{e'}
    }
 \end{smathpar}
 \caption{Backward desugaring}
