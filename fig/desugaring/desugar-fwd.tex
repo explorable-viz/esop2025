@@ -27,12 +27,24 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \exListComp{e}{\vec{q}} \desugarFwdR e^\dagger
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
       }
       {
-         \exListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}
+         \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exFun{(\pattContF(p)(e^\dagger))}}{e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
+      {
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
+      }
+      {
+         \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
+         \desugarFwdR
+         \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\pattContF(p)(e^\dagger)), \annConstr{\cNil}{}{\alpha}))}}}{e'}
       }
    \end{smathpar}
 
@@ -65,10 +77,6 @@
       \exListEnum{e}{e'}
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
-      \\
-      \exListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}
-      &\desugarFwdR
-      \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\pattContF(p)(\exSugar{\exListComp{e}{\vec{q}}})), \exConstr{\cNil}{}))}}}{e'}
       \\
       \exDo{e}
       &\desugarFwdR
