@@ -141,6 +141,28 @@
       \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \concat \vec{\raw{q}}}}
       \exApp{\exFun{\sigma}}{e'}
    }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
+   ]
+   {
+      e \desugarBwdR{t} s
+      \\
+      \orElseBwdF(p)(\sigma) = (\sigma', \beta)
+      \\
+      \pattContBwdF(p)(e') = \sigma'
+      \\
+      e'
+      \desugarBwdR{\exListComp{t'}{\seq{q}}}
+      \annListComp{s'}{\seq{q}'}{\beta'}
+   }
+   {
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+      \desugarBwdR{\exListComp{t'}{\qualGenerator{p}{t} \concat \seq{q}}}
+      \annListComp{s'}{\qualGenerator{p}{s} \concat \seq{q}'}{\beta \join \beta'}
+   }
 \end{smathpar}
 \caption{Backward desugaring}
 \end{figure}
