@@ -152,14 +152,44 @@
       \\
       \pattContBwdF(p)(\sigma') = e^\dagger
       \\
-      \annListComp{e'}{\seq{q}}{\beta'}
+      \annListComp{e}{\seq{q}}{\beta'}
       \desugarBwdThunkR
       e^\dagger
    }
    {
-      \annListComp{e'}{\qualGenerator{p}{e} \concat \seq{q}}{\beta \join \beta'}
-      \desugarBwdR{\exListComp{\raw{e}'}{\qualGenerator{p}{\raw{t}} \concat \seq{\raw{q}}}}
-      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+      \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\beta \join \beta'}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGenerator{p}{\raw{e}'} \concat \seq{\raw{q}}}}
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
+   }
+\end{smathpar}
+\flushleft \shadebox{$e \desugarBwdR{r} r'$}
+\begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-rest-end}}
+   ]
+   {
+      \strut
+   }
+   {
+      \annConstr{\cNil}{}{\alpha}
+      \desugarBwdR{\exListEnd}
+      \annListEnd{\alpha}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-rest-cons}}
+   ]
+   {
+      e \desugarBwdR{t} s
+      \\
+      e' \desugarBwdR{r} r'
+   }
+   {
+      \annConstr{\cCons}{e, e'}{\alpha}
+      \desugarBwdR{(\exListNext{t}{r})}
+      (\annListNext{s}{r'}{\alpha})
    }
 \end{smathpar}
 \caption{Backward desugaring}
