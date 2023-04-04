@@ -148,20 +148,20 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
    ]
    {
-      e \desugarBwdR{t} s
+      s \desugarBwdR{t} e
       \\
       \orElseBwdF(p)(\sigma) = (\sigma', \beta)
       \\
       \pattContBwdF(p)(e') = \sigma'
       \\
-      e'
-      \desugarBwdR{\exListComp{t'}{\seq{q}}}
       \annListComp{s'}{\seq{q}'}{\beta'}
+      \desugarBwdR{\exListComp{t'}{\seq{q}}}
+      e'
    }
    {
-      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
-      \desugarBwdR{\exListComp{t'}{\qualGenerator{p}{t} \concat \seq{q}}}
       \annListComp{s'}{\qualGenerator{p}{s} \concat \seq{q}'}{\beta \join \beta'}
+      \desugarBwdR{\exListComp{t'}{\qualGenerator{p}{t} \concat \seq{q}}}
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
    }
 \end{smathpar}
 \caption{Backward desugaring}
