@@ -2,6 +2,30 @@
    {\flushleft \shadebox{$s \desugarFwdR e$}
    \hfill \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      {
+         r \desugarFwdR e'
+      }
+      {
+         \exList{e}{r}
+         \desugarFwdR
+         \exConstr{\cCons}{e, e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      {
+         \strut
+      }
+      {
+         \exMatch{e}{\seq{c}}
+         \desugarFwdR
+         \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
          \sigma_i = \clausesFwdF(\seq{c_i})
@@ -77,14 +101,6 @@
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
-      \exMatch{e}{\seq{c}}
-      &\desugarFwdR
-      \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
-      \\
-      \exList{e}{r}
-      &\desugarFwdR
-      \exConstr{\cCons}{e,\exSugar{r}}
-      \\
       \exIfThenElse{e}{e_1}{e_2}
       &\desugarFwdR
       \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
