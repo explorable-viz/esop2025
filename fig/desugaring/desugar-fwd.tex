@@ -151,7 +151,7 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-discard}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
@@ -165,7 +165,7 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
@@ -177,6 +177,20 @@
          \exApp
             {\exApp{\varBind}{e}}
             {\exFun{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      {
+         \exDo{\seq{d}} \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseF(\pattContF(p)(e'), \exError)
+      }
+      {
+         \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
+         \desugarFwdR
+         \smash{\exApp{\exFun{\sigma}}{e}}
       }
    \end{smathpar}
    {\flushleft \shadebox{$r \desugarFwdR e$}
@@ -204,11 +218,4 @@
          \annConstr{\cCons}{e, e'}{\alpha}
       }
    \end{smathpar}
-
-   \flushleft \shadebox{$s \desugarFwdR e$}
-   \begin{salign}
-      \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
-      &\desugarFwdR
-      \smash{\exApp{\exFun{(\orElseF(\pattContF(p)(\exSugar{(\exDo{\seq{d}})}), \exError))}}{e}}
-   \end{salign}
 \end{figure}
