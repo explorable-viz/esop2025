@@ -148,19 +148,17 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
    ]
    {
-      s \desugarBwdR{t} e
-      \\
       \orElseBwdF(p)(\sigma) = (\sigma', \beta)
       \\
-      \pattContBwdF(p)(e') = \sigma'
+      \pattContBwdF(p)(\sigma') = e^\dagger
       \\
-      \annListComp{s'}{\seq{q}'}{\beta'}
-      \desugarBwdR{\exListComp{t'}{\seq{q}}}
-      e'
+      \annListComp{e'}{\seq{q}}{\beta'}
+      \desugarBwdThunkR
+      e^\dagger
    }
    {
-      \annListComp{s'}{\qualGenerator{p}{s} \concat \seq{q}'}{\beta \join \beta'}
-      \desugarBwdR{\exListComp{t'}{\qualGenerator{p}{t} \concat \seq{q}}}
+      \annListComp{e'}{\qualGenerator{p}{e} \concat \seq{q}}{\beta \join \beta'}
+      \desugarBwdR{\exListComp{\raw{e}'}{\qualGenerator{p}{\raw{t}} \concat \seq{\raw{q}}}}
       \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
    }
 \end{smathpar}
