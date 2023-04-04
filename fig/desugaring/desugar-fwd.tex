@@ -41,7 +41,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
-         \sigma = \clausesF(\seq{c})
+         \sigma = \clausesFwdF(\seq{c})
       }
       {
          \exMatch{e}{\seq{c}}
@@ -117,7 +117,7 @@
       {
          \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
-         \sigma = \pattContF(p)(e^\dagger)
+         \sigma = \pattContFwdF(p)(e^\dagger)
       }
       {
          \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
@@ -131,7 +131,7 @@
       {
          \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
-         \sigma = \orElseF(\pattContF(p)(e^\dagger), \annConstr{\cNil}{}{\alpha})
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annConstr{\cNil}{}{\alpha})
       }
       {
          \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
@@ -155,7 +155,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \pattContF(p)(e^\dagger)
+         \sigma = \pattContFwdF(p)(e^\dagger)
       }
       {
          \exDo{(e \cons \seq{d})}
@@ -169,7 +169,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseF(\pattContF(p)(e'),\exError)
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'),\exError)
       }
       {
          \exDo{(\stmtBind{p}{e} \cons \seq{d})}
@@ -185,7 +185,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseF(\pattContF(p)(e'), \exError)
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
          \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
