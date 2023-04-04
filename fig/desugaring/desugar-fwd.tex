@@ -133,6 +133,31 @@
          \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\pattContF(p)(e^\dagger)), \annConstr{\cNil}{}{\alpha}))}}}{e'}
       }
    \end{smathpar}
+   {\flushleft \shadebox{$r \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$r$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      {
+         \strut
+      }
+      {
+         \annListEnd{\alpha}
+         \desugarFwdR
+         \annConstr{\cNil}{}{\alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      {
+         r \desugarFwdThunkR e'
+      }
+      {
+         \annListNext{e}{r}{\alpha}
+         \desugarFwdR
+         \annConstr{\cCons}{e, e'}{\alpha}
+      }
+   \end{smathpar}
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
@@ -154,15 +179,4 @@
       &\desugarFwdR
       \smash{\exApp{\exFun{(\orElseF(\pattContF(p)(\exSugar{(\exDo{\seq{d}})}), \exError))}}{e}}
    \end{salign}
-   \flushleft \shadebox{$r \desugarFwdR e$}
-   \begin{salign}
-      \exListEnd
-      &\desugarFwdR
-      \exConstr{\cNil}{}
-      \\
-      \exListNext{e}{r}
-      &\desugarFwdR
-      \exConstr{\cCons}{e,\exSugar{r}}
-   \end{salign}
-   \caption{Desugaring}
 \end{figure}
