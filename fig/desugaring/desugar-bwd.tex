@@ -171,9 +171,9 @@
       \strut
    }
    {
-      \annConstr{\cNil}{}{\alpha}
-      \desugarBwdR{\exListEnd}
       \annListEnd{\alpha}
+      \desugarBwdR{\exListEnd}
+      \annConstr{\cNil}{}{\alpha}
    }
    %
    \and
@@ -182,14 +182,12 @@
       lab={\ruleName{$\desugarBwdR{}$-list-rest-cons}}
    ]
    {
-      e \desugarBwdR{t} s
-      \\
-      e' \desugarBwdR{r} r'
+      r \desugarBwdThunkR e'
    }
    {
+      (\annListNext{e}{r}{\alpha})
+      \desugarBwdR{(\exListNext{\raw{e}}{\raw{r}})}
       \annConstr{\cCons}{e, e'}{\alpha}
-      \desugarBwdR{(\exListNext{t}{r})}
-      (\annListNext{s}{r'}{\alpha})
    }
 \end{smathpar}
 \caption{Backward desugaring}
