@@ -1,6 +1,20 @@
 \begin{figure}
-{\flushleft \shadebox{$e \desugarBwdR{\raw{s}} s$\text{ }}
+{\flushleft \shadebox{$e \desugarBwdR{} s$\text{ }}
 \hfill \textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}}
+\begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-sugar}}
+   ]
+   {
+      s \desugarBwdR{\raw{s}} e
+   }
+   {
+      s \desugarBwdR{} \exSugarNew{\raw{s}}{e}
+   }
+\end{smathpar}
+\\
+{\flushleft \shadebox{$e \desugarBwdR{\raw{s}} s$\text{ }}
+\hfill \phantom{blah}}%\textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}}
 \begin{smathpar}
    \inferrule*[
       lab={\ruleName{$\desugarBwdR{}$-binary-apply}}
