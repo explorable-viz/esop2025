@@ -1,15 +1,26 @@
 \begin{figure}
-   {\flushleft \shadebox{$s \desugarFwdR e$}
+   {\flushleft \shadebox{$s \desugarFwdThunkR e$}
    \hfill \textbfit{$s$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-sugar}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         s \desugarFwdThunkR \exSugarNew{\raw{s}}{e}
+      }
+   \end{smathpar}
+   {\flushleft \shadebox{$s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
       {
          r \desugarFwdR e'
       }
       {
-         \exList{e}{r}
+         \annList{e}{r}{\alpha}
          \desugarFwdR
-         \exConstr{\cCons}{e, e'}
+         \annConstr{\cCons}{e, e'}{\alpha}
       }
       %
       \and
