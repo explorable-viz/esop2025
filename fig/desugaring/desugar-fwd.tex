@@ -13,26 +13,14 @@
    {\flushleft \shadebox{$s \desugarFwdR e$}
    \hfill \phantom{blah}}% \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
-      {
-         r \desugarFwdThunkR e'
-      }
-      {
-         \annList{e}{r}{\alpha}
-         \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
          \strut
       }
       {
-         \exMatch{e}{\seq{c}}
+         \exBinaryApp{e}{\oplus}{e'}
          \desugarFwdR
-         \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
+         \exApp{\exApp{(\oplus)}{e}}{e'}
       }
       %
       \and
@@ -51,14 +39,26 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
          \strut
       }
       {
-         \exBinaryApp{e}{\oplus}{e'}
+         \exMatch{e}{\seq{c}}
          \desugarFwdR
-         \exApp{\exApp{(\oplus)}{e}}{e'}
+         \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      {
+         r \desugarFwdThunkR e'
+      }
+      {
+         \annList{e}{r}{\alpha}
+         \desugarFwdR
+         \annConstr{\cCons}{e, e'}{\alpha}
       }
       %
       \and
@@ -112,10 +112,6 @@
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
-      \exIfThenElse{e}{e_1}{e_2}
-      &\desugarFwdR
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
-      \\
       \exListEnum{e}{e'}
       &\desugarFwdR
       \exApp{\exApp{\varEnumFromTo}{e}}{e'}
