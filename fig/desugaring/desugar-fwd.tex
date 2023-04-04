@@ -1,9 +1,71 @@
 \begin{figure}
-   {\flushleft \shadebox{$s \desugarFwdR e$}
+   {\flushleft \shadebox{$s \desugarFwdThunkR e$}
    \hfill \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-sugar}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         s \desugarFwdThunkR \exSugarNew{\raw{s}}{e}
+      }
+   \end{smathpar}
+   {\flushleft \shadebox{$s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$s$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      {
+         r \desugarFwdThunkR e'
+      }
+      {
+         \annList{e}{r}{\alpha}
+         \desugarFwdR
+         \annConstr{\cCons}{e, e'}{\alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      {
+         \strut
+      }
+      {
+         \exMatch{e}{\seq{c}}
+         \desugarFwdR
+         \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+      {
+         \sigma_i = \clausesFwdF(\seq{c_i})
+         \quad
+         (\forall i \leq j)
+      }
+      {
+         \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
+         \desugarFwdR
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
+      {
+         \strut
+      }
+      {
+         \exBinaryApp{e}{\oplus}{e'}
+         \desugarFwdR
+         \exApp{\exApp{(\oplus)}{e}}{e'}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
+         \strut
       }
       {
          \annListComp{e}{\seqEmpty}{\alpha}
@@ -15,7 +77,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
-         \annListComp{e}{\seq{q}}{\alpha} \desugarFwdR e^\dagger
+         \annListComp{e}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
       }
       {
          \annListComp{e}{\qualGuard{e'} \concat \seq{q}}{\alpha}
@@ -27,7 +89,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
       }
       {
          \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
@@ -39,7 +101,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
       {
-         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdR e^\dagger
+         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
       }
       {
          \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
@@ -50,26 +112,6 @@
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
-      \exBinaryApp{e}{\oplus}{e'}
-      &\desugarFwdR
-      \exApp{\exApp{(\oplus)}{e}}{e'}
-      \\
-      \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
-      &\desugarFwdR
-      \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
-      \quad\textit{where }
-      \sigma_i = \clausesF(\seq{c_i})
-      \quad
-      (\forall i \leq j)
-      \\
-      \exMatch{e}{\seq{c}}
-      &\desugarFwdR
-      \exApp{\exFun{(\clausesF(\seq{c}))}}{e}
-      \\
-      \exList{e}{r}
-      &\desugarFwdR
-      \exConstr{\cCons}{e,\exSugar{r}}
-      \\
       \exIfThenElse{e}{e_1}{e_2}
       &\desugarFwdR
       \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}

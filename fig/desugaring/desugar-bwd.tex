@@ -1,6 +1,20 @@
 \begin{figure}
-{\flushleft \shadebox{$e \desugarBwdR{\raw{s}} s$\text{ }}
+{\flushleft \shadebox{$s \desugarBwdThunkR e$\text{ }}
 \hfill \textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}}
+\begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-sugar}}
+   ]
+   {
+      s \desugarBwdR{\raw{s}} e
+   }
+   {
+      s \desugarBwdThunkR \exSugarNew{\raw{s}}{e}
+   }
+\end{smathpar}
+\\
+{\flushleft \shadebox{$s \desugarBwdR{\raw{s}} e$\text{ }}
+\hfill \phantom{blah}}%\textbfit{$e$ backward-desugars to $s$ of shape $\raw{s}$}}
 \begin{smathpar}
    \inferrule*[
       lab={\ruleName{$\desugarBwdR{}$-binary-apply}}
@@ -50,7 +64,7 @@
       lab={\ruleName{$\desugarBwdR{}$-non-empty-list}}
    ]
    {
-      r \desugarBwdR{\raw{r}} e'
+      r \desugarBwdThunkR e'
    }
    {
       \annList{e}{r}{\alpha}
@@ -104,7 +118,7 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
    {
-      \annListComp{e}{\vec{q}}{\beta} \desugarBwdR{\exListComp{\raw{e}}{\vec{\raw{q}}}} e^\dagger
+      \annListComp{e}{\vec{q}}{\beta} \desugarBwdThunkR e^\dagger
    }
    {
       \annListComp{e}{\qualGuard{e'} \concat \vec{q}}{\alpha \join \beta}
@@ -119,7 +133,7 @@
    ]
    {
       \annListComp{e}{\vec{q}}{\beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\vec{\raw{q}}}}
+      \desugarBwdThunkR
       \pattContBwdF(p, \sigma)
    }
    {

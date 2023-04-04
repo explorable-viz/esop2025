@@ -121,7 +121,9 @@
 \newcommand*{\exRecord}[1]{\record{#1}}
 \newcommand*{\exRecordEmpty}{\record{}}
 \newcommand*{\exRecordExtend}[2]{{#1}\record{#2}}
-\newcommand*{\exSugar}[1]{{\downarrow}#1}
+\newcommand*{\sugSym}{\square}
+\newcommand*{\exSugar}[1]{{\sugSym}#1}
+\newcommand*{\exSugarNew}[2]{{\sugSym}(#1\;#2)}
 \newcommand*{\exReturn}[1]{\kw{return}\;#1}
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\variant}[1]{[#1]}
@@ -173,13 +175,12 @@
 % desugaring
 \newcommand*{\desugarFwdS}{\twoheadrightarrow}
 \newcommand*{\desugarBwdS}{\twoheadleftarrow}
+\newcommand*{\desugarFwdThunkR}{\desugarFwdS_{\sugSym}}
 \newcommand*{\desugarFwdR}{\desugarFwdS}
 \newcommand*{\desugarBwdR}[1]{\sub{\desugarBwdS}{#1}}
+\newcommand*{\desugarBwdThunkR}{\desugarBwdS_{\sugSym}}
 
 % desugaring-aux
-%\newcommand*{\clauseF}{\opName{clause}}
-%\newcommand*{\clauseFwdF}{\opFwd{\clauseF}}
-%\newcommand*{\clauseBwdF}{\opBwd{\clauseF}}
 \newcommand*{\pattContF}{\opName{pattCont}}
 \newcommand*{\pattContFwdF}{\opFwd{\pattContF}}
 \newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
