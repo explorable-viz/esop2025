@@ -50,10 +50,10 @@
       lab={\ruleName{$\desugarBwdR{}$-match}}
    ]
    {
-       \strut
+      \clausesBwdF(\seq{\raw{c}}, \sigma) = \sigma'
    }
    {
-      \exMatch{e}{\clausesBwdF(\seq{\raw{c}}, \sigma)}
+      \exMatch{e}{\sigma'}
       \desugarBwdR{\exMatch{\raw{e}}{\seq{\raw{c}}}}
       \exApp{\exFun{\sigma}}{e}
    }
@@ -78,12 +78,12 @@
       lab={\ruleName{$\desugarBwdR{}$-if}}
    ]
    {
-      \strut
+      \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
    }
    {
       \exIfThenElse{e}{e_1}{e_2}
       \desugarBwdR{\exIfThenElse{\raw{e}}{\raw{e}_1}{\raw{e}_2}}
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}}}{e}
+      \exApp{\exFun{\sigma}}{e}
    }
    %
    \and
@@ -119,11 +119,13 @@
    ]
    {
       \annListComp{e}{\vec{q}}{\beta} \desugarBwdThunkR e^\dagger
+      \\
+      \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
    }
    {
       \annListComp{e}{\qualGuard{e'} \concat \vec{q}}{\alpha \join \beta}
       \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{\raw{q}}}}
-      \exApp{\exFun{\elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}}}{e'}
+      \exApp{\exFun{\sigma}}{e'}
    }
    %
    \and
@@ -148,13 +150,13 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
    ]
    {
-      \orElseBwdF(p)(\sigma) = (\sigma', \beta)
-      \\
-      \pattContBwdF(p)(\sigma') = e^\dagger
-      \\
       \annListComp{e}{\seq{q}}{\beta'}
       \desugarBwdThunkR
       e^\dagger
+      \\
+      \pattContBwdF(p)(\sigma') = e^\dagger
+      \\
+      \orElseBwdF(p)(\sigma) = (\sigma', \beta)
    }
    {
       \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\beta \join \beta'}
