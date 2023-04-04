@@ -75,6 +75,18 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
+      {
+         \strut
+      }
+      {
+         \exListEnum{e}{e'}
+         \desugarFwdR
+         \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
          \strut
@@ -124,10 +136,6 @@
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
-      \exListEnum{e}{e'}
-      &\desugarFwdR
-      \exApp{\exApp{\varEnumFromTo}{e}}{e'}
-      \\
       \exDo{e}
       &\desugarFwdR
       e
