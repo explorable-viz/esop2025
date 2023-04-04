@@ -132,6 +132,28 @@
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{(\orElseF(\pattContF(p)(e^\dagger)), \annConstr{\cNil}{}{\alpha}))}}}{e'}
       }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      {
+         \strut
+      }
+      {
+         \exDo{e} \desugarFwdR e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      {
+         \exDo{\seq{d}} \desugarFwdThunkR e'
+      }
+      {
+         \exDo{(e \cons \seq{d})}
+         \desugarFwdR
+         \exApp{\exApp{\varBind}{e}}{\exFun{(\elimVar{\varAnon}{e'})}}
+      }
    \end{smathpar}
    {\flushleft \shadebox{$r \desugarFwdR e$}
    \hfill \phantom{blah}}% \textbfit{$r$ forward-desugars to $e$}}
@@ -161,14 +183,6 @@
 
    \flushleft \shadebox{$s \desugarFwdR e$}
    \begin{salign}
-      \exDo{e}
-      &\desugarFwdR
-      e
-      \\
-      \smash{\exDo{(e \cons \seq{d})}}
-      &\desugarFwdR
-      \smash{\exApp{\exApp{\varBind}{e}}{\exFun{(\elimVar{\varAnon}{\exSugar{(\exDo{\seq{d}})}})}}}
-      \\
       \smash{\exDo{(\stmtBind{p}{e} \cons \seq{d})}}
       &\desugarFwdR
       \smash{\exApp
