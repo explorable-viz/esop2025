@@ -7,23 +7,25 @@
       %========================================
       \orElseFwdF
       &::
-      \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;\Gamma\;A
+      \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \to (1 + \exists B, \Gamma'.\PattSeq\;B\;\Gamma') \times \Cont\;\Gamma\;A
       \\
       %========================================
       \orElseFwdF(e, e')
       &=
-      e
+      (\UnitVal, e)
       \\
       \orElseFwdF(\elimVar{x}{\kappa}, e)
       &=
-      \elimVar{x}{\orElseFwdF(\kappa, e)}
+      (\pattVar{x} \cons \seq{p}, \elimVar{x}{\kappa'})
+      \textit{ where }
+      (\seq{p}, \kappa') = \orElseFwdF(\kappa, e)
       \\
       \orElseFwdF(\elimRecord{\seq{x}}{\kappa}, e)
       &=
-      \elimRecord{\seq{x}}{\orElseFwdF(\kappa, e)}
+      (\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\orElseFwdF(\kappa, e)})
       \\
       \begin{split}
-         \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
+      \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
       \elimConstr{\elimBind{c}{\orElseFwdF(\kappa, e)}}
       \disjjoin
