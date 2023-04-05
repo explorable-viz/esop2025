@@ -82,11 +82,11 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\unlessF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\seqEmpty\;A\;B)$}
       }
       %========================================
       \unlessFwdF
-      &:: \Ctr \to \Expr\;\seqEmpty\;B \to \Elim\;\Gamma\;A\;B
+      &:: \Ctr \to \Expr\;\seqEmpty\;B \to \Elim\;\seqEmpty\;A\;B
       \\
       %========================================
       \begin{split}
@@ -107,11 +107,9 @@
       \unlessBwdF
       &:: \Ctr \to \Raw{\Expr}\;\seqEmpty\;B \times \Elim\;\Gamma\;A\;B \to \Expr\;\seqEmpty\;B
       \\
-      \unlessBwdF(c)(\raw{e})
+      \unlessBwdF(c)(\raw{e}, \elimConstr{\elimBind{c}{\kappa}})
       &=
       \bot_{\raw{e}}
-      \quad\textit{ if }
-      \dom{\datatype{\Delta}{c}} = \set{c}
       %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
