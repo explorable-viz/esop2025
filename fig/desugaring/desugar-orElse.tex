@@ -16,11 +16,17 @@
       \\
       \orElseFwdF(\elimVar{x}{\kappa}, e)
       &=
-      (\pattVar{x} \cons \seq{p}, \elimVar{x}{\kappa'})
+      (\pattVar{x} \cons \seq{\pi}, \elimVar{x}{\kappa'})
       \textit{ where }
-      (\seq{p}, \kappa') = \orElseFwdF(\kappa, e)
+      (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
       \\
-      \orElseFwdF(\elimRecord{\seq{x}}{\kappa}, e)
+      \orElseFwdF(\elimRecord{\seqEmpty}{\kappa}, e)
+      &=
+      (\pattRecord{} \cons \seq{\pi}, \elimRecord{\seq{x}}{\kappa'})
+      \textit{ where }
+      (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
+      \\
+      \orElseFwdF(\elimRecord{\seq{x} \cons y}{\kappa}, e)
       &=
       (\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\orElseFwdF(\kappa, e)})
       \\
