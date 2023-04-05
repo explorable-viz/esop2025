@@ -11,11 +11,11 @@
       \\
       %========================================
       \clausesFwdF(\clause{\seq{p}}{e})
-      &= \pattContFwdF(\seq{p})(e)
+      &= \pattsExprFwdF(\seq{p})(e)
       \\
       \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c})
       &=
-      \pattContFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
+      \pattsExprFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
       \quad\textit{ if }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
@@ -26,11 +26,11 @@
       %========================================
       \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \sigma)
       &=
-      \clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}
+      \clause{\seq{p}}{\pattsExprBwdF(\seq{p})(\raw{e}, \sigma)}
       \\
       \clausesBwdF((\clause{\seq{p}}{\raw{e}}) \cons \seq{\raw{c}}, \sigma \disjjoin \tau)
       &=
-      (\clause{\seq{p}}{\pattContBwdF(\seq{p})(\raw{e}, \sigma)}) \cons \clausesBwdF(\seq{\raw{c}}, \tau)
+      (\clause{\seq{p}}{\pattsExprBwdF(\seq{p})(\raw{e}, \sigma)}) \cons \clausesBwdF(\seq{\raw{c}}, \tau)
       \quad\textit{ if }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================

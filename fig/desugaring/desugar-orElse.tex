@@ -22,15 +22,15 @@
       \\
       \orElseFwdF(\elimRecord{\seqEmpty}{\kappa}, e)
       &=
-      (\pattRecord{} \cons \seq{\pi}, \elimRecord{\seq{x}}{\kappa'})
+      (\pattRecord{} \cons \seq{\pi}, \elimRecord{\seqEmpty}{\kappa'})
       \textit{ where }
       (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
       \\
       \orElseFwdF(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
-      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi}, \elimRecord{\seq{x}}{\sigma'})
+      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi}, \elimRecord{\seq{x} \cons y}{\sigma'})
       \textit{ where }
-      (p' \cons \seq{\pi}, \sigma') = \orElseFwdF(\sigma, e)
+      (\seq{p} \cons p' \cons \seq{\pi}, \sigma') = \orElseFwdF(\sigma, e)
       \\
       \begin{split}
       \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
