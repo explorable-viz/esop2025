@@ -22,11 +22,9 @@
       &=
       \elimRecord{\seqEmpty}{\orElseFwdF(\seq{\pi})(\kappa, e)}
       \\
-      \orElseFwdF(\elimRecord{\seq{x} \cons y}{\sigma}, e)
+      \orElseFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi})(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
-      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi}, \elimRecord{\seq{x} \cons y}{\sigma'})
-      \textit{ where }
-      (\seq{p} \cons p' \cons \seq{\pi}, \sigma') = \orElseFwdF(\sigma, e)
+      \elimRecord{\seq{x} \cons y}{\orElseFwdF(\seq{p} \cons p' \cons \seq{\pi})(\sigma, e)}
       \\
       \begin{split}
       \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
