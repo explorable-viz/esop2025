@@ -84,7 +84,31 @@
       (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
       \\[2mm]
       %========================================
+      \PattSeqOpt &:: \Set{Set}
+      \\
       \PattSeqOpt &\eqdef 1 + \exists A, \Gamma.\PattSeq\;A\;\Gamma
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\orElseCtrF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      }
+      %========================================
+      \orElseCtrFwdF
+      &:: \Ctr \to \Elim\;\Gamma\;A\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      \begin{split}
+         \orElseCtrFwdF(c)(e)
+         &=
+         \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
+         \\
+         &
+         \textit{where }
+         \opName{elimArgs}(\seqEmpty) = e
+         \\
+         &
+         \phantom{\textit{where }}
+         \opName{elimArgs}(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
+      \end{split}
+      %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
 \end{figure}
