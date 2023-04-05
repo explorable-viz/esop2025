@@ -27,7 +27,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         \sigma_i = \clausesFwdF(\seq{c_i})
+          \clausesFwdF(\seq{c_i}) = \sigma_i
          \quad
          (\forall i \leq j)
       }
@@ -41,7 +41,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
-         \sigma = \clausesFwdF(\seq{c})
+         \clausesFwdF(\seq{c}) = \sigma
       }
       {
          \exMatch{e}{\seq{c}}
@@ -101,42 +101,42 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
-         \annListComp{e}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
       }
       {
-         \annListComp{e}{\qualGuard{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e'}{\qualGuard{e} \cons \seq{q}}{\alpha}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e'}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         \annListComp{e'}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
          \sigma = \pattContFwdF(p)(e^\dagger)
       }
       {
-         \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e'}{\qualDeclaration{p}{e} \cons \seq{q}}{\alpha}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e'}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
       {
-         \annListComp{e}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         \annListComp{e'}{\vec{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
          \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annConstr{\cNil}{}{\alpha})
       }
       {
-         \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha}
          \desugarFwdR
-         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
       %
       \and
@@ -155,7 +155,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \pattContFwdF(p)(e^\dagger)
+         \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
       }
       {
          \exDo{(e \cons \seq{d})}
@@ -169,7 +169,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'),\exError)
+         \orElseFwdF(\pattContFwdF(p)(e'),\exError) = \sigma
       }
       {
          \exDo{(\stmtBind{p}{e} \cons \seq{d})}
@@ -185,7 +185,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
+         \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
       }
       {
          \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}

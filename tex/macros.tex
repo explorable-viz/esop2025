@@ -1,5 +1,6 @@
 % preliminaries
 \newcommand{\cons}{\cdot}
+\renewcommand{\concat}{\mathbin{++}}
 \newcommand*{\iter}{..}
 \newcommand*{\length}[1]{|#1|}
 \newcommand*{\mathSf}[1]{\textup{\textsf{#1}}} % use in place of \mathsf
@@ -13,6 +14,10 @@
 \newcommand*{\equal}{\mathrel{\kw{=}}}
 \newcommand*{\comma}{\sym{,}}
 \newcommand*{\symCons}{\sym{:}}
+
+% Metatypes
+\newcommand*{\Unit}{1}
+\newcommand*{\UnitVal}{\ast}
 
 % Galois connections
 \newcommand{\partialGCto}{\rightleftharpoons}
@@ -85,7 +90,7 @@
 
 % constructors
 \newcommand*{\cCons}{\kw{Cons}}
-\newcommand*{\cNil}{\kw{Nil}}
+\newcommand*{\cNil}{\kw{[]}}
 \newcommand*{\cFalse}{\kw{False}}
 \newcommand*{\cTrue}{\kw{True}}
 
@@ -146,12 +151,14 @@
 % sets
 \newcommand{\Clause}{\Set{Clause}}
 \newcommand{\Cont}{\Set{Cont}}
+\newcommand{\Ctr}{\Set{Ctr}}
 \newcommand{\Elim}{\Set{Elim}}
 \newcommand{\Expr}{\Set{Expr}}
 \newcommand{\ListRest}{\Set{ListRest}}
 \newcommand{\ListRestPatt}{\Set{ListRestPatt}}
 \newcommand{\Patt}{\Set{Patt}}
 \newcommand{\PattSeq}{\Set{PattSeq}}
+\newcommand{\PattSeqOpt}{\Set{PattSeqOpt}}
 \newcommand{\SExpr}{\Set{SExpr}}
 \newcommand{\Type}{\Set{Type}}
 
@@ -182,18 +189,24 @@
 \newcommand*{\desugarBwdThunkR}{\desugarBwdS_{\sugSym}}
 
 % desugaring-aux
-\newcommand*{\pattContF}{\opName{pattCont}}
-\newcommand*{\pattContFwdF}{\opFwd{\pattContF}}
-\newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
 \newcommand*{\clausesF}{\opName{clauses}}
 \newcommand*{\clausesFwdF}{\opFwd{\clausesF}}
 \newcommand*{\clausesBwdF}{\opBwd{\clausesF}}
-\newcommand*{\orElseF}{\opName{orElse}}
-\newcommand*{\orElseFwdF}{\opFwd{\orElseF}}
-\newcommand*{\orElseBwdF}{\opBwd{\orElseF}}
+\newcommand*{\elimArgsF}{\opName{elimArgs}}
+\newcommand*{\elimArgsFwdF}{\opFwd{\elimArgsF}}
+\newcommand*{\elimArgsBwdF}{\opBwd{\elimArgsF}}
+\newcommand*{\pattContF}{\opName{pattCont}}
+\newcommand*{\pattContFwdF}{\opFwd{\pattContF}}
+\newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
 \newcommand*{\pattsExprF}{\opName{pattsExpr}}
 \newcommand*{\pattsExprFwdF}{\opFwd{\pattsExprF}}
 \newcommand*{\pattsExprBwdF}{\opBwd{\pattsExprF}}
+\newcommand*{\orElseF}{\opName{orElse}}
+\newcommand*{\orElseFwdF}{\opFwd{\orElseF}}
+\newcommand*{\orElseBwdF}{\opBwd{\orElseF}}
+\newcommand*{\unlessF}{\opName{unless}}
+\newcommand*{\unlessFwdF}{\opFwd{\unlessF}}
+\newcommand*{\unlessBwdF}{\opBwd{\unlessF}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%

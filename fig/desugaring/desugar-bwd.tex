@@ -23,8 +23,8 @@
       \strut
    }
    {
-      \exBinaryApp{s}{\oplus}{s'}
-      \desugarBwdR{\exBinaryApp{\raw{s}}{\oplus}{\raw{s}'}}
+      \exBinaryApp{e}{\oplus}{e'}
+      \desugarBwdR{\exBinaryApp{\raw{e}}{\oplus}{\raw{e}'}}
       \exApp{\exApp{(\oplus)}{e}}{e'}
    }
    %
@@ -34,7 +34,7 @@
       lab={\ruleName{$\desugarBwdR{}$-let-rec}}
    ]
    {
-      \sigma_i = \clausesBwdF(\seq{\raw{c}_i}, \seq{c_i})
+      \clausesBwdF(\seq{\raw{c}_i}, \sigma_i) = \seq{c_i}
       \quad
       (\forall i \leq j)
    }
@@ -50,10 +50,10 @@
       lab={\ruleName{$\desugarBwdR{}$-match}}
    ]
    {
-      \clausesBwdF(\seq{\raw{c}}, \sigma) = \sigma'
+      \clausesBwdF(\seq{\raw{c}}, \sigma) = \seq{c}
    }
    {
-      \exMatch{e}{\sigma'}
+      \exMatch{e}{\seq{c}}
       \desugarBwdR{\exMatch{\raw{e}}{\seq{\raw{c}}}}
       \exApp{\exFun{\sigma}}{e}
    }
@@ -107,9 +107,9 @@
       \strut
    }
    {
-      \annListComp{e}{\seqEmpty}{\alpha \join \alpha'}
+      \annListComp{e}{\seqEmpty}{\alpha \join \beta}
       \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
-      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha'}
+      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\beta}}{\alpha}
    }
    %
    \and
@@ -123,8 +123,8 @@
       \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
    }
    {
-      \annListComp{e}{\qualGuard{e'} \concat \vec{q}}{\alpha \join \beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{\raw{q}}}}
+      \annListComp{e}{\qualGuard{e'} \cons \vec{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \cons \vec{\raw{q}}}}
       \exApp{\exFun{\sigma}}{e'}
    }
    %
@@ -134,14 +134,14 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-decl}},
    ]
    {
-      \annListComp{e}{\vec{q}}{\beta}
+      \annListComp{e'}{\vec{q}}{\alpha}
       \desugarBwdThunkR
-      \pattContBwdF(p, \sigma)
+      \pattContBwdF(p)(\sigma)
    }
    {
-      \annListComp{e}{\qualDeclaration{p}{e'} \concat \vec{q}}{\beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \concat \vec{\raw{q}}}}
-      \exApp{\exFun{\sigma}}{e'}
+      \annListComp{e'}{\qualDeclaration{p}{e} \cons \vec{q}}{\alpha}
+      \desugarBwdR{\exListComp{\raw{e}'}{\qualDeclaration{p}{\raw{e}} \cons \vec{\raw{q}}}}
+      \exApp{\exFun{\sigma}}{e}
    }
    %
    \and
@@ -150,18 +150,16 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
    ]
    {
-      \annListComp{e}{\seq{q}}{\beta'}
+      \annListComp{e'}{\seq{q}}{\beta}
       \desugarBwdThunkR
-      e^\dagger
+      \pattContBwdF(p)(\sigma')
       \\
-      \pattContBwdF(p)(\sigma') = e^\dagger
-      \\
-      \orElseBwdF(p)(\sigma) = (\sigma', \beta)
+      \orElseBwdF(p)(\sigma) = (\sigma', \alpha)
    }
    {
-      \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\beta \join \beta'}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGenerator{p}{\raw{e}'} \concat \seq{\raw{q}}}}
-      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
+      \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{e}'}{\qualGenerator{p}{\raw{e}} \cons \seq{\raw{q}}}}
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
    }
 \end{smathpar}
 \flushleft \shadebox{$e \desugarBwdR{\raw{r}} r$}
@@ -187,8 +185,8 @@
       r \desugarBwdThunkR e'
    }
    {
-      (\annListNext{e}{r}{\alpha})
-      \desugarBwdR{(\exListNext{\raw{e}}{\raw{r}})}
+      \annListNext{e}{r}{\alpha}
+      \desugarBwdR{\exListNext{\raw{e}}{\raw{r}}}
       \annConstr{\cCons}{e, e'}{\alpha}
    }
 \end{smathpar}
