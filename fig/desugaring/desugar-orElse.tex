@@ -26,23 +26,9 @@
       &=
       \elimRecord{\seq{x} \cons y}{\orElseFwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\sigma, e)}
       \\
-      \begin{split}
       \orElseFwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}} \disjjoin \sigma
-      \\
-      &
-      \textit{where }
-      \sigma = \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
-      \\
-      &
-      \phantom{\textit{where }}
-      \opName{elimArgs}(\seqEmpty) = e
-      \\
-      &
-      \phantom{\textit{where }}
-      \opName{elimArgs}(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
-      \end{split}
+      \elimConstr{\elimBind{c}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}} \disjjoin \orElseCtrFwdF(c)(e)
       \\
       \orElseFwdF(\pattList{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
