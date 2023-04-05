@@ -18,11 +18,9 @@
       &=
       \elimVar{x}{\orElseFwdF(\seq{\pi})(\kappa, e)}
       \\
-      \orElseFwdF(\elimRecord{\seqEmpty}{\kappa}, e)
+      \orElseFwdF(\pattRecord{} \cons \seq{\pi})(\elimRecord{\seqEmpty}{\kappa}, e)
       &=
-      (\pattRecord{} \cons \seq{\pi}, \elimRecord{\seqEmpty}{\kappa'})
-      \textit{ where }
-      (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
+      \elimRecord{\seqEmpty}{\orElseFwdF(\seq{\pi})(\kappa, e)}
       \\
       \orElseFwdF(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
