@@ -16,9 +16,7 @@
       \\
       \orElseFwdF(\pattVar{x} \cons \seq{\pi})(\elimVar{x}{\kappa}, e)
       &=
-      \elimVar{x}{\kappa'}
-      \textit{ where }
-      (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
+      \elimVar{x}{\orElseFwdF(\seq{\pi})(\kappa, e)}
       \\
       \orElseFwdF(\elimRecord{\seqEmpty}{\kappa}, e)
       &=
