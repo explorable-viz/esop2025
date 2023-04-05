@@ -1,6 +1,11 @@
 \begin{figure}
    \begin{salign}
       %========================================
+      \PattSeqOpt &:: \Set{Set}
+      \\
+      \PattSeqOpt &\eqdef 1 + \exists A, \Gamma.\PattSeq\;A\;\Gamma
+      \\[2mm]
+      %========================================
       \intertext{
       \flushleft\shadebox{$\orElseF :: \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \partialGCto \Cont\;\Gamma\;A$}
       }
@@ -69,10 +74,6 @@
       \textit{ where }
       (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
       \\[2mm]
-      %========================================
-      \PattSeqOpt &:: \Set{Set}
-      \\
-      \PattSeqOpt &\eqdef 1 + \exists A, \Gamma.\PattSeq\;A\;\Gamma
       %========================================
       \intertext{
       \flushleft\shadebox{$\unlessF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
