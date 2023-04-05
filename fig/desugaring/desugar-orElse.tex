@@ -43,6 +43,10 @@
       \phantom{\textit{where }}
       \opName{elimArgs}(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
       \end{split}
+      \\
+      \orElseFwdF(\pattList{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}})
+      &=
+      \elimConstr{\elimBind{\cNil}{}, \elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}
       \\[2mm]
       %========================================
       \orElseBwdF
