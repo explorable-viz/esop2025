@@ -7,7 +7,7 @@
       %========================================
       \orElseFwdF
       &::
-      (1 + \exists B, \Gamma.\PattSeq\;B\;\Gamma) \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;\Gamma\;A
+      \PattSeqOpt \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
       \orElseFwdF(\seqEmpty)(e, e')
@@ -47,7 +47,7 @@
       %========================================
       \orElseBwdF
       &::
-      (1 + \exists B, \Gamma.\PattSeq\;B\;\Gamma) \to \Raw{\Expr}\;\cxtEmpty\;A \times \Cont\;\Gamma\;A \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A
+      \PattSeqOpt \to \Raw{\Expr}\;\cxtEmpty\;A \times \Cont\;\Gamma\;A \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A
       \\
       %========================================
       \orElseBwdF(\seqEmpty)(\raw{e}, e)
@@ -71,5 +71,5 @@
       \textit{ where }
       (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
    \end{salign}
-   \caption{Desugaring: $\orElseF$ auxiliary function}
+   \caption{Desugaring: $\orElseF$ auxiliary function, where $\PattSeqOpt = 1 + \exists A, \Gamma.\PattSeq\;A\;\Gamma$}
 \end{figure}
