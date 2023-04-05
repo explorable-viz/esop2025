@@ -73,6 +73,12 @@
       &= (\elimRecord{\seq{x} \cons y}{\sigma'}, e)
       \textit{ where }
       (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
+      \\
+      \orElseBwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{c}{\kappa}} \disjjoin \sigma)
+      &=
+      (\elimConstr{\elimBind{c}{\kappa'}}, e)
+      \textit{ where }
+      (\kappa', e) = \orElseBwdF(\seq{p} \concat \seq{\pi})(\raw{e}, \kappa)
       \\[2mm]
       %========================================
       \intertext{
