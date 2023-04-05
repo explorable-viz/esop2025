@@ -65,6 +65,11 @@
       (\elimRecord{\seqEmpty}{\kappa'}, e)
       \textit{ where }
       (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
+      \\
+      \orElseBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi})(\raw{e}, \elimRecord{\seq{x} \cons y}{\sigma})
+      &= (\elimRecord{\seq{x} \cons y}{\sigma'}, e)
+      \textit{ where }
+      (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
 \end{figure}
