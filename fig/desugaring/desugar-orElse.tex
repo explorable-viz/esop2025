@@ -87,13 +87,13 @@
       }
       %========================================
       \unlessFwdF
-      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;B \to \Elim\;\Gamma\;\seq{A}\;B
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;B \to \Elim\;\Gamma\;d\;B
       \\
       %========================================
       \begin{split}
          \unlessFwdF(c)(e)
          &=
-         \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
+         \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in d \setminus \set{c}}
          \\
          &
          \textit{where }
