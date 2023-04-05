@@ -112,14 +112,6 @@
          \unlessBwdF(c)(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
          &=
          \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF(\kappa_1)}{\elimArgsBwdF(\kappa_n)}{\join}
-         \\
-         &
-         \textit{where }
-         \elimArgsBwdF(e) = e
-         \\
-         &
-         \phantom{\textit{where }}
-         \elimArgsBwdF(\elimVar{x}{\kappa}) = \elimArgsBwdF(\kappa)
       \end{split}
       %========================================
       \intertext{
@@ -130,6 +122,10 @@
       &:: \Pi(\seq{A}: \Type^*).\Expr\;\seqEmpty\;B \to \Elim\;\Gamma\;d\;B
       \\
       %========================================
+      \elimArgsBwdF(e) &= e
+      \\
+      \elimArgsBwdF(\elimVar{x}{\kappa}) &= \elimArgsBwdF(\kappa)
+   %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
 \end{figure}
