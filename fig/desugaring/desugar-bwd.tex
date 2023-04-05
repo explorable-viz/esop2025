@@ -150,16 +150,16 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-gen}},
    ]
    {
-      \annListComp{e}{\seq{q}}{\beta'}
+      \annListComp{e'}{\seq{q}}{\beta}
       \desugarBwdThunkR
       \pattContBwdF(p)(\sigma')
       \\
-      \orElseBwdF(p)(\sigma) = (\sigma', \beta)
+      \orElseBwdF(p)(\sigma) = (\sigma', \alpha)
    }
    {
-      \annListComp{e}{\qualGenerator{p}{e'} \cons \seq{q}}{\beta \join \beta'}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGenerator{p}{\raw{e}'} \cons \seq{\raw{q}}}}
-      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
+      \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{e}'}{\qualGenerator{p}{\raw{e}} \cons \seq{\raw{q}}}}
+      \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
    }
 \end{smathpar}
 \flushleft \shadebox{$e \desugarBwdR{\raw{r}} r$}
