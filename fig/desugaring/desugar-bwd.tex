@@ -134,14 +134,14 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-decl}},
    ]
    {
-      \annListComp{e}{\vec{q}}{\alpha}
+      \annListComp{e'}{\vec{q}}{\alpha}
       \desugarBwdThunkR
       \pattContBwdF(p)(\sigma)
    }
    {
-      \annListComp{e}{\qualDeclaration{p}{e'} \cons \vec{q}}{\alpha}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \cons \vec{\raw{q}}}}
-      \exApp{\exFun{\sigma}}{e'}
+      \annListComp{e'}{\qualDeclaration{p}{e} \cons \vec{q}}{\alpha}
+      \desugarBwdR{\exListComp{\raw{e}'}{\qualDeclaration{p}{\raw{e}} \cons \vec{\raw{q}}}}
+      \exApp{\exFun{\sigma}}{e}
    }
    %
    \and
