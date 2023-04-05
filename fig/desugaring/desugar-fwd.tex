@@ -155,7 +155,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \pattContFwdF(\pattVar{\varAnon})(e^\dagger)
+         \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
       }
       {
          \exDo{(e \cons \seq{d})}
@@ -169,7 +169,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'),\exError)
+         \orElseFwdF(\pattContFwdF(p)(e'),\exError) = \sigma
       }
       {
          \exDo{(\stmtBind{p}{e} \cons \seq{d})}
@@ -185,7 +185,7 @@
       {
          \exDo{\seq{d}} \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
+         \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
       }
       {
          \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
