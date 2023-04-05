@@ -97,11 +97,11 @@
          \\
          &
          \textit{where }
-         \opName{elimArgs}(\seqEmpty) = e
+         \elimArgsFwdF(\seqEmpty) = e
          \\
          &
          \phantom{\textit{where }}
-         \opName{elimArgs}(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
+         \elimArgsFwdF(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
       \end{split}
       \\[2mm]
       %========================================
@@ -109,17 +109,17 @@
          \unlessBwdF
          &:: \Pi(c: \Ctr).\Raw{\Expr}\;\seqEmpty\;A \times \Elim\;\Gamma\;d\;A \to \Expr\;\seqEmpty\;A
          \\
-         \unlessBwdF(c)(\raw{e}, \elimConstr{\elimBind{c}{\kappa}})
+         \unlessBwdF(c)(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
          &=
-         \bot_{\raw{e}} \join (\textstyle\bigjoin \seq{e})
+         \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF(\kappa_1)}{\elimArgsBwdF(\kappa_n)}{\join}
          \\
          &
          \textit{where }
-         \opBwd{\opName{elimArgs}}(e) = e
+         \elimArgsBwdF(e) = e
          \\
          &
          \phantom{\textit{ where }}
-         \opBwd{\opName{elimArgs}}(\elimVar{x}{\kappa}) = \opBwd{\opName{elimArgs}}(\kappa)
+         \elimArgsBwdF(\elimVar{x}{\kappa}) = \elimArgsBwdF(\kappa)
       \end{split}
       %========================================
    \end{salign}
