@@ -28,19 +28,19 @@
       \\
       \orElseFwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}} \disjjoin \orElseCtrFwdF(c)(e)
+      \elimConstr{\elimBind{c}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}} \disjjoin \unlessFwdF(c)(e)
       \\
       \orElseFwdF(\pattList{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{e}, \elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}
+      \elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cCons)(e)
       \\
       \orElseFwdF(\pattListNext{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{e}, \elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}
+      \elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cCons)(e)
       \\
       \orElseFwdF(\pattListEnd \cons \seq{\pi})(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{\orElseFwdF(\seq{\pi})(\sigma)}, \elimBind{\cCons}{\elimVar{\varAnon}{\elimVar{\varAnon}{e}}}}
+      \elimConstr{\elimBind{\cNil}{\orElseFwdF(\seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cNil)(e)
       \\[2mm]
       %========================================
       \orElseBwdF
@@ -75,14 +75,14 @@
       \PattSeqOpt &\eqdef 1 + \exists A, \Gamma.\PattSeq\;A\;\Gamma
       %========================================
       \intertext{
-      \flushleft\shadebox{$\orElseCtrF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\unlessF :: \Ctr \to (\Expr\;\seqEmpty\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \orElseCtrFwdF
+      \unlessFwdF
       &:: \Ctr \to \Expr\;\seqEmpty\;B \to \Elim\;\Gamma\;A\;B
       \\
       \begin{split}
-         \orElseCtrFwdF(c)(e)
+         \unlessFwdF(c)(e)
          &=
          \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
          \\
