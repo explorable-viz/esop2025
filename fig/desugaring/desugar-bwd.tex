@@ -123,8 +123,8 @@
       \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
    }
    {
-      \annListComp{e}{\qualGuard{e'} \concat \vec{q}}{\alpha \join \beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \concat \vec{\raw{q}}}}
+      \annListComp{e}{\qualGuard{e'} \cons \vec{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \cons \vec{\raw{q}}}}
       \exApp{\exFun{\sigma}}{e'}
    }
    %
@@ -139,8 +139,8 @@
       \pattContBwdF(p, \sigma)
    }
    {
-      \annListComp{e}{\qualDeclaration{p}{e'} \concat \vec{q}}{\beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \concat \vec{\raw{q}}}}
+      \annListComp{e}{\qualDeclaration{p}{e'} \cons \vec{q}}{\beta}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualDeclaration{p}{\raw{e}'} \cons \vec{\raw{q}}}}
       \exApp{\exFun{\sigma}}{e'}
    }
    %
@@ -157,8 +157,8 @@
       \orElseBwdF(p)(\sigma) = (\sigma', \beta)
    }
    {
-      \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\beta \join \beta'}
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGenerator{p}{\raw{e}'} \concat \seq{\raw{q}}}}
+      \annListComp{e}{\qualGenerator{p}{e'} \cons \seq{q}}{\beta \join \beta'}
+      \desugarBwdR{\exListComp{\raw{e}}{\qualGenerator{p}{\raw{e}'} \cons \seq{\raw{q}}}}
       \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
    }
 \end{smathpar}

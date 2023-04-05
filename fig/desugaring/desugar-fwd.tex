@@ -106,7 +106,7 @@
          \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
       }
       {
-         \annListComp{e}{\qualGuard{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e}{\qualGuard{e'} \cons \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e'}
       }
@@ -120,7 +120,7 @@
          \sigma = \pattContFwdF(p)(e^\dagger)
       }
       {
-         \annListComp{e}{\qualDeclaration{p}{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e}{\qualDeclaration{p}{e'} \cons \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e'}
       }
@@ -134,7 +134,7 @@
          \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annConstr{\cNil}{}{\alpha})
       }
       {
-         \annListComp{e}{\qualGenerator{p}{e'} \concat \seq{q}}{\alpha}
+         \annListComp{e}{\qualGenerator{p}{e'} \cons \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e'}
       }
