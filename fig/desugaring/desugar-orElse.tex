@@ -24,28 +24,30 @@
       \\
       \orElseFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi})(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
-      \elimRecord{\seq{x} \cons y}{\orElseFwdF(\seq{p} \cons p' \cons \seq{\pi})(\sigma, e)}
+      \elimRecord{\seq{x} \cons y}{\orElseFwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\sigma, e)}
       \\
       \begin{split}
-      \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
+      \orElseFwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseFwdF(\kappa, e)}}
-      \disjjoin
-      \elimConstr{\elimBind{c'}{\opName{elimArgs}(n)} \mid \bind{c'}{n} \in \datatype{\Delta}{c} \setminus \set{c}}
+      \elimConstr{\elimBind{c}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}} \disjjoin \sigma
       \\
       &
       \textit{where }
-      \opName{elimArgs}(0) = e
+      \sigma = \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
       \\
       &
       \phantom{\textit{where }}
-      \opName{elimArgs}(n + 1) = \elimVar{x}{\opName{elimArgs}(n)}
+      \opName{elimArgs}(\seqEmpty) = e
+      \\
+      &
+      \phantom{\textit{where }}
+      \opName{elimArgs}(B' \cons \seq{B}) = \elimVar{x}{\opName{elimArgs}(\seq{B})}
       \end{split}
       \\[2mm]
       %========================================
       \orElseBwdF
       &::
-      (1 + \exists B, \Gamma'.\PattSeq\;B\;\Gamma') \to \Raw{\Expr}\;\cxtEmpty\;A \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A
+      (1 + \exists B, \Gamma.\PattSeq\;B\;\Gamma) \to \Raw{\Expr}\;\cxtEmpty\;A \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A
       \\
       %========================================
    \end{salign}
