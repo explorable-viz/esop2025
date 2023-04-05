@@ -10,13 +10,13 @@
       (1 + \exists B, \Gamma.\PattSeq\;B\;\Gamma) \to \Cont\;\Gamma\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
-      \orElseFwdF(e, e')
+      \orElseFwdF(\seqEmpty)(e, e')
       &=
-      (\seqEmpty, e)
+      e
       \\
-      \orElseFwdF(\elimVar{x}{\kappa}, e)
+      \orElseFwdF(\pattVar{x} \cons \seq{\pi})(\elimVar{x}{\kappa}, e)
       &=
-      (\pattVar{x} \cons \seq{\pi}, \elimVar{x}{\kappa'})
+      \elimVar{x}{\kappa'}
       \textit{ where }
       (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
       \\
