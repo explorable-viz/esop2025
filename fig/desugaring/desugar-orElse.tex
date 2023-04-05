@@ -47,6 +47,10 @@
       \orElseFwdF(\pattList{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
       \elimConstr{\elimBind{\cNil}{e}, \elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}
+      \\
+      \orElseFwdF(\pattListNext{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      &=
+      \elimConstr{\elimBind{\cNil}{e}, \elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}
       \\[2mm]
       %========================================
       \orElseBwdF
