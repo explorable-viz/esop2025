@@ -12,7 +12,7 @@
       %========================================
       \orElseFwdF(e, e')
       &=
-      (\UnitVal, e)
+      (\seqEmpty, e)
       \\
       \orElseFwdF(\elimVar{x}{\kappa}, e)
       &=
@@ -28,7 +28,9 @@
       \\
       \orElseFwdF(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
-      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \elimRecord{\seq{x}}{\orElseFwdF(\sigma, e)})
+      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi}, \elimRecord{\seq{x}}{\sigma'})
+      \textit{ where }
+      (p' \cons \seq{\pi}, \sigma') = \orElseFwdF(\sigma, e)
       \\
       \begin{split}
       \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
