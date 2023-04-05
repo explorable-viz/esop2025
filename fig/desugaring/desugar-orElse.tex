@@ -26,9 +26,9 @@
       \textit{ where }
       (\seq{\pi}, \kappa') = \orElseFwdF(\kappa, e)
       \\
-      \orElseFwdF(\elimRecord{\seq{x} \cons y}{\kappa}, e)
+      \orElseFwdF(\elimRecord{\seq{x} \cons y}{\sigma}, e)
       &=
-      (\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\orElseFwdF(\kappa, e)})
+      (\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}}, \elimRecord{\seq{x}}{\orElseFwdF(\sigma, e)})
       \\
       \begin{split}
       \orElseFwdF(\elimConstr{\elimBind{c}{\kappa}}, e)
