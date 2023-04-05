@@ -59,6 +59,12 @@
       (\elimVar{x}{\kappa'}, e)
       \textit{ where }
       (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
+      \\
+      \orElseBwdF(\pattRecord{} \cons \seq{\pi})(\raw{e}, \elimRecord{\seqEmpty}{\kappa})
+      &=
+      (\elimRecord{\seqEmpty}{\kappa'}, e)
+      \textit{ where }
+      (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
 \end{figure}
