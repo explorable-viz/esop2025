@@ -14,45 +14,38 @@
       &=
       \elimVar{x}{\kappa}
       \\
-      %\pattContFwdF(\pattConstr{c}{\seq{p}})()
-      %&=
-      %\\
+      \pattContFwdF(\pattConstr{c}{\seq{p}})(\kappa)
+      &=
+      \elimConstr{\elimBind{c}{\pattArgsFwdF(\seq{p})(\kappa)}}
+      \\
       \pattContFwdF(\pattList{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
+      \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
       \\
-      \pattContFwdF(\pattRecord{\seqEmpty})(\kappa)
+      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
       &=
-      \elimRecord{\seqEmpty}{\kappa}
-      \\
-      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\kappa)
-      &=
-      \elimRecord{\seq{x} \cons y}{\sigma}
-      \\
-      &
-      \quad\textit{where }
-      \pattContFwdF(\pattRecord{\seq{\bind{x}p}})(\pattContFwdF(p')(\kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \elimRecord{\seq{x}}{\pattArgsFwdF(\seq{p})(\kappa)}
       \\[2mm]
       %========================================
       \pattContBwdF
       &::
-      \Patt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \Patt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
       \\
       \pattContBwdF(\pattVar{x})(\elimVar{x}{\kappa})
       &=
       \kappa
       \\
+      \pattContBwdF(\pattConstr{c}{\seq{p}})(\elimConstr{\elimBind{c}{\kappa}})
+      &=
+      \pattArgsBwdF(\seq{p})(\kappa)
+      \\
       \pattContBwdF(\pattList{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
       &=
-      \pattContBwdF(o, \pattContBwdF(p, \sigma))
+      \pattArgsBwdF(p \cons o)(\sigma)
       \\
-      \pattContBwdF(\pattRecord{\seqEmpty})(\elimRecord{\seqEmpty}{\kappa})
+      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}})(\elimRecord{\seq{x}}{\kappa})
       &=
-      \kappa
-      \\
-      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\elimRecord{\seq{x} \cons y}{\sigma})
-      &=
-      \pattContBwdF(p', \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\sigma}))
+      \pattArgsBwdF(\seq{p})(\kappa)
       \\
       %========================================
       \intertext{
@@ -70,14 +63,12 @@
       \\
       \pattContFwdF(\pattListNext{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
+      \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
       \\[2mm]
       %========================================
       \pattContBwdF
       &::
-      \ListRestPatt\;A\;\Gamma' \to \Raw{\Cont}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \\
-      &\phantom{an}
-      \Cont\;(\Gamma \cons \Gamma')\;B
+      \ListRestPatt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
       \\
       \pattContBwdF(\pattListEnd)(\elimConstr{\elimBind{\cNil}{\kappa}})
       &=
@@ -85,8 +76,38 @@
       \\
       \pattContBwdF(\pattListNext{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
       &=
-      \pattContBwdF(o, \pattContBwdF(p, \sigma))
+      \pattArgsBwdF(p \cons o)(\sigma)
       %========================================
+      \intertext{
+      \flushleft\shadebox{$\pattArgsF :: \PattSeq\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      }
+      %========================================
+      \pattArgsFwdF
+      &::
+      \PattSeq\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      %========================================
+      \pattArgsFwdF(\seqEmpty)(\kappa)
+      &=
+      \kappa
+      \\
+      \pattArgsFwdF(\pi \cons \seq{\pi})(\sigma)
+      &=
+      \pattContFwdF(\pi)(\pattArgsFwdF(\seq{\pi})(\sigma))
+      \\[2mm]
+      %========================================
+      \pattArgsBwdF
+      &::
+      \PattSeq\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
+      %========================================
+      \pattArgsBwdF(\seqEmpty)(\kappa)
+      &=
+      \kappa
+      \\
+      \pattArgsBwdF(\pi \cons \seq{\pi})(\sigma)
+      &=
+      \pattArgsBwdF(\seq{\pi})(\pattContBwdF(\pi)(\sigma))
    \end{salign}
    \caption{Desugaring: $\pattContF$ auxiliary function}
 \end{figure}

@@ -47,9 +47,10 @@
       &=
       \pattContFwdF(p)(e)
       \\
-      \pattsExprFwdF(p_1 \cons p_2 \cons \seq{p}')(e)
+      \pattsExprFwdF(p' \cons \seq{p})(e)
       &=
-      \pattContFwdF(p_1)(\exFun{(\pattsExprFwdF(p_2 \cons \seq{p}')(e))})
+      \pattContFwdF(p')(\exFun{(\pattsExprFwdF(\seq{p})(e))})
+      \quad\textit{ if }\seq{p} \neq \seqEmpty
       \\[2mm]
       %========================================
       \pattsExprBwdF
@@ -60,11 +61,13 @@
       &=
       \pattContBwdF(p)(\raw{e}, \sigma)
       \\
-      \pattsExprBwdF(p_1 \cons p_2 \cons \seq{p}')(\raw{e}, \sigma)
+      \pattsExprBwdF(p' \cons \seq{p})(\raw{e}, \sigma)
       &=
-      \pattsExprBwdF(p_2 \cons \seq{p}')(\raw{e}, \sigma')
-      \quad\textit{ where }
-      \pattContBwdF(p_1)(\sigma) = \exFun{\sigma'}
+      \pattsExprBwdF(\seq{p})(\raw{e}, \sigma')
+      \quad\textit{ if }
+      \seq{p} \neq \seqEmpty
+      \textit{ and }
+      \pattContBwdF(p)(\raw{e}, \sigma) = \exFun{\sigma'}
       %========================================
    \end{salign}
    \caption{Desugaring: auxiliary functions}
