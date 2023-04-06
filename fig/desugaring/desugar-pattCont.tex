@@ -39,13 +39,9 @@
       &=
       \pattArgsBwdF(p \cons o)(\sigma)
       \\
-      \pattContBwdF(\pattRecord{})(\elimRecord{\seqEmpty}{\kappa})
+      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}})(\elimRecord{\seq{x}}{\kappa})
       &=
-      \kappa
-      \\
-      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\elimRecord{\seq{x} \cons y}{\sigma})
-      &=
-      \pattContBwdF(p', \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}}, \elimRecord{\seq{x}}{\sigma}))
+      \pattArgsBwdF(\seq{p})(\kappa)
       \\
       %========================================
       \intertext{
