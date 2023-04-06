@@ -79,13 +79,17 @@
       \textit{ where }
       (\sigma^\dagger, e) = \orElseFwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
-      \orElseFwdF(\pattListNext{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseBwdF(\pattListNext{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}})
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cCons)(e)
+      (\elimConstr{\elimBind{\cCons}{\sigma^\dagger}}, e \join e')
+      \textit{ where }
+      (\sigma^\dagger, e) = \orElseBwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
-      \orElseFwdF(\pattListEnd \cons \seq{\pi})(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
+      \orElseBwdF(\pattListEnd \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}})
       &=
-      \elimConstr{\elimBind{\cNil}{\orElseFwdF(\seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cNil)(e)
+      \elimConstr{\elimBind{\cNil}{\sigma'}}
+      \textit{ where }
+      (\sigma', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \sigma)
       \\[2mm]
       %========================================
       \intertext{
