@@ -87,6 +87,22 @@
       &=
       \pattContBwdF(o, \pattContBwdF(p, \sigma))
       %========================================
+      \intertext{
+      \flushleft\shadebox{$\pattArgsF :: \PattSeq\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      }
+      %========================================
+      \pattArgsFwdF
+      &::
+      \PattSeq\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \\
+      %========================================
+      \pattArgsF(\seqEmpty)(\kappa)
+      &=
+      \kappa
+      \\
+      \pattArgsF(\pi \cons \seq{\pi})(\sigma)
+      &=
+      \pattContF(\pi)(\pattArgsF(\seq{\pi})(\sigma))
    \end{salign}
    \caption{Desugaring: $\pattContF$ auxiliary function}
 \end{figure}
