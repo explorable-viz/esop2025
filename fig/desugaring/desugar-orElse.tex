@@ -72,6 +72,18 @@
       (\elimConstr{\elimBind{c}{\kappa'}}, e \join e')
       \textit{ where }
       (\kappa', e) = \orElseBwdF(\seq{p} \concat \seq{\pi})(\raw{e}, \kappa)
+      \\
+      \orElseBwdF(\pattList{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma)
+      &=
+      (\elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}, e \join e')
+      \\
+      \orElseFwdF(\pattListNext{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      &=
+      \elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cCons)(e)
+      \\
+      \orElseFwdF(\pattListEnd \cons \seq{\pi})(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
+      &=
+      \elimConstr{\elimBind{\cNil}{\orElseFwdF(\seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cNil)(e)
       \\[2mm]
       %========================================
       \intertext{
