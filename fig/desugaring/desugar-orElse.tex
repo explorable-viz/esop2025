@@ -5,9 +5,13 @@
       \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \partialGCto \Cont\;\Gamma\;A)$}
       }
       %========================================
+      \begin{split}
       \orElseFwdF
       &::
-      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
+      \PattSeqOpt\;\Gamma' \to\\
+      &\phantom{aj.}
+      \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
+      \end{split}
       \\
       %========================================
       \orElseFwdF(\seqEmpty)(e, e')
@@ -43,9 +47,13 @@
       \elimConstr{\elimBind{\cNil}{\orElseFwdF(\seq{\pi})(\sigma)}} \disjjoin \unlessFwdF(\cNil)(e)
       \\[2mm]
       %========================================
+      \begin{split}
       \orElseBwdF
       &::
-      \PattSeqOpt\;\Gamma' \to \Raw{\Expr}\;\cxtEmpty\;A \times \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A
+      \PattSeqOpt\;\Gamma' \to\\
+      &\phantom{aj.}
+      \Raw{\Expr}\;\cxtEmpty\;A \times \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A
+      \end{split}
       \\
       %========================================
       \orElseBwdF(\seqEmpty)(\raw{e}, e)
