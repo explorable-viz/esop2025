@@ -103,7 +103,7 @@
       %========================================
       \unlessFwdF_{c}(e)
       &=
-      \elimConstr{\elimBind{c'}{\opName{elimArgs}(\seq{B})} \mid \bind{c'}{\seq{B}} \in d \setminus \set{c}}
+      \elimConstr{\elimBind{c'}{\elimArgsFwdF_{\seq{B}}} \mid \bind{c'}{\seq{B}} \in d \setminus \set{c}}
       \\[2mm]
       %========================================
       \unlessBwdF
@@ -111,7 +111,7 @@
       \\
       \unlessBwdF_{c}(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
       &=
-      \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF(\kappa_1)}{\elimArgsBwdF(\kappa_n)}{\join}
+      \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF_{\seq{B}_1}(\kappa_1)}{\elimArgsBwdF_{\seq{B}_n}(\kappa_n)}{\join}
       \\[2mm]
       %========================================
       \intertext{
@@ -121,18 +121,18 @@
       \elimArgsFwdF
       &:: \Type^* \to \Expr\;\seqEmpty\;A \to \Cont\;\Gamma\;A
       \\
-      \elimArgsFwdF(\seqEmpty)(e) &= e
+      \elimArgsFwdF_{\seqEmpty}(e) &= e
       \\
-      \elimArgsFwdF(A' \cons \seq{A})(e) &= \elimVar{x}{\opName{elimArgs}(\seq{A}, e)}
+      \elimArgsFwdF_{A' \cons \seq{A}}(e) &= \elimVar{x}{\elimArgsFwdF_{\seq{A}}(e)}
       \\[2mm]
       %========================================
       \elimArgsBwdF
       &:: \Type^* \to \Cont\;\Gamma\;A \to \Expr\;\seqEmpty\;A
       \\
       %========================================
-      \elimArgsBwdF(\seqEmpty)(e) &= e
+      \elimArgsBwdF_{\seqEmpty}(e) &= e
       \\
-      \elimArgsBwdF(A' \cons \seq{A})(\elimVar{x}{\kappa}) &= \elimArgsBwdF(\seq{A})(\kappa)
+      \elimArgsBwdF_{A' \cons \seq{A}}(\elimVar{x}{\kappa}) &= \elimArgsBwdF_{\seq{A}}(\kappa)
    %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
