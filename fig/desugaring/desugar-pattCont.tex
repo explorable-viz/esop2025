@@ -7,12 +7,12 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \pattContFwdF
       &::
-      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
       \pattContFwdF(\pattVar{x})(\kappa)
@@ -34,7 +34,7 @@
       %========================================
       \pattContBwdF
       &::
-      \Patt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \Patt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \concat \Gamma')\;B
       \\
       \pattContBwdF(\pattVar{x})(\elimVar{x}{\kappa})
       &=
@@ -54,12 +54,12 @@
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \pattContFwdF
       &::
-      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
       \pattContFwdF(\pattListEnd)(\kappa)
@@ -73,7 +73,7 @@
       %========================================
       \pattContBwdF
       &::
-      \ListRestPatt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \ListRestPatt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \concat \Gamma')\;B
       \\
       \pattContBwdF(\pattListEnd)(\elimConstr{\elimBind{\cNil}{\kappa}})
       &=
@@ -84,12 +84,12 @@
       \pattArgsBwdF(p \cons o)(\sigma)
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattArgsF :: \PattSeq\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \partialGCto \Cont\;\Gamma\;A)$}
       }
       %========================================
       \pattArgsFwdF
       &::
-      \PattSeq\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
       \pattArgsFwdF(\seqEmpty)(\kappa)
@@ -103,7 +103,7 @@
       %========================================
       \pattArgsBwdF
       &::
-      \PattSeq\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \PattSeqOpt\;\Gamma' \to \Cont\;\Gamma\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
       \\
       %========================================
       \pattArgsBwdF(\seqEmpty)(\kappa)
