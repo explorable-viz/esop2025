@@ -14,9 +14,10 @@
       &=
       \elimVar{x}{\kappa}
       \\
-      %\pattContFwdF(\pattConstr{c}{\seq{p}})()
-      %&=
-      %\\
+      \pattContFwdF(\pattConstr{c}{\seq{p}})(\kappa)
+      &=
+      \elimConstr{\elimBind{c}{\pattArgsFwdF(\seq{p})(\kappa)}}
+      \\
       \pattContFwdF(\pattList{p}{o})(\kappa)
       &=
       \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
@@ -62,7 +63,7 @@
       \\
       \pattContFwdF(\pattListNext{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattContFwdF(p)(\pattContFwdF(o)(\kappa))}}
+      \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
       \\[2mm]
       %========================================
       \pattContBwdF
