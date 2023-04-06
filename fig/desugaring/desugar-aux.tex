@@ -61,11 +61,13 @@
       &=
       \pattContBwdF(p)(\raw{e}, \sigma)
       \\
-      \pattsExprBwdF(p_1 \cons p_2 \cons \seq{p}')(\raw{e}, \sigma)
+      \pattsExprBwdF(p' \cons \seq{p})(\raw{e}, \sigma)
       &=
-      \pattsExprBwdF(p_2 \cons \seq{p}')(\raw{e}, \sigma')
-      \quad\textit{ where }
-      \pattContBwdF(p_1)(\raw{e}, \sigma) = \exFun{\sigma'}
+      \pattsExprBwdF(\seq{p})(\raw{e}, \sigma')
+      \quad\textit{ if }
+      \seq{p} \neq \seqEmpty
+      \textit{ and }
+      \pattContBwdF(p)(\raw{e}, \sigma) = \exFun{\sigma'}
       %========================================
    \end{salign}
    \caption{Desugaring: auxiliary functions}
