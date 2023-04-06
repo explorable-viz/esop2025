@@ -84,12 +84,12 @@
       \pattArgsBwdF(p \cons o)(\sigma)
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattArgsF :: \PattSeq\;A\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \cons \Gamma')\;A \partialGCto \Cont\;\Gamma\;A)$}
       }
       %========================================
       \pattArgsFwdF
       &::
-      \PattSeq\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
       \pattArgsFwdF(\seqEmpty)(\kappa)
@@ -103,7 +103,7 @@
       %========================================
       \pattArgsBwdF
       &::
-      \PattSeq\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \PattSeqOpt\;\Gamma' \to \Cont\;\Gamma\;A \to \Cont\;(\Gamma \cons \Gamma')\;A
       \\
       %========================================
       \pattArgsBwdF(\seqEmpty)(\kappa)
