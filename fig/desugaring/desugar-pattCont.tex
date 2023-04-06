@@ -21,17 +21,9 @@
       &=
       \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
       \\
-      \pattContFwdF(\pattRecord{})(\kappa)
+      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
       &=
-      \elimRecord{\seqEmpty}{\kappa}
-      \\
-      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}})(\kappa)
-      &=
-      \elimRecord{\seq{x} \cons y}{\sigma}
-      \\
-      &
-      \quad\textit{where }
-      \pattContFwdF(\pattRecord{\seq{\bind{x}p}})(\pattContFwdF(p')(\kappa)) = \elimRecord{\seq{x}}{\sigma}
+      \elimRecord{\seq{x}}{\pattArgsFwdF(\seq{p})(\kappa)}
       \\[2mm]
       %========================================
       \pattContBwdF
