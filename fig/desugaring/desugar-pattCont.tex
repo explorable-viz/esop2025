@@ -87,13 +87,27 @@
       \PattSeq\;A\;\Gamma' \to \Cont\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattArgsF(\seqEmpty)(\kappa)
+      \pattArgsFwdF(\seqEmpty)(\kappa)
       &=
       \kappa
       \\
-      \pattArgsF(\pi \cons \seq{\pi})(\sigma)
+      \pattArgsFwdF(\pi \cons \seq{\pi})(\sigma)
       &=
-      \pattContF(\pi)(\pattArgsF(\seq{\pi})(\sigma))
+      \pattContFwdF(\pi)(\pattArgsFwdF(\seq{\pi})(\sigma))
+      \\[2mm]
+      %========================================
+      \pattArgsBwdF
+      &::
+      \PattSeq\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \cons \Gamma')\;B
+      \\
+      %========================================
+      \pattArgsBwdF(\seqEmpty)(\kappa)
+      &=
+      \kappa
+      \\
+      \pattArgsBwdF(\pi \cons \seq{\pi})(\sigma)
+      &=
+      \pattArgsBwdF(\seq{\pi})(\pattContBwdF(\pi)(\sigma))
    \end{salign}
    \caption{Desugaring: $\pattContF$ auxiliary function}
 \end{figure}
