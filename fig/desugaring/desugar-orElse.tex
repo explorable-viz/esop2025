@@ -85,11 +85,11 @@
       \textit{ where }
       (\sigma^\dagger, e) = \orElseBwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
-      \orElseBwdF(\pattListEnd \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}} \disjoin \sigma)
+      \orElseBwdF(\pattListEnd \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}} \disjjoin \sigma)
       &=
-      \elimConstr{\elimBind{\cNil}{\sigma'}}
+      (\elimConstr{\elimBind{\cNil}{\kappa'}}, e \join \unlessBwdF(\cNil)(\raw{e}))
       \textit{ where }
-      (\sigma', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \sigma)
+      (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
       \\[2mm]
       %========================================
       \intertext{
@@ -112,6 +112,7 @@
       \unlessBwdF(c)(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
       &=
       \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF(\kappa_1)}{\elimArgsBwdF(\kappa_n)}{\join}
+      \\[2mm]
       %========================================
       \intertext{
       \flushleft\shadebox{$\elimArgsF :: \Type^* \to (\Expr\;\seqEmpty\;A \partialGCto \Cont\;\Gamma\;A)$}
