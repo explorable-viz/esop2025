@@ -22,13 +22,9 @@
       &=
       \elimVar{x}{\orElseFwdF(\seq{\pi})(\kappa, e)}
       \\
-      \orElseFwdF(\pattRecord{} \cons \seq{\pi})(\elimRecord{\seqEmpty}{\kappa}, e)
+      \orElseFwdF(\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi})(\elimRecord{\seq{x}}{\kappa}, e)
       &=
-      \elimRecord{\seqEmpty}{\orElseFwdF(\seq{\pi})(\kappa, e)}
-      \\
-      \orElseFwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi})(\elimRecord{\seq{x} \cons y}{\sigma}, e)
-      &=
-      \elimRecord{\seq{x} \cons y}{\orElseFwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\sigma, e)}
+      \elimRecord{\seq{x}}{\orElseFwdF(\seq{p} \concat \seq{\pi})(\kappa, e)}
       \\
       \orElseFwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
