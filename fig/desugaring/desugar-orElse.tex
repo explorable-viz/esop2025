@@ -62,16 +62,10 @@
       \textit{ where }
       (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
       \\
-      \orElseBwdF(\pattRecord{} \cons \seq{\pi})(\raw{e}, \elimRecord{\seqEmpty}{\kappa})
-      &=
-      (\elimRecord{\seqEmpty}{\kappa'}, e)
+      \orElseBwdF(\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi})(\raw{e}, \elimRecord{\seq{x}}{\kappa})
+      &= (\elimRecord{\seq{x}}{\kappa'}, e)
       \textit{ where }
-      (\kappa', e) = \orElseBwdF(\seq{\pi})(\raw{e}, \kappa)
-      \\
-      \orElseBwdF(\pattRecord{\seq{\bind{x}{p}} \cons \bind{y}{p'}} \cons \seq{\pi})(\raw{e}, \elimRecord{\seq{x} \cons y}{\sigma})
-      &= (\elimRecord{\seq{x} \cons y}{\sigma'}, e)
-      \textit{ where }
-      (\sigma', e) = \orElseBwdF(\seq{p} \concat (p' \cons \seq{\pi}))(\raw{e}, \kappa)
+      (\kappa', e) = \orElseBwdF(\seq{p} \concat \seq{\pi})(\raw{e}, \kappa)
       \\
       \orElseBwdF(\pattConstr{c}{\seq{p}} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{c}{\kappa}} \disjjoin \sigma)
       &=
