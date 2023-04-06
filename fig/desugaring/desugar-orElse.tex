@@ -73,9 +73,11 @@
       \textit{ where }
       (\kappa', e) = \orElseBwdF(\seq{p} \concat \seq{\pi})(\raw{e}, \kappa)
       \\
-      \orElseBwdF(\pattList{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma)
+      \orElseBwdF(\pattList{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma')
       &=
-      (\elimConstr{\elimBind{\cCons}{\orElseFwdF(p \cons o \cons \seq{\pi})(\sigma)}}, e \join e')
+      (\elimConstr{\elimBind{\cCons}{\sigma^\dagger}}, e \join e')
+      \textit{ where }
+      (\sigma^\dagger, e) = \orElseFwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
       \orElseFwdF(\pattListNext{p}{o} \cons \seq{\pi})(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
