@@ -79,13 +79,13 @@
       \textit{ where }
       (\sigma^\dagger, e) = \orElseFwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
-      \orElseBwdF(\pattListNext{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}})
+      \orElseBwdF(\pattListNext{p}{o} \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma')
       &=
       (\elimConstr{\elimBind{\cCons}{\sigma^\dagger}}, e \join e')
       \textit{ where }
       (\sigma^\dagger, e) = \orElseBwdF(p \cons o \cons \seq{\pi})(\raw{e}, \sigma)
       \\
-      \orElseBwdF(\pattListEnd \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}})
+      \orElseBwdF(\pattListEnd \cons \seq{\pi})(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}} \disjoin \sigma)
       &=
       \elimConstr{\elimBind{\cNil}{\sigma'}}
       \textit{ where }
