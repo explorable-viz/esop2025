@@ -108,22 +108,14 @@
       \unlessBwdF
       &:: \Pi(c: \Ctr).\Raw{\Expr}\;\seqEmpty\;A \times \Elim\;\Gamma\;\datatype{\Delta}{c}\;A \to \Expr\;\seqEmpty\;A
       \\
-      \unlessBwdF_{c}(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
+      \unlessBwdF_{c}(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \sigma)
       &=
-      \bot_{\raw{e}} \join \seqRangeOp{\elimArgsBwdF_{\seq{B}_1}(\kappa_1)}{\elimArgsBwdF_{\seq{B}_n}(\kappa_n)}{\join}
-      \\[2mm]
-      %========================================
-      \intertext{
-      \flushleft\shadebox{$\elimArgsF :: \Type^* \to (\Expr\;\seqEmpty\;A \partialGCto \Cont\;\Gamma\;A)$}
+      {\textstyle\bigjoin}\set{
+         \iterateF(\length{\seq{B}},\lambda(\elimVar{x}{\kappa}).\kappa)(\sigma(c'))
+         \mid
+         \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}
       }
-      %========================================
-      \elimArgsBwdF
-      &:: \Type^* \to \Cont\;\Gamma\;A \to \Expr\;\seqEmpty\;A
-      \\
-      %========================================
-      \elimArgsBwdF_{\seqEmpty}(e) &= e
-      \\
-      \elimArgsBwdF_{A' \cons \seq{A}}(\elimVar{x}{\kappa}) &= \elimArgsBwdF_{\seq{A}}(\kappa)
+      \join \bot_{\raw{e}}
    %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
