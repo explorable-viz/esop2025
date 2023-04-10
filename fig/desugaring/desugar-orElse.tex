@@ -93,21 +93,20 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \partialGCto \Elim\;\Gamma\;d\;A
-      \quad\textit{ if }d = \datatype{\Delta}{c}$}
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \partialGCto \Elim\;\Gamma\;\datatype{\Delta}{c}\;A$}
       }
       %========================================
       \unlessFwdF
-      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;d\;A
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Delta}{c}\;A
       \\
       %========================================
       \unlessFwdF_{c}(e)
       &=
-      \elimConstr{\elimBind{c'}{\elimArgsFwdF_{\seq{B}}} \mid \bind{c'}{\seq{B}} \in d \setminus \set{c}}
+      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
       \\[2mm]
       %========================================
       \unlessBwdF
-      &:: \Pi(c: \Ctr).\Raw{\Expr}\;\seqEmpty\;A \times \Elim\;\Gamma\;d\;A \to \Expr\;\seqEmpty\;A
+      &:: \Pi(c: \Ctr).\Raw{\Expr}\;\seqEmpty\;A \times \Elim\;\Gamma\;\datatype{\Delta}{c}\;A \to \Expr\;\seqEmpty\;A
       \\
       \unlessBwdF_{c}(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \elimConstr{\seq{\elimBind{c}{\kappa}}})
       &=
@@ -117,14 +116,6 @@
       \intertext{
       \flushleft\shadebox{$\elimArgsF :: \Type^* \to (\Expr\;\seqEmpty\;A \partialGCto \Cont\;\Gamma\;A)$}
       }
-      %========================================
-      \elimArgsFwdF
-      &:: \Type^* \to \Expr\;\seqEmpty\;A \to \Cont\;\Gamma\;A
-      \\
-      \elimArgsFwdF_{\seqEmpty}(e) &= e
-      \\
-      \elimArgsFwdF_{A' \cons \seq{A}}(e) &= \elimVar{x}{\elimArgsFwdF_{\seq{A}}(e)}
-      \\[2mm]
       %========================================
       \elimArgsBwdF
       &:: \Type^* \to \Cont\;\Gamma\;A \to \Expr\;\seqEmpty\;A
