@@ -109,7 +109,7 @@
    {
       \annListComp{e}{\seqEmpty}{\alpha \join \beta}
       \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
-      \annConstr{\cCons}{e, \annConstr{\cNil}{}{\beta}}{\alpha}
+      \annConstr{\cCons}{e, \annot{\cNil}{\beta}}{\alpha}
    }
    %
    \and
@@ -120,7 +120,7 @@
    {
       \annListComp{e}{\vec{q}}{\beta} \desugarBwdThunkR e^\dagger
       \\
-      \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
+      \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
    }
    {
       \annListComp{e}{\qualGuard{e'} \cons \vec{q}}{\alpha \join \beta}
@@ -173,7 +173,7 @@
    {
       \annListEnd{\alpha}
       \desugarBwdR{\exListEnd}
-      \annConstr{\cNil}{}{\alpha}
+      \annot{\cNil}{\alpha}
    }
    %
    \and
