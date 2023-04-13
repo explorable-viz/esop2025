@@ -94,7 +94,7 @@
       {
          \annListComp{e}{\seqEmpty}{\alpha}
          \desugarFwdR
-         \annConstr{\cCons}{e, \annConstr{\cNil}{}{\alpha}}{\alpha}
+         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
       %
       \and
@@ -103,7 +103,7 @@
       {
          \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annConstr{\cNil}{}{\alpha}}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
       }
       {
          \annListComp{e'}{\qualGuard{e} \cons \seq{q}}{\alpha}
@@ -131,7 +131,7 @@
       {
          \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annConstr{\cNil}{}{\alpha})
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annot{\cNil}{\alpha})
       }
       {
          \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha}
@@ -203,7 +203,7 @@
       {
          \annListEnd{\alpha}
          \desugarFwdR
-         \annConstr{\cNil}{}{\alpha}
+         \annot{\cNil}{\alpha}
       }
       %
       \and
