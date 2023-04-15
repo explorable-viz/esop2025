@@ -144,7 +144,7 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
       {
-         s \desugarFwdR e
+         s \desugarFwdThunkR e
       }
       {
          \stmtVoid{s} \desugarFwdR e
@@ -154,12 +154,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
       {
+         s \desugarFwdThunkR e
+         \\
          \seq{d} \desugarFwdThunkR e'
          \\
          \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
       }
       {
-         e \cons \seq{d}
+         s \cons \seq{d}
          \desugarFwdR
          \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
       }
@@ -168,12 +170,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
       {
+         s \desugarFwdThunkR e
+         \\
          \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'),\exError) = \sigma
       }
       {
-         \stmtBind{p}{e} \cons \seq{d}
+         \stmtBind{p}{s} \cons \seq{d}
          \desugarFwdR
          \exApp
             {\exApp{\varBind}{e}}
@@ -184,12 +188,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
       {
+         s \desugarFwdThunkR e
+         \\
          \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
       }
       {
-         \smash{\stmtDeclaration{p}{e} \cons \seq{d}}
+         \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
          \desugarFwdR
          \smash{\exApp{\exFun{\sigma}}{e}}
       }
