@@ -15,6 +15,7 @@
 \newcommand*{\comma}{\sym{,}}
 \newcommand*{\symCons}{\sym{:}}
 \newcommand*{\symSemi}{\sym{;}}
+\newcommand*{\symVert}{\sym{$\vert$}}
 
 % Metatypes
 \newcommand*{\Unit}{1}
@@ -69,9 +70,13 @@
 \newcommand*{\pattRecord}[1]{\exRecord{#1}}
 
 % qualifiers
-\newcommand*{\qualGuard}[1]{{#1}}
+\newcommand*{\qualGuard}[1]{#1}
 \newcommand*{\qualDeclaration}[2]{\kw{let}\;{#1}\equal{#2}}
 \newcommand*{\qualGenerator}[2]{{#1}\;\kw{$\leftarrow$}\;{#2}}
+
+% list comprehensions
+\newcommand*{\listCompExpr}[1]{#1\;\symVert}
+\newcommand*{\listCompGuard}[2]{{#1} \cons \qualGuard{#2}}
 
 % do statements
 \newcommand*{\stmtVoid}[1]{{#1}\symSemi}
@@ -119,6 +124,7 @@
 \newcommand*{\exLetRecPiecewise}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
 \newcommand*{\exList}[2]{\kw{[}\;#1 \ #2}
 \newcommand*{\exListComp}[2]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\kw{]}}
+\newcommand*{\exListCompNew}[1]{\kw{[}{#1}\kw{]}}
 \newcommand*{\exListEnum}[2]{\kw{[}\,{#1}\;\kw{..}\;{#2}\,\kw{]}}
 \newcommand*{\exListEnd}{\kw{]}}
 \newcommand*{\exListNext}[2]{\comma\;#1 \ #2}

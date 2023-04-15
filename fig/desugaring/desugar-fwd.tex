@@ -165,6 +165,17 @@
          e
       }
    \end{smathpar}
+   {\flushleft \shadebox{$ \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      {
+         s \desugarFwdThunkR e
+      }
+      {
+         \stmtVoid{s} \desugarFwdR e
+      }
+   \end{smathpar}
    {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
    \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
    \begin{smathpar}
