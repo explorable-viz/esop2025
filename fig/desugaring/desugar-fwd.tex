@@ -138,27 +138,28 @@
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
-      %
-      \and
-      %
+   \end{smathpar}
+   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
       {
-         \strut
+         s \desugarFwdR e
       }
       {
-         \exDo{e} \desugarFwdR e
+         \stmtVoid{s} \desugarFwdR e
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         \seq{d} \desugarFwdThunkR e'
          \\
          \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
       }
       {
-         \exDo{(e \cons \seq{d})}
+         e \cons \seq{d}
          \desugarFwdR
          \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
       }
