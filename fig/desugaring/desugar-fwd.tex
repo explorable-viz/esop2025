@@ -168,12 +168,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'),\exError) = \sigma
       }
       {
-         \exDo{(\stmtBind{p}{e} \cons \seq{d})}
+         \stmtBind{p}{e} \cons \seq{d}
          \desugarFwdR
          \exApp
             {\exApp{\varBind}{e}}
@@ -184,12 +184,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
       }
       {
-         \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
+         \smash{\stmtDeclaration{p}{e} \cons \seq{d}}
          \desugarFwdR
          \smash{\exApp{\exFun{\sigma}}{e}}
       }
