@@ -15,10 +15,12 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
-         \strut
+         s \desugarFwdThunkR e
+         \\
+         s' \desugarFwdThunkR e'
       }
       {
-         \exBinaryApp{e}{\oplus}{e'}
+         \exBinaryApp{s}{\oplus}{s'}
          \desugarFwdR
          \exApp{\exApp{(\oplus)}{e}}{e'}
       }
@@ -41,10 +43,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
+         s \desugarFwdThunkR e
+         \\
          \clausesFwdF(\seq{c}) = \sigma
       }
       {
-         \exMatch{e}{\seq{c}}
+         \exMatch{s}{\seq{c}}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -138,6 +142,18 @@
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
+      {
+         \seq{d} \desugarFwdThunkR e
+      }
+      {
+         \exDo{\seq{d}}
+         \desugarFwdR
+         e
+      }
    \end{smathpar}
    {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
    \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
@@ -217,10 +233,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
       {
+         s \desugarFwdThunkR e
+         \\
          r \desugarFwdThunkR e'
       }
       {
-         \annListNext{e}{r}{\alpha}
+         \annListNext{s}{r}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, e'}{\alpha}
       }
