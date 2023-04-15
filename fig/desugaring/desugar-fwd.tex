@@ -140,12 +140,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         s \desugarFwdThunkR e
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+         q \desugarFwdThunkR e'
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
       }
       {
-         \annListComp{e'}{\qualGuard{e} \cons \seq{q}}{\alpha}
+         \listCompGuard{\qualGuard{s}}{q}%{\alpha}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
