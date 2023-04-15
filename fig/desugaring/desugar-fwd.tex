@@ -113,6 +113,31 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
+      {
+         \seq{d} \desugarFwdThunkR e
+      }
+      {
+         \exDo{\seq{d}}
+         \desugarFwdR
+         e
+      }
+   \end{smathpar}
+   {\flushleft \shadebox{$q \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$q$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      {
+         s \desugarFwdThunkR e
+      }
+      {
+         \listCompExpr{s}
+         \desugarFwdR
+         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
          \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
@@ -151,31 +176,6 @@
          \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha}
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
-      {
-         \seq{d} \desugarFwdThunkR e
-      }
-      {
-         \exDo{\seq{d}}
-         \desugarFwdR
-         e
-      }
-   \end{smathpar}
-   {\flushleft \shadebox{$q \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$q$ forward-desugars to $e$}}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
-      {
-         s \desugarFwdThunkR e
-      }
-      {
-         \listCompExpr{s}
-         \desugarFwdR
-         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
    \end{smathpar}
    {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
