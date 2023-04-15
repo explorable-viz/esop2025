@@ -71,10 +71,16 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
       {
+         s \desugarFwdThunkR e
+         \\
+         s_1 \desugarFwdThunkR e_1
+         \\
+         s_2 \desugarFwdThunkR e_2
+         \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
-         \exIfThenElse{e}{e_1}{e_2}
+         \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -83,10 +89,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
       {
-         \strut
+         s \desugarFwdThunkR e
+         \\
+         s' \desugarFwdThunkR e'
       }
       {
-         \exListEnum{e}{e'}
+         \exListEnum{s}{s'}
          \desugarFwdR
          \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       }
