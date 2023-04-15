@@ -57,10 +57,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
       {
+         s \desugarFwdThunkR e
+         \\
          r \desugarFwdThunkR e'
       }
       {
-         \annList{e}{r}{\alpha}
+         \annList{s}{r}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, e'}{\alpha}
       }
