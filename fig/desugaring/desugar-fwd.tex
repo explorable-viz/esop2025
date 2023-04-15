@@ -156,12 +156,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         s \desugarFwdThunkR e
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \exError)
+         q \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
-         \annListComp{e'}{\qualDeclaration{p}{e} \cons \seq{q}}{\alpha}
+         \listCompDeclaration{p}{s}{q}%{\alpha}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -170,12 +172,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         s \desugarFwdThunkR e
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annot{\cNil}{\alpha})
+         q \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha}
+         \listCompGenerator{p}{s}{q}%{\alpha}
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
