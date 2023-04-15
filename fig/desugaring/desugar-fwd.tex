@@ -101,18 +101,6 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
-      {
-         \strut
-      }
-      {
-         \annListComp{e}{\seqEmpty}{\alpha}
-         \desugarFwdR
-         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
-      }
-      %
-      \and
-      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
          \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
@@ -165,15 +153,17 @@
          e
       }
    \end{smathpar}
-   {\flushleft \shadebox{$ \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$q \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$q$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
          s \desugarFwdThunkR e
       }
       {
-         \stmtVoid{s} \desugarFwdR e
+         \listCompExpr{s}
+         \desugarFwdR
+         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
    \end{smathpar}
    {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
