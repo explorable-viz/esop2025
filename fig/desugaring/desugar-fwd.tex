@@ -101,6 +101,18 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
+      {
+         q \desugarFwdThunkR e
+      }
+      {
+         \annListCompNew{q}{\alpha}
+         \desugarFwdR
+         e
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
       {
          \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
