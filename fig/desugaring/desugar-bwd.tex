@@ -149,11 +149,13 @@
       lab={\ruleName{$\desugarBwdR{}$-list-rest-cons}}
    ]
    {
+      s \desugarBwdThunkR e
+      \\
       r \desugarBwdThunkR e'
    }
    {
-      \annListNext{e}{r}{\alpha}
-      \desugarBwdR{\exListNext{\raw{e}}{\raw{r}}}
+      \annListNext{s}{r}{\alpha}
+      \desugarBwdR{\exListNext{\raw{s}}{\raw{r}}}
       \annConstr{\cCons}{e, e'}{\alpha}
    }
 \end{smathpar}
@@ -193,13 +195,17 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-decl}},
    ]
    {
-      \annListComp{e'}{\vec{q}}{\alpha}
+      s \desugarBwdThunkR e
+      \\
+      \seq{q}, s'
       \desugarBwdThunkR
-      \pattContBwdF(p)(\sigma)
+      \pattContBwdF(p)(\sigma')
+      \\
+      \orElseBwdF(p)(\sigma) = (\sigma', \exError)
    }
    {
-      \annListComp{e'}{\qualDeclaration{p}{e} \cons \vec{q}}{\alpha}
-      \desugarBwdR{\qualDeclaration{p}{\raw{e}} \cons \vec{\raw{q}}}
+      \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
+      \desugarBwdR{\qualDeclaration{p}{\raw{s}} \cons \seq{\raw{q}}, \raw{s}'}
       \exApp{\exFun{\sigma}}{e}
    }
    %
