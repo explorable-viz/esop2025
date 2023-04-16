@@ -163,7 +163,7 @@
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
-         \annListCompDeclaration{p}{s}{\seq{q}}{\alpha}, s'
+         \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -179,7 +179,7 @@
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \annListCompGenerator{p}{s}{\seq{q}}{\alpha}, s'
+         \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
