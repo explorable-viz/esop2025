@@ -119,18 +119,46 @@
    %
    \and
    %
-   \inferrule*[lab={\ruleName{$\desugarBwdR{}$-list-comp-done}}]
+   \inferrule*[lab={\ruleName{$\desugarBwdR{}$-list-comp}}]
+   {
+      \seq{q}, s \desugarBwdThunkR e
+   }
+   {
+      \annListComp{s}{\seq{q}}{\alpha \join \beta}
+      \desugarBwdR{\exListComp{\raw{s}}{\seq{\raw{q}}}}
+      \annConstr{\cCons}{e, \annot{\cNil}{\beta}}{\alpha}
+   }
+\end{smathpar}
+\flushleft \shadebox{$e \desugarBwdR{\raw{r}} r$}
+\begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-rest-end}}
+   ]
    {
       \strut
    }
    {
-      \annListComp{e}{\seqEmpty}{\alpha \join \beta}
-      \desugarBwdR{\exListComp{\raw{e}}{\seqEmpty}}
-      \annConstr{\cCons}{e, \annot{\cNil}{\beta}}{\alpha}
+      \annListEnd{\alpha}
+      \desugarBwdR{\exListEnd}
+      \annot{\cNil}{\alpha}
    }
    %
    \and
    %
+   \inferrule*[
+      lab={\ruleName{$\desugarBwdR{}$-list-rest-cons}}
+   ]
+   {
+      r \desugarBwdThunkR e'
+   }
+   {
+      \annListNext{e}{r}{\alpha}
+      \desugarBwdR{\exListNext{\raw{e}}{\raw{r}}}
+      \annConstr{\cCons}{e, e'}{\alpha}
+   }
+\end{smathpar}
+\flushleft \shadebox{$\seq{q}, s \desugarBwdR{\seq{\raw{q}}, \raw{s}} e$}
+\begin{smathpar}
    \inferrule*[
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
@@ -177,34 +205,6 @@
       \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha \join \beta}
       \desugarBwdR{\exListComp{\raw{e}'}{\qualGenerator{p}{\raw{e}} \cons \seq{\raw{q}}}}
       \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
-   }
-\end{smathpar}
-\flushleft \shadebox{$e \desugarBwdR{\raw{r}} r$}
-\begin{smathpar}
-   \inferrule*[
-      lab={\ruleName{$\desugarBwdR{}$-list-rest-end}}
-   ]
-   {
-      \strut
-   }
-   {
-      \annListEnd{\alpha}
-      \desugarBwdR{\exListEnd}
-      \annot{\cNil}{\alpha}
-   }
-   %
-   \and
-   %
-   \inferrule*[
-      lab={\ruleName{$\desugarBwdR{}$-list-rest-cons}}
-   ]
-   {
-      r \desugarBwdThunkR e'
-   }
-   {
-      \annListNext{e}{r}{\alpha}
-      \desugarBwdR{\exListNext{\raw{e}}{\raw{r}}}
-      \annConstr{\cCons}{e, e'}{\alpha}
    }
 \end{smathpar}
 \caption{Backward desugaring}
