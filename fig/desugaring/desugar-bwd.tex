@@ -20,12 +20,14 @@
       lab={\ruleName{$\desugarBwdR{}$-binary-apply}}
    ]
    {
-      \strut
+      s \desugarBwdThunkR e
+      \\
+      s' \desugarBwdThunkR e'
    }
    {
-      \exBinaryApp{e}{\oplus}{e'}
-      \desugarBwdR{\exBinaryApp{\raw{e}}{\oplus}{\raw{e}'}}
-      \exApp{\exApp{(\oplus)}{e}}{e'}
+      \exBinaryApp{s}{\oplus}{s'}
+      \desugarBwdR{\exBinaryApp{\raw{s}}{\oplus}{\raw{s}'}}
+      \exApp{\exApp{(\oplus)}{s}}{s'}
    }
    %
    \and
