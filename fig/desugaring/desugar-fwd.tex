@@ -103,10 +103,10 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
       {
-         q, s \desugarFwdThunkR e
+         \seq{q}, s \desugarFwdThunkR e
       }
       {
-         \annListComp{s}{q}{\alpha}
+         \annListComp{s}{\seq{q}}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
@@ -123,8 +123,8 @@
          e
       }
    \end{smathpar}
-   {\flushleft \shadebox{$q,s \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$q, s$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
@@ -142,12 +142,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q, s' \desugarFwdThunkR e'
+         \seq{q}, s' \desugarFwdThunkR e'
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
       }
       {
-         \annListCompGuard{s}{q}{\alpha}, s'
+         \annListCompGuard{s}{\seq{q}}{\alpha}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -158,12 +158,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q, s' \desugarFwdThunkR e'
+         \seq{q}, s' \desugarFwdThunkR e'
          \\
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
-         \annListCompDeclaration{p}{s}{q}{\alpha}, s'
+         \annListCompDeclaration{p}{s}{\seq{q}}{\alpha}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -174,12 +174,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q, s' \desugarFwdThunkR e'
+         \seq{q}, s' \desugarFwdThunkR e'
          \\
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \annListCompGenerator{p}{s}{q}{\alpha}, s'
+         \annListCompGenerator{p}{s}{\seq{q}}{\alpha}, s'
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
