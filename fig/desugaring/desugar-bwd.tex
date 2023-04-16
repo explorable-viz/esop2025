@@ -163,14 +163,16 @@
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
    {
-      \annListComp{e}{\vec{q}}{\beta} \desugarBwdThunkR e^\dagger
+      s \desugarBwdThunkR e
       \\
-      \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+      \seq{q}, s' \desugarBwdThunkR e'
+      \\
+      \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
    }
    {
-      \annGuard{e'}{\alpha \join \beta} \cons \vec{q}, s
-      \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \cons \vec{\raw{q}}}}
-      \exApp{\exFun{\sigma}}{e'}
+      \annQualGuard{s}{\alpha} \cons \seq{q}, s'
+      \desugarBwdR{\qualGuard{\raw{s}} \cons \seq{\raw{q}}, \raw{s}'}
+      \exApp{\exFun{\sigma}}{e}
    }
    %
    \and
@@ -185,7 +187,7 @@
    }
    {
       \annListComp{e'}{\qualDeclaration{p}{e} \cons \vec{q}}{\alpha}
-      \desugarBwdR{\exListComp{\raw{e}'}{\qualDeclaration{p}{\raw{e}} \cons \vec{\raw{q}}}}
+      \desugarBwdR{\qualDeclaration{p}{\raw{e}} \cons \vec{\raw{q}}}
       \exApp{\exFun{\sigma}}{e}
    }
    %
