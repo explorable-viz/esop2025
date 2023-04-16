@@ -103,12 +103,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
       {
-         q \desugarFwdThunkR e
+         q, s \desugarFwdThunkR e
       }
       {
-         \annListCompNew{q}{\alpha}
+         \annListComp{s}{q}{\alpha}
          \desugarFwdR
-         e
+         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
       %
       \and
@@ -123,17 +123,17 @@
          e
       }
    \end{smathpar}
-   {\flushleft \shadebox{$q,e \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$q, e$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$q,s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$q, s$ forward-desugars to $e$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
          s \desugarFwdThunkR e
       }
       {
-         \listCompExpr{s}
+         \seqEmpty, s
          \desugarFwdR
-         \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
+         e
       }
       %
       \and
@@ -142,12 +142,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q \desugarFwdThunkR e'
+         q, s' \desugarFwdThunkR e'
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
       }
       {
-         \listCompGuard{s}{q}%{\alpha}
+         \annListCompGuard{s}{q}{\alpha}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -158,12 +158,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q \desugarFwdThunkR e'
+         q, s' \desugarFwdThunkR e'
          \\
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
-         \listCompDeclaration{p}{s}{q}%{\alpha}
+         \annListCompDeclaration{p}{s}{q}{\alpha}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -174,12 +174,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         q \desugarFwdThunkR e'
+         q, s' \desugarFwdThunkR e'
          \\
          \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \listCompGenerator{p}{s}{q}%{\alpha}
+         \annListCompGenerator{p}{s}{q}{\alpha}, s'
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
