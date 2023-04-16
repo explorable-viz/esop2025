@@ -168,7 +168,7 @@
       \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
    }
    {
-      \annListComp{e}{\qualGuard{e'} \cons \vec{q}}{\alpha \join \beta}
+      \annGuard{e'}{\alpha \join \beta} \cons \vec{q}, s
       \desugarBwdR{\exListComp{\raw{e}}{\qualGuard{\raw{e}'} \cons \vec{\raw{q}}}}
       \exApp{\exFun{\sigma}}{e'}
    }
