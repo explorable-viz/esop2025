@@ -159,6 +159,18 @@
 \end{smathpar}
 \flushleft \shadebox{$\seq{q}, s \desugarBwdR{\seq{\raw{q}}, \raw{s}} e$}
 \begin{smathpar}
+   \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+   {
+      s \desugarBwdThunkR e
+   }
+   {
+      \seqEmpty, s
+      \desugarBwdR{\seqEmpty, \raw{s}}
+      e
+   }
+   %
+   \and
+   %
    \inferrule*[
       lab={\ruleName{$\desugarBwdR{}$-list-comp-guard}},
    ]
