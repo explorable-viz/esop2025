@@ -15,10 +15,12 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
-         \strut
+         s \desugarFwdThunkR e
+         \\
+         s' \desugarFwdThunkR e'
       }
       {
-         \exBinaryApp{e}{\oplus}{e'}
+         \exBinaryApp{s}{\oplus}{s'}
          \desugarFwdR
          \exApp{\exApp{(\oplus)}{e}}{e'}
       }
@@ -30,9 +32,11 @@
           \clausesFwdF(\seq{c_i}) = \sigma_i
          \quad
          (\forall i \leq j)
+         \\
+         s \desugarFwdThunkR e
       }
       {
-         \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{e}
+         \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{s}
          \desugarFwdR
          \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
@@ -41,10 +45,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
+         s \desugarFwdThunkR e
+         \\
          \clausesFwdF(\seq{c}) = \sigma
       }
       {
-         \exMatch{e}{\seq{c}}
+         \exMatch{s}{\seq{c}}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -53,10 +59,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
       {
+         s \desugarFwdThunkR e
+         \\
          r \desugarFwdThunkR e'
       }
       {
-         \annList{e}{r}{\alpha}
+         \annList{s}{r}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, e'}{\alpha}
       }
@@ -65,10 +73,16 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
       {
+         s \desugarFwdThunkR e
+         \\
+         s_1 \desugarFwdThunkR e_1
+         \\
+         s_2 \desugarFwdThunkR e_2
+         \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
-         \exIfThenElse{e}{e_1}{e_2}
+         \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -77,36 +91,65 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
       {
-         \strut
+         s \desugarFwdThunkR e
+         \\
+         s' \desugarFwdThunkR e'
       }
       {
-         \exListEnum{e}{e'}
+         \exListEnum{s}{s'}
          \desugarFwdR
          \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
       {
-         \strut
+         \seq{q}, s \desugarFwdThunkR e
       }
       {
-         \annListComp{e}{\seqEmpty}{\alpha}
+         \annListComp{s}{\seq{q}}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, \annot{\cNil}{\alpha}}{\alpha}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
-         \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e^\dagger}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+         \seq{d} \desugarFwdThunkR e
       }
       {
-         \annListComp{e'}{\qualGuard{e} \cons \seq{q}}{\alpha}
+         \exDo{\seq{d}}
+         \desugarFwdR
+         e
+      }
+   \end{smathpar}
+   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      {
+         s \desugarFwdThunkR e
+      }
+      {
+         \seqEmpty, s
+         \desugarFwdR
+         e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         \seq{q}, s' \desugarFwdThunkR e'
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+      }
+      {
+         \annQualGuard{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -115,12 +158,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         s \desugarFwdThunkR e
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \exError)
+         \seq{q}, s' \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
       }
       {
-         \annListComp{e'}{\qualDeclaration{p}{e} \cons \seq{q}}{\alpha}
+         \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
          \exApp{\exFun{\sigma}}{e}
       }
@@ -129,36 +174,41 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
       {
-         \annListComp{e'}{\seq{q}}{\alpha} \desugarFwdThunkR e^\dagger
+         s \desugarFwdThunkR e
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e^\dagger), \annot{\cNil}{\alpha})
+         \seq{q}, s' \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \annListComp{e'}{\qualGenerator{p}{e} \cons \seq{q}}{\alpha}
+         \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
-      %
-      \and
-      %
+   \end{smathpar}
+   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
       {
-         \strut
+         s \desugarFwdThunkR e
       }
       {
-         \exDo{e} \desugarFwdR e
+         \stmtVoid{s} \desugarFwdR e
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
          \\
          \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
       }
       {
-         \exDo{(e \cons \seq{d})}
+         s \cons \seq{d}
          \desugarFwdR
          \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
       }
@@ -167,12 +217,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'),\exError) = \sigma
       }
       {
-         \exDo{(\stmtBind{p}{e} \cons \seq{d})}
+         \stmtBind{p}{s} \cons \seq{d}
          \desugarFwdR
          \exApp
             {\exApp{\varBind}{e}}
@@ -183,12 +235,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
       {
-         \exDo{\seq{d}} \desugarFwdThunkR e'
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
          \\
          \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
       }
       {
-         \smash{\exDo{(\stmtDeclaration{p}{e} \cons \seq{d})}}
+         \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
          \desugarFwdR
          \smash{\exApp{\exFun{\sigma}}{e}}
       }
@@ -210,10 +264,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
       {
+         s \desugarFwdThunkR e
+         \\
          r \desugarFwdThunkR e'
       }
       {
-         \annListNext{e}{r}{\alpha}
+         \annListNext{s}{r}{\alpha}
          \desugarFwdR
          \annConstr{\cCons}{e, e'}{\alpha}
       }

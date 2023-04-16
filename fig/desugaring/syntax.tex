@@ -2,7 +2,7 @@
    {\small
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-         &\textbfit{Full term}&
+         &\textbfit{Core term}&
          \lowlight{$\Expr\;\Gamma\;A$}
          \\
          $e ::=$
@@ -42,37 +42,37 @@
       \\
       $s ::=$
       &
-      $\exBinaryApp{e}{\oplus}{e'}$
+      $\exBinaryApp{s}{\oplus}{s'}$
       &
       binary application
       \\
       &
-      $\exLetRecPiecewise{\seq{g}}{e}$
+      $\exLetRecPiecewise{\seq{g}}{s}$
       &
       recursive functions
       \\
       &
-      $\exIfThenElse{e}{e_1}{e_2}$
+      $\exIfThenElse{s}{s_1}{s_2}$
       &
       if
       \\
       &
-      $\exMatch{e}{\seq{\clauseUncurried{p}{e}}}$
+      $\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}$
       &
       match
       \\
       &
-      $\exList{e}{r}$
+      $\exList{s}{r}$
       &
       non-empty list
       \\
       &
-      $\exListEnum{e}{e'}$
+      $\exListEnum{s}{s'}$
       &
       list enum
       \\
       &
-      $\exListComp{e}{\seq{q}}$
+      $\exListComp{s}{\seq{q}}$
       &
       list comprehension
       \\
@@ -91,7 +91,7 @@
       end
       \\
       &
-      $\exListNext{e}{r}$
+      $\exListNext{s}{r}$
       &
       cons
       \\[2mm]
@@ -107,7 +107,7 @@
       \\
       $c ::=$
       &
-      $\clause{\seq{p}}{e}$
+      $\clause{\seq{p}}{s}$
       &
       \\
       \end{tabularx}
@@ -156,17 +156,17 @@
       \\
       $q ::=$
       &
-      $\qualGuard{e}$
+      $\qualGuard{s}$
       &
       guard
       \\
       &
-      $\qualDeclaration{p}{e}$
+      $\qualDeclaration{p}{s}$
       &
       declaration
       \\
       &
-      $\qualGenerator{p}{e}$
+      $\qualGenerator{p}{s}$
       &
       generator
       \\[2mm]
@@ -174,17 +174,17 @@
       \\
       $d ::=$
       &
-      $\stmtVoid{e}$
+      $\stmtVoid{s}$
       &
       void
       \\
       &
-      $\stmtDeclaration{p}{e}$
+      $\stmtDeclaration{p}{s}$
       &
       declaration
       \\
       &
-      $\stmtBind{p}{e}$
+      $\stmtBind{p}{s}$
       &
       generator
       \end{tabularx}

@@ -14,6 +14,8 @@
 \newcommand*{\equal}{\mathrel{\kw{=}}}
 \newcommand*{\comma}{\sym{,}}
 \newcommand*{\symCons}{\sym{:}}
+\newcommand*{\symSemi}{\sym{;}}
+\newcommand*{\symVert}{\sym{$\vert$}}
 
 % Metatypes
 \newcommand*{\Unit}{1}
@@ -68,12 +70,15 @@
 \newcommand*{\pattRecord}[1]{\exRecord{#1}}
 
 % qualifiers
-\newcommand*{\qualGuard}[1]{{#1}}
+\newcommand*{\qualGuard}[1]{\kw{if}\;#1}
 \newcommand*{\qualDeclaration}[2]{\kw{let}\;{#1}\equal{#2}}
 \newcommand*{\qualGenerator}[2]{{#1}\;\kw{$\leftarrow$}\;{#2}}
+\newcommand*{\annQualGuard}[2]{\kw{if}_{#2}\;#1}
+\newcommand*{\annQualDeclaration}[3]{\kw{let}_{#3}\;{#1}\equal{#2}}
+\newcommand*{\annQualGenerator}[3]{{#1}\;\kw{$\leftarrow$}_{#3}\;{#2}}
 
 % do statements
-\newcommand*{\stmtVoid}[1]{{#1}}
+\newcommand*{\stmtVoid}[1]{{#1}\symSemi}
 \newcommand*{\stmtDeclaration}[2]{\qualDeclaration{#1}{#2}}
 \newcommand*{\stmtBind}[2]{\qualGenerator{#1}{#2}}
 
@@ -118,6 +123,7 @@
 \newcommand*{\exLetRecPiecewise}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
 \newcommand*{\exList}[2]{\kw{[}\;#1 \ #2}
 \newcommand*{\exListComp}[2]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\kw{]}}
+\newcommand*{\exListCompNew}[1]{\kw{[}{#1}\kw{]}}
 \newcommand*{\exListEnum}[2]{\kw{[}\,{#1}\;\kw{..}\;{#2}\,\kw{]}}
 \newcommand*{\exListEnd}{\kw{]}}
 \newcommand*{\exListNext}[2]{\comma\;#1 \ #2}
@@ -141,6 +147,7 @@
 \newcommand*{\annConstr}[3]{{\annot{#1}{#3}(#2)}}
 \newcommand*{\annList}[3]{\annot{\kw{[}}{#3}\;#1 \ #2}
 \newcommand*{\annListComp}[3]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\annot{\kw{]}}{#3}}
+\newcommand*{\annListCompNew}[2]{\kw{[}{#1}\annot{\kw{]}}{#2}}
 \newcommand*{\annListEnd}[1]{\annot{\kw{]}}{#1}}
 \newcommand*{\annListNext}[3]{\annot{\comma}{#3}\;#1 \ #2}
 
