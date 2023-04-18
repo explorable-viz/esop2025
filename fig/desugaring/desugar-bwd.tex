@@ -124,9 +124,9 @@
       \seq{q}, s \desugarBwdThunkR e
    }
    {
-      \annListComp{s}{\seq{q}}{\alpha \join \beta}
+      \annListComp{s}{\seq{q}}{\bot}
       \desugarBwdR{\exListComp{\raw{s}}{\seq{\raw{q}}}}
-      \annConstr{\cCons}{e, \annot{\cNil}{\beta}}{\alpha}
+      e
    }
 \end{smathpar}
 \flushleft \shadebox{$e \desugarBwdR{\raw{r}} r$}
@@ -168,7 +168,7 @@
    {
       \seqEmpty, s
       \desugarBwdR{\seqEmpty, \raw{s}}
-      e
+      \annConstr{\cCons}{e, \annot{\cNil}{\beta}}{\alpha}
    }
    %
    \and
