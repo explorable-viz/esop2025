@@ -1,3 +1,25 @@
+% utils
+\newcommand*{\ldblbrace}{\{\mskip-6mu\{}
+\newcommand*{\rdblbrace}{\}\mskip-6mu\}}
+
+
+
+% Code font symbols
+\newcommand*{\symBrace}[1]{\symLBrace#1\symRBrace}
+\newcommand*{\symBrack}[1]{\symLBrack#1\symRBrack}
+\newcommand*{\symColon}{\kw{:}}
+\newcommand*{\symComma}{\kw{,}}
+\newcommand*{\symDot}{\kw{.}}
+\newcommand*{\symEllipsis}{\kw{...}}
+\newcommand*{\symEqual}{\mathrel{\kw{=}}}
+\newcommand*{\symLBrace}{\kw{\{}}
+\newcommand*{\symLBrack}{\kw{[}}
+\newcommand*{\symLParens}{\kw{(}}
+\newcommand*{\symParens}[1]{\symLParens#1\symRParens}
+\newcommand*{\symRBrace}{\kw{\}}}
+\newcommand*{\symRBrack}{\kw{]}}
+\newcommand*{\symRParens}{\kw{)}}
+
 % preliminaries
 \newcommand{\cons}{\cdot}
 \renewcommand{\concat}{\mathbin{++}}
@@ -142,6 +164,18 @@
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\variant}[1]{[#1]}
 \newcommand*{\exVariant}[2]{\variant{\bind{#1}{#2}}}
+
+% Expressions.
+\newcommand{\symLambda}{\uplambda}
+\newcommand*{\exAppPrimTwo}[3]{{#1}#2{#3}} % DELETE ME
+\newcommand*{\exDict}[1]{\ldblbrace#1\rdblbrace}
+\newcommand*{\exExtern}[1]{#1}
+\newcommand*{\exLambda}[1]{\symLambda{#1}}
+\newcommand*{\exLet}[3]{\kw{let}\;{#1}\symEqual{#2}\;\kw{in}\;{#3}}
+\newcommand*{\exLetRec}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
+\newcommand*{\exRec}[1]{\{#1\}}
+\newcommand*{\exRecProj}[2]{#1.#2}
+\newcommand*{\exStr}[1]{\kw{"}#1\kw{"}}
 
 % annotated terms
 \newcommand*{\annot}[2]{#1_{#2}}
