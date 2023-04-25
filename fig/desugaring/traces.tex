@@ -1,0 +1,152 @@
+
+Skip to content
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+@JosephBond
+explorable-viz /
+js-compile
+Private
+
+Cannot fork because forking is disabled.
+
+Code
+Issues 15
+Pull requests
+Actions
+Projects 1
+Wiki
+Security
+Insights
+
+    Settings
+
+Beta Try the new code view
+js-compile/sec/core/fig/syntax-trace.tex
+@rolyp
+rolyp Treat Gamma in AppTrace as existential.
+Latest commit 5cc9c24 Mar 29, 2023
+History
+1 contributor
+103 lines (103 sloc) 1.4 KB
+\begin{figure}
+\begin{minipage}[t]{0.52\textwidth}
+\begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+   &\textit{Trace}&
+   \lowlight{$\Trace\;\upGamma\;A$}
+   \\
+   $T, U ::=$
+   &
+   $\trConst$
+   &
+   constant
+   \\
+   &
+   $\trVar{x}$
+   &
+   variable
+   \\
+   &
+   $\trExtern{f}$
+   &
+   external function name
+   \\
+   &
+   $\trRec{\seq{\bind{x}{T}}}$
+   &
+   record
+   \\
+   &
+   $\trRecProj{T}{x}$
+   &
+   record projection
+   \\
+   &
+   $\trDict{\seq{\bind{s}{(T, \raw{v}, U)}}}$
+   &
+   dictionary
+   \\
+   &
+   $\trConstr{c}{T}$
+   &
+   data value
+   \\
+   &
+   $\trAppNew{T}{U}{S}$
+   &
+   application
+   \\
+   &
+   $\trLet{x}{T}{\raw{v}}{U}$
+   &
+   let
+   \\
+   &
+   $\trLetRec{\seq{x}}{T}$
+   &
+   recursive let
+\end{tabularx}
+\end{minipage}%
+\hspace{6mm}
+\begin{minipage}[t]{0.42\textwidth}
+\begin{tabularx}{\textwidth}{rL{2.5cm}L{2.9cm}}
+   &\textit{Application trace}&
+   \lowlight{$\AppTrace\;A\;B$}
+   \\
+   $S ::=$
+   &
+   $\trAppClosure{w}{T}$
+   &
+   closure
+   \\
+   &
+   $\trAppOpSaturated{\upphi}{t}$
+   &
+   external function
+   \\
+   &
+   $\trAppOp{\upphi}{n}$
+   &
+   partial application
+   \\[2mm]
+   &\textit{Match}&
+   \lowlight{$\Match\;\,A\;\upGamma$}
+   \\
+   $w ::=$
+   &
+   $\mVar{x}{\raw{v}}$
+   &
+   variable
+   \\
+   &
+   $\mRec{\seq{\bind{x}{w}}}$
+   &
+   record
+   \\
+   &
+   $\mConstr{c}{w}$
+   &
+   data value
+   \\[14mm]
+\end{tabularx}
+\end{minipage}
+\caption{Traces and matches}
+\end{figure}
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+

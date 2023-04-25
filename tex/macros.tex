@@ -19,7 +19,7 @@
 \newcommand*{\symRBrace}{\kw{\}}}
 \newcommand*{\symRBrack}{\kw{]}}
 \newcommand*{\symRParens}{\kw{)}}
-
+\newcommand*{\filledtriangleright}{\blacktriangleright}
 % preliminaries
 \newcommand{\cons}{\cdot}
 \renewcommand{\concat}{\mathbin{++}}
@@ -43,6 +43,11 @@
 \newcommand*{\Unit}{1}
 \newcommand*{\UnitVal}{\ast}
 
+% Metafunctions
+\newcommand*{\appTrace}{\opName{AppTrace}}
+
+% Meta Operations
+\newcommand*{\apply}{\opName{apply}}
 % useful operations
 \newcommand{\iterateF}{\opName{iterate}}
 
@@ -82,6 +87,9 @@
 \newcommand*{\elimRecord}[2]{\elimBind{\exRecord{}_{#1}}{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
+\newcommand*{\elimRec}[2]{\set{#2}_{#1}}
+
+
 
 % patterns
 \newcommand*{\pattVar}[1]{#1}
@@ -185,6 +193,15 @@
 \newcommand*{\annListCompNew}[2]{\kw{[}{#1}\annot{\kw{]}}{#2}}
 \newcommand*{\annListEnd}[1]{\annot{\kw{]}}{#1}}
 \newcommand*{\annListNext}[3]{\annot{\comma}{#3}\;#1 \ #2}
+\newcommand*{\annDict}[2]{\exDict{#1}_{#2}}
+\newcommand*{\annInt}[2]{\exInt{#1}_{#2}}
+\newcommand*{\annMatrix}[5]{\matrixLBrack{#1}\;\sym{$\vert$}\;\exPair{#2}{#3}\;\kw{in}\;{#4}\matrixRBrack_{#5}}
+\newcommand*{\annRec}[2]{\exRec{#1}_{#2}}
+\newcommand*{\annStr}[2]{\exStr{#1}_{\hspace{-0.2mm}#2}}
+
+
+% Annotated value-only forms.
+\newcommand*{\annClosure}[4]{\kw{cl}({#1},{#2},{#3})_{#4}}
 
 % clauses
 \newcommand*{\clause}[2]{{#1}\equal{#2}}
@@ -193,6 +210,39 @@
 % handler clauses
 \newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
 \newcommand*{\hReturn}[2]{\kw{return}\;x\mapsto{#2}}
+
+
+% Traces
+\newcommand*{\trApp}[3]{{\exApp{#1}{#2}}\;{#3}}
+\newcommand*{\trAppNew}[3]{{\exApp{#1}{#2}}\filledtriangleright{#3}}
+\newcommand*{\trAppClosure}[2]{\kw{cl}(#1,#2)}
+\newcommand*{\trAppOpSaturated}[2]{\kw{op}(#1,#2)}
+\newcommand*{\trAppOp}[2]{\kw{op}(#1,#2)}
+\newcommand*{\trConst}{\centerdot}
+\newcommand*{\trConstr}[2]{\exConstr{#1}{#2}}
+\newcommand*{\trDict}[1]{\exDict{#1}}
+\newcommand*{\trExtern}[1]{#1}
+\newcommand*{\trInt}[1]{\exInt{#1}}
+\newcommand*{\trLambda}{\uplambda}
+\newcommand*{\trLet}[4]{\exLet{\bind{#1}{#3}}{#2}{#4}}
+\newcommand*{\trLetRec}[2]{\exLetRec{#1}{#2}}
+\newcommand*{\trRec}[1]{\exRec{#1}}
+\newcommand*{\trRecProj}[2]{\exRecProj{#1}{#2}}
+\newcommand*{\trStr}[1]{\exStr{#1}}
+\newcommand*{\trVar}[1]{\exVar{#1}}
+
+\newcommand*{\mConstr}[2]{\exConstr{#1}{#2}}
+\newcommand*{\mRec}[1]{\exRec{#1}}
+\newcommand*{\mVar}[2]{\bind{#1}{#2}}
+
+% Tracing-Sets
+\newcommand*{\AppTrace}{\Set{AppTrace}}
+\newcommand*{\Match}[1]{\Set{Match}}
+\newcommand*{\RawVal}[1]{\Set{\textbf{Val}}\;{#1}}
+\newcommand*{\Trace}{\Set{Trace}}
+\newcommand*{\TrVal}[1]{\Set{TrVal}\;{#1}}
+
+\newcommand*{\trVal}[2]{#1::{#2}}
 
 % sets
 \newcommand{\Clause}{\Set{Clause}}
@@ -208,9 +258,28 @@
 \newcommand{\PattSeqOpt}{\Set{PattSeqOpt}}
 \newcommand{\SExpr}{\Set{SExpr}}
 \newcommand{\Type}{\Set{Type}}
+\newcommand*{\DataDef}{\Set{DataDef}}
+\newcommand*{\DataEnv}{\Set{DataEnv}}
+\newcommand*{\DataSig}{\Set{DataSig}}
+\newcommand*{\DataType}{\Set{DataType}}
+\newcommand*{\Dict}[1]{\Set{Dict}\;{#1}}
+\newcommand*{\Env}{\Set{Env}}
+\newcommand*{\Extern}{\Set{Extern}}
+\newcommand*{\PrimOp}{\Set{PrimOp}}
+\newcommand*{\Rec}[1]{\Set{Rec}\;{#1}}
+\newcommand*{\RecDefs}{\Set{RecDefs}}
+\newcommand*{\Val}[1]{\Set{Val}\;{#1}}
+\newcommand*{\Var}{\Set{Var}}
+
+
+
 
 % operations
 \newcommand{\FV}{\opName{FV}}
+\newcommand*{\BV}{\opName{BV}}
+\newcommand*{\splitEnv}[2]{#1 \triangleleft #2}
+\newcommand*{\reach}{\opName{reach}}
+\newcommand*{\reaches}{\opName{reaches}}
 
 % evaluation contexts
 \newcommand{\evalCxtEmpty}{[]}
@@ -222,6 +291,26 @@
 \newcommand{\evalR}{\Rightarrow}
 \newcommand{\reduce}{\rightsquigarrow}
 \newcommand{\match}{\looparrowright}
+
+% Operational semantics
+\newcommand*{\evalS}{\Rightarrow}
+\newcommand*{\closeDefsS}{\twoheadrightarrow}
+\newcommand*{\closeDefsR}{\closeDefsS}
+\newcommand*{\matchS}{\rightsquigarrow}
+\newcommand*{\matchR}{\matchS}
+
+% Operational semantics
+\newcommand*{\evalFwdS}{\evalS}%{\mathrel{\rotatebox[origin=c]{45}{$\evalS$}}}
+\newcommand*{\evalBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\evalS$}}}
+\newcommand*{\evalBwdR}[1]{\sub{\evalBwdS}{#1}}
+\newcommand*{\evalFwdR}[1]{\sub{\evalFwdS}{#1}}
+\newcommand*{\closeDefsFwdR}{\closeDefsS}%{\mathrel{\rotatebox[origin=c]{45}{$\closeDefsS$}}}
+\newcommand*{\closeDefsBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\closeDefsS$}}}
+\newcommand*{\closeDefsBwdR}{\closeDefsBwdS}
+\newcommand*{\matchFwdS}{\matchS}%{\mathrel{\rotatebox[origin=c]{45}{$\matchS$}}}
+\newcommand*{\matchBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\matchS$}}}
+\newcommand*{\matchFwdR}[1]{\sub{\matchFwdS}{#1}}
+\newcommand*{\matchBwdR}[1]{\sub{\matchBwdS}{#1}}
 
 % fwd/bwd notation
 \newcommand*{\opBwd}[1]{#1^{\triangleleft}}
@@ -265,3 +354,13 @@
 % annotations
 \newcommand*{\raw}[1]{\bm{#1}}
 \newcommand*{\Raw}[1]{\textbf{#1}}
+\newcommand*{\erase}[1]{\lfloor#1\rfloor}
+
+
+\newcommand*{\interpret}[1]{\hat{#1}}
+
+
+% Environments
+\newcommand*{\weakJoin}{\mathrel{\ooalign{\hss$\join$\hss\cr\hspace{0.6mm}$\cdot$}}} % want \sqdoublecup from mathabx
+\newcommand*{\bigweakJoin}{\scalebox{1.3}{$\weakJoin$}} % bit hacky..
+\newcommand*{\concatSub}[1]{\mathbin{\sub{\concat}{#1}}}

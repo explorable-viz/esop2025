@@ -1,0 +1,251 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\upgamma, \seq{e}, \upalpha \evalBwdR{\seq{T}} \seq{v}$}%
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-var}}
+       ]
+       {
+          \upgamma_i, e_i, \upalpha_i \evalBwdR{T_i} v_i
+          \quad
+          (\forall i \leq \length{\seq{v}})
+       }
+       {
+          \bigweakJoin(\seq{\upgamma}), \seq{e}, \textstyle{\bigjoin}(\seq{\upalpha}) \evalBwdR{\seq{T}} \seq{v}
+       }
+       %
+       \and
+       %
+    \end{smathpar}}
+    {\small \flushleft \shadebox{$\upgamma, e, \upalpha \evalBwdR{T} v$}
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-var}}
+       ]
+       {
+          \strut
+       }
+       {
+          \set{\bind{x}{v}}, \exVar{x}, \bot
+          \evalBwdR{\trVar{x}}
+          v
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-int}}
+       ]
+       {
+          \strut
+       }
+       {
+          \emptyset, \exInt{n}, \upalpha
+          \evalBwdR{\trConst}
+          \annInt{n}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-str}}
+       ]
+       {
+          \strut
+       }
+       {
+          \emptyset, \exStr{n}, \upalpha
+          \evalBwdR{\trConst}
+          \annStr{s}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\evalBwdS$-tuple}}]
+       {
+          \upgamma, \seq{e}, \upalpha' \evalBwdR{\seq{T}} v_i
+       }
+       {
+          \upgamma,
+          \exRec{\seq{\bind{x}{e}}},
+          \upalpha \join \upalpha'
+          \evalBwdR{\trRec{\seq{\bind{x}{T}}}}
+          \annRec{\seq{\bind{x}{v}}}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\evalBwdS$-record}}]
+       {
+          \upgamma, \seq{e}, \upalpha' \evalBwdR{\seq{U}} \seq{v}
+          \\
+          \set{\seq{\bind{y}{U}}} \subseteq \set{\seq{\bind{x}{T}}}
+       }
+       {
+          \upgamma,
+          \exRec{\seq{\bind{x}{e}}},
+          \upalpha \join \upalpha'
+          \evalBwdR{\trRec{\seq{\bind{x}{T}}}}
+          \annRec{\seq{\bind{y}{v}}}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\evalBwdS$-project}}]
+       {
+          \upgamma, e, \upalpha
+          \evalBwdR{T}
+          \annRec{\bind{x}{v}}{\bot}
+       }
+       {
+          \upgamma, \exRecProj{e}{x}, \upalpha
+          \evalBwdR{\trRecProj{T}{x}}
+          v
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\evalBwdS$-dict}}]
+       {
+          \upgamma', \seq{e}, \upalpha_3 \evalBwdR{\seq{T}} \seq{\annStr{s}{\upbeta'}}
+          \\
+          \upgamma, \seq{e}', \upalpha_2 \evalBwdR{\seq{U}} \seq{u}
+          \\
+          \set{\seq{\bind{s}{(\upbeta', u)}}} = \set{\seq{\bind{s}{(\bot, \bot_{\raw{v}})}}} \concat \set{\seq{\bind{s'}{(\upbeta, v)}}}
+       }
+       {
+          \upgamma \weakJoin \upgamma',
+          \exDict{\seq{\bind{e}{e}}'},
+          \textstyle{\bigjoin}(\seq{\upalpha})
+          \evalBwdR{\trDict{\seq{\bind{s}{(T, \raw{v}, U)}}}}
+          \annDict{\seq{\bind{s'}{(\upbeta, v)}}}{\upalpha_1}
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\evalBwdS$-constr}}]
+       {
+          \upgamma, e, \upalpha' \evalBwdR{T} v
+       }
+       {
+          \upgamma,
+          \exConstr{c}{e},
+          \upalpha \join \upalpha'
+          \evalBwdR{\trConstr{c}{T}}
+          \annConstr{c}{v}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-external}}
+       ]
+       {
+          \strut
+       }
+       {
+          \emptyset, \exExtern{f}, \bot
+          \evalBwdR{\trExtern{f}}
+          \exOp{\upphi}{\seqEmpty}
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-lambda}}
+       ]
+       {
+          \strut
+       }
+       {
+          \upgamma, \exLambda{\upsigma}, \upalpha
+          \evalBwdR{\trConst}
+          \annClosure{\upgamma}{\seqEmpty}{\upsigma}{\upalpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-apply}},
+          width={3.3in}
+       ]
+       {
+          \upgamma, (e, e'), \upalpha \evalBwdR{T,U} (v, v')
+          \\
+          \opBwd{\apply}(S, u) = (v, v')
+       }
+       {
+          \upgamma, \exApp{e}{e'}, \upalpha
+          \evalBwdR{\trAppNew{T}{U}{S}}
+          u
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-let}},
+          width={2.3in}
+       ]
+       {
+          \upgamma', e, \upbeta
+          \evalBwdR{T}
+          (\set{\bind{x}{\bot_{\raw{v}}}} \concat \upgamma^\twoPrime)(x)
+          \\
+          \upgamma \concatSub{\set{x}} \upgamma^\twoPrime, e', \upalpha
+          \evalBwdR{U}
+          v
+       }
+       {
+          \upgamma \weakJoin \upgamma', \exLet{x}{e}{e'}, \upalpha \join \upbeta
+          \evalBwdR{\trLet{x}{T}{\raw{v}}{U}}
+          v
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-let-rec}}
+       ]
+       {
+          \upgamma', \uprho', \upalpha'
+          \closeDefsBwdR
+          \upgamma^\twoPrime
+          \\
+          \upgamma \concatSub{\set{\seq{x}}} \upgamma^\twoPrime, e, \upalpha
+          \evalBwdR{T}
+          v
+       }
+       {
+          \upgamma \weakJoin \upgamma',
+          \exLetRec{\uprho'}{e},
+          \upalpha \join \upalpha'
+          \evalBwdR{\trLetRec{\seq{x}}{T}}
+          v
+       }
+    \end{smathpar}}
+    
+    \vspace{1mm}
+    {\small \flushleft \shadebox{$\upgamma', \uprho, \upalpha \closeDefsBwdR \upgamma$} \hfill \textit{with }$\dom{\uprho} = \dom{\upgamma}$%
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\closeDefsBwdS$-rec-defs}}
+       ]
+       {
+          \upgamma' =
+          \set{\seqRange
+             {\bind{x_1}{\annClosure{\upgamma_1}{\uprho_1}{\upsigma_1}{\upalpha_1}}}
+             {\bind{x_n}{\annClosure{\upgamma_n}{\uprho_n}{\upsigma_n}{\upalpha_n}}}
+          }
+       }
+       {
+          \textstyle{\bigweakJoin}(\seq{\upgamma}),
+          \textstyle{\bigweakJoin}(\seq{\uprho}) \weakJoin \set{\seq{\bind{x}{\upsigma}}},
+          \textstyle{\bigjoin}(\seq{\upalpha})
+          \closeDefsBwdR
+          \upgamma'
+       }
+    \end{smathpar}
+    }
+    
+    \caption{Galois dependencies: backwards analysis}
+    \end{figure}
+    
