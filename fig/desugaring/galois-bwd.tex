@@ -19,6 +19,18 @@
     {\small \flushleft \shadebox{$\upgamma, e, \upalpha \evalBwdR{T} v$}
     \begin{smathpar}
        \inferrule*[
+          lab={\ruleName{$\evalBwdS$-sugar}}
+       ]
+       {
+          \rho, e \evalBwdR{T} v
+       }
+       {
+          \rho, \exSugarNew{\raw{s}}{e} \evalBwdR{\trSugar{\raw{s}}{T}} v
+       }
+       %
+       \and
+       %
+       \inferrule*[
           lab={\ruleName{$\evalBwdS$-var}}
        ]
        {
@@ -222,7 +234,7 @@
           v
        }
     \end{smathpar}}
-    
+
     \vspace{1mm}
     {\small \flushleft \shadebox{$\upgamma', \uprho, \upalpha \closeDefsBwdR \upgamma$} \hfill \textit{with }$\dom{\uprho} = \dom{\upgamma}$%
     \begin{smathpar}
@@ -245,7 +257,6 @@
        }
     \end{smathpar}
     }
-    
+
     \caption{Galois dependencies: backwards analysis}
     \end{figure}
-    
