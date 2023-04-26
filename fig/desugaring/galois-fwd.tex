@@ -19,13 +19,13 @@
     {\small \flushleft \shadebox{$\upgamma, e, \upalpha \evalFwdR{T} v$}%
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\evalR$-sugar}}
+          lab={\ruleName{$\evalFwdS$-sugar}}
        ]
        {
-          \rho, e \evalR v
+          \rho, e \evalFwdR{T} v
        }
        {
-          \rho, \exSugarNew{\raw{s}}{e} \evalR v
+          \rho, \exSugarNew{\raw{s}}{e} \evalFwdR{\trSugar{\raw{s}}{T}} v
        }
        %
        \and
