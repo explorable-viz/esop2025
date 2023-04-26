@@ -19,7 +19,19 @@
     {\small \flushleft \shadebox{$\upgamma, e, \upalpha \evalFwdR{T} v$}%
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-var}}
+          lab={\ruleName{$\evalFwdS$-sugar}}
+       ]
+       {
+          \rho, e \evalFwdR{T} v
+       }
+       {
+          \rho, \exSugarNew{\raw{s}}{e} \evalFwdR{\trSugar{\raw{s}}{T}} v
+       }
+       %
+       \and
+       %
+       \inferrule*[
+       lab={\ruleName{$\evalFwdS$-var}}
        ]
        {
           \strut
@@ -201,7 +213,6 @@
        }
     \end{smathpar}
     }
-    
+
     \caption{Galois dependencies: forwards analysis}
     \end{figure}
-    
