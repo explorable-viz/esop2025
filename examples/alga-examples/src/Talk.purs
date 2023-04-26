@@ -2,8 +2,11 @@ module Talk where
 
 import Prelude
 
-data MGraph a =
-    Empty | Vertex a | Overlay (MGraph a) (MGraph a) | Connect (MGraph a) (MGraph a)
+data MGraph a
+   = Empty
+   | Vertex a
+   | Overlay (MGraph a) (MGraph a)
+   | Connect (MGraph a) (MGraph a)
 
 empty :: forall a. MGraph a
 empty = Empty
@@ -25,12 +28,12 @@ edge x y = connect (vertex x) (vertex y)
 -- | The order of arguments is: empty, vertex, overlay and connect.
 foldg :: forall a b. b -> (a -> b) -> (b -> b -> b) -> (b -> b -> b) -> MGraph a -> b
 foldg e v o c = go
-  where
-  go = case _ of
-    Empty -> e
-    Vertex x -> v x
-    Overlay x y -> o (go x) (go y)
-    Connect x y -> c (go x) (go y)
+   where
+   go = case _ of
+      Empty -> e
+      Vertex x -> v x
+      Overlay x y -> o (go x) (go y)
+      Connect x y -> c (go x) (go y)
 
 isEmpty :: forall a. MGraph a -> Boolean
 isEmpty = foldg true (const false) (&&) (&&)
@@ -55,12 +58,13 @@ size = foldg 1 (const 1) (+) (+)
 -- | Instead we have:
 -- | x * y * z = (x * y) + (x * z) + (y * z)
 
-type Name = {
-    firstName :: String,
-    surname   :: String
-}
-addSuffixJr :: forall r. { surname :: String | r} -> {surname :: String | r}
-addSuffixJr record = record { surname = record.surname <> " Jr."}
+type Name =
+   { firstName :: String
+   , surname :: String
+   }
+
+addSuffixJr :: forall r. { surname :: String | r } -> { surname :: String | r }
+addSuffixJr record = record { surname = record.surname <> " Jr." }
 
 data Either a b = Left a | Right b
-data Either3 a b c =  Left3 a | Middle3 b | Right3 c
+data Either3 a b c = Left3 a | Middle3 b | Right3 c
