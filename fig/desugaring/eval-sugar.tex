@@ -1,0 +1,68 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\upgamma, \seq{s}, \upalpha \evalFwdR{\seq{T}} \seq{v}$}%
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\evalSugS$-var}}
+       ]
+       {
+          \upgamma, s_i, \upalpha \evalFwdR{T_i} v_i
+          \quad
+          (\forall i \leq \length{\seq{s}})
+       }
+       {
+          \upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}
+       }
+       %
+       \and
+       %
+    \end{smathpar}}
+    {\small \flushleft \shadebox{$\upgamma, s, \upalpha \evalSugR{T} v$}%
+    \begin{smathpar}
+        \inferrule*[
+            lab={\ruleName{$\evalSugS$-var}}
+        ]{
+            \strut
+        } {
+            \upgamma  \cons (\bind{x_\sugSym}{v_\sugSym}), y_\sugSym, \upalpha \evalSugR{x_\sugSym} v_\sugSym 
+        }
+        %
+        \and
+        %
+        \inferrule*[
+           lab={\ruleName{$\evalSugS$-int}}
+        ]
+        {
+           \strut
+        }
+        {
+           \upgamma, \exInt{n}_\sugSym, \upalpha \evalSugR{\trConst} \annInt{n}{\upalpha}
+        }
+        %
+        \and
+        %
+        \inferrule*[
+           lab={\ruleName{$\evalSugS$-str}}
+        ]
+        {
+           \strut
+        }
+        {
+           \upgamma, \exStr{s_\sugSym}, \upalpha \evalFwdR{\trConst} \annStr{s_\sugSym}{\upalpha}
+        }
+        %
+        \and
+        %
+        \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
+        {
+           \upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}
+        }
+        {
+           \upgamma,
+           \exRec{\seq{\bind{x_\sugSym}{s}}}, \upalpha \evalSugR{\trRec{\seq{\bind{x_\sugSym}{T}}}} \annRec{\seq{\bind{x_\sugSym}{v}}}{\upalpha}
+        }
+        %
+        \and
+        %
+    \end{smathpar}}
+    \caption{Direct Forward Semantics of Surface Terms}
+\end{figure}
