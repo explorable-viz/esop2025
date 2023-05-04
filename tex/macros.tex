@@ -222,11 +222,11 @@
 \newcommand*{\trStr}[1]{\exStr{#1}}
 \newcommand*{\trSugar}[2]{\exSugarNew{#1}{#2}}
 \newcommand*{\trVar}[1]{\exVar{#1}}
-
+\newcommand*{\trBinApp}[2]{#1 \oplus #2}
 \newcommand*{\mConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\mRec}[1]{\exRec{#1}}
 \newcommand*{\mVar}[2]{\bind{#1}{#2}}
-
+\newcommand*{\trIfElse}[3]{\exIfThenElse{#1}{#2}{#3}}
 % Tracing-Sets
 \newcommand*{\AppTrace}{\Set{AppTrace}}
 \newcommand*{\Match}[1]{\Set{Match}}
@@ -304,7 +304,7 @@
 \newcommand*{\matchFwdR}[1]{\sub{\matchFwdS}{#1}}
 \newcommand*{\matchBwdR}[1]{\sub{\matchBwdS}{#1}}
 \newcommand*{\evalSugR}[1]{\sub{\evalSugS}{#1}}
-\newcommand*{\evalSugS}{\Rightarrow^\sugSym}
+\newcommand*{\evalSugS}{\hookrightarrow}
 % fwd/bwd notation
 \newcommand*{\opBwd}[1]{#1^{\triangleleft}}
 \newcommand*{\opFwd}[1]{#1^{\triangleright}}

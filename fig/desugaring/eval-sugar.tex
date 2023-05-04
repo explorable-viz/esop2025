@@ -23,7 +23,7 @@
         ]{
             \strut
         } {
-            \upgamma  \cons (\bind{x_\sugSym}{v_\sugSym}), y_\sugSym, \upalpha \evalSugR{x_\sugSym} v_\sugSym 
+            \upgamma  \cons (\bind{x_\sugSym}{v_\sugSym}), x_\sugSym, \upalpha \evalSugR{x_\sugSym} v_\sugSym 
         }
         %
         \and
@@ -47,7 +47,7 @@
            \strut
         }
         {
-           \upgamma, \exStr{s_\sugSym}, \upalpha \evalFwdR{\trConst} \annStr{s_\sugSym}{\upalpha}
+           \upgamma, \exStr{s_\sugSym}, \upalpha \evalSugR{\trConst} \annStr{s_\sugSym}{\upalpha}
         }
         %
         \and
@@ -63,6 +63,92 @@
         %
         \and
         %
+        \inferrule*[
+            lab={\ruleName{$\evalSugS$-BinApp}}
+        ]
+        {
+            \upgamma, (s_1, s_2), \upalpha \evalSugR{T, U} (s_1', s_2')
+            \\
+            apply_s(v, s_1) = (S_1, v_1)
+            \\
+            apply_s(v_1, s_2) = (S_2, u)
+        }
+        {
+            \upgamma' \cons (\bind{\oplus}{v}), s_1 \oplus s_1 \evalSugR{\trBinApp{A_1}{A_2}} u
+        }
+        %
+        \and
+        %
+        \inferrule*[
+            lab={\ruleName{$\evalSugS$-IfElse-True}}
+        ]
+        {
+            \upgamma, s \evalSugS true
+            \\
+            \upgamma, s_1 \evalSugS u
+        }
+        {
+            \upgamma, \exIfThenElse{s}{s_1}{s_2}\evalSugR{\sugSym}u
+        }
+        %
+        \and
+        %
+        \inferrule*[
+            lab={\ruleName{$\evalSugS$-IfElse-False}}
+        ]
+        { 
+            \upgamma, s \evalSugS false
+            \\
+            \upgamma, s_2 \evalSugS u
+        }
+        {
+            \upgamma, \exIfThenElse{s}{s_{1}}{s_{2}}\evalSugR{\sugSym}u
+        }
+        %
+        \and
+        %
+        \inferrule*[
+            lab={\ruleName{$\evalSugS$-ListCompDecl}}
+         ]
+         {
+            \upgamma, s' \evalSugR{S} u'
+            \\
+            p,u' \matchS \upgamma', \upalpha
+            \\
+            \upgamma \cons \upgamma', \annListComp{s}{\seq{q}}{} \evalSugS u
+         }
+         {
+            \upgamma, \annListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}}{\alpha} \evalSugS u
+         }
+         %
+         \and
+         %
+        \inferrule*[
+         lab={\ruleName{$\evalSugS$-ListCompGen}},
+         right={$\upgamma'=\upgamma\cons(\varConcatMap \mapsto v)$}
+        ]
+        {
+            apply_s(v, cl(\upgamma', \cxtEmpty, p=s))=u
+            \\
+            \upgamma', s \evalSugS u'
+            \\
+            apply_s(u, u') = u\dag
+        }
+        {
+            \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugS u\dag
+        }
+        %
+        \and
+        % %
+        % \inferrule*[
+        %     lab={\ruleName{$\evalSugS$-ListCompGuard}},
+        % ]
+        % {
+        %     \apply_s()
+        % }
+        % {
+        %     \upgamma, \qualGuard{p} \cons \seq{q}, s \evalSugS u
+        % }
     \end{smathpar}}
     \caption{Direct Forward Semantics of Surface Terms}
 \end{figure}
