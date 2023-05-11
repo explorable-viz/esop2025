@@ -1,8 +1,18 @@
 \section{Surface Semantics}
 \label{sec:surfacesemantics}
-When presenting a program execution, we want to give the appearence to the user that they are executing parts of the surface language directly. To that end we formalise and present a notion of evaluation of surface terms, which we present to the user in the debugger. We most formalise a notion of values in the surface language, which mostly correspond to values in the core language. We then present proof that directly evaluating a surface program produces the same result as desugaring it to a core program and evaluating that. This correspondence justifies our presentation of the surface semantics to the debugger. 
+When presenting a program execution, we want to give the appearence to the user that they are executing parts
+of the surface language directly. To that end we formalise and present a notion of evaluation of surface
+terms, which we present to the user in the debugger. We most formalise a notion of values in the surface
+language, which mostly correspond to values in the core language. We then present proof that directly
+evaluating a surface program produces the same result as desugaring it to a core program and evaluating that.
+This correspondence justifies our presentation of the surface semantics to the debugger.
 
-\subsection{Compatible Values}
-One complication of defining semantics for the surface language is how to deal with functions defined equationally. In particular, functions defined with equations are subject to conditions on how they perform pattern matching. We need to define a notion of pattern matching for surface terms, that roughly corresponds to pattern matching in the core language. This is made more complicated by the lack of eliminators in the surface language. We therefore need to define a notion of compatible values for defining functions equationally, and a notion of pattern matching for surface values.
+\subsection{Compatible Patterns}
+One complication of defining semantics for the surface language is how to deal with functions defined
+equationally. In particular, functions defined with equations are subject to conditions on how they perform
+pattern matching. We need to define a notion of pattern matching for surface terms, that roughly corresponds
+to pattern matching in the core language. This is made more complicated by the lack of eliminators in the
+surface language. We therefore need to define a notion of compatible patterns for defining functions
+equationally, and a notion of pattern matching for surface values.
 
 \input{fig/semantics/match-sug}
