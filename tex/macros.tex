@@ -2,8 +2,6 @@
 \newcommand*{\ldblbrace}{\{\mskip-6mu\{}
 \newcommand*{\rdblbrace}{\}\mskip-6mu\}}
 
-
-
 % Code font symbols
 \newcommand*{\symBrace}[1]{\symLBrace#1\symRBrace}
 \newcommand*{\symBrack}[1]{\symLBrack#1\symRBrack}
@@ -40,7 +38,9 @@
 \newcommand*{\symVert}{\sym{$\vert$}}
 
 % Metatypes
-\newcommand*{\Unit}{1}
+\newcommand*{\Int}{\mathbb{Z}}
+\newcommand*{\Str}{\Set{Char}^*}
+\newcommand*{\Unit}{\mathbb{1}}
 \newcommand*{\UnitVal}{\ast}
 
 % Metafunctions
@@ -142,6 +142,7 @@
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
 \newcommand*{\exBinaryApp}[3]{{#1} \mathbin{#2} {#3}}
+\newcommand*{\exClosure}[3]{\kw{cl}({#1},{#2},{#3})}
 \newcommand*{\exConstr}[2]{#1(#2)}
 \newcommand*{\exDo}[1]{\kw{do}\;#1}
 \newcommand*{\exError}{\kw{error}}
@@ -180,7 +181,7 @@
 
 % annotated terms
 \newcommand*{\annot}[2]{#1_{#2}}
-\newcommand*{\annClosure}[4]{\kw{cl}({#1},{#2},{#3})_{#4}}
+\newcommand*{\annClosure}[4]{\exClosure{#1}{#2}{#3}_{#4}}
 \newcommand*{\annConstr}[3]{{\annot{#1}{#3}(#2)}}
 \newcommand*{\annList}[3]{\annot{\kw{[}}{#3}\;#1 \ #2}
 \newcommand*{\annListComp}[3]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\annot{\kw{]}}{#3}}
@@ -256,7 +257,7 @@
 \newcommand*{\DataType}{\Set{DataType}}
 \newcommand*{\Dict}[1]{\Set{Dict}\;{#1}}
 \newcommand*{\Env}{\Set{Env}}
-\newcommand*{\Extern}{\Set{Extern}}
+\newcommand*{\Foreign}{\Set{Foreign}}
 \newcommand*{\PrimOp}{\Set{PrimOp}}
 \newcommand*{\Rec}[1]{\Set{Rec}\;{#1}}
 \newcommand*{\RecDefs}{\Set{RecDefs}}

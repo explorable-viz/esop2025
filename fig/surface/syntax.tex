@@ -1,78 +1,6 @@
 \begin{figure}
    {\small
    \begin{minipage}[t]{0.48\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-         &\textbfit{Core term}&
-         \lowlight{$\Expr\;\Gamma\;A$}
-         \\
-         $e ::=$
-         &
-         $\exSugarNew{\raw{s}}{e}$
-         &
-         desugared term
-         \\
-         &
-         $\exInt{n}$
-         &
-         integer
-         \\
-         &
-         $\exStr{s}$
-         &
-         string
-         \\
-         &
-         $\exVar{x}$
-         &
-         variable
-         \\
-         &
-         $f$
-         &
-         external function
-         \\
-         &
-         $\exRec{\seq{\bind{x}{e}}}$
-         &
-         record
-         \\
-         &
-         $\exRecProj{e}{x}$
-         &
-         record projection
-         \\
-         &
-         $\exDict{\seq{\bind{e}{e}}'}$
-         &
-         dictionary
-         \\
-         &
-         $\exConstr{c}{e}$
-         &
-         data value
-         \\
-         &
-         $\exLambda{\upsigma}$
-         &
-         anonymous function
-         \\
-         &
-         $\exApp{e}{e'}$
-         &
-         application
-         \\
-         &
-         $\exLet{x}{e}{e'}$
-         &
-         let
-         \\
-         &
-         $\exLetRec{\seq{\bind{x}{\upsigma}}}{e}$
-         &
-         recursive let
-      \end{tabularx}
-   \end{minipage}\\[3mm]
-   \begin{minipage}[t]{0.48\textwidth}
    \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
       &\textbfit{Sugar term}&
       \lowlight{$\SExpr\;\Gamma\;A$}
@@ -230,7 +158,25 @@
       &
       generator
       \end{tabularx}
-   \end{minipage}
+   \end{minipage}\\[3mm]
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+      &\textbfit{Surface value}&
+      \lowlight{$\Val{A}$}
+      \\
+      $u ::=$
+      &
+      $\dots$
+      &
+      $\dots$
+      \\
+      &
+      $\exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}}$
+      &
+      closure
+      \\[0mm]
+      \end{tabularx}
+      \end{minipage}
    }
-   \caption{Syntax (full terms and sugar terms)}
+   \caption{Syntax of surface terms}
 \end{figure}
