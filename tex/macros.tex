@@ -142,6 +142,7 @@
 % terms
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
 \newcommand*{\exBinaryApp}[3]{{#1} \mathbin{#2} {#3}}
+\newcommand*{\exClosure}[3]{\kw{cl}({#1},{#2},{#3})}
 \newcommand*{\exConstr}[2]{#1(#2)}
 \newcommand*{\exDo}[1]{\kw{do}\;#1}
 \newcommand*{\exError}{\kw{error}}
@@ -180,7 +181,7 @@
 
 % annotated terms
 \newcommand*{\annot}[2]{#1_{#2}}
-\newcommand*{\annClosure}[4]{\kw{cl}({#1},{#2},{#3})_{#4}}
+\newcommand*{\annClosure}[4]{\exClosure{#1}{#2}{#3}_{#4}}
 \newcommand*{\annConstr}[3]{{\annot{#1}{#3}(#2)}}
 \newcommand*{\annList}[3]{\annot{\kw{[}}{#3}\;#1 \ #2}
 \newcommand*{\annListComp}[3]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\annot{\kw{]}}{#3}}
