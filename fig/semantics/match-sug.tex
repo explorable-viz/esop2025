@@ -1,0 +1,43 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\compatVal{v}{u}$} %
+    \begin{smathpar}
+        \inferrule*[
+            lab={\ruleName{$\uparrow$-var}}
+        ]
+        {
+            \strut
+        }
+        {
+            \compatVal{\exVar{x}}{\exVar{x}}
+        }
+        %
+        \and
+        %
+        \inferrule*[
+            lab={\ruleName{$\uparrow$-ctr-$\ne$}},
+            right={$c \ne c'$}
+        ]
+        {
+            \strut
+        }
+        {
+            \compatVal{c(\seq{p})}{c'(\seq{p'})}
+        }
+        %
+        \and
+        %
+        \inferrule*[
+            lab={\ruleName{$\uparrow$-ctr}}
+        ]
+        {
+            \compatVal{p_i}{p'_i} \quad (\forall i)
+        }
+        {
+            \compatVal{c(\seq{p})}{c(\seq{p'})}
+        }
+        %
+        \and
+        %
+    \end{smathpar}}
+    \caption{Rules for compatible values in surface functions}
+\end{figure}
