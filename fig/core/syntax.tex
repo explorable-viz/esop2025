@@ -1,7 +1,7 @@
 \begin{figure}
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-         &\textit{Core term}&
+         &\textit{Expression}&
          \lowlight{$\Expr\;\Gamma\;A$}
          \\
          $e ::=$
@@ -41,7 +41,7 @@
          dictionary
          \\
          &
-         $\exConstr{c}{e}$
+         $\exConstr{c}{\seq{e}}$
          &
          data value
          \\
@@ -93,39 +93,40 @@
           data value
           \\[2mm]
           &\textit{Value}&
-    \lowlight{$\Val{A}$}
-    \\
-    $u, v ::=$
-    &
-    $\exInt{n}$
-    &
-    integer
-    \\
-    &
-    $\exStr{s}$
-    &
-    string
-    \\
-    &
-    $\exRec{\seq{\bind{x}{v}}}$
-    &
-    record
-    \\
-    &
-    $\exDict{\seq{\bind{s}{v}}}$
-    &
-    dictionary
-    \\
-    &
-    $\exConstr{c}{v}$
-    &
-    data value
-    \\
-    &
-    $\exClosure{\upgamma}{\uprho}{\upsigma}$
-    &
-    closure
-    \end{tabularx}
- \end{minipage}
- \caption{Syntax of core terms}
+          \lowlight{$\Val{A}$}
+          \\
+          $u, v ::=$
+          &
+          $\exInt{n}$
+          &
+          integer
+          \\
+          &
+          $\exStr{s}$
+          &
+          string
+          \\
+          &
+          $\exRec{\seq{\bind{x}{v}}}$
+          &
+          record
+          \\
+          &
+          $\exDict{\seq{\bind{s}{v}}}$
+          &
+          dictionary
+          \\
+          &
+          $\exConstr{c}{\seq{v}}$
+          &
+          data value
+          \\
+          &
+          $\exClosure{\upgamma}{\uprho}{\upsigma}$
+          &
+          closure
+          \\[12mm]
+      \end{tabularx}
+   \end{minipage}
+\caption{Syntax of core terms}
 \end{figure}
