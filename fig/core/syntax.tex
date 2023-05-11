@@ -1,7 +1,7 @@
 \begin{figure}
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-         &\textbfit{Core term}&
+         &\textit{Core term}&
          \lowlight{$\Expr\;\Gamma\;A$}
          \\
          $e ::=$
@@ -70,5 +70,67 @@
          &
          recursive let
       \end{tabularx}
-   \end{minipage}\\[3mm]
+   \end{minipage}%
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+          &\textit{Eliminator}&
+          \lowlight{$\Elim\;\upGamma\,A\;K$}
+          \\
+          $\upsigma, \uptau ::=$
+          &
+          $\elimVar{x}{\upkappa}$
+          &
+          variable
+          \\
+          &
+          $\elimRec{\seq{x}}{\upkappa}$
+          &
+          record
+          \\
+          &
+          $\elimConstr{\seq{\elimBind{c}{\upsigma}}}$
+          &
+          data value
+          \\[2mm]
+          &\textit{Value}&
+    \lowlight{$\Val{A}$}
+    \\
+    $u, v ::=$
+    &
+    $\annInt{n}{\upalpha}$
+    &
+    integer
+    \\
+    &
+    $\annStr{s}{\upalpha}$
+    &
+    string
+    \\
+    &
+    $\annRec{\seq{\bind{x}{v}}}{\upalpha}$
+    &
+    record
+    \\
+    &
+    $\annDict{\seq{\bind{s}{(\upalpha, v)}}}{\upbeta}$
+    &
+    dictionary
+    \\
+    &
+    $\annConstr{c}{v}{\upalpha}$
+    &
+    data value
+    \\
+    &
+    $\annClosure{\upgamma}{\uprho}{\upsigma}{\upalpha}$
+    &
+    closure
+    \\
+    &
+    $\annOp{\upphi}{\seq{v}}{\upalpha}$
+    &
+    partial application
+    \\[0mm]
+    \end{tabularx}
+ \end{minipage}
 \end{figure}
