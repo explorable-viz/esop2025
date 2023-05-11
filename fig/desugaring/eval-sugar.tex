@@ -53,7 +53,7 @@
             \upgamma, s_1 \evalSugS u
         }
         {
-            \upgamma, \exIfThenElse{s}{s_1}{s_2}\evalSugR{\sugSym}u
+            \upgamma, \exIfThenElse{s}{s_1}{s_2}\evalSugS u
         }
         %
         \and
@@ -67,7 +67,7 @@
             \upgamma, s_2 \evalSugS u
         }
         {
-            \upgamma, \exIfThenElse{s}{s_{1}}{s_{2}}\evalSugR{\sugSym}u
+            \upgamma, \exIfThenElse{s}{s_{1}}{s_{2}}\evalSugS u
         }
         %
         \and
@@ -83,10 +83,10 @@
         \\
         p,u' \matchS \upgamma', \upalpha
         \\
-        \upgamma \cons \upgamma', \annListComp{s}{\seq{q}}{} \evalSugS u
+        (\upgamma \cons \upgamma'), \seq{q},s \evalSugS u
      }
      {
-        \upgamma, \annListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}}{\alpha} \evalSugS u
+        \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugS u
      }
      %
      \and
