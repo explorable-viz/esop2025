@@ -89,8 +89,6 @@
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 \newcommand*{\elimRec}[2]{\set{#2}_{#1}}
 
-
-
 % patterns
 \newcommand*{\pattVar}[1]{#1}
 \newcommand*{\pattConstr}[2]{\exConstr{#1}{#2}}
@@ -208,6 +206,7 @@
 % Traces
 \newcommand*{\trApp}[3]{{\exApp{#1}{#2}}\;{#3}}
 \newcommand*{\trAppNew}[3]{{\exApp{#1}{#2}}\filledtriangleright{#3}}
+\newcommand*{\trAppOld}[4]{{\exApp{#1}{#2}}\filledtriangleright{{#3}.{#4}}}
 \newcommand*{\trAppClosure}[2]{\kw{cl}(#1,#2)}
 \newcommand*{\trAppOpSaturated}[2]{\kw{op}(#1,#2)}
 \newcommand*{\trAppOp}[2]{\kw{op}(#1,#2)}
@@ -215,6 +214,7 @@
 \newcommand*{\trConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\trDict}[1]{\exDict{#1}}
 \newcommand*{\trExtern}[1]{#1}
+\newcommand*{\trForeignApp}[3]{{#1}({#2})\filledtriangleright{#3}}
 \newcommand*{\trInt}[1]{\exInt{#1}}
 \newcommand*{\trLambda}{\uplambda}
 \newcommand*{\trLet}[4]{\exLet{\bind{#1}{#3}}{#2}{#4}}
@@ -354,7 +354,6 @@
 \newcommand*{\Ann}[1]{\mathcal{#1}}
 
 \newcommand*{\interpret}[1]{\hat{#1}}
-
 
 % Environments
 \newcommand*{\weakJoin}{\mathrel{\ooalign{\hss$\join$\hss\cr\hspace{0.6mm}$\cdot$}}} % want \sqdoublecup from mathabx
