@@ -26,11 +26,6 @@
          variable
          \\
          &
-         $f$
-         &
-         external function
-         \\
-         &
          $\exRec{\seq{\bind{x}{e}}}$
          &
          record
@@ -59,6 +54,11 @@
          $\exApp{e}{e'}$
          &
          application
+         \\
+         &
+         $\exForeignApp{f}{\seq{e}}$
+         &
+         foreign function call
          \\
          &
          $\exLet{x}{e}{e'}$
@@ -97,37 +97,37 @@
     \\
     $u, v ::=$
     &
-    $\annInt{n}{\upalpha}$
+    $\exInt{n}$
     &
     integer
     \\
     &
-    $\annStr{s}{\upalpha}$
+    $\exStr{s}$
     &
     string
     \\
     &
-    $\annRec{\seq{\bind{x}{v}}}{\upalpha}$
+    $\exRec{\seq{\bind{x}{v}}}$
     &
     record
     \\
     &
-    $\annDict{\seq{\bind{s}{(\upalpha, v)}}}{\upbeta}$
+    $\exDict{\seq{\bind{s}{v}}}$
     &
     dictionary
     \\
     &
-    $\annConstr{c}{v}{\upalpha}$
+    $\exConstr{c}{v}$
     &
     data value
     \\
     &
-    $\annClosure{\upgamma}{\uprho}{\upsigma}{\upalpha}$
+    $\exClosure{\upgamma}{\uprho}{\upsigma}$
     &
     closure
     \\
     &
-    $\annOp{\upphi}{\seq{v}}{\upalpha}$
+    $\exOp{\upphi}{\seq{v}}$
     &
     partial application
     \end{tabularx}
