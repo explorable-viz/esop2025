@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\upgamma, \seq{s}, \upalpha \evalFwdR{\seq{T}} \seq{v}$}%
+    {\small \flushleft \shadebox{$\upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}$}%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\evalSugS$-var}}
@@ -19,46 +19,11 @@
     {\small \flushleft \shadebox{$\upgamma, s, \upalpha \evalSugR{T} v$}%
     \begin{smathpar}
         \inferrule*[
-            lab={\ruleName{$\evalSugS$-var}}
+            lab={\ruleName{$\evalSugS$-ListComp}}
         ]{
-            \strut
+            \upgamma, \seq{q}, s \evalSugS v
         } {
-            \upgamma  \cons (\bind{x_\sugSym}{v_\sugSym}), x_\sugSym, \upalpha \evalSugR{x_\sugSym} v_\sugSym 
-        }
-        %
-        \and
-        %
-        \inferrule*[
-           lab={\ruleName{$\evalSugS$-int}}
-        ]
-        {
-           \strut
-        }
-        {
-           \upgamma, \exInt{n}_\sugSym, \upalpha \evalSugR{\trConst} \annInt{n}{\upalpha}
-        }
-        %
-        \and
-        %
-        \inferrule*[
-           lab={\ruleName{$\evalSugS$-str}}
-        ]
-        {
-           \strut
-        }
-        {
-           \upgamma, \exStr{s_\sugSym}, \upalpha \evalSugR{\trConst} \annStr{s_\sugSym}{\upalpha}
-        }
-        %
-        \and
-        %
-        \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
-        {
-           \upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}
-        }
-        {
-           \upgamma,
-           \exRec{\seq{\bind{x_\sugSym}{s}}}, \upalpha \evalSugR{\trRec{\seq{\bind{x_\sugSym}{T}}}} \annRec{\seq{\bind{x_\sugSym}{v}}}{\upalpha}
+            \upgamma,  \exListComp{s}{\seq{q}} \evalSugS v
         }
         %
         \and
@@ -107,52 +72,65 @@
         %
         \and
         %
-        \inferrule*[
-            lab={\ruleName{$\evalSugS$-ListCompDecl}}
-         ]
-         {
-            \upgamma, s' \evalSugR{S} u'
-            \\
-            p,u' \matchS \upgamma', \upalpha
-            \\
-            \upgamma \cons \upgamma', \annListComp{s}{\seq{q}}{} \evalSugS u
-         }
-         {
-            \upgamma, \annListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}}{\alpha} \evalSugS u
-         }
-         %
-         \and
-         %
-        \inferrule*[
-         lab={\ruleName{$\evalSugS$-ListCompGen}},
-         right={$\upgamma'=\upgamma\cons(\varConcatMap \mapsto v)$}
-        ]
-        {
-            apply_s(v, cl(\upgamma', \cxtEmpty, p=s))=u
-            \\
-            \upgamma', s \evalSugS u'
-            \\
-            apply_s(u, u') = u\dag
-        }
-        {
-            \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugS u\dag
-        }
-        %
-        \and
-        %
-        \inferrule*[
-            lab={\ruleName{$\evalSugS$-ListCompGuard}},
-        ]
-        {
-            p = cl(\bind{s}{u}, \cxtEmpty, \{cTrue \mapsto u', cFalse \mapsto cNil \})
-            \\
-            apply_s(p, s) = (P_1, s_1)
-            \\
-            \upgamma, \seq{q}, s_1 \evalSugS u
-        }
-        {
-            \upgamma, \qualGuard{p} \cons \seq{q}, s \evalSugS u
-        }
+    \end{smathpar}}
+    {\small \flushleft \shadebox{$\seq{q}, s \evalSugS v$}
+    \begin{smathpar}
+    \inferrule*[
+        lab={\ruleName{$\evalSugS$-ListCompDecl}}
+     ]
+     {
+        \upgamma, s' \evalSugR{S} u'
+        \\
+        p,u' \matchS \upgamma', \upalpha
+        \\
+        \upgamma \cons \upgamma', \annListComp{s}{\seq{q}}{} \evalSugS u
+     }
+     {
+        \upgamma, \annListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}}{\alpha} \evalSugS u
+     }
+     %
+     \and
+     %
+    \inferrule*[
+     lab={\ruleName{$\evalSugS$-ListCompGen}},
+     right={$\upgamma'=\upgamma\cons(\varConcatMap \mapsto v)$}
+    ]
+    {
+        apply_s(v, cl(\upgamma', \cxtEmpty, p=s))=u
+        \\
+        \upgamma', s \evalSugS u'
+        \\
+        apply_s(u, u') = u\dag
+    }
+    {
+        \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugS u\dag
+    }
+    %
+    \and
+    %
+    \inferrule*[
+        lab={\ruleName{$\evalSugS$-ListCompGuard-False}}
+    ]
+    {
+        \upgamma, s \evalSugS False
+    }
+    {
+        \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugS [] 
+    }
+    %
+    \and
+    %
+    \inferrule*[
+        lab={\ruleName{$\evalSugS$-ListCompGuard-True}},
+    ]
+    {
+        \upgamma, \seq{q}, s' \evalSugS v
+        \\
+        \upgamma, s \evalSugS True
+    }
+    {
+        \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugS v
+    }
     \end{smathpar}}
     \caption{Direct Forward Semantics of Surface Terms}
 \end{figure}
