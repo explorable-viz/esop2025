@@ -117,22 +117,6 @@
        %
        \and
        %
-       \inferrule*[
-          lab={\ruleName{$\evalS$-foreign}}
-       ]
-       {
-          \bind{f}{(\seq{A}, B)} \in \Sigma
-          \\
-          \length{\seq{x}} = \length{\seq{A}}
-       }
-       {
-          \upgamma, \exExtern{f}, \upalpha
-          \evalFwdR{\trExtern{f}}
-          \exClosure{\seqEmpty}{\seqEmpty}{\elimVar{\seq{x}}{\exForeignApp{f}{\seq{x}}}}
-       }
-       %
-       \and
-       %
        \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
        {
           \strut
@@ -158,6 +142,20 @@
           \upgamma, \exApp{e}{e'}, \upalpha
           \evalFwdR{\trAppNew{T}{U}{S}}
           u
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalS$-foreign}}
+       ]
+       {
+          \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
+       }
+       {
+          \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
+          \evalFwdR{\trExtern{f}}
+          \exClosure{\seqEmpty}{\seqEmpty}{\elimVar{\seq{x}}{\exForeignApp{f}{\seq{x}}}}
        }
        %
        \and

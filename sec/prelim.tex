@@ -19,6 +19,6 @@ must provide a backwards dependency analysis; since this is difficult to impleme
 foreign functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
 i.e.~$\length{\seq{e}} = \length{\seq{A}}$. First-class foreign functions are provided via a top-level
 environment which maps every $\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
-$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{\seq{x}}{\exForeignApp{f}{\seq{x}}}}$ where $\length{\seq{x}} =
-\length{\seq{A}}$. Although saturated calls are technically part of the surface and core languages, user
-programs by convention use the first-class representation.
+$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_i}{\exForeignApp{f}{\seq{x}}}}}}$
+where $\length{\seq{x}} = \length{\seq{A}}$. Although saturated calls are technically part of the surface and
+core languages, user programs by convention use the first-class representation.
