@@ -149,20 +149,6 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalBwdS$-foreign}}
-       ]
-       {
-          \strut
-       }
-       {
-          \seqEmpty, \exExtern{f}, \upalpha
-          \evalBwdR{\trExtern{f}}
-          \annClosure{\seqEmpty}{\seqEmpty}{\sigma}{\alpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[
           lab={\ruleName{$\evalBwdS$-lambda}}
        ]
        {
@@ -189,6 +175,22 @@
           \upgamma, \exApp{e}{e'}, \upalpha
           \evalBwdR{\trAppNew{T}{U}{S}}
           u
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalBwdS$-foreign}}
+       ]
+       {
+          \upgamma, \seq{e}, \upalpha \evalBwdR{\seq{T}} \seq{u}
+          \\
+          \seq{u} = \opBwd{f}(t, v)
+       }
+       {
+          \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
+          \evalBwdR{\trForeignApp{f}{\seq{T}}{t}}
+          v
        }
        %
        \and
