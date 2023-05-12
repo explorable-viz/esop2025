@@ -136,11 +136,11 @@
        {
           \upgamma, (e, e'), \upalpha \evalFwdR{(T, U)} (v, v')
           \\
-          \apply(v, v') = (S, u)
+          \apply(v, v') = ((w, T'), u)
        }
        {
           \upgamma, \exApp{e}{e'}, \upalpha
-          \evalFwdR{\trAppNew{T}{U}{S}}
+          \evalFwdR{\trAppOld{T}{U}{w}{T'}}
           u
        }
        %
@@ -151,11 +151,13 @@
        ]
        {
           \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
+          \\
+          (t, u) = \opFwd{f}(\seq{v})
        }
        {
           \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
-          \evalFwdR{\trExtern{f}}
-          \exClosure{\seqEmpty}{\seqEmpty}{\elimVar{\seq{x}}{\exForeignApp{f}{\seq{x}}}}
+          \evalFwdR{\trForeignApp{f}{\seq{T}}{t}}
+          u
        }
        %
        \and
