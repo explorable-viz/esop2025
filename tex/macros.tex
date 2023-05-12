@@ -120,10 +120,6 @@
 \newcommand*{\tyVar}[1]{#1}
 \newcommand*{\tyVariant}[1]{[#1]}
 
-% rows
-\newcommand{\rowEmpty}{\seqEmpty}
-\newcommand{\rowExtend}[2]{{#1}, {#2}}
-
 % constructors
 \newcommand*{\cCons}{\kw{Cons}}
 \newcommand*{\cNil}{\kw{[]}}
@@ -198,23 +194,14 @@
 \newcommand*{\clause}[2]{{#1}\equal{#2}}
 \newcommand*{\clauseUncurried}[2]{{#1}\equal{#2}}
 
-% handler clauses
-\newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
-\newcommand*{\hReturn}[2]{\kw{return}\;x\mapsto{#2}}
-
-
 % Traces
 \newcommand*{\trApp}[3]{{\exApp{#1}{#2}}\;{#3}}
-\newcommand*{\trAppNew}[3]{{\exApp{#1}{#2}}\filledtriangleright{#3}}
 \newcommand*{\trAppOld}[4]{{\exApp{#1}{#2}}\filledtriangleright{{#3}.{#4}}}
-\newcommand*{\trAppClosure}[2]{\kw{cl}(#1,#2)}
-\newcommand*{\trAppOpSaturated}[2]{\kw{op}(#1,#2)}
-\newcommand*{\trAppOp}[2]{\kw{op}(#1,#2)}
 \newcommand*{\trConst}{\centerdot}
 \newcommand*{\trConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\trDict}[1]{\exDict{#1}}
-\newcommand*{\trExtern}[1]{#1}
 \newcommand*{\trForeignApp}[3]{{#1}({#2})\filledtriangleright{#3}}
+\newcommand*{\trIfElse}[3]{\exIfThenElse{#1}{#2}{#3}}
 \newcommand*{\trInt}[1]{\exInt{#1}}
 \newcommand*{\trLambda}{\uplambda}
 \newcommand*{\trLet}[4]{\exLet{\bind{#1}{#3}}{#2}{#4}}
@@ -228,15 +215,12 @@
 \newcommand*{\mConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\mRec}[1]{\exRec{#1}}
 \newcommand*{\mVar}[2]{\bind{#1}{#2}}
-\newcommand*{\trIfElse}[3]{\exIfThenElse{#1}{#2}{#3}}
 % Tracing-Sets
 \newcommand*{\AppTrace}{\Set{AppTrace}}
 \newcommand*{\Match}[1]{\Set{Match}}
 \newcommand*{\RawVal}[1]{\Set{\textbf{Val}}\;{#1}}
 \newcommand*{\Trace}{\Set{Trace}}
 \newcommand*{\TrVal}[1]{\Set{TrVal}\;{#1}}
-
-\newcommand*{\trVal}[2]{#1::{#2}}
 
 % sets
 \newcommand{\Clause}{\Set{Clause}}
