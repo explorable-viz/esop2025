@@ -3,11 +3,22 @@
 \input{fig/basic-elements}
 
 The (countably infinite) set $\Var$ include a distinguished variable $\varAnon$ called the \emph{anonymous}
-variable. The set of foreign function names $\Foreign$ is a finite subset of $\Var$. The language is also
-parameterised on a map $\Sigma$ that assigns to every $f \in \Foreign$ a signature $(\seq{A}, B)$.
+variable.
 
 For any constructor $c$ we write $\datatype{\Delta}{c}$ for the corresponding datatype.
 
 For some purposes, the annotations are irrelevant, and so we can set $\Ann{A}$ to be the unit lattice, in
 which case we highlight a term in bold, and elide the annotations $\upalpha$ from the syntax. We call such
 terms \emph{raw} terms.
+
+\subsection{Foreign functions}
+
+The language is parameterised on a finite map $\Phi: \Var \to \Type^+ \times \Type$ from variables to foreign
+function signatures $(\seq{A}, B)$. By convention $f$ and $\oplus$ ranges over $\dom{\Phi}$. Foreign functions
+must provide a backwards dependency analysis; since this is difficult to implement for curried functions,
+foreign functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
+i.e.~$\length{\seq{e}} = \length{\seq{A}}$. First-class foreign functions are provided via a top-level
+environment which maps every $\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
+$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{\seq{x}}{\exForeignApp{f}{\seq{x}}}}$ where $\length{\seq{x}} =
+\length{\seq{A}}$. Although saturated calls are technically part of the surface and core languages, user
+programs by convention use the first-class representation.
