@@ -21,11 +21,6 @@
    variable
    \\
    &
-   $\trExtern{f}$
-   &
-   external function name
-   \\
-   &
    $\trRec{\seq{\bind{x}{T}}}$
    &
    record
@@ -46,9 +41,14 @@
    data value
    \\
    &
-   $\trAppNew{T}{U}{S}$
+   $\trApp{T}{U}{w}{T'}$
    &
    application
+   \\
+   &
+   $\trForeignApp{f}{\seq{T}}{t}$
+   &
+   foreign function call
    \\
    &
    $\trLet{x}{T}{\raw{v}}{U}$
@@ -64,25 +64,6 @@
 \hspace{6mm}
 \begin{minipage}[t]{0.42\textwidth}
 \begin{tabularx}{\textwidth}{rL{2.5cm}L{2.9cm}}
-   &\textit{Application trace}&
-   \lowlight{$\AppTrace\;A\;B$}
-   \\
-   $\mathbb{T} ::=$
-   &
-   $\trAppClosure{w}{T}$
-   &
-   closure
-   \\
-   &
-   $\trAppOpSaturated{\upphi}{t}$
-   &
-   external function
-   \\
-   &
-   $\trAppOp{\upphi}{n}$
-   &
-   partial application
-   \\[2mm]
    &\textit{Match}&
    \lowlight{$\Match\;\,A\;\upGamma$}
    \\
@@ -98,10 +79,10 @@
    record
    \\
    &
-   $\mConstr{c}{w}$
+   $\mConstr{c}{\seq{w}}$
    &
    data value
-   \\[14mm]
+   \\[41mm]
 \end{tabularx}
 \end{minipage}
 \caption{Traces and matches}

@@ -18,6 +18,7 @@
 \newcommand*{\symRBrack}{\kw{]}}
 \newcommand*{\symRParens}{\kw{)}}
 \newcommand*{\filledtriangleright}{\blacktriangleright}
+
 % preliminaries
 \newcommand{\cons}{\cdot}
 \renewcommand{\concat}{\mathbin{++}}
@@ -89,8 +90,6 @@
 \newcommand*{\elimVariant}[3]{\variant{\seq{\elimBind{\ell}{P}};P'}}
 \newcommand*{\elimRec}[2]{\set{#2}_{#1}}
 
-
-
 % patterns
 \newcommand*{\pattVar}[1]{#1}
 \newcommand*{\pattConstr}[2]{\exConstr{#1}{#2}}
@@ -122,10 +121,6 @@
 \newcommand*{\tyVar}[1]{#1}
 \newcommand*{\tyVariant}[1]{[#1]}
 
-% rows
-\newcommand{\rowEmpty}{\seqEmpty}
-\newcommand{\rowExtend}[2]{{#1}, {#2}}
-
 % constructors
 \newcommand*{\cCons}{\kw{Cons}}
 \newcommand*{\cNil}{\kw{[]}}
@@ -146,6 +141,7 @@
 \newcommand*{\exConstr}[2]{#1(#2)}
 \newcommand*{\exDo}[1]{\kw{do}\;#1}
 \newcommand*{\exError}{\kw{error}}
+\newcommand*{\exForeignApp}[2]{{#1}({#2})}
 \newcommand*{\exFun}[1]{\bm{\lambda}{#1}}
 \newcommand*{\exIfThenElse}[3]{\kw{if}\;{#1}\;\kw{then}\;{#2}\;\kw{else}\;{#3}}
 \newcommand*{\exInt}[1]{#1}
@@ -199,21 +195,14 @@
 \newcommand*{\clause}[2]{{#1}\equal{#2}}
 \newcommand*{\clauseUncurried}[2]{{#1}\equal{#2}}
 
-% handler clauses
-\newcommand*{\hEffect}[4]{{#1}\;{#2}\;{#3}\mapsto{#4}}
-\newcommand*{\hReturn}[2]{\kw{return}\;x\mapsto{#2}}
-
-
 % Traces
-\newcommand*{\trApp}[3]{{\exApp{#1}{#2}}\;{#3}}
-\newcommand*{\trAppNew}[3]{{\exApp{#1}{#2}}\filledtriangleright{#3}}
-\newcommand*{\trAppClosure}[2]{\kw{cl}(#1,#2)}
-\newcommand*{\trAppOpSaturated}[2]{\kw{op}(#1,#2)}
-\newcommand*{\trAppOp}[2]{\kw{op}(#1,#2)}
+\newcommand*{\trApp}[4]{{\exApp{#1}{#2}}\filledtriangleright{{#3}.{#4}}}
+\newcommand*{\trBinApp}[2]{#1 \oplus #2}
 \newcommand*{\trConst}{\centerdot}
 \newcommand*{\trConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\trDict}[1]{\exDict{#1}}
-\newcommand*{\trExtern}[1]{#1}
+\newcommand*{\trForeignApp}[3]{{#1}({#2})\filledtriangleright{#3}}
+\newcommand*{\trIfElse}[3]{\exIfThenElse{#1}{#2}{#3}}
 \newcommand*{\trInt}[1]{\exInt{#1}}
 \newcommand*{\trLambda}{\uplambda}
 \newcommand*{\trLet}[4]{\exLet{\bind{#1}{#3}}{#2}{#4}}
@@ -223,19 +212,14 @@
 \newcommand*{\trStr}[1]{\exStr{#1}}
 \newcommand*{\trSugar}[2]{\exSugarNew{#1}{#2}}
 \newcommand*{\trVar}[1]{\exVar{#1}}
-\newcommand*{\trBinApp}[2]{#1 \oplus #2}
 \newcommand*{\mConstr}[2]{\exConstr{#1}{#2}}
 \newcommand*{\mRec}[1]{\exRec{#1}}
 \newcommand*{\mVar}[2]{\bind{#1}{#2}}
-\newcommand*{\trIfElse}[3]{\exIfThenElse{#1}{#2}{#3}}
 % Tracing-Sets
 \newcommand*{\AppTrace}{\Set{AppTrace}}
 \newcommand*{\Match}[1]{\Set{Match}}
 \newcommand*{\RawVal}[1]{\Set{\textbf{Val}}\;{#1}}
 \newcommand*{\Trace}{\Set{Trace}}
-\newcommand*{\TrVal}[1]{\Set{TrVal}\;{#1}}
-
-\newcommand*{\trVal}[2]{#1::{#2}}
 
 % sets
 \newcommand{\Clause}{\Set{Clause}}
@@ -263,9 +247,6 @@
 \newcommand*{\RecDefs}{\Set{RecDefs}}
 \newcommand*{\Val}[1]{\Set{Val}\;{#1}}
 \newcommand*{\Var}{\Set{Var}}
-
-
-
 
 % operations
 \newcommand{\FV}{\opName{FV}}
@@ -354,12 +335,10 @@
 
 \newcommand*{\interpret}[1]{\hat{#1}}
 
-
 % Environments
 \newcommand*{\weakJoin}{\mathrel{\ooalign{\hss$\join$\hss\cr\hspace{0.6mm}$\cdot$}}} % want \sqdoublecup from mathabx
 \newcommand*{\bigweakJoin}{\scalebox{1.3}{$\weakJoin$}} % bit hacky..
 \newcommand*{\concatSub}[1]{\mathbin{\sub{\concat}{#1}}}
-
 
 % compatible values
 \newcommand*{\compatVal}[2]{#1 \uparrow #2}

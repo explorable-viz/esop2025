@@ -117,20 +117,6 @@
        %
        \and
        %
-       \inferrule*[
-          lab={\ruleName{$\evalS$-external}}
-       ]
-       {
-          \strut
-       }
-       {
-          \upgamma, \exExtern{f}, \upalpha
-          \evalFwdR{\trExtern{f}}
-          \exOp{\interpret{f}}{\seqEmpty}
-       }
-       %
-       \and
-       %
        \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
        {
           \strut
@@ -150,11 +136,27 @@
        {
           \upgamma, (e, e'), \upalpha \evalFwdR{(T, U)} (v, v')
           \\
-          \apply(v, v') = (S, u)
+          \apply(v, v') = ((w, T'), u)
        }
        {
           \upgamma, \exApp{e}{e'}, \upalpha
-          \evalFwdR{\trAppNew{T}{U}{S}}
+          \evalFwdR{\trApp{T}{U}{w}{T'}}
+          u
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\evalS$-foreign}}
+       ]
+       {
+          \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
+          \\
+          \opFwd{f}(\seq{v}) = (t, u)
+       }
+       {
+          \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
+          \evalFwdR{\trForeignApp{f}{\seq{T}}{t}}
           u
        }
        %
