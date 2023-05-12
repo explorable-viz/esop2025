@@ -169,11 +169,11 @@
        {
           \upgamma, (e, e'), \upalpha \evalBwdR{T,U} (v, v')
           \\
-          \opBwd{\apply}(S, u) = (v, v')
+          \opBwd{\apply}((w, T'), u) = (v, v')
        }
        {
           \upgamma, \exApp{e}{e'}, \upalpha
-          \evalBwdR{\trAppNew{T}{U}{S}}
+          \evalBwdR{\trAppOld{T}{U}{w}{T'}}
           u
        }
        %
@@ -185,7 +185,7 @@
        {
           \upgamma, \seq{e}, \upalpha \evalBwdR{\seq{T}} \seq{u}
           \\
-          \seq{u} = \opBwd{f}(t, v)
+          \opBwd{f}(t, v) = \seq{u}
        }
        {
           \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
