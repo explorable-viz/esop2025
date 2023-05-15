@@ -5,7 +5,7 @@
           lab={\ruleName{$\evalSugS$-var}}
        ]
        {
-          \upgamma, s_i, \upalpha \evalFwdR{T_i} v_i
+          \upgamma, s_i, \upalpha \evalSugR{T_i} v_i
           \quad
           (\forall i \leq \length{\seq{s}})
        }
@@ -32,14 +32,12 @@
             lab={\ruleName{$\evalSugS$-BinApp}}
         ]
         {
-            \upgamma, (s_1, s_2), \upalpha \evalSugR{T, U} (s_1', s_2')
+            \upgamma, (s_1, s_2), \upalpha \evalSugR{S_1, S_2} (s_1', s_2')
             \\
-            apply_s(v, s_1) = (S_1, v_1)
-            \\
-            apply_s(v_1, s_2) = (S_2, u)
+            \upgamma, \hat{\oplus}(s_1', s_2') \evalSugS (t, u)
         }
         {
-            \upgamma' \cons (\bind{\oplus}{v}), s_1 \oplus s_1 \evalSugR{\trBinApp{A_1}{A_2}} u
+            \upgamma, s_1 \oplus s_1 \evalSugR{\trBinApp{S_1}{S_2}{t}} u
         }
         %
         \and
@@ -48,7 +46,7 @@
             lab={\ruleName{$\evalSugS$-IfElse-True}}
         ]
         {
-            \upgamma, s \evalSugS true
+            \upgamma, s \evalSugS \cTrue
             \\
             \upgamma, s_1 \evalSugS u
         }
@@ -62,7 +60,7 @@
             lab={\ruleName{$\evalSugS$-IfElse-False}}
         ]
         {
-            \upgamma, s \evalSugS false
+            \upgamma, s \evalSugS \cFalse
             \\
             \upgamma, s_2 \evalSugS u
         }
@@ -92,18 +90,13 @@
      \and
      %
     \inferrule*[
-     lab={\ruleName{$\evalSugS$-ListCompGen}},
-     right={$\upgamma'=\upgamma\cons(\varConcatMap \mapsto v)$}
+     lab={\ruleName{$\evalSugS$-ListCompGen}}
     ]
     {
-        apply_s(v, cl(\upgamma', \cxtEmpty, p=s))=u
-        \\
-        \upgamma', s \evalSugS u'
-        \\
-        apply_s(u, u') = u\dag
+        \upgamma, \exApp{\exApp{\varConcatMap}{\uplambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
     }
     {
-        \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugS u\dag
+        \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugS u
     }
     %
     \and
@@ -112,7 +105,7 @@
         lab={\ruleName{$\evalSugS$-ListCompGuard-False}}
     ]
     {
-        \upgamma, s \evalSugS False
+        \upgamma, s \evalSugS \cFalse
     }
     {
         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugS []
@@ -126,7 +119,7 @@
     {
         \upgamma, \seq{q}, s' \evalSugS v
         \\
-        \upgamma, s \evalSugS True
+        \upgamma, s \evalSugS \cTrue
     }
     {
         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugS v

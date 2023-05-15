@@ -15,6 +15,27 @@ to pattern matching in the core language. This is made more complicated by the l
 surface language. We therefore need to define a notion of compatible patterns for defining functions
 equationally, and a notion of pattern matching for surface values.
 
+\subsection{Desugaring Of Values, Environments and RecDefs}
+In order to state the theorem, we must extend our definition of desugaring to values, environments and recursive 
+definitions ($\seq{g}$). For values, we only have one interesting case, that of surface closures. To define the 
+desugaring of these surface closures, we are required to extend the definition to environments and recdefs.
+Once this extension to the desugaring relation has been carefully defined, we can state and prove our theorem.
+
+\subsection{Equivalence of Semantics}
+Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
+\begin{theorem}[]
+    Suppose we have $\Gamma, s, A$ such that $\, \Gamma \vdash s : A \; and \; \rho : \Gamma$, then the following hold:
+\hfill
+\begin{enumerate}
+    \item $$
+        If \; \exists v'. \; \upgamma, s \evalSugS v' \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v \; where \; v' \desugarFwdS v
+    $$
+    \item $$
+        If \; \exists \upgamma', e. \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; s.t \; v' \desugarFwdS v
+    $$
+\end{enumerate}
+\end{theorem}
+
 \input{fig/surface/syntax}
 \input{fig/surface/eval-sugar}
 \input{fig/surface/match-sug}
