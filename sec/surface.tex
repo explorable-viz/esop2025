@@ -22,8 +22,12 @@ desugaring of these surface closures, we are required to extend the definition t
 Once this extension to the desugaring relation has been carefully defined, we can state and prove our theorem.
 
 \subsection{Equivalence of Semantics}
-Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
-\begin{theorem}[]
+Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can 
+either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this
+theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the
+program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
+some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
+\begin{theorem}
     Suppose we have $\Gamma, s, A$ such that $\, \Gamma \vdash s : A \; and \; \rho : \Gamma$, then the following hold:
 \hfill
 \begin{enumerate}
