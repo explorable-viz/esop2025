@@ -39,7 +39,11 @@ some non-trivial desugaring. We formalise the equivalence of these semantics as 
     $$
 \end{enumerate}
 \end{theorem}
-
+The sketch of the proof is as follows: for many cases of evaluation, the rules for surface and core evaluation are 
+matched exactly. For these rules, provided the desugaring relations are defined correctly, we can probably 
+call those proof cases trivial. There are a number of more interesting cases, specifically the ones to do with 
+list comprehensions and function applications. Since we have slightly changed the semantics of functions (FFI etc)
+this should be a bit easier. We can likely inline most definitions.
 \input{fig/surface/syntax}
 \input{fig/surface/eval-sugar}
 \input{fig/surface/match-sug}
