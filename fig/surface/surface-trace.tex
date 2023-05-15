@@ -1,0 +1,61 @@
+\begin{figure}
+    \begin{minipage}[t]{0.52\textwidth}
+    \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+       &\textit{Surface Trace}&
+       \lowlight{$\STrace\;\upGamma\;A$}
+       \\
+       $R, S ::=$
+       &
+       $\trConst$
+       &
+       constant
+       \\
+       &
+       $\trVar{x}$
+       &
+       variable
+       \\
+       &
+       $\trRec{\seq{\bind{x}{R}}}$
+       &
+       record
+       \\
+       &
+       $\trRecProj{T}{x}$
+       &
+       record projection
+       \\
+       &
+       $\trDict{\seq{\bind{s}{(R, \raw{v}, S)}}}$
+       &
+       dictionary
+       \\
+       &
+       $\trConstr{c}{R}$
+       &
+       data value
+       \\
+       &
+       $\trApp{R}{S}{w}{R'}$
+       &
+       application
+       \\
+       &
+       $\trForeignApp{f}{\seq{R}}{t}$
+       &
+       foreign function call
+       \\
+       &
+       $\trLet{x}{R}{\raw{v}}{S}$
+       &
+       let
+       \\
+       &
+       $\trLetRec{\seq{x}}{R}$
+       &
+       recursive let
+    \end{tabularx}
+    \end{minipage}%
+    \caption{Syntax of Surface Traces}
+    \end{figure}
+    
