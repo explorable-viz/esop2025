@@ -71,20 +71,20 @@
         \and
         %
     \end{smathpar}}
-    {\small \flushleft \shadebox{$\seq{q}, s \evalSugR{\trListComp{S}{Q}} v$}
+    {\small \flushleft \shadebox{$\seq{q}, s \evalSugR{\trListCompNE{S}{Q}{Q}} v$}
     \begin{smathpar}
     \inferrule*[
         lab={\ruleName{$\evalSugS$-list-comp-decl}}
      ]
      {
-        \upgamma, s' \evalSugR{S} u'
+        \upgamma, s' \evalSugR{S'} u'
         \\
         p,u' \matchS \upgamma', \upalpha
         \\
         (\upgamma \cons \upgamma'), \seq{q},s \evalSugR{\seq{Q},S} u
      }
      {
-        \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trListComp{S}{Q}} u
+        \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualDecl{P}{S'}}} u
      }
      %
      \and
@@ -96,7 +96,7 @@
         \upgamma, \exApp{\exApp{\varConcatMap}{\uplambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
     }
     {
-        \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trListComp{S}{Q}} u
+        \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualGen{P}{S'}}} u
     }
     %
     \and
@@ -122,7 +122,7 @@
         \upgamma, s \evalSugR{S} \cTrue
     }
     {
-        \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trListComp{S}{Q}} v
+        \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trListCompNE{S}{Q}{\trQualIf{S}}} v
     }
     \end{smathpar}}
     \caption{Surface semantics: evaluation}
