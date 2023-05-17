@@ -1,25 +1,25 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}$}%
+    {\small \flushleft \shadebox{$\upgamma, \seq{s}, \upalpha \evalSugR{\seq{S}} \seq{v}$}%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\evalSugS$-var}}
        ]
        {
-          \upgamma, s_i, \upalpha \evalSugR{T_i} v_i
+          \upgamma, s_i, \upalpha \evalSugR{S_i} v_i
           \quad
           (\forall i \leq \length{\seq{s}})
        }
        {
-          \upgamma, \seq{s}, \upalpha \evalSugR{\seq{T}} \seq{v}
+          \upgamma, \seq{s}, \upalpha \evalSugR{\seq{S}} \seq{v}
        }
        %
        \and
        %
     \end{smathpar}}
-    {\small \flushleft \shadebox{$\upgamma, s, \upalpha \evalSugR{T} v$}%
+    {\small \flushleft \shadebox{$\upgamma, s, \upalpha \evalSugR{S} v$}%
     \begin{smathpar}
         \inferrule*[
-            lab={\ruleName{$\evalSugS$-ListComp}}
+            lab={\ruleName{$\evalSugS$-list-comp}}
         ]{
             \upgamma, \seq{q}, s \evalSugR{\seq{Q},S} v
         } {
@@ -29,7 +29,7 @@
         \and
         %
         \inferrule*[
-            lab={\ruleName{$\evalSugS$-BinApp}}
+            lab={\ruleName{$\evalSugS$-bin-app}}
         ]
         {
             \upgamma, (s_1, s_2), \upalpha \evalSugR{S_1, S_2} (u_1, u_2)
@@ -43,7 +43,7 @@
         \and
         %
         \inferrule*[
-            lab={\ruleName{$\evalSugS$-IfElse-True}}
+            lab={\ruleName{$\evalSugS$-if-true}}
         ]
         {
             \upgamma, s \evalSugR{S} \cTrue
@@ -57,7 +57,7 @@
         \and
         %
         \inferrule*[
-            lab={\ruleName{$\evalSugS$-IfElse-False}}
+            lab={\ruleName{$\evalSugS$-if-false}}
         ]
         {
             \upgamma, s \evalSugR{S} \cFalse
@@ -71,10 +71,10 @@
         \and
         %
     \end{smathpar}}
-    {\small \flushleft \shadebox{$\seq{q}, s \evalSugS v$}
+    {\small \flushleft \shadebox{$\seq{q}, s \evalSugR{\trListComp{S}{Q}} v$}
     \begin{smathpar}
     \inferrule*[
-        lab={\ruleName{$\evalSugS$-ListCompDecl}}
+        lab={\ruleName{$\evalSugS$-list-comp-decl}}
      ]
      {
         \upgamma, s' \evalSugR{S} u'
@@ -90,7 +90,7 @@
      \and
      %
     \inferrule*[
-     lab={\ruleName{$\evalSugS$-ListCompGen}}
+     lab={\ruleName{$\evalSugS$-list-comp-gen}}
     ]
     {
         \upgamma, \exApp{\exApp{\varConcatMap}{\uplambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
@@ -102,7 +102,7 @@
     \and
     %
     \inferrule*[
-        lab={\ruleName{$\evalSugS$-ListCompGuard-False}}
+        lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
     ]
     {
         \upgamma, s \evalSugR{S} \cFalse
@@ -114,7 +114,7 @@
     \and
     %
     \inferrule*[
-        lab={\ruleName{$\evalSugS$-ListCompGuard-True}},
+        lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
     ]
     {
         \upgamma, \seq{q}, s' \evalSugR{\seq{Q},S} v

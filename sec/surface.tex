@@ -22,9 +22,9 @@ desugaring of these surface closures, we are required to extend the definition t
 Once this extension to the desugaring relation has been carefully defined, we can state and prove our theorem.
 \begin{definition}
     Suppose $\upgamma' := (\bind{x_1}{v'_1}\cdots\bind{x_n}{v'_n})$ is an environment that binds surface-variables
-    to surface-values. Suppose we have defined $\desugarValue$ to be the relation which desugars surface-values into 
-    core-values. Then, if $\forall i$ we have that $v'_i \desugarValue v_i$, we can say that
-    $\upgamma' \desugarValue \upgamma := (\bind{x_1}{v_1}\cdots\bind{x_n}{v_n})$
+    to surface-values. Suppose we have defined $\desugarFwdS$ to be the relation which desugars surface-values into 
+    core-values. Then, if $\forall i$ we have that $v'_i \desugarFwdS v_i$, we can say that
+    $\upgamma' \desugarFwdS \upgamma := (\bind{x_1}{v_1}\cdots\bind{x_n}{v_n})$
 \end{definition}
 \subsection{Equivalence of Semantics}
 Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can 
@@ -33,15 +33,11 @@ theorem, as it is our intent that the user is presented with the surface semanti
 program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
 some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
 \begin{theorem}
-    Suppose we have $\Gamma, s, A$ such that $\, \Gamma \vdash s : A \; and \; \rho : \Gamma$, then the following hold:
+    Suppose $\Gamma \vdash s : A \; and \; \rho : \Gamma$, then:
 \hfill
 \begin{enumerate}
-    \item $$
-        If \; \exists v'. \; \upgamma, s \evalSugS v' \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v \; where \; v' \desugarFwdS v
-    $$
-    \item $$
-        If \; \exists \upgamma', e. \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; s.t \; v' \desugarFwdS v
-    $$
+    \item $ If \; \exists v. \; \upgamma, s \evalSugS v \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
+    \item $If \; \exists \upgamma, e. \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; where \; v' \desugarFwdS v$
 \end{enumerate}
 \end{theorem}
 The sketch of the proof is as follows: for many cases of evaluation, the rules for surface and core evaluation are 
