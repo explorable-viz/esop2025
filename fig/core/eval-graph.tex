@@ -74,7 +74,7 @@
          V
          \evalFwdR{\trRec{\seq{\bind{x}{T}}}}
          \annRec{\seq{\bind{x}{v}}}{\upalpha},
-         (V, \upalpha)
+         E \cup (V, \upalpha)
       }
       %
       \and
@@ -83,10 +83,10 @@
          lab={\ruleName{$\evalFwdS$-project}}
       ]
       {
-         \upgamma, e, \upalpha \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upbeta}
+         \upgamma, e, V \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upbeta}, E
       }
       {
-         \upgamma, \exRecProj{e}{y}, \upalpha \evalFwdR{\trRecProj{T}{y}} u
+         \upgamma, \exRecProj{e}{y}, V \evalFwdR{\trRecProj{T}{y}} u
       }
       %
       \and
