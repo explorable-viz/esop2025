@@ -129,12 +129,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
       {
-         \strut
+         \upalpha\text{ fresh}
       }
       {
          \upgamma, \exLambda{\upsigma}, V
          \evalFwdR{\trConst}
-         \annClosure{\domrestrict{\upgamma}{\FV(\upsigma)}}{\seqEmpty}{\upsigma}{\upalpha}
+         \annClosure{\upgamma}{\seqEmpty}{\upsigma}{\upalpha}
       }
       %
       \and
