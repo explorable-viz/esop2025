@@ -67,6 +67,8 @@
       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
       {
          \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
+         \\
+         \upalpha\text{ fresh}
       }
       {
          \upgamma,
@@ -83,7 +85,7 @@
          lab={\ruleName{$\evalFwdS$-project}}
       ]
       {
-         \upgamma, e, V \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upbeta}, E
+         \upgamma, e, V \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upalpha}, E
       }
       {
          \upgamma, \exRecProj{e}{y}, V \evalFwdR{\trRecProj{T}{y}} u, E
@@ -93,9 +95,9 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
       {
-         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}, E
          \\
-         \upgamma, \seq{e}', \upalpha \evalFwdR{\seq{U}} \seq{v}
+         \upgamma, \seq{e}', V \evalFwdR{\seq{U}} \seq{v}, E'
       }
       {
          \upgamma,
