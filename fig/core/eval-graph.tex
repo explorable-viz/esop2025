@@ -66,11 +66,15 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
       {
-         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
       }
       {
          \upgamma,
-         \exRec{\seq{\bind{x}{e}}}, \upalpha \evalFwdR{\trRec{\seq{\bind{x}{T}}}} \annRec{\seq{\bind{x}{v}}}{\upalpha}
+         \exRec{\seq{\bind{x}{e}}},
+         V
+         \evalFwdR{\trRec{\seq{\bind{x}{T}}}}
+         \annRec{\seq{\bind{x}{v}}}{\upalpha},
+         (V, \upalpha)
       }
       %
       \and
