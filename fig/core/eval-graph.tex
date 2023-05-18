@@ -1,212 +1,217 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E$}%
-    \begin{smathpar}
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-var}}
-       ]
-       {
-          \upgamma, e_i, V \evalFwdR{T_i} v_i, E_i
-          \quad
-          (\forall i \leq \length{\seq{e}})
-       }
-       {
-          \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, \bigcup{\seq{E}}
-       }
-       %
-       \and
-       %
-    \end{smathpar}}
-    {\small \flushleft \shadebox{$\upgamma, e, V \evalFwdR{T} v, E$}%
-    \begin{smathpar}
-       \inferrule*[
-       lab={\ruleName{$\evalFwdS$-var}}
-       ]
-       {
-          \strut
-       }
-       {
-          \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdR{\trVar{x}} v, \varnothing
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-int}}
-       ]
-       {
-          \alpha\text{ fresh}
-       }
-       {
-          \upgamma,
-          \exInt{n},
-          V
-          \evalFwdR{\trConst}
-          \annInt{n}{\upalpha},
-          (V, \upalpha)
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-str}}
-       ]
-       {
-          \strut
-       }
-       {
-          \upgamma, \exStr{s}, \upalpha \evalFwdR{\trConst} \annStr{s}{\upalpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
-       {
-          \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
-       }
-       {
-          \upgamma,
-          \exRec{\seq{\bind{x}{e}}}, \upalpha \evalFwdR{\trRec{\seq{\bind{x}{T}}}} \annRec{\seq{\bind{x}{v}}}{\upalpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-project}}
-       ]
-       {
-          \upgamma, e, \upalpha \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upbeta}
-       }
-       {
-          \upgamma, \exRecProj{e}{y}, \upalpha \evalFwdR{\trRecProj{T}{y}} u
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
-       {
-          \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}
-          \\
-          \upgamma, \seq{e}', \upalpha \evalFwdR{\seq{U}} \seq{v}
-       }
-       {
-          \upgamma,
-          \exDict{\seq{\bind{e}{e}}'},
-          \upalpha
-          \evalFwdR{\trDict{\seq{\bind{s}{(T, \erase{v}, U)}}}}
-          \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
-       {
-          \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
-       }
-       {
-          \upgamma, \exConstr{c}{\seq{e}}, \upalpha
-          \evalFwdR{\trConstr{c}{\seq{T}}}
-          \annConstr{c}{\seq{v}}{\upalpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
-       {
-          \strut
-       }
-       {
-          \upgamma, \exLambda{\upsigma}, \upalpha
-          \evalFwdR{\trConst}
-          \annClosure{\domrestrict{\upgamma}{\FV(\upsigma)}}{\seqEmpty}{\upsigma}{\upalpha}
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-apply}},
-          width=3.2in,
-       ]
-       {
-          \upgamma, (e, e'), \upalpha \evalFwdR{(T, U)} (v, v')
-          \\
-          \apply(v, v') = ((w, T'), u)
-       }
-       {
-          \upgamma, \exApp{e}{e'}, \upalpha
-          \evalFwdR{\trApp{T}{U}{w}{T'}}
-          u
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalS$-foreign}}
-       ]
-       {
-          \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
-          \\
-          \opFwd{f}(\seq{v}) = (t, u)
-       }
-       {
-          \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
-          \evalFwdR{\trForeignApp{f}{\seq{T}}{t}}
-          u
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-let}}
-       ]
-       {
-          \upgamma, e, \upalpha \evalFwdR{T} v
-          \\
-          \upgamma \cons (\bind{x}{v}), e', \upalpha \evalFwdR{U} v'
-       }
-       {
-          \upgamma, \exLet{x}{e}{e'}, \upalpha \evalFwdR{\trLet{x}{T}{\erase{v}}{U}} v'
-       }
-       %
-       \and
-       %
-       \inferrule*[
-          lab={\ruleName{$\evalFwdS$-let-rec}}
-       ]
-       {
-          \upgamma, \set{\seq{\bind{x}{\upsigma}}}, \upalpha \closeDefsFwdR \upgamma'
-          \\
-          \upgamma \concat \upgamma', e, \upalpha \evalFwdR{T} v
-       }
-       {
-          \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, \upalpha
-          \evalFwdR{\trLetRec{\seq{x}}{T}}
-          v
-       }
-    \end{smathpar}}
-    \\[2mm]
-    {\small \flushleft \shadebox{$\upgamma, \uprho, \upalpha \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
-    \begin{smathpar}
-       \inferrule*[
-          lab={\ruleName{$\closeDefsFwdR$-rec-defs}},
-          width=4in,
-       ]
-       {
-          \uprho = \set{\seq{\bind{x}{\upsigma}}}
-          \\
-          v_i = \annClosure{\domrestrict{\upgamma}{\upGamma'_i}}{\domrestrict{\uprho}{\upGamma_i}}{\upsigma_i}{\upalpha}
-          \\
-          \upGamma_i = \reach_{\uprho}(\upsigma_i)
-          \\
-          \upGamma'_i = \FV(\domrestrict{\uprho}{\upGamma_i}) \cup \FV(\upsigma_i)
-          \quad
-          (\forall i \leq n)
-       }
-       {
-          \upgamma, \uprho, \upalpha
-          \closeDefsFwdR
-          \set{\seq{\bind{x}{v}}}
-       }
-    \end{smathpar}
-    }
-    \caption{Core semantics}
+   {\small \flushleft \shadebox{$\upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \upgamma, e_i, V \evalFwdR{T_i} v_i, E_i
+         \quad
+         (\forall i \leq \length{\seq{e}})
+      }
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, \bigcup{\seq{E}}
+      }
+      %
+      \and
+      %
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\upgamma, e, V \evalFwdR{T} v, E$}%
+   \begin{smathpar}
+      \inferrule*[
+      lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdR{\trVar{x}} v, \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-int}}
+      ]
+      {
+         \alpha\text{ fresh}
+      }
+      {
+         \upgamma,
+         \exInt{n},
+         V
+         \evalFwdR{\trConst}
+         \annInt{n}{\upalpha},
+         (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-str}}
+      ]
+      {
+      \alpha\text{ fresh}
+      }
+      {
+         \upgamma,
+         \exStr{s},
+         V
+         \evalFwdR{\trConst}
+         \annStr{s}{\upalpha},
+         (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+      {
+         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
+      }
+      {
+         \upgamma,
+         \exRec{\seq{\bind{x}{e}}}, \upalpha \evalFwdR{\trRec{\seq{\bind{x}{T}}}} \annRec{\seq{\bind{x}{v}}}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-project}}
+      ]
+      {
+         \upgamma, e, \upalpha \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upbeta}
+      }
+      {
+         \upgamma, \exRecProj{e}{y}, \upalpha \evalFwdR{\trRecProj{T}{y}} u
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+      {
+         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}
+         \\
+         \upgamma, \seq{e}', \upalpha \evalFwdR{\seq{U}} \seq{v}
+      }
+      {
+         \upgamma,
+         \exDict{\seq{\bind{e}{e}}'},
+         \upalpha
+         \evalFwdR{\trDict{\seq{\bind{s}{(T, \erase{v}, U)}}}}
+         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+      {
+         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
+      }
+      {
+         \upgamma, \exConstr{c}{\seq{e}}, \upalpha
+         \evalFwdR{\trConstr{c}{\seq{T}}}
+         \annConstr{c}{\seq{v}}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exLambda{\upsigma}, \upalpha
+         \evalFwdR{\trConst}
+         \annClosure{\domrestrict{\upgamma}{\FV(\upsigma)}}{\seqEmpty}{\upsigma}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-apply}},
+         width=3.2in,
+      ]
+      {
+         \upgamma, (e, e'), \upalpha \evalFwdR{(T, U)} (v, v')
+         \\
+         \apply(v, v') = ((w, T'), u)
+      }
+      {
+         \upgamma, \exApp{e}{e'}, \upalpha
+         \evalFwdR{\trApp{T}{U}{w}{T'}}
+         u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign}}
+      ]
+      {
+         \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
+         \\
+         \opFwd{f}(\seq{v}) = (t, u)
+      }
+      {
+         \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
+         \evalFwdR{\trForeignApp{f}{\seq{T}}{t}}
+         u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let}}
+      ]
+      {
+         \upgamma, e, \upalpha \evalFwdR{T} v
+         \\
+         \upgamma \cons (\bind{x}{v}), e', \upalpha \evalFwdR{U} v'
+      }
+      {
+         \upgamma, \exLet{x}{e}{e'}, \upalpha \evalFwdR{\trLet{x}{T}{\erase{v}}{U}} v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let-rec}}
+      ]
+      {
+         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, \upalpha \closeDefsFwdR \upgamma'
+         \\
+         \upgamma \concat \upgamma', e, \upalpha \evalFwdR{T} v
+      }
+      {
+         \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, \upalpha
+         \evalFwdR{\trLetRec{\seq{x}}{T}}
+         v
+      }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\upgamma, \uprho, \upalpha \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\closeDefsFwdR$-rec-defs}},
+         width=4in,
+      ]
+      {
+         \uprho = \set{\seq{\bind{x}{\upsigma}}}
+         \\
+         v_i = \annClosure{\domrestrict{\upgamma}{\upGamma'_i}}{\domrestrict{\uprho}{\upGamma_i}}{\upsigma_i}{\upalpha}
+         \\
+         \upGamma_i = \reach_{\uprho}(\upsigma_i)
+         \\
+         \upGamma'_i = \FV(\domrestrict{\uprho}{\upGamma_i}) \cup \FV(\upsigma_i)
+         \quad
+         (\forall i \leq n)
+      }
+      {
+         \upgamma, \uprho, \upalpha
+         \closeDefsFwdR
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
+   }
+   \caption{Core semantics}
 \end{figure}
