@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upalpha$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
+    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', V$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\matchFwdS$-seq-empty}}
@@ -8,7 +8,7 @@
           \strut
        }
        {
-          \seqEmpty, \upkappa \matchFwdR{\seqEmpty} \emptyset, \upkappa, \top
+          \seqEmpty, \upkappa \matchFwdR{\seqEmpty} \varnothing, \upkappa, \varnothing
        }
        %
        \and
@@ -17,9 +17,9 @@
           lab={\ruleName{$\matchFwdS$-seq-non-empty}}
        ]
        {
-          v, \upsigma \matchFwdR{w} \upgamma, \uptau, \upalpha
+          v, \upsigma \matchFwdR{w} \upgamma, \uptau, V
           \\
-          \seq{u}, \uptau \matchFwdR{\seq{w}'} \upgamma', \upkappa, \upbeta
+          \seq{u}, \uptau \matchFwdR{\seq{w}'} \upgamma', \upkappa, V'
        }
        {
           v \cons \seq{u},
@@ -27,7 +27,7 @@
           \matchFwdR{w \cons \seq{w}'}
           \upgamma \disjunion \upgamma',
           \upkappa,
-          \upalpha \meet \upbeta
+          V \cup V'
        }
     \end{smathpar}}
 
@@ -70,5 +70,5 @@
           \upgamma, \upkappa^\twoPrime, \upalpha \meet \upbeta
        }
     \end{smathpar}}
- \caption{Core semantics: forward and backward matching}
+ \caption{Core semantics: matching}
  \end{figure}
