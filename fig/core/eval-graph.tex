@@ -5,12 +5,12 @@
           lab={\ruleName{$\evalFwdS$-var}}
        ]
        {
-          \upgamma, e_i, \upalpha \evalFwdR{T_i} v_i
+          \upgamma, e_i, V \evalFwdR{T_i} v_i, E_i
           \quad
           (\forall i \leq \length{\seq{e}})
        }
        {
-          \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
+          \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, \bigcup{\seq{E}}
        }
        %
        \and
@@ -25,7 +25,7 @@
           \strut
        }
        {
-          \upgamma \cons (\bind{x}{v}), \exVar{x}, \upalpha \evalFwdR{\trVar{x}} v
+          \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdR{\trVar{x}} v, \varnothing
        }
        %
        \and
@@ -203,5 +203,5 @@
        }
     \end{smathpar}
     }
-    \caption{Core semantics: forwards evaluation}
+    \caption{Core semantics}
 \end{figure}
