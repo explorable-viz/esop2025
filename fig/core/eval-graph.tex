@@ -140,12 +140,17 @@
       {
          \upgamma, (e, e'), V \evalFwdR{(T, U)} (\annClosureNew{\upgamma_1}{\uprho}{\upsigma}{V_1'}{\upbeta}, v), E
          \\
-         \apply(?, v) = ((w, T'), u, E')
+         \upgamma_1, \uprho, V \closeDefsFwdR \upgamma_2
+         \\
+         v, \sigma \matchFwdR{w} \upgamma_3, e, V_2'
+         \\
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1' \cup V_2' \evalFwdR{T'} u, E'
       }
       {
          \upgamma, \exApp{e}{e'}, V
          \evalFwdR{\trApp{T}{U}{w}{T'}}
-         u
+         u,
+         E \cup E'
       }
       %
       \and
