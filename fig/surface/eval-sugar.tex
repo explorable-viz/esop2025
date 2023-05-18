@@ -30,6 +30,27 @@
       \and
       %
       \inferrule*[
+         lab={\ruleName{$\evalSugS$-app}}
+      ]
+      {
+         \upgamma', (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\seq{c}}, v)
+         \\
+         \kw{closedefs}(\upgamma_1, \seq{g}) = \upgamma_2
+         \\
+         v, \seq{c} \matchFwdS \upgamma_3, s^\dag
+         \\
+         \upgamma = \upgamma_1 \concat \upgamma_2 \concat \upgamma_3
+         \\
+         \upgamma, s\dag \evalSugS v^\dag
+      }
+      {
+         \upgamma, \exApp{s}{s'} \evalSugS v^\dag
+      }
+
+      %
+      \and
+      %
+      \inferrule*[
          lab={\ruleName{$\evalSugS$-bin-app}}
       ]
       {
