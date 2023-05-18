@@ -1,0 +1,228 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \upgamma, e_i, V \evalFwdR{T_i} v_i, E_i
+         \quad
+         (\forall i \leq \length{\seq{e}})
+      }
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, \bigcup{\seq{E}}
+      }
+      %
+      \and
+      %
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\upgamma, e, V \evalFwdR{T} v, E$}%
+   \begin{smathpar}
+      \inferrule*[
+      lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdR{\trVar{x}} v, \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-int}}
+      ]
+      {
+         \upalpha\text{ fresh}
+      }
+      {
+         \upgamma, \exInt{n}, V
+         \evalFwdR{\trConst}
+         \annInt{n}{\upalpha},
+         (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-str}}
+      ]
+      {
+      \upalpha\text{ fresh}
+      }
+      {
+         \upgamma, \exStr{s}, V
+         \evalFwdR{\trConst}
+         \annStr{s}{\upalpha},
+         (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
+         \\
+         \upalpha\text{ fresh}
+      }
+      {
+         \upgamma, \exRec{\seq{\bind{x}{e}}}, V
+         \evalFwdR{\trRec{\seq{\bind{x}{T}}}}
+         \annRec{\seq{\bind{x}{v}}}{\upalpha},
+         E \cup (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-project}}
+      ]
+      {
+         \upgamma, e, V \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upalpha}, E
+      }
+      {
+         \upgamma, \exRecProj{e}{y}, V \evalFwdR{\trRecProj{T}{y}} u, E
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}, E
+         \\
+         \upgamma, \seq{e}', V \evalFwdR{\seq{U}} \seq{v}, E'
+         \\
+         \upalpha\text{ fresh}
+      }
+      {
+         \upgamma,
+         \exDict{\seq{\bind{e}{e}}'},
+         V
+         \evalFwdR{\trDict{\seq{\bind{s}{(T, \erase{v}, U)}}}}
+         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha},
+         E \cup E' \cup (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
+         \\
+         \upalpha\text{ fresh}
+      }
+      {
+         \upgamma, \exConstr{c}{\seq{e}}, V
+         \evalFwdR{\trConstr{c}{\seq{T}}}
+         \annConstr{c}{\seq{v}}{\upalpha},
+         E \cup (V, \upalpha)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+      {
+         \upalpha\text{ fresh}
+      }
+      {
+         \upgamma, \exLambda{\upsigma}, V
+         \evalFwdR{\trConst}
+         \annClosureNew{\upgamma}{\seqEmpty}{\upsigma}{V}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-apply}},
+         width=3.3in,
+      ]
+      {
+         \upgamma, (e, e'), V \evalFwdR{(T, U)} (\annClosureNew{\upgamma_1}{\uprho}{\upsigma}{V_1'}{\upbeta}, v), E
+         \\
+         \upgamma_1, \uprho, V \closeDefsFwdR \upgamma_2
+         \\
+         v, \sigma \matchFwdR{w} \upgamma_3, e, V_2'
+         \\
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1' \cup V_2' \evalFwdR{T'} u, E'
+      }
+      {
+         \upgamma, \exApp{e}{e'}, V
+         \evalFwdR{\trApp{T}{U}{w}{T'}}
+         u,
+         E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign}}
+      ]
+      {
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
+         \\
+         \interpret{f}(\seq{v}) = (u, E')
+      }
+      {
+         \upgamma, \exForeignApp{f}{\seq{e}}, V
+         \evalFwdR{\trForeignAppNew{f}{\seq{T}}}
+         u, E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let}}
+      ]
+      {
+         \upgamma, e, V \evalFwdR{T} v, E
+         \\
+         \upgamma \cons (\bind{x}{v}), e', V \evalFwdR{U} v', E'
+      }
+      {
+         \upgamma, \exLet{x}{e}{e'}, V
+         \evalFwdR{\trLet{x}{T}{U}}
+         v', E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let-rec}}
+      ]
+      {
+         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, V \closeDefsFwdR \upgamma'
+         \\
+         \upgamma \concat \upgamma', e, V \evalFwdR{T} v, E
+      }
+      {
+         \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, V
+         \evalFwdR{\trLetRec{\seq{x}}{T}}
+         v, E
+      }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\closeDefsFwdR$-rec-defs}},
+         width=4in,
+      ]
+      {
+         \uprho = \set{\seq{\bind{x}{\upsigma}}}
+         \\
+         v_i = \annClosureNew{\upgamma}{\uprho}{\upsigma_i}{V}{\upalpha_i}
+         \\
+         \upalpha_i\text{ fresh}
+         \quad
+         (\forall i \leq \length{\seq{x}})
+      }
+      {
+         \upgamma, \uprho, V
+         \closeDefsFwdR
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
+   }
+   \caption{Core semantics}
+\end{figure}
