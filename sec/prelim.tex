@@ -21,6 +21,14 @@ i.e.~$\length{\seq{e}} = \length{\seq{A}}$. First-class foreign functions are pr
 environment which maps every $\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
 $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_i}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \length{\seq{A}}$. Although saturated calls are technically part of the surface and
-core languages, user programs by convention use the first-class representation. Throughout this paper, we make
-reference to a metavariable $t$. For any foreign function $f$, we associate with it a $t$, which specifies
-the shape of traces of the function. The variable $t$ is existentially quantified for each $f$.  
+core languages, user programs by convention use the first-class representation. Metavariable $t$ ranges over \emph{foreign traces} of existentially quantified type particular to each $f$.
+
+\subsection{Dependence graphs}
+
+$G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of
+\emph{addresses} which serve as vertices.
+
+\begin{definition}
+   Define $(V, \alpha)$ where $\alpha \notin V$ to be the set of edges
+   $\set{(\beta, \alpha) \mid \beta \in V}$.
+\end{definition}
