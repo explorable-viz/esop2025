@@ -1,60 +1,60 @@
 \begin{figure}
-    \begin{minipage}[t]{0.48\textwidth}
-    \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
-       &\textit{Surface Trace}&
-       \lowlight{$\STrace\;\upGamma\;A$}
-       \\
-       $R, S ::=$
-       &
-       $\dots$
-       &
-       $\dots$
-       \\
-       &
-       $\trBinApp{S_1}{S_2}{S}$  
-       &
-       binary application
-       \\
-       &
-       $\trListComp{S}{Q}$
-       &
-       List comprehensions
-       \\
-       &
-       $\trIfThen{R}{S}$
-       &
-       If-Else True Branch
-       \\
-       &
-       $\trIfElse{R}{S}$
-       &
-       If-Else False Branch
-    \end{tabularx}
-    \end{minipage}%
-    \\
-    \begin{minipage}[t]{0.52\textwidth}
-   \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
-   &\textit{Qualifier Trace}&
-   \lowlight{$\QTrace\;\upGamma\;A$}
-   \\
-   $Q ::=$
-   &
-   $\trQualIf{S}$
-   &
-   guard
-   \\
-   &
-   $\trQualDecl{P}{S}$
-   &
-   declaration
-   \\
-   &
-   $\trQualGen{P}{S}$
-   &
-   generator
-   \\
-   \end{tabularx}
-    \end{minipage}
-    \caption{Syntax of Surface Traces}
-    \end{figure}
+   \begin{minipage}[t]{0.52\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+         &\textit{Surface Trace}&
+         \lowlight{$\STrace\;\upGamma\;A$}
+         \\
+         $R, S ::=$
+         &
+         $\dots$
+         &
+         $\dots$
+         \\[2mm]
+         &
+         $\trBinApp{S_1}{S_2}{t}$  
+         &
+         binary application
+         \\[2mm]
+         &
+         $\trListComp{S}{Q}$
+         &
+         List comprehensions
+         \\[2mm]
+         &
+         $\exIfThenElse{R}{S}{s}$
+         &
+         If-Else True Branch
+         \\[2mm]
+         &
+         $\exIfThenElse{R}{s}{S}$
+         &
+         If-Else False Branch
+      \end{tabularx}
+   \end{minipage}%
+   \\[2mm]
+   \begin{minipage}[t]{0.52\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+         &\textit{Qualifier Trace}&
+         \lowlight{$\QTrace\;\upGamma\;A$}
+         \\
+         $Q\; ::=$
+         &
+         $\trQualIf{S}$
+         &
+         guard
+         \\[2mm]
+         &
+         $\trQualDecl{p}{S}$
+         &
+         declaration
+         \\[2mm]
+         &
+         $\trQualGen{p}{S}$
+         &
+         generator
+         \\[2mm]
+      \end{tabularx}
+   \end{minipage}
+   \caption{Syntax of Surface Traces}
+\end{figure}
     

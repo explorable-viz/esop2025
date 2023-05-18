@@ -16,16 +16,11 @@ surface language. We therefore need to define a notion of compatible patterns fo
 equationally, and a notion of pattern matching for surface values.
 
 \subsection{Desugaring Of Values, Environments and RecDefs}
-In order to state the theorem, we must extend our definition of desugaring to values, environments and recursive 
-definitions ($\seq{g}$). For values, we only have one interesting case, that of surface closures. To define the 
-desugaring of these surface closures, we are required to extend the definition to environments and recdefs.
-Once this extension to the desugaring relation has been carefully defined, we can state and prove our theorem.
-\begin{definition}
-    Suppose $\upgamma' := (\bind{x_1}{v'_1}\cdots\bind{x_n}{v'_n})$ is an environment that binds surface-variables
-    to surface-values. Suppose we have defined $\desugarFwdS$ to be the relation which desugars surface-values into 
-    core-values. Then, if $\forall i$ we have that $v'_i \desugarFwdS v_i$, we can say that
-    $\upgamma' \desugarFwdS \upgamma := (\bind{x_1}{v_1}\cdots\bind{x_n}{v_n})$
-\end{definition}
+In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
+one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define 
+desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$). 
+Once this extension to the desugaring relation has been carefully defined, in figure \ref{fig:closures}, we can state and prove our theorem.
+
 \subsection{Equivalence of Semantics}
 Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can 
 either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this
@@ -33,7 +28,7 @@ theorem, as it is our intent that the user is presented with the surface semanti
 program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
 some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
 \begin{theorem}
-    Suppose $\Gamma \vdash s : A \; and \; \rho : \Gamma$, then:
+    Suppose $\Gamma \vdash s : A \; and \; \upgamma : \Gamma$, then:
 \hfill
 \begin{enumerate}
     \item $ If \; \upgamma, s \evalSugS v \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$

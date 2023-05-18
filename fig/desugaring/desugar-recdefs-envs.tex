@@ -15,36 +15,37 @@
     \end{smathpar}
     }
 
-    {\small \flushleft \shadebox{$g \desugarFwdS \upsigma$}
+    {\small \flushleft \shadebox {$\seq{g} \desugarFwdS \uprho$}
     \begin{smathpar}
         \inferrule*
         {
-            g = \bind{x}{\seq{c}}
+            \forall i \le \length{\seq{g}}
             \\
-            \clausesF(c_i) = \upsigma_i \forall i
+            g_i = \bind{\exVar{x}}{\seq{c_i}}
             \\
-            \bigsqcupplus_i \upsigma_i = \upsigma        
+            \clausesF(\seq{c_i})=\upsigma_i
         }
         {
-            g \desugarFwdS \upsigma
-        }
-    \end{smathpar}}
-    {\small \flushleft \shadebox {$\seq{g} \desugarFwdS \upsigma$}
-    \begin{smathpar}
-        \inferrule*
-        {
-            g_i \desugarFwdS \upsigma_i \quad \forall i
-            \\
-            \bigsqcupplus_i \upsigma_i = \upsigma  
-        }
-        {
-            \seq{g} \desugarFwdS \upsigma           
+            \seq{g} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma}}}
         }
     \end{smathpar}
     }
-    {\small \flushleft \shadebox {$\exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}$}
+    % \exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+    {\small \flushleft \shadebox {$u \desugarFwdS v$}
         \begin{smathpar}
+            \inferrule*[lab={$\desugarFwdS-closure$}]
+            {
+                \upgamma \desugarFwdS \upgamma'
+                \\
+                \seq{g} \desugarFwdS \uprho
+                \\
+                \clausesF(\seq{c}) = \upsigma
+            }
+            {
+                \exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+            }
         \end{smathpar}
     }
     \caption{Desugaring for environments, recursive definitions, and clauses}
+    \label{fig:closures}
 \end{figure}
