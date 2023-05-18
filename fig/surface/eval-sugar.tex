@@ -30,18 +30,16 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-app}}
+         lab={\ruleName{$\evalSugS$-app}},
       ]
       {
-         \upgamma', (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\seq{c}}, v)
+         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\seq{c}}, v)
          \\
-         \kw{closedefs}(\upgamma_1, \seq{g}) = \upgamma_2
+         \upgamma_1, \seq{g} \desugarFwdS \upgamma_2
          \\
          v, \seq{c} \matchFwdS \upgamma_3, s^\dag
          \\
-         \upgamma = \upgamma_1 \concat \upgamma_2 \concat \upgamma_3
-         \\
-         \upgamma, s\dag \evalSugS v^\dag
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugS v^\dag
       }
       {
          \upgamma, \exApp{s}{s'} \evalSugS v^\dag
@@ -92,6 +90,17 @@
       %
       \and
       %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-let-rec}}
+      ]
+      {
+         \upgamma, \seq{g} \desugarFwdS \upgamma'
+         \\
+         \upgamma \concat \upgamma', s \evalSugR{S} v
+      }
+      {
+         \upgamma, \exLetRecPiecewise{\seq{g}}{s} \evalSugR{\trLetRec{\seq{g}}{S}} v
+      }
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\exListComp{S}{\seq{Q}}} v$}
    \begin{smathpar}
@@ -155,4 +164,19 @@
       }
    \end{smathpar}}
    \caption{Surface semantics: evaluation}
+\end{figure}
+\begin{figure}
+   {\small, \flushleft \shadebox{$\upgamma, \seq{g} \desugarFwdS \upgamma'$}
+      \begin{smathpar}
+         \inferrule*
+         { 
+            g_i = \bind{x_i}{\seq{c_i}}
+            \\
+            v_i = \exClosure{\upgamma}{\seq{g}}{\seq{c_i}}
+         }
+         {
+            \upgamma, \seq{g} \desugarFwdS \set{\seq{\bind{x}{v}}}
+         }
+      \end{smathpar}}
+   \caption{Closing surface definitions}
 \end{figure}
