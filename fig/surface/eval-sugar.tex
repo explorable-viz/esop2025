@@ -72,8 +72,15 @@
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\trListCompNE{S}{Q}{Q}} v$}
+   {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\exListComp{S}{\seq{Q}}} v$}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
+      {
+         \upgamma, s \evalSugR{S} u
+      }
+      {
+         \upgamma, \exListComp{s}{\seqEmpty} \evalSugR{\exListComp{S}{\kw{-}}} \cCons(u,\kw{Nil})
+      }
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp-decl}}
       ]
@@ -85,7 +92,7 @@
          (\upgamma \cons \upgamma'), \seq{q},s \evalSugR{\seq{Q},S} u
       }
       {
-         \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualDecl{P}{S'}}} u
+         \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualDecl{p}{S'}}} u
       }
       %
       \and
@@ -97,7 +104,7 @@
          \upgamma, \exApp{\exApp{\varConcatMap}{\uplambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
       }
       {
-         \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualGen{P}{S'}}} u
+         \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trListCompNE{S}{Q}{\trQualGen{p}{S'}}} u
       }
       %
       \and
@@ -109,7 +116,7 @@
          \upgamma, s \evalSugR{S} \cFalse
       }
       {
-         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugS []
+         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIf{S}} []
       }
       %
       \and
