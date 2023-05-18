@@ -159,14 +159,14 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         \upgamma, \seq{e}, \evalFwdR{\seq{T}} \seq{v}
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
          \\
-         \opFwd{f}(\seq{v}) = (t, u)
+         \interpret{f}(\seq{v}) = (u, E')
       }
       {
-         \upgamma, \exForeignApp{f}{\seq{e}}, \upalpha
-         \evalFwdR{\trForeignApp{f}{\seq{T}}{t}}
-         u
+         \upgamma, \exForeignApp{f}{\seq{e}}, V
+         \evalFwdR{\trForeignAppNew{f}{\seq{T}}}
+         u, E \cup E'
       }
       %
       \and
@@ -175,12 +175,14 @@
          lab={\ruleName{$\evalFwdS$-let}}
       ]
       {
-         \upgamma, e, \upalpha \evalFwdR{T} v
+         \upgamma, e, V \evalFwdR{T} v, E
          \\
-         \upgamma \cons (\bind{x}{v}), e', \upalpha \evalFwdR{U} v'
+         \upgamma \cons (\bind{x}{v}), e', V \evalFwdR{U} v', E'
       }
       {
-         \upgamma, \exLet{x}{e}{e'}, \upalpha \evalFwdR{\trLet{x}{T}{\erase{v}}{U}} v'
+         \upgamma, \exLet{x}{e}{e'}, V
+         \evalFwdR{\trLet{x}{T}{U}}
+         v', E \cup E'
       }
       %
       \and
