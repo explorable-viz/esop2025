@@ -34,7 +34,7 @@
          lab={\ruleName{$\evalFwdS$-int}}
       ]
       {
-         \alpha\text{ fresh}
+         \upalpha\text{ fresh}
       }
       {
          \upgamma,
@@ -51,7 +51,7 @@
          lab={\ruleName{$\evalFwdS$-str}}
       ]
       {
-      \alpha\text{ fresh}
+      \upalpha\text{ fresh}
       }
       {
          \upgamma,
@@ -98,11 +98,13 @@
          \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{\annStr{s}{\upbeta}}, E
          \\
          \upgamma, \seq{e}', V \evalFwdR{\seq{U}} \seq{v}, E'
+         \\
+         \upalpha\text{ fresh}
       }
       {
          \upgamma,
          \exDict{\seq{\bind{e}{e}}'},
-         \upalpha
+         V
          \evalFwdR{\trDict{\seq{\bind{s}{(T, \erase{v}, U)}}}}
          \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha}
       }
