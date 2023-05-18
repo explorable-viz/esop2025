@@ -202,7 +202,7 @@
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\upgamma, \uprho, \upalpha \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\closeDefsFwdR$-rec-defs}},
@@ -211,12 +211,14 @@
       {
          \uprho = \set{\seq{\bind{x}{\upsigma}}}
          \\
-         v_i = \annClosure{\upgamma}{\uprho}{\upsigma_i}{\upalpha}
+         v_i = \annClosureNew{\upgamma}{\uprho}{\upsigma_i}{V}{\upalpha_i}
          \\
-         (\forall i \leq \length{n})
+         \upalpha_i\text{ fresh}
+         \quad
+         (\forall i \leq \length{\seq{x}})
       }
       {
-         \upgamma, \uprho, \upalpha
+         \upgamma, \uprho, V
          \closeDefsFwdR
          \set{\seq{\bind{x}{v}}}
       }
