@@ -191,14 +191,14 @@
          lab={\ruleName{$\evalFwdS$-let-rec}}
       ]
       {
-         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, \upalpha \closeDefsFwdR \upgamma'
+         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, V \closeDefsFwdR \upgamma'
          \\
-         \upgamma \concat \upgamma', e, \upalpha \evalFwdR{T} v
+         \upgamma \concat \upgamma', e, V \evalFwdR{T} v, E
       }
       {
-         \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, \upalpha
+         \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, V
          \evalFwdR{\trLetRec{\seq{x}}{T}}
-         v
+         v, E
       }
    \end{smathpar}}
    \\[2mm]
