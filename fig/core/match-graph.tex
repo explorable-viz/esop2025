@@ -1,0 +1,74 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upalpha$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-seq-empty}}
+       ]
+       {
+          \strut
+       }
+       {
+          \seqEmpty, \upkappa \matchFwdR{\seqEmpty} \emptyset, \upkappa, \top
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-seq-non-empty}}
+       ]
+       {
+          v, \upsigma \matchFwdR{w} \upgamma, \uptau, \upalpha
+          \\
+          \seq{u}, \uptau \matchFwdR{\seq{w}'} \upgamma', \upkappa, \upbeta
+       }
+       {
+          v \cons \seq{u},
+          \upsigma
+          \matchFwdR{w \cons \seq{w}'}
+          \upgamma \disjunion \upgamma',
+          \upkappa,
+          \upalpha \meet \upbeta
+       }
+    \end{smathpar}}
+
+    {\small \flushleft \shadebox{$v, \upsigma \matchFwdR{w} \upgamma, \upkappa, \upalpha$}\hfill \textit{with }$\dom{\upgamma} = \BV(w)$%
+    \begin{smathpar}
+       \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
+       {
+          \strut
+       }
+       {
+          v, \elimVar{x}{\upkappa} \matchFwdR{\mVar{x}{\erase{v}}} \set{\bind{x}{v}}, \upkappa, \top
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-record}}
+       ]
+       {
+          \seq{u}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upbeta
+          \\
+          \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+       }
+       {
+          \annRec{\seq{\bind{x}{v}}}{\upalpha},
+          \elimRec{\seq{y}}{\upkappa}
+          \matchFwdR{\mRec{\seq{\bind{y}{w}}}}
+          \upgamma, \upkappa', \upalpha \meet \upbeta
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
+       {
+          \seq{v}, \upkappa' \matchFwdR{\seq{w}} \upgamma, \upkappa^\twoPrime, \upbeta
+       }
+       {
+          \annConstr{c'}{\seq{v}}{\upalpha}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
+          \matchFwdR{\mConstr{c'}{\seq{w}}}
+          \upgamma, \upkappa^\twoPrime, \upalpha \meet \upbeta
+       }
+    \end{smathpar}}
+ \caption{Core semantics: forward and backward matching}
+ \end{figure}
