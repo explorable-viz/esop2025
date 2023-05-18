@@ -38,7 +38,7 @@
           \strut
        }
        {
-          v, \elimVar{x}{\upkappa} \matchFwdR{\mVar{x}} \set{\bind{x}{v}}, \upkappa, \top
+          v, \elimVar{x}{\upkappa} \matchFwdR{\mVar{x}} \set{\bind{x}{v}}, \upkappa, \varnothing
        }
        %
        \and
@@ -47,7 +47,7 @@
           lab={\ruleName{$\matchFwdS$-record}}
        ]
        {
-          \seq{u}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upbeta
+          \seq{u}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', V
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
@@ -55,19 +55,19 @@
           \annRec{\seq{\bind{x}{v}}}{\upalpha},
           \elimRec{\seq{y}}{\upkappa}
           \matchFwdR{\mRec{\seq{\bind{y}{w}}}}
-          \upgamma, \upkappa', \upalpha \meet \upbeta
+          \upgamma, \upkappa', V \cup \set{\upalpha}
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
        {
-          \seq{v}, \upkappa' \matchFwdR{\seq{w}} \upgamma, \upkappa^\twoPrime, \upbeta
+          \seq{v}, \upkappa' \matchFwdR{\seq{w}} \upgamma, \upkappa^\twoPrime, V
        }
        {
           \annConstr{c'}{\seq{v}}{\upalpha}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
           \matchFwdR{\mConstr{c'}{\seq{w}}}
-          \upgamma, \upkappa^\twoPrime, \upalpha \meet \upbeta
+          \upgamma, \upkappa^\twoPrime, V \cup \set{\upalpha}
        }
     \end{smathpar}}
  \caption{Core semantics: matching}
