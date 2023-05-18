@@ -37,9 +37,7 @@
          \upalpha\text{ fresh}
       }
       {
-         \upgamma,
-         \exInt{n},
-         V
+         \upgamma, \exInt{n}, V
          \evalFwdR{\trConst}
          \annInt{n}{\upalpha},
          (V, \upalpha)
@@ -54,9 +52,7 @@
       \upalpha\text{ fresh}
       }
       {
-         \upgamma,
-         \exStr{s},
-         V
+         \upgamma, \exStr{s}, V
          \evalFwdR{\trConst}
          \annStr{s}{\upalpha},
          (V, \upalpha)
@@ -71,9 +67,7 @@
          \upalpha\text{ fresh}
       }
       {
-         \upgamma,
-         \exRec{\seq{\bind{x}{e}}},
-         V
+         \upgamma, \exRec{\seq{\bind{x}{e}}}, V
          \evalFwdR{\trRec{\seq{\bind{x}{T}}}}
          \annRec{\seq{\bind{x}{v}}}{\upalpha},
          E \cup (V, \upalpha)
@@ -144,12 +138,12 @@
          width=3.2in,
       ]
       {
-         \upgamma, (e, e'), \upalpha \evalFwdR{(T, U)} (v, v')
+         \upgamma, (e, e'), V \evalFwdR{(T, U)} (v, v'), E
          \\
          \apply(v, v') = ((w, T'), u)
       }
       {
-         \upgamma, \exApp{e}{e'}, \upalpha
+         \upgamma, \exApp{e}{e'}, V
          \evalFwdR{\trApp{T}{U}{w}{T'}}
          u
       }
