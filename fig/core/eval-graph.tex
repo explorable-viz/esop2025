@@ -114,12 +114,15 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
       {
-         \upgamma, \seq{e}, \upalpha \evalFwdR{\seq{T}} \seq{v}
+         \upgamma, \seq{e}, V \evalFwdR{\seq{T}} \seq{v}, E
+         \\
+         \upalpha\text{ fresh}
       }
       {
-         \upgamma, \exConstr{c}{\seq{e}}, \upalpha
+         \upgamma, \exConstr{c}{\seq{e}}, V
          \evalFwdR{\trConstr{c}{\seq{T}}}
-         \annConstr{c}{\seq{v}}{\upalpha}
+         \annConstr{c}{\seq{v}}{\upalpha},
+         E \cup (V, \upalpha)
       }
       %
       \and
