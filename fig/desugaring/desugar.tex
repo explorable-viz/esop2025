@@ -17,14 +17,16 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
-         s \desugarFwdThunkR e
+         s_1 \desugarFwdR s_1', e_1, V_1
          \\
-         s' \desugarFwdThunkR e'
+         s_2 \desugarFwdR s_2', e_2, V_2
       }
       {
-         \exBinaryApp{s}{\oplus}{s'}
+         \exBinaryApp{s_1}{\oplus}{s_2}
          \desugarFwdR
-         \exForeignApp{\oplus}{e, e'}
+         \exBinaryApp{s_1'}{\oplus}{s_2'},
+         \exForeignApp{\oplus}{e, e'},
+         V_1 \cup V_2
       }
       %
       \and
