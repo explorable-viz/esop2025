@@ -1,13 +1,17 @@
 \begin{figure}
-   {\flushleft \shadebox{$s \desugarFwdThunkR e$}
+   {\flushleft \shadebox{$s \desugarFwdR s', e, E$}
    \hfill \textbfit{$s$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-sugar}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-edge}}]
       {
-         s \desugarFwdR e
+         t \desugarFwdR t', r, E
+         \\
+         \upalpha, \upbeta\textit{ fresh}
       }
       {
-         s \desugarFwdThunkR \exSugarNew{\raw{s}}{e}
+         \annot{t}{\addrNull}
+         \desugarFwdR
+         \annot{t'}{\upalpha}, \annot{r}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
       }
    \end{smathpar}
    {\flushleft \shadebox{$s \desugarFwdR e$}
