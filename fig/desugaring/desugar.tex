@@ -13,20 +13,20 @@
          \annot{t'}{\upalpha}, \annot{r}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
       }
    \end{smathpar}
-   {\flushleft \shadebox{$t \desugarFwdR t', r$}\hfill}
+   {\flushleft \shadebox{$t \desugarFwdR t', r, V$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
-         s_1 \desugarFwdR s_1', e_1, V_1
+         s_1 \desugarFwdR s_1', e_1, E_1
          \\
-         s_2 \desugarFwdR s_2', e_2, V_2
+         s_2 \desugarFwdR s_2', e_2, E_2
       }
       {
          \exBinaryApp{s_1}{\oplus}{s_2}
          \desugarFwdR
          \exBinaryApp{s_1'}{\oplus}{s_2'},
          \exForeignApp{\oplus}{e, e'},
-         V_1 \cup V_2
+         E_1 \cup E_2
       }
       %
       \and
@@ -37,7 +37,7 @@
          \quad
          (\forall i \leq j)
          \\
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
       }
       {
          \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{s}
