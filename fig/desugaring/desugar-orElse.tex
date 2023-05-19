@@ -2,11 +2,11 @@
    \begin{salign}
       %========================================
       \intertext{
-      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \partialGCto \Cont\;(\Gamma \concat \Gamma')\;A)$}
+      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
       }
       %========================================
       \begin{split}
-      \orElseFwdF
+      \orElseF
       &::
       \PattSeqOpt\;\Gamma' \to\\
       &\phantom{aj.}
@@ -14,109 +14,46 @@
       \end{split}
       \\
       %========================================
-      \orElseFwdF_{\seqEmpty}(e, e')
+      \orElseF_{\seqEmpty}(e, e')
       &=
       e
       \\
-      \orElseFwdF_{\pattVar{x} \cons \seq{\pi}}(\elimVar{x}{\kappa}, e)
+      \orElseF_{\pattVar{x} \cons \seq{\pi}}(\elimVar{x}{\kappa}, e)
       &=
-      \elimVar{x}{\orElseFwdF(\seq{\pi})(\kappa, e)}
+      \elimVar{x}{\orElseF(\seq{\pi})(\kappa, e)}
       \\
-      \orElseFwdF_{\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}}(\elimRecord{\seq{x}}{\kappa}, e)
+      \orElseF_{\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}}(\elimRecord{\seq{x}}{\kappa}, e)
       &=
-      \elimRecord{\seq{x}}{\orElseFwdF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}
+      \elimRecord{\seq{x}}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}
       \\
-      \orElseFwdF_{\pattConstr{c}{\seq{p}} \cons \seq{\pi}}(\elimConstr{\elimBind{c}{\kappa}}, e)
+      \orElseF_{\pattConstr{c}{\seq{p}} \cons \seq{\pi}}(\elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseFwdF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessFwdF_{c}(e)
+      \elimConstr{\elimBind{c}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessF_{c}(e)
       \\
-      \orElseFwdF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseFwdF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessFwdF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
-      \orElseFwdF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseFwdF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessFwdF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
-      \orElseFwdF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
+      \orElseF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{\orElseFwdF_{\seq{\pi}}(\kappa)}} \disjjoin \unlessFwdF_{\cNil}(e)
-      \\[2mm]
-      %========================================
-      \begin{split}
-      \orElseBwdF
-      &::
-      \PattSeqOpt\;\Gamma' \to\\
-      &\phantom{aj.}
-      \Raw{\Expr}\;\cxtEmpty\;A \times \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A
-      \end{split}
-      \\
-      %========================================
-      \orElseBwdF_{\seqEmpty}(\raw{e}, e)
-      &=
-      (e, \bot_{\raw{e}})
-      \\
-      \orElseBwdF_{\pattVar{x} \cons \seq{\pi}}(\raw{e}, \elimVar{x}{\kappa})
-      &=
-      (\elimVar{x}{\kappa'}, e)
-      \textit{ if }
-      (\kappa', e) = \orElseBwdF_{\seq{\pi}}(\raw{e}, \kappa)
-      \\
-      \orElseBwdF_{\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}}(\raw{e}, \elimRecord{\seq{x}}{\kappa})
-      &= (\elimRecord{\seq{x}}{\kappa'}, e)
-      \textit{ if }
-      (\kappa', e) = \orElseBwdF_{\seq{p} \concat \seq{\pi}}(\raw{e}, \kappa)
-      \\
-      \orElseBwdF_{\pattConstr{c}{\seq{p}} \cons \seq{\pi}}(\raw{e}, \elimConstr{\elimBind{c}{\kappa}} \disjjoin \sigma)
-      &=
-      (\elimConstr{\elimBind{c}{\kappa'}}, e \join \unlessBwdF_{c}(\raw{e}, \sigma))
-      \textit{ if }
-      (\kappa', e) = \orElseBwdF_{\seq{p} \concat \seq{\pi}}(\raw{e}, \kappa)
-      \\
-      \orElseBwdF_{\pattList{p}{o} \cons \seq{\pi}}(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma')
-      &=
-      (\elimConstr{\elimBind{\cCons}{\sigma^\dagger}}, e \join \unlessBwdF_{\cCons}(\raw{e}, \sigma'))
-      \textit{ if }
-      (\sigma^\dagger, e) = \orElseFwdF_{p \cons o \cons \seq{\pi}}(\raw{e}, \sigma)
-      \\
-      \orElseBwdF_{\pattListNext{p}{o} \cons \seq{\pi}}(\raw{e}, \elimConstr{\elimBind{\cCons}{\sigma}} \disjjoin \sigma')
-      &=
-      (\elimConstr{\elimBind{\cCons}{\sigma^\dagger}}, e \join \unlessBwdF_{\cCons}(\raw{e}, \sigma'))
-      \textit{ if }
-      (\sigma^\dagger, e) = \orElseBwdF_{p \cons o \cons \seq{\pi}}(\raw{e}, \sigma)
-      \\
-      \orElseBwdF_{\pattListEnd \cons \seq{\pi}}(\raw{e}, \elimConstr{\elimBind{\cNil}{\kappa}} \disjjoin \sigma)
-      &=
-      (\elimConstr{\elimBind{\cNil}{\kappa'}}, e \join \unlessBwdF_{\cNil}(\raw{e}, \sigma))
-      \textit{ if }
-      (\kappa', e) = \orElseBwdF_{\seq{\pi}}(\raw{e}, \kappa)
+      \elimConstr{\elimBind{\cNil}{\orElseF_{\seq{\pi}}(\kappa)}} \disjjoin \unlessF_{\cNil}(e)
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \partialGCto \Elim\;\Gamma\;\datatype{\Delta}{c}\;A$}
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Delta}{c}\;A$}
       }
       %========================================
-      \unlessFwdF
+      \unlessF
       &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Delta}{c}\;A
       \\
       %========================================
-      \unlessFwdF_{c}(e)
+      \unlessF_{c}(e)
       &=
       \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
-      \\[2mm]
-      %========================================
-      \unlessBwdF
-      &:: \Pi(c: \Ctr).\Raw{\Expr}\;\seqEmpty\;A \times \Elim\;\Gamma\;\datatype{\Delta}{c}\;A \to \Expr\;\seqEmpty\;A
-      \\
-      \unlessBwdF_{c}(\raw{e}, \elimConstr{\elimBind{c'}{\kappa'}} \disjjoin \sigma)
-      &=
-      {\textstyle\bigjoin}\set{
-         \iterateF(\length{\seq{B}},\lambda(\elimVar{x}{\kappa}).\kappa)(\sigma(c'))
-         \mid
-         \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}
-      }
-      \join \bot_{\raw{e}}
-   %========================================
    \end{salign}
    \caption{Desugaring: $\orElseF$ auxiliary function}
 \end{figure}

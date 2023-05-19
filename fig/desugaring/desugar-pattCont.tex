@@ -7,112 +7,65 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattContF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \pattContFwdF
+      \pattContF
       &::
       \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattContFwdF(\pattVar{x})(\kappa)
+      \pattContF(\pattVar{x})(\kappa)
       &=
       \elimVar{x}{\kappa}
       \\
-      \pattContFwdF(\pattConstr{c}{\seq{p}})(\kappa)
+      \pattContF(\pattConstr{c}{\seq{p}})(\kappa)
       &=
-      \elimConstr{\elimBind{c}{\pattArgsFwdF(\seq{p})(\kappa)}}
+      \elimConstr{\elimBind{c}{\pattArgsF(\seq{p})(\kappa)}}
       \\
-      \pattContFwdF(\pattList{p}{o})(\kappa)
+      \pattContF(\pattList{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
+      \elimConstr{\elimBind{\cCons}{\pattArgsF(p \cons o)(\kappa)}}
       \\
-      \pattContFwdF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
+      \pattContF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
       &=
-      \elimRecord{\seq{x}}{\pattArgsFwdF(\seq{p})(\kappa)}
-      \\[2mm]
-      %========================================
-      \pattContBwdF
-      &::
-      \Patt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \concat \Gamma')\;B
-      \\
-      \pattContBwdF(\pattVar{x})(\elimVar{x}{\kappa})
-      &=
-      \kappa
-      \\
-      \pattContBwdF(\pattConstr{c}{\seq{p}})(\elimConstr{\elimBind{c}{\kappa}})
-      &=
-      \pattArgsBwdF(\seq{p})(\kappa)
-      \\
-      \pattContBwdF(\pattList{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
-      &=
-      \pattArgsBwdF(p \cons o)(\sigma)
-      \\
-      \pattContBwdF(\pattRecord{\seq{\bind{x}{p}}})(\elimRecord{\seq{x}}{\kappa})
-      &=
-      \pattArgsBwdF(\seq{p})(\kappa)
+      \elimRecord{\seq{x}}{\pattArgsF(\seq{p})(\kappa)}
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattContF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \pattContFwdF
+      \pattContF
       &::
       \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattContFwdF(\pattListEnd)(\kappa)
+      \pattContF(\pattListEnd)(\kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
       \\
-      \pattContFwdF(\pattListNext{p}{o})(\kappa)
+      \pattContF(\pattListNext{p}{o})(\kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\pattArgsFwdF(p \cons o)(\kappa)}}
+      \elimConstr{\elimBind{\cCons}{\pattArgsF(p \cons o)(\kappa)}}
       \\[2mm]
       %========================================
-      \pattContBwdF
-      &::
-      \ListRestPatt\;A\;\Gamma' \to \Elim\;\Gamma\;A\;B \to \Cont\;(\Gamma \concat \Gamma')\;B
-      \\
-      \pattContBwdF(\pattListEnd)(\elimConstr{\elimBind{\cNil}{\kappa}})
-      &=
-      \kappa
-      \\
-      \pattContBwdF(\pattListNext{p}{o})(\elimConstr{\elimBind{\cCons}{\sigma}})
-      &=
-      \pattArgsBwdF(p \cons o)(\sigma)
-      %========================================
       \intertext{
-      \flushleft\shadebox{$\pattArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \partialGCto \Cont\;\Gamma\;A)$}
+      \flushleft\shadebox{$\pattArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
       }
       %========================================
-      \pattArgsFwdF
+      \pattArgsF
       &::
       \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
-      \pattArgsFwdF(\seqEmpty)(\kappa)
+      \pattArgsF(\seqEmpty)(\kappa)
       &=
       \kappa
       \\
-      \pattArgsFwdF(\pi \cons \seq{\pi})(\sigma)
+      \pattArgsF(\pi \cons \seq{\pi})(\sigma)
       &=
-      \pattContFwdF(\pi)(\pattArgsFwdF(\seq{\pi})(\sigma))
-      \\[2mm]
-      %========================================
-      \pattArgsBwdF
-      &::
-      \PattSeqOpt\;\Gamma' \to \Cont\;\Gamma\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
-      \\
-      %========================================
-      \pattArgsBwdF(\seqEmpty)(\kappa)
-      &=
-      \kappa
-      \\
-      \pattArgsBwdF(\pi \cons \seq{\pi})(\sigma)
-      &=
-      \pattArgsBwdF(\seq{\pi})(\pattContBwdF(\pi)(\sigma))
+      \pattContF(\pi)(\pattArgsF(\seq{\pi})(\sigma))
    \end{salign}
    \caption{Desugaring: $\pattContF$ auxiliary function}
 \end{figure}
