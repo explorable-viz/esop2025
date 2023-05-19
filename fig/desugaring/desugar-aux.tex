@@ -2,72 +2,40 @@
    \begin{salign}
       %========================================
       \intertext{
-      \flushleft\shadebox{$\clausesF :: (\Clause\;\Gamma\;A\;B)^+ \partialGCto \Elim\;\Gamma\;A\;B$}
+      \flushleft\shadebox{$\clausesF :: (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B$}
       }
       %========================================
-      \clausesFwdF
+      \clausesF
       &::
       (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \clausesFwdF(\clause{\seq{p}}{e})
-      &= \pattsExprFwdF(\seq{p})(e)
+      \clausesF(\clause{\seq{p}}{e})
+      &= \pattsExprF(\seq{p})(e)
       \\
-      \clausesFwdF((\clause{\seq{p}}{e}) \cons \seq{c})
+      \clausesF((\clause{\seq{p}}{e}) \cons \seq{c})
       &=
-      \pattsExprFwdF(\seq{p})(e) \disjjoin \clausesFwdF(\seq{c})
-      \quad\textit{ if }\seq{c} \neq \seqEmpty
-      \\[2mm]
-      %========================================
-      \clausesBwdF
-      &::
-      (\Raw{\Clause}\;\Gamma\;A\;B)^+ \times \Elim\;\Gamma\;A\;B \to (\Clause\;\Gamma\;A\;B)^+
-      \\
-      %========================================
-      \clausesBwdF(\clause{\seq{p}}{\raw{e}}, \sigma)
-      &=
-      \clause{\seq{p}}{\pattsExprBwdF(\seq{p})(\raw{e}, \sigma)}
-      \\
-      \clausesBwdF((\clause{\seq{p}}{\raw{e}}) \cons \seq{\raw{c}}, \sigma \disjjoin \tau)
-      &=
-      (\clause{\seq{p}}{\pattsExprBwdF(\seq{p})(\raw{e}, \sigma)}) \cons \clausesBwdF(\seq{\raw{c}}, \tau)
+      \pattsExprF(\seq{p})(e) \disjjoin \clausesF(\seq{c})
       \quad\textit{ if }\seq{c} \neq \seqEmpty
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\pattsExprF :: \PattSeq\;A\;\Gamma' \to (\Expr\;(\Gamma \cons \Gamma')\;B \partialGCto \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\pattsExprF :: \PattSeq\;A\;\Gamma' \to (\Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \pattsExprFwdF
+      \pattsExprF
       &::
       \PattSeq\;A\;\Gamma' \to \Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \pattsExprFwdF(p)(e)
+      \pattsExprF(p)(e)
       &=
-      \pattContFwdF(p)(e)
+      \pattContF(p)(e)
       \\
-      \pattsExprFwdF(p' \cons \seq{p})(e)
+      \pattsExprF(p' \cons \seq{p})(e)
       &=
-      \pattContFwdF(p')(\exFun{(\pattsExprFwdF(\seq{p})(e))})
+      \pattContF(p')(\exFun{(\pattsExprF(\seq{p})(e))})
       \quad\textit{ if }\seq{p} \neq \seqEmpty
-      \\[2mm]
-      %========================================
-      \pattsExprBwdF
-      &::
-      \PattSeq\;A\;\Gamma' \to \Raw{\Expr}\;(\Gamma \cons \Gamma')\;B \times \Elim\;\Gamma\;A\;B \to \Expr\;(\Gamma \cons \Gamma')\;B
-      \\
-      \pattsExprBwdF(p)(\raw{e}, \sigma)
-      &=
-      \pattContBwdF(p)(\raw{e}, \sigma)
-      \\
-      \pattsExprBwdF(p' \cons \seq{p})(\raw{e}, \sigma)
-      &=
-      \pattsExprBwdF(\seq{p})(\raw{e}, \sigma')
-      \quad\textit{ if }
-      \seq{p} \neq \seqEmpty
-      \textit{ and }
-      \pattContBwdF(p)(\raw{e}, \sigma) = \exFun{\sigma'}
       %========================================
    \end{salign}
    \caption{Desugaring: auxiliary functions}
