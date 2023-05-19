@@ -1,6 +1,5 @@
 \begin{figure}
-   {\flushleft \shadebox{$s \desugarFwdR s', e, E$}
-   \hfill \textbfit{$s$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$s \desugarFwdR s', e, E$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-edge}}]
       {
@@ -14,8 +13,7 @@
          \annot{t'}{\upalpha}, \annot{r}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
       }
    \end{smathpar}
-   {\flushleft \shadebox{$s \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$s$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$t \desugarFwdR t', r$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
@@ -33,7 +31,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-          \clausesFwdF(\seq{c_i}) = \sigma_i
+         \clausesF(\seq{c_i}) = \sigma_i
          \quad
          (\forall i \leq j)
          \\
@@ -51,7 +49,7 @@
       {
          s \desugarFwdThunkR e
          \\
-         \clausesFwdF(\seq{c}) = \sigma
+         \clausesF(\seq{c}) = \sigma
       }
       {
          \exMatch{s}{\seq{c}}
@@ -166,7 +164,7 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \exError)
+         \sigma = \orElseF(\pattContF(p)(e'), \exError)
       }
       {
          \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
@@ -182,7 +180,7 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\pattContFwdF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseF(\pattContF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
@@ -209,7 +207,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \sigma = \pattContFwdF(\pattVar{\varAnon})(e')
+         \sigma = \pattContF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
@@ -225,7 +223,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\pattContFwdF(p)(e'),\varFail) = \sigma
+         \orElseF(\pattContF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
@@ -243,7 +241,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\pattContFwdF(p)(e'), \exError) = \sigma
+         \orElseF(\pattContF(p)(e'), \exError) = \sigma
       }
       {
          \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
