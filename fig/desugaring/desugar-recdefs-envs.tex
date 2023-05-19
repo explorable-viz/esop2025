@@ -5,9 +5,9 @@
         {
             v_i \desugarFwdS v'_i \quad (\forall i\le n) 
             \\
-            \upgamma = (\bind{x_1}{v_1} \cdots \bind{x_n}{v_n})
+            \upgamma = \set{\seqRange{\bind{x_1}{v_1}}{\bind{x_n}{v_n}}}
             \\
-            \upgamma' = (\bind{x_1}{v'_1} \cdots \bind{x_n}{v'_n})
+            \upgamma' = \set{\seqRange{\bind{x_1}{v'_1}}{\bind{x_n}{v'_n}}}   
         }
         {
             \upgamma \desugarFwdS \upgamma'
@@ -21,7 +21,7 @@
         {
             \forall i \le \length{\seq{g}}
             \\
-            g_i = \bind{\exVar{x}}{\seq{c_i}}
+            g_i = \bind{\exVar{x_i}}{\seq{c_i}}
             \\
             \clausesF(\seq{c_i})=\upsigma_i
         }

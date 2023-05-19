@@ -23,35 +23,36 @@
          &
          $\exIfThenElse{R}{S}{s}$
          &
-         If-Else True Branch
+         if-else true branch
          \\[2mm]
          &
          $\exIfThenElse{R}{s}{S}$
          &
-         If-Else False Branch
+         if-else false branch
          \\[2mm]
          &
          $\trSurfaceApp{S_1}{S_2}{R}$
          &
-         application of foreign (primitive) function
+         foreign function application
          \\[2mm]
          &
          $\trLetRec{\seq{g}}{S}$
          &
          recursive definition
-      \end{tabularx}
-   \end{minipage}%
-   \\[2mm]
-   \begin{minipage}[t]{0.52\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+         \\[2mm]
          &\textit{Qualifier Trace}&
          \lowlight{$\QTrace\;\upGamma\;A$}
          \\
-         $Q\; ::=$
+         $Q ::=$
          &
-         $\trQualIf{S}$
+         $\trQualIfTrue{S}$
          &
-         guard
+         guard (true)
+         \\[2mm]
+         &
+         $\trQualIfFalse{S}{q}$
+         &
+         guard (false)
          \\[2mm]
          &
          $\trQualDecl{p}{S}$
@@ -64,7 +65,8 @@
          generator
          \\[2mm]
       \end{tabularx}
-   \end{minipage}
+   \end{minipage}%
+   \\[2mm]
    \caption{Syntax of Surface Traces}
 \end{figure}
     
