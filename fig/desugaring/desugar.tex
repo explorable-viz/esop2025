@@ -33,7 +33,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         \clausesF(\seq{c_i}) = \sigma_i
+         \seq{c_i} \desugarFwdR \sigma_i
          \quad
          (\forall i \leq j)
          \\
@@ -51,7 +51,7 @@
       {
          s \desugarFwdThunkR e
          \\
-         \clausesF(\seq{c}) = \sigma
+         \seq{c} \desugarFwdR \sigma
       }
       {
          \exMatch{s}{\seq{c}}
