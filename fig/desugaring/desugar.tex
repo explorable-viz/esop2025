@@ -107,14 +107,16 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
       {
-         s \desugarFwdThunkR e
+         s_1 \desugarFwdR s_1', e, E
          \\
-         s' \desugarFwdThunkR e'
+         s_2 \desugarFwdR s_2', e', E'
       }
       {
-         \exListEnum{s}{s'}
+         \exListEnum{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+         \exListEnum{s_1'}{s_2'},
+         \exApp{\exApp{\varEnumFromTo}{e}}{e'},
+         E \cup E'
       }
       %
       \and
