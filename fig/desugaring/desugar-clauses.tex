@@ -59,32 +59,36 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
-         s \desugarFwdThunkR e
+         s_1 \desugarFwdR s_1', e, E
          \\
-         \seq{q}, s' \desugarFwdThunkR e'
+         \seq{q}, s_2 \desugarFwdR \seq{q}', s_2', e', E'
          \\
          \sigma = \orElseF(\pattContF(p)(e'), \exError)
       }
       {
-         \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
+         \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \qualDeclaration{p}{s_1'} \cons \seq{q}', s_2',
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E'
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
       {
-         s \desugarFwdThunkR e
+         s_1 \desugarFwdR s_1', e, E
          \\
-         \seq{q}, s' \desugarFwdThunkR e'
+         \seq{q}, s_2 \desugarFwdThunkR \seq{q}', s_2', e', E'
          \\
          \sigma = \orElseF(\pattContF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
-         \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
+         \qualGenerator{p}{s_1} \cons \seq{q}, s_2
          \desugarFwdR
-         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+         \qualGenerator{p}{s_1'} \cons \seq{q}', s_2',
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e},
+         E \cup E'
       }
    \end{smathpar}
    \\[2mm]
@@ -93,10 +97,10 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
       {
-         s \desugarFwdThunkR e
+         \annot{\raw{s}}{\upalpha} \desugarFwdR e
       }
       {
-         \stmtVoid{s} \desugarFwdR e
+         \annot{\stmtVoid{\annot{\raw{s}}{\addrNull}}}{\upalpha} \desugarFwdR e
       }
       %
       \and

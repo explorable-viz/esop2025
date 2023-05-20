@@ -3,17 +3,17 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-edge}}]
       {
-         t \desugarFwdR t', r, E
+         \raw{s} \desugarFwdR \raw{s}', \raw{e}, E
          \\
          \upalpha, \upbeta\textit{ fresh}
       }
       {
-         \annot{t}{\addrNull}
+         \annot{\raw{s}}{\addrNull}
          \desugarFwdR
-         \annot{t'}{\upalpha}, \annot{r}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
+         \annot{\raw{s}'}{\upalpha}, \annot{\raw{e}}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
       }
    \end{smathpar}
-   {\flushleft \shadebox{$\raw{s} \desugarFwdR \raw{s}', \raw{e}, V$}\hfill}
+   {\flushleft \shadebox{$\raw{s} \desugarFwdR \raw{s}', \raw{e}, E$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
@@ -135,16 +135,16 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
       {
-         \seq{d} \desugarFwdThunkR e
+         \seq{d} \desugarFwdR \seq{d}', e, E
       }
       {
          \exDo{\seq{d}}
          \desugarFwdR
-         e
+         \exDo{\seq{d}'}, e, E
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$l \desugarFwdR e$}
+   {\flushleft \shadebox{$\raw{l} \desugarFwdR \raw{l}', \raw{e}, E$}
    \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
@@ -152,23 +152,27 @@
          \strut
       }
       {
-         \annListEnd{\alpha}
+         \exListEnd
          \desugarFwdR
-         \annot{\cNil}{\alpha}
+         \exListEnd,
+         \cNil,
+         \varnothing
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s, e, E
          \\
-         l \desugarFwdThunkR e'
+         l \desugarFwdR l', e', E'
       }
       {
-         \annListNext{s}{l}{\alpha}
+         \exListNext{s}{l}
          \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
+         \exListNext{s'}{l'},
+         \exConstr{\cCons}{e, e'},
+         E \cup E'
       }
    \end{smathpar}
 \end{figure}
