@@ -55,28 +55,32 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         \seq{c} \desugarFwdR \sigma
+         \seq{c} \desugarFwdR \seq{c}', \sigma, E'
       }
       {
          \exMatch{s}{\seq{c}}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \exMatch{s'}{\seq{c}'},
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E'
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         l \desugarFwdThunkR e'
+         l \desugarFwdR l', e', E'
       }
       {
-         \annList{s}{l}{\alpha}
+         \exList{s}{l}
          \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
+         \exList{s'}{l'},
+         \exConstr{\cCons}{e, e'},
+         E \cup E'
       }
       %
       \and
