@@ -4,22 +4,22 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-clause}}]
       {
-         s \desugarFwdR e
+         s \desugarFwdR s', e, E
       }
       {
-         \clause{\seq{p}}{s} \desugarFwdR \pattsExprF(\seq{p})(e)
+         \clause{\seq{p}}{s} \desugarFwdR \clause{\seq{p}}{s'}, \pattsExprF(\seq{p})(e), E
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\seq{c} \neq \seqEmpty$}]
       {
-         c' \desugarFwdR \sigma
+         c \desugarFwdR c', \sigma, E
          \\
-         \seq{c} \desugarFwdR \tau
+         \seq{c} \desugarFwdR \seq{c}', \tau, E'
       }
       {
-         c' \cons \seq{c} \desugarFwdR \sigma \disjjoin \tau
+         c \cons \seq{c} \desugarFwdR \sigma \disjjoin \tau, E \cup E'
       }
    \end{smathpar}
    \\[2mm]
