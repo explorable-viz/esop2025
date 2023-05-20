@@ -126,18 +126,20 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         \seq{d} \desugarFwdThunkR e'
+         \seq{d} \desugarFwdR, \seq{d}', e', E'
          \\
          \orElseF(\pattContF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
          \desugarFwdR
+         \stmtBind{p}{s'} \cons \seq{d}',
          \exApp
             {\exApp{\varBind}{e}}
-            {\exFun{\sigma}}
+            {\exFun{\sigma}},
+         E \cup E'
       }
       %
       \and
