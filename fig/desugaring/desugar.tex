@@ -33,76 +33,90 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         \clausesF(\seq{c_i}) = \sigma_i
-         \quad
-         (\forall i \leq j)
+         g_i = \bind{x_i}{\seq{c_i}}
          \\
-         s \desugarFwdR s', e, E
+         g'_i = \bind{x_i}{\seq{c_i}'}
+         \\
+         \seq{c_i} \desugarFwdR \seq{c_i}', \sigma_i, E_i
+         \quad
+         (\forall i \leq \length{\seq{g}})
+         \\
+         s \desugarFwdR s', e, E'
       }
       {
-         \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{s}
+         \exLetRecPiecewise{\seq{g}}{s}
          \desugarFwdR
-         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         \exLetRecPiecewise{\seq{g}'}{s'},
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e},
+         \bigcup{\seq{E}} \cup E'
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         \clausesF(\seq{c}) = \sigma
+         \seq{c} \desugarFwdR \seq{c}', \sigma, E'
       }
       {
          \exMatch{s}{\seq{c}}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \exMatch{s'}{\seq{c}'},
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E'
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         l \desugarFwdThunkR e'
+         l \desugarFwdR l', e', E'
       }
       {
-         \annList{s}{l}{\alpha}
+         \exList{s}{l}
          \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
+         \exList{s'}{l'},
+         \exConstr{\cCons}{e, e'},
+         E \cup E'
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         s_1 \desugarFwdThunkR e_1
+         s_1 \desugarFwdR s_1', e_1, E_1
          \\
-         s_2 \desugarFwdThunkR e_2
+         s_2 \desugarFwdR s_2', e_2, E_2
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \exIfThenElse{s'}{s_1'}{s_2'},
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E_1 \cup E_2
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
       {
-         s \desugarFwdThunkR e
+         s_1 \desugarFwdR s_1', e, E
          \\
-         s' \desugarFwdThunkR e'
+         s_2 \desugarFwdR s_2', e', E'
       }
       {
-         \exListEnum{s}{s'}
+         \exListEnum{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+         \exListEnum{s_1'}{s_2'},
+         \exApp{\exApp{\varEnumFromTo}{e}}{e'},
+         E \cup E'
       }
       %
       \and
@@ -249,33 +263,6 @@
          \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
          \desugarFwdR
          \smash{\exApp{\exFun{\sigma}}{e}}
-      }
-   \end{smathpar}
-   {\flushleft \shadebox{$r \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$r$ forward-desugars to $e$}}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
-      {
-         \strut
-      }
-      {
-         \annListEnd{\alpha}
-         \desugarFwdR
-         \annot{\cNil}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         l \desugarFwdThunkR e'
-      }
-      {
-         \annListNext{s}{l}{\alpha}
-         \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
       }
    \end{smathpar}
 \end{figure}

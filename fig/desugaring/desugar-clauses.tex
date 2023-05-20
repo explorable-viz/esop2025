@@ -1,0 +1,54 @@
+\begin{figure}
+   {\flushleft \shadebox{$\seq{c} \desugarFwdR \upsigma$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clause}}]
+      {
+         s \desugarFwdR s', e, E
+      }
+      {
+         \clause{\seq{p}}{s} \desugarFwdR \clause{\seq{p}}{s'}, \pattsExprF(\seq{p})(e), E
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\seq{c} \neq \seqEmpty$}]
+      {
+         c \desugarFwdR c', \sigma, E
+         \\
+         \seq{c} \desugarFwdR \seq{c}', \tau, E'
+      }
+      {
+         c \cons \seq{c} \desugarFwdR \sigma \disjjoin \tau, E \cup E'
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$l \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      {
+         \strut
+      }
+      {
+         \annListEnd{\alpha}
+         \desugarFwdR
+         \annot{\cNil}{\alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         l \desugarFwdThunkR e'
+      }
+      {
+         \annListNext{s}{l}{\alpha}
+         \desugarFwdR
+         \annConstr{\cCons}{e, e'}{\alpha}
+      }
+   \end{smathpar}
+   \caption{Desugaring of clauses and list rests}
+\end{figure}
