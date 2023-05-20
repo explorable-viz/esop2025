@@ -251,31 +251,4 @@
          \smash{\exApp{\exFun{\sigma}}{e}}
       }
    \end{smathpar}
-   {\flushleft \shadebox{$r \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$r$ forward-desugars to $e$}}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
-      {
-         \strut
-      }
-      {
-         \annListEnd{\alpha}
-         \desugarFwdR
-         \annot{\cNil}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         l \desugarFwdThunkR e'
-      }
-      {
-         \annListNext{s}{l}{\alpha}
-         \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
-      }
-   \end{smathpar}
 \end{figure}

@@ -1,0 +1,30 @@
+\begin{figure}
+   {\flushleft \shadebox{$l \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      {
+         \strut
+      }
+      {
+         \annListEnd{\alpha}
+         \desugarFwdR
+         \annot{\cNil}{\alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         l \desugarFwdThunkR e'
+      }
+      {
+         \annListNext{s}{l}{\alpha}
+         \desugarFwdR
+         \annConstr{\cCons}{e, e'}{\alpha}
+      }
+   \end{smathpar}
+   \caption{Desugaring of clauses and list rests}
+\end{figure}
