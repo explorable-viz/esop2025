@@ -7,7 +7,7 @@
             \\
             \upgamma = \set{\seqRange{\bind{x_1}{v_1}}{\bind{x_n}{v_n}}}
             \\
-            \upgamma' = \set{\seqRange{\bind{x_1}{v'_1}}{\bind{x_n}{v'_n}}}   
+            \upgamma' = \set{\seqRange{\bind{x_1}{v'_1}}{\bind{x_n}{v'_n}}}
         }
         {
             \upgamma \desugarFwdS \upgamma'
@@ -19,11 +19,11 @@
     \begin{smathpar}
         \inferrule*
         {
-            \forall i \le \length{\seq{g}}
-            \\
             g_i = \bind{\exVar{x_i}}{\seq{c_i}}
             \\
             \clausesF(\seq{c_i})=\upsigma_i
+            \quad
+            (\forall i \le \length{\seq{g}})
         }
         {
             \seq{g} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma}}}
@@ -42,7 +42,7 @@
                 \clausesF(\seq{c}) = \upsigma
             }
             {
-                \exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+                \exClosure{\upgamma}{\seq{g}}{\seq{c}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
             }
         \end{smathpar}
     }
