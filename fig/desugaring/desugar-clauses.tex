@@ -97,10 +97,13 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
       {
-         \annot{\raw{s}}{\upalpha} \desugarFwdR e
+         s \desugarFwdR \annot{\raw{s}}{\upalpha}, e, E
       }
       {
-         \annot{\stmtVoid{\annot{\raw{s}}{\addrNull}}}{\upalpha} \desugarFwdR e
+         \stmtVoid{s}
+         \desugarFwdR
+         \annot{\stmtVoid{\annot{\raw{s}}{\addrNull}}}{\upalpha},
+         e, E
       }
       %
       \and
