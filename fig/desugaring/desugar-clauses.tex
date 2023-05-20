@@ -1,4 +1,28 @@
 \begin{figure}
+   {\flushleft \shadebox{$\seq{c} \desugarFwdR \upsigma$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clause}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         \clause{\seq{p}}{s} \desugarFwdR \pattsExprF(\seq{p})(e)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\seq{c} \neq \seqEmpty$}]
+      {
+         c' \desugarFwdR \sigma
+         \\
+         \seq{c} \desugarFwdR \tau
+      }
+      {
+         c' \cons \seq{c} \desugarFwdR \sigma \disjjoin \tau
+      }
+   \end{smathpar}
+   \\[2mm]
    {\flushleft \shadebox{$l \desugarFwdR e$}
    \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
    \begin{smathpar}

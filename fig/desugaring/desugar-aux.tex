@@ -2,24 +2,6 @@
    \begin{salign}
       %========================================
       \intertext{
-      \flushleft\shadebox{$\clausesF :: (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B$}
-      }
-      %========================================
-      \clausesF
-      &::
-      (\Clause\;\Gamma\;A\;B)^+ \to \Elim\;\Gamma\;A\;B
-      \\
-      %========================================
-      \clausesF(\clause{\seq{p}}{e})
-      &= \pattsExprF(\seq{p})(e)
-      \\
-      \clausesF((\clause{\seq{p}}{e}) \cons \seq{c})
-      &=
-      \pattsExprF(\seq{p})(e) \disjjoin \clausesF(\seq{c})
-      \quad\textit{ if }\seq{c} \neq \seqEmpty
-      \\[2mm]
-      %========================================
-      \intertext{
       \flushleft\shadebox{$\pattsExprF :: \PattSeq\;A\;\Gamma' \to (\Expr\;(\Gamma \cons \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
@@ -38,5 +20,5 @@
       \quad\textit{ if }\seq{p} \neq \seqEmpty
       %========================================
    \end{salign}
-   \caption{Desugaring: auxiliary functions}
+   \caption{Desugaring: auxiliary function}
 \end{figure}
