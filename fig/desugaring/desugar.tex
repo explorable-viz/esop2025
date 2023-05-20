@@ -135,12 +135,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
       {
-         \seq{d} \desugarFwdR \seq{d}', e, E
+         \seq{d} \desugarFwdR \annot{\seq{\raw{d}}}{\upalpha}, e, E
       }
       {
          \exDo{\seq{d}}
          \desugarFwdR
-         \exDo{\seq{d}'}, e, E
+         \annot{(\exDo{\annot{\seq{\raw{d}}}{\addrNull}})}{\upalpha}, e, E
       }
    \end{smathpar}
    \\[2mm]
