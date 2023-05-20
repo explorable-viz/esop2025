@@ -23,32 +23,131 @@
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$l \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
+   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR \seq{q}', s', e, E$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
       {
-         \strut
+         s \desugarFwdR s', e, E
       }
       {
-         \annListEnd{\alpha}
+         \seqEmpty, s
          \desugarFwdR
-         \annot{\cNil}{\alpha}
+         \seqEmpty, s',
+         \exConstr{\cCons}{e, \cNil}, E
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      {
+         s_1 \desugarFwdR s_1', e, E
+         \\
+         \seq{q}, s_2 \desugarFwdR \seq{q}', s_2', e', E'
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+      }
+      {
+         \qualGuard{s_1} \cons \seq{q}, s_2
+         \desugarFwdR
+         \qualGuard{s_1'} \cons \seq{q}', s_2',
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
       {
          s \desugarFwdThunkR e
          \\
-         l \desugarFwdThunkR e'
+         \seq{q}, s' \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseF(\pattContF(p)(e'), \exError)
       }
       {
-         \annListNext{s}{l}{\alpha}
+         \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
-         \annConstr{\cCons}{e, e'}{\alpha}
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         \seq{q}, s' \desugarFwdThunkR e'
+         \\
+         \sigma = \orElseF(\pattContF(p)(e'), \annot{\cNil}{\alpha})
+      }
+      {
+         \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
+         \desugarFwdR
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
    \end{smathpar}
-   \caption{Desugaring of clauses and list rests}
+   \\[2mm]
+   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      {
+         s \desugarFwdThunkR e
+      }
+      {
+         \stmtVoid{s} \desugarFwdR e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
+         \\
+         \sigma = \pattContF(\pattVar{\varAnon})(e')
+      }
+      {
+         s \cons \seq{d}
+         \desugarFwdR
+         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
+         \\
+         \orElseF(\pattContF(p)(e'),\varFail) = \sigma
+      }
+      {
+         \stmtBind{p}{s} \cons \seq{d}
+         \desugarFwdR
+         \exApp
+            {\exApp{\varBind}{e}}
+            {\exFun{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      {
+         s \desugarFwdThunkR e
+         \\
+         \seq{d} \desugarFwdThunkR e'
+         \\
+         \orElseF(\pattContF(p)(e'), \exError) = \sigma
+      }
+      {
+         \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
+         \desugarFwdR
+         \smash{\exApp{\exFun{\sigma}}{e}}
+      }
+   \end{smathpar}
+   \caption{Desugaring of clauses, qualifiers and statements}
 \end{figure}

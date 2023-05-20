@@ -123,12 +123,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
       {
-         \seq{q}, s \desugarFwdThunkR e
+         \seq{q}, s \desugarFwdR \seq{q}', s', e
       }
       {
-         \annListComp{s}{\seq{q}}{\alpha}
+         \exListComp{s}{\seq{q}}
          \desugarFwdR
-         e
+         \exListComp{s'}{\seq{q}'}, e
       }
       %
       \and
@@ -143,126 +143,32 @@
          e
       }
    \end{smathpar}
-   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
+   \\[2mm]
+   {\flushleft \shadebox{$l \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
       {
-         s \desugarFwdThunkR e
+         \strut
       }
       {
-         \seqEmpty, s
+         \annListEnd{\alpha}
          \desugarFwdR
-         \annConstr{\cCons}{e, \annot{\cNil}{\top}}{\top}
+         \annot{\cNil}{\alpha}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
       {
          s \desugarFwdThunkR e
          \\
-         \seq{q}, s' \desugarFwdThunkR e'
-         \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+         l \desugarFwdThunkR e'
       }
       {
-         \annQualGuard{s}{\alpha} \cons \seq{q}, s'
+         \annListNext{s}{l}{\alpha}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         \seq{q}, s' \desugarFwdThunkR e'
-         \\
-         \sigma = \orElseF(\pattContF(p)(e'), \exError)
-      }
-      {
-         \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
-         \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         \seq{q}, s' \desugarFwdThunkR e'
-         \\
-         \sigma = \orElseF(\pattContF(p)(e'), \annot{\cNil}{\alpha})
-      }
-      {
-         \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
-         \desugarFwdR
-         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
-      }
-   \end{smathpar}
-   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
-   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
-      {
-         s \desugarFwdThunkR e
-      }
-      {
-         \stmtVoid{s} \desugarFwdR e
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         \seq{d} \desugarFwdThunkR e'
-         \\
-         \sigma = \pattContF(\pattVar{\varAnon})(e')
-      }
-      {
-         s \cons \seq{d}
-         \desugarFwdR
-         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         \seq{d} \desugarFwdThunkR e'
-         \\
-         \orElseF(\pattContF(p)(e'),\varFail) = \sigma
-      }
-      {
-         \stmtBind{p}{s} \cons \seq{d}
-         \desugarFwdR
-         \exApp
-            {\exApp{\varBind}{e}}
-            {\exFun{\sigma}}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
-      {
-         s \desugarFwdThunkR e
-         \\
-         \seq{d} \desugarFwdThunkR e'
-         \\
-         \orElseF(\pattContF(p)(e'), \exError) = \sigma
-      }
-      {
-         \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
-         \desugarFwdR
-         \smash{\exApp{\exFun{\sigma}}{e}}
+         \annConstr{\cCons}{e, e'}{\alpha}
       }
    \end{smathpar}
 \end{figure}
