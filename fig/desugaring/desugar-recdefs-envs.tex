@@ -3,14 +3,10 @@
     \begin{smathpar}
         \inferrule*[]
         {
-            v_i \desugarFwdS v'_i \quad (\forall i\le n)
-            \\
-            \upgamma = \set{\seqRange{\bind{x_1}{v_1}}{\bind{x_n}{v_n}}}
-            \\
-            \upgamma' = \set{\seqRange{\bind{x_1}{v'_1}}{\bind{x_n}{v'_n}}}
+            v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
         }
         {
-            \upgamma \desugarFwdS \upgamma'
+            \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
         }
     \end{smathpar}
     }
