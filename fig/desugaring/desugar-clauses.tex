@@ -110,16 +110,18 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
       {
-         s \desugarFwdThunkR e
+         s \desugarFwdR s', e, E
          \\
-         \seq{d} \desugarFwdThunkR e'
+         \seq{d} \desugarFwdR \seq{d}', e', E'
          \\
          \sigma = \pattContF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
          \desugarFwdR
-         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
+         s' \cons \seq{d}',
+         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}},
+         E \cup E'
       }
       %
       \and
