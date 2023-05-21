@@ -17,12 +17,12 @@ equationally, and a notion of pattern matching for surface values.
 
 \subsection{Desugaring Of Values, Environments and RecDefs}
 In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
-one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define 
-desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$). 
+one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define
+desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$).
 Once this extension to the desugaring relation has been carefully defined, in figure \ref{fig:closures}, we can state and prove our theorem.
 
 \subsection{Equivalence of Semantics}
-Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can 
+Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can
 either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this
 theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the
 program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
@@ -35,12 +35,13 @@ some non-trivial desugaring. We formalise the equivalence of these semantics as 
     \item $If \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; where \; v' \desugarFwdS v$
 \end{enumerate}
 \end{theorem}
-The sketch of the proof is as follows: for many cases of evaluation, the rules for surface and core evaluation are 
-matched exactly. For these rules, provided the desugaring relations are defined correctly, we can probably 
-call those proof cases trivial. There are a number of more interesting cases, specifically the ones to do with 
+The sketch of the proof is as follows: for many cases of evaluation, the rules for surface and core evaluation are
+matched exactly. For these rules, provided the desugaring relations are defined correctly, we can probably
+call those proof cases trivial. There are a number of more interesting cases, specifically the ones to do with
 list comprehensions and function applications. Since we have slightly changed the semantics of functions (FFI etc)
 this should be a bit easier. We can likely inline most definitions.
+
 \input{fig/surface/syntax}
-\input{fig/surface/eval-sugar}
-\input{fig/surface/match-sug}
-\input{fig/surface/surface-trace}
+\input{fig/surface/eval}
+\input{fig/surface/match}
+\input{fig/surface/syntax-trace}
