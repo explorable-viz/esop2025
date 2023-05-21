@@ -1,0 +1,69 @@
+\begin{figure}
+   \begin{minipage}[t]{0.52\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{3.4cm}}
+         &\textit{Surface trace}&
+         \lowlight{$\STrace\;\upGamma\;A$}
+         \\
+         $R, S ::=$
+         &
+         $\dots$
+         &
+         $\dots$
+         \\
+         &
+         $\trBinApp{S_1}{S_2}{t}$
+         &
+         binary application
+         \\
+         &
+         $\trListComp{S}{Q}$
+         &
+         list comprehension
+         \\
+         &
+         $\exIfThenElse{R}{S}{s}$
+         &
+         if (true)
+         \\
+         &
+         $\exIfThenElse{R}{s}{S}$
+         &
+         if (false)
+         \\
+         &
+         $\trSurfaceApp{S_1}{S_2}{R}$
+         &
+         application
+         \\
+         &
+         $\trLetRec{\seq{g}}{S}$
+         &
+         recursive definitions
+         \\[2mm]
+         &\textit{Qualifier trace}&
+%         \lowlight{$\QTrace\;\upGamma\;A$}
+         \\
+         $Q ::=$
+         &
+         $\trQualIfTrue{S}$
+         &
+         guard (true)
+         \\
+         &
+         $\trQualIfFalse{S}{q}$
+         &
+         guard (false)
+         \\
+         &
+         $\trQualDecl{p}{S}$
+         &
+         declaration
+         \\
+         &
+         $\trQualGen{p}{S}$
+         &
+         generator
+      \end{tabularx}
+   \end{minipage}%
+   \caption{Surface traces and qualifier traces}
+\end{figure}
