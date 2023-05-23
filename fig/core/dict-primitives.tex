@@ -1,0 +1,104 @@
+\begin{figure}
+\small
+\addtolength{\jot}{-0.4em}
+\begin{align*}
+   % =============================================================
+   \dictMap &: \Val{(\tyFun{A}{B})} \times \Val{(\tyDict{A})} \to \Val{(\tyDict{B})}
+   % =============================================================
+   \\
+   \opFwd{\dictMap}(v, d_{\upalpha})
+   &=
+   ((\erase{v}, d' \map (\pi_1 \after \pi_2), (d' \map \Second(\pi_2))_{\upalpha})
+   \\
+   &\quad\textit{where }
+   d' = d \map \Second(\uplambda u.\opFwd{\apply}(v, u))
+   \\
+   \opBwd{\dictMap}((\raw{v}, d), d'_{\upalpha})
+   &= (\foldl(\weakJoin,\bot_{\raw{v}},d^\dagger \map (\pi_1 \after \pi_2)), (d^\dagger \map \Second(\pi_2))_{\upalpha})
+   \\
+   &\quad\textit{where }
+   d^\dagger = \zipWith(\uplambda(S, (\upbeta, v)).(\upbeta, \opBwd{\apply}(S, v)), d, d')
+   \\[2mm]
+   % =============================================================
+   \dictIntersectionWith
+   &:
+   \Val{(\tyFun{A}{\tyFun{B}{A'}})} \times \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A'})}
+   % =============================================================
+   \\
+   \opFwd{\dictIntersectionWith}(v, d_{\upalpha}, d'_{\upalpha'})
+   &=
+   ((\erase{v}, d^\dagger \map (\pi_1 \after \pi_2)), (d^\dagger \map \Second(\pi_2))_{\upalpha \meet \upalpha'})
+   \\
+   &\quad\textit{ where }
+   d^\dagger = \zipWith(\uplambda((\upbeta, u), (\upbeta', u')).(\upbeta \meet \upbeta', \opFwd{\apply}(v, (u, u')))), d, d')
+   \\
+   \opBwd{\dictIntersectionWith}((\raw{v}, d), d^\dagger_{\upalpha})
+   &=
+   (\foldl(\weakJoin,\bot_{\raw{v}},d' \map (\pi_1 \after \pi_2)), (d' \map \Second(\pi_1 \after \pi_2))_{\upalpha}, (d' \map \Second(\pi_2 \after \pi_2))_{\upalpha})
+   \\
+   &\quad\textit{ where }
+   d' = \zipWith(\uplambda((S, S'), (\upbeta, v')).(\upbeta, \opBwd{\apply}((S, S'), v')), d, d^\dagger)
+   \\[2mm]
+   % =============================================================
+   \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
+   % =============================================================
+   \\
+   \opFwd{\dictDisjUnion}(d_{\upalpha}, d'_{\upbeta})
+   &=
+   ((d \map \const(\UnitVal), d' \map \const(\UnitVal)), (d \disjunion d')_{\upalpha \meet \upbeta})
+   \\
+   &\quad\;\textit{iff }\dom{d} \cap \dom{d'} = \emptyset
+   \\
+   \opBwd{\dictDisjUnion}((d, d'), d^\dagger_{\upalpha}) &=
+      (d^\dagger \setminus d')_{\upalpha},
+      (d^\dagger \setminus d)_{\upalpha}
+   \\[2mm]
+   % =============================================================
+   \dictDifference &: \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A})}
+   % =============================================================
+   \\
+   \opFwd{\dictDifference}(d_{\upalpha}, d'_{\upbeta})
+   &=
+   (\UnitVal, (d \setminus d')_{\upalpha \meet \upbeta})
+   \\
+   \opBwd{\dictDifference}(\UnitVal, d_{\upalpha}) &= (d_{\upalpha}, \annDict{}{\upalpha})
+   \\[2mm]
+   % =============================================================
+   \dictGet &: \Val{\tyStr} \times \Val{(\tyDict{A})} \to \Val{A}
+   % =============================================================
+   \\
+   \opFwd{\dictGet}(\annStr{s}{\upalpha}, d_{\upalpha'}) &= (s, v)
+   \quad\textit{iff }\bind{s}{(\upbeta, v)} \in d
+   \\
+   \opBwd{\dictGet}(s, v) &= (\annStr{s}{\bot}, \annDict{\bind{s}{(\bot, v)}}{\bot})
+   \\[2mm]
+   % =============================================================
+   \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
+   % =============================================================
+   \\
+   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
+   \\
+   &\quad\textit{where }
+   f(s, (\seq{t}, v'), (\upbeta, u')) = \opFwd{\apply}(v, (v', u')) \map \First(\uplambda (S, S').(s, (S, S')) \cons \seq{t})
+   \\
+   \opBwd{\dictFoldl}((\raw{v}, \seq{t}), u) &=
+   \foldl(f, (\bot_{\raw{v}}, u, \annDict{}{\bot}), \seq{t})
+   \\
+   &\quad\textit{where }
+   f((v, u', d_{\upalpha}), (s, (S, S'))) = \opBwd{\apply}((S, S'), u') \app g
+   \\
+   &\quad\phantom{\textit{where}\,}\textit{where }
+   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
+   \\[2mm]
+   % =============================================================
+   \dictFromRecord &: \Val{(\tyRec{\seqRangeOp{,}{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
+   % =============================================================
+   \\
+   \opFwd{\dictFromRecord}(\annRec{\seq{\bind{x}{v}}}{\upalpha}) &= (\UnitVal, \annDict{\seq{\bind{s}{(\upalpha, v)}}}{\upalpha})
+   \quad\textit{where }\seq{x} \map \str = \seq{s}
+   \\
+   \opBwd{\dictFromRecord}(\UnitVal, \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha}) &= \annRec{\seq{\bind{x}{v}}}{{\bigjoin}(\upalpha \cons \seq{\upbeta})}
+   \quad\textit{where }\seq{x} \map \str = \seq{s}
+\end{align*}
+\caption{Foreign functions for dictionaries; $\dictFromRecord$ assumes embedding $\str: \Var \hookrightarrow \Str$}
+\end{figure}
