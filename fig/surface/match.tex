@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\compatVal{p_1}{p_2}$} %
+   {\small \flushleft \shadebox{$\compatPatt{p_1}{p_2}$} %
    \begin{smathpar}
       \inferrule*[
          %lab={\ruleName{$\uparrow$-var}}
@@ -8,7 +8,7 @@
          \strut
       }
       {
-         \compatVal{\exVar{x}}{\exVar{x}}
+         \compatPatt{\exVar{x}}{\exVar{x}}
       }
       %
       \and
@@ -22,7 +22,7 @@
          \Delta(c) = \Delta(c')
       }
       {
-         \compatVal{c(\seq{p})}{c'(\seq{p'})}
+         \compatPatt{c(\seq{p})}{c'(\seq{p'})}
       }
       %
       \and
@@ -31,10 +31,10 @@
          %lab={\ruleName{$\uparrow$-ctr}}
       ]
       {
-         \compatVal{p_i}{p'_i} \quad (\forall i)
+         \compatPatt{p_i}{p'_i} \quad (\forall i)
       }
       {
-         \compatVal{c(\seq{p})}{c(\seq{p'})}
+         \compatPatt{c(\seq{p})}{c(\seq{p'})}
       }
       %
       \and
@@ -43,19 +43,106 @@
          %lab={\ruleName{$\uparrow$-Record}}
       ]
       {
-         \compatVal{p_i}{p'_i} \quad (\forall i \le |\seq{x}|)
+         \compatPatt{p_i}{p'_i} \quad (\forall i \le |\seq{x}|)
       }
       {
-         \compatVal{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{p'}}}}
+         \compatPatt{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{p'}}}}
       }
       %
       \and
       %
+      \inferrule*
+      {
+         \compatPatt{p}{o}
+         \\
+         \compatPatt{p'}{o'}
+      }
+      {
+         \compatPatt{\exList{p}{o}}{\exList{p'}{o'}}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \compatPatt{o}{p'}
+      }
+      {
+         \compatPatt{\exList{p}{o}}{\cCons(p, p')}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{\seq{p_1}}{\seq{p_2}}$}
+   \begin{smathpar}
+      \inferrule*[
+         right={$\seq{p},\seq{p}' \; nonempty$}
+      ]
+      {
+         \compatPatt{p}{p'}
+         \\
+         \compatPatt{\seq{p}}{\seq{p}'}
+      }
+      {
+         \compatPatt{p \cons \seq{p}}{p' \cons \seq{p}'}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{o}{p}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \compatPatt{\pattListEnd}{\cNilKW} 
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \compatPatt{o}{p'}
+      }
+      {
+         \compatPatt{\pattListNext{p}{o}}{\cCons(p, p')}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{o}{o'}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \compatPatt{\pattListEnd}{\pattListEnd}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \compatPatt{p}{p'}
+         \\
+         \compatPatt{o}{o'}
+      }
+      {
+         \compatPatt{\pattListNext{p}{o}}{\pattListNext{p'}{o'}}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatClause{\upmu}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \compatPatt{\seq{p_i}}{\seq{p_j}}
+         \quad
+         (\forall i, j \le n)
+      }
+      {
+         \compatClause{\seqRange{\clauseUncurried{\seq{p_1}}{s_1}}{\clauseUncurried{\seq{p_n}}{s_n}}}
+      }
    \end{smathpar}}
    \caption{Compatible patterns}
 \end{figure}
 \begin{figure}
-   {\small \flushleft \shadebox{$\matches{p}{v}$}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \matchFwdS \upgamma$}
    \begin{smathpar}
       \inferrule*[
         %lab={\ruleName{\matchesS-var}}
@@ -64,7 +151,7 @@
          \strut
       }
       {
-         \matches{\exVar{x}}{\exVar{v}}
+         \seqEmpty, \seqEmpty \matchFwdS \varnothing 
       }
       %
       \and
@@ -73,50 +160,71 @@
          %lab={\ruleName{\matchesS-ctr}}
       ]
       {
-         \matches{p_i}{v_i} \quad (\forall i \le |\seq{p}|)
-      }
-      {
-         \matches{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{v}}}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         %lab={\ruleName{\matchesS-record}}
-      ]
-      {
-         \matches(p_i,v_i) \quad (\forall i \le |\seq{p}|)
-      }
-      {
-         \matches{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{v}}}}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         %lab={\ruleName{\matchesS-ListRest}}
-      ]
-      {
-         \matches{p}{v}
+         v, p \matchFwdS \upgamma
          \\
-         \matches{o}{v'}
+         \seq{u}, \seq{p'} \matchFwdS \upgamma'
       }
       {
-         \matches{\exList{p}{o}}{\cCons (v, v')}
+         v \cons \seq{u}, p \cons \seq{p'} \matchFwdS \upgamma \disjunion \upgamma'
       }
    \end{smathpar}}
-   {\small \flushleft \shadebox{$\matches{o}{v}$}
+   {\small \flushleft \shadebox {$v, p \matchFwdS \upgamma$}
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         \strut
+      }
+      {
+         v, x \matchFwdS \set{\bind{\exVar{x}}{v}}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \seq{v},\seq{p} \matchFwdS \upgamma
+      }
+      {
+         \exConstr{c}{\seq{v}},\exConstr{c}{\seq{p}} \matchFwdS \upgamma
+      }
+      %
+      \and
+      %
+      % \inferrule
+      % {
+
+      % }
+      % {
+
+      % }
+      % %
+      % \and
+      % %
+      \inferrule*
+      {
+         \seq{u}, \seq{p}' \matchFwdS \upgamma 
+         \\
+         \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
+         \\
+         \seq{p}' \subseteq \seq{p}
+      }
+      {
+         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{x}}{p}}} \matchFwdS \upgamma  
+      }
+   \end{smathpar}
+   }
+   {\small \flushleft \shadebox{$v, \upmu \matchFwdS \upgamma, s$}
    \begin{smathpar}
       \inferrule*[
          %lab={\ruleName{\matches-\cCons}}
       ]
       {
-         \matches{p}{v}
+         v, p_i \matchFwdS \upgamma
          \\
-         \matches{o}{v'}
+         \forall j \ne i \; \nexists \upgamma. \, v, p_j \matchFwdS \upgamma
       }
       {
-         \matches{\exListNext{p}{o}}{\cCons (v, v')}
+         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_n}{s_n}} \matchFwdR{p_i} \upgamma, s_i
       }
       %
       \and
@@ -125,10 +233,10 @@
          %lab={\ruleName{\matchesS-\cNil}}
       ]
       {
-         \strut
+         \forall i \le n. \quad \seq{p_i}' = s_i \in \upmu \iff (v, p \matchFwdS \upgamma \land p_i = p)
       }
       {
-         \matches{]}{\kw{Nil}}
+         v, \seqRange{p_1 \cons \seq{p_1}'=s_1}{p_n \cons \seq{p_n}' = s_n} \matchFwdR{p} \upgamma, \uplambda\upmu
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
