@@ -46,7 +46,7 @@
    \dictDisjUnion(d_{\upalpha}, d'_{\upalpha'})
    &=
    ((d \disjunion d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
-   \quad\;\textit{iff }\upbeta\textit{ fresh and }\dom{d} \cap \dom{d'} = \emptyset
+   \quad\;\textit{iff }\upbeta\textit{ fresh and }\dom{d} \cap \dom{d'} = \varnothing
    \\[2mm]
    % =============================================================
    \dictDifference &: \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A})}
@@ -61,10 +61,8 @@
    \dictGet &: \Val{\tyStr} \times \Val{(\tyDict{A})} \to \Val{A}
    % =============================================================
    \\
-   \opFwd{\dictGet}(\annStr{s}{\upalpha}, d_{\upalpha'}) &= (s, v)
+   \dictGet(\annStr{s}{\upalpha}, d_{\upalpha'}) &= (v, \varnothing)
    \quad\textit{iff }\bind{s}{(\upbeta, v)} \in d
-   \\
-   \opBwd{\dictGet}(s, v) &= (\annStr{s}{\bot}, \annDict{\bind{s}{(\bot, v)}}{\bot})
    \\[2mm]
    % =============================================================
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
