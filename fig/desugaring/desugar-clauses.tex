@@ -7,7 +7,20 @@
          s \desugarFwdR s', e, E
       }
       {
-         \clause{\seq{p}}{s} \desugarFwdR \clause{\seq{p}}{s'}, \pattsExprF(\seq{p})(e), E
+         \clause{p}{s} \desugarFwdR \clause{p}{s'}, \pattContF(p)(e), E
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      {
+         \clause{\seq{p}}{s} \desugarFwdR \clause{\seq{p}}{s'}, \upsigma, E
+      }
+      {
+         \clause{p' \cons \seq{p}}{s}
+         \desugarFwdR
+         \clause{p' \cons \seq{p}}{s'},
+         \pattContF(p')(\exFun{\upsigma}), E
       }
       %
       \and
