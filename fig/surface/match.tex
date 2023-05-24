@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\compatVal{p_1}{p_2}$} %
+   {\small \flushleft \shadebox{$\compatPatt{p_1}{p_2}$} %
    \begin{smathpar}
       \inferrule*[
          %lab={\ruleName{$\uparrow$-var}}
@@ -8,7 +8,7 @@
          \strut
       }
       {
-         \compatVal{\exVar{x}}{\exVar{x}}
+         \compatPatt{\exVar{x}}{\exVar{x}}
       }
       %
       \and
@@ -22,7 +22,7 @@
          \Delta(c) = \Delta(c')
       }
       {
-         \compatVal{c(\seq{p})}{c'(\seq{p'})}
+         \compatPatt{c(\seq{p})}{c'(\seq{p'})}
       }
       %
       \and
@@ -31,10 +31,10 @@
          %lab={\ruleName{$\uparrow$-ctr}}
       ]
       {
-         \compatVal{p_i}{p'_i} \quad (\forall i)
+         \compatPatt{p_i}{p'_i} \quad (\forall i)
       }
       {
-         \compatVal{c(\seq{p})}{c(\seq{p'})}
+         \compatPatt{c(\seq{p})}{c(\seq{p'})}
       }
       %
       \and
@@ -43,14 +43,38 @@
          %lab={\ruleName{$\uparrow$-Record}}
       ]
       {
-         \compatVal{p_i}{p'_i} \quad (\forall i \le |\seq{x}|)
+         \compatPatt{p_i}{p'_i} \quad (\forall i \le |\seq{x}|)
       }
       {
-         \compatVal{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{p'}}}}
+         \compatPatt{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{p'}}}}
       }
       %
       \and
       %
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{\seq{p_1}}{\seq{p_2}}$}
+   \begin{smathpar}
+      \inferrule*[
+         right={$\seq{p},\seq{p}' \; nonempty$}
+      ]
+      {
+         \compatPatt{p}{p'}
+         \\
+         \compatPatt{\seq{p}}{\seq{p}'}
+      }
+      {
+         \compatPatt{p \cons \seq{p}}{p' \cons \seq{p}'}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{o}{p}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \compatPatt{\pattListEnd}{\cNilKW} 
+      }
    \end{smathpar}}
    \caption{Compatible patterns}
 \end{figure}
