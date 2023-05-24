@@ -33,11 +33,11 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         g_i = \bind{x_i}{\seq{c_i}}
+         g_i = \bind{x_i}{\upmu_i}
          \\
-         g'_i = \bind{x_i}{\seq{c_i}'}
+         g'_i = \bind{x_i}{\upmu_i'}
          \\
-         \seq{c_i} \desugarFwdR \seq{c_i}', \sigma_i, E_i
+         \upmu_i \desugarFwdR \upmu_i', \sigma_i, E_i
          \quad
          (\forall i \leq \length{\seq{g}})
          \\
@@ -57,12 +57,12 @@
       {
          s \desugarFwdR s', e, E
          \\
-         \seq{c} \desugarFwdR \seq{c}', \sigma, E'
+         \upmu \desugarFwdR \upmu', \sigma, E'
       }
       {
-         \exMatch{s}{\seq{c}}
+         \exMatch{s}{\upmu}
          \desugarFwdR
-         \exMatch{s'}{\seq{c}'},
+         \exMatch{s'}{\upmu'},
          \exApp{\exFun{\sigma}}{e},
          E \cup E'
       }

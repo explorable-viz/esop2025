@@ -1,5 +1,5 @@
 \begin{figure}
-   {\flushleft \shadebox{$\seq{c} \desugarFwdR \upsigma$}
+   {\flushleft \shadebox{$\upmu \desugarFwdR \upsigma$}
    \hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-clause}}]
@@ -12,14 +12,14 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\seq{c} \neq \seqEmpty$}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\upmu \neq \seqEmpty$}]
       {
          c \desugarFwdR c', \sigma, E
          \\
-         \seq{c} \desugarFwdR \seq{c}', \tau, E'
+         \upmu \desugarFwdR \upmu', \tau, E'
       }
       {
-         c \cons \seq{c} \desugarFwdR \sigma \disjjoin \tau, E \cup E'
+         c \cons \upmu \desugarFwdR \sigma \disjjoin \tau, E \cup E'
       }
    \end{smathpar}
    \\[2mm]

@@ -15,9 +15,9 @@
     \begin{smathpar}
         \inferrule*
         {
-            g_i = \bind{\exVar{x_i}}{\seq{c_i}}
+            g_i = \bind{\exVar{x_i}}{\upmu_i}
             \\
-            \seq{c_i} \desugarFwdR \upsigma_i
+            \upmu_i \desugarFwdR \upsigma_i
             \quad
             (\forall i \le \length{\seq{g}})
         }
@@ -26,7 +26,7 @@
         }
     \end{smathpar}
     }
-    % \exClosure{\upgamma}{\seq{g}}{\{\seq{c}\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+    % \exClosure{\upgamma}{\seq{g}}{\{\upmu\}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
     {\small \flushleft \shadebox {$u \desugarFwdS v$}
         \begin{smathpar}
             \inferrule*[lab={\ruleName{$\desugarFwdS$-closure}}]
@@ -35,10 +35,10 @@
                 \\
                 \seq{g} \desugarFwdS \uprho
                 \\
-                \seq{c} \desugarFwdR \upsigma
+                \upmu \desugarFwdR \upsigma
             }
             {
-                \exClosure{\upgamma}{\seq{g}}{\seq{c}} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+                \exClosure{\upgamma}{\seq{g}}{\upmu} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
             }
         \end{smathpar}
     }
