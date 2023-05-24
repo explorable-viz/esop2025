@@ -18,6 +18,18 @@
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\upgamma, s, \upalpha \evalSugR{S} v$}%
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\evalSugS$-nonempty-list}}]
+      {
+         \upgamma, s \evalSugR{S} v
+         \\
+         \upgamma, l \evalSugR{S'} v_{next}
+      }
+      {
+         \upgamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v_{next})
+      }
+      %
+      \and
+      %
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp}}
       ]{
@@ -34,15 +46,15 @@
          width=3in,
       ]
       {
-         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\seq{c}}, v)
+         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\upmu}, v)
          \\
          \upgamma_1, \seq{g} \desugarFwdS \upgamma_2
          \\
-         v, \seq{c} \matchFwdS \upgamma_3, s^\dag
+         v, \upmu \matchFwdS \upgamma_3, s^\dag
          \\
          \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^\dag
          \\
-         \kw{compat}(\seq{c})
+         \kw{compat}(\upmu)
       }
       {
          \upgamma, \exApp{s}{s'} \evalSugR{\trSurfaceApp{S}{S'}{S^{\dag}}} v^\dag
@@ -104,6 +116,22 @@
       {
          \upgamma, \exLetRecPiecewise{\seq{g}}{s} \evalSugR{\trLetRec{\seq{g}}{S}} v
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-match-as}}
+      ]
+      {
+         \upgamma, s \evalSugR{S} v_1
+         \\
+         v_1, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s^{\dag}, p'
+         \\
+         \upgamma \concat \upgamma', s^{\dag} \evalSugR{S'} v
+      }
+      {
+         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v
+      }
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\seq{Q},S} v$}
    \begin{smathpar}
@@ -112,7 +140,7 @@
          \upgamma, s \evalSugR{S} u
       }
       {
-         \upgamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\kw{Nil})
+         \upgamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\cNilKW)
       }
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp-decl}}
