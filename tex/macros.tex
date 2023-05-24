@@ -114,14 +114,10 @@
 \newcommand*{\stmtBind}[2]{\qualGenerator{#1}{#2}}
 
 % types
-\newcommand*{\tyComp}[2]{{#1}!\set{#2}}
-\newcommand*{\tyForall}[3]{\forall{\bind{#1}{#2}}.{#3}}
-\newcommand*{\tyFun}[2]{{#1} \to {#2}}
-\newcommand*{\tyHandler}[2]{{#1} \Rightarrow {#2}}
-\newcommand*{\tyInt}{\kw{Int}}
-\newcommand*{\tyRecord}[1]{\exRecordExtend{}{#1}}
-\newcommand*{\tyVar}[1]{#1}
-\newcommand*{\tyVariant}[1]{[#1]}
+\newcommand*{\tyDict}[1]{\kw{Dict}\;{#1}}
+\newcommand*{\tyFun}[2]{{#1}\rightarrow{#2}}
+\newcommand*{\tyRec}[1]{\kw{Rec}\;\exRec{#1}}
+\newcommand*{\tyStr}[0]{\kw{Str}}
 
 % constructors
 \newcommand*{\cCons}{\kw{Cons}}
@@ -365,4 +361,26 @@
 \newcommand*{\compatPatt}[2]{#1 \uparrow #2}
 \newcommand*{\matches}[2]{\opName{matches}(#1, #2)}
 \newcommand*{\matchesS}{\matches{-}{-}}
+
+% Dict primitives
+\newcommand*{\dictDisjUnion}{\opName{disjointUnion}}
+\newcommand*{\dictMap}{\opName{map}}
+\newcommand*{\dictIntersectionWith}{\opName{intersectionWith}}
+\newcommand*{\dictDifference}{\opName{difference}}
+\newcommand*{\dictGet}{\opName{get}}
+\newcommand*{\dictFoldl}{\opName{foldl}}
+\newcommand*{\dictFromRecord}{\opName{fromRecord}}
+\newcommand*{\str}{\opName{str}}
+
+% Meta-functions
+\newcommand*{\app}{\mathbin{\&}}
+\newcommand*{\const}{\opName{const}}
+\newcommand*{\First}{{\opName{on}_1}}
+\newcommand*{\foldl}{\opName{foldl}}
+\newcommand*{\foldlWithIndex}{\opName{ifoldl}}
+\newcommand*{\map}{\mathbin{{\langle}\&{\rangle}}}
+\newcommand*{\Second}{{\opName{on}_2}}
+\newcommand*{\zipWith}{\opName{zipWith}}
+
 \newcommand*{\compatClause}[1]{\opName{compat}(#1)}
+
