@@ -66,6 +66,60 @@
       \pattArgsF(\pi \cons \seq{\pi})(\sigma)
       &=
       \pattContF(\pi)(\pattArgsF(\seq{\pi})(\sigma))
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
+      }
+      %========================================
+      \begin{split}
+      \orElseF
+      &::
+      \PattSeqOpt\;\Gamma' \to\\
+      &\phantom{aj.}
+      \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
+      \end{split}
+      \\
+      %========================================
+      \orElseF_{\seqEmpty}(e, e')
+      &=
+      e
+      \\
+      \orElseF_{\pattVar{x} \cons \seq{\pi}}(\elimVar{x}{\kappa}, e)
+      &=
+      \elimVar{x}{\orElseF(\seq{\pi})(\kappa, e)}
+      \\
+      \orElseF_{\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}}(\elimRecord{\seq{x}}{\kappa}, e)
+      &=
+      \elimRecord{\seq{x}}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}
+      \\
+      \orElseF_{\pattConstr{c}{\seq{p}} \cons \seq{\pi}}(\elimConstr{\elimBind{c}{\kappa}}, e)
+      &=
+      \elimConstr{\elimBind{c}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessF_{c}(e)
+      \\
+      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      &=
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \\
+      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      &=
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \\
+      \orElseF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
+      &=
+      \elimConstr{\elimBind{\cNil}{\orElseF_{\seq{\pi}}(\kappa)}} \disjjoin \unlessF_{\cNil}(e)
+      \\[2mm]
+      %========================================
+      \intertext{
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Delta}{c}\;A$}
+      }
+      %========================================
+      \unlessF
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Delta}{c}\;A
+      \\
+      %========================================
+      \unlessF_{c}(e)
+      &=
+      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Delta}{c} \setminus \set{c}}
    \end{salign}
    \caption{Desugaring: auxiliary functions}
 \end{figure}
