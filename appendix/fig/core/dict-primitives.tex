@@ -68,29 +68,29 @@
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
    \\
-   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
-   \\
-   &\quad\textit{where }
-   f(s, (\seq{t}, v'), (\upbeta, u')) = \opFwd{\apply}(v, (v', u')) \map \First(\uplambda (S, S').(s, (S, S')) \cons \seq{t})
-   \\
-   \opBwd{\dictFoldl}((\raw{v}, \seq{t}), u) &=
-   \foldl(f, (\bot_{\raw{v}}, u, \annDict{}{\bot}), \seq{t})
-   \\
-   &\quad\textit{where }
-   f((v, u', d_{\upalpha}), (s, (S, S'))) = \opBwd{\apply}((S, S'), u') \app g
-   \\
-   &\quad\phantom{\textit{where}\,}\textit{where }
-   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
-   \\[2mm]
+%   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
+%   \\
+%   &\quad\textit{where }
+%   f(s, (\seq{t}, v'), (\upbeta, u')) = \opFwd{\apply}(v, (v', u')) \map \First(\uplambda (S, S').(s, (S, S')) \cons \seq{t})
+%   \\
+%   \opBwd{\dictFoldl}((\raw{v}, \seq{t}), u) &=
+%   \foldl(f, (\bot_{\raw{v}}, u, \annDict{}{\bot}), \seq{t})
+%   \\
+%   &\quad\textit{where }
+%   f((v, u', d_{\upalpha}), (s, (S, S'))) = \opBwd{\apply}((S, S'), u') \app g
+%   \\
+%   &\quad\phantom{\textit{where}\,}\textit{where }
+%   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
+%   \\[2mm]
    % =============================================================
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
    % =============================================================
    \\
-   \opFwd{\dictFromRecord}(\annRec{\seq{\bind{x}{v}}}{\upalpha}) &= (\UnitVal, \annDict{\seq{\bind{s}{(\upalpha, v)}}}{\upalpha})
-   \quad\textit{where }\seq{x} \map \str = \seq{s}
-   \\
-   \opBwd{\dictFromRecord}(\UnitVal, \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha}) &= \annRec{\seq{\bind{x}{v}}}{{\bigjoin}(\upalpha \cons \seq{\upbeta})}
-   \quad\textit{where }\seq{x} \map \str = \seq{s}
+   \dictFromRecord(\annRec{\seq{\bind{x}{v}}}{\upalpha})
+   &=
+   (\annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha'},
+    \set{(\upalpha, \upalpha')} \cup (\set{\seq{\upbeta}}, \upalpha')
+   \quad\textit{where }\upalpha', \seq{\upbeta}\textit{ fresh and }\seq{x} \map \str = \seq{s}
 \end{align*}
 \caption{Foreign functions for dictionaries; $\dictFromRecord$ assumes embedding $\str: \Var \hookrightarrow \Str$}
 \end{figure}
