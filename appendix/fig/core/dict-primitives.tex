@@ -52,11 +52,10 @@
    \dictDifference &: \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A})}
    % =============================================================
    \\
-   \opFwd{\dictDifference}(d_{\upalpha}, d'_{\upbeta})
+   \dictDifference(d_{\upalpha}, d'_{\upbeta})
    &=
-   (\UnitVal, (d \setminus d')_{\upalpha \meet \upbeta})
-   \\
-   \opBwd{\dictDifference}(\UnitVal, d_{\upalpha}) &= (d_{\upalpha}, \annDict{}{\upalpha})
+   ((d \setminus d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
+   \quad\;\textit{iff }\upbeta\textit{ fresh}
    \\[2mm]
    % =============================================================
    \dictGet &: \Val{\tyStr} \times \Val{(\tyDict{A})} \to \Val{A}
