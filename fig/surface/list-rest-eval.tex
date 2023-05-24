@@ -1,0 +1,27 @@
+\begin{figure}
+   {\small \flushleft \tallshadebox{$\upgamma, r \evalSugS v$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-rest-end}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exListEnd \evalSugR{\exListEnd} \cNilKW
+      }
+      \quad
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-rest-next}}
+      ]
+      {
+         \upgamma, s \evalSugR{S} v
+         \\
+         \upgamma, l \evalSugR{S'} v_{next}
+      }
+      {
+         \upgamma, \exListNext{s}{l} \evalSugR{\exListNext{S}{S'}} \cCons(v, v_{next})
+      }
+   \end{smathpar}
+   }
+\end{figure}
