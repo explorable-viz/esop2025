@@ -127,6 +127,18 @@
          \compatPatt{\pattListNext{p}{o}}{\pattListNext{p'}{o'}}
       }
    \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatClause{\upmu}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \compatPatt{\seq{p_i}}{\seq{p_j}}
+         \quad
+         (\forall i, j \le n)
+      }
+      {
+         \compatClause{\seqRange{\clauseUncurried{\seq{p_1}}{s_1}}{\clauseUncurried{\seq{p_n}}{s_n}}}
+      }
+   \end{smathpar}}
    \caption{Compatible patterns}
 \end{figure}
 \begin{figure}
