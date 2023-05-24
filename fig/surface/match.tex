@@ -51,6 +51,25 @@
       %
       \and
       %
+      \inferrule*
+      {
+         \compatPatt{p}{o}
+         \\
+         \compatPatt{p'}{o'}
+      }
+      {
+         \compatPatt{\exList{p}{o}}{\exList{p'}{o'}}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \compatPatt{o}{p'}
+      }
+      {
+         \compatPatt{\exList{p}{o}}{\cCons(p, p')}
+      }
    \end{smathpar}}
    {\small \flushleft \shadebox{$\compatPatt{\seq{p_1}}{\seq{p_2}}$}
    \begin{smathpar}
@@ -74,6 +93,38 @@
       }
       {
          \compatPatt{\pattListEnd}{\cNilKW} 
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \compatPatt{o}{p'}
+      }
+      {
+         \compatPatt{\pattListNext{p}{o}}{\cCons(p, p')}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\compatPatt{o}{o'}$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \compatPatt{\pattListEnd}{\pattListEnd}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \compatPatt{p}{p'}
+         \\
+         \compatPatt{o}{o'}
+      }
+      {
+         \compatPatt{\pattListNext{p}{o}}{\pattListNext{p'}{o'}}
       }
    \end{smathpar}}
    \caption{Compatible patterns}
