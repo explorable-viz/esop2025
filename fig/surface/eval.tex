@@ -18,6 +18,18 @@
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\upgamma, s, \upalpha \evalSugR{S} v$}%
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\evalSugS$-nonempty-list}}]
+      {
+         \upgamma, s \evalSugR{S} v
+         \\
+         \upgamma, l \evalSugR{S'} v_{next}
+      }
+      {
+         \upgamma, \exList{s}{l} \evalSugR{\exList{S}{S'}} \cCons(v, v_{next})
+      }
+      %
+      \and
+      %
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp}}
       ]{
