@@ -46,15 +46,15 @@
          width=3in,
       ]
       {
-         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\seq{c}}, v)
+         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\upmu}, v)
          \\
          \upgamma_1, \seq{g} \desugarFwdS \upgamma_2
          \\
-         v, \seq{c} \matchFwdS \upgamma_3, s^\dag
+         v, \upmu \matchFwdS \upgamma_3, s^\dag
          \\
          \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^\dag
          \\
-         \kw{compat}(\seq{c})
+         \kw{compat}(\upmu)
       }
       {
          \upgamma, \exApp{s}{s'} \evalSugR{\trSurfaceApp{S}{S'}{S^{\dag}}} v^\dag
