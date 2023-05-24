@@ -6,25 +6,19 @@
    \dictMap &: \Val{(\tyFun{A}{B})} \times \Val{(\tyDict{A})} \to \Val{(\tyDict{B})}
    % =============================================================
    \\
-%   \opFwd{\dictMap}(v, d_{\upalpha})
-%   &=
-%   ((\erase{v}, d' \map (\pi_1 \after \pi_2), (d' \map \Second(\pi_2))_{\upalpha})
-%   \\
-%   &\quad\textit{where }
-%   d' = d \map \Second(\uplambda u.\opFwd{\apply}(v, u))
-%   \\
-%   \opBwd{\dictMap}((\raw{v}, d), d'_{\upalpha})
-%   &= (\foldl(\weakJoin,\bot_{\raw{v}},d^\dagger \map (\pi_1 \after \pi_2)), (d^\dagger \map \Second(\pi_2))_{\upalpha})
-%   \\
-%   &\quad\textit{where }
-%   d^\dagger = \zipWith(\uplambda(S, (\upbeta, v)).(\upbeta, \opBwd{\apply}(S, v)), d, d')
-%   \\[2mm]
+   \dictMap(v, d_{\upalpha})
+   &=
+   (\annDict{\seq{\bind{s}{(\upalpha', v')}}}{\upbeta}, \bigcup\set{\seq{E}})
+   \\
+   &\quad\textit{where }\upbeta\textit{ fresh and }
+   \set{\seq{\bind{s}{(v',E)}}} = \set{\bind{s}{(\upalpha', \apply(v, u))} \mid \bind{s}{(\upalpha', u)} \in d}
+   \\[2mm]
    % =============================================================
    \dictIntersectionWith
    &:
    \Val{(\tyFun{A}{\tyFun{B}{A'}})} \times \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A'})}
    % =============================================================
-   \\
+%   \\
 %   \opFwd{\dictIntersectionWith}(v, d_{\upalpha}, d'_{\upalpha'})
 %   &=
 %   ((\erase{v}, d^\dagger \map (\pi_1 \after \pi_2)), (d^\dagger \map \Second(\pi_2))_{\upalpha \meet \upalpha'})
@@ -38,7 +32,7 @@
 %   \\
 %   &\quad\textit{ where }
 %   d' = \zipWith(\uplambda((S, S'), (\upbeta, v')).(\upbeta, \opBwd{\apply}((S, S'), v')), d, d^\dagger)
-%   \\[2mm]
+   \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
    % =============================================================
@@ -67,7 +61,7 @@
    % =============================================================
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
-   \\
+%   \\
 %   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
 %   \\
 %   &\quad\textit{where }
@@ -81,7 +75,7 @@
 %   \\
 %   &\quad\phantom{\textit{where}\,}\textit{where }
 %   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
-%   \\[2mm]
+   \\[2mm]
    % =============================================================
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
    % =============================================================
