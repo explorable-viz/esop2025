@@ -25,7 +25,7 @@
          \upgamma, l \evalSugR{S'} v_{next}
       }
       {
-         \upgamma, \exList{s}{l} \evalSugR{\exList{S}{S'}} \cCons(v, v_{next})
+         \upgamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v_{next})
       }
       %
       \and
@@ -125,12 +125,12 @@
       {
          \upgamma, s \evalSugR{S} v_1
          \\
-         v1, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s^{\dag}
+         v_1, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s^{\dag}, p'
          \\
-         \upgamma \concat \upgamma', s^{\dag} v
+         \upgamma \concat \upgamma', s^{\dag} \evalSugR{S'} v
       }
       {
-         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugS v
+         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v
       }
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\seq{Q},S} v$}
