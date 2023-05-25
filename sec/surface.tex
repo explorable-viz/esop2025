@@ -28,19 +28,21 @@ theorem, as it is our intent that the user is presented with the surface semanti
 program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
 some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
 \begin{theorem}
-    Suppose $\Gamma \vdash s : A \; and \; \upgamma : \Gamma$, then:
+   \label{theorem:semantics}
+   Suppose $\Gamma \vdash s : A \; and \; \upgamma : \Gamma$, then:
 \hfill
 \begin{enumerate}
-    \item $ If \; \upgamma, s \evalSugS v \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
-    \item $If \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; where \; v' \desugarFwdS v$
+   \item $ If \; \upgamma, s \evalSugS v \; then \; \exists \upgamma', e.\; s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
+   \item $If \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; where \; v' \desugarFwdS v$
 \end{enumerate}
 \end{theorem}
-The sketch of the proof is as follows: for many cases of evaluation, the rules for surface and core evaluation are
-matched exactly. For these rules, provided the desugaring relations are defined correctly, we can probably
-call those proof cases trivial. There are a number of more interesting cases, specifically the ones to do with
-list comprehensions and function applications. Since we have slightly changed the semantics of functions (FFI etc)
-this should be a bit easier. We can likely inline most definitions.
-
+Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing 
+environments that coincide. We state this as lemma \ref{lemma:matching}.
+\begin{lemma}
+   \label{lemma:matching}
+   Suppose $\upmu \desugarFwdS \upsigma$ and $u \desugarFwdS v$, if $u, \upmu \matchFwdS \upgamma_s$ and
+   $v, \upsigma \matchFwdS \upgamma_c$ then $\upgamma_s \desugarFwdS \upgamma_c$
+\end{lemma}
 \input{fig/surface/syntax}
 \input{fig/surface/eval}
 \input{fig/surface/list-rest-eval}

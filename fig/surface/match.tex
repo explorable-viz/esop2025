@@ -1,147 +1,4 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\compatPatt{p_1}{p_2}$} %
-   \begin{smathpar}
-      \inferrule*[
-         %lab={\ruleName{$\uparrow$-var}}
-      ]
-      {
-         \strut
-      }
-      {
-         \compatPatt{\exVar{x}}{\exVar{x}}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         %lab={\ruleName{$\uparrow$-ctr-$\ne$}}
-      ]
-      {
-         c \ne c'
-         \\
-         \Delta(c) = \Delta(c')
-      }
-      {
-         \compatPatt{c(\seq{p})}{c'(\seq{p'})}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         %lab={\ruleName{$\uparrow$-ctr}}
-      ]
-      {
-         \compatPatt{p_i}{p'_i} \quad (\forall i)
-      }
-      {
-         \compatPatt{c(\seq{p})}{c(\seq{p'})}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         %lab={\ruleName{$\uparrow$-Record}}
-      ]
-      {
-         \compatPatt{p_i}{p'_i} \quad (\forall i \le |\seq{x}|)
-      }
-      {
-         \compatPatt{\exRecord{\seq{\bind{x}{p}}}}{\exRecord{\seq{\bind{x}{p'}}}}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \compatPatt{p}{o}
-         \\
-         \compatPatt{p'}{o'}
-      }
-      {
-         \compatPatt{\exList{p}{o}}{\exList{p'}{o'}}
-      }
-      %
-      \and
-      %
-      \inferrule*[]
-      {
-         \compatPatt{o}{p'}
-      }
-      {
-         \compatPatt{\exList{p}{o}}{\cCons(p, p')}
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\compatPatt{\seq{p_1}}{\seq{p_2}}$}
-   \begin{smathpar}
-      \inferrule*[
-         right={$\seq{p},\seq{p}' \; nonempty$}
-      ]
-      {
-         \compatPatt{p}{p'}
-         \\
-         \compatPatt{\seq{p}}{\seq{p}'}
-      }
-      {
-         \compatPatt{p \cons \seq{p}}{p' \cons \seq{p}'}
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\compatPatt{o}{p}$}
-   \begin{smathpar}
-      \inferrule*
-      {
-         \strut
-      }
-      {
-         \compatPatt{\pattListEnd}{\cNilKW} 
-      }
-      %
-      \and
-      %
-      \inferrule*[]
-      {
-         \compatPatt{o}{p'}
-      }
-      {
-         \compatPatt{\pattListNext{p}{o}}{\cCons(p, p')}
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\compatPatt{o}{o'}$}
-   \begin{smathpar}
-      \inferrule*
-      {
-         \strut
-      }
-      {
-         \compatPatt{\pattListEnd}{\pattListEnd}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \compatPatt{p}{p'}
-         \\
-         \compatPatt{o}{o'}
-      }
-      {
-         \compatPatt{\pattListNext{p}{o}}{\pattListNext{p'}{o'}}
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\compatClause{\upmu}$}
-   \begin{smathpar}
-      \inferrule*
-      {
-         \compatPatt{\seq{p_i}}{\seq{p_j}}
-         \quad
-         (\forall i, j \le n)
-      }
-      {
-         \compatClause{\seqRange{\clauseUncurried{\seq{p_1}}{s_1}}{\clauseUncurried{\seq{p_n}}{s_n}}}
-      }
-   \end{smathpar}}
-   \caption{Compatible patterns}
-\end{figure}
-\begin{figure}
    {\small \flushleft \shadebox{$\seq{v}, \seq{p} \matchFwdS \upgamma$}
    \begin{smathpar}
       \inferrule*[
@@ -190,23 +47,21 @@
       %
       \and
       %
-      % \inferrule
-      % {
-
-      % }
-      % {
-
-      % }
-      % %
-      % \and
+      \inferrule
+      {
+         v, p \matchFwdS \upgamma
+         \\
+         v', o \matchFwdS \upgamma'
+      }
+      {
+         \cCons(v, v'), \pattList{p}{o} \matchFwdR{\trList{p}{o}} \upgamma \disjunion \upgamma'
+      }
+      %
+      \and
       % %
       \inferrule*
       {
          \seq{u}, \seq{p}' \matchFwdS \upgamma 
-         \\
-         \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
-         \\
-         \seq{p}' \subseteq \seq{p}
       }
       {
          \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{x}}{p}}} \matchFwdS \upgamma  
@@ -237,6 +92,28 @@
       }
       {
          v, \seqRange{p_1 \cons \seq{p_1}'=s_1}{p_n \cons \seq{p_n}' = s_n} \matchFwdR{p} \upgamma, \uplambda\upmu
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$v, o \matchFwdS \upgamma$}
+   \begin{smathpar}   
+      \inferrule*[]
+      {
+         \strut
+      }
+      {
+         \cNil, \pattListEnd \matchFwdR{\trListEnd} \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         v, p, \matchFwdS \upgamma
+         \\
+         v', o \matchFwdS \upgamma'
+      }
+      {
+         \cCons(v, v'), \pattListNext{p}{o} \matchFwdR{\trListNext{p}{o}} \upgamma \disjunion \upgamma' 
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
