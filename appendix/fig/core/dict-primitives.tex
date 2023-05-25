@@ -29,7 +29,7 @@
    \\
    &\quad
    \;\set{\seq{\bind{s}{(\upbeta', (v',E))}}} =
-   \intersectionWith(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
+   \DintersectionWith(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
@@ -46,7 +46,7 @@
    \\
    \dictDifference(d_{\upalpha}, d'_{\upbeta})
    &=
-   ((d \setminus d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
+   ((\Ddifference(d, d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
    \quad\;\textit{where }\upbeta\textit{ fresh}
    \\[2mm]
    % =============================================================
@@ -60,7 +60,7 @@
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
    \\
-   \dictFoldl(v, u, d_\upalpha) &= \foldl(f, (u, \varnothing), d)
+   \dictFoldl(v, u, d_\upalpha) &= \Dfoldl(f, (u, \varnothing), d)
    \\
    &\quad\textit{where }
    f(s, (v', E), (\_, u')) = (v^\dagger, E \cup E')\text{ where }(v^\dagger, E') = \apply(v, (v', u'))
