@@ -25,11 +25,11 @@
     (\annDict{\seq{\bind{s}{(\upbeta', v'}}}{\upbeta},
     \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta), (\upalpha', \upbeta)}
    \\
-   &\quad\textit{ where }\upbeta\textit{ fresh and}
+   &\quad\textit{ where }\upbeta\textit{ fresh and }
+   \set{\seq{\bind{s}{(\upbeta', (v',E))}}} = \DintersectionWith(f, d, d')
    \\
-   &\quad
-   \;\set{\seq{\bind{s}{(\upbeta', (v',E))}}} =
-   \DintersectionWith(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
+   &\quad\textit{ and }
+   f((\upbeta', u), (\_, u')) = (\upbeta', \apply(v, (u, u')))
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
