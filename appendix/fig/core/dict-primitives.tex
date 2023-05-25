@@ -11,27 +11,24 @@
    (\annDict{\seq{\bind{s}{(\upalpha', v')}}}{\upbeta}, \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta)})
    \\
    &\quad\textit{where }\upbeta\textit{ fresh and }
-   \set{\seq{\bind{s}{(v',E)}}} = \set{\bind{s}{(\upalpha', \apply(v, u))} \mid \bind{s}{(\upalpha', u)} \in d}
+   \set{\seq{\bind{s}{(\upalpha', (v',E))}}} = \Dmap(\uplambda(\upalpha', u).(\upalpha', \apply(v, u)), d)
    \\[2mm]
    % =============================================================
    \dictIntersectionWith
    &:
    \Val{(\tyFun{A}{\tyFun{B}{A'}})} \times \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A'})}
    % =============================================================
-%   \\
-%   \opFwd{\dictIntersectionWith}(v, d_{\upalpha}, d'_{\upalpha'})
-%   &=
-%   ((\erase{v}, d^\dagger \map (\pi_1 \after \pi_2)), (d^\dagger \map \Second(\pi_2))_{\upalpha \meet \upalpha'})
-%   \\
-%   &\quad\textit{ where }
-%   d^\dagger = \zipWith(\uplambda((\upbeta, u), (\upbeta', u')).(\upbeta \meet \upbeta', \opFwd{\apply}(v, (u, u')))), d, d')
-%   \\
-%   \opBwd{\dictIntersectionWith}((\raw{v}, d), d^\dagger_{\upalpha})
-%   &=
-%   (\foldl(\weakJoin,\bot_{\raw{v}},d' \map (\pi_1 \after \pi_2)), (d' \map \Second(\pi_1 \after \pi_2))_{\upalpha}, (d' \map \Second(\pi_2 \after \pi_2))_{\upalpha})
-%   \\
-%   &\quad\textit{ where }
-%   d' = \zipWith(\uplambda((S, S'), (\upbeta, v')).(\upbeta, \opBwd{\apply}((S, S'), v')), d, d^\dagger)
+   \\
+   \dictIntersectionWith(v, d_{\upalpha}, d'_{\upalpha'})
+   &=
+    (\annDict{\seq{\bind{s}{(\upbeta', v'}}}{\upbeta},
+    \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta), (\upalpha', \upbeta)}
+   \\
+   &\quad\textit{ where }\upbeta\textit{ fresh and }
+   \set{\seq{\bind{s}{(\upbeta', (v',E))}}} = \DintersectionWith(f, d, d')
+   \\
+   &\quad\textit{ and }
+   f((\upbeta', u), (\_, u')) = (\upbeta', \apply(v, (u, u')))
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
@@ -48,7 +45,7 @@
    \\
    \dictDifference(d_{\upalpha}, d'_{\upbeta})
    &=
-   ((d \setminus d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
+   ((\Ddifference(d, d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
    \quad\;\textit{where }\upbeta\textit{ fresh}
    \\[2mm]
    % =============================================================
@@ -61,20 +58,11 @@
    % =============================================================
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
-%   \\
-%   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
-%   \\
-%   &\quad\textit{where }
-%   f(s, (\seq{t}, v'), (\upbeta, u')) = \opFwd{\apply}(v, (v', u')) \map \First(\uplambda (S, S').(s, (S, S')) \cons \seq{t})
-%   \\
-%   \opBwd{\dictFoldl}((\raw{v}, \seq{t}), u) &=
-%   \foldl(f, (\bot_{\raw{v}}, u, \annDict{}{\bot}), \seq{t})
-%   \\
-%   &\quad\textit{where }
-%   f((v, u', d_{\upalpha}), (s, (S, S'))) = \opBwd{\apply}((S, S'), u') \app g
-%   \\
-%   &\quad\phantom{\textit{where}\,}\textit{where }
-%   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
+   \\
+   \dictFoldl(v, u, d_\upalpha) &= \Dfoldl(f, (u, \varnothing), d)
+   \\
+   &\quad\textit{where }
+   f(s, (v', E), (\_, u')) = (v^\dagger, E \cup E')\textit{ where }(v^\dagger, E') = \apply(v, (v', u'))
    \\[2mm]
    % =============================================================
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
