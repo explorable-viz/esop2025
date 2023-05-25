@@ -11,8 +11,7 @@
    (\annDict{\seq{\bind{s}{(\upalpha', v')}}}{\upbeta}, \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta)})
    \\
    &\quad\textit{where }\upbeta\textit{ fresh and }
-   \set{\seq{\bind{s}{(\upalpha', (v',E))}}} =
-   \set{\bind{s}{(\upalpha', \apply(v, u))} \mid \bind{s}{(\upalpha', u)} \in d}
+   \set{\seq{\bind{s}{(\upalpha', (v',E))}}} = \Dmap(\uplambda(\upalpha', u).(\upalpha', \apply(v, u)), d)
    \\[2mm]
    % =============================================================
    \dictIntersectionWith
@@ -63,7 +62,7 @@
    \dictFoldl(v, u, d_\upalpha) &= \Dfoldl(f, (u, \varnothing), d)
    \\
    &\quad\textit{where }
-   f(s, (v', E), (\_, u')) = (v^\dagger, E \cup E')\text{ where }(v^\dagger, E') = \apply(v, (v', u'))
+   f(s, (v', E), (\_, u')) = (v^\dagger, E \cup E')\textit{ where }(v^\dagger, E') = \apply(v, (v', u'))
    \\[2mm]
    % =============================================================
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
