@@ -40,8 +40,11 @@ Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface
 environments that coincide. We state this as lemma \ref{lemma:matching}.
 \begin{lemma}
    \label{lemma:matching}
-   Suppose $\upmu \desugarFwdS \upsigma$ and $u \desugarFwdS v$, if $u, \upmu \matchFwdS \upgamma_s$ and
-   $v, \upsigma \matchFwdS \upgamma_c$ then $\upgamma_s \desugarFwdS \upgamma_c$
+   \hfill
+\begin{enumerate}
+   \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
+   \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$ 
+\end{enumerate}
 \end{lemma}
 \input{fig/surface/syntax}
 \input{fig/surface/eval}
