@@ -22,18 +22,14 @@
    \\
    \dictIntersectionWith(v, d_{\upalpha}, d'_{\upalpha'})
    &=
-   (\annDict{\seq{\bind{s}{(\upbeta', v'}}}{\upbeta},
+    (\annDict{\seq{\bind{s}{(\upbeta', v'}}}{\upbeta},
     \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta), (\upalpha', \upbeta)}
-%   \\
-%   &\quad\textit{ where }
-%   d^\dagger = \zipWith(\uplambda((\upbeta, u), (\upbeta', u')).(\upbeta \meet \upbeta', \opFwd{\apply}(v, (u, u')))), d, d')
-%   \\
-%   \opBwd{\dictIntersectionWith}((\raw{v}, d), d^\dagger_{\upalpha})
-%   &=
-%   (\foldl(\weakJoin,\bot_{\raw{v}},d' \map (\pi_1 \after \pi_2)), (d' \map \Second(\pi_1 \after \pi_2))_{\upalpha}, (d' \map \Second(\pi_2 \after \pi_2))_{\upalpha})
-%   \\
-%   &\quad\textit{ where }
-%   d' = \zipWith(\uplambda((S, S'), (\upbeta, v')).(\upbeta, \opBwd{\apply}((S, S'), v')), d, d^\dagger)
+   \\
+   &\quad\textit{ where }\upbeta\textit{ fresh}
+   \\
+   &\quad\textit{ and }
+   \set{\seq{\bind{s}{(\upbeta', (v',E))}}} =
+   \cap{-}\opName{with}(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
