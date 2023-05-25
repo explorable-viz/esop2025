@@ -29,7 +29,7 @@
    \\
    &\quad
    \;\set{\seq{\bind{s}{(\upbeta', (v',E))}}} =
-   \cap{-}\opName{with}(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
+   \intersectionWith(\lambda((\upbeta', u), (\_, u')).(\upbeta', \apply(v, (u, u'))), d, d')
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
@@ -59,20 +59,11 @@
    % =============================================================
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
-%   \\
-%   \opFwd{\dictFoldl}(v, u, d_\upalpha) &= \foldlWithIndex(f, (\seqEmpty, u), d) \map \First(\uplambda\seq{t}.(\erase{v}, \seq{t}))
+   \\
+   \dictFoldl(v, u, d_\upalpha) &= \foldlWithIndex(f, (u, \varnothing), d)
 %   \\
 %   &\quad\textit{where }
 %   f(s, (\seq{t}, v'), (\upbeta, u')) = \opFwd{\apply}(v, (v', u')) \map \First(\uplambda (S, S').(s, (S, S')) \cons \seq{t})
-%   \\
-%   \opBwd{\dictFoldl}((\raw{v}, \seq{t}), u) &=
-%   \foldl(f, (\bot_{\raw{v}}, u, \annDict{}{\bot}), \seq{t})
-%   \\
-%   &\quad\textit{where }
-%   f((v, u', d_{\upalpha}), (s, (S, S'))) = \opBwd{\apply}((S, S'), u') \app g
-%   \\
-%   &\quad\phantom{\textit{where}\,}\textit{where }
-%   g(v', (u^\dagger, u^\ddagger)) = (v \weakJoin v', u^\dagger, ((s \mapsto (\bot, u^\ddagger)) \cons d)_{\upalpha})
    \\[2mm]
    % =============================================================
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
