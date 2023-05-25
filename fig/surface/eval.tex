@@ -136,35 +136,13 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-enum-base}}
+         lab={\ruleName{$\evalSugS$-enum}}
       ]
       {
-         \upgamma, s_1 \evalSugS v_1
-         \\
-         \upgamma, s_2 \evalSugS v_2
-         \\
-         v_1 > v_2
+         \upgamma, \exApp{\exApp{\varEnumFromTo}{s_1}}{s_2}\evalSugS v
       }
       {
-         \upgamma, \exListEnum{s_1}{s_2} \evalSugS \cNil
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-enum-rec}}
-      ]
-      {
-         \upgamma, s_1 \evalSugS v_1
-         \\
-         \upgamma, s_2 \evalSugS v_2
-         \\
-         v_1 \le v_2
-         \\
-         \upgamma, \exListEnum{(1 + s_1)}{s_2} \evalSugS v
-      }
-      {
-         \upgamma, \exListEnum{s_1}{s_2} \evalSugS \cCons(v_1, v)
+         \upgamma, \exListEnum{s_1}{s_2} \evalSugS v
       }
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\seq{Q},S} v$}
