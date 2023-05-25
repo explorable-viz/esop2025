@@ -29,31 +29,31 @@ program using the core semantics. Without this theorem, we could not properly ju
 some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
 \begin{theorem}
    \label{theorem:semantics}
-   Suppose $\Gamma \vdash s : A \; and \; \upgamma : \Gamma$, then:
+   Suppose $\Gamma \vdash s : A, \; \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \upgamma, s \evalSugS v \; and \; \exists e.\; s \desugarFwdS e \; then \; \exists \upgamma'. \; \upgamma \desugarFwdS \upgamma' \; and \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
-   \item $If \; \upgamma \desugarFwdS \upgamma' \; and \; s \desugarFwdS e \; and \; \upgamma',e \evalFwdS v \; then \; \exists v'. \; \upgamma, s \evalSugS v' \; where \; v' \desugarFwdS v$
+   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
+   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$
 \end{enumerate}
 \end{theorem}
 Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing 
-environments that coincide. We state this as lemma \ref{lemma:matching}. Due to the fact that desugaring of values
-is not a total relation, we require that $s$ can be desugared as the precondition to the first case of theorem \ref{theorem:semantics}.
+environments that coincide. We state this as lemma \ref{lemma:matching-bi}. Due to the fact that desugaring of values
+is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as the precondition to the first case of theorem \ref{theorem:semantics}.
 This will be properly explained in the final version of the paper.
-\begin{lemma}
-   \label{lemma:matching}
-   \hfill
-\begin{enumerate}
-   \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
-   \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$ 
-\end{enumerate}
-\end{lemma}
-For now we provide this alternate formulation, and need to pick the one we think is correct.
+% \begin{lemma}
+%    \label{lemma:matching}
+%    \hfill
+% \begin{enumerate}
+%    \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
+%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$ 
+% \end{enumerate}
+% \end{lemma}
+% For now we provide this alternate formulation, and need to pick the one we think is correct.
 \begin{lemma}
    \label{lemma:matching-bi}
-   Suppose we have $v, \upmu, \upgamma$, and $v', \upsigma, \upgamma'$, with $v \desugarFwdS v'$, $\upmu \desugarFwdS \upsigma$, and $\upgamma \desugarFwdS \upgamma'$. Then:
+   Suppose we have $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
    $$
-      v, \upmu \matchFwdS \upgamma \quad \iff \quad \exists \upkappa.\, v',\upsigma \matchFwdS \upgamma'
+      v, \upmu \matchFwdS \upgamma, \; where \; \upgamma \desugarFwdS \upgamma' \quad \iff \quad \exists \upkappa.\, v',\upsigma \matchFwdS \upgamma', \upkappa \; where \; \upgamma \desugarFwdS \upgamma'
    $$
 \end{lemma}
 \input{fig/surface/syntax}
