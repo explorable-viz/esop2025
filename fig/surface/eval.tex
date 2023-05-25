@@ -197,6 +197,37 @@
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
+   \ContinuedFloat
+   {\small \flushleft \tallshadebox{$\upgamma, r \evalSugS v$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-rest-end}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exListEnd \evalSugR{\trListEnd} \cNilKW
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-rest-next}}
+      ]
+      {
+         \upgamma, s \evalSugR{S} v
+         \\
+         \upgamma, l \evalSugR{S'} v_{next}
+      }
+      {
+         \upgamma, \exListNext{s}{l} \evalSugR{\trListNext{S}{S'}} \cCons(v, v_{next})
+      }
+   \end{smathpar}
+   }
+   \caption{Surface semantics: evaluation}
+\end{figure}
+\begin{figure}
    {\small, \flushleft \shadebox{$\upgamma, \seq{g} \desugarFwdS \upgamma'$}
       \begin{smathpar}
          \inferrule*
