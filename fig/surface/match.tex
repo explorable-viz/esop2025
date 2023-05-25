@@ -2,7 +2,7 @@
    {\small \flushleft \shadebox{$\seq{v}, \seq{p} \matchFwdS \upgamma$}
    \begin{smathpar}
       \inferrule*[
-        %lab={\ruleName{\matchesS-var}}
+        lab={\ruleName{$\matchFwdS$-empty}}
       ]
       {
          \strut
@@ -14,7 +14,7 @@
       \and
       %
       \inferrule*[
-         %lab={\ruleName{\matchesS-ctr}}
+         lab={\ruleName{$\matchFwdS$-seq}}
       ]
       {
          v, p \matchFwdS \upgamma
@@ -27,7 +27,9 @@
    \end{smathpar}}
    {\small \flushleft \shadebox {$v, p \matchFwdS \upgamma$}
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-var}}
+      ]
       {
          \strut
       }
@@ -37,7 +39,9 @@
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-constr}}
+      ]
       {
          \seq{v},\seq{p} \matchFwdS \upgamma
       }
@@ -47,19 +51,23 @@
       %
       \and
       %
-      \inferrule
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-nonempty-list}}
+      ]
       {
          v, p \matchFwdS \upgamma
          \\
          v', o \matchFwdS \upgamma'
       }
       {
-         \cCons(v, v'), \pattList{p}{o} \matchFwdR{\trList{p}{o}} \upgamma \disjunion \upgamma'
+         \cCons(v, v'), \pattList{p}{o} \matchFwdS \upgamma \disjunion \upgamma'
       }
       %
       \and
       % %
-      \inferrule*
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-record}}
+      ]
       {
          \seq{u}, \seq{p}' \matchFwdS \upgamma 
          \quad
@@ -70,10 +78,36 @@
       }
    \end{smathpar}
    }
+   {\small \flushleft \shadebox{$v, o \matchFwdS \upgamma$}
+   \begin{smathpar}   
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-nil}}
+      ]
+      {
+         \strut
+      }
+      {
+         \cNil, \pattListEnd \matchFwdS \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\matchFwdS$-cons}}
+      ]
+      {
+         v, p, \matchFwdS \upgamma
+         \\
+         v', o \matchFwdS \upgamma'
+      }
+      {
+         \cCons(v, v'), \pattListNext{p}{o} \matchFwdS \upgamma \disjunion \upgamma' 
+      }
+   \end{smathpar}}
    {\small \flushleft \shadebox{$v, \upmu \matchFwdS \upgamma, s$}
    \begin{smathpar}
       \inferrule*[
-         %lab={\ruleName{\matches-\cCons}}
+         lab={\ruleName{$\matchFwdS$-last}}
       ]
       {
          v, p_i \matchFwdS \upgamma
@@ -87,35 +121,13 @@
       \and
       %
       \inferrule*[
-         %lab={\ruleName{\matchesS-\cNil}}
+         lab={\ruleName{$\matchFwdS$-$\upmu$}}
       ]
       {
-         \forall i \le n. \quad \seq{p_i}' = s_i \in \upmu \iff (v, p \matchFwdS \upgamma \land p_i = p)
+         (\seq{p_i}' = s_i \in \upmu \iff (v, p \matchFwdS \upgamma \land p_i = p)) \quad (\forall i \le n. )
       }
       {
-         v, \seqRange{p_1 \cons \seq{p_1}'=s_1}{p_n \cons \seq{p_n}' = s_n} \matchFwdR{p} \upgamma, \uplambda\upmu
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$v, o \matchFwdS \upgamma$}
-   \begin{smathpar}   
-      \inferrule*[]
-      {
-         \strut
-      }
-      {
-         \cNil, \pattListEnd \matchFwdR{\trListEnd} \varnothing
-      }
-      %
-      \and
-      %
-      \inferrule*[]
-      {
-         v, p, \matchFwdS \upgamma
-         \\
-         v', o \matchFwdS \upgamma'
-      }
-      {
-         \cCons(v, v'), \pattListNext{p}{o} \matchFwdR{\trListNext{p}{o}} \upgamma \disjunion \upgamma' 
+         v, \seqRange{p_1 \cons \seq{p_1}'=s_1}{p_n \cons \seq{p_n}' = s_n} \matchFwdS \upgamma, \uplambda\upmu
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
