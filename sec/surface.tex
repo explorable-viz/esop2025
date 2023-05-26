@@ -37,8 +37,10 @@ some non-trivial desugaring. We formalise the equivalence of these semantics as 
 \end{enumerate}
 \end{theorem}
 Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing 
-environments that coincide. We state this as lemma \ref{lemma:matching-bi}. Due to the fact that desugaring of values
-is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as the precondition to the first case of theorem \ref{theorem:semantics}.
+environments that coincide. We state this as lemma \ref{lemma:matching-bi}. For the variable case, we need to
+also establish that environment lookup commutes with desugaring, lemma \ref{lemma:varlookup}. Due to the fact
+that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
+the precondition to the first case of theorem \ref{theorem:semantics}.
 This will be properly explained in the final version of the paper.
 % \begin{lemma}
 %    \label{lemma:matching}
@@ -49,6 +51,21 @@ This will be properly explained in the final version of the paper.
 % \end{enumerate}
 % \end{lemma}
 % For now we provide this alternate formulation, and need to pick the one we think is correct.
+\begin{lemma}
+   \label{lemma:varlookup}
+   Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
+   $$
+      \bind{x}{v} \in \upgamma \quad \iff \quad \bind{x}{v'} \in \upgamma'
+   $$
+\end{lemma}
+\begin{proof}
+   This is trivial by the definition of $\upgamma \desugarFwdS \upgamma'$. In the forward direction,
+   $\bind{x}{v}\in\upgamma$ implies that $v$ must have been desugared into $v'$, and bound to $\exVar{x}$
+   in $\upgamma'$. 
+   Then in the backwards direction, because we can desugar $\upgamma$ into $\upgamma'$, and 
+   $\bind{x}{v'} \in \upgamma'$, we know that $\exVar{x}$ was bound to some value in $\upgamma$, and by 
+   our assumption, that value is $v$.
+\end{proof}
 \begin{lemma}
    \label{lemma:matching-bi}
    Suppose we have $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
