@@ -2,11 +2,11 @@
    {\small \flushleft \tallshadebox{$\upgamma, \seq{s} \evalSugR{\seq{S}} \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-var}}
+         lab={\ruleName{$\evalSugS$-seq}}
       ]
       {
          \upgamma, s_i \evalSugR{S_i} v_i
-         \quad_ne
+         \quad
          (\forall i \leq \length{\seq{s}})
       }
       {
@@ -121,14 +121,14 @@
          lab={\ruleName{$\evalSugS$-match-as}}
       ]
       {
-         \upgamma, s \evalSugR{S} v_1
+         \upgamma, s \evalSugR{S} v
          \\
-         v_1, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s_i, p'
+         v, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s_i
          \\
-         \upgamma \concat \upgamma', s^{\dag} \evalSugR{S'} v
+         \upgamma \concat \upgamma', s_i \evalSugR{S'} v'
       }
       {
-         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v
+         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v'
       }
       %
       \and
