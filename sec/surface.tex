@@ -4,8 +4,7 @@ When presenting a program execution, we want to give the appearence to the user 
 of the surface language directly. To that end we formalise and present a notion of evaluation of surface
 terms, which we present to the user in the debugger. We most formalise a notion of values in the surface
 language, which mostly correspond to values in the core language. We then present proof that directly
-evaluating a surface program produces the same result as desugaring it to a core program and evaluating that.
-This correspondence justifies our presentation of the surface semantics to the debugger.
+evaluating a surface program produces the same result as desugaring it to a core program and then evaluating, justifying our presentation of the surface semantics to the debugger.
 
 \subsection{Compatible Patterns}
 One complication of defining semantics for the surface language is how to deal with functions defined
@@ -36,7 +35,7 @@ some non-trivial desugaring. We formalise the equivalence of these semantics as 
    \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$
 \end{enumerate}
 \end{theorem}
-Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing 
+Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing
 environments that coincide. We state this as lemma \ref{lemma:matching-bi}. For the variable case, we need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
@@ -47,7 +46,7 @@ This will be properly explained in the final version of the paper.
 %    \hfill
 % \begin{enumerate}
 %    \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
-%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$ 
+%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$
 % \end{enumerate}
 % \end{lemma}
 % For now we provide this alternate formulation, and need to pick the one we think is correct.
