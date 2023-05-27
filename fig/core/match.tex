@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', V$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
+    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdS \upgamma, \upkappa', V$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\matchFwdS$-seq-empty}}
@@ -8,7 +8,7 @@
           \strut
        }
        {
-          \seqEmpty, \upkappa \matchFwdR{\seqEmpty} \varnothing, \upkappa, \varnothing
+          \seqEmpty, \upkappa \matchFwdS \varnothing, \upkappa, \varnothing
        }
        %
        \and
@@ -17,28 +17,28 @@
           lab={\ruleName{$\matchFwdS$-seq-non-empty}}
        ]
        {
-          v, \upsigma \matchFwdR{w} \upgamma, \upkappa, V
+          v, \upsigma \matchFwdS \upgamma, \upkappa, V
           \\
-          \seq{u}, \upkappa \matchFwdR{\seq{w}'} \upgamma', \upkappa', V'
+          \seq{u}, \upkappa \matchFwdS \upgamma', \upkappa', V'
        }
        {
           v \cons \seq{u},
           \upsigma
-          \matchFwdR{w \cons \seq{w}'}
+          \matchFwdS
           \upgamma \disjunion \upgamma',
           \upkappa',
           V \cup V'
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \upsigma \matchFwdR{w} \upgamma, \upkappa, V$}\hfill \textit{with }$\dom{\upgamma} = \BV(w)$%
+    {\small \flushleft \shadebox{$v, \upsigma \matchFwdS \upgamma, \upkappa, V$}\hfill \textit{with }$\dom{\upgamma} = \BV(w)$%
     \begin{smathpar}
        \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
        {
           \strut
        }
        {
-          v, \elimVar{x}{\upkappa} \matchFwdR{\mVar{x}} \set{\bind{x}{v}}, \upkappa, \varnothing
+          v, \elimVar{x}{\upkappa} \matchFwdS \set{\bind{x}{v}}, \upkappa, \varnothing
        }
        %
        \and
@@ -47,14 +47,14 @@
           lab={\ruleName{$\matchFwdS$-record}}
        ]
        {
-          \seq{u}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', V
+          \seq{u}, \upkappa \matchFwdS \upgamma, \upkappa', V
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
           \annRec{\seq{\bind{x}{v}}}{\upalpha},
           \elimRec{\seq{y}}{\upkappa}
-          \matchFwdR{\mRec{\seq{\bind{y}{w}}}}
+          \matchFwdS
           \upgamma, \upkappa', V \cup \set{\upalpha}
        }
        %
@@ -62,11 +62,11 @@
        %
        \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
        {
-          \seq{v}, \upkappa' \matchFwdR{\seq{w}} \upgamma, \upkappa^\twoPrime, V
+          \seq{v}, \upkappa' \matchFwdS \upgamma, \upkappa^\twoPrime, V
        }
        {
           \annConstr{c'}{\seq{v}}{\upalpha}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
-          \matchFwdR{\mConstr{c'}{\seq{w}}}
+          \matchFwdS
           \upgamma, \upkappa^\twoPrime, V \cup \set{\upalpha}
        }
     \end{smathpar}}
