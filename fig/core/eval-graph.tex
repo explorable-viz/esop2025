@@ -169,14 +169,14 @@
          lab={\ruleName{$\evalFwdS$-let}}
       ]
       {
-         \upgamma, e, V \evalFwdS v, E
+         G, \upgamma, e, V \evalFwdS G', v
          \\
-         \upgamma \cons (\bind{x}{v}), e', V \evalFwdS v', E'
+         G', \upgamma \cons (\bind{x}{v}), e', V \evalFwdS G^\twoPrime, v'
       }
       {
-         \upgamma, \exLet{x}{e}{e'}, V
+         G, \upgamma, \exLet{x}{e}{e'}, V
          \evalFwdS
-         v', E \cup E'
+         G^\twoPrime, v'
       }
       %
       \and
