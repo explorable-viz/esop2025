@@ -6,7 +6,7 @@
       ]
       {
          \upgamma, s_i, \upalpha \evalSugR{S_i} v_i
-         \quad
+         \quad_ne
          (\forall i \leq \length{\seq{s}})
       }
       {
@@ -22,10 +22,10 @@
       {
          \upgamma, s \evalSugR{S} v
          \\
-         \upgamma, l \evalSugR{S'} v_{next}
+         \upgamma, l \evalSugR{S'} v'
       }
       {
-         \upgamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v_{next})
+         \upgamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v')
       }
       %
       \and
@@ -46,15 +46,13 @@
          width=3in,
       ]
       {
-         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{\seq{g}}{\upmu}, v)
+         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{g}{\upmu}, v)
          \\
          \upgamma_1, \seq{g} \desugarFwdS \upgamma_2
          \\
          v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
          \\
          \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^\dag
-         \\
-         \kw{compat}(\upmu)
       }
       {
          \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^\dag
@@ -109,12 +107,12 @@
          lab={\ruleName{$\evalSugS$-let-rec}}
       ]
       {
-         \upgamma, \seq{g} \desugarFwdS \upgamma'
+         \upgamma, g \desugarFwdS \upgamma'
          \\
          \upgamma \concat \upgamma', s \evalSugR{S} v
       }
       {
-         \upgamma, \exLetRecPiecewise{\seq{g}}{s} \evalSugR{\trLetRec{\seq{g}}{S}} v
+         \upgamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
       }
       %
       \and
@@ -240,18 +238,18 @@
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
-   {\small, \flushleft \shadebox{$\upgamma, \seq{g} \desugarFwdS \upgamma'$}
+   {\small, \flushleft \shadebox{$\upgamma, g \desugarFwdS \upgamma'$}
       \begin{smathpar}
          \inferrule*
          {
             g_i = \bind{x_i}{\seq{c_i}}
             \\
-            v_i = \exClosure{\upgamma}{\seq{g}}{\seq{c_i}}
+            v_i = \exClosure{\upgamma}{g}{\seq{c_i}}
             \quad
-            \forall i \le \length{\seq{g}}
+            \forall i \le \length{g}
          }
          {
-            \upgamma, \seq{g} \desugarFwdS \set{\seq{\bind{x}{v}}}
+            \upgamma, g \desugarFwdS \set{\seq{\bind{x}{v}}}
          }
       \end{smathpar}}
    \caption{Surface semantics: recursive definitions}
