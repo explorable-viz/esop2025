@@ -21,11 +21,12 @@ desugaring for environments, and recursively-defined functions (in surface langu
 Once this extension to the desugaring relation has been carefully defined, in figure \ref{fig:closures}, we can state and prove our theorem.
 
 \subsection{Equivalence of Semantics}
-Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can
-either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this
-theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the
-program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
-some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
+Informally, the equivalence of the semantics means that desugaring a surface term and surface environment
+produces the same result as surface-evaluating to a surface value and then desugaring the surface value. We
+need this theorem, as it is our intent that the user is presented with the surface semantics, even though we
+execute the program using the core semantics. Without this theorem, we could not properly justify this choice,
+as fluid has some non-trivial desugaring. We formalise the equivalence of these semantics as the following
+theorem.
 \begin{theorem}
    \label{theorem:semantics}
    Suppose $\Gamma \vdash s : A, \; \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
