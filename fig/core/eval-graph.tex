@@ -104,15 +104,13 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
       {
-         \upgamma, \seq{e}, V \evalFwdS \seq{v}, E
-         \\
-         \upalpha\textit{ fresh}
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         \upgamma, \exConstr{c}{\seq{e}}, V
+         G, \upgamma, \exConstr{c}{\seq{e}}, V
          \evalFwdS
-         \annConstr{c}{\seq{v}}{\upalpha},
-         E \cup (V, \upalpha)
+         \mkAddr{G'}{V}{\upalpha},
+         \annConstr{c}{\seq{v}}{\upalpha}
       }
       %
       \and
