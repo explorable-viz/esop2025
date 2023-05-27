@@ -133,19 +133,18 @@
          width=3.3in,
       ]
       {
-         \upgamma, (e, e'), V \evalS (\annClosureNew{\upgamma_1}{\uprho}{\upsigma}{V_1'}{\upbeta}, v), E
+         G, \upgamma, (e, e'), V \evalS G', (\annClosureNew{\upgamma_1}{\uprho}{\upsigma}{V_1}{\upbeta}, v)
          \\
-         \upgamma_1, \uprho, V_1' \closeDefsFwdR \upgamma_2
+         \upgamma_1, \uprho, V_1 \closeDefsFwdR \upgamma_2
          \\
-         v, \sigma \matchFwdS \upgamma_3, e, V_2'
+         v, \sigma \matchFwdS \upgamma_3, e, V_2
          \\
-         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1' \cup V_2' \evalFwdS u, E'
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1 \cup V_2 \evalFwdS u, E'
       }
       {
-         \upgamma, \exApp{e}{e'}, V
+         G, \upgamma, \exApp{e}{e'}, V
          \evalFwdS
-         u,
-         E \cup E'
+         G^\twoPrime, u
       }
       %
       \and
@@ -197,7 +196,8 @@
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   {\small \flushleft \shadebox{$G, \upgamma, \uprho, V \closeDefsFwdR G', \upgamma'$}
+    \hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
    \begin{smathpar}
       \inferrule*[]
       {
@@ -210,7 +210,7 @@
          (\forall i \leq \length{\seq{x}})
       }
       {
-         \upgamma, \uprho, V
+         G, \upgamma, \uprho, V
          \closeDefsFwdR
          \set{\seq{\bind{x}{v}}}
       }
