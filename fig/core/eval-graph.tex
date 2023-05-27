@@ -62,15 +62,13 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
       {
-         \upgamma, \seq{e}, V \evalFwdS \seq{v}, E
-         \\
-         \upalpha\textit{ fresh}
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         \upgamma, \exRec{\seq{\bind{x}{e}}}, V
+         G, \upgamma, \exRec{\seq{\bind{x}{e}}}, V
          \evalFwdS
-         \annRec{\seq{\bind{x}{v}}}{\upalpha},
-         E \cup (V, \upalpha)
+         \mkAddr{G}{V}{\upalpha},
+         \annRec{\seq{\bind{x}{v}}}{\upalpha}
       }
       %
       \and
