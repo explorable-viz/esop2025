@@ -1,0 +1,164 @@
+\begin{figure}
+   {\flushleft \shadebox{$\upmu \desugarFwdR \upsigma$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clause}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         \clause{p}{s} \desugarFwdR \pattContF(p)(e)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      {
+         \clause{\seq{p}}{s} \desugarFwdR \upsigma
+      }
+      {
+         \clause{p' \cons \seq{p}}{s}
+         \desugarFwdR
+         \pattContF(p')(\exFun{\upsigma})
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\upmu \neq \seqEmpty$}]
+      {
+         c \desugarFwdR \sigma
+         \\
+         \upmu \desugarFwdR \tau
+      }
+      {
+         c \cons \upmu \desugarFwdR \sigma \disjjoin \tau
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         \seqEmpty, s
+         \desugarFwdR
+         \exConstr{\cCons}{e, \cNil}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      {
+         s_1 \desugarFwdR e
+         \\
+         \seq{q}, s_2 \desugarFwdR e'
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+      }
+      {
+         \qualGuard{s_1} \cons \seq{q}, s_2
+         \desugarFwdR
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
+      {
+         s_1 \desugarFwdR e
+         \\
+         \seq{q}, s_2 \desugarFwdR e'
+         \\
+         \sigma = \orElseF(\pattContF(p)(e'), \exError)
+      }
+      {
+         \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
+         \desugarFwdR
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
+      {
+         s_1 \desugarFwdR e
+         \\
+         \seq{q}, s_2 \desugarFwdR e'
+         \\
+         \sigma = \orElseF(\pattContF(p)(e'), \annot{\cNil}{\alpha})
+      }
+      {
+         \qualGenerator{p}{s_1} \cons \seq{q}, s_2
+         \desugarFwdR
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      {
+         s \desugarFwdR e
+      }
+      {
+         \stmtVoid{s}
+         \desugarFwdR
+         e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
+      {
+         s \desugarFwdR e
+         \\
+         \seq{d} \desugarFwdR e'
+         \\
+         \sigma = \pattContF(\pattVar{\varAnon})(e')
+      }
+      {
+         s \cons \seq{d}
+         \desugarFwdR
+         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
+      {
+         s \desugarFwdR e
+         \\
+         \seq{d} \desugarFwdR e'
+         \\
+         \orElseF(\pattContF(p)(e'),\varFail) = \sigma
+      }
+      {
+         \stmtBind{p}{s} \cons \seq{d}
+         \desugarFwdR
+         \exApp
+            {\exApp{\varBind}{e}}
+            {\exFun{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      {
+         s \desugarFwdR e
+         \\
+         \seq{d} \desugarFwdR e'
+         \\
+         \orElseF(\pattContF(p)(e'), \exError) = \sigma
+      }
+      {
+         \stmtDeclaration{p}{s} \cons \seq{d}
+         \desugarFwdR
+         \exApp{\exFun{\sigma}}{e}
+      }
+   \end{smathpar}
+   \caption{Baseline language: Desugaring of function definitions, qualifiers and statements}
+\end{figure}

@@ -1,0 +1,73 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdS \upgamma, \upkappa'$}\hfill
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-seq-empty}}
+       ]
+       {
+          \strut
+       }
+       {
+          \seqEmpty, \upkappa \matchFwdS \varnothing, \upkappa
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-seq-non-empty}}
+       ]
+       {
+          v, \upsigma \matchFwdS \upgamma, \upkappa
+          \\
+          \seq{u}, \upkappa \matchFwdS \upgamma', \upkappa'
+       }
+       {
+          v \cons \seq{u},
+          \upsigma
+          \matchFwdS
+          \upgamma \disjunion \upgamma',
+          \upkappa'
+       }
+    \end{smathpar}}
+
+    {\small \flushleft \shadebox{$v, \upsigma \matchFwdS \upgamma, \upkappa$}
+    \begin{smathpar}
+       \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
+       {
+          \strut
+       }
+       {
+          v, \elimVar{x}{\upkappa} \matchFwdS \set{\bind{x}{v}}, \upkappa
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\matchFwdS$-record}}
+       ]
+       {
+          \seq{u}, \upkappa \matchFwdS \upgamma, \upkappa'
+          \\
+          \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+       }
+       {
+          \exRec{\seq{\bind{x}{v}}},
+          \elimRec{\seq{y}}{\upkappa}
+          \matchFwdS
+          \upgamma, \upkappa'
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
+       {
+          \seq{v}, \upkappa' \matchFwdS \upgamma, \upkappa^\twoPrime
+       }
+       {
+          \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
+          \matchFwdS
+          \upgamma, \upkappa^\twoPrime
+       }
+    \end{smathpar}}
+ \caption{Core semantics (baseline): matching}
+ \end{figure}

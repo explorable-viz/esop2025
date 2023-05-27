@@ -1,0 +1,148 @@
+\begin{figure}
+   {\flushleft \shadebox{$s \desugarFwdR e$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
+      {
+         s_1 \desugarFwdR e_1
+         \\
+         s_2 \desugarFwdR e_2
+      }
+      {
+         \exBinaryApp{s_1}{\oplus}{s_2}
+         \desugarFwdR
+         \exForeignApp{\oplus}{e, e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+      {
+         \upmu_i \desugarFwdR \sigma_i
+         \quad
+         (\forall i \leq \length{\seq{x}})
+         \\
+         s \desugarFwdR e
+      }
+      {
+         \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
+         \desugarFwdR
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      {
+         s \desugarFwdR e
+         \\
+         \upmu \desugarFwdR \sigma
+      }
+      {
+         \exMatch{s}{\upmu}
+         \desugarFwdR
+         \exMatch{s'}{\upmu'},
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      {
+         s \desugarFwdR e
+         \\
+         l \desugarFwdR e'
+      }
+      {
+         \exList{s}{l}
+         \desugarFwdR
+         \exList{s'}{l'},
+         \exConstr{\cCons}{e, e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
+      {
+         s \desugarFwdR e
+         \\
+         s_1 \desugarFwdR e_1
+         \\
+         s_2 \desugarFwdR e_2
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+      }
+      {
+         \exIfThenElse{s}{s_1}{s_2}
+         \desugarFwdR
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
+      {
+         s_1 \desugarFwdR e
+         \\
+         s_2 \desugarFwdR e'
+      }
+      {
+         \exListEnum{s_1}{s_2}
+         \desugarFwdR
+         \exApp{\exApp{\varEnumFromTo}{e}}{e'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
+      {
+         \seq{q}, s \desugarFwdR e
+      }
+      {
+         \exListComp{s}{\seq{q}}
+         \desugarFwdR
+         e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
+      {
+         \seq{d} \desugarFwdR e
+      }
+      {
+         \exDo{\seq{d}}
+         \desugarFwdR
+         e
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$l \desugarFwdR e$}
+   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      {
+         \strut
+      }
+      {
+         \exListEnd
+         \desugarFwdR
+         \exListEnd,
+         \cNil
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      {
+         s \desugarFwdR e
+         \\
+         l \desugarFwdR e'
+      }
+      {
+         \exListNext{s}{l}
+         \desugarFwdR
+         \exConstr{\cCons}{e, e'}
+      }
+   \end{smathpar}
+   \caption{Baseline language: desugaring}
+\end{figure}

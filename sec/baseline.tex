@@ -1,32 +1,28 @@
-\section{Surface Language}
-\label{sec:surfacesemantics}
+\section{Baseline language (without graphs)}
+
+\subsection{Surface Language}
+
 When presenting a program execution, we want to give the appearence to the user that they are executing parts
 of the surface language directly. To that end we formalise and present a notion of evaluation of surface
 terms, which we present to the user in the debugger. We most formalise a notion of values in the surface
 language, which mostly correspond to values in the core language. We then present proof that directly
-evaluating a surface program produces the same result as desugaring it to a core program and evaluating that.
-This correspondence justifies our presentation of the surface semantics to the debugger.
+evaluating a surface program produces the same result as desugaring it to a core program and then evaluating, justifying our presentation of the surface semantics to the debugger.
 
-\subsection{Compatible Patterns}
-One complication of defining semantics for the surface language is how to deal with functions defined
-equationally. In particular, functions defined with equations are subject to conditions on how they perform
-pattern matching. We need to define a notion of pattern matching for surface terms, that roughly corresponds
-to pattern matching in the core language. This is made more complicated by the lack of eliminators in the
-surface language. We therefore need to define a notion of compatible patterns for defining functions
-equationally, and a notion of pattern matching for surface values.
+\subsubsection{Desugaring Of Values, Environments and Recursive Definitions}
 
-\subsection{Desugaring Of Values, Environments and RecDefs}
 In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
 one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define
 desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$).
 Once this extension to the desugaring relation has been carefully defined, in figure \ref{fig:closures}, we can state and prove our theorem.
 
-\subsection{Equivalence of Semantics}
-Informally, the equivalence of the semantics means that if we take a surface term, and an environment, we can
-either desugar the term, and then evaluate it, or we can evaluate it, and then desugar the result. We need this
-theorem, as it is our intent that the user is presented with the surface semantics, even though we execute the
-program using the core semantics. Without this theorem, we could not properly justify this choice, as fluid has
-some non-trivial desugaring. We formalise the equivalence of these semantics as the following theorem.
+\subsubsection{Equivalence of Semantics}
+
+Informally, the equivalence of the semantics means that desugaring a surface term and surface environment
+produces the same result as surface-evaluating to a surface value and then desugaring the surface value. We
+need this theorem, as it is our intent that the user is presented with the surface semantics, even though we
+execute the program using the core semantics. Without this theorem, we could not properly justify this choice,
+as fluid has some non-trivial desugaring. We formalise the equivalence of these semantics as the following
+theorem.
 \begin{theorem}
    \label{theorem:semantics}
    Suppose $\Gamma \vdash s : A, \; \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
@@ -36,7 +32,7 @@ some non-trivial desugaring. We formalise the equivalence of these semantics as 
    \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$
 \end{enumerate}
 \end{theorem}
-Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing 
+Cases of theorem \ref{theorem:semantics} rely on pattern-matching in the surface and core languages producing
 environments that coincide. We state this as lemma \ref{lemma:matching-bi}. For the variable case, we need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
@@ -47,7 +43,7 @@ This will be properly explained in the final version of the paper.
 %    \hfill
 % \begin{enumerate}
 %    \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
-%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$ 
+%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$
 % \end{enumerate}
 % \end{lemma}
 % For now we provide this alternate formulation, and need to pick the one we think is correct.
@@ -72,7 +68,18 @@ This will be properly explained in the final version of the paper.
       v, \upmu \matchFwdS \upgamma, \; where \; \upgamma \desugarFwdS \upgamma' \quad \iff \quad \exists \upkappa.\, v',\upsigma \matchFwdS \upgamma', \upkappa \; where \; \upgamma \desugarFwdS \upgamma'
    $$
 \end{lemma}
-\input{fig/surface/syntax}
-\input{fig/surface/eval}
-\input{fig/surface/match}
-\input{fig/surface/syntax-trace}
+\input{fig/baseline/surface/syntax}
+\input{fig/baseline/surface/eval}
+\input{fig/baseline/surface/match}
+
+\subsection{Core Language}
+
+\input{fig/baseline/core/syntax}
+\input{fig/baseline/core/eval}
+\input{fig/baseline/core/match}
+
+\subsection{Desugaring}
+
+\input{fig/baseline/desugar/term}
+\input{fig/baseline/desugar/clauses}
+\input{fig/baseline/desugar/value}

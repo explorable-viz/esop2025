@@ -1,0 +1,218 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\upgamma, \seq{e}, V \evalFwdS \seq{v}, E$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         G_{i - 1}, \upgamma, e_i, V \evalFwdS G_i, v_i
+         \quad
+         (\forall i \leq \length{\seq{e}})
+      }
+      {
+         G_0, \upgamma, \seq{e}, V \evalFwdS G_{\length{\seq{e}}}, \seq{v}
+      }
+      %
+      \and
+      %
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\upgamma, e, V \evalFwdS v, E$}%
+   \begin{smathpar}
+      \inferrule*[
+      lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdS G, v
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \upgamma, \exInt{n}, V
+         \evalFwdS
+         \mkAddr{G}{V}{\upalpha},
+         \annInt{n}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-str}}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \upgamma, \exStr{s}, V
+         \evalFwdS
+         \mkAddr{G}{V}{\upalpha},
+         \annStr{s}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+      {
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+      }
+      {
+         G, \upgamma, \exRec{\seq{\bind{x}{e}}}, V
+         \evalFwdS
+         \mkAddr{G'}{V}{\upalpha},
+         \annRec{\seq{\bind{x}{v}}}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-project}}
+      ]
+      {
+         G, \upgamma, e, V \evalFwdS G', \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upalpha}
+      }
+      {
+         G, \upgamma, \exRecProj{e}{y}, V \evalFwdS G', u
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+      {
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{\annStr{s}{\upbeta}}
+         \\
+         G', \upgamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
+      }
+      {
+         G, \upgamma,
+         \exDict{\seq{\bind{e}{e}}'},
+         V
+         \evalFwdS
+         \mkAddr{G^\twoPrime}{V}{\upalpha},
+         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha},
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+      {
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+      }
+      {
+         G, \upgamma, \exConstr{c}{\seq{e}}, V
+         \evalFwdS
+         \mkAddr{G'}{V}{\upalpha},
+         \annConstr{c}{\seq{v}}{\upalpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+      {
+         \strut
+      }
+      {
+         G, \upgamma, \exLambda{\upsigma}, V
+         \evalFwdS
+         G,
+         \annClosure{\upgamma}{\seqEmpty}{\upsigma}{V}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-apply}},
+         width=3.3in,
+      ]
+      {
+         G, \upgamma, (e, e'), V \evalS G', (\annClosure{\upgamma_1}{\uprho}{\upsigma}{V_1}, v)
+         \\
+         \upgamma_1, \uprho, V_1 \closeDefsFwdR \upgamma_2
+         \\
+         v, \sigma \matchFwdS \upgamma_3, e, V_2
+         \\
+         G', \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1 \cup V_2 \evalFwdS G^\twoPrime, u
+      }
+      {
+         G, \upgamma, \exApp{e}{e'}, V
+         \evalFwdS
+         G^\twoPrime, u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign}}
+      ]
+      {
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+         \\
+         \interpret{f}(G', \seq{v}) = (G^\twoPrime, u)
+      }
+      {
+         G, \upgamma, \exForeignApp{f}{\seq{e}}, V
+         \evalFwdS
+         G^\twoPrime, u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let}}
+      ]
+      {
+         G, \upgamma, e, V \evalFwdS G', v
+         \\
+         G', \upgamma \cons (\bind{x}{v}), e', V \evalFwdS G^\twoPrime, v'
+      }
+      {
+         G, \upgamma, \exLet{x}{e}{e'}, V
+         \evalFwdS
+         G^\twoPrime, v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let-rec}}
+      ]
+      {
+         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, V \closeDefsFwdR \upgamma'
+         \\
+         G, \upgamma \concat \upgamma', e, V \evalFwdS G', v
+      }
+      {
+         G, \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, V
+         \evalFwdS
+         G', v
+      }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}
+    \hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         \uprho = \set{\seq{\bind{x}{\upsigma}}}
+         \\
+         v_i = \annClosure{\upgamma}{\uprho}{\upsigma_i}{V'}
+         \quad
+         (\forall i \leq \length{\seq{x}})
+      }
+      {
+         \upgamma, \uprho, V
+         \closeDefsFwdR
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
+   }
+   \caption{Core semantics (dependence graph): evaluation}
+\end{figure}

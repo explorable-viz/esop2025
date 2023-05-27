@@ -1,24 +1,18 @@
 \begin{figure}
    {\small
    \begin{minipage}[t]{0.48\textwidth}
-   \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+   \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
       &\textbfit{Surface term}&
       \lowlight{$\SExpr\;\Gamma\;A$}
       \\
       $s ::=$
-      &
-      $\annot{\raw{s}}{\upalpha}$
-      \\[2mm]
-      &\textbfit{Raw surface term}&
-      \\
-      $\raw{s} ::=$
       &
       $\exBinaryApp{s}{\oplus}{s'}$
       &
       binary application
       \\
       &
-      $\exLetRecPiecewise{\seq{g}}{s}$
+      $\exLetRecPiecewise{g}{s}$
       &
       recursive functions
       \\
@@ -53,14 +47,14 @@
       do
       \\
       &
-      $\uplambda \{ \upmu \}$
+      $\exLambda{\upmu}$
       &
       lambda
       \\[2mm]
       &\textbfit{List rest}&
       \lowlight{$\ListRest\;\Gamma\;A$}
       \\
-      $\raw{l} ::=$
+      $l ::=$
       &
       $\exListEnd$
       &
@@ -71,16 +65,16 @@
       &
       cons
       \\[2mm]
-      &\textbfit{Recursive function}&
+      &\textbfit{Recursive functions}&
       \\
-      $\raw{g} ::=$
+      $g ::=$
       &
-      $\bind{x}{\upmu}$
+      $\seq{\bind{x}{\upmu}}$
       &
+      \\[2mm]
+      &\textbfit{Function definition}&
       \\
-      &\textbfit{Sequential Clauses}&
-      \\
-      $\raw{\upmu}  ::=$
+      $\upmu  ::=$
       &
       $\seq{c}$
       &
@@ -88,7 +82,7 @@
       &\textbfit{Clause}&
       \lowlight{$\Clause\;\Gamma\;A\;B$}
       \\
-      $\raw{c} ::=$
+      $c ::=$
       &
       $\clause{\seq{p}}{s}$
       &
@@ -137,7 +131,7 @@
       \\[2mm]
       &\textbfit{Qualifier}&
       \\
-      $\raw{q} ::=$
+      $q ::=$
       &
       $\qualGuard{s}$
       &
@@ -155,7 +149,7 @@
       \\[2mm]
       &\textbfit{Do statement}&
       \\
-      $\raw{d} ::=$
+      $d ::=$
       &
       $\stmtVoid{s}$
       &
@@ -170,21 +164,23 @@
       $\stmtBind{p}{s}$
       &
       generator
+      \\[13mm]
       \end{tabularx}
-   \end{minipage}\\[3mm]
+   \end{minipage}
+   \\[3mm]
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
       &\textbfit{Surface value}&
       \lowlight{$\SVal{A}$}
       \\
-      $\raw{u} ::=$
+      $v, u ::=$
       &
       $\dots$
       &
       $\dots$
       \\
       &
-      $\exClosure{\upgamma}{\seq{g}}{\upmu}$
+      $\exClosure{\upgamma}{g}{\upmu}$
       &
       closure
       \\[0mm]

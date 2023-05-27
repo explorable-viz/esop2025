@@ -1,0 +1,207 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\upgamma, \seq{e}, V \evalFwdS \seq{v}, E$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \upgamma, e_i \evalFwdS v_i
+         \quad
+         (\forall i \leq \length{\seq{e}})
+      }
+      {
+         \upgamma, \seq{e} \evalFwdS \seq{v}
+      }
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\upgamma, e, V \evalFwdS v, E$}%
+   \begin{smathpar}
+      \inferrule*[
+      lab={\ruleName{$\evalFwdS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma \cons (\bind{x}{v}), \exVar{x} \evalFwdS v
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exInt{n}
+         \evalFwdS
+         \exInt{n}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-str}}
+      ]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exStr{s}
+         \evalFwdS
+         \exStr{s}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+      {
+         \upgamma, \seq{e} \evalFwdS \seq{v}
+      }
+      {
+         \upgamma, \exRec{\seq{\bind{x}{e}}}
+         \evalFwdS
+         \exRec{\seq{\bind{x}{v}}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-project}}
+      ]
+      {
+         \upgamma, e \evalFwdS \exRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}
+      }
+      {
+         \upgamma, \exRecProj{e}{y} \evalFwdS u
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+      {
+         \upgamma, \seq{e} \evalFwdS \seq{\exStr{s}}
+         \\
+         \upgamma, \seq{e}' \evalFwdS \seq{v}
+      }
+      {
+         \upgamma,
+         \exDict{\seq{\bind{e}{e}}'}
+         \evalFwdS
+         \exDict{\seq{\bind{s}{v}}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+      {
+         \upgamma, \seq{e} \evalFwdS \seq{v}
+      }
+      {
+         \upgamma, \exConstr{c}{\seq{e}}
+         \evalFwdS
+         \exConstr{c}{\seq{v}}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+      {
+         \strut
+      }
+      {
+         \upgamma, \exLambda{\upsigma}
+         \evalFwdS
+         \exClosure{\upgamma}{\seqEmpty}{\upsigma}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-apply}},
+         width=3.3in,
+      ]
+      {
+         \upgamma, (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v)
+         \\
+         \upgamma_1, \uprho \closeDefsFwdR \upgamma_2
+         \\
+         v, \sigma \matchFwdS \upgamma_3, e
+         \\
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e \evalFwdS u
+      }
+      {
+         \upgamma, \exApp{e}{e'}
+         \evalFwdS
+         u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign}}
+      ]
+      {
+         \upgamma, \seq{e} \evalFwdS \seq{v}
+         \\
+         \interpret{f}(\seq{v}) = u
+      }
+      {
+         \upgamma, \exForeignApp{f}{\seq{e}}
+         \evalFwdS
+         u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let}}
+      ]
+      {
+         \upgamma, e \evalFwdS v
+         \\
+         \upgamma \cons (\bind{x}{v}), e' \evalFwdS v', E'
+      }
+      {
+         \upgamma, \exLet{x}{e}{e'}
+         \evalFwdS
+         v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalFwdS$-let-rec}}
+      ]
+      {
+         \upgamma, \set{\seq{\bind{x}{\upsigma}}} \closeDefsFwdR \upgamma'
+         \\
+         \upgamma \concat \upgamma', e \evalFwdS v
+      }
+      {
+         \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}
+         \evalFwdS
+         v
+      }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\upgamma, \uprho \closeDefsFwdR \upgamma'$}\hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         \uprho = \set{\seq{\bind{x}{\upsigma}}}
+         \\
+         v_i = \exClosureNew{\upgamma}{\uprho}{\upsigma_i}
+         \quad
+         (\forall i \leq \length{\seq{x}})
+      }
+      {
+         \upgamma, \uprho
+         \closeDefsFwdR
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
+   }
+   \caption{Core language (baseline): evaluation}
+\end{figure}

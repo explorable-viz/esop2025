@@ -8,7 +8,7 @@
          \strut
       }
       {
-         \seqEmpty, \seqEmpty \matchFwdS \varnothing 
+         \seqEmpty, \seqEmpty \matchFwdS \varnothing
       }
       %
       \and
@@ -19,12 +19,13 @@
       {
          v, p \matchFwdS \upgamma
          \\
-         \seq{u}, \seq{p'} \matchFwdS \upgamma'
+         \seq{u}, \seq{p}' \matchFwdS \upgamma'
       }
       {
-         v \cons \seq{u}, p \cons \seq{p'} \matchFwdS \upgamma \disjunion \upgamma'
+         v \cons \seq{u}, p \cons \seq{p}' \matchFwdS \upgamma \disjunion \upgamma'
       }
    \end{smathpar}}
+   \\[3mm]
    {\small \flushleft \shadebox {$v, p \matchFwdS \upgamma$}
    \begin{smathpar}
       \inferrule*[
@@ -69,17 +70,17 @@
          lab={\ruleName{$\matchFwdS$-record}}
       ]
       {
-         \seq{u}, \seq{p}' \matchFwdS \upgamma 
+         \seq{u}, \seq{p}' \matchFwdS \upgamma
          \quad
          \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
       }
       {
-         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \matchFwdS \upgamma  
+         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \matchFwdS \upgamma
       }
-   \end{smathpar}
-   }
+   \end{smathpar}}
+   \\[3mm]
    {\small \flushleft \shadebox{$v, o \matchFwdS \upgamma$}
-   \begin{smathpar}   
+   \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\matchFwdS$-nil}}
       ]
@@ -101,18 +102,19 @@
          v', o \matchFwdS \upgamma'
       }
       {
-         \cCons(v, v'), \pattListNext{p}{o} \matchFwdS \upgamma \disjunion \upgamma' 
+         \cCons(v, v'), \pattListNext{p}{o} \matchFwdS \upgamma \disjunion \upgamma'
       }
    \end{smathpar}}
+   \\[3mm]
    {\small \flushleft \shadebox{$v, \upmu \matchFwdS \upgamma, s$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-last}}
+         lab={\ruleName{$\matchFwdS$-uncurried}}
       ]
       {
          v, p_i \matchFwdS \upgamma
          \\
-         \forall j \ne i \; \nexists \upgamma. \, v, p_j \matchFwdS \upgamma
+         \forall j \ne i.\nexists \upgamma. \, v, p_j \matchFwdS \upgamma
       }
       {
          v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_n}{s_n}} \matchFwdR{p_i} \upgamma, s_i
@@ -121,10 +123,10 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-$\upmu$}}
+         lab={\ruleName{$\matchFwdS$-curried}}
       ]
       {
-         (\seq{p_i}' = s_i \in \upmu \iff (v, p \matchFwdS \upgamma \land p_i = p)) \quad (\forall i \le n. )
+         (\seq{p_i}' = s_i \in \upmu \iff (v, p \matchFwdS \upgamma \land p_i = p)) \quad (\forall i \le n)
       }
       {
          v, \seqRange{p_1 \cons \seq{p_1}'=s_1}{p_n \cons \seq{p_n}' = s_n} \matchFwdS \upgamma, \uplambda\upmu
