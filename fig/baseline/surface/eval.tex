@@ -231,10 +231,10 @@
       {
          \upgamma, s \evalSugR{S} v
          \\
-         \upgamma, l \evalSugR{S'} v_{next}
+         \upgamma, l \evalSugR{S'} v'
       }
       {
-         \upgamma, \exListNext{s}{l} \evalSugR{\trListNext{S}{S'}} \cCons(v, v_{next})
+         \upgamma, \exListNext{s}{l} \evalSugR{\trListNext{S}{S'}} \cCons(v, v')
       }
    \end{smathpar}
    }
@@ -245,11 +245,11 @@
       \begin{smathpar}
          \inferrule*
          {
-            g_i = \bind{x_i}{\seq{c_i}}
+            g = \seq{\bind{x}{\mu}}
             \\
-            v_i = \exClosure{\upgamma}{g}{\seq{c_i}}
+            v_i = \exClosure{\upgamma}{g}{\upmu_i}
             \quad
-            \forall i \le \length{g}
+            \forall i \le \length{\seq{x}}
          }
          {
             \upgamma, g \desugarFwdS \set{\seq{\bind{x}{v}}}
