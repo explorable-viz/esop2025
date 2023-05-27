@@ -67,7 +67,7 @@
       {
          G, \upgamma, \exRec{\seq{\bind{x}{e}}}, V
          \evalFwdS
-         \mkAddr{G}{V}{\upalpha},
+         \mkAddr{G'}{V}{\upalpha},
          \annRec{\seq{\bind{x}{v}}}{\upalpha}
       }
       %
@@ -87,19 +87,17 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
       {
-         \upgamma, \seq{e}, V \evalFwdS \seq{\annStr{s}{\upbeta}}, E
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{\annStr{s}{\upbeta}}
          \\
-         \upgamma, \seq{e}', V \evalFwdS \seq{v}, E'
-         \\
-         \upalpha\textit{ fresh}
+         G', \upgamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
       }
       {
-         \upgamma,
+         G, \upgamma,
          \exDict{\seq{\bind{e}{e}}'},
          V
          \evalFwdS
+         \mkAddr{G^\twoPrime}{V}{\upalpha},
          \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha},
-         E \cup E' \cup (V, \upalpha)
       }
       %
       \and
