@@ -122,8 +122,8 @@
       {
          G, \upgamma, \exLambda{\upsigma}, V
          \evalFwdS
-         \mkAddr{G}{V}{\upalpha},
-         \annClosureNew{\upgamma}{\seqEmpty}{\upsigma}{V}{\upalpha}
+         G,
+         \annClosure{\upgamma}{\seqEmpty}{\upsigma}{V}
       }
       %
       \and
@@ -133,7 +133,7 @@
          width=3.3in,
       ]
       {
-         G, \upgamma, (e, e'), V \evalS G', (\annClosureNew{\upgamma_1}{\uprho}{\upsigma}{V_1}{\upbeta}, v)
+         G, \upgamma, (e, e'), V \evalS G', (\annClosure{\upgamma_1}{\uprho}{\upsigma}{V_1}, v)
          \\
          \upgamma_1, \uprho, V_1 \closeDefsFwdR \upgamma_2
          \\
@@ -196,21 +196,20 @@
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$G, \upgamma, \uprho, V \closeDefsFwdR G', \upgamma'$}
+   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}
     \hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
    \begin{smathpar}
       \inferrule*[]
       {
          \uprho = \set{\seq{\bind{x}{\upsigma}}}
          \\
-         v_i = \annClosureNew{\upgamma}{\uprho}{\upsigma_i}{V'}{\upalpha_i}
+         v_i = \annClosure{\upgamma}{\uprho}{\upsigma_i}{V'}
          \quad
          (\forall i \leq \length{\seq{x}})
       }
       {
-         G, \upgamma, \uprho, V
+         \upgamma, \uprho, V
          \closeDefsFwdR
-         \mkAddr{G}{V}{\set{\seq{\upalpha}}},
          \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
