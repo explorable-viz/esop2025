@@ -1,0 +1,178 @@
+\begin{figure}
+   {\flushleft \shadebox{$s \desugarFwdR s', e, E$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-edge}}]
+      {
+         \raw{s} \desugarFwdR \raw{s}', \raw{e}, E
+         \\
+         \upalpha, \upbeta\textit{ fresh}
+      }
+      {
+         \annot{\raw{s}}{\addrNull}
+         \desugarFwdR
+         \annot{\raw{s}'}{\upalpha}, \annot{\raw{e}}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
+      }
+   \end{smathpar}
+   {\flushleft \shadebox{$\raw{s} \desugarFwdR \raw{s}', \raw{e}, E$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
+      {
+         s_1 \desugarFwdR s_1', e_1, E_1
+         \\
+         s_2 \desugarFwdR s_2', e_2, E_2
+      }
+      {
+         \exBinaryApp{s_1}{\oplus}{s_2}
+         \desugarFwdR
+         \exBinaryApp{s_1'}{\oplus}{s_2'},
+         \exForeignApp{\oplus}{e, e'},
+         E_1 \cup E_2
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+      {
+         g_i = \bind{x_i}{\upmu_i}
+         \\
+         g'_i = \bind{x_i}{\upmu_i'}
+         \\
+         \upmu_i \desugarFwdR \upmu_i', \sigma_i, E_i
+         \quad
+         (\forall i \leq \length{\seq{g}})
+         \\
+         s \desugarFwdR s', e, E'
+      }
+      {
+         \exLetRecPiecewise{\seq{g}}{s}
+         \desugarFwdR
+         \exLetRecPiecewise{\seq{g}'}{s'},
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e},
+         \bigcup{\seq{E}} \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      {
+         s \desugarFwdR s', e, E
+         \\
+         \upmu \desugarFwdR \upmu', \sigma, E'
+      }
+      {
+         \exMatch{s}{\upmu}
+         \desugarFwdR
+         \exMatch{s'}{\upmu'},
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      {
+         s \desugarFwdR s', e, E
+         \\
+         l \desugarFwdR l', e', E'
+      }
+      {
+         \exList{s}{l}
+         \desugarFwdR
+         \exList{s'}{l'},
+         \exConstr{\cCons}{e, e'},
+         E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
+      {
+         s \desugarFwdR s', e, E
+         \\
+         s_1 \desugarFwdR s_1', e_1, E_1
+         \\
+         s_2 \desugarFwdR s_2', e_2, E_2
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+      }
+      {
+         \exIfThenElse{s}{s_1}{s_2}
+         \desugarFwdR
+         \exIfThenElse{s'}{s_1'}{s_2'},
+         \exApp{\exFun{\sigma}}{e},
+         E \cup E_1 \cup E_2
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
+      {
+         s_1 \desugarFwdR s_1', e, E
+         \\
+         s_2 \desugarFwdR s_2', e', E'
+      }
+      {
+         \exListEnum{s_1}{s_2}
+         \desugarFwdR
+         \exListEnum{s_1'}{s_2'},
+         \exApp{\exApp{\varEnumFromTo}{e}}{e'},
+         E \cup E'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
+      {
+         \seq{q}, s \desugarFwdR \seq{q}', s', e
+      }
+      {
+         \exListComp{s}{\seq{q}}
+         \desugarFwdR
+         \exListComp{s'}{\seq{q}'}, e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
+      {
+         \seq{d} \desugarFwdR \annot{\seq{\raw{d}}}{\upalpha}, e, E
+      }
+      {
+         \exDo{\seq{d}}
+         \desugarFwdR
+         \annot{(\exDo{\annot{\seq{\raw{d}}}{\addrNull}})}{\upalpha}, e, E
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$\raw{l} \desugarFwdR \raw{l}', \raw{e}, E$}
+   \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      {
+         \strut
+      }
+      {
+         \exListEnd
+         \desugarFwdR
+         \exListEnd,
+         \cNil,
+         \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      {
+         s \desugarFwdR s, e, E
+         \\
+         l \desugarFwdR l', e', E'
+      }
+      {
+         \exListNext{s}{l}
+         \desugarFwdR
+         \exListNext{s'}{l'},
+         \exConstr{\cCons}{e, e'},
+         E \cup E'
+      }
+   \end{smathpar}
+\end{figure}
