@@ -117,11 +117,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
       {
-         \upalpha\textit{ fresh}
+         \strut
       }
       {
-         \upgamma, \exLambda{\upsigma}, V
+         G, \upgamma, \exLambda{\upsigma}, V
          \evalFwdS
+         \mkAddr{G}{V}{\upalpha},
          \annClosureNew{\upgamma}{\seqEmpty}{\upsigma}{V}{\upalpha}
       }
       %
