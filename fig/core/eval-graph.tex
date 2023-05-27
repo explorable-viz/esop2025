@@ -153,14 +153,14 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         \upgamma, \seq{e}, V \evalFwdS \seq{v}, E
+         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
          \\
-         \interpret{f}(\seq{v}) = (u, E')
+         \interpret{f}(G', \seq{v}) = (G^\twoPrime, u)
       }
       {
-         \upgamma, \exForeignApp{f}{\seq{e}}, V
+         G, \upgamma, \exForeignApp{f}{\seq{e}}, V
          \evalFwdS
-         u, E \cup E'
+         G^\twoPrime, u
       }
       %
       \and
