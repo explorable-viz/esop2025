@@ -1,22 +1,22 @@
 \begin{figure}
-   {\small \flushleft \tallshadebox{$\upgamma, \seq{s}, \upalpha \evalSugR{\seq{S}} \seq{v}$}%
+   {\small \flushleft \tallshadebox{$\upgamma, \seq{s} \evalSugR{\seq{S}} \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalSugS$-var}}
       ]
       {
-         \upgamma, s_i, \upalpha \evalSugR{S_i} v_i
+         \upgamma, s_i \evalSugR{S_i} v_i
          \quad_ne
          (\forall i \leq \length{\seq{s}})
       }
       {
-         \upgamma, \seq{s}, \upalpha \evalSugR{\seq{S}} \seq{v}
+         \upgamma, \seq{s} \evalSugR{\seq{S}} \seq{v}
       }
       %
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \tallshadebox{$\upgamma, s, \upalpha \evalSugR{S} v$}%
+   {\small \flushleft \tallshadebox{$\upgamma, s \evalSugR{S} v$}%
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\evalSugS$-nonempty-list}}]
       {
@@ -48,7 +48,7 @@
       {
          \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{g}{\upmu}, v)
          \\
-         \upgamma_1, \seq{g} \desugarFwdS \upgamma_2
+         \upgamma_1, g \desugarFwdS \upgamma_2
          \\
          v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
          \\
@@ -65,7 +65,7 @@
          lab={\ruleName{$\evalSugS$-bin-app}}
       ]
       {
-         \upgamma, (s_1, s_2), \upalpha \evalSugR{S_1, S_2} (u_1, u_2)
+         \upgamma, (s_1, s_2) \evalSugR{S_1, S_2} (u_1, u_2)
          \\
          \upgamma, \hat{\oplus}(u_1, u_2) = (t, u)
       }
@@ -158,7 +158,7 @@
       {
          \upgamma, s' \evalSugR{S'} u'
          \\
-         p,u' \matchS \upgamma', \upalpha
+         p, u' \matchS \upgamma'
          \\
          (\upgamma \cons \upgamma'), \seq{q},s \evalSugR{\seq{Q},S} u
       }
