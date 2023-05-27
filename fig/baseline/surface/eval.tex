@@ -52,10 +52,10 @@
          \\
          v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
          \\
-         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^\dag
+         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v'
       }
       {
-         \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^\dag
+         \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v'
       }
 
       %
@@ -67,7 +67,7 @@
       {
          \upgamma, (s_1, s_2) \evalSugR{S_1, S_2} (u_1, u_2)
          \\
-         \upgamma, \hat{\oplus}(u_1, u_2) = (t, u)
+         \upgamma, \hat{\oplus}(u_1, u_2) = u
       }
       {
          \upgamma, s_1 \oplus s_1 \evalSugR{\trBinApp{S_1}{S_2}{t}} u
@@ -152,6 +152,9 @@
       {
          \upgamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\cNilKW)
       }
+      %
+      \and
+      %
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp-decl}}
       ]

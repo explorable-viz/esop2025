@@ -296,49 +296,49 @@
 % Operational semantics
 \newcommand*{\evalFwdS}{\evalS}%{\mathrel{\rotatebox[origin=c]{45}{$\evalS$}}}
 \newcommand*{\evalBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\evalS$}}}
-\newcommand*{\evalBwdR}[1]{\sub{\evalBwdS}{#1}}
-\newcommand*{\evalFwdR}[1]{\sub{\evalFwdS}{#1}}
+%\newcommand*{\evalBwdR}[1]{\sub{\evalBwdS}{#1}}
+%\newcommand*{\evalFwdR}[1]{\sub{\evalFwdS}{#1}}
 \newcommand*{\closeDefsFwdR}{\closeDefsS}%{\mathrel{\rotatebox[origin=c]{45}{$\closeDefsS$}}}
-\newcommand*{\closeDefsBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\closeDefsS$}}}
-\newcommand*{\closeDefsBwdR}{\closeDefsBwdS}
+%\newcommand*{\closeDefsBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\closeDefsS$}}}
+%\newcommand*{\closeDefsBwdR}{\closeDefsBwdS}
 \newcommand*{\matchFwdS}{\matchS}%{\mathrel{\rotatebox[origin=c]{45}{$\matchS$}}}
-\newcommand*{\matchBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\matchS$}}}
-\newcommand*{\matchFwdR}[1]{\sub{\matchFwdS}{#1}}
-\newcommand*{\matchBwdR}[1]{\sub{\matchBwdS}{#1}}
+%\newcommand*{\matchBwdS}{\mathrel{\rotatebox[origin=c]{-180}{$\matchS$}}}
+\newcommand*{\matchFwdR}[1]{\matchFwdS}%{\sub{\matchFwdS}{#1}}
+%\newcommand*{\matchBwdR}[1]%{\sub{\matchBwdS}{#1}}
 \newcommand*{\evalSugR}[1]{\evalSugS}%{\sub{\evalSugS}{#1}}
 \newcommand*{\evalSugS}{\stackrel{\tiny S}{\Rightarrow}}
 % fwd/bwd notation
-\newcommand*{\opBwd}[1]{#1^{\triangleleft}}
-\newcommand*{\opFwd}[1]{#1^{\triangleright}}
+%\newcommand*{\opBwd}[1]{#1^{\triangleleft}}
+%\newcommand*{\opFwd}[1]{#1^{\triangleright}}
 
 % desugaring
 \newcommand*{\desugarFwdS}{\twoheadrightarrow}
-\newcommand*{\desugarBwdS}{\twoheadleftarrow}
+%\newcommand*{\desugarBwdS}{\twoheadleftarrow}
 \newcommand*{\desugarFwdR}{\desugarFwdS}
-\newcommand*{\desugarBwdR}[1]{\sub{\desugarBwdS}{#1}}
+%\newcommand*{\desugarBwdR}[1]{\sub{\desugarBwdS}{#1}}
 \newcommand*{\desugarValue}{\stackrel{\tiny \mathbb{V}}{\twoheadrightarrow}}
 % desugaring-aux
 \newcommand*{\clausesF}{\opName{clauses}}
 \newcommand*{\clausesFwdF}{\opFwd{\clausesF}}
-\newcommand*{\clausesBwdF}{\opBwd{\clausesF}}
+%\newcommand*{\clausesBwdF}{\opBwd{\clausesF}}
 \newcommand*{\elimArgsF}{\opName{elimArgs}}
 \newcommand*{\elimArgsFwdF}{\opFwd{\elimArgsF}}
-\newcommand*{\elimArgsBwdF}{\opBwd{\elimArgsF}}
+%\newcommand*{\elimArgsBwdF}{\opBwd{\elimArgsF}}
 \newcommand*{\pattContF}{\opName{pattCont}}
 \newcommand*{\pattContFwdF}{\opFwd{\pattContF}}
-\newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
+%\newcommand*{\pattContBwdF}{\opBwd{\pattContF}}
 \newcommand*{\pattArgsF}{\opName{pattArgs}}
 \newcommand*{\pattArgsFwdF}{\opFwd{\pattArgsF}}
-\newcommand*{\pattArgsBwdF}{\opBwd{\pattArgsF}}
+%\newcommand*{\pattArgsBwdF}{\opBwd{\pattArgsF}}
 \newcommand*{\pattsExprF}{\opName{pattsExpr}}
 \newcommand*{\pattsExprFwdF}{\opFwd{\pattsExprF}}
-\newcommand*{\pattsExprBwdF}{\opBwd{\pattsExprF}}
+%\newcommand*{\pattsExprBwdF}{\opBwd{\pattsExprF}}
 \newcommand*{\orElseF}{\opName{orElse}}
 \newcommand*{\orElseFwdF}{\opFwd{\orElseF}}
-\newcommand*{\orElseBwdF}{\opBwd{\orElseF}}
+%\newcommand*{\orElseBwdF}{\opBwd{\orElseF}}
 \newcommand*{\unlessF}{\opName{unless}}
 \newcommand*{\unlessFwdF}{\opFwd{\unlessF}}
-\newcommand*{\unlessBwdF}{\opBwd{\unlessF}}
+%\newcommand*{\unlessBwdF}{\opBwd{\unlessF}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
