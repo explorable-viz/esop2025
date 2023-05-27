@@ -203,15 +203,14 @@
       {
          \uprho = \set{\seq{\bind{x}{\upsigma}}}
          \\
-         v_i = \annClosureNew{\upgamma}{\uprho}{\upsigma_i}{V}{\upalpha_i}
-         \\
-         \upalpha_i\textit{ fresh}
+         v_i = \annClosureNew{\upgamma}{\uprho}{\upsigma_i}{V'}{\upalpha_i}
          \quad
          (\forall i \leq \length{\seq{x}})
       }
       {
-         G, \upgamma, \uprho, V
+         (V, E), \upgamma, \uprho, V'
          \closeDefsFwdR
+         (V \disjunion \set{\seq{\upalpha}}, E),
          \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
