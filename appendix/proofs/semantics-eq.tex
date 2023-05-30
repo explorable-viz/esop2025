@@ -50,5 +50,42 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \text{$\evalSugS$-var}
    \notag
    \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseName{\thmref{semantics-eq}-constr}
+   &
+   \notag
+   \\
+   &
+   \defProofVar{s}{\exConstr{c}{\seq{s}'}}, \quad
+   \defProofVar{e}{\exConstr{c}{\seq{e}'}}\text{, so $s \desugarFwdS e$ if $\seq{s}' \desugarFwdS \seq{e}'$}, \quad
+   \upgamma \desugarFwdS \upgamma'
+   &
+   \notag
+   \\
+   &
+   \subcaseName{desugar-then-eval}
+   &
+   \notag
+   \\
+   &
+   \text{$\upgamma, s \evalSugS v \; \implies \; \defProofVar{v}{\exConstr{c}{\seq{v}}}$. }
+   &
+   \text{inversion of $\evalFwdS$-constr}
+   \notag
+   \\
+   &
+   \text{Then, we get that $\upgamma', e \evalFwdS \exConstr{c}{\seq{v}'}$}
+   &
+   \text{$\desugarFwdS$-constr and $\evalFwdS$-constr}
+   \notag
+   \\
+   &
+   \text{We already have that $\seq{v} \desugarFwdS \seq{v}'$}
+   &
+   \text{IH}
+   \notag
+   \\
    \end{flalign}
 \end{proof}
