@@ -3,38 +3,51 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
 \small
 \begin{flalign}
    \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
    &
-   \defProofVar{s}{\exVar{x}},
+   \caseName{\thmref{semantics-eq}-var}
    &
+   \notag
    \\
    &
-   \defProofVar{e}{\exVar{x}},
+   \defProofVar{s}{\exVar{x}}, \quad
+   \defProofVar{e}{\exVar{x}}, \quad
+   \defProofVar{\upgamma}{(\bind{x}{v})\cdot \upgamma^{\dag}}, \quad
+   \upgamma \desugarFwdS \upgamma'
    &
+   \notag
    \\
    &
-   \defProofVar{\upgamma}{(\bind{x}{v})\cdot \upgamma^{\dag}},
+   \subcaseName{desugar-then-eval}
    &
+   \notag
    \\
    &
-   \defProofVar{\upgamma'}{(\bind{x}{v})\cdot \upgamma'^{\dag}}
+   \defProofVar{\upgamma'}{\bind{\exVar{x}}{v'}\cdot\upgamma'^{\dag}}\text{ for $v$ satisfying $v \desugarFwdS v'$} 
    &
+   \text{$\desugarFwdS$-env}
+   \notag
    \\
    &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{Var}}
-         ]
-         {
-            \strut
-         }
-         {
-            \strut
-         }
-      \end{smathpar}
-   }
+   \text{By the definition of $\upgamma'$, we have that $\upgamma', \exVar{x} \evalFwdS v'$.}
    &
+   \text{\lemref{lemma:varlookup}}
+   \notag
+   \\
+   &
+   \subcaseName{eval-then-desugar}
+   &
+   \notag
+   \\
+   &
+   \text{If $\upgamma', \exVar{x} \evalFwdS v$ then, by \lemref{lemma:varlookup}, $\bind{x}{v} \in \upgamma$ and we have that $v \desugarFwdS v'$ }.
+   &
+   \notag
+   \\
+   &
+   \text{Then, with $\bind{x}{v} \in \upgamma$ we get that $\upgamma, \exVar{x} \evalSugS v$}
+   &
+   \text{$\evalSugS$-var}
    \notag
    \\
    \end{flalign}
