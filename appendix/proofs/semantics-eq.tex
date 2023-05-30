@@ -5,6 +5,22 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
+   \defProofVar{s}{\exVar{x}},
+   &
+   \\
+   &
+   \defProofVar{e}{\exVar{x}},
+   &
+   \\
+   &
+   \defProofVar{\upgamma}{(\bind{x}{v})\cdot \upgamma^{\dag}},
+   &
+   \\
+   &
+   \defProofVar{\upgamma'}{(\bind{x}{v})\cdot \upgamma'^{\dag}}
+   &
+   \\
+   &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -18,5 +34,8 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
          }
       \end{smathpar}
    }
+   &
+   \notag
+   \\
    \end{flalign}
 \end{proof}
