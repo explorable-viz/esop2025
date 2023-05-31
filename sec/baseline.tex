@@ -36,17 +36,9 @@ Cases of theorem \ref{thm:semantics-eq} rely on pattern-matching in the surface 
 environments that coincide. We state this as lemma \ref{lem:lemma:matching-bi}. For the variable case, we need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
-the precondition to the first case of theorem \ref{thm:semantics-eq}.
+the precondition to the first case of theorem \ref{thm:semantics-eq}. We also need to establish that closing
+a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}
 This will be properly explained in the final version of the paper.
-% \begin{lemma}
-%    \label{lemma:matching}
-%    \hfill
-% \begin{enumerate}
-%    \item Suppose we have $\upmu,\, v$ with $\upmu \desugarFwdS \upsigma$, $v \desugarFwdS v'$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upkappa.\, v', \upsigma \matchFwdS \upgamma', \upkappa$ and $\upgamma \desugarFwdS \upgamma'$
-%    \item Suppose we have $\upmu, v$ and $v', \upsigma, \upkappa$. If $v', \upsigma \matchFwdS \upgamma', \upkappa$, $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$ then $v, \upmu \matchFwdS \upgamma$ such that $\upgamma \desugarFwdS \upgamma'$
-% \end{enumerate}
-% \end{lemma}
-% For now we provide this alternate formulation, and need to pick the one we think is correct.
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
@@ -67,6 +59,10 @@ This will be properly explained in the final version of the paper.
    $$
       v, \upmu \matchFwdS \upgamma, \; where \; \upgamma \desugarFwdS \upgamma' \quad \iff \quad \exists \upkappa.\, v',\upsigma \matchFwdS \upgamma', \upkappa \; where \; \upgamma \desugarFwdS \upgamma'
    $$
+\end{lemma}
+\begin{lemma}
+   \label{lem:closedefs-eq}
+   Suppose we have $\upgamma$
 \end{lemma}
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}

@@ -113,9 +113,33 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
+   \caseName{\thmref{semantics-eq}-letrec}
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
    \caseName{\thmref{semantics-eq}-app}
    &
    \notag
    \\
+   &
+   \text{$\defProofVar{s}{\exLetRecPiecewise{\seq{g}}{s'}} \implies \defProofVar{e}{\exLetRec{\seq{\bind{x}{\upsigma}}}{e'}}$} 
+   &
+   \text{$\desugarFwdS$-letrec}
+   \notag
+   \\
+   &
+   \subcaseName{surface-then-core}
+   &
+   \notag
+   \\
+   &
+   \text{$\upgamma, s \evalSugS v$ means $\upgamma, \seq{g} \desugarFwdS \upgamma'$ and $\upgamma \concat \upgamma', s' \evalSugS v$}
+   &
+   \text{inversion of $\evalSugS$-letrec}
+   \notag
+   \\  
    \end{flalign}
 \end{proof}
