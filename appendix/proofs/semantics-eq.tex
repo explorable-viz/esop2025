@@ -125,7 +125,7 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \notag
    \\
    &
-   \text{$\defProofVar{s}{\exLetRecPiecewise{\seq{g}}{s'}} \implies \defProofVar{e}{\exLetRec{\seq{\bind{x}{\upsigma}}}{e'}}$} 
+   \text{$\defProofVar{s}{\exLetRecPiecewise{\seq{g}}{s'}}$, which means $\defProofVar{e}{\exLetRec{\seq{\bind{x}{\upsigma}}}{e'}}$. For this case, fix $\upgamma \desugarFwdS \upgamma^{\dag}$} 
    &
    \text{$\desugarFwdS$-letrec}
    \notag
@@ -136,10 +136,32 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \notag
    \\
    &
-   \text{$\upgamma, s \evalSugS v$ means $\upgamma, \seq{g} \desugarFwdS \upgamma'$ and $\upgamma \concat \upgamma', s' \evalSugS v$}
+   \text{$\upgamma, s \evalSugS v$ means $\upgamma, \seq{g} \closeDefsS \upgamma'$ and $\upgamma \concat \upgamma', s' \evalSugS v$}
    &
    \text{inversion of $\evalSugS$-letrec}
    \notag
-   \\  
+   \\
+   &
+   \text{${\upgamma^{\dag}}, \exLetRec{\seq{\bind{\exVar{x}}{\upsigma}}}{e'} \evalFwdS v'$ means $\upgamma', \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {\upgamma^{\dag}}'$ and ${\upgamma^{\dag}} \concat {\upgamma^{\dag}}', e' \evalFwdS v'$}
+   &
+   \text{inversion of $\evalFwdS$-letrec}
+   \notag
+   \\
+   &
+   \text{We then have that $\upgamma' \desugarFwdS {\upgamma^{\dag}}'$ and thus that $\upgamma \concat \upgamma' \desugarFwdS {\upgamma^{\dag}} \concat {\upgamma^{\dag}}'$}
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \text{We use the concatenated environments and $s'$, $e'$, to get that $v \desugarFwdS v'$}
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \subcaseName{core-then-surface}
+   &
+   \notag
    \end{flalign}
 \end{proof}
