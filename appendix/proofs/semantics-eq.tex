@@ -18,7 +18,7 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \notag
    \\
    &
-   \subcaseName{desugar-then-eval}
+   \subcaseName{surface-then-core}
    &
    \notag
    \\
@@ -35,7 +35,7 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \notag
    \\
    &
-   \subcaseName{eval-then-desugar}
+   \subcaseName{core-then-surface}
    &
    \notag
    \\
@@ -65,7 +65,7 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \notag
    \\
    &
-   \subcaseName{desugar-then-eval}
+   \subcaseName{surface-then-core}
    &
    \notag
    \\
@@ -85,6 +85,36 @@ By induction on derivations of $\desugarFwdS$, $\evalFwdS$ and $\evalSugS$.
    \text{We already have that $\seq{v} \desugarFwdS \seq{v}'$}
    &
    \text{IH}
+   \notag
+   \\
+   &
+   \subcaseName{core-then-surface}
+   &
+   \notag
+   \\
+   &
+   \text{$\upgamma', e \evalFwdS \exConstr{c}{\seq{v}'}$ by choice of $e$}
+   &
+   \text{$\evalFwdS$-constr}
+   \notag
+   \\
+   &
+   \text{Then we have that $\upgamma, \seq{s}' \evalSugS \seq{v}^{\dag}$, and $\upgamma', \seq{e}' \evalFwdS \seq{v}'$, with $\seq{v}^{\dag} \desugarFwdS \seq{v}'$}
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \text{This gives us $\upgamma, s \evalSugS \exConstr{c}{\seq{v}^{\dag}}$}
+   &
+   \text{$\evalSugS$-constr}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseName{\thmref{semantics-eq}-app}
+   &
    \notag
    \\
    \end{flalign}
