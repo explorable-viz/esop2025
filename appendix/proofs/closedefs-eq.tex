@@ -19,14 +19,9 @@
       \notag
       \\
       &
-      \text{We have that $\upgamma_2, \uprho \desugarFwdS \upgamma_2'$}
+      \text{We have that $\upgamma_2, \uprho \desugarFwdS \upgamma_2'$, and need to show that $\upgamma_1' \desugarFwdS \upgamma_2'$}
       &
       \text{def of closedefs for $\uprho$}
-      \notag
-      \\
-      &
-      \text{Need to show that $\upgamma_1' \desugarFwdS \upgamma_2'$}
-      &
       \notag
       \\
       &
@@ -51,5 +46,21 @@
       &
       \notag
       \\
+      &
+      \text{If $\upgamma_2, \uprho \desugarFwdS \upgamma_2'$, we have that $\defProofVar{\upgamma_2'}{\set{\seq{\bind{\exVar{x}}{u}}}}$, where $\defProofVar{u_i}{\exClosure{\upgamma_2}{\uprho}{\upsigma_i}}$}
+      &
+      \text{definition of $\upgamma,\uprho \desugarFwdS \upgamma'$}
+      \notag
+      \\
+      &
+      \text{We know that $\upgamma_1, g \desugarFwdS \upgamma_1'$, and that $\defProofVar{\upgamma_1'}{\set{\seq{\bind{\exVar{x}}{v}}}}$}
+      &
+      \text{$\upgamma, g, \desugarFwdS \upgamma'$}
+      \notag
+      \\
+      &
+      \text{Since $g \desugarFwdS \uprho$, we can show that $\forall i \le \length{\seq{x}}. \; v_i \desugarFwdS u_i$, and so $\upgamma_1' \desugarFwdS \upgamma_2'$}
+      &
+      \text{$\desugarFwdS$-closure}
    \end{flalign}
 \end{proof}
