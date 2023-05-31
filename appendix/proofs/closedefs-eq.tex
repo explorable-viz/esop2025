@@ -3,7 +3,7 @@
       \intertext{\crossrule}
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       &
-      \text{Let $\upgamma_1 \desugarFwdS \upgamma_2$ and $g \desugarFwdS \uprho$}
+      \text{Let $\upgamma_1 \desugarFwdS \upgamma_2$, $\defProofVar{g}{\seq{\bind{\exVar{x}}{\upmu}}}$, and $g \desugarFwdS \uprho$}
       &
       \notag
       \\
@@ -13,7 +13,41 @@
       \notag
       \\
       &
-      \text{If $\upgamma_1, g \desugarFwdS \upgamma_1'$}
+      \text{If $\upgamma_1, g \desugarFwdS \upgamma_1'$, then $\defProofVar{\upgamma_1'}{\set{\seq{\bind{\exVar{x}}{v}}}}$ with $\defProofVar{v_i}{\exClosure{\upgamma}{g}{\upmu_i}}$ }
+      &
+      \text{Inversion of closedefs for g}
+      \notag
+      \\
+      &
+      \text{We have that $\upgamma_2, \uprho \desugarFwdS \upgamma_2'$}
+      &
+      \text{def of closedefs for $\uprho$}
+      \notag
+      \\
+      &
+      \text{Need to show that $\upgamma_1' \desugarFwdS \upgamma_2'$}
+      &
+      \notag
+      \\
+      &
+      \text{Have that $\defProofVar{\upgamma_2'}{\set{\seq{\bind{\exVar{x}}{u}}}}$, with $\defProofVar{u_i}{\exClosure{\upgamma_2}{\uprho}{\upsigma_i}}$}
+      &
+      \notag
+      \\
+      &
+      \text{We have  $\forall i \le \length{\seq{x}} \; v_i \desugarFwdS u_i$}
+      &
+      \text{$g \desugarFwdS \uprho$, defs of $v$ and $u$}
+      \notag
+      \\
+      &
+      \text{Which gives us $\upgamma_1' \desugarFwdS \upgamma_2'$}
+      &
+      \text{$\desugarFwdS$-env}
+      \notag
+      \\
+      &
+      \subcaseName{desugar-then-closedefs}
       &
       \notag
       \\
