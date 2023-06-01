@@ -1,37 +1,81 @@
-By induction on derivations of $\evalFwdS$
-Fix $\Gamma \vdash \bind{s}{A}$, with $ \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$
+By induction on derivations of $\evalFwdS$\newline
+Assume: 
+\begin{equation}
+   \Gamma \vdash \bind{s}{A}
+\end{equation}
+\begin{equation}
+   \upgamma : \Gamma
+\end{equation}   
+\begin{equation}
+   s \desugarFwdS e
+\end{equation}
+\begin{equation}
+   \locallabel{desug:env}
+   \upgamma \desugarFwdS \upgamma'
+\end{equation}
 \begin{proof}
 \small
 \begin{flalign}
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
    &
-   \caseName{\thmref{semantics-eq-1}-var}
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            {\upgamma^{\dag}}' \cdot (\bind{x}{v'}), x \evalFwdS v'
+         }
+      \end{smathpar}
+   }
    &
    \notag
    \\
    &
-   \defProofVar{s}{\exVar{x}}, \quad
-   \defProofVar{e}{\exVar{x}}, \quad
-   \defProofVar{\upgamma}{(\bind{x}{v})\cdot \upgamma^{\dag}}, \quad
-   \upgamma \desugarFwdS \upgamma'
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugarFwdS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            \exVar{x} \desugarFwdS \exVar{x}
+         }
+      \end{smathpar}
+   }
    &
+   \text{inversion on $\desugarFwdS$-var}
    \notag
    \\
    &
-   \subcaseName{core-then-surface}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            {\upgamma^{\dag}} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+         }
+      \end{smathpar}
+   }
    &
+   \text{inversion on $\evalSugS$-var}
    \notag
    \\
    &
-   \text{If $\upgamma', \exVar{x} \evalFwdS v$ then, by \lemref{lemma:varlookup}, $\bind{x}{v} \in \upgamma$ and we have that $v \desugarFwdS v'$ }.
+   \qedLocal
+   v \desugarFwdS v'
    &
-   \notag
-   \\
-   &
-   \text{Then, with $\bind{x}{v} \in \upgamma$ we get that $\upgamma, \exVar{x} \evalSugS v$}
-   &
-   \text{$\evalSugS$-var}
+   \text{assumption \localref{desug:env} and \lemref{lemma:varlookup}}
    \notag
    \\
    \intertext{\crossrule}
