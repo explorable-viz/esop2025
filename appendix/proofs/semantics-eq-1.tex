@@ -81,40 +81,69 @@ Assume:
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
-   \caseName{\thmref{semantics-eq}-constr}
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-constr}}
+         ]
+         {
+            \upgamma, \seq{s} \evalSugS \seq{v}
+         }
+         {
+            \upgamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
+         }
+      \end{smathpar}
+   }
    &
    \notag
    \\
    &
-   \defProofVar{s}{\exConstr{c}{\seq{s}'}}, \quad
-   \defProofVar{e}{\exConstr{c}{\seq{e}'}}\text{, so $s \desugarFwdS e$ if $\seq{s}' \desugarFwdS \seq{e}'$}, \quad
-   \upgamma \desugarFwdS \upgamma'
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugarFwdS$-constr}}
+         ]
+         {
+            \seq{s} \desugarFwdS \seq{e}
+         }
+         {
+            \exConstr{c}{\seq{s}} \desugarFwdS \exConstr{c}{\seq{e}}
+         }
+      \end{smathpar}
+   }
    &
+   \text{Inversion of $\desugarFwdS$}
    \notag
    \\
    &
-   \subcaseName{surface-then-core}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-constr}}
+         ]
+         {
+            \upgamma', \seq{e} \evalFwdS \seq{v}'
+         }
+         {
+            \upgamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+         }
+      \end{smathpar}
+   }
    &
+   \text{Inversion on $\evalFwdS$}
    \notag
    \\
    &
-   \text{$\upgamma, s \evalSugS v \; \implies \; \defProofVar{v}{\exConstr{c}{\seq{v}}}$. }
-   &
-   \text{inversion of $\evalFwdS$-constr}
-   \notag
-   \\
-   &
-   \text{Then, we get that $\upgamma', e \evalFwdS \exConstr{c}{\seq{v}'}$}
-   &
-   \text{$\desugarFwdS$-constr and $\evalFwdS$-constr}
-   \notag
-   \\
-   &
-   \text{We already have that $\seq{v} \desugarFwdS \seq{v}'$}
+   \text{$\seq{v} \desugarFwdS \seq{v}'$}
    &
    \text{IH}
    \notag
    \\
+   &
+   \qedLocal
+   \text{$\exConstr{c}{\seq{v}} \desugarFwdS \exConstr{c}{\seq{v}'}$}
+   &
+   \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
