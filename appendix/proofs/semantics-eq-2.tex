@@ -81,30 +81,61 @@ Assume:
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
-   \caseName{\thmref{semantics-eq}-constr}
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-constr}}
+         ]
+         {
+            \upgamma', \seq{e} \evalFwdS \seq{v}'
+         }
+         {
+            \upgamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+         }         
+      \end{smathpar}
+   }
    &
    \notag
    \\
    &
-   \defProofVar{s}{\exConstr{c}{\seq{s}'}}, \quad
-   \defProofVar{e}{\exConstr{c}{\seq{e}'}}\text{, so $s \desugarFwdS e$ if $\seq{s}' \desugarFwdS \seq{e}'$}, \quad
-   \upgamma \desugarFwdS \upgamma'
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugarFwdS$-constr}}
+         ]
+         {
+            \seq{s} \desugarFwdS \seq{e}
+         }
+         {
+            \exConstr{c}{\seq{s}} \desugarFwdS \exConstr{c}{\seq{e}}
+         }
+      \end{smathpar}
+   }
    &
+   \text{inversion on $\desugarFwdS$}
    \notag
    \\
    &
-   \subcaseName{core-then-surface}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-constr}}
+         ]
+         {
+            \upgamma, \seq{s} \evalSugS \seq{v}
+         }
+         {
+            \upgamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
+         }
+      \end{smathpar}
+   }
    &
+   \text{inversion on $\evalSugS$-constr}
    \notag
    \\
    &
-   \text{$\upgamma', e \evalFwdS \exConstr{c}{\seq{v}'}$ by choice of $e$}
-   &
-   \text{$\evalFwdS$-constr}
-   \notag
-   \\
-   &
-   \text{Then we have that $\upgamma, \seq{s}' \evalSugS \seq{v}^{\dag}$, and $\upgamma', \seq{e}' \evalFwdS \seq{v}'$, with $\seq{v}^{\dag} \desugarFwdS \seq{v}'$}
+   \qedLocal
+   \text{$\upgamma, \seq{s}' \evalSugS \seq{v}^{\dag}$, and $\upgamma', \seq{e}' \evalFwdS \seq{v}'$, with $\seq{v}^{\dag} \desugarFwdS \seq{v}'$}
    &
    \text{IH}
    \notag
