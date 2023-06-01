@@ -65,10 +65,10 @@
          G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         G, \upgamma, \exRec{\seq{\bind{x}{e}}}, V
+         G, \upgamma, \annRec{\seq{\bind{x}{e}}}{\upalpha}, V
          \evalFwdS
-         \mkAddr{G'}{V}{\upalpha},
-         \annRec{\seq{\bind{x}{v}}}{\upalpha}
+         \mkAddr{G'}{V \cup \set{\upalpha}}{\upbeta},
+         \annRec{\seq{\bind{x}{v}}}{\upbeta}
       }
       %
       \and
