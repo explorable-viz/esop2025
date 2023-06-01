@@ -28,13 +28,46 @@
           &
           $\annConstr{c}{\seq{v}}{\upalpha}$
           &
-          data value
+          constructor
           \\
           &
           $\annClosure{\upgamma}{\uprho}{\upsigma}{V}$
           &
           closure
           \\[0mm]
+      \end{tabularx}
+   \end{minipage}\hspace{3mm}%
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.2cm}L{3.6cm}}
+          &\textit{Expression}&
+          \lowlight{$\Expr{A}$}
+          \\
+          $e ::=$
+          &
+          $\annInt{n}{\upalpha}$
+          &
+          integer
+          \\
+          &
+          $\annStr{s}{\upalpha}$
+          &
+          string
+          \\
+          &
+          $\annRec{\seq{\bind{x}{e}}}{\upalpha}$
+          &
+          record
+          \\
+          &
+          $\annDict{\seq{\bind{e}{e}}}{\upalpha}$
+          &
+          dictionary
+          \\
+          &
+          $\annConstr{c}{\seq{e}}{\upalpha}$
+          &
+          constructor
+          \\[4mm]
       \end{tabularx}
    \end{minipage}
 \caption{Core language (dependence graphs): syntax}

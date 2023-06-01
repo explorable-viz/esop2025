@@ -2,7 +2,7 @@
    {\small \flushleft \shadebox{$G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-var}}
+         lab={\ruleName{$\evalFwdS$-seq}}
       ]
       {
          G_{i - 1}, \upgamma, e_i, V \evalFwdS G_i, v_i
@@ -37,10 +37,10 @@
          \strut
       }
       {
-         G, \upgamma, \exInt{n}, V
+         G, \upgamma, \annInt{n}{\upalpha}, V
          \evalFwdS
-         \mkAddr{G}{V}{\upalpha},
-         \annInt{n}{\upalpha}
+         \mkAddr{G}{V \cup \set{\upalpha}}{\upalpha'},
+         \annInt{n}{\upalpha'}
       }
       %
       \and
@@ -52,10 +52,10 @@
          \strut
       }
       {
-         G, \upgamma, \exStr{s}, V
+         G, \upgamma, \annStr{s}{\upalpha}, V
          \evalFwdS
-         \mkAddr{G}{V}{\upalpha},
-         \annStr{s}{\upalpha}
+         \mkAddr{G}{V \cup \set{\upalpha}}{\upalpha'},
+         \annStr{s}{\upalpha'}
       }
       %
       \and
@@ -65,10 +65,10 @@
          G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         G, \upgamma, \exRec{\seq{\bind{x}{e}}}, V
+         G, \upgamma, \annRec{\seq{\bind{x}{e}}}{\upalpha}, V
          \evalFwdS
-         \mkAddr{G'}{V}{\upalpha},
-         \annRec{\seq{\bind{x}{v}}}{\upalpha}
+         \mkAddr{G'}{V \cup \set{\upalpha}}{\upalpha'},
+         \annRec{\seq{\bind{x}{v}}}{\upalpha'}
       }
       %
       \and
@@ -92,12 +92,10 @@
          G', \upgamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
       }
       {
-         G, \upgamma,
-         \exDict{\seq{\bind{e}{e}}'},
-         V
+         G, \upgamma, \annDict{\seq{\bind{e}{e}}'}{\upalpha},         V
          \evalFwdS
-         \mkAddr{G^\twoPrime}{V}{\upalpha},
-         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha},
+         \mkAddr{G^\twoPrime}{V \cup \set{\upalpha}}{\upalpha'},
+         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha'},
       }
       %
       \and
