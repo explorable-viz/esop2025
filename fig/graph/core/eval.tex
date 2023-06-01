@@ -92,12 +92,10 @@
          G', \upgamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
       }
       {
-         G, \upgamma,
-         \exDict{\seq{\bind{e}{e}}'},
-         V
+         G, \upgamma, \annDict{\seq{\bind{e}{e}}'}{\upalpha},         V
          \evalFwdS
-         \mkAddr{G^\twoPrime}{V}{\upalpha},
-         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha},
+         \mkAddr{G^\twoPrime}{V \cup \set{\upalpha}}{\upalpha'},
+         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha'},
       }
       %
       \and
