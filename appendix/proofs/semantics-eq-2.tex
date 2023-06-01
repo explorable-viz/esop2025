@@ -1,0 +1,128 @@
+By induction on derivations of $\evalFwdS$
+Fix $\Gamma \vdash \bind{s}{A}$, with $ \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$
+\begin{proof}
+\small
+\begin{flalign}
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+   &
+   \caseName{\thmref{semantics-eq-1}-var}
+   &
+   \notag
+   \\
+   &
+   \defProofVar{s}{\exVar{x}}, \quad
+   \defProofVar{e}{\exVar{x}}, \quad
+   \defProofVar{\upgamma}{(\bind{x}{v})\cdot \upgamma^{\dag}}, \quad
+   \upgamma \desugarFwdS \upgamma'
+   &
+   \notag
+   \\
+   &
+   \subcaseName{core-then-surface}
+   &
+   \notag
+   \\
+   &
+   \text{If $\upgamma', \exVar{x} \evalFwdS v$ then, by \lemref{lemma:varlookup}, $\bind{x}{v} \in \upgamma$ and we have that $v \desugarFwdS v'$ }.
+   &
+   \notag
+   \\
+   &
+   \text{Then, with $\bind{x}{v} \in \upgamma$ we get that $\upgamma, \exVar{x} \evalSugS v$}
+   &
+   \text{$\evalSugS$-var}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseName{\thmref{semantics-eq}-constr}
+   &
+   \notag
+   \\
+   &
+   \defProofVar{s}{\exConstr{c}{\seq{s}'}}, \quad
+   \defProofVar{e}{\exConstr{c}{\seq{e}'}}\text{, so $s \desugarFwdS e$ if $\seq{s}' \desugarFwdS \seq{e}'$}, \quad
+   \upgamma \desugarFwdS \upgamma'
+   &
+   \notag
+   \\
+   &
+   \subcaseName{core-then-surface}
+   &
+   \notag
+   \\
+   &
+   \text{$\upgamma', e \evalFwdS \exConstr{c}{\seq{v}'}$ by choice of $e$}
+   &
+   \text{$\evalFwdS$-constr}
+   \notag
+   \\
+   &
+   \text{Then we have that $\upgamma, \seq{s}' \evalSugS \seq{v}^{\dag}$, and $\upgamma', \seq{e}' \evalFwdS \seq{v}'$, with $\seq{v}^{\dag} \desugarFwdS \seq{v}'$}
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \text{This gives us $\upgamma, s \evalSugS \exConstr{c}{\seq{v}^{\dag}}$}
+   &
+   \text{$\evalSugS$-constr}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseName{\thmref{semantics-eq}-app}
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseName{\thmref{semantics-eq}-let-rec}
+   &
+   \notag
+   \\
+   &
+   \text{$\defProofVar{s}{\exLetRecPiecewise{\seq{g}}{s'}}$, which means $\defProofVar{e}{\exLetRec{\seq{\bind{x}{\upsigma}}}{e'}}$. For this case, fix $\upgamma \desugarFwdS \upgamma^{\dag}$} 
+   &
+   \text{$\desugarFwdS$-let-rec}
+   \notag
+   \\
+   &
+   \subcaseName{core-then-surface}
+   &
+   \notag
+   \\
+   &
+   \text{${\upgamma^{\dag}}, \exLetRec{\seq{\bind{\exVar{x}}{\upsigma}}}{e'} \evalFwdS v'$, then $\upgamma^{\dag}, \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {{\upgamma}^\dag}'$ and ${\upgamma^{\dag}} \concat {{\upgamma}^\dag}', e' \evalFwdS v'$}
+   &
+   \text{inversion of $\evalFwdS$-let-rec}
+   \notag
+   \\
+   &
+   \text{$\upgamma, \exLetRec{\seq{g}}{s'} \evalSugS v$, with $\upgamma, \seq{g} \closeDefsS \upgamma'$ and $\upgamma \concat \upgamma', s' \evalSugS v$}
+   &
+   \text{inversion of $\evalSugS$-let-rec}
+   \notag
+   \\
+   &
+   \text{We can conlude that $\upgamma' \desugarFwdS {{\upgamma}^\dag}'$}
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \text{We can thus conclude that $\upgamma \concat \upgamma' \desugarFwdS {\upgamma^{\dag}} \concat {{\upgamma}^\dag}'$}
+   &
+   \notag
+   \\
+   &
+   \text{Then we use these concatenated environments to conclude that $v \desugarFwdS v'$}
+   &
+   \text{IH}
+   \notag
+\end{flalign}
+\end{proof}

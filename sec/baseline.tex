@@ -28,10 +28,13 @@ theorem.
    Suppose $\Gamma \vdash s : A, \; \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$
-   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$
+   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{thm:semantics-eq-1}
+   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{them:semantics-eq-1}
 \end{enumerate}
 \end{theorem}
+\begin{proof}
+   For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics=eq}.2, see \appref{semantics-eq-2}
+\end{proof}
 Cases of theorem \ref{thm:semantics-eq} rely on pattern-matching in the surface and core languages producing
 environments that coincide. We state this as lemma \ref{lem:lemma:matching-bi}. For the variable case, we need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
