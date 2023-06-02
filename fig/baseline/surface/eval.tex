@@ -107,7 +107,7 @@
          lab={\ruleName{$\evalSugS$-let-rec}}
       ]
       {
-         \upgamma, g \desugarFwdS \upgamma'
+         \upgamma, g \closeDefsS \upgamma'
          \\
          \upgamma \concat \upgamma', s \evalSugR{S} v
       }
@@ -241,7 +241,7 @@
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
-   {\small, \flushleft \shadebox{$\upgamma, g \desugarFwdS \upgamma'$}
+   {\small, \flushleft \shadebox{$\upgamma, g \closeDefsS \upgamma'$}
       \begin{smathpar}
          \inferrule*
          {
@@ -252,7 +252,7 @@
             \forall i \le \length{\seq{x}}
          }
          {
-            \upgamma, g \desugarFwdS \set{\seq{\bind{x}{v}}}
+            \upgamma, g \closeDefsS \set{\seq{\bind{x}{v}}}
          }
       \end{smathpar}}
    \caption{Surface semantics: recursive definitions}
