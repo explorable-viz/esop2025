@@ -33,10 +33,10 @@ theorem.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics=eq}.2, see \appref{semantics-eq-2}
+   For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics-eq}.2, see \appref{semantics-eq-2}
 \end{proof}
 Cases of theorem \ref{thm:semantics-eq} rely on pattern-matching in the surface and core languages producing
-environments that coincide. We state this as lemma \ref{lem:lemma:matching-bi}. For the variable case, we need to
+environments that coincide. We state this as lemma \ref{lem:matching-bi}. For the variable case, we need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
 the precondition to the first case of theorem \ref{thm:semantics-eq}. We also need to establish that closing
@@ -57,12 +57,15 @@ This will be properly explained in the final version of the paper.
    $\upgamma \desugarFwdS \upgamma'$, $\exists v_i.\, v_i \desugarFwdS {v_i}'$ where $\bind{y_i}{v_i} \in \upgamma$, which means $\bind{x}{v} \in \upgamma$.
 \end{proof}
 \begin{lemma}
-   \label{lem:lemma:matching-bi}
+   \label{lem:matching-bi}
    Suppose we have $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
    $$
       v, \upmu \matchFwdS \upgamma, \; where \; \upgamma \desugarFwdS \upgamma' \quad \iff \quad \exists \upkappa.\, v',\upsigma \matchFwdS \upgamma', \upkappa \; where \; \upgamma \desugarFwdS \upgamma'
    $$
 \end{lemma}
+\begin{proof}
+   As in \thmref{semantics-eq}, we split the proof into 2 parts, one for the $\implies$ direction \appref{proofs:matching-bi-right} and one for the $\impliedby$ direction, \appref{proofs:matching-bi-left}.
+\end{proof}
 \begin{lemma}
    \label{lem:closedefs-eq}
    Suppose we have $\upgamma_1 \desugarFwdS \upgamma_2$, and $g \desugarFwdS \uprho$. Then
