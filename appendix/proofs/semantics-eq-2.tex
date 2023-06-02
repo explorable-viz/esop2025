@@ -157,46 +157,77 @@ Assume:
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
-   \caseName{\thmref{semantics-eq}-let-rec}
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-let-rec}}
+         ]
+         {
+            \upgamma, g \closeDefsS \upgamma'
+            \\
+            \upgamma \concat \upgamma', s \evalSugR{S} v
+         }
+         {
+            \upgamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
+         }
+      \end{smathpar}
+   }
    &
    \notag
    \\
    &
-   \text{$\defProofVar{s}{\exLetRecPiecewise{\seq{g}}{s'}}$, which means $\defProofVar{e}{\exLetRec{\seq{\bind{x}{\upsigma}}}{e'}}$. For this case, fix $\upgamma \desugarFwdS \upgamma^{\dag}$} 
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+         {
+            \upmu_i \desugarFwdR \sigma_i
+            \quad
+            (\forall i \leq \length{\seq{x}})
+            \\
+            s \desugarFwdR e
+         }
+         {
+            \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
+            \desugarFwdR
+            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
    &
    \text{$\desugarFwdS$-let-rec}
    \notag
    \\
    &
-   \subcaseName{core-then-surface}
-   &
-   \notag
-   \\
-   &
-   \text{${\upgamma^{\dag}}, \exLetRec{\seq{\bind{\exVar{x}}{\upsigma}}}{e'} \evalFwdS v'$, then $\upgamma^{\dag}, \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {{\upgamma}^\dag}'$ and ${\upgamma^{\dag}} \concat {{\upgamma}^\dag}', e' \evalFwdS v'$}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-let-rec}}
+         ]
+         {
+            {\upgamma^{\dag}}, \set{\seq{\bind{x}{\upsigma}}} \closeDefsFwdR {\upgamma^{\dag}}'
+            \\
+            {\upgamma^{\dag}} \concat {\upgamma^{\dag}}', e \evalFwdS v
+         }
+         {
+            {\upgamma^{\dag}}, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}
+            \evalFwdS
+            v
+         }
+      \end{smathpar}
+   }
    &
    \text{inversion of $\evalFwdS$-let-rec}
    \notag
    \\
    &
-   \text{$\upgamma, \exLetRec{\seq{g}}{s'} \evalSugS v$, with $\upgamma, \seq{g} \closeDefsS \upgamma'$ and $\upgamma \concat \upgamma', s' \evalSugS v$}
+   \text{Then we conclude that $\upgamma \concat \upgamma' \desugarFwdS {\upgamma^{\dag}} \concat {\upgamma^{\dag}}'$}
    &
-   \text{inversion of $\evalSugS$-let-rec}
+   \text{assumption \localref{desug:env} and \lemref{closedefs-eq}}
    \notag
    \\
    &
-   \text{We can conlude that $\upgamma' \desugarFwdS {{\upgamma}^\dag}'$}
-   &
-   \text{\lemref{closedefs-eq}}
-   \notag
-   \\
-   &
-   \text{We can thus conclude that $\upgamma \concat \upgamma' \desugarFwdS {\upgamma^{\dag}} \concat {{\upgamma}^\dag}'$}
-   &
-   \notag
-   \\
-   &
-   \text{Then we use these concatenated environments to conclude that $v \desugarFwdS v'$}
+   \qedLocal
+   v \desugarFwdS v'
    &
    \text{IH}
    \notag

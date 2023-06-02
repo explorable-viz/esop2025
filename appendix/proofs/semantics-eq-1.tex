@@ -176,17 +176,17 @@ Assume:
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+         \inferrule*[lab={\ruleName{$\desugarFwdS$-let-rec}}]
          {
-             \clausesF(\seq{c_i}) = \sigma_i
+            \upmu_i \desugarFwdR \sigma_i
             \quad
-            (\forall i \leq j)
+            (\forall i \leq \length{\seq{x}})
             \\
-            s \desugarFwdS e
+            s \desugarFwdR e
          }
          {
-            \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{s}
-            \desugarFwdS
+            \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
+            \desugarFwdR
             \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
          }
       \end{smathpar}
