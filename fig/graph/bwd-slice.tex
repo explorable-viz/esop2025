@@ -1,0 +1,45 @@
+\begin{figure}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\bwdSliceS$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         \varnothing, G' \bwdSliceR{G} G'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\bwdSliceS$-skip}},
+         right={$\upalpha \in \V(G')$}
+      ]
+      {
+         V, G' \bwdSliceR{G} G^\twoPrime
+      }
+      {
+         \set{\upalpha} \disjunion V, G' \bwdSliceR{G} G^\twoPrime
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\bwdSliceS$-step}},
+         right={$\upalpha \notin \V(G')$}
+      ]
+      {
+         \V(\inN{G}(\upalpha)), G' \disjjoin \inN{G}(\upalpha) \bwdSliceR{G} G^\dagger
+         \\
+         V, G^\dagger \bwdSliceR{G} G^\twoPrime
+      }
+      {
+         \set{\upalpha} \disjunion V, G' \bwdSliceR{G} G^\twoPrime
+      }
+      %
+      \and
+      %
+   \end{smathpar}
+   \caption{Backward slicing (graph formulation)}
+\end{figure}

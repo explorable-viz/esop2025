@@ -6,8 +6,20 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \in \Addr$ which serve as vertices.  Addresses include a distinguished address $\addrNull$ called the
 \emph{null} address.
 
+\begin{definition}[Opposite graph]
+   For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+\end{definition}
+
 \begin{definition}
    For any $G = (V, E)$, any $V' \subseteq V$ and any $\upalpha \notin V$, define $\mkAddr{G}{V'}{\upalpha} = (V \cup \set{\upalpha}, E \cup (V' \times \set{\upalpha}))$.
+\end{definition}
+
+\begin{definition}[Neighbours]
+   For any $G = (V,E)$ define the \emph{in neighbours} and \emph{out neighbours} as the following functions of type $V \to \powerset V$:
+   \begin{itemize}
+      \item $\inN{G}(\upalpha) = \set{\upalpha' \in V \mid (\upalpha', \upalpha) \in E}$
+      \item $\outN{G} = \inN{G^{-1}}$
+   \end{itemize}
 \end{definition}
 
 \subsection{Surface language (dependence graph formulation)}
@@ -22,3 +34,7 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 
 \input{fig/graph/desugar/term}
 \input{fig/graph/desugar/clauses}
+
+\subsection{Backwards slicing (dependence graph formulation)}
+
+\input{fig/graph/bwd-slice}
