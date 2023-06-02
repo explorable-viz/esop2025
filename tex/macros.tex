@@ -194,6 +194,8 @@
 % graphs
 \newcommand*{\inN}[1]{\opName{in}_{#1}}
 \newcommand*{\outN}[1]{\opName{out}_{#1}}
+\newcommand*{\E}{\opName{E}}
+\newcommand*{\V}{\opName{V}}
 
 % clauses
 \newcommand*{\clause}[2]{{#1}\equal{#2}}
@@ -277,17 +279,9 @@
 \newcommand*{\reach}{\opName{reach}}
 \newcommand*{\reaches}{\opName{reaches}}
 
-% evaluation contexts
-\newcommand{\evalCxtEmpty}{[]}
-\newcommand{\evalCxtHandle}[2]{\exHandle{#1}{#2}}
-\newcommand{\plug}[2]{{#1}[#2]}
-
-% semantics
-\newcommand{\evalR}{\Rightarrow}
-\newcommand{\reduce}{\rightsquigarrow}
-\newcommand{\match}{\looparrowright}
-
 % Operational semantics (TODO: consolidate)
+\newcommand{\evalR}{\Rightarrow}
+\newcommand{\match}{\looparrowright}
 \newcommand*{\evalS}{\Rightarrow}
 \newcommand*{\evalFwdS}{\evalS}
 \newcommand*{\closeDefsS}{\rightarrowtail}
@@ -302,7 +296,6 @@
 \newcommand*{\desugarFwdS}{\twoheadrightarrow}
 \newcommand*{\desugarFwdR}{\desugarFwdS}
 \newcommand*{\desugarValue}{\stackrel{\tiny \mathbb{V}}{\twoheadrightarrow}}
-% desugaring-aux
 \newcommand*{\clausesF}{\opName{clauses}}
 \newcommand*{\elimArgsF}{\opName{elimArgs}}
 \newcommand*{\pattContF}{\opName{pattCont}}
@@ -310,6 +303,10 @@
 \newcommand*{\pattsExprF}{\opName{pattsExpr}}
 \newcommand*{\orElseF}{\opName{orElse}}
 \newcommand*{\unlessF}{\opName{unless}}
+
+% slicing
+\newcommand*{\bwdSliceS}{\nearrow}
+\newcommand*{\bwdSliceR}[1]{\bwdSliceS_{#1}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
