@@ -4,7 +4,7 @@
         \exPrettyFunction{s}  : \SExpr \mapsto \exDoc
         \\
         &
-        \exPrettyFunction{\exInt{n}} = \exText{\exShow{\exInt{n}}} 
+        \exPrettyFunction{\exInt{n}} = \exText{(\Show{(\exInt{n})})} 
         \\
         &
         \exPrettyFunction{x} =  \exText{x} 
@@ -24,6 +24,10 @@
         \\
         &
         \exPrettyFunction{\exApp{s}{s'}} = \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
+        &
+        \\
+        &
+        \exPrettyFunction{\exLambda{\upmu}} = \exLayoutAppBeside{\exText{\exLambda}}{\exText{\upmu}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
