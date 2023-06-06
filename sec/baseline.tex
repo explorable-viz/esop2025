@@ -50,18 +50,14 @@ is that pattern-matching on a $\upmu$ implies that we can desugar it into an eli
    $$
 \end{lemma}
 \begin{proof}
-   This follows from the definition of $\upgamma \desugarFwdS \upgamma'$. If $\upgamma := \set{\seq{\bind{y}{v}}}$ and
-   $\upgamma' := \set{\seq{\bind{y'}{v'}}}$ then $\bind{x}{v} \in \upgamma \implies \exists i \le \length{\upgamma}. \, \exVar{x} = y_i$ and $v = v_i$.
-   Then by definition of $\upgamma \desugarFwdS \upgamma'$, we have that $u_i \desugarFwdS {u_i}' = v'$, and so we have that $\bind{x}{v'} \in \upgamma'$.
-   Going backwards, $\bind{x}{v'} \in \upgamma' \implies \exists i \le \length{\upgamma'}. \, \exVar{x} = y_i$ and $v = {v_i}'$. By definition of
-   $\upgamma \desugarFwdS \upgamma'$, $\exists v_i.\, v_i \desugarFwdS {v_i}'$ where $\bind{y_i}{v_i} \in \upgamma$, which means $\bind{x}{v} \in \upgamma$.
+   See \appref{proofs:varlookup}
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
    Suppose we have $v \desugarFwdS v'$, and $\upmu$, Then:
    \hfill
    \begin{enumerate}
-      \item If $\upmu, v \matchFwdS \upgamma$ then $\upmu \desugarFwdS \upsigma\;\land\;\exists \upkappa.\;v',\upsigma \matchFwdS \upkappa, \upgamma'\;\land\;\upgamma \desugarFwdS \upgamma'$
+      \item If $\upmu, v \matchFwdS \upgamma$ and $\upmu \desugarFwdS \upsigma\;\land\;\exists \upkappa.\;v',\upsigma \matchFwdS \upkappa, \upgamma'\;\land\;\upgamma \desugarFwdS \upgamma'$
       \item If $\upmu \desugarFwdS \upsigma\;\land\;v', \upsigma \matchFwdS \upkappa, \upgamma'$ then $v, \upmu \matchFwdS \upgamma\;\land\; \upgamma \desugarFwdS \upgamma'$
    \end{enumerate}
    
@@ -80,10 +76,10 @@ is that pattern-matching on a $\upmu$ implies that we can desugar it into an eli
 \end{lemma}
 \begin{lemma}
    \label{lem:match-then-desugar}
-   If $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarFwdS \upsigma$.
+   If $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarPartFwd \upsigma$.
 \end{lemma}
 \begin{proof}
-   see appendix \appref{match-then-desugar}.
+   see \appref{match-then-desugar}.
 \end{proof}
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}
