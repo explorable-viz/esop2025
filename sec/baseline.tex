@@ -40,8 +40,8 @@ environments that coincide. We state this as lemma \ref{lem:matching-bi}. For th
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
 the precondition to the first case of theorem \ref{thm:semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}
-This will be properly explained in the final version of the paper.
+a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}. The final thing we need to establish
+is that pattern-matching on a $\upmu$ implies that we can desugar it into an eliminator. This is handled by 
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
@@ -78,6 +78,13 @@ This will be properly explained in the final version of the paper.
       \item If $\upgamma_2, \uprho \closeDefsS \upgamma_2'$, then $\upgamma_1, g, \closeDefsS \upgamma_1'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
    \end{enumerate}
 \end{lemma}
+\begin{lemma}
+   \label{lem:match-then-desugar}
+   If $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarFwdS \upsigma$.
+\end{lemma}
+\begin{proof}
+   see appendix \appref{match-then-desugar}.
+\end{proof}
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
