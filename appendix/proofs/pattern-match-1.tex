@@ -1,4 +1,33 @@
-
+By induction on $\matchFwdS$. 
+Assume:
+\begin{equation}
+   v \desugarFwdS v' 
+\end{equation}
+\begin{equation}
+   \upmu, v \matchFwdS \upgamma
+\end{equation}
 \begin{proof}
-
+\small
+\begin{flalign}
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\matchFwdS$-uncurried}}
+         ]
+         {
+            v, p_i \matchFwdS \upgamma
+            \\
+            \forall j \ne i.\nexists \upgamma. \, v, p_j \matchFwdS \upgamma
+         }
+         {
+            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_n}{s_n}} \matchFwdR{p_i} \upgamma, s_i
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+\end{flalign}
 \end{proof}
