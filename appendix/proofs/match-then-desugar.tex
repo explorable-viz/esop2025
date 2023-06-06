@@ -1,4 +1,26 @@
-
+In this proof, we consider $\sqcupplus$ to be the disjoint join of continuations 
+restricted only to the eliminator cases. 
 \begin{proof}
-
+\small
+\begin{flalign}
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\matchFwdS$-uncurried}}
+         ]
+         {
+            v, p_i \matchFwdS \upgamma
+            \\
+            \forall j \ne i.\nexists \upgamma. \, v, p_j \matchFwdS \upgamma
+         }
+         {
+            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_n}{s_n}} \matchFwdR{p_i} \upgamma, s_i
+         }
+      \end{smathpar}
+   }
+   &
+\end{flalign}
 \end{proof}
