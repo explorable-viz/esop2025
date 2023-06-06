@@ -1,0 +1,106 @@
+\begin{figure}
+   {\small
+   \begin{minipage}[t]{0.48\textwidth}
+   \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+      &\textbfit{Surface term}&
+      \\
+      $s ::=$
+      &
+      $\exInt{n}$
+      &
+      integer
+      \\
+      &
+      $\exVar{x}$
+      &
+      variable
+      \\
+      &
+      $\exRec{\seq{\bind{x}{s}}}$
+      &
+      record
+      \\
+      &
+      $\exRecProj{s}{x}$
+      &
+      record projection
+      \\
+      &      
+      $\exBinaryApp{s}{\oplus}{s'}$
+      &
+      binary application
+      \\
+      &
+      $\exLetRecPiecewise{g}{s}$
+      &
+      recursive functions
+      \\
+      &
+      $\exIfThenElse{s}{s_1}{s_2}$
+      &
+      if
+      \\
+      &
+      $\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}$
+      &
+      match
+      \\
+      &
+      $\exLambda{\upmu}$
+      &
+      lambda
+      \\ 
+      &
+      $\exApp{s}{s'}$
+      &
+      application
+      \\[2mm]
+      &\textbfit{Recursive functions}&
+      \\
+      $g ::=$
+      &
+      $\seq{\bind{x}{\upmu}}$
+      &
+      \\[2mm]
+      &\textbfit{Function definition}&
+      \\
+      $\upmu  ::=$
+      &
+      $\seq{c}$
+      &
+      \\
+      &\textbfit{Clause}&
+      \\
+      $c ::=$
+      &
+      $\clause{\seq{p}}{s}$
+      &
+      \\
+      \end{tabularx}
+   \end{minipage}%
+   \begin{minipage}[t]{0.5\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.8cm}L{2.9cm}}
+      &\textbfit{Pattern}&
+      \\
+      $p ::=$
+      &
+      $\pattVar{x}$
+      &
+      variable
+      \\
+      &
+      $\pattRecord{\seq{\bind{x}{p}}}$
+      &
+      record
+      \\
+      &
+      $\pattConstr{c}{\seq{p}}$
+      &
+      constructor
+      \\[13mm]
+      \end{tabularx}
+   \end{minipage}
+   \\[3mm]
+   }
+   \caption{Syntax of surface terms}
+\end{figure}
