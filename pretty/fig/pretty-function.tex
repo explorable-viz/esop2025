@@ -2,15 +2,15 @@
     \begin{salign}
         \exPrettyFunction{\param}  &: \SExpr \mapsto \exDoc
         \\
-        \exPrettyFunction{\exInt{n}} &= \exText{\Show \, (x)} 
+        \exPrettyFunction{\exInt{n}} &= \exText{\Show(x)} 
         \\
-        \exPrettyFunction{x} &=  \exText{\str \, (x)} 
+        \exPrettyFunction{x} &=  \exText{\str(x)} 
         \\
-        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\str \, (\oplus)}}{\exPrettyFunction{s'}}}
+        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\str(\oplus)}}{\exPrettyFunction{s'}}}
         \\
         \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exText{\opName{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\opName{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exText{\opName{"else"}}}{ \exPrettyFunction{s_2}}}}}}
         \\
-        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{"."}}{\exPrettyFunction{x}}}
+        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{"."}}{\exText{\str(x)}}}
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
         \\
