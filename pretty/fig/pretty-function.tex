@@ -1,6 +1,6 @@
 \begin{figure}
     \begin{salign}
-        \exPrettyFunction{\param}  &: \SExpr \mapsto \exDoc
+        \exPrettyFunction{\param}  &: \SExpr \rightarrow \exDoc
         \\
         \exPrettyFunction{\exInt{n}} &= \exText{\Show(x)} 
         \\
@@ -14,9 +14,9 @@
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
         \\
-        \exFuncDefToDoc{\upmu} &: \FunctionDefinition \mapsto \exDoc
+        \exFuncDefToDoc{\upmu} &: \FunctionDefinition \rightarrow \exDoc
         \\
-        \exPatternToDoc{\seq{p}} &: \PatternDefinition \mapsto \exDoc
+        \exPatternToDoc{\seq{p}} &: \PatternDefinition \rightarrow \exDoc
         \\
         \exFuncDefToDoc{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPatternToDoc{\seq{p}}}{\exText{"="}}}{\exPrettyFunction{s}}
         \\
