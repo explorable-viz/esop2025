@@ -17,7 +17,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         (\upmu_i \desugarPartFwd \sigma_i\;\land\; \sigma_i \desugarFwdS \sigma'_i)
+         \upmu_i \desugarMuFull \sigma_i
          \quad
          (\forall i \leq \length{\seq{x}})
          \\
@@ -26,7 +26,7 @@
       {
          \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
          \desugarFwdR
-         \exLetRecPiecewise{\seq{\bind{x}{\sigma'}}}{e}
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
       %
       \and
@@ -35,15 +35,13 @@
       {
          s \desugarFwdR e
          \\
-         \upmu \desugarPartFwd \sigma
-         \\
-         \upsigma \desugarFwdS \upsigma'
+         \upmu \desugarMuFull \sigma
       }
       {
          \exMatch{s}{\upmu}
          \desugarFwdR
          \exMatch{s'}{\upmu'},
-         \exApp{\exFun{\sigma'}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
