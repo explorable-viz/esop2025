@@ -42,8 +42,10 @@
         \\
         \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Patt^* \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \exDoc
         \\
+        \exPrettyFunction{p} &= \exPrettyFunction{p}
+        \\ 
         \exPrettyFunction{p_1\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p_1}}{\exPrettyFunction{\seq{p}}}
         \\
         \\[2mm]
