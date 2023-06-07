@@ -2,25 +2,25 @@
     \begin{salign}
         \exPrettyFunction{\param}  &: \SExpr \rightarrow \exDoc
         \\
-        \exPrettyFunction{\exInt{n}} &= \exText{\Show(x)} 
+        \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
         \\
-        \exPrettyFunction{x} &=  \exText{\str(x)} 
+        \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
         \\
-        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\str(\oplus)}}{\exPrettyFunction{s'}}}
+        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}}}
         \\
-        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exText{\opName{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\opName{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exText{\opName{"else"}}}{ \exPrettyFunction{s_2}}}}}}
+        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\opName{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\opName{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\opName{"else"}}}{ \exPrettyFunction{s_2}}}}}}
         \\
-        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{"."}}{\exText{\str(x)}}}
+        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{"."}}{\exLayoutText{\str(x)}}}
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
-        \\
+        \\[2mm]
         \exPrettyFunction{\upmu} &: \FunctionDefinition \rightarrow \exDoc
         \\
-        \exPrettyFunction{\seq{p}} &: \PatternDefinition \rightarrow \exDoc
-        \\
-        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exText{"="}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{"="}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{(\clause{\seq{p}}{s}).\upmu} &= \exLayoutAppATop{\exPrettyFunction{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
+        \\[2mm]
+        \exPrettyFunction{\seq{p}} &: \Patt^* \rightarrow \exDoc
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
