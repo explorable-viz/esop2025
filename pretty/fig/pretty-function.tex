@@ -14,13 +14,13 @@
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
         \\[2mm]
-        \exPrettyFunction{\upmu} &: \Clause^+ \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Clause^+ \rightarrow \exDoc
         \\
         \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{(\clause{\seq{p}}{s})\cons\upmu} &= \exLayoutAppATop{\exPrettyFunction{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
         \\[2mm]
-        \exPrettyFunction{\seq{p}} &: \Patt^* \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Patt^* \rightarrow \exDoc
         \\
         \exPrettyFunction{x} &= \exLayoutText{\str(x)}
         \\
@@ -35,6 +35,8 @@
         \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
         \\
         \exPrettyFunction{\pattConstr{c}{\seq{p_1}}\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{\pattConstr{c}{\seq{p_1}}}}{\exPrettyFunction{\seq{p}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: 
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
