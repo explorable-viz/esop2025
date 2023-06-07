@@ -13,6 +13,8 @@
         \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{"."}}{\exLayoutText{\str(x)}}}
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
+        \\
+        \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\[2mm]
         \exPrettyFunction{\param} &: \Clause^+ \rightarrow \exDoc
         \\
@@ -37,6 +39,10 @@
         \exPrettyFunction{\pattConstr{c}{\seq{p_1}}\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{\pattConstr{c}{\seq{p_1}}}}{\exPrettyFunction{\seq{p}}}
         \\[2mm]
         \exPrettyFunction{\param} &: \RecursiveFunction \rightarrow \exDoc
+        \\
+        \exPrettyFunction{x\symColon\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{"\symColon"}}}}{\exPrettyFunction{\upmu}}
+        \\
+        \exPrettyFunction{x_1\symColon\upmu_1\cons\seq{x\symColon\upmu}} &= \exLayoutAppATop{\exPrettyFunction{x_1\symColon\upmu_1}}{\seq{x\symColon\upmu}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
