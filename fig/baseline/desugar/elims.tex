@@ -21,6 +21,16 @@
       {
          \elimConstr{\seq{\elimBind{c}{\upkappa}}} \desugarFwdS \elimConstr{\seq{\elimBind{c}{\upkappa'}}}
       }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upkappa \desugarFwdS \upkappa'
+      }
+      {
+         \elimRec{\seq{c}}{\upkappa} \desugarFwdS \elimRec{\seq{c}}{\upkappa'}
+      }
    \end{smathpar}
 \caption{(Partial) desugaring of eliminators}
 \end{figure}
