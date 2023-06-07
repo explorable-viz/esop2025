@@ -15,12 +15,12 @@
     \begin{smathpar}
         \inferrule*
         {
-            (\upmu_i \desugarPartFwd \upsigma_i \;\land\; \upsigma_i \desugarFwdS \upsigma'_i)
+            \upmu_i \desugarMuFull \upsigma_i
             \quad
             (\forall i \le \length{\seq{x}})
         }
         {
-            \seq{\bind{x}{\upmu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma'}}}
+            \seq{\bind{x}{\upmu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma}}}
         }
     \end{smathpar}
     }
@@ -32,12 +32,10 @@
                 \\
                 g \desugarFwdS \uprho
                 \\
-                \upmu \desugarPartFwd \upsigma
-                \\
-                \upsigma \desugarFwdS \upsigma'
+                \upmu \desugarMuFull \upsigma
             }
             {
-                \exClosure{\upgamma}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma'}
+                \exClosure{\upgamma}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
             }
         \end{smathpar}
     }
