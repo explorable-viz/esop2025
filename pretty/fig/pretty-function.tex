@@ -33,6 +33,8 @@
         \exPrettyFunction{\{(x_1:p_1)\cons\seq{x:p}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1:p_1):\seq{x:p}}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\ 
         \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
+        \\
+        \exPrettyFunction{\pattConstr{c}{\seq{p_1}}\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{\pattConstr{c}{\seq{p_1}}}}{\exPrettyFunction{\seq{p}}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
