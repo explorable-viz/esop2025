@@ -6,7 +6,7 @@
         \\
         \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
         \\
-        \exPrettyFunction{\exRec{\seq{\bind{x}{s}}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \exPrettyFunction{\{(x_1:s_1)\cons\seq{(x:s)}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
         \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}}}
         \\
@@ -20,7 +20,7 @@
         \\
         \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str("match")}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{\seq{(p,s)}}}
         \\
-        \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exPrettyFunction{\lambda}}{\exPrettyFunction{\upmu}}
+        \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{\upmu}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\[2mm]
         \exPrettyFunction{\param} &: (\Variable \times \SExpr)^* \rightarrow \exDoc
         \\
@@ -65,7 +65,6 @@
         \exPrettyFunction{p} &= \exPrettyFunction{p}
         \\ 
         \exPrettyFunction{p_1\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p_1}}{\exPrettyFunction{\seq{p}}}
-        \\
         \\[2mm]
         \exPrettyFunction{\param} &: \RecursiveFunction \rightarrow \exDoc
         \\
