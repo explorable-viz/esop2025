@@ -14,13 +14,13 @@
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
         \\
-        \exFuncDefToDoc{\upmu} &: \FunctionDefinition \rightarrow \exDoc
+        \exPrettyFunction{\upmu} &: \FunctionDefinition \rightarrow \exDoc
         \\
-        \exPatternToDoc{\seq{p}} &: \PatternDefinition \rightarrow \exDoc
+        \exPrettyFunction{\seq{p}} &: \PatternDefinition \rightarrow \exDoc
         \\
-        \exFuncDefToDoc{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPatternToDoc{\seq{p}}}{\exText{"="}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exText{"="}}}{\exPrettyFunction{s}}
         \\
-        \exFuncDefToDoc{(\clause{\seq{p}}{s}).\upmu} &= \exLayoutAppATop{\exFuncDefToDoc{\clause{\seq{p}}{s}}}{\exFuncDefToDoc{\upmu}}
+        \exPrettyFunction{(\clause{\seq{p}}{s}).\upmu} &= \exLayoutAppATop{\exFuncDefToDoc{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
