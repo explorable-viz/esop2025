@@ -13,10 +13,6 @@
         \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{"."}}{\exLayoutText{\str(x)}}}
         \\
         \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
-        \\
-        \exPrettyFunction{(x_1:p_1)} &= {\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}
-        \\
-        \exPrettyFunction{(x_1:p_1):\seq{x:p}} &= \exLayoutAppATop{\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}{\exPrettyFunction{\seq{x:p}}}
         \\[2mm]
         \exPrettyFunction{\upmu} &: \Clause^+ \rightarrow \exDoc
         \\
@@ -29,6 +25,10 @@
         \exPrettyFunction{x} &= \exLayoutText{\str(x)}
         \\
         \exPrettyFunction{x\seq{p}} &= \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exPrettyFunction{\seq{p}}}
+        \\
+        \exPrettyFunction{(x_1:p_1)} &= {\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}
+        \\
+        \exPrettyFunction{(x_1:p_1):\seq{x:p}} &= \exLayoutAppATop{\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}{\exPrettyFunction{\seq{x:p}}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
