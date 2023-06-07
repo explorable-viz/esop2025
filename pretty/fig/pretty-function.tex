@@ -16,9 +16,21 @@
         \\
         \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\
-        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str("match")} }{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}
+        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str("match")}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{\seq{(p,s)}}}
         \\
         \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exPrettyFunction{\lambda}}{\exPrettyFunction{\upmu}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: (\Variable \times \SExpr) \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\[2mm]
+        \exPrettyFunction{\param} &: (\Patt \times \SExpr) \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(p,s)} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"="}}}}{s}
+        \\
+        \exPrettyFunction{(p_1,s_1)\cons\seq{(p,s)}} &= \exLayoutAppATop{\exPrettyFunction{(p_1,s_1)}}{\exPrettyFunction{\seq{(p,s)}}}
         \\[2mm]
         \exPrettyFunction{\param} &: \Clause^+ \rightarrow \exDoc
         \\
