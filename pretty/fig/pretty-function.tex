@@ -8,7 +8,7 @@
         \\
         \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}}}
         \\
-        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\opName{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\opName{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\opName{"else"}}}{ \exPrettyFunction{s_2}}}}}}
+        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\kw{"else"}}}{ \exPrettyFunction{s_2}}}}}}
         \\
         \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{"."}}{\exLayoutText{\str(x)}}}
         \\
@@ -16,7 +16,7 @@
         \\[2mm]
         \exPrettyFunction{\upmu} &: \Clause^+ \rightarrow \exDoc
         \\
-        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{"="}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{(\clause{\seq{p}}{s})\cons\upmu} &= \exLayoutAppATop{\exPrettyFunction{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
         \\[2mm]
