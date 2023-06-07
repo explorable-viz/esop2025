@@ -115,6 +115,14 @@
 \newcommand*{\pattListNext}[2]{\exListNext{#1}{#2}}
 \newcommand*{\pattListEnd}{\exListEnd}
 \newcommand*{\pattRecord}[1]{\exRecord{#1}}
+\newcommand*{\pattTrue}{\exTrue}
+\newcommand*{\pattFalse}{\exFalse}
+\newcommand*{\pattCons}[2]{\exCons{#1}{#2}}
+\newcommand*{\pattNil}{\exNil}
+\newcommand*{\pattPair}[2]{\exPair{#1}{#2}}
+\newcommand*{\pattRec}[1]{\exRec{#1}}
+\newcommand*{\pattRecEmpty}{\exRecEmpty}
+
 
 % qualifiers
 \newcommand*{\qualGuard}[1]{\kw{if}\;#1}
@@ -186,6 +194,7 @@
 \newcommand*{\exVar}[1]{#1}
 \newcommand*{\exTrue}{\kw{true}}
 \newcommand*{\exFalse}{\kw{false}}
+\newcommand*{\exCons}[2]{{#1}\,\symCons\,{#2}}
 \newcommand*{\exNil}{\kw{[]}}
 \newcommand*{\exRecEmpty}{\kw{()}}
 % Expressions.
@@ -302,13 +311,14 @@
 \newcommand*{\PatternDefinition}{\Set{Patterns}}
 
 \newcommand*{\MayFail}{\Set{MayFail}}
+
 % operations
 \newcommand{\FV}{\opName{FV}}
 \newcommand*{\BV}{\opName{BV}}
 \newcommand*{\splitEnv}[2]{#1 \triangleleft #2}
 \newcommand*{\reach}{\opName{reach}}
 \newcommand*{\reaches}{\opName{reaches}}
-
+\newcommand*{\primOp}{\oplus}
 % Operational semantics (TODO: consolidate)
 \newcommand{\evalR}{\Rightarrow}
 \newcommand{\match}{\looparrowright}
@@ -342,7 +352,19 @@
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
    \hfil\raise0.42ex\hbox{$\scriptscriptstyle+$}\hfil\cr}}}
-
+\let\oldbigjoin\bigjoin
+\let\oldbigmeet\bigmeet
+\renewcommand*{\bigjoin}[1]{{\textstyle{\oldbigjoin}}\hspace{-0.1em}#1}
+\renewcommand*{\bigmeet}[1]{{\textstyle{\oldbigmeet}}\hspace{-0.1em}#1}
+\let\oldleq\leq
+\let\oldgeq\geq
+\newcommand*{\numleq}{\oldleq}
+\newcommand*{\numgeq}{\oldgeq}
+\newcommand*{\numgt}{>}
+\newcommand*{\numlt}{<}
+\renewcommand*{\leq}{\sqsubseteq}
+\renewcommand*{\geq}{\sqsupseteq}
+\newcommand{\eq}{\doteq}   
 % annotations
 \newcommand*{\addrNull}{\bullet}
 \newcommand{\mkAddr}[3]{{#1} \oplus (#2, #3)}
