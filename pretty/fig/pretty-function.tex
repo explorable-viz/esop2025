@@ -47,6 +47,12 @@
         \exPrettyFunction{(x\symComma\seq{p}=s)} &= \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}}
         \\
         \exPrettyFunction{(x\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(x\symComma\seq{p_1}=s_1)}}{\exPrettyFunction{(x\symComma\upmu)}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \RecursiveFunction^+ \rightarrow \Doc
+        \\
+        \exPrettyFunction{x\symColon\upmu} &= \exPrettyFunction{(x\symComma\upmu)}
+        \\
+        \exPrettyFunction{x_1\symColon\upmu_1\cons\seq{(x\symColon\upmu)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1\symComma\upmu_1)}}{\exPrettyFunction{\seq{(x\symComma\upmu)}}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
