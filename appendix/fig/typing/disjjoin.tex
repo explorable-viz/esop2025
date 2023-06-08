@@ -96,7 +96,7 @@
 \label{fig:surface-language:disjoin-join-elim}
 \end{figure}
 \begin{figure}
-   {\flushleft \shadebox{$\upsigma \disjjoin \upsigma' = \uptau$}
+   {\flushleft \shadebox{$\upkappa \disjjoin \upkappa' = \upkappa^{\dag}$}
    \begin{smathpar}
       \inferrule*
       {
@@ -104,6 +104,16 @@
       }
       {
          \exApp{\uplambda}{\upsigma} \disjjoin \exApp{\uplambda}{\upsigma'} = \exApp{\uplambda}{\uptau}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+      }
+      {
+         \elimBind{\exVar{x}}{\upkappa} \disjjoin \elimBind{\exVar{x}}{\upkappa'} = \elimBind{\exVar{x}}{\upkappa^{\dag}}
       }
    \end{smathpar}}
 \end{figure}
