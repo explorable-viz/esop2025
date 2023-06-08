@@ -1,6 +1,6 @@
 \begin{figure}
     \begin{salign}
-        \exPrettyFunction{\param}  &: \SExpr \rightarrow \exDoc
+        \exPrettyFunction{\param}  &: \SExpr \rightarrow \Doc
         \\
         \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
         \\
@@ -22,7 +22,7 @@
         \\
         \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{\upmu}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \exDoc
+        \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \Doc
         \\
         \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
         \\
@@ -30,7 +30,7 @@
         \\
         \exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,s_1)}}{\exPrettyFunction{\seq{(x,s)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Patt \times \SExpr)^* \rightarrow \exDoc
+        \exPrettyFunction{\param} &: (\Patt \times \SExpr)^* \rightarrow \Doc
         \\
         \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
         \\
@@ -38,13 +38,13 @@
         \\
         \exPrettyFunction{(p_1,s_1)\cons\seq{(p,s)}} &= \exLayoutAppATop{\exPrettyFunction{(p_1,s_1)}}{\exPrettyFunction{\seq{(p,s)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Clause^+ \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Clause^+ \rightarrow \Doc
         \\
         \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{(\clause{\seq{p}}{s})\cons\upmu} &= \exLayoutAppATop{\exPrettyFunction{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Patt \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Patt \rightarrow \Doc
         \\
         \exPrettyFunction{x} &= \exLayoutText{\str(x)}
         \\
@@ -52,7 +52,7 @@
         \\
         \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
         \\[2mm]
-        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \exDoc
+        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Doc
         \\
         \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
         \\
@@ -60,13 +60,13 @@
         \\
         \exPrettyFunction{(x_1,p_1)\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,p_1)}}{\exPrettyFunction{\seq{(x,p)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Doc
         \\
         \exPrettyFunction{p} &= \exPrettyFunction{p}
         \\ 
         \exPrettyFunction{p_1\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p_1}}{\exPrettyFunction{\seq{p}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \RecursiveFunction \rightarrow \exDoc
+        \exPrettyFunction{\param} &: \RecursiveFunction \rightarrow \Doc
         \\
         \exPrettyFunction{x\symColon\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{"\symColon"}}}}{\exPrettyFunction{\upmu}}
         \\
