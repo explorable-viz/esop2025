@@ -18,7 +18,7 @@
         \\
         \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\
-        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{\seq{(p,s)}}}
+        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{(\UnitVal\symComma\seq{(p,s')})}}
         \\
         \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\[2mm]
@@ -30,23 +30,15 @@
         \\
         \exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,s_1)}}{\exPrettyFunction{\seq{(x,s)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Patt \times \SExpr)^* \rightarrow \Doc
-        \\
-        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
-        \\
-        \exPrettyFunction{(p,s)} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}
-        \\
-        \exPrettyFunction{(p_1,s_1)\cons\seq{(p,s)}} &= \exLayoutAppATop{\exPrettyFunction{(p_1,s_1)}}{\exPrettyFunction{\seq{(p,s)}}}
-        \\[2mm]
-        \exPrettyFunction{\param} &: (\Var + \UnitVal)\times \Clause^+ \rightarrow \Doc
+        \exPrettyFunction{\param} &: (\Var + 1)\times \Clause^+ \rightarrow \Doc
         \\
         \exPrettyFunction{(\UnitVal\symComma\seq{p}=s)} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}} 
         \\
-        \exPrettyFunction{(\UnitVal\symComma(\seq{p_1}=s_1)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(\UnitVal\symComma\seq{p_1}=s_1)}}{(\exPrettyFunction{\UnitVal\symComma\upmu})}
+        \exPrettyFunction{(\UnitVal\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}}{\exPrettyFunction{\UnitVal\symComma\upmu}}
         \\
         \exPrettyFunction{(x\symComma\seq{p}=s)} &= \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}}
         \\
-        \exPrettyFunction{(x\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(x\symComma\seq{p_1}=s_1)}}{\exPrettyFunction{(x\symComma\upmu)}}
+        \exPrettyFunction{(x\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(x\symComma\seq{p}=s)}}{\exPrettyFunction{(x\symComma\upmu)}}
         \\[2mm]
         \exPrettyFunction{\param} &: \RecursiveFunction^+ \rightarrow \Doc
         \\
