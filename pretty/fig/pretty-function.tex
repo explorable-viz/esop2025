@@ -1,45 +1,78 @@
 \begin{figure}
     \begin{salign}
-        &
-        \exPrettyFunction{s}  : \SExpr \mapsto \exDoc
+        \exPrettyFunction{\param}  &: \SExpr \rightarrow \exDoc
         \\
-        &
-        \exPrettyFunction{\exInt{n}} = \exText{\Show \, (x)} 
+        \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
         \\
-        &
-        \exPrettyFunction{x} =  \exText{\str \, (x)} 
-        &
+        \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
         \\
-        &
-        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} = \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\str \, (\oplus)}}{\exPrettyFunction{s'}}}
-        &
+        \exPrettyFunction{\{(x_1:s_1)\cons\seq{(x:s)}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
-        &
-        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} = \exLayoutAppBeside{\exText{\opName{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{\opName{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exText{\opName{"else"}}}{ \exPrettyFunction{s_2}}}}}}
-        &
+        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}}}
         \\
-        &
-        \exPrettyFunction{\exRecProj{s}{x}} = \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exText{"."}}{\exPrettyFunction{x}}}
-        &
+        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\kw{"else"}}}{ \exPrettyFunction{s_2}}}}}}
         \\
-        &
-        \exPrettyFunction{\exApp{s}{s'}} = \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
-        &
+        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"."}}}{\exLayoutText{\str(x)}}}
         \\
-        &
-        \exFuncDefToDoc{\upmu} : \FunctionDefinition \mapsto \exDoc
-        &
+        \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
         \\
-        &
-        \exPatternToDoc{\seq{p}} : \PatternDefinition \mapsto \exDoc
-        &
+        \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\
-        &
-        \exFuncDefToDoc{\clause{\seq{p}}{s}} = \exLayoutAppBeside{\exLayoutAppBeside{\exPatternToDoc{\seq{p}}}{\exText{"="}}}{\exPrettyFunction{s}}
-        &
+        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{\seq{(p,s)}}}
         \\
-        &
-        \exFuncDefToDoc{(\clause{\seq{p}}{s}).\upmu} = \exLayoutAppATop{\exFuncDefToDoc{\clause{\seq{p}}{s}}}{\exFuncDefToDoc{\upmu}}
+        \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{\upmu}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: (\Variable \times \SExpr)^* \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(x,s)} &= \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{":"}}}}{\exPrettyFunction{s}}
+        \\
+        \exPrettyFunction{(x_1,s_1)\cons\seq{(x,s)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,s_1)}}{\exPrettyFunction{\seq{(x,s)}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: (\Patt \times \SExpr)^* \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(p,s)} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"="}}}}{s}
+        \\
+        \exPrettyFunction{(p_1,s_1)\cons\seq{(p,s)}} &= \exLayoutAppATop{\exPrettyFunction{(p_1,s_1)}}{\exPrettyFunction{\seq{(p,s)}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \Clause^+ \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\clause{\seq{p}}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}
+        \\
+        \exPrettyFunction{(\clause{\seq{p}}{s})\cons\upmu} &= \exLayoutAppATop{\exPrettyFunction{\clause{\seq{p}}{s}}}{\exPrettyFunction{\upmu}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \Patt \rightarrow \exDoc
+        \\
+        \exPrettyFunction{x} &= \exLayoutText{\str(x)}
+        \\
+        \exPrettyFunction{\{(x_1:p_1)\cons\seq{x:p}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1,p_1)\cons\seq{(x,p)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \\
+        \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
+        \\[2mm]
+        \exPrettyFunction{\param}&: (\Variable \times \Patt)^* \rightarrow \exDoc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(x_1,p_1)} &= {\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}
+        \\
+        \exPrettyFunction{(x_1,p_1)\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,p_1)}}{\exPrettyFunction{\seq{(x,p)}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \exDoc
+        \\
+        \exPrettyFunction{p} &= \exPrettyFunction{p}
+        \\ 
+        \exPrettyFunction{p_1\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p_1}}{\exPrettyFunction{\seq{p}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \RecursiveFunction \rightarrow \exDoc
+        \\
+        \exPrettyFunction{x\symColon\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{"\symColon"}}}}{\exPrettyFunction{\upmu}}
+        \\
+        \exPrettyFunction{x_1\symColon\upmu_1\cons\seq{x\symColon\upmu}} &= \exLayoutAppATop{\exPrettyFunction{x_1\symColon\upmu_1}}{\seq{x\symColon\upmu}}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
+
+ 
