@@ -1,0 +1,33 @@
+\begin{figure}
+    \begin{salign}
+        \exPrettyFunction{\param} &: \Patt \rightarrow \Doc
+        \\
+        \exPrettyFunction{x} &= \exLayoutText{\str(x)}
+        \\
+        \exPrettyFunction{\{(x_1:p_1)\cons\seq{x:p}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{(x_1,p_1)\cons\seq{(x,p)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \\
+        \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
+        \\[2mm]
+        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Doc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(x_1,p_1)} &= {\exLayoutAppBeside{\exLayoutText{\str(x_1)}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p_1}}}}
+        \\
+        \exPrettyFunction{(x_1,p_1)\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1,p_1)}}{\exPrettyFunction{\seq{(x,p)}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Doc
+        \\
+        \exPrettyFunction{p} &= \exPrettyFunction{p}
+        \\ 
+        \exPrettyFunction{p_1\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p_1}}{\exPrettyFunction{\seq{p}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \RecursiveFunction^+ \rightarrow \Doc
+        \\
+        \exPrettyFunction{x\symColon\upmu} &= \exPrettyFunction{(x\symComma\upmu)}
+        \\
+        \exPrettyFunction{x_1\symColon\upmu_1\cons\seq{(x\symColon\upmu)}} &= \exLayoutAppATop{\exPrettyFunction{(x_1\symComma\upmu_1)}}{\exPrettyFunction{\seq{(x\symColon\upmu)}}}
+    \end{salign}
+    \caption{Pretty Function Continued}
+\end{figure}
+
