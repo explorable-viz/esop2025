@@ -1,12 +1,42 @@
 \begin{figure}
    \flushleft \shadebox{$\compatPatt{p}{p'}$}
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\compatPatt{}{}$-constr-neq}}
+      ]
       {
          \exVar{c} \neq \exVar{c'}
       }
       {
          \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c'}{\seq{p}'}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\compatPatt{}{}$-constr-eq}}
+      ]
+      {
+         \compatPatt{p_i}{p_i'}
+         \quad
+         \forall i \le arity(c)
+      }
+      {
+         \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{p}'}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\compatPatt{}{}$-record}}
+      ]
+      {
+         \compatPatt{p_i}{p_i'}
+         \quad
+         \forall i \le \length{\seq{\exVar{x}}}
+      }
+      {
+         \compatPatt{\exRecord{\seq{\bind{\exVar{x}}{p}}}}{\exRecord{\seq{\bind{\exVar{x}}{p}}'}}
       }
    \end{smathpar}
 \end{figure}
