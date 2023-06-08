@@ -1,0 +1,27 @@
+\begin{figure}
+    \begin{salign}
+        \exPrettyFunction{\param} &: \Patt \rightarrow \Doc
+        \\
+        \exPrettyFunction{x} &= \exLayoutText{\str(x)}
+        \\
+        \exPrettyFunction{\{\seq{x:p}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,p)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \\
+        \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
+        \\[2mm]
+        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Doc
+        \\
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \\
+        \exPrettyFunction{(x',p')} &= {\exLayoutAppBeside{\exLayoutText{\str(x')}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p'}}}}
+        \\
+        \exPrettyFunction{(x',p')\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x',p')}}{\exPrettyFunction{\seq{(x,p)}}}
+        \\[2mm]
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Doc
+        \\
+        \exPrettyFunction{p} &= \exPrettyFunction{p}
+        \\ 
+        \exPrettyFunction{p'\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p'}}{\exPrettyFunction{\seq{p}}}
+    \end{salign}
+    \caption{Pretty Function Continued}
+\end{figure}
+
