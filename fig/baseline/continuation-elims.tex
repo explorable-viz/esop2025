@@ -63,7 +63,7 @@
    \begin{smathpar}
    \inferrule*
    {
-      \Gamma \concat \bind{x}{A} \vdash \kappa: K
+      \Gamma \cons \bind{x}{A} \vdash \kappa: K
    }
    {
       \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
@@ -97,12 +97,12 @@
    %
    \inferrule*
    {
-      \Gamma \vdash \elimRec{\vec{x}}{\sigma}: \elimTy{\tyRec{\vec{\bind{x}{A}}}}{\elimTy{B}{K}}
+      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
    }
    {
       \Gamma
       \vdash
-      \elimRec{\vec{x} \concat y}{\sigma}: \elimTy{\tyRec{\vec{\bind{x}{A}} \concat \bind{y}{B}}}{K}
+      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }
    %
    \and
