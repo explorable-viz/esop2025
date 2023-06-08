@@ -40,8 +40,8 @@ environments that coincide. We state this as lemma \ref{lem:matching-bi}. For th
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
 the precondition to the first case of theorem \ref{thm:semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}
-This will be properly explained in the final version of the paper.
+a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}. The final thing we need to establish
+is that pattern-matching on a $\upmu$ implies that we can desugar it into an eliminator. This is handled by 
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
@@ -50,18 +50,14 @@ This will be properly explained in the final version of the paper.
    $$
 \end{lemma}
 \begin{proof}
-   This follows from the definition of $\upgamma \desugarFwdS \upgamma'$. If $\upgamma := \set{\seq{\bind{y}{v}}}$ and
-   $\upgamma' := \set{\seq{\bind{y'}{v'}}}$ then $\bind{x}{v} \in \upgamma \implies \exists i \le \length{\upgamma}. \, \exVar{x} = y_i$ and $v = v_i$.
-   Then by definition of $\upgamma \desugarFwdS \upgamma'$, we have that $u_i \desugarFwdS {u_i}' = v'$, and so we have that $\bind{x}{v'} \in \upgamma'$.
-   Going backwards, $\bind{x}{v'} \in \upgamma' \implies \exists i \le \length{\upgamma'}. \, \exVar{x} = y_i$ and $v = {v_i}'$. By definition of
-   $\upgamma \desugarFwdS \upgamma'$, $\exists v_i.\, v_i \desugarFwdS {v_i}'$ where $\bind{y_i}{v_i} \in \upgamma$, which means $\bind{x}{v} \in \upgamma$.
+   See \appref{proofs:varlookup}
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
    Suppose we have $v \desugarFwdS v'$, and $\upmu$, Then:
    \hfill
    \begin{enumerate}
-      \item If $\upmu, v \matchFwdS \upgamma$ then $\upmu \desugarFwdS \upsigma\;\land\;\exists \upkappa.\;v',\upsigma \matchFwdS \upkappa, \upgamma'\;\land\;\upgamma \desugarFwdS \upgamma'$
+      \item If $\upmu, v \matchFwdS \upgamma$ and $\upmu \desugarFwdS \upsigma\;\land\;\exists \upkappa.\;v',\upsigma \matchFwdS \upkappa, \upgamma'\;\land\;\upgamma \desugarFwdS \upgamma'$
       \item If $\upmu \desugarFwdS \upsigma\;\land\;v', \upsigma \matchFwdS \upkappa, \upgamma'$ then $v, \upmu \matchFwdS \upgamma\;\land\; \upgamma \desugarFwdS \upgamma'$
    \end{enumerate}
    
@@ -78,6 +74,13 @@ This will be properly explained in the final version of the paper.
       \item If $\upgamma_2, \uprho \closeDefsS \upgamma_2'$, then $\upgamma_1, g, \closeDefsS \upgamma_1'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
    \end{enumerate}
 \end{lemma}
+\begin{lemma}
+   \label{lem:match-then-desugar}
+   Suppose we have $\Gamma \vdash\upmu\,:\,A \to B$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarPartFwd \upsigma$.
+\end{lemma}
+\begin{proof}
+   see \appref{match-then-desugar}.
+\end{proof}
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
@@ -92,4 +95,5 @@ This will be properly explained in the final version of the paper.
 
 \input{fig/baseline/desugar/term}
 \input{fig/baseline/desugar/clauses}
+\input{fig/baseline/desugar/elims}
 \input{fig/baseline/desugar/value}
