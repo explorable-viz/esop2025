@@ -125,5 +125,27 @@
       {
          \elimRec{\seq{x}}{\upkappa} \disjjoin \elimRec{\seq{x}}{\upkappa'} = \elimRec{\seq{x}}{\upkappa^{\dag}} 
       }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upsigma \disjjoin \upsigma' = (\elimBind{c}{\upkappa'})\cons \uptau
+         \\
+         \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+      }
+      {
+         (\elimBind{c}{\upkappa})\cons\upsigma \disjjoin \upsigma' = \elimBind{c}{\upkappa^{\dag}}\cons \uptau
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         dom(\elimConstr{\seq{\elimBind{c}{\upkappa}}}) \cap dom(\elimConstr{\seq{\elimBind{c'}{\upkappa'}}}) = \emptyset
+      }
+      {
+         \elimConstr{\seq{\elimBind{c}{\upkappa}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\upkappa'}}} = \elimConstr{\seq{\elimBind{c}{\upkappa}}} \cup \elimConstr{\seq{\elimBind{c'}{\upkappa'}}}
+      }
    \end{smathpar}}
 \end{figure}
