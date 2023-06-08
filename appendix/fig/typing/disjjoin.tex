@@ -1,0 +1,64 @@
+\begin{figure}
+   {\flushleft \shadebox{$\upkappa \disjjoin \upkappa' = \upkappa^{\dag}$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\disjjoin-\uplambda$}}
+      ]
+      {
+         \upsigma \disjjoin \upsigma' = \uptau
+      }
+      {
+         \exApp{\uplambda}{\upsigma} \disjjoin \exApp{\uplambda}{\upsigma'} = \exApp{\uplambda}{\uptau}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-var}}
+      ]
+      {
+         \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+      }
+      {
+         \elimBind{\exVar{x}}{\upkappa} \disjjoin \elimBind{\exVar{x}}{\upkappa'} = \elimBind{\exVar{x}}{\upkappa^{\dag}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-record}}
+      ]
+      {
+         \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+      }
+      {
+         \elimRec{\seq{x}}{\upkappa} \disjjoin \elimRec{\seq{x}}{\upkappa'} = \elimRec{\seq{x}}{\upkappa^{\dag}} 
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-overlap}}
+      ]
+      {
+         \upsigma \disjjoin \upsigma' = (\elimBind{c}{\upkappa'})\cons \uptau
+         \\
+         \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+      }
+      {
+         (\elimBind{c}{\upkappa})\cons\upsigma \disjjoin \upsigma' = \elimBind{c}{\upkappa^{\dag}}\cons \uptau
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-no-overlap}}
+      ]
+      {
+         dom(\elimConstr{\seq{\elimBind{c}{\upkappa}}}) \cap dom(\elimConstr{\seq{\elimBind{c'}{\upkappa'}}}) = \emptyset
+      }
+      {
+         \elimConstr{\seq{\elimBind{c}{\upkappa}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\upkappa'}}} = \elimConstr{\seq{\elimBind{c}{\upkappa}}} \cup \elimConstr{\seq{\elimBind{c'}{\upkappa'}}}
+      }
+   \end{smathpar}}
+\end{figure}
