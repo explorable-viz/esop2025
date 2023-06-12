@@ -2,7 +2,7 @@
    {\flushleft \shadebox{$\upkappa \disjjoin \upkappa' = \upkappa^{\dag}$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\disjjoin-\uplambda$}}
+         lab={\ruleName{$\disjjoin{-}\uplambda$}}
       ]
       {
          \upsigma \disjjoin \upsigma' = \uptau
@@ -14,13 +14,13 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\disjjoin$-var}}
+         lab={\ruleName{$\disjjoin${-var}}}
       ]
       {
          \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
       }
       {
-         \elimBind{\exVar{x}}{\upkappa} \disjjoin \elimBind{\exVar{x}}{\upkappa'} = \elimBind{\exVar{x}}{\upkappa^{\dag}}
+         (\elimBind{\exVar{x}}{\upkappa}) \disjjoin (\elimBind{\exVar{x}}{\upkappa'}) = \elimBind{\exVar{x}}{\upkappa^{\dag}}
       }
       %
       \and
@@ -46,7 +46,7 @@
          \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
       }
       {
-         (\elimBind{c}{\upkappa})\cons\upsigma \disjjoin \upsigma' = \elimBind{c}{\upkappa^{\dag}}\cons \uptau
+         (\elimBind{c}{\upkappa})\cons(\upsigma \disjjoin \upsigma') = (\elimBind{c}{\upkappa^{\dag}})\cons \uptau
       }
       %
       \and
@@ -55,10 +55,11 @@
          lab={\ruleName{$\disjjoin$-no-overlap}}
       ]
       {
-         dom(\elimConstr{\seq{\elimBind{c}{\upkappa}}}) \cap dom(\elimConstr{\seq{\elimBind{c'}{\upkappa'}}}) = \emptyset
+         dom(\upsigma) \cap dom(\uptau) = \emptyset
       }
       {
-         \elimConstr{\seq{\elimBind{c}{\upkappa}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\upkappa'}}} = \elimConstr{\seq{\elimBind{c}{\upkappa}}} \cup \elimConstr{\seq{\elimBind{c'}{\upkappa'}}}
+         \upsigma \disjjoin \uptau = \upsigma \cup \uptau
       }
    \end{smathpar}}
+   \caption{Disjoint join of (partial) continuations}
 \end{figure}
