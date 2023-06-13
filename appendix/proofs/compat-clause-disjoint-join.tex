@@ -1,5 +1,5 @@
 By case analysis and induction on derivations of $\compatPattSym$. For our first pass, we will only consider pairs of clauses. Then, we will generalize this to arbitrary numbers of clauses. We disallow certain combinations of patterns which might otherwise be allowed. For example, we do not allow clauses formed in the following fashion:
-\begin{lstlisting}[frame=single]
+\begin{lstlisting}[language=Fluid]
    foo :: forall a b. List a -> List a -> b
    foo (Cons y ys) (Cons z zs) = ...
    foo  x           Nil        = ...
@@ -10,7 +10,7 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
 \end{lstlisting}
 IE when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name.
 Pattern matching proceeds from left to right so the following \textit{is} allowed:
-\begin{lstlisting}[frame=single]
+\begin{lstlisting}[language = Fluid]
    baz :: forall a b. List a -> List a -> b
    baz (Cons y ys) (Cons z zs) = ...
    baz  Nil         x          = ...
@@ -165,5 +165,25 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    &
    \text{$\disjjoin$-record}
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPattSym$-tail}}
+         ]
+         {
+            \compatPatt{\seq{p_{rest}}}{\seq{p_{rest}}'}
+         }
+         {
+            \compatPatt{\clause{p\cdot\seq{p_{rest}}}{s}}{\clause{p'\cdot\seq{p_{rest}}'}{s'}}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
 \end{flalign}
 \end{proof}
