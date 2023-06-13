@@ -45,6 +45,16 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    &
    \\
    &
+   \text{$\clause{\seq{p_{rest}}}{s}\desugarFwdS \upsigma_{rest}$}
+   &
+   \text{(1) and $\desugarFwdS$-clause-curried}
+   \\
+   &
+   \text{$\clause{\seq{p_{rest}}'}{s'}\desugarFwdS \upsigma_{rest}'$}
+   &
+   \text{(2) and $\desugarFwdS$-clause-curried}
+   \\
+   &
    \text{Have three cases for $\compatPatt{p}{p'}$}
    &
    \notag
@@ -91,18 +101,6 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    \notag
    \\
    &
-   \text{$\clause{\seq{p_{rest}}}{s}\desugarFwdS \upsigma_{rest}$}
-   &
-   \text{(1) and $\desugarFwdS$-clause-curried}
-   \notag
-   \\
-   &
-   \text{$\clause{\seq{p_{rest}}'}{s'}\desugarFwdS \upsigma_{rest}'$}
-   &
-   \text{(2) and $\desugarFwdS$-clause-curried}
-   \notag
-   \\
-   &
    \upkappa := \pattArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{rest}}),\;\upsigma := c \mapsto \upkappa
    &
    \text{Def of $\pattContF$}
@@ -127,5 +125,46 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    \text{$\disjjoin$-constr-eq}
    \notag
    \\
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPatt{}{}$-record}}
+         ]
+         {
+            \compatPatt{\seq{p}}{\seq{p}'}
+         }
+         {
+            \compatPatt{\exRecord{\seq{\bind{\exVar{x}}{p}}}}{\exRecord{\seq{\bind{\exVar{x}}{p}}'}}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \upkappa := \pattArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{rest}}),\;\upsigma := \elimRec{\seq{x}}{\upkappa}
+   &
+   \text{Def of \pattContF}
+   \notag
+   \\
+   &
+   \upkappa' := \pattArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{rest}'}),\;\upsigma' := \elimRec{\seq{x}}{\upkappa'}
+   &
+   \text{Def of $\pattContF$}
+   \notag
+   \\
+   &
+   \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \upsigma \disjjoin \upsigma' = \elimRec{\seq{x}}{\upkappa^{\dag}}
+   &
+   \text{$\disjjoin$-record}
+   \notag
 \end{flalign}
 \end{proof}
