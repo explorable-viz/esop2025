@@ -80,9 +80,7 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
             lab={\ruleName{$\compatPatt{}{}$-constr-eq}}
          ]
          {
-            \compatPatt{p_i}{p_i'}
-            \quad
-            \forall i \le \arity{c}
+            \compatPatt{\seq{p}}{\seq{p}'}
          }
          {
             \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{p}'}}
@@ -91,5 +89,43 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    }
    &
    \notag
+   \\
+   &
+   \text{$\clause{\seq{p_{rest}}}{s}\desugarFwdS \upsigma_{rest}$}
+   &
+   \text{(1) and $\desugarFwdS$-clause-curried}
+   \notag
+   \\
+   &
+   \text{$\clause{\seq{p_{rest}}'}{s'}\desugarFwdS \upsigma_{rest}'$}
+   &
+   \text{(2) and $\desugarFwdS$-clause-curried}
+   \notag
+   \\
+   &
+   \upkappa := \pattArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{rest}}),\;\upsigma := c \mapsto \upkappa
+   &
+   \text{Def of $\pattContF$}
+   \notag
+   \\
+   &
+   \upkappa' := \pattArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{rest}'}),\;\upsigma' := c \mapsto \upkappa'
+   &
+   \text{Def of $\pattContF$}
+   \notag
+   \\
+   &
+   \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \upsigma \disjjoin \upsigma' = c \mapsto \upkappa^{\dag}
+   &
+   \text{$\disjjoin$-constr-eq}
+   \notag
+   \\
 \end{flalign}
 \end{proof}
