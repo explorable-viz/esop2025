@@ -67,15 +67,29 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    \notag
    \\
    &
-   \text{$\clause{\seq{p_{rest}}}{s}\desugarFwdS \upsigma_{rest}$}
+   \qedLocal
+   \upsigma \disjjoin \upsigma' = \uptau
    &
-   \text{(1) and $\desugarFwdS$-clause-curried}
+   \text{(IH) and $\disjjoin$-constr-neq}
    \notag
    \\
    &
-   \text{$\clause{\seq{p_{rest}}'}{s'}\desugarFwdS \upsigma_{rest}'$}
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPatt{}{}$-constr-eq}}
+         ]
+         {
+            \compatPatt{p_i}{p_i'}
+            \quad
+            \forall i \le \arity{c}
+         }
+         {
+            \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{p}'}}
+         }
+      \end{smathpar}
+   }
    &
-   \text{(2) and $\desugarFwdS$-clause-curried}
    \notag
 \end{flalign}
 \end{proof}
