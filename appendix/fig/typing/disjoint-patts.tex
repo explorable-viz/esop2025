@@ -19,7 +19,7 @@
       {
          \compatPatt{p_i}{p_i'}
          \quad
-         \forall i \le arity(c)
+         \forall i \le \arity{c}
       }
       {
          \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{p}'}}
@@ -41,12 +41,26 @@
    \end{smathpar}
    {\flushleft \shadebox{$\compatPatt{\seq{p}}{\seq{p}'}$}
    \begin{smathpar}
-      \inferrule
+      \inferrule*[
+         lab={\ruleName{$\compatPattSym$-head}}
+      ]
       {
-         \exists i.\, \compatPatt{p_i}{p'_i}
+         \compatPatt{p}{p'}
       }
       {
-         \compatPatt{\seq{p}}{\seq{p}'}
+         \compatPatt{p\cdot\seq{p_{rest}}}{p'\cdot\seq{p_{rest}}'}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\compatPattSym$-tail}}
+      ]
+      {
+         \compatPatt{\seq{p_{rest}}}{\seq{p_{rest}}'}
+      }
+      {
+         \compatPatt{p\cdot\seq{p_{rest}}}{p'\cdot\seq{p_{rest}}'}
       }
    \end{smathpar}}
    {\flushleft \shadebox{$\compatPatt{c}{\upmu}$}
