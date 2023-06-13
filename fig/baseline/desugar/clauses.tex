@@ -2,9 +2,9 @@
    {\flushleft \shadebox{$\upmu \desugarPartFwd \upsigma$}
    \hfill}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarPartFwd$-clause}}]
+      \inferrule*[lab={\ruleName{$\desugarFwdS$-clause}}]
       {
-         \strut
+         s \desugarFwdS e
       }
       {
          \clause{p}{s} \desugarFwdR \pattContF(p)(s)
@@ -12,13 +12,13 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarPartFwd$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      \inferrule*[lab={\ruleName{$\desugarFwdS$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
       {
-         \clause{\seq{p}}{s} \desugarPartFwd \upsigma
+         \clause{\seq{p}}{s} \desugarFwdS \upsigma
       }
       {
          \clause{p' \cons \seq{p}}{s}
-         \desugarPartFwd
+         \desugarFwdS
          \pattContF(p')(\exFun{\upsigma})
       }
       %
@@ -26,12 +26,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\upmu \neq \seqEmpty$}]
       {
-         c \desugarPartFwd \sigma
+         c \desugarFwdS \sigma
          \\
-         \upmu \desugarPartFwd \tau
+         \upmu \desugarFwdS \tau
       }
       {
-         c \cons \upmu \desugarPartFwd \sigma \disjjoin \tau
+         c \cons \upmu \desugarFwdS \sigma \disjjoin \tau
       }
    \end{smathpar}
    \\[2mm]
