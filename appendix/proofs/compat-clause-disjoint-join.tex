@@ -15,6 +15,15 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    baz (Cons y ys) (Cons z zs) = ...
    baz  Nil         x          = ...
 \end{lstlisting}
+We define the following partial order on eliminators:
+\begin{equation}
+   \upsigma \elimOrd \upsigma' := 
+   \hfill
+   \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{rest}
+   \land
+   \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{rest}
+\end{equation}
+And we use $\upsigma \sqcap \upsigma'$ to be the greatest lowerbound of $\upsigma,\;\upsigma'$ with respect to this ordering.
 \begin{proof}
 \small
 \begin{flalign}
