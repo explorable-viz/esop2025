@@ -172,18 +172,38 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\compatPattSym$-tail}}
+            right={$\length{\seq{p}} = \length{\seq{p'}} \ge 2$}
          ]
          {
-            \compatPatt{\seq{p_{rest}}}{\seq{p_{rest}}'}
+            \exists i.\; \compatPatt{p_i}{p_i'}
+            \;
+            \forall j < i.\; p_j = p'_j
          }
          {
-            \compatPatt{\clause{p\cdot\seq{p_{rest}}}{s}}{\clause{p'\cdot\seq{p_{rest}}'}{s'}}
+            \compatPatt{\clause{\seq{p}}{s}}{\clause{\seq{p}'}{s'}} 
          }
       \end{smathpar}
    }
    &
    \notag
    \\
+   &
+   \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c_1 \elimmapsto \upsigma_{rest},\quad p = p_1
+   &
+   \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
+   \notag
+   \\
+   &
+   \upsigma' = \seqRangeOp{p'_1}{p'_{i-1}}{\elimmapsto} \elimmapsto c_2 \elimmapsto \upsigma'_{rest},\quad p' = p'_1
+   &
+   \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
+   \notag
+   \\
+   &
+   \qedLocal
+   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto (\set{\elimBind{c_1}{\upsigma_{rest}}} \cup \set{\elimBind{c_2}{\upsigma'_{rest}}})
+   &
+   \disjjoin\text{-no-overlap}
+   \notag
 \end{flalign}
 \end{proof}
