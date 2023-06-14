@@ -172,7 +172,7 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            right={$\length{\seq{p}} = \length{\seq{p'}} \ge 2$}
+            right={$\length{\seq{p}} = \length{\seq{p}'} \ge 2$}
          ]
          {
             \exists i.\; \compatPatt{p_i}{p_i'}
@@ -202,6 +202,53 @@ Pattern matching proceeds from left to right so the following \textit{is} allowe
    &
    \qedLocal
    \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto (\set{\elimBind{c_1}{\upsigma_{rest}}} \cup \set{\elimBind{c_2}{\upsigma'_{rest}}})
+   &
+   \disjjoin\text{-no-overlap}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            right={$\length{\upmu}\ge2$}
+         ]
+         {
+            \forall c_i \in \upmu. \; \compatPatt{c}{c_i}
+         }
+         {
+            \compatPatt{c}{\upmu}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   c := \clause{\seq{p}}{s}
+   \quad
+   c_i := \clause{\seq{p_i}}{s_i}
+   \quad
+   \forall i.\; \exists j.\;\forall k < j.\;p_k = p_{i,k} \land \compatPatt{p_j}{p_{i,j} \land i_j = j}  
+   &
+   \notag
+   \\
+   &
+   \text{Let $j' = \opName{min}_i(i_j)$}
+   &
+   \\
+   &
+   \upsigma := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma_{rest}
+   &
+   \\
+   &
+   \upsigma' := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma'_{rest}
+   &
+   \notag
+   \\
+   &
+   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto (\upsigma \cup \upsigma')
    &
    \disjjoin\text{-no-overlap}
    \notag
