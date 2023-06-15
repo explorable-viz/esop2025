@@ -18,10 +18,8 @@ Once this extension to the desugaring relation has been carefully defined, in fi
 \subsubsection{Equivalence of Semantics}
 
 Informally, the equivalence of the semantics means that desugaring a surface term and surface environment
-produces the same result as surface-evaluating to a surface value and then desugaring the surface value. We
-need this theorem, as it is our intent that the user is presented with the surface semantics, even though we
-execute the program using the core semantics. Without this theorem, we could not properly justify this choice,
-as fluid has some non-trivial desugaring. We formalise the equivalence of these semantics as the following
+produces the same result as surface-evaluating to a surface value and then desugaring the surface value.
+We formalise the equivalence of these semantics as the following
 theorem.
 \begin{theorem}
    \label{thm:semantics-eq}
@@ -35,13 +33,14 @@ theorem.
 \begin{proof}
    For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics-eq}.2, see \appref{semantics-eq-2}
 \end{proof}
-Cases of theorem \ref{thm:semantics-eq} rely on pattern-matching in the surface and core languages producing
-environments that coincide. We state this as lemma \ref{lem:matching-bi}. For the variable case, we need to
+\ref{thm:semantics-eq} relies on pattern-matching in the surface and core languages producing
+environments that coincide sensibly. We state this as lemma \ref{lem:matching-bi}. We need to
 also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
-the precondition to the first case of theorem \ref{thm:semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, see \lemref{closedefs-eq}. The final thing we need to establish
-is that pattern-matching on a $\upmu$ implies that we can desugar it into an eliminator. This is handled by 
+the precondition to theorem \ref{thm:semantics-eq}. We also need to establish that closing
+a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some 
+properties on recursively defined functions and the eliminators they desugar to so that we can characterize 
+their surface evaluation properly, which we do in Lemma \lemref{disjoint-clause-elim}.
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
