@@ -126,12 +126,12 @@
    %
    \inferrule*
    {
-      \Gamma \vdash h: \Delta
+      \Gamma \vdash \uprho: \Delta
       \\
       \Gamma \concat \Delta \vdash e: A
    }
    {
-      \Gamma \vdash \exLetRec{h}{e}: A
+      \Gamma \vdash \exLetRec{\uprho}{e}: A
    }
    \end{smathpar}
    \\[2mm]
@@ -206,12 +206,12 @@
    {
       \vdash \upgamma: \Gamma
       \\
-      \Gamma \vdash h: \Delta
+      \Gamma \vdash \uprho: \Delta
       \\
       \Gamma \concat \Delta \vdash \sigma: \elimTy{A}{B}
    }
    {
-      \vdash \exClosure{\upgamma}{h}{\sigma}: \tyFun{A}{B}
+      \vdash \exClosure{\upgamma}{\uprho}{\sigma}: \tyFun{A}{B}
    }
    %
    \and
