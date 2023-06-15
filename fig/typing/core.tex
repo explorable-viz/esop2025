@@ -46,19 +46,19 @@
    {
       \Gamma \vdash e_i: A_i
       \quad
-      (\forall i \numleq \length{\vec{x}})
+      (\forall i \numleq \length{\seq{x}})
    }
    {
-      \Gamma \vdash \exRec{\vec{\bind{x}{e}}}: \tyRec{\vec{\bind{x}{A}}}
+      \Gamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
    }
    %
    \and
    %
    \inferrule*[
-      right={$i \numleq \length{\vec{x}}$}
+      right={$i \numleq \length{\seq{x}}$}
    ]
    {
-      \Gamma \vdash e: \tyRec{\vec{\bind{x}{A}}}
+      \Gamma \vdash e: \tyRec{\seq{\bind{x}{A}}}
    }
    {
       \Gamma \vdash \exRecProj{e}{x_i}: A_i
@@ -85,7 +85,7 @@
       (\forall i \numleq j)
    }
    {
-      \Gamma \vdash \phi(\vec{e}): \tyInt
+      \Gamma \vdash \phi(\seq{e}): \tyInt
    }
    %
    \and
@@ -172,10 +172,10 @@
    {
       \vdash v_i: A_i
       \quad
-      (\forall i \numleq \length{\vec{x}})
+      (\forall i \numleq \length{\seq{x}})
    }
    {
-      \vdash \exRec{\vec{\bind{x}{v}}}: \tyRec{\vec{\bind{x}{A}}}
+      \vdash \exRec{\seq{\bind{x}{v}}}: \tyRec{\seq{\bind{x}{A}}}
    }
    %
    \and
@@ -204,29 +204,41 @@
    %
    \inferrule*
    {
-      \vdash \rho: \Gamma
+      \vdash \upgamma: \Gamma
       \\
       \Gamma \vdash h: \Delta
       \\
       \Gamma \concat \Delta \vdash \sigma: \elimTy{A}{B}
    }
    {
-      \vdash \exClosure{\rho}{h}{\sigma}: \tyFun{A}{B}
+      \vdash \exClosure{\upgamma}{h}{\sigma}: \tyFun{A}{B}
+   }
+   %
+   \and
+   %
+   \inferrule*[]
+   {
+      \Gamma \vdash \seq{v}: \seq{A}
+      \\
+      \Delta(c)= \tyFun{\seq{A}}{D}
+   }
+   {
+      \Gamma \vdash \exConstr{c}{\seq{v}}: D
    }
    \end{smathpar}
    \\[2mm]
    \begin{minipage}[t]{0.4\textwidth}%
-   {\small \flushleft \shadebox{$\vdash \rho: \Gamma$}%
-   \hfill \textbfit{$\rho$ has type $\Gamma$}}
+   {\small \flushleft \shadebox{$\vdash \upgamma: \Gamma$}%
+   \hfill \textbfit{$\upgamma$ has type $\Gamma$}}
    \begin{smathpar}
    \inferrule*
    {
       \vdash v_i: A_i
       \quad
-      (\forall i \numleq \length{\vec{x}})
+      (\forall i \numleq \length{\seq{x}})
    }
    {
-      \vdash \vec{\bind{x}{v}}: \vec{\bind{x}{A}}
+      \vdash \seq{\bind{x}{v}}: \seq{\bind{x}{A}}
    }
    \end{smathpar}
    \end{minipage}%
@@ -236,15 +248,15 @@
    \hfill \textbfit{$h$ has type $\Delta$ under $\Gamma$}}
    \begin{smathpar}
       \inferrule*[right={
-         \textnormal{$\Delta = \vec{\bind{x}{\tyFun{A}{B}}}$}
+         \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
          \Gamma \concat \Delta \vdash \sigma_i: \elimTy{A_i}{B_i}
          \quad
-         (\forall i \numleq \length{\vec{x}})
+         (\forall i \numleq \length{\seq{x}})
       }
       {
-         \Gamma \vdash \vec{\bind{x}{\sigma}}: \Delta
+         \Gamma \vdash \seq{\bind{x}{\sigma}}: \Delta
       }
    \end{smathpar}
    \end{minipage}
