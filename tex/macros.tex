@@ -104,7 +104,7 @@
 \newcommand*{\elimFalse}[1]{\{\branchFalse{#1}\}}
 \newcommand*{\elimList}[2]{\{\branchNil{#1},\branchCons{#2}\}}
 \newcommand*{\elimProd}[1]{\{\exPair{}{}\elimmapsto{#1}\}}
-
+\newcommand*{\elimPair}[2]{\{#1,\,#2\}}
 \newcommand*{\elimRecEmpty}[1]{\{\exRecEmpty\elimmapsto{#1}\}}
 % \newcommand*{\elimVar}[2]{{#1}\elimmapsto{#2}} % no squigglies as not a 'set' of branches
 
@@ -164,6 +164,7 @@
 \newcommand*{\varFail}{\exVar{\kw{fail}}}
 
 % terms
+\newcommand*{\exPair}[2]{\kw{(}#1\comma#2\kw{)}}
 \newcommand*{\exApp}[2]{{#1}\,{#2}}
 \newcommand*{\exBinaryApp}[3]{{#1} \mathbin{#2} {#3}}
 \newcommand*{\exClosure}[3]{\kw{cl}({#1},{#2},{#3})}

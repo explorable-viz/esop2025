@@ -72,13 +72,16 @@
    \and
    %
    \inferrule*
+   [
+      right={$\Delta(c) = \Delta(c') = D$}
+   ]
    {
       \Gamma \vdash \kappa: K
       \\
       \Gamma \vdash \kappa': K
    }
    {
-      \Gamma \vdash \elimBool{\kappa}{\kappa'}: \elimTy{\tyBool}{K}
+      \Gamma \vdash \elimPair{\seq{\elimBind{c}{\upsigma}}}{\seq{\elimBind{'c}{\upsigma'}}}: \elimTy{D}{K}
    }
    %
    \and
@@ -103,18 +106,6 @@
       \Gamma
       \vdash
       \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \Gamma \vdash \kappa: K
-      \\
-      \Gamma \vdash \sigma: \elimTy{A}{\elimTy{\tyList{A}}{K}}
-   }
-   {
-      \Gamma \vdash \elimList{\kappa}{\sigma}: \elimTy{\tyList{A}}{B}
    }
    \end{smathpar}
    \caption{Syntax and Typing of Eliminators}
