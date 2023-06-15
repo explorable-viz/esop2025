@@ -81,6 +81,7 @@
 % eliminator types
 \newcommand*{\elimTyArrow}{\mapsto}
 \newcommand*{\elimTy}[2]{{#1}\elimTyArrow{#2}}
+\newcommand*{\pstar}{p_{*}}
 
 % eliminators
 \newcommand*{\elimmapsto}{\mapsto}
@@ -96,7 +97,8 @@
 \newcommand*{\branchNil}[1]{\exNil\elimmapsto{#1}}
 \newcommand*{\branchTrue}[1]{\exTrue\elimmapsto{#1}}
 \newcommand*{\branchFalse}[1]{\exFalse\elimmapsto{#1}}
-
+\newcommand*{\newConstrPatt}[1]{#1}
+\newcommand*{\newRecPatt}[1]{\{\}_{#1}}
 \newcommand*{\elimNil}[1]{\{\branchNil{#1}\}}
 \newcommand*{\elimCons}[1]{\{\branchCons{#1}\}}
 \newcommand*{\elimBool}[2]{\{\branchTrue{#1}, \branchFalse{#2}\}}
