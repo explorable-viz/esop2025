@@ -3,16 +3,16 @@
       %========================================
       \PattSeqOpt &:: \Cxt \to \Set{Set}
       \\
-      \PattSeqOpt\;\Gamma &\eqdef 1 + \exists A.\PattSeq\;A\;\Gamma
+      \PattSeqOpt\;\upGamma &\eqdef 1 + \exists A.\PattSeq\;A\;\upGamma
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\mkElimF :: \Patt\;A\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B)$}
       }
       %========================================
       \mkElimF
       &::
-      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \Patt\;A\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B
       \\
       %========================================
       \mkElimF(\pattVar{x})(\kappa)
@@ -33,12 +33,12 @@
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\mkElimF :: \ListRestPatt\;A\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B)$}
       }
       %========================================
       \mkElimF
       &::
-      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
+      \ListRestPatt\;A\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B
       \\
       %========================================
       \mkElimF(\pattListEnd)(\kappa)
@@ -51,12 +51,12 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
+      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;A \to \Cont\;\upGamma\;A)$}
       }
       %========================================
       \elimArgsF
       &::
-      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A
+      \PattSeqOpt\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;A \to \Cont\;\upGamma\;A
       \\
       %========================================
       \elimArgsF(\seqEmpty)(\kappa)
@@ -68,15 +68,15 @@
       \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
       %========================================
       \intertext{
-      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
+      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\upGamma \concat \upGamma')\;A)$}
       }
       %========================================
       \begin{split}
       \orElseF
       &::
-      \PattSeqOpt\;\Gamma' \to\\
+      \PattSeqOpt\;\upGamma' \to\\
       &\phantom{aj.}
-      \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
+      \Cont\;(\upGamma \concat \upGamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\upGamma \concat \upGamma')\;A
       \end{split}
       \\
       %========================================
@@ -110,16 +110,16 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A$}
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\upGamma\;\datatype{\upSigma}{c}\;A$}
       }
       %========================================
       \unlessF
-      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\upGamma\;\datatype{\upSigma}{c}\;A
       \\
       %========================================
       \unlessF_{c}(e)
       &=
-      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Sigma}{c} \setminus \set{c}}
+      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\upSigma}{c} \setminus \set{c}}
       \\
       %========================================
    \end{salign}

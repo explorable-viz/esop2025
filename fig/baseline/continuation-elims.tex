@@ -53,40 +53,40 @@
       \\[2mm]
       \end{tabularx}
    \end{minipage}
-   {\small \flushleft \shadebox{$\Gamma \vdash \sigma: \elimTy{A}{K}$}%
-   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\Gamma$}}
+   {\small \flushleft \shadebox{$\upGamma \vdash \sigma: \elimTy{A}{K}$}%
+   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\upGamma$}}
    \begin{smathpar}
    \inferrule*
    {
-      \Gamma \cons \bind{x}{A} \vdash \kappa: K
+      \upGamma \cons \bind{x}{A} \vdash \kappa: K
    }
    {
-      \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
+      \upGamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
    }
    %
    \and
    %
    \inferrule*
    [
-      right={$\datatype{\Sigma}{c} = \datatype{\Sigma}{c} = D$}
+      right={$\datatype{\upSigma}{c} = \datatype{\upSigma}{c} = D$}
    ]
    {
-      \Gamma \vdash \kappa: K
+      \upGamma \vdash \kappa: K
       \\
-      \Gamma \vdash \kappa': K
+      \upGamma \vdash \kappa': K
    }
    {
-      \Gamma \vdash \elimPair{\seq{\elimBind{c}{\upsigma}}}{\seq{\elimBind{'c}{\upsigma'}}}: \elimTy{D}{K}
+      \upGamma \vdash \elimPair{\seq{\elimBind{c}{\upsigma}}}{\seq{\elimBind{'c}{\upsigma'}}}: \elimTy{D}{K}
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash \kappa: K
+      \upGamma \vdash \kappa: K
    }
    {
-      \Gamma
+      \upGamma
       \vdash
       \elimRecEmpty{\kappa}: \elimTy{\tyRecEmpty}{K}
    }
@@ -95,10 +95,10 @@
    %
    \inferrule*
    {
-      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+      \upGamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
    }
    {
-      \Gamma
+      \upGamma
       \vdash
       \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }

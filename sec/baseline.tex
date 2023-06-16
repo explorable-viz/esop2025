@@ -23,7 +23,7 @@ We formalise the equivalence of these semantics as the following
 theorem.
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $\Gamma \vdash s : A, \; \upgamma : \Gamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
+   Suppose $\upGamma \vdash s : A, \; \upgamma : \upGamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
 \hfill
 \begin{enumerate}
    \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{thm:semantics-eq-1}
@@ -33,14 +33,14 @@ theorem.
 \begin{proof}
    For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics-eq}.2, see \appref{semantics-eq-2}
 \end{proof}
-\ref{thm:semantics-eq} relies on pattern-matching in the surface and core languages producing
-environments that coincide sensibly. We state this as lemma \ref{lem:matching-bi}. We need to
-also establish that environment lookup commutes with desugaring, lemma \ref{lem:lemma:varlookup}. Due to the fact
+\thmref{semantics-eq} relies on pattern-matching in the surface and core languages producing
+environments that coincide sensibly. We state this as \lemref{matching-bi}. We need to
+also establish that environment lookup commutes with desugaring, \lemref{lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
-the precondition to theorem \ref{thm:semantics-eq}. We also need to establish that closing
+the precondition to \thmref{semantics-eq}. We also need to establish that closing
 a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some 
 properties on recursively defined functions and the eliminators they desugar to so that we can characterize 
-their surface evaluation properly, which we do in Lemma \lemref{disjoint-clause-elim}.
+their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
@@ -75,7 +75,7 @@ their surface evaluation properly, which we do in Lemma \lemref{disjoint-clause-
 \end{lemma}
 \begin{lemma}
    \label{lem:match-then-desugar}
-   Suppose we have $\Gamma \vdash\upmu\,:\,A \to B$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarFwdS \upsigma$.
+   Suppose we have $\upGamma \vdash\upmu\,:\,A \to B$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarFwdS \upsigma$.
 \end{lemma}
 \begin{proof}
    see \appref{match-then-desugar}.
@@ -100,8 +100,10 @@ their surface evaluation properly, which we do in Lemma \lemref{disjoint-clause-
 \input{fig/baseline/core/eval}
 \input{fig/baseline/core/match}
 \clearpage
-\subsection{Desugaring}
 
+\subsection{Desugaring}
+The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is 
+consistent in both the core and surface languages is imperative for \thmref{semantics-eq}
 \input{fig/baseline/desugar/term}
 \input{fig/baseline/desugar/clauses}
 \input{fig/baseline/desugar/value}

@@ -1,13 +1,13 @@
 \begin{figure}
-   \small{\flushleft \shadebox{$\Gamma \vdash e: A$}%
-   \hfill \textbfit{$e$ has type $A$ under $\Gamma$}}
+   \small{\flushleft \shadebox{$\upGamma \vdash e: A$}%
+   \hfill \textbfit{$e$ has type $A$ under $\upGamma$}}
    \begin{smathpar}
-   \inferrule*[right={$x : A \in \Gamma$}]
+   \inferrule*[right={$x : A \in \upGamma$}]
    {
       \strut
    }
    {
-      \Gamma \vdash \exVar{x}: A
+      \upGamma \vdash \exVar{x}: A
    }
    %
    \and
@@ -17,39 +17,45 @@
       \strut
    }
    {
-      \Gamma \vdash \exInt{n}: \tyInt
+      \upGamma \vdash \exInt{n}: \tyInt
+   }
+   %
+   \and
+   %
+   \inferrule*[]
+   {
+      \upGamma \vdash \seq{e}: \seq{A}
+      \\
+      d: (c: \tyFun{\seq{A}}{D})
+   }
+   {
+      \upGamma \vdash \exConstr{c}{\seq{e}}: d
    }
    %
    \and
    %
    \inferrule*
    {
-      \strut
+      \upGamma \vdash e_i: \tyStr
+      \\
+      \upGamma \vdash e'_i: A
+      \quad
+      (\forall i \leq \length{\seq{e}})
    }
    {
-      \Gamma \vdash \exTrue: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \Gamma \vdash \exFalse: \tyBool
+      \upGamma \vdash \exDict{\seq{\bind{e}{e}}'}: \tyDict{A}
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash e_i: A_i
+      \upGamma \vdash e_i: A_i
       \quad
       (\forall i \numleq \length{\seq{x}})
    }
    {
-      \Gamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
+      \upGamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
    }
    %
    \and
@@ -58,20 +64,20 @@
       right={$i \numleq \length{\seq{x}}$}
    ]
    {
-      \Gamma \vdash e: \tyRec{\seq{\bind{x}{A}}}
+      \upGamma \vdash e: \tyRec{\seq{\bind{x}{A}}}
    }
    {
-      \Gamma \vdash \exRecProj{e}{x_i}: A_i
+      \upGamma \vdash \exRecProj{e}{x_i}: A_i
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash \sigma : \elimTy{A}{B}
+      \upGamma \vdash \sigma : \elimTy{A}{B}
    }
    {
-      \Gamma \vdash \exLambda{\sigma} : \tyFun{A}{B}
+      \upGamma \vdash \exLambda{\sigma} : \tyFun{A}{B}
    }
    %
    \and
@@ -80,24 +86,24 @@
       right={$f: \seq{A} \to B \in \Phi$}
    ]
    {
-      \Gamma \vdash e_i: A
+      \upGamma \vdash e_i: A
       \quad
       (\forall i \numleq j)
    }
    {
-      \Gamma \vdash f(\seq{e}): B
+      \upGamma \vdash f(\seq{e}): B
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash e: \tyFun{A}{B}
+      \upGamma \vdash e: \tyFun{A}{B}
       \\
-      \Gamma \vdash e': A
+      \upGamma \vdash e': A
    }
    {
-      \Gamma \vdash \exApp{e}{e'}: B
+      \upGamma \vdash \exApp{e}{e'}: B
    }
    %
    \and
@@ -107,31 +113,31 @@
       \strut
    }
    {
-      \Gamma \vdash \exNil: \tyList{A}
+      \upGamma \vdash \exNil: \tyList{A}
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash e: A
+      \upGamma \vdash e: A
       \\
-      \Gamma \vdash e': \tyList{A}
+      \upGamma \vdash e': \tyList{A}
    }
    {
-      \Gamma \vdash (\exCons{e}{e'}): \tyList{A}
+      \upGamma \vdash (\exCons{e}{e'}): \tyList{A}
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash \uprho: \Delta
+      \upGamma \vdash \uprho: \upDelta
       \\
-      \Gamma \concat \Delta \vdash e: A
+      \upGamma \concat \upDelta \vdash e: A
    }
    {
-      \Gamma \vdash \exLetRec{\uprho}{e}: A
+      \upGamma \vdash \exLetRec{\uprho}{e}: A
    }
    \end{smathpar}
    \\[2mm]
@@ -144,6 +150,26 @@
    }
    {
       \vdash \exInt{n}: \tyInt
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \strut
+   }
+   {
+      \upGamma \vdash \exTrue: \tyBool
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \strut
+   }
+   {
+      \upGamma \vdash \exFalse: \tyBool
    }
    %
    \and
@@ -184,11 +210,11 @@
    %
    \inferrule*
    {
-      \vdash \upgamma: \Gamma
+      \vdash \upgamma: \upGamma
       \\
-      \Gamma \vdash \uprho: \Delta
+      \upGamma \vdash \uprho: \upDelta
       \\
-      \Gamma \concat \Delta \vdash \sigma: \elimTy{A}{B}
+      \upGamma \concat \upDelta \vdash \sigma: \elimTy{A}{B}
    }
    {
       \vdash \exClosure{\upgamma}{\uprho}{\sigma}: \tyFun{A}{B}
@@ -198,18 +224,18 @@
    %
    \inferrule*[]
    {
-      \Gamma \vdash \seq{v}: \seq{A}
+      \upGamma \vdash \seq{v}: \seq{A}
       \\
-      \Delta(c)= \tyFun{\seq{A}}{D}
+      d: (c: \tyFun{\seq{A}}{D})
    }
    {
-      \Gamma \vdash \exConstr{c}{\seq{v}}: D
+      \upGamma \vdash \exConstr{c}{\seq{v}}: d
    }
    \end{smathpar}
    \\[2mm]
    \begin{minipage}[t]{0.4\textwidth}%
-   {\small \flushleft \shadebox{$\vdash \upgamma: \Gamma$}%
-   \hfill \textbfit{$\upgamma$ has type $\Gamma$}}
+   {\small \flushleft \shadebox{$\vdash \upgamma: \upGamma$}%
+   \hfill \textbfit{$\upgamma$ has type $\upGamma$}}
    \begin{smathpar}
    \inferrule*
    {
@@ -224,19 +250,19 @@
    \end{minipage}%
    \hspace{1.5cm}
    \begin{minipage}[t]{0.6\textwidth}%
-   {\small \flushleft \shadebox{$\Gamma \vdash \uprho: \Delta$}%
-   \hfill \textbfit{$h$ has type $\Delta$ under $\Gamma$}}
+   {\small \flushleft \shadebox{$\upGamma \vdash \uprho: \upDelta$}%
+   \hfill \textbfit{$\uprho$ has type $\upDelta$ under $\upGamma$}}
    \begin{smathpar}
       \inferrule*[right={
-         \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
+         \textnormal{$\upDelta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \Gamma \concat \Delta \vdash \sigma_i: \elimTy{A_i}{B_i}
+         \upGamma \concat \upDelta \vdash \sigma_i: \elimTy{A_i}{B_i}
          \quad
          (\forall i \numleq \length{\seq{x}})
       }
       {
-         \Gamma \vdash \seq{\bind{x}{\sigma}}: \Delta
+         \upGamma \vdash \seq{\bind{x}{\sigma}}: \upDelta
       }
    \end{smathpar}
    \end{minipage}

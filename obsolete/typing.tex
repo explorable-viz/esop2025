@@ -1,23 +1,23 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash \sigma: \elimTy{A}{E}$}%
-   \hfill \textbfit{$\sigma$ has eliminator type $\elimTy{A}{E}$ in $\Gamma$, where $A$ and $C$ are well-kinded in $\Delta$}}
+   {\small \flushleft \shadebox{$\upDelta; \upGamma \vdash \sigma: \elimTy{A}{E}$}%
+   \hfill \textbfit{$\sigma$ has eliminator type $\elimTy{A}{E}$ in $\upGamma$, where $A$ and $C$ are well-kinded in $\upDelta$}}
    \begin{smathpar}
       \inferrule*
       {
-         \Delta; \cxtExtend{\Gamma}{\bind{x}{A}} \vdash P: E
+         \upDelta; \cxtExtend{\upGamma}{\bind{x}{A}} \vdash P: E
       }
       {
-         \Delta; \Gamma \vdash \elimVar{x}{P}: \elimTy{A}{E}
+         \upDelta; \upGamma \vdash \elimVar{x}{P}: \elimTy{A}{E}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash P: E
+         \upDelta; \upGamma \vdash P: E
       }
       {
-         \Delta; \Gamma
+         \upDelta; \upGamma
          \vdash
          \elimRecord{\seqEmpty}{P}:
          \elimTy{\tyRecord{R}}{E}
@@ -27,13 +27,13 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma
+         \upDelta; \upGamma
          \vdash
          \elimRecord{\seq{\ell}}{P}:
          \elimTy{\tyRecord{R}}{\elimTy{B}{E}}
       }
       {
-         \Delta; \Gamma
+         \upDelta; \upGamma
          \vdash
          \elimRecord{\seq{\ell}, \ell'}{P}:
          \elimTy{\tyRecord{\rowExtend{R}{\bind{\ell'}{B}}}}{E}
@@ -43,14 +43,14 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash P_i: \elimTy{A_i}{E}
+         \upDelta; \upGamma \vdash P_i: \elimTy{A_i}{E}
          \quad
          (\forall i \leq \length{\seq{P}})
          \\
-         \Delta; \Gamma \vdash P': \elimTy{\tyVariant{R}}{E}
+         \upDelta; \upGamma \vdash P': \elimTy{\tyVariant{R}}{E}
       }
       {
-         \Delta; \Gamma
+         \upDelta; \upGamma
          \vdash
          \elimVariant{\ell}{P}{P'}: \elimTy{\tyVariant{\rowExtend{R}{\seq{\bind{\ell}{A}}}}}{E}
       }
@@ -59,48 +59,48 @@
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash P_i: \elimTy{A_i}{\tyFun{(\tyFun{B_i}{C})}{C}}
+         \upDelta; \upGamma \vdash P_i: \elimTy{A_i}{\tyFun{(\tyFun{B_i}{C})}{C}}
          \quad
          (\forall i \in \length{\seq{P}})
          \\
-         \Delta; \Gamma \vdash P': \elimTy{A'}{C}
+         \upDelta; \upGamma \vdash P': \elimTy{A'}{C}
       }
       {
-         \Delta; \Gamma
+         \upDelta; \upGamma
          \vdash
          \elimComp{\ell}{P; \elimBind{\kw{return}}{P'}}: \elimTy{\tyComp{A'}{\seq{\bind{\ell}{\tyFun{A}{B}}}}}{C}
       }
    \end{smathpar}
    \\[2mm]
-   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash V: A$}%
-   \hfill \textbfit{$V$ has type $A$ in $\Gamma$, where $A$ is well-kinded in $\Delta$}}
+   {\small \flushleft \shadebox{$\upDelta; \upGamma \vdash V: A$}%
+   \hfill \textbfit{$V$ has type $A$ in $\upGamma$, where $A$ is well-kinded in $\upDelta$}}
    \begin{smathpar}
       \inferrule*
       {
          \strut
       }
       {
-         \Delta; \Gamma \vdash \exInt{n}: \tyInt
+         \upDelta; \upGamma \vdash \exInt{n}: \tyInt
       }
       %
       \and
       %
       \inferrule*
       {
-         \bind{x}{A} \in \Gamma
+         \bind{x}{A} \in \upGamma
       }
       {
-         \Delta; \Gamma \vdash \exVar{x}: A
+         \upDelta; \upGamma \vdash \exVar{x}: A
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: A
+         \upDelta; \upGamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
+         \upDelta; \upGamma \vdash \exVariant{\ell}{V}: \tyVariant{\rowExtend{R}{\bind{\ell}{A}}}
       }
       %
       \and
@@ -110,113 +110,113 @@
          \strut
       }
       {
-         \Delta; \Gamma \vdash \exRecordEmpty: \tyRecord{}
+         \upDelta; \upGamma \vdash \exRecordEmpty: \tyRecord{}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash U: \tyRecord{R}
+         \upDelta; \upGamma \vdash U: \tyRecord{R}
          \\
-         \Delta; \Gamma \vdash V_i: A_i
+         \upDelta; \upGamma \vdash V_i: A_i
          \quad
          (\forall i \in \length{\seq{A}})
       }
       {
-         \Delta; \Gamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
+         \upDelta; \upGamma \vdash \exRecordExtend{U}{\seq{\bind{\ell}{V}}}: \tyRecord{\rowExtend{R}{\seq{\bind{\ell}{A}}}}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
+         \upDelta; \upGamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exFun{\sigma}: \tyFun{A}{C}
+         \upDelta; \upGamma \vdash \exFun{\sigma}: \tyFun{A}{C}
       }
       %
       \and
       %
       \inferrule*
       {
-         \cxtExtend{\Delta}{\bind{\alpha}{K}}; \Gamma \vdash M: C
+         \cxtExtend{\upDelta}{\bind{\alpha}{K}}; \upGamma \vdash M: C
          \\
-         \alpha \notin \FV(\Gamma)
+         \alpha \notin \FV(\upGamma)
       }
       {
-         \Delta; \Gamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{K}{C}
+         \upDelta; \upGamma \vdash \exPolyFun{\alpha}{M}: \tyForall{\alpha}{K}{C}
       }
    \end{smathpar}
    \\[2mm]
-   {\small \flushleft \shadebox{$\Delta; \Gamma \vdash M: C$}%
-   \hfill \textbfit{$M$ has computation type $C$ in $\Gamma$, where $C$ is well-kinded in $\Delta$}}
+   {\small \flushleft \shadebox{$\upDelta; \upGamma \vdash M: C$}%
+   \hfill \textbfit{$M$ has computation type $C$ in $\upGamma$, where $C$ is well-kinded in $\upDelta$}}
    \begin{smathpar}
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: A
+         \upDelta; \upGamma \vdash V: A
       }
       {
-         \Delta; \Gamma \vdash \exReturn{V}: \tyComp{A}{R}
+         \upDelta; \upGamma \vdash \exReturn{V}: \tyComp{A}{R}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyFun{A}{C}
+         \upDelta; \upGamma \vdash V: \tyFun{A}{C}
          \\
-         \Delta; \Gamma \vdash U: A
+         \upDelta; \upGamma \vdash U: A
       }
       {
-         \Delta; \Gamma \vdash \exApp{V}{U}: C
+         \upDelta; \upGamma \vdash \exApp{V}{U}: C
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: A
+         \upDelta; \upGamma \vdash V: A
          \\
-         \Delta; \Gamma \vdash \sigma: \elimTy{A}{C}
+         \upDelta; \upGamma \vdash \sigma: \elimTy{A}{C}
       }
       {
-         \Delta; \Gamma \vdash \exMatch{V}{\sigma}: C
+         \upDelta; \upGamma \vdash \exMatch{V}{\sigma}: C
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash V: \tyForall{\alpha}{K}{C}
+         \upDelta; \upGamma \vdash V: \tyForall{\alpha}{K}{C}
          \\
-         \Delta \vdash T: K
+         \upDelta \vdash T: K
       }
       {
-         \Delta; \Gamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \Delta; \Gamma \vdash V: A
-      }
-      {
-         \Delta; \Gamma \vdash \exOp{\ell}{V}: \tyComp{B}{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}
+         \upDelta; \upGamma \vdash \exPolyApp{V}{T}: \subst{C}{T}{\alpha}
       }
       %
       \and
       %
       \inferrule*
       {
-         \Delta; \Gamma \vdash M: C
+         \upDelta; \upGamma \vdash V: A
+      }
+      {
+         \upDelta; \upGamma \vdash \exOp{\ell}{V}: \tyComp{B}{\rowExtend{R}{\bind{\ell}{\tyFun{A}{B}}}}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \upDelta; \upGamma \vdash M: C
          \\
-         \Delta; \Gamma \vdash V: \tyHandler{C}{D}
+         \upDelta; \upGamma \vdash V: \tyHandler{C}{D}
       }
       {
-         \Delta; \Gamma \vdash \exHandle{M}{V}: D
+         \upDelta; \upGamma \vdash \exHandle{M}{V}: D
       }
    \end{smathpar}
    \caption{Typing rules}
