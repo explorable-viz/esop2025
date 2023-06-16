@@ -77,15 +77,15 @@
    \and
    %
    \inferrule*[
-      right={$\phi \in \Int^j \to \Int$}
+      right={$f: \seq{A} \to B \in \Phi$}
    ]
    {
-      \Gamma \vdash e_i: \tyInt
+      \Gamma \vdash e_i: A
       \quad
       (\forall i \numleq j)
    }
    {
-      \Gamma \vdash \phi(\seq{e}): \tyInt
+      \Gamma \vdash f(\seq{e}): B
    }
    %
    \and
@@ -144,26 +144,6 @@
    }
    {
       \vdash \exInt{n}: \tyInt
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \vdash \exTrue: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \vdash \exFalse: \tyBool
    }
    %
    \and
@@ -243,8 +223,8 @@
    \end{smathpar}
    \end{minipage}%
    \hspace{1.5cm}
-   \begin{minipage}[t]{0.48\textwidth}%
-   {\small \flushleft \shadebox{$\Gamma \vdash h: \Delta$}%
+   \begin{minipage}[t]{0.6\textwidth}%
+   {\small \flushleft \shadebox{$\Gamma \vdash \uprho: \Delta$}%
    \hfill \textbfit{$h$ has type $\Delta$ under $\Gamma$}}
    \begin{smathpar}
       \inferrule*[right={
