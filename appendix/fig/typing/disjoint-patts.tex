@@ -53,20 +53,18 @@
          lab={\ruleName{$\compatPattSym$-tail}}
       ]
       {
-         p = p'
-         \\
          \compatPatt{\seq{p_{rest}}}{\seq{p_{rest}}'}
       }
       {
-         \compatPatt{p\cdot\seq{p_{rest}}}{p'\cdot\seq{p_{rest}}'}
+         \compatPatt{p\cdot\seq{p_{rest}}}{p\cdot\seq{p_{rest}}'}
       }
    \end{smathpar}}
    {\flushleft \shadebox{$\compatPatt{c}{\upmu}$}
    \begin{smathpar}
       \inferrule*[]
       {
-         \exists i.\; \compatPatt{p_i}{p_i'}
-         \;
+         \exists i.\; (\compatPatt{p_i}{p_i'})
+         \land
          \forall j < i.\; p_j = p'_j
       }
       {

@@ -1,29 +1,13 @@
-By case analysis and induction on derivations of $\compatPattSym$. For our first pass, we will only consider pairs of clauses. Then, we will generalize this to arbitrary numbers of clauses. We disallow certain combinations of patterns which might otherwise be allowed. For example, we do not allow clauses formed in the following fashion:
-\begin{lstlisting}[language=Fluid]
-   foo :: forall a b. List a -> List a -> b
-   foo (Cons y ys) (Cons z zs) = ...
-   foo  x           Nil        = ...
-
-   bar :: a -> ... -> c
-   bar x ... = ...
-   bar y ... = ...
-\end{lstlisting}
-IE when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name.
-Pattern matching proceeds from left to right so the following \textit{is} allowed:
-\begin{lstlisting}[language = Fluid]
-   baz :: forall a b. List a -> List a -> b
-   baz (Cons y ys) (Cons z zs) = ...
-   baz  Nil         x          = ...
-\end{lstlisting}
-We define the following partial order on eliminators:
-\begin{equation}
-   \upsigma \elimOrd \upsigma' := 
-   \hfill
-   \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{rest}
-   \land
-   \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{rest}
-\end{equation}
-And we use $\upsigma \sqcap \upsigma'$ to be the greatest lowerbound of $\upsigma,\;\upsigma'$ with respect to this ordering.
+By case analysis and induction on derivations of $\compatPattSym$. For our first pass, we will only consider pairs of clauses. Then, we will generalize this to arbitrary numbers of clauses.
+% We define the following partial order on eliminators:
+% \begin{equation}
+%    \upsigma \elimOrd \upsigma' := 
+%    \hfill
+%    \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{rest}
+%    \land
+%    \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{rest}
+% \end{equation}
+% And we use $\upsigma \sqcap \upsigma'$ to be the greatest lowerbound of $\upsigma,\;\upsigma'$ with respect to this ordering.
 \begin{proof}
 \small
 \begin{flalign}

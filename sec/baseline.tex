@@ -103,7 +103,25 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 
 \subsection{Desugaring}
 The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is 
-consistent in both the core and surface languages is imperative for \thmref{semantics-eq}
+consistent in both the core and surface languages is imperative for \thmref{semantics-eq}. We disallow certain combinations of 
+patterns which might otherwise be allowed in another language. For example, we do not allow clauses formed in the following fashion:
+{\small
+\begin{lstlisting}[language=Fluid]
+   foo (Cons y ys) (Cons z zs) = ...
+   foo  x           Nil        = ...
+
+   bar x ... = ...
+   bar y ... = ...
+\end{lstlisting}}
+In other words, when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name,
+and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish 
+both arguments. As pattern matching proceeds from left to right, this means that the following \textit{is} allowed:
+{\small
+\begin{lstlisting}[language = Fluid]
+   baz :: forall a b. List a -> List a -> b
+   baz (Cons y ys) (Cons z zs) = ...
+   baz  Nil         x          = ...
+\end{lstlisting}}
 \input{fig/baseline/desugar/term}
 \input{fig/baseline/desugar/clauses}
 \input{fig/baseline/desugar/value}
