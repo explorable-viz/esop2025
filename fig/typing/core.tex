@@ -40,7 +40,7 @@
       \\
       \upGamma \vdash e'_i: A
       \quad
-      (\forall i \leq \length{\seq{e}})
+      (\forall i \numleq \length{\seq{e}})
    }
    {
       \upGamma \vdash \exDict{\seq{\bind{e}{e}}'}: \tyDict{A}
@@ -83,7 +83,7 @@
    \and
    %
    \inferrule*[
-      right={$f: \seq{A} \to B \in \Phi$}
+      right={$f: \tyForeign{\seq{A}}{B} \in \Phi$}
    ]
    {
       \upGamma \vdash e_i: A
