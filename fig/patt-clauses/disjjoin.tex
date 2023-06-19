@@ -2,7 +2,7 @@
    {\flushleft \shadebox{$\upkappa \disjjoin \upkappa' = \upkappa^{\dag}$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\disjjoin{-}\uplambda$}}
+         lab={\ruleName{$\disjjoin$-lambda}}
       ]
       {
          \upsigma \disjjoin \upsigma' = \uptau
@@ -55,10 +55,10 @@
          lab={\ruleName{$\disjjoin$-no-overlap}}
       ]
       {
-         dom(\upsigma) \cap dom(\uptau) = \emptyset
+         dom(\elimConstr{\seq{\elimBind{c}{\upsigma}}}) \cap dom(\elimConstr{\seq{\elimBind{c'}{\upsigma'}}}) = \emptyset
       }
       {
-         \upsigma \disjjoin \uptau = \upsigma \cup \uptau
+         \elimConstr{\seq{\elimBind{c}{\upsigma}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\upsigma'}}} = \elimConstr{\seq{\elimBind{c}{\upsigma}}} \cup \elimConstr{\seq{\elimBind{c'}{\upsigma'}}}
       }
    \end{smathpar}}
    \caption{Disjoint join of (partial) continuations}
