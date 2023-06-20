@@ -3,20 +3,13 @@ Start with the following assumptions:
    \compatPatt{c}{\upmu}
 \end{equation}
 \begin{equation}
+   \locallabel{desugar-left}
    c \desugarFwdS \upsigma
 \end{equation}
 \begin{equation}
+   \locallabel{desugar-right}
    \upmu \desugarFwdS \upsigma'
 \end{equation}
-% We define the following partial order on eliminators:
-% \begin{equation}
-%    \upsigma \elimOrd \upsigma' := 
-%    \hfill
-%    \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{\dag}
-%    \opAnd
-%    \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{\dag}
-% \end{equation}
-% And we use $\upsigma \sqcap \upsigma'$ to be the greatest lowerbound of $\upsigma,\;\upsigma'$ with respect to this ordering.
 We proceed by induction on the derivation of $\compatPattSym$
 \begin{proof}
 \small
@@ -24,14 +17,14 @@ We proceed by induction on the derivation of $\compatPattSym$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\compatPattSym$-head}}
-         ]
+         \inferrule*[]
          {
-            \compatPatt{p}{p'}
+            \exists i.\; (\compatPatt{p_i}{p_i'})
+            \opAnd
+            \forall j < i.\; p_j = p'_j
          }
          {
-            \compatPatt{\clause{p\cdot\seq{p_{\dag}}}{s}}{p'\cdot\clause{\seq{p_{\dag}}'}{s'}}
+            \compatPatt{(\clause{\seq{p}}{s})}{(\clause{\seq{p}'}{s'})} 
          }
       \end{smathpar}
    }
@@ -39,29 +32,11 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   \clause{p\cdot\seq{p_{\dag}}}{s}\desugarFwdS \upsigma
-   &
-   \\
-   &
-   \clause{p'\cdot\seq{p_{\dag}}}{s'}\desugarFwdS \upsigma'
-   &
-   \\
-   &
-   \text{$\clause{\seq{p_{\dag}}}{s}\desugarFwdS \upsigma_{\dag}$}
-   &
-   \text{(1) and $\desugarFwdS$-clause-curried}
-   \\
-   &
-   \text{$\clause{\seq{p_{\dag}}'}{s'}\desugarFwdS \upsigma_{\dag}'$}
-   &
-   \text{(2) and $\desugarFwdS$-clause-curried}
-   \\
-   &
-   \text{Have three cases for $\compatPatt{p}{p'}$}
+   \text{Have three cases for $\compatPatt{p_i}{p'_i}$}
    &
    \notag
    \\
-   \subcase{Constr-neq}
+   \subcase{constr-neq}
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
@@ -77,6 +52,18 @@ We proceed by induction on the derivation of $\compatPattSym$
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \clause{\seq{p}}{s} \desugarFwdS \upsigma
+   &
+   \text{Assumption \localref{desugar-left}}
+   \notag
+   \\
+   &
+   \clause{\seq{p}'}{s'} \desugarFwdS \upsigma'
+   &
+   \text{Assumption \localref{desugar-right}}
    \notag
    \\
    &
@@ -232,31 +219,32 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   c := \clause{\seq{p}}{s}
-   \quad
-   c_i := \clause{\seq{p_i}}{s_i}
-   \quad
-   \forall i.\; \exists j.\;\forall k < j.\;p_k = p_{i,k} \opAnd \compatPatt{p_j}{p_{i,j} \opAnd i_j = j}  
+   c \desugarFwdS \upsigma
    &
+   \text{assumption \localref{desugar-left}}
    \notag
    \\
    &
-   \text{Let $j' = \opName{min}_i(i_j)$}
+   \forall c_i \in \upmu.\; \exists \uptau_i.\; \upsigma \disjjoin \upsigma_i = \uptau_i
    &
+   \text{premise}
    \\
    &
-   \upsigma := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma_{\dag}
+   \forall c_i,c_j \in \upmu.\; c_i \desugarFwdS \upsigma_i,\; c_k \desugarFwdS \upsigma_j,\; \exists \uptau_{i,j}.\;\upsigma_i \disjjoin \upsigma_j = \uptau_{i,j}
    &
+   \text{premise}
    \\
    &
-   \upsigma' := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma'_{\dag}
+   \upmu \desugarFwdS \upsigma'
    &
+   \text{assumption \localref{desugar-right}}
    \notag
    \\
    &
-   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto (\upsigma \cup \upsigma')
+   \qedLocal
+   \exists \uptau.\;\upsigma \disjjoin \upsigma' = \uptau
    &
-   \disjjoin\text{-no-overlap}
+   \thmref{join-preserves-join}
    \notag
 \end{flalign}
 \end{proof}
