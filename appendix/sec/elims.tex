@@ -24,7 +24,12 @@ Singletons allow us to define a notion of an eliminators \textit{prefix}.
    and write $\upsigma \leq \uptau$. Given two eliminators $\upsigma,\upsigma'$ we write $\uptau = \upsigma \sqcap \upsigma'$
    to mean $\uptau$ is the longest shared prefix of $\upsigma$ and $\upsigma'$
 \end{definition}
-
+\begin{lemma}
+   If $c$ a clause, and $c \desugarFwdS \upsigma$, then $\upsigma$ is a singleton.
+\end{lemma}
+\begin{proof}
+   Branch nodes are introduced only during the disjoint join, never during desugaring.
+\end{proof}
 \begin{lemma}
    For two singleton eliminators $\upsigma = \seqRangeOp{p_1}{p_m}{\elimmapsto} \elimmapsto (\exConstr{c}{\seq{p}} \elimmapsto \uptau)$ and
    $\upsigma' = \seqRangeOp{p_1}{p_m}{\elimmapsto} \elimmapsto (\exConstr{c'}{\seq{p}'} \elimmapsto \uptau')$. 
