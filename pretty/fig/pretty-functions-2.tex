@@ -28,11 +28,15 @@
         \\
         \exPrettyFunction{\exListNext{s}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symComma"}}}{\exPrettyFunction{s}}}{\exPrettyFunction{l}}
         \\[2mm]
-        \exPrettyFunction{\param}&: \Qualifier \rightarrow \Doc
+        \exPrettyFunction{\param}&: \Qualifier^+ \rightarrow \Doc
         \\
-        \exPrettyFunction{\qualGuard{s}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{(\qualGuard{s})} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{\qualDeclaration{p}{s}} &=  \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}   
+        \\
+        \exPrettyFunction{\qualGenerator{p}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}} 
+        \\
+        \exPrettyFunction{(\qualGuard{s})\cons\kw{q}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}}{ \exLayoutText{\kw{"\symComma"}}}}{\exPrettyFunction{q}}   
     \end{salign}
     \caption{Pretty Function Continued}
 \end{figure}
