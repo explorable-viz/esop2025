@@ -16,4 +16,11 @@ We present some facts/strong intuitions about eliminators which we use in our pr
    Temporarily Omitted.
 \end{proof}
 
-We require that we can index into eliminators efficiently. The indexing strategy needs to take into account of the 
+An eliminator with no instances of the \textit{branch} constructor, we call it a \textit{singleton} eliminator.
+Singletons allow us to define a notion of an eliminators \textit{prefix}.
+
+\begin{definition}
+   If $\exists \upsigma'.\; \upsigma \elimmapsto \upsigma' = \uptau$ then we say $\upsigma$ is a prefix of $\uptau$, 
+   and write $\upsigma \leq \uptau$. Given two eliminators $\upsigma,\upsigma'$ we write $\uptau = \upsigma \sqcap \upsigma'$
+   to mean $\uptau$ is the longest shared prefix of $\upsigma$ and $\upsigma'$
+\end{definition}

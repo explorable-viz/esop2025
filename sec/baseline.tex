@@ -99,6 +99,11 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \begin{proof}
    Temporarily Omitted.
 \end{proof}
+\begin{lemma}
+   Suppose we have $c_1,c_2$ clauses, such that $\upGamma \vdash c_1: \tyFun{A}{B},\; c_2:\tyFun{A}{B}$ and $\compatPatt{c_1}{c_2}$
+   Then $c_1 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c}{\seq{p}} \elimmapsto \upsigma$ and 
+   $c_2 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c'}{\seq{p}} \elimmapsto \upsigma'$
+\end{lemma}
 \clearpage
 \input{fig/baseline/surface/syntax}
 \input{fig/typing/surface}

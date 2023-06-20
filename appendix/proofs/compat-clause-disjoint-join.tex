@@ -168,12 +168,29 @@ We proceed by induction on the derivation of $\compatPattSym$
             right={$\length{\seq{p}} = \length{\seq{p}'} \ge 2$}
          ]
          {
-            \exists i.\; \compatPatt{p_i}{p_i'}
-            \;
+            \exists i. \compatPatt{p_i}{p_i'}
+            \opAnd
             \forall j < i.\; p_j = p'_j
          }
          {
             \compatPatt{\clause{\seq{p}}{s}}{\clause{\seq{p}'}{s'}} 
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugarFwdS$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+         {
+            \clause{\seq{p}}{s} \desugarFwdS \upsigma_1
+         }
+         {
+            \clause{p_1 \cons \seq{p}}{s}
+            \desugarFwdS
+            \mkElimF(p_1)(\exFun{\upsigma})
          }
       \end{smathpar}
    }
