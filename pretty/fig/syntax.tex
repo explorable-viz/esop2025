@@ -3,29 +3,10 @@
    \begin{minipage}[t]{0.48\textwidth}
    \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
       &\textbfit{Surface term}&
+      \lowlight{$\SExpr\;\Gamma\;A$}
       \\
       $s ::=$
       &
-      $\exInt{n}$
-      &
-      integer
-      \\
-      &
-      $\exVar{x}$
-      &
-      variable
-      \\
-      &
-      $\exRec{\seq{\bind{x}{s}}}$
-      &
-      record
-      \\
-      &
-      $\exRecProj{s}{x}$
-      &
-      record projection
-      \\
-      &      
       $\exBinaryApp{s}{\oplus}{s'}$
       &
       binary application
@@ -46,14 +27,43 @@
       match
       \\
       &
+      $\exList{s}{l}$
+      &
+      non-empty list
+      \\
+      &
+      $\exListEnum{s}{s'}$
+      &
+      list enum
+      \\
+      &
+      $\exListComp{s}{\seq{q}}$
+      &
+      list comprehension
+      \\
+      &
+      $\exDo{\seq{d}}$
+      &
+      do
+      \\
+      &
       $\exLambda{\upmu}$
       &
       lambda
-      \\ 
+      \\[2mm]
+      &\textbfit{List rest}&
+      \lowlight{$\ListRest\;\Gamma\;A$}
+      \\
+      $l ::=$
       &
-      $\exApp{s}{s'}$
+      $\exListEnd$
       &
-      application
+      end
+      \\
+      &
+      $\exListNext{s}{l}$
+      &
+      cons
       \\[2mm]
       &\textbfit{Recursive functions}&
       \\
@@ -70,6 +80,7 @@
       &
       \\
       &\textbfit{Clause}&
+      \lowlight{$\Clause\;\Gamma\;A\;B$}
       \\
       $c ::=$
       &
@@ -81,6 +92,7 @@
    \begin{minipage}[t]{0.5\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.8cm}L{2.9cm}}
       &\textbfit{Pattern}&
+      \lowlight{$\Patt\;A\;\Gamma$}
       \\
       $p ::=$
       &
@@ -97,10 +109,83 @@
       $\pattConstr{c}{\seq{p}}$
       &
       constructor
+      \\
+      &
+      $\pattList{p}{o}$
+      &
+      non-empty list
+      \\[2mm]
+      &\textbfit{List rest pattern}&
+      \lowlight{$\ListRestPatt\;A\;\Gamma$}
+      \\
+      $o ::=$
+      &
+      $\pattListEnd$
+      &
+      end
+      \\
+      &
+      $\pattListNext{p}{o}$
+      &
+      cons
+      \\[2mm]
+      &\textbfit{Qualifier}&
+      \\
+      $q ::=$
+      &
+      $\qualGuard{s}$
+      &
+      guard
+      \\
+      &
+      $\qualDeclaration{p}{s}$
+      &
+      declaration
+      \\
+      &
+      $\qualGenerator{p}{s}$
+      &
+      generator
+      \\[2mm]
+      &\textbfit{Do statement}&
+      \\
+      $d ::=$
+      &
+      $\stmtVoid{s}$
+      &
+      void
+      \\
+      &
+      $\stmtDeclaration{p}{s}$
+      &
+      declaration
+      \\
+      &
+      $\stmtBind{p}{s}$
+      &
+      generator
       \\[13mm]
       \end{tabularx}
    \end{minipage}
    \\[3mm]
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+      &\textbfit{Surface value}&
+      \lowlight{$\SVal{A}$}
+      \\
+      $v, u ::=$
+      &
+      $\dots$
+      &
+      $\dots$
+      \\
+      &
+      $\exClosure{\upgamma}{g}{\upmu}$
+      &
+      closure
+      \\[0mm]
+      \end{tabularx}
+      \end{minipage}
    }
    \caption{Syntax of surface terms}
 \end{figure}
