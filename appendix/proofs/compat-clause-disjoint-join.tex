@@ -1,13 +1,23 @@
-By case analysis and induction on derivations of $\compatPattSym$. For our first pass, we will only consider pairs of clauses. Then, we will generalize this to arbitrary numbers of clauses.
+Start with the following assumptions:
+\begin{equation}
+   \compatPatt{c}{\upmu}
+\end{equation}
+\begin{equation}
+   c \desugarFwdS \upsigma
+\end{equation}
+\begin{equation}
+   \upmu \desugarFwdS \upsigma'
+\end{equation}
 % We define the following partial order on eliminators:
 % \begin{equation}
 %    \upsigma \elimOrd \upsigma' := 
 %    \hfill
-%    \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{rest}
+%    \quad \upsigma  = \upsigma_{pre} \elimmapsto \upsigma_{\dag}
 %    \opAnd
-%    \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{rest}
+%    \upsigma' = \upsigma_{pre} \elimmapsto \upsigma'_{\dag}
 % \end{equation}
 % And we use $\upsigma \sqcap \upsigma'$ to be the greatest lowerbound of $\upsigma,\;\upsigma'$ with respect to this ordering.
+We proceed by induction on the derivation of $\compatPattSym$
 \begin{proof}
 \small
 \begin{flalign}
@@ -21,7 +31,7 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
             \compatPatt{p}{p'}
          }
          {
-            \compatPatt{\clause{p\cdot\seq{p_{rest}}}{s}}{p'\cdot\clause{\seq{p_{rest}}'}{s'}}
+            \compatPatt{\clause{p\cdot\seq{p_{\dag}}}{s}}{p'\cdot\clause{\seq{p_{\dag}}'}{s'}}
          }
       \end{smathpar}
    }
@@ -29,20 +39,20 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
    \notag
    \\
    &
-   \clause{p\cdot\seq{p_{rest}}}{s}\desugarFwdS \upsigma
+   \clause{p\cdot\seq{p_{\dag}}}{s}\desugarFwdS \upsigma
    &
    \\
    &
-   \clause{p'\cdot\seq{p_{rest}}}{s'}\desugarFwdS \upsigma'
+   \clause{p'\cdot\seq{p_{\dag}}}{s'}\desugarFwdS \upsigma'
    &
    \\
    &
-   \text{$\clause{\seq{p_{rest}}}{s}\desugarFwdS \upsigma_{rest}$}
+   \text{$\clause{\seq{p_{\dag}}}{s}\desugarFwdS \upsigma_{\dag}$}
    &
    \text{(1) and $\desugarFwdS$-clause-curried}
    \\
    &
-   \text{$\clause{\seq{p_{rest}}'}{s'}\desugarFwdS \upsigma_{rest}'$}
+   \text{$\clause{\seq{p_{\dag}}'}{s'}\desugarFwdS \upsigma_{\dag}'$}
    &
    \text{(2) and $\desugarFwdS$-clause-curried}
    \\
@@ -95,13 +105,13 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
    \notag
    \\
    &
-   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{rest}}),\;\upsigma := c \mapsto \upkappa
+   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{\dag}}),\;\upsigma := c \mapsto \upkappa
    &
    \text{Def of $\mkElimF$}
    \notag
    \\
    &
-   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{rest}'}),\;\upsigma' := c \mapsto \upkappa'
+   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{\dag}'}),\;\upsigma' := c \mapsto \upkappa'
    &
    \text{Def of $\mkElimF$}
    \notag
@@ -138,13 +148,13 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
    \notag
    \\
    &
-   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{rest}}),\;\upsigma := \elimRec{\seq{x}}{\upkappa}
+   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{\dag}}),\;\upsigma := \elimRec{\seq{x}}{\upkappa}
    &
    \text{Def of \mkElimF}
    \notag
    \\
    &
-   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{rest}'}),\;\upsigma' := \elimRec{\seq{x}}{\upkappa'}
+   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{\dag}'}),\;\upsigma' := \elimRec{\seq{x}}{\upkappa'}
    &
    \text{Def of $\mkElimF$}
    \notag
@@ -184,20 +194,20 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
    \notag
    \\
    &
-   \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c_1 \elimmapsto \upsigma_{rest},\quad p = p_1
+   \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c_1 \elimmapsto \upsigma_{\dag},\quad p = p_1
    &
    \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
    \notag
    \\
    &
-   \upsigma' = \seqRangeOp{p'_1}{p'_{i-1}}{\elimmapsto} \elimmapsto c_2 \elimmapsto \upsigma'_{rest},\quad p' = p'_1
+   \upsigma' = \seqRangeOp{p'_1}{p'_{i-1}}{\elimmapsto} \elimmapsto c_2 \elimmapsto \upsigma'_{\dag},\quad p' = p'_1
    &
    \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
    \notag
    \\
    &
    \qedLocal
-   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto (\set{\elimBind{c_1}{\upsigma_{rest}}} \cup \set{\elimBind{c_2}{\upsigma'_{rest}}})
+   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto (\set{\elimBind{c_1}{\upsigma_{\dag}}} \cup \set{\elimBind{c_2}{\upsigma'_{\dag}}})
    &
    \disjjoin\text{-no-overlap}
    \notag
@@ -235,11 +245,11 @@ By case analysis and induction on derivations of $\compatPattSym$. For our first
    &
    \\
    &
-   \upsigma := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma_{rest}
+   \upsigma := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma_{\dag}
    &
    \\
    &
-   \upsigma' := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma'_{rest}
+   \upsigma' := \seqRangeOp{p_1}{p_{j'-1}}{\elimmapsto} \elimmapsto \upsigma'_{\dag}
    &
    \notag
    \\
