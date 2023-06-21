@@ -1,7 +1,9 @@
 \begin{figure}
    {\flushleft \shadebox{$\upsigma \disjjoin (\clause{\seq{p}}{s}) = \uptau$}
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-last}}
+      ]
       {
          s \desugarFwdS e
       }
@@ -11,7 +13,9 @@
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-head}}
+      ]
       {
          \varepsilon \disjjoin (\clause{\seq{p}}{s}) = \uptau
       }
@@ -21,17 +25,21 @@
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-var}}
+      ]
       {
-         \upsigma \disjjoin (\clause{\seq{p}}{e}) = \uptau
+         \upsigma \disjjoin (\clause{\seq{p}}{s}) = \uptau
       }
       {
-         (\elimBind{p}{\upsigma}) \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau} 
+         (\elimBind{\exVar{x}}{\upsigma}) \disjjoin (\clause{\exVar{x}\cdot\seq{p}}{s}) = \elimBind{\exVar{x}}{\uptau} 
       }
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-constr-eq}}
+      ]
       {
          \upsigma \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}) = \uptau
       }
@@ -42,6 +50,7 @@
       \and
       %
       \inferrule*[
+         lab={\ruleName{$\disjjoin$-constr-neq}},
          right={$\exVar{c'} \notin \dom{\elimConstr{\seq{\elimBind{c}{\upsigma}}}}$}
       ]
       {
@@ -53,7 +62,9 @@
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-record}}
+      ]
       {
          \upsigma \disjjoin (\clause{\seq{p}\cdot \seq{p}'}{s}) = \uptau
       }

@@ -7,20 +7,20 @@
          s \desugarFwdS e
       }
       {
-         \clause{p}{s} \desugarFwdR \mkElimF(p)(e)
+         (\clause{\seq{p}}{s}) \desugarFwdR (\varepsilon \disjjoin \clause{\seq{p}}{s})
       }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugarFwdS$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
-      {
-         \clause{\seq{p}}{s} \desugarFwdS \upsigma
-      }
-      {
-         \clause{p' \cons \seq{p}}{s}
-         \desugarFwdS
-         \mkElimF(p')(\exFun{\upsigma})
-      }
+      % %
+      % \and
+      % %
+      % \inferrule*[lab={\ruleName{$\desugarFwdS$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      % {
+      %    \clause{\seq{p}}{s} \desugarFwdS \upsigma
+      % }
+      % {
+      %    \clause{p' \cons \seq{p}}{s}
+      %    \desugarFwdS
+      %    \mkElimF(p')(\exFun{\upsigma})
+      % }
       %
       \and
       %

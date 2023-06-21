@@ -92,15 +92,26 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{\dag}}),\;\upsigma := c \mapsto \upkappa
+   (\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s} )\desugarFwdS \elimBind{c}{(\varepsilon \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}))}
    &
-   \text{Def of $\mkElimF$}
+   \text{$\desugarFwdS$ and assumption \localref{desugar-left}}
    \notag
    \\
    &
-   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{\dag}'}),\;\upsigma' := c \mapsto \upkappa'
+   \text{Let $\upsigma = (\varepsilon \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}))$}
    &
-   \text{Def of $\mkElimF$}
+   \notag
+   \\
+   &
+   (\elimBind{c}{\upsigma}) \disjjoin (\clause{\exConstr{c}{\seq{p}''}\cdot\seq{p}'''}{s'}) = \elimBind{c}{(\upsigma \disjjoin (\clause{\seq{p}''\cdot\seq{p}'''}{s'}) )}
+   &
+   \text{$\disjjoin$-constr-eq}
+   \notag
+   \\
+   &
+   (\clause{\exConstr{c}{\seq{p}''}\cdot\seq{p}'''}{s'} )\desugarFwdS \elimBind{c}{(\varepsilon \disjjoin (\clause{\seq{p}''\cdot\seq{p}'''}{s'}))}
+   &
+   \text{$\desugarFwdS$ and assumption \localref{desugar-right}}
    \notag
    \\
    &
