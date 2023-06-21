@@ -1,0 +1,66 @@
+\begin{figure}
+   {\flushleft \shadebox{$\upsigma \disjjoin (\clause{\seq{p}}{s}) = \uptau$}
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         s \desugarFwdS e
+      }
+      {
+         \varepsilon \disjjoin s = e
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \varepsilon \disjjoin (\clause{\seq{p}}{s}) = \uptau
+      }
+      {
+         \varepsilon \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upsigma \disjjoin (\clause{\seq{p}}{e}) = \uptau
+      }
+      {
+         (\elimBind{p}{\upsigma}) \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau} 
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upsigma \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}) = \uptau
+      }
+      {
+         (\elimBind{c}{\upsigma}) \disjjoin ((\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s})) = (\elimBind{c}{\uptau})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         right={$\exVar{c'} \notin \dom{\elimConstr{\seq{\elimBind{c}{\upsigma}}}}$}
+      ]
+      {
+         \varepsilon \disjjoin (\clause{\seq{p}'\cdot\seq{p}}{s}) = \uptau
+      }
+      {
+         \elimConstr{\seq{\elimBind{c}{\upsigma}}} \disjjoin (\clause{\exConstr{c'}{\seq{p}'}\cdot \seq{p}}{s}) = \elimPair{\seq{\elimBind{c}{\upsigma}}}{\elimBind{c'}{\uptau}}
+      }
+      %
+      \and
+      %
+      \inferrule*[]
+      {
+         \upsigma \disjjoin (\clause{\seq{p}\cdot \seq{p}'}{s}) = \uptau
+      }
+      {
+         (\elimBind{\newRecPatt{\seq{x}}}{\upsigma}) \disjjoin (\clause{\elimRec{x}{\seq{p}} \cdot \seq{p}'}{s}) = \elimBind{\newRecPatt{\seq{x}}}{\uptau}
+      }
+   \end{smathpar}
+   }
+\caption{Second Attempt At Def of disjjoin}
+\end{figure}
