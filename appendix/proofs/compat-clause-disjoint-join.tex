@@ -24,7 +24,7 @@ We proceed by induction on the derivation of $\compatPattSym$
             \forall j < i.\; p_j = p'_j
          }
          {
-            \compatPatt{(\clause{\seq{p}}{s})}{(\clause{\seq{p}'}{s'})} 
+            \compatPatt{(\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s})}{(\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'})} 
          }
       \end{smathpar}
    }
@@ -47,7 +47,7 @@ We proceed by induction on the derivation of $\compatPattSym$
             \exVar{c} \neq \exVar{c'}
          }
          {
-            \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c'}{\seq{p}'}}
+            \compatPatt{\exConstr{c}{\seq{p}''}}{\exConstr{c'}{\seq{p}'''}}
          }
       \end{smathpar}
    }
@@ -55,22 +55,32 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   \clause{\seq{p}}{s} \desugarFwdS \upsigma
+   \text{Let $\uptau = \seqRangeOp{p''_1}{p''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
+   &
+   \notag
+   \\
+   &
+   \text{Let $\uptau' = \seqRangeOp{p'''_1}{p'''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s})$}
+   &
+   \notag
+   \\
+   &
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugarFwdS \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \uptau
    &
    \text{Assumption \localref{desugar-left}}
    \notag
    \\
    &
-   \clause{\seq{p}'}{s'} \desugarFwdS \upsigma'
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugarFwdS \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \uptau'
    &
    \text{Assumption \localref{desugar-right}}
    \notag
    \\
    &
    \qedLocal
-   \upsigma \disjjoin \upsigma' = \upsigma \cup \upsigma'
+   \upsigma \disjjoin (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \elimPair{\elimBind{c}{\uptau}}{\elimBind{c'}{\uptau'}}
    &
-   \text{(IH) and $\disjjoin$-constr-neq}
+   \text{$\disjjoin$-constr-neq}
    \notag
    \\
    \subcase{constr-eq}
@@ -81,10 +91,10 @@ We proceed by induction on the derivation of $\compatPattSym$
             lab={\ruleName{$\compatPatt{}{}$-constr-eq}}
          ]
          {
-            \compatPatt{\seq{p}}{\seq{p}'}
+            \compatPatt{\seq{p}''}{\seq{p}'''}
          }
          {
-            \compatPatt{\exConstr{c}{\seq{p}}}{\exConstr{c}{\seq{p}'}}
+            \compatPatt{\exConstr{c}{\seq{p}''}}{\exConstr{c}{\seq{p}'''}}
          }
       \end{smathpar}
    }
@@ -92,39 +102,71 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   (\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s} )\desugarFwdS \elimBind{c}{(\varepsilon \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}))}
-   &
-   \text{$\desugarFwdS$ and assumption \localref{desugar-left}}
-   \notag
-   \\
-   &
-   \text{Let $\upsigma = (\varepsilon \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}))$}
+   \text{Let $\uptau = \seqRangeOp{p''_1}{p''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
    &
    \notag
    \\
    &
-   (\elimBind{c}{\upsigma}) \disjjoin (\clause{\exConstr{c}{\seq{p}''}\cdot\seq{p}'''}{s'}) = \elimBind{c}{(\upsigma \disjjoin (\clause{\seq{p}''\cdot\seq{p}'''}{s'}) )}
+   \text{Let $\uptau' = \seqRangeOp{p'''_1}{p'''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s})$}
    &
-   \text{$\disjjoin$-constr-eq}
    \notag
    \\
    &
-   (\clause{\exConstr{c}{\seq{p}''}\cdot\seq{p}'''}{s'} )\desugarFwdS \elimBind{c}{(\varepsilon \disjjoin (\clause{\seq{p}''\cdot\seq{p}'''}{s'}))}
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugarFwdS \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \uptau
    &
-   \text{$\desugarFwdS$ and assumption \localref{desugar-right}}
+   \text{Assumption \localref{desugar-left}}
    \notag
    \\
    &
-   \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugarFwdS \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \uptau'
    &
-   \text{(IH) and $\disjjoin$-lambda}
+   \text{Assumption \localref{desugar-right}}
    \notag
    \\
    &
-   \qedLocal
-   \upsigma \disjjoin \upsigma' = c \mapsto \upkappa^{\dag}
+   \exists i'.\; \compatPatt{p''_{i'}}{p'''_{i'}} \opAnd \forall j' < i'.\; p''_{j'} = p'''_{j'} 
    &
-   \text{$\disjjoin$-constr-eq}
+   \text{inversion on $\compatPatt{\seq{p}}{\seq{p}'}$}
+   \\
+   &
+   \text{If $p''_{i'} = \exConstr{c}{\seq{p}^{\dag}} \opAnd p'''_{i'} = \exConstr{c'}{\seq{p}'^{\dag}}$ with $\upSigma(c) = \upSigma(c') \opAnd c \neq c'$ then:}
+   &
+   \\
+   &
+   \uptau = \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto c \elimmapsto \seqRangeOp{p^{\dag}_1}{p^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p''_{i'+1}}{p''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})
+   &
+   \text{4}
+   \notag
+   \\
+   &
+   \uptau' = \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \seqRangeOp{p'^{\dag}_1}{p'^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p'''_{i'+1}}{p'''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s'})
+   &
+   \text{4}
+   \notag
+   \\
+   &
+   \text{Let $\uptau^{\dag} = \seqRangeOp{p^{\dag}_1}{p^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p''_{i'+1}}{p''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
+   &
+   \notag
+   \\
+   &
+   \text{Let $\uptau'^{\dag} = \seqRangeOp{p'^{\dag}_1}{p'^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p'''_{i'+1}}{p'''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s'})$}
+   &
+   \notag
+   \\
+   &
+   \upsigma \disjjoin (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) =
+   &
+   \notag
+   \\
+   &
+   \quad\seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto \elimPair{\elimBind{c}{\uptau^{\dag}}}{\elimBind{c'}{\uptau'^{\dag}}}
+   &
+   \notag
+   \\
+   &
+   \text{If ¬$(5)$, repeat until find non-equal constructors, then construct join accordingly} 
+   &
    \notag
    \\
    \subcase{record}
@@ -146,87 +188,11 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   \upkappa := \elimArgsF(\seq{p})(\exApp{\uplambda}{\upsigma_{\dag}}),\;\upsigma := \elimRec{\seq{x}}{\upkappa}
-   &
-   \text{Def of \mkElimF}
-   \notag
-   \\
-   &
-   \upkappa' := \elimArgsF(\seq{p}')(\exApp{\uplambda}{\upsigma_{\dag}'}),\;\upsigma' := \elimRec{\seq{x}}{\upkappa'}
-   &
-   \text{Def of $\mkElimF$}
-   \notag
-   \\
-   &
-   \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
-   &
-   \text{(IH) and $\disjjoin$-lambda}
-   \notag
-   \\
-   &
-   \qedLocal
-   \upsigma \disjjoin \upsigma' = \elimRec{\seq{x}}{\upkappa^{\dag}}
-   &
-   \text{$\disjjoin$-record}
-   \notag
-   \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            right={$\length{\seq{p}} = \length{\seq{p}'} \ge 2$}
-         ]
-         {
-            \exists i. \compatPatt{p_i}{p_i'}
-            \opAnd
-            \forall j < i.\; p_j = p'_j
-         }
-         {
-            \compatPatt{\clause{\seq{p}}{s}}{\clause{\seq{p}'}{s'}} 
-         }
-      \end{smathpar}
-   }
+   \text{Isomorphic proof to the constr-eq case}
    &
    \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugarFwdS$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
-         {
-            \clause{\seq{p}}{s} \desugarFwdS \upsigma_1
-         }
-         {
-            \clause{p_1 \cons \seq{p}}{s}
-            \desugarFwdS
-            \mkElimF(p_1)(\exFun{\upsigma})
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \upsigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c_1 \elimmapsto \upsigma_{\dag},\quad p = p_1
-   &
-   \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
-   \notag
-   \\
-   &
-   \upsigma' = \seqRangeOp{p'_1}{p'_{i-1}}{\elimmapsto} \elimmapsto c_2 \elimmapsto \upsigma'_{\dag},\quad p' = p'_1
-   &
-   \text{$\compatPattSym$-tail and $c \desugarFwdS \upsigma$}
-   \notag
-   \\
-   &
-   \qedLocal
-   \upsigma \disjjoin \upsigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto (\set{\elimBind{c_1}{\upsigma_{\dag}}} \cup \set{\elimBind{c_2}{\upsigma'_{\dag}}})
-   &
-   \disjjoin\text{-no-overlap}
-   \notag
-   \\
+\end{flalign}      
+\begin{flalign}
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%
    &
