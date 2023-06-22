@@ -171,6 +171,24 @@ Assume:
    &
    \notag
    \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugarFwdS$-app}}
+         ]
+         {
+            s \desugarFwdS e
+            \\
+            s' \desugarFwdS e'
+         }
+         {
+            \exApp{s}{s'} \desugarFwdS \exApp{e'}{}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
