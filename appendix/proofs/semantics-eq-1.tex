@@ -188,6 +188,34 @@ Assume:
       \end{smathpar}
    }
    &
+   \text{Inversion on $\desugarFwdS$}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-apply}},
+            width=3.3in,
+         ]
+         {
+            \upgamma, (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v)
+            \\
+            \upgamma_1, \uprho \closeDefsFwdR \upgamma_2
+            \\
+            v, \sigma \matchFwdS \upgamma_3, e
+            \\
+            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e \evalFwdS u
+         }
+         {
+            \upgamma, \exApp{e}{e'}
+            \evalFwdS
+            u
+         }
+      \end{smathpar}
+   }
+   &
+   \text{Inversion on $\evalFwdS$-app}
    \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

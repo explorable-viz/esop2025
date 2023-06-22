@@ -191,6 +191,34 @@ Assume:
          }
       \end{smathpar}
    }
+   &
+   \text{Inversion on $\desugarFwdS$}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3in,
+         ]
+         {
+            \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{g}{\upmu}, v)
+            \\
+            \upgamma_1, g \closeDefsS \upgamma_2
+            \\
+            v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
+            \\
+            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v'
+         }
+         {
+            \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v'
+         }
+      \end{smathpar}
+   }
+   &
+   \text{Inversion on $\evalSugS$}
+   \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
