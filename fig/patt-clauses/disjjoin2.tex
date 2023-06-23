@@ -14,6 +14,18 @@
       \and
       %
       \inferrule*[
+         lab={\ruleName{$\disjjoin$-lambda}}
+      ]
+      {
+         \upsigma \disjjoin \clause{\seq{p}}{s} = \uptau
+      }
+      {
+         (\elimBind{p}{\exFun{\upsigma}}) \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau}
+      }
+      %
+      \and
+      %
+      \inferrule*[
          lab={\ruleName{$\disjjoin$-head}}
       ]
       {
@@ -73,5 +85,11 @@
       }
    \end{smathpar}
    }
+   {\flushleft \shadebox{$\upsigma \disjjoin \exPair{\seq{p}}{s}$}
+   \begin{smathpar}
+   \end{smathpar}}
+   {\flushleft \shadebox{$\upsigma \disjjoin \upmu$}
+   \begin{smathpar}
+   \end{smathpar}}
 \caption{Second Attempt At Def of disjjoin}
 \end{figure}
