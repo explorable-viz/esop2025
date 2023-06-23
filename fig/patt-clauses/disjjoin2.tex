@@ -17,7 +17,7 @@
          lab={\ruleName{$\disjjoin$-lambda}}
       ]
       {
-         \upsigma \disjjoin \clause{\seq{p}}{s} = \uptau
+         \upsigma \disjjoin \exPair{\seq{p}}{s} = \uptau
       }
       {
          (\elimBind{p}{\exFun{\upsigma}}) \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau}
@@ -26,22 +26,10 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\disjjoin$-head}}
-      ]
-      {
-         \varepsilon \disjjoin (\clause{\seq{p}}{s}) = \uptau
-      }
-      {
-         \varepsilon \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\uptau}
-      }
-      %
-      \and
-      %
-      \inferrule*[
          lab={\ruleName{$\disjjoin$-var}}
       ]
       {
-         \upsigma \disjjoin (\clause{\seq{p}}{s}) = \uptau
+         \upsigma \disjjoin \exPair{\seq{p}}{s} = \uptau
       }
       {
          (\elimBind{\exVar{x}}{\upsigma}) \disjjoin (\clause{\exVar{x}\cdot\seq{p}}{s}) = \elimBind{\exVar{x}}{\uptau} 
@@ -53,10 +41,10 @@
          lab={\ruleName{$\disjjoin$-constr-eq}}
       ]
       {
-         \upsigma \disjjoin (\clause{\seq{p}\cdot\seq{p}'}{s}) = \uptau
+         \upsigma \disjjoin \exPair{\seq{p}\cdot\seq{p}'}{s} = \uptau
       }
       {
-         (\elimBind{c}{\upsigma}) \disjjoin ((\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s})) = (\elimBind{c}{\uptau})
+         (\elimBind{c}{\upsigma}) \disjjoin (\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s}) = (\elimBind{c}{\uptau})
       }
       %
       \and
@@ -66,7 +54,7 @@
          right={$\exVar{c'} \notin \dom{\elimConstr{\seq{\elimBind{c}{\upsigma}}}}$}
       ]
       {
-         \varepsilon \disjjoin (\clause{\seq{p}'\cdot\seq{p}}{s}) = \uptau
+         \varepsilon \disjjoin \exPair{\seq{p}'\cdot\seq{p}}{s} = \uptau
       }
       {
          \elimConstr{\seq{\elimBind{c}{\upsigma}}} \disjjoin (\clause{\exConstr{c'}{\seq{p}'}\cdot \seq{p}}{s}) = \elimPair{\seq{\elimBind{c}{\upsigma}}}{\elimBind{c'}{\uptau}}
@@ -78,7 +66,7 @@
          lab={\ruleName{$\disjjoin$-record}}
       ]
       {
-         \upsigma \disjjoin (\clause{\seq{p}\cdot \seq{p}'}{s}) = \uptau
+         \upsigma \disjjoin \exPair{\seq{p}\cdot \seq{p}'}{s} = \uptau
       }
       {
          (\elimBind{\newRecPatt{\seq{x}}}{\upsigma}) \disjjoin (\clause{\elimRec{x}{\seq{p}} \cdot \seq{p}'}{s}) = \elimBind{\newRecPatt{\seq{x}}}{\uptau}
