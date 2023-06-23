@@ -30,17 +30,13 @@
         \\[2mm]
         \exPrettyFunction{\param}&: \Qualifier^+ \rightarrow \Doc
         \\
-        \exPrettyFunction{(\qualGuard{s})} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{\qualGuard{s}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{\qualDeclaration{p}{s}} &=  \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}   
         \\
         \exPrettyFunction{\qualGenerator{p}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}} 
         \\
-        \exPrettyFunction{(\qualGuard{s})\cons\kw{q}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}}{ \exLayoutText{\kw{"\symComma"}}}}{\exPrettyFunction{q}}   
-        \\
-        \exPrettyFunction{(\qualDeclaration{p}{s})\cons\kw{q}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}} }{\exLayoutText{\kw{"\symComma"}}}}{\exPrettyFunction{q}} 
-        \\
-        \exPrettyFunction{(\qualGenerator{p}{s})\cons\kw{q}} &=  \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}} }{\exLayoutText{\kw{"\symComma"}}}}{{\exPrettyFunction{q}}}  
+        \exPrettyFunction{\kw{q'}\cons\seq{q}} &= \exLayoutAppBeside{\exPrettyFunction{q'}}{\exPrettyFunction{\seq{q}}} 
     \end{salign}
     \caption{Pretty Function Continued}
 \end{figure}
