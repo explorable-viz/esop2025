@@ -13,7 +13,7 @@ evaluating a surface program produces the same result as desugaring it to a core
 In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
 one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define
 desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$).
-Once this extension to the desugaring relation has been carefully defined, in figure \ref{fig:closures}, we can state and prove our theorem.
+Once this extension to the desugaring relation has been carefully defined, in figure \figref{closures}, we can state and prove our theorem.
 
 \subsubsection{Equivalence of Semantics}
 
@@ -95,7 +95,7 @@ Our current intuition is that we need to prove some properties about eliminators
 We shall break these down.
 \subsubsection{Vertical Recursion}
 For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses. 
-The definition of this, at the top of \ref{fig:desugar-func-qual-do} ($\desugarFwdS$-clauses) 
+The definition of this, at the top of \figref{desugar-func-qual-do} ($\desugarFwdS$-clauses) 
 demonstrates the need to join the eliminator formed by desugaring the previous equations with the 
 next clause in the definition. We need this join operation ($\disjjoin$) to always be defined
 for well-typed definitions of a recursive function. We have captured this intuition with the maxim
