@@ -90,6 +90,26 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \begin{proof}
    see \appref{disjoint-clause-elim}
 \end{proof}
+Proving \lemref{disjoint-clause-elim} is quite challenging, but is a requirement for the proof of \thmref{semantics-eq}.
+Our current intuition is that we need to prove some properties about eliminators in order to make this tractable.
+We shall break these down.
+\subsubsection{Vertical Recursion}
+For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses. 
+The definition of this, at the top of \ref{fig:desugar-func-qual-do} ($\desugarFwdS$-clauses) 
+demonstrates the need to join the eliminator formed by desugaring the previous equations with the 
+next clause in the definition. We need this join operation ($\disjjoin$) to always be defined
+for well-typed definitions of a recursive function. We have captured this intuition with the maxim
+"disjoint join preserves joinability". We will make this notion more formal in a revision of this draft.
+\subsubsection{Horizontal Recursion}
+The other part that makes this difficult is the notion of curried patterns. An eliminator is
+a branching structure as we have noted. However an individual clause is sequential with no branching.
+The branching is introduced when we consider multiple clauses for the same function. We need the proof 
+of the lemma to be constructive, to show exactly how we compute the join when it is defined. 
+Our intuition is that the only point in an eliminator where we encounter branching
+is at the point of disjoint constructors, however this branch may be nested deeply inside other 
+constructor and record patterns. We think we need to revise our definition of eliminators 
+in order to make this intuition clear and easy to prove, as our current approach to proving
+\lemref{disjoint-clause-elim} relies on this unproven fact.
 % \begin{theorem}
 %    \label{thm:join-preserves-join}
 %    The disjoint join of eliminators is joinability-preserving, that is:
