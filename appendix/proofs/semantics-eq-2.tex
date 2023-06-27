@@ -157,16 +157,16 @@ Assume:
             width=3.3in,
          ]
          {
-            \upgamma, (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v)
+            \upgamma, (e, e') \evalS (\exClosure{\upgamma'_1}{\uprho}{\upsigma}, v')
             \\
-            \upgamma_1, \uprho \closeDefsFwdR \upgamma_2
+            \upgamma'_1, \uprho \closeDefsFwdR \upgamma'_2
             \\
-            v, \sigma \matchFwdS \upgamma_3, e
+            v', \sigma \matchFwdS \upgamma_3, e^{\dag}
             \\
-            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e \evalFwdS u
+            \upgamma'_1 \concat \upgamma'_2 \concat \upgamma'_3, e^{\dag} \evalFwdS u
          }
          {
-            \upgamma, \exApp{e}{e'}
+            \upgamma', \exApp{e}{e'}
             \evalFwdS
             u
          }
@@ -209,16 +209,46 @@ Assume:
             \\
             v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
             \\
-            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v'
+            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
          }
          {
-            \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v'
+            \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
          }
       \end{smathpar}
    }
    &
-   \text{Inversion on $\evalSugS$}
+   \text{Inversion on $\evalSugS$-app}
    \notag
+   \\
+   &
+   \exClosure{\upgamma_1}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'_1}{\uprho}{\upsigma}
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   v \desugarFwdS v'
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \upgamma_2 \desugarFwdS  \upgamma'_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \upgamma_3 \desugarFwdS \upgamma'_3 \desugarFwdS \opAnd s^{\dag} \desugarFwdS e^{\dag}
+   &
+   \text{$\upmu \desugarFwdS \upsigma$ and \lemref{matching-bi}}
+   \notag
+   \\
+   &
+   \qedLocal
+   v^{\dag} \desugarFwdS u
+   &
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
