@@ -71,5 +71,11 @@ $v, \upmu / \upsigma \matchFwdS \upgamma, \upkappa$. As part of the theorem rela
 core semantics, we have a lemma which relates pattern matching in the surface language, 
 and pattern matching in the core language, this is \lemref{matching-bi}.
 
-% \subsubsection{$\disjjoin$}
+\subsubsection{$\closeDefsS$}
+This relation, which we call \textit{closeDefs}, is how we create the environments we need to 
+evaluate recursively defined functions. The way to read the judgement is thus: given an
+ambient environment $\upgamma$, and a sequence of recursively defined functions $g = \seq{\bind{x}{\upmu}}$
+(read $x$ as the function name and $\upmu$ as the clauses of the function), we split the sequence into
+each invidiual function (ie each $\bind{x}{\upmu}$), then take the closure that defines each function
+and add that to the environment. Hopefully this should make it easier to read \ref{fig:close-defs-surface}.
 \clearpage
