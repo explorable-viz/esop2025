@@ -16,7 +16,7 @@
           branch node
           \\
           &
-          $\upPhi$
+          $\emptyset$
           &
           empty eliminator
           \\
@@ -61,12 +61,12 @@
          \strut
       }
       {
-         \seq{p},\upPhi \elimmapsto \upPhi
+         \seq{p},\emptyset \elimmapsto \emptyset
       }
       %
       \and
       %
-      \inferrule
+      \inferrule*
       {
          \seq{p},\upsigma \elimmapsto \uptau
       }
@@ -76,15 +76,70 @@
       %
       \and
       %
-      \inferrule
+      \inferrule*
       {
-         \exVar{p'}\notin\dom{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
+         \exVar{p'}\notin\phiKeys{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
       }
       {
-         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\upsigma}}} \elimmapsto \upPhi  
+         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\upsigma}}} \elimmapsto \emptyset  
       }
    \end{smathpar}
    }
    \caption{Eliminator lookup}
 \end{figure}
 
+\begin{figure}
+   {\small \flushleft \shadebox{$\upsigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \exVar{e} \disjjoin \exPair{\seq{p}}{\exVar{e'}} = \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \emptyset \disjjoin \exPair{\varepsilon}{\exVar{e}} = \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \upsigma 
+      }
+      {
+         \emptyset \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\upsigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \upsigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau
+      }
+      {
+         \elimPhi{\exPair{p}{\upsigma} \cdot \seq{\exPair{p}{\upsigma}}' } \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\uptau} \cdot \seq{\exPair{p}{\upsigma}}'}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         p' \notin \phiKeys{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
+         \\
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau
+      }
+      {
+         \elimPhi{\seq{\exPair{p}{\upsigma}}} \disjjoin \exPair{p'\cdot\seq{p}}{\exVar{e}} = \elimPhi{\seq{\exPair{p}{\upsigma}} \cdot \exPair{p'}{\uptau}}
+      }
+   \end{smathpar}}
+\end{figure}
+   
