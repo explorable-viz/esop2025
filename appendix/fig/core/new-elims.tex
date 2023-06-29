@@ -6,48 +6,85 @@
           \\
           $\upsigma, \uptau ::=$
           &
-          $\elimBind{\pstar}{b}$
+          $\exVar{e}$
           &
-          variable
+          expression
+          \\
+          &
+          $\elimPhi{\seq{\exPair{p}{\upsigma}}}$
+          &
+          branch node
+          \\
+          &
+          $\upPhi$
+          &
+          empty eliminator
           \\
           &\textit{Extended Patterns}&
           \\
           $\pstar ::=$
           &
-          $\exConstr{c}{\pstar}$
+          $\pattConstr{c}{}$
           &
           constructor pattern
           \\
           &
-          $\newRecPatt{\seq{x}}(\pstar)$
+          $\exRecord{}_{\seq{x}}$
           &
           record pattern
-          \\
-          &
-          $\elimBind{\pstar}{\pstar}$
-          &
-          pattern concatenation
           \\
           &
           $\exVar{x}$
           &
           ground variable pattern
           \\
-          &\textit{Eliminator Branch}&
-          \\
-          $b ::=$
-          &
-          $e$
-          &
-          expression
-          \\
-          &
-          $\elimBranch{\seq{\upsigma}}$
-          &
-          branching eliminators
-          \\
       \end{tabularx}
    \end{minipage}
 \caption{Grammar for new eliminators}
 \end{figure}
-   
+
+\begin{figure}
+   {\small \flushleft \shadebox{$\seq{p},\upsigma \elimmapsto \uptau$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \seq{p},\exVar{e} \elimmapsto \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \seq{p},\upPhi \elimmapsto \upPhi
+      }
+      %
+      \and
+      %
+      \inferrule
+      {
+         \seq{p},\upsigma \elimmapsto \uptau
+      }
+      {
+         p\cdot\seq{p},\elimPhi{\exPair{p}{\upsigma}\cdot\seq{\exPair{p}{\upsigma}}'} \elimmapsto \uptau
+      }
+      %
+      \and
+      %
+      \inferrule
+      {
+         \exVar{p'}\notin\dom{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
+      }
+      {
+         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\upsigma}}} \elimmapsto \upPhi  
+      }
+   \end{smathpar}
+   }
+   \caption{Eliminator lookup}
+\end{figure}
+
