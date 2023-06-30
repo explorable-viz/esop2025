@@ -1,19 +1,29 @@
+We assume the following:
+\begin{equation}
+    \upgamma \desugarFwdS \upgamma'
+\end{equation}
+\begin{equation}
+    v \desugarFwdS v'
+\end{equation}
 \begin{proof}
     \begin{flalign}
     \intertext{\crossrule}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \Case{\bind{x}{v} \in \upgamma}
     &
-    \caseDerivation{\derivationWidth}{
-       \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\desugarFwdS$-env}}]
-        {
-            v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
-        }
-        {
-            \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
-        }
-       \end{smathpar}
+    \derivation{\derivationWidth}{
+        \begin{smathpar}
+            \inferrule*[]
+            {
+                v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+            }
+            {
+                \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+            }
+        \end{smathpar}
     }
+    &
+    \\
     \end{flalign}
     This follows from the definition of $\upgamma \desugarFwdS \upgamma'$. If $\upgamma := \set{\seq{\bind{y}{v}}}$ and
     $\upgamma' := \set{\seq{\bind{y'}{v'}}}$ then $\bind{x}{v} \in \upgamma \implies \exists i \le \length{\upgamma}. \, \exVar{x} = y_i$ and $v = v_i$.
