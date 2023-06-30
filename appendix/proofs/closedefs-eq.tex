@@ -1,67 +1,128 @@
+Assume the following:
+\begin{equation}
+   \upgamma_1 \desugarFwdS \upgamma_2
+\end{equation}
+\begin{equation}
+   g \desugarFwdS \uprho
+\end{equation}
 \begin{proof}
    \begin{flalign}
       \intertext{\crossrule}
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       &
-      \text{Let $\upgamma_1 \desugarFwdS \upgamma_2$, $\defProofVar{g}{\seq{\bind{\exVar{x}}{\upmu}}}$, and $g \desugarFwdS \uprho$}
+      \subcaseName{$\closeDefsS$-then-$\desugarFwdS$}
       &
       \notag
       \\
       &
-      \subcaseName{closedefs-then-desugar}
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               g = \seq{\bind{x}{\mu}}
+               \\
+               v_i = \exClosure{\upgamma_1}{g}{\upmu_i}
+               \quad
+               \forall i \le \length{\seq{x}}
+            }
+            {
+               \upgamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+            }
+         \end{smathpar}
+      }
       &
       \notag
       \\
       &
-      \text{If $\upgamma_1, g \desugarFwdS \upgamma_1'$, then $\defProofVar{\upgamma_1'}{\set{\seq{\bind{\exVar{x}}{v}}}}$ with $\defProofVar{v_i}{\exClosure{\upgamma}{g}{\upmu_i}}$ }
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[]
+            {
+               \uprho = \set{\seq{\bind{x}{\upsigma}}}
+               \\
+               v'_i = \exClosureNew{\upgamma_2}{\uprho}{\upsigma_i}
+               \quad
+               (\forall i \numleq \length{\seq{x}})
+            }
+            {
+               \upgamma_2, \uprho
+               \closeDefsFwdR
+               \set{\seq{\bind{x}{v'}}}
+            }
+         \end{smathpar}
+      }
       &
-      \text{Inversion of closedefs for g}
       \notag
       \\
       &
-      \text{We have that $\upgamma_2, \uprho \desugarFwdS \upgamma_2'$, and need to show that $\upgamma_1' \desugarFwdS \upgamma_2'$}
+      \forall i \numleq \length{\seq{x}} \; v_i \desugarFwdS v'_i
       &
-      \text{def of closedefs for $\uprho$}
+      \text{$g \desugarFwdS \uprho \opAnd \upgamma_1 \desugarFwdS \upgamma_2$}
       \notag
       \\
       &
-      \text{Have that $\defProofVar{\upgamma_2'}{\set{\seq{\bind{\exVar{x}}{u}}}}$, with $\defProofVar{u_i}{\exClosure{\upgamma_2}{\uprho}{\upsigma_i}}$}
-      &
-      \notag
-      \\
-      &
-      \text{We have  $\forall i \le \length{\seq{x}} \; v_i \desugarFwdS u_i$}
-      &
-      \text{$g \desugarFwdS \uprho$, defs of $v$ and $u$}
-      \notag
-      \\
-      &
-      \text{Which gives us $\upgamma_1' \closeDefsS \upgamma_2'$}
+      \qedLocal
+      \upgamma_1' \desugarFwdS \upgamma_2'
       &
       \text{$\desugarFwdS$-env}
       \notag
       \\
       &
-      \subcaseName{desugar-then-closedefs}
+      \subcaseName{$\desugarFwdS$-then-$\closeDefsS$}
       &
       \notag
       \\
       &
-      \text{If $\upgamma_2, \uprho \closeDefsS \upgamma_2'$, we have that $\defProofVar{\upgamma_2'}{\set{\seq{\bind{\exVar{x}}{u}}}}$, where $\defProofVar{u_i}{\exClosure{\upgamma_2}{\uprho}{\upsigma_i}}$}
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[]
+            {
+               \uprho = \set{\seq{\bind{x}{\upsigma}}}
+               \\
+               v'_i = \exClosureNew{\upgamma_2}{\uprho}{\upsigma_i}
+               \quad
+               (\forall i \numleq \length{\seq{x}})
+            }
+            {
+               \upgamma_2, \uprho
+               \closeDefsFwdR
+               \set{\seq{\bind{x}{v'}}}
+            }
+         \end{smathpar}
+      }
       &
-      \text{definition of $\upgamma,\uprho \closeDefsS \upgamma'$}
       \notag
       \\
       &
-      \text{We know that $\upgamma_1, g \closeDefsS \upgamma_1'$, and that $\defProofVar{\upgamma_1'}{\set{\seq{\bind{\exVar{x}}{v}}}}$}
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               g = \seq{\bind{x}{\mu}}
+               \\
+               v_i = \exClosure{\upgamma_1}{g}{\upmu_i}
+               \quad
+               \forall i \le \length{\seq{x}}
+            }
+            {
+               \upgamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+            }
+         \end{smathpar}
+      }
       &
-      \text{$\upgamma, g, \closeDefsS \upgamma'$}
       \notag
       \\
       &
-      \text{Since $g \desugarFwdS \uprho$, we can show that $\forall i \le \length{\seq{x}}. \; v_i \desugarFwdS u_i$, and so $\upgamma_1' \desugarFwdS \upgamma_2'$}
+      \forall i\numleq \length{\seq{x}}\; v_i \desugarFwdS v'_i
       &
-      \text{$\desugarFwdS$-closure}
+      \text{$g \desugarFwdS \uprho \opAnd \upgamma_1 \desugarFwdS \upgamma_2$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \upgamma_1' \desugarFwdS \upgamma_2'
+      &
+      \text{$\desugarFwdS$-env}
       \notag
    \end{flalign}
 \end{proof}
