@@ -79,42 +79,42 @@
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$v, o \matchFwdS \upgamma$}
+   {\small \flushleft \shadebox{$v, o \match \upgamma$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-nil}}
+         lab={\ruleName{$\match$-nil}}
       ]
       {
          \strut
       }
       {
-         \cNil, \pattListEnd \matchFwdS \varnothing
+         \cNil, \pattListEnd \match \varnothing
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-cons}}
+         lab={\ruleName{$\match$-cons}}
       ]
       {
-         v, p, \matchFwdS \upgamma
+         v, p, \match \upgamma
          \\
-         v', o \matchFwdS \upgamma'
+         v', o \match \upgamma'
       }
       {
-         \cCons(v, v'), (\pattListNext{p}{o}) \matchFwdS \upgamma \disjunion \upgamma'
+         \cCons(v, v'), (\pattListNext{p}{o}) \match \upgamma \disjunion \upgamma'
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$v, \upmu \matchFwdS \upgamma, s$}
+   {\small \flushleft \shadebox{$v, \upmu \match \upgamma, s$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\match$-uncurried}}
       ]
       {
-         v, p_i \matchFwdS \upgamma
+         v, p_i \match \upgamma
          \\
-         \forall i' \ne i.\nexists \upgamma. \, v, p_{i'} \matchFwdS \upgamma
+         \forall i' \ne i.\nexists \upgamma. \, v, p_{i'} \match \upgamma
       }
       {
          v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
@@ -127,12 +127,15 @@
          right={$\upmu \neq \seqEmpty$}
       ]
       {
-         v, p \matchFwdS \upgamma
+         v, p \match \upgamma
          \\
-         (\forall i \numleq j.\text{if }p_i = p\text{ then }\seq{p_i}' = s_i \in \upmu\text{ else }v, p_i\;\matchNeg)
+         (\forall i \numleq j.\text{if }p_i = p\text{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu\text{ else }v, p_i\;\matchNeg)
       }
       {
-         v, \seqRange{p_1 \cons \clause{\seq{p_1}'}{s_1}}{p_n \cons \clause{\seq{p_n}'}{s_n}} \matchFwdS \upgamma, \uplambda\upmu
+         v, \seqRange{(p_1 \cons \clause{\seq{p_1}')}{s_1}}{(p_j \cons \clause{\seq{p_n}')}{s_j}}
+         \match
+         \upgamma,
+         \exLambda{\upmu}
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
