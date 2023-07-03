@@ -24,7 +24,7 @@ theorem.
 %  $\upGamma \vdash s : A, \; \upgamma : \upGamma, 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
+   Suppose $s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma'$, then:
 \hfill
 \begin{enumerate}
    \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
@@ -54,7 +54,7 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
+   Suppose $v \desugarFwdS v'$ and $\upmu \desugarFwdS \upsigma$, Then:
    \hfill
    \begin{enumerate}
       \item If $v, \upmu\matchFwdS \upgamma, s$ then $v',\upsigma \matchFwdS \upgamma', e$ with $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
@@ -67,7 +67,7 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \end{proof}
 \begin{lemma}
    \label{lem:closedefs-eq}
-   Suppose $\upgamma_1 \desugarFwdS \upgamma_2$, and $g \desugarFwdS \uprho$. Then
+   Suppose $\upgamma_1 \desugarFwdS \upgamma_2$ and $g \desugarFwdS \uprho$. Then
    \hfill
    \begin{enumerate}
       \item If $\upgamma_1, g \closeDefsS \upgamma_1'$ then $\upgamma_2, \uprho \closeDefsS \upgamma_2'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
@@ -86,7 +86,7 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 % \end{proof}
 \begin{lemma}
    \label{lem:disjoint-clause-elim}
-   If $\compatPatt{c}{\upmu}$, and $c \desugarFwdS \upsigma,\,\upmu\desugarFwdS\upsigma'$ then $\exists\uptau.\,\upsigma \disjjoin\upsigma' = \uptau$
+   If $\compatPatt{c}{\upmu}$ and $c \desugarFwdS \upsigma,\,\upmu\desugarFwdS\upsigma'$ then $\exists\uptau.\,\upsigma \disjjoin\upsigma' = \uptau$
 \end{lemma}
 \begin{proof}
    see \appref{disjoint-clause-elim}
