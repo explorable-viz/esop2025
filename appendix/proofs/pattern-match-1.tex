@@ -23,12 +23,12 @@ By case analysis on $\matchFwdS$ derivation.
             lab={\ruleName{$\matchFwdS$-uncurried}}
          ]
          {
-            v, p_i \matchFwdS \upgamma
+            u, p_i \matchFwdS \upgamma
             \\
             \forall i' \ne i.\nexists \upgamma. \, v, p_i \matchFwdS \upgamma
          }
          {
-            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
+            u, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
          }
       \end{smathpar}
    }
@@ -38,9 +38,9 @@ By case analysis on $\matchFwdS$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugarFwdR$-clauses}}]
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
          {
-            \inferrule*[left={\ruleName{$\desugarFwdS$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
+            \inferrule*[left={\ruleName{$\desugar$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
             {
                s_i \desugar e_i
                \\
@@ -77,6 +77,30 @@ By case analysis on $\matchFwdS$ derivation.
    \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
    \text{\localref{gamma}, \localref{no-match}, \lemref{match-increasing}}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\match$-curried}},
+            right={$\upmu' \neq \seqEmpty$}
+         ]
+         {
+            u, p \match \upgamma
+            \\
+            (\forall i \numleq j.\text{if }p_i = p\text{ then }\seq{p_i}' = s_i \in \upmu'\text{ else }v, p_i\;\matchNeg)
+         }
+         {
+            u, \seqRange{p_1 \cons \clause{\seq{p_1}'}{s_1}}{p_j \cons \clause{\seq{p_j}'}{s_j}}
+            \match
+            \upgamma, \exLambda{\upmu'}
+         }
+      \end{smathpar}
+   }
+   &
    \notag
 \end{flalign}
 \end{proof}
