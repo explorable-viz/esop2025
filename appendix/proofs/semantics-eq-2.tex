@@ -5,7 +5,7 @@ Assume:
 \end{equation}
 \begin{equation}
    \upgamma : \upGamma
-\end{equation}   
+\end{equation}
 \begin{equation}
    s \desugarFwdS e
 \end{equation}
@@ -17,7 +17,7 @@ Assume:
 \small
 \begin{flalign}
    \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
@@ -91,7 +91,7 @@ Assume:
          }
          {
             \upgamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
-         }         
+         }
       \end{smathpar}
    }
    &
@@ -160,7 +160,7 @@ Assume:
             \\
             \upgamma'_1, \uprho \closeDefsFwdR \upgamma'_2
             \\
-            v', \sigma \matchFwdS \upgamma_3, e^{\dag}
+            v', \upsigma \matchFwdS \upgamma_3, e^{\dag}
             \\
             \upgamma'_1 \concat \upgamma'_2 \concat \upgamma'_3, e^{\dag} \evalFwdS u
          }
@@ -274,7 +274,7 @@ Assume:
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
          {
-            \upmu_i \desugarFwdR \sigma_i
+            \upmu_i \desugarFwdR \upsigma_i
             \quad
             (\forall i \numleq \length{\seq{x}})
             \\
@@ -283,7 +283,7 @@ Assume:
          {
             \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
             \desugarFwdR
-            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+            \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
          }
       \end{smathpar}
    }

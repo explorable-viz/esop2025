@@ -37,7 +37,7 @@
          \\
          g'_i = \bind{x_i}{\upmu_i'}
          \\
-         \upmu_i \desugarFwdR \upmu_i', \sigma_i, E_i
+         \upmu_i \desugarFwdR \upmu_i', \upsigma_i, E_i
          \quad
          (\forall i \numleq \length{\seq{g}})
          \\
@@ -47,7 +47,7 @@
          \exLetRecPiecewise{\seq{g}}{s}
          \desugarFwdR
          \exLetRecPiecewise{\seq{g}'}{s'},
-         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e},
+         \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e},
          \bigcup{\seq{E}} \cup E'
       }
       %
@@ -57,13 +57,13 @@
       {
          s \desugarFwdR s', e, E
          \\
-         \upmu \desugarFwdR \upmu', \sigma, E'
+         \upmu \desugarFwdR \upmu', \upsigma, E'
       }
       {
          \exMatch{s}{\upmu}
          \desugarFwdR
          \exMatch{s'}{\upmu'},
-         \exApp{\exFun{\sigma}}{e},
+         \exApp{\exFun{\upsigma}}{e},
          E \cup E'
       }
       %
@@ -93,13 +93,13 @@
          \\
          s_2 \desugarFwdR s_2', e_2, E_2
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+         \upsigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
          \exIfThenElse{s'}{s_1'}{s_2'},
-         \exApp{\exFun{\sigma}}{e},
+         \exApp{\exFun{\upsigma}}{e},
          E \cup E_1 \cup E_2
       }
       %

@@ -47,14 +47,14 @@
       core-term
       \\
       &
-      $\sigma$
+      $\upsigma$
       &
       eliminator
       \\[2mm]
       \end{tabularx}
    \end{minipage}
-   {\small \flushleft \shadebox{$\upGamma \vdash \sigma: \elimTy{A}{K}$}%
-   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\upGamma$}}
+   {\small \flushleft \shadebox{$\upGamma \vdash \upsigma: \elimTy{A}{K}$}%
+   \hfill \textbfit{$\upsigma$ has type $\elimTy{A}{K}$ under $\upGamma$}}
    \begin{smathpar}
    \inferrule*
    {
@@ -95,12 +95,12 @@
    %
    \inferrule*
    {
-      \upGamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+      \upGamma \vdash \elimRec{\seq{x}}{\upsigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
    }
    {
       \upGamma
       \vdash
-      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
+      \elimRec{\seq{x} \cons y}{\upsigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }
    \end{smathpar}
    \caption{Syntax and Typing of Eliminators}
