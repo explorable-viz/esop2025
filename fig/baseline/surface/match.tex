@@ -129,10 +129,10 @@
       {
          v, p \match \upgamma
          \\
-         (\forall i \numleq j.\text{if }p_i = p\text{ then }\seq{p_i}' = s_i \in \upmu\text{ else }v, p_i\;\matchNeg)
+         (\forall i \numleq j.\text{if }p_i = p\text{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu\text{ else }v, p_i\;\matchNeg)
       }
       {
-         v, \seqRange{(p_1 \cons \clause{\seq{p_1}')}{s_1}}{p_j \cons \clause{\seq{p_n}'}{s_j}}
+         v, \seqRange{(p_1 \cons \clause{\seq{p_1}')}{s_1}}{(p_j \cons \clause{\seq{p_n}')}{s_j}}
          \match
          \upgamma,
          \exLambda{\upmu}
