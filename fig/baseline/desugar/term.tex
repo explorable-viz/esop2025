@@ -1,6 +1,20 @@
 \begin{figure}
    {\flushleft \shadebox{$s \desugarFwdR e$}\hfill}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-lambda}}]
+      {
+         \upmu
+         \desugarFwdR
+         \upsigma
+      }
+      {
+         \exFun{\upmu}
+         \desugarFwdS
+         \exFun{\upsigma}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
       {
          s_1 \desugarFwdR e_1
@@ -40,7 +54,6 @@
       {
          \exMatch{s}{\upmu}
          \desugarFwdR
-         \exMatch{s'}{\upmu'},
          \exApp{\exFun{\sigma}}{e}
       }
       %
@@ -55,7 +68,6 @@
       {
          \exList{s}{l}
          \desugarFwdR
-         \exList{s'}{l'},
          \exConstr{\cCons}{e, e'}
       }
       %
