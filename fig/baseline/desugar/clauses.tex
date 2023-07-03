@@ -17,21 +17,21 @@
          \clause{\seq{p}}{s} \desugarFwdS \upsigma
       }
       {
-         \clause{p' \cons \seq{p}}{s}
+         (\clause{(p' \cons \seq{p})}{s})
          \desugarFwdS
          \mkElimF(p')(\exFun{\upsigma})
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\upmu \neq \seqEmpty$}]
+      \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}]
       {
-         c \desugarFwdS \sigma
-         \\
-         \upmu \desugarFwdS \tau
+         c_i \desugarFwdS \sigma_i
+         \quad
+         (\forall i \numleq j)
       }
       {
-         c \cons \upmu \desugarFwdS \sigma \disjjoin \tau
+         \seqRange{c_1}{c_j} \desugarFwdS \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
       }
    \end{smathpar}
    \\[2mm]
