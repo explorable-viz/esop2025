@@ -44,7 +44,7 @@ properties on recursively defined functions and the eliminators they desugar to 
 their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \begin{lemma}
    \label{lem:lemma:varlookup}
-   Suppose we have $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
+   Suppose $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
    $$
       \bind{x}{v} \in \upgamma \quad \iff \quad \bind{x}{v'} \in \upgamma'
    $$
@@ -54,7 +54,7 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose we have $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
+   Suppose $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
    \hfill
    \begin{enumerate}
       \item If $v, \upmu\matchFwdS \upgamma, s$ then $v',\upsigma \matchFwdS \upgamma', e$ with $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
@@ -63,11 +63,11 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
    
 \end{lemma}
 \begin{proof}
-   As in \thmref{semantics-eq}, we split the proof into 2 parts, for \lemref{matching-bi}.1 see \appref{proofs:matching-bi-1} and for \lemref{matching-bi}.2, see \appref{proofs:matching-bi-2}.
+   As in \thmref{semantics-eq}, we split the proof into 2 parts, for (1) see \appref{proofs:matching-bi-1} and for (2), see \appref{proofs:matching-bi-2}.
 \end{proof}
 \begin{lemma}
    \label{lem:closedefs-eq}
-   Suppose we have $\upgamma_1 \desugarFwdS \upgamma_2$, and $g \desugarFwdS \uprho$. Then
+   Suppose $\upgamma_1 \desugarFwdS \upgamma_2$, and $g \desugarFwdS \uprho$. Then
    \hfill
    \begin{enumerate}
       \item If $\upgamma_1, g \closeDefsS \upgamma_1'$ then $\upgamma_2, \uprho \closeDefsS \upgamma_2'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
