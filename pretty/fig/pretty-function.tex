@@ -1,6 +1,8 @@
 \begin{figure}
     \begin{salign}
-        \exPrettyFunction{\param}  &: \SExpr \rightarrow \Doc
+        \exPrettyFunction{\param}  &: \SExpr \rightarrow \Sem
+        \\
+        \exPrettyFunction{s}_\etypeS &= \exIfThenElse{\exExprTypeFunction (s) = \etypeS}{\exPrettyFunction{s}_\etypeE}{\parens \ \exPrettyFunction{s}_\etypeE}
         \\
         \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
         \\
@@ -14,7 +16,7 @@
         \\
         \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"."}}}{\exLayoutText{\str(x)}}}
         \\
-        \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
+        \exPrettyFunction{\exApp{s}{s'}}_\etypeE &= \exLayoutAppBeside{\exPrettyFunction{s}_\etypeS}{\exPrettyFunction{s'}_\etypeS}
         \\
         \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\
