@@ -6,26 +6,26 @@
          \textnormal{$\upDelta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \upGamma \concat \upDelta \vdash \seq{c_i}: \tyFun{A_i}{B_i}
+         \upGamma \concat \upDelta \vdash \upmu_i: \tyFun{A_i}{B_i}
          \quad
          (\forall i \numleq j)
       }
       {
-         \upGamma \vdash \seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}: \upDelta
+         \upGamma \vdash \seqRange{\bind{x_1}{\upmu_1}}{\bind{x_j}{\upmu_j}}: \upDelta
       }
    \end{smathpar}
    
    \vspace{5pt}
    \flushleft \shadebox{$\upGamma \vdash s: A$}
    \begin{smathpar}
-      \inferrule*[right={$\primOp: \tyFun{\tyProd{A}{A}}{B} \in \upGamma$}]
+      \inferrule*[right={$\primOp: \tyForeign{(A,B)}{C} \in \upGamma$}]
       {
          \upGamma \vdash s: A
          \\
-         \upGamma \vdash s': A
+         \upGamma \vdash s': B
       }
       {
-         \upGamma \vdash \exBinaryApp{s}{\oplus}{s'}: B
+         \upGamma \vdash \exBinaryApp{s}{\oplus}{s'}: C
       }
       %
       \and
@@ -70,10 +70,10 @@
       {
          \upGamma \vdash s: A
          \\
-         \upGamma \vdash \seq{c}: \tyFun{A}{B}
+         \upGamma \vdash \upmu: \tyFun{A}{B}
       }
       {
-         \upGamma \vdash \exMatch{s}{\seq{c}}: B
+         \upGamma \vdash \exMatch{s}{\upmu}: B
       }
       %
       \and
