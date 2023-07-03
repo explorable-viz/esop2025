@@ -36,11 +36,21 @@ By case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
-   \caseDerivation{\derivationWidth}{
+   \derivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}]
+         {
+            c_i \desugarFwdS \upsigma_i
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \upmu = \seqRange{c_1}{c_j} \desugarFwdS \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin} = \upsigma
+         }
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
 \end{flalign}
 \end{proof}
