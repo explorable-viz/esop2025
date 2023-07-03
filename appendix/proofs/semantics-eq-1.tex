@@ -1,13 +1,13 @@
 By induction on derivations of $\evalSugS$. \newline
 Assume: 
 \begin{equation}
-   \upGamma \vdash \bind{s}{A}
+   \upGamma \vdash \bind{s_0}{A}
 \end{equation}
 \begin{equation}
    \upgamma : \upGamma
 \end{equation}   
 \begin{equation}
-   s \desugarFwdS e
+   s_0 \desugarFwdS e_0
 \end{equation}
 \begin{equation}
    \locallabel{desug:env}
@@ -28,7 +28,7 @@ Assume:
             \strut
          }
          {
-            {\upgamma^{\dag}} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+            {\upgamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
          }
       \end{smathpar}
    }
@@ -63,7 +63,7 @@ Assume:
             \strut
          }
          {
-            {{\upgamma}^{\dag}}' \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalFwdS v'
+            \upgamma_2 \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalFwdS v'
          }
       \end{smathpar}
    }
@@ -75,7 +75,7 @@ Assume:
    \qedLocal
    \text{$v \desugarFwdS v'$.}
    &
-   \text{\lemref{lemma:varlookup} and assumption \localref{desug:env}}
+   \text{\lemref{lemma:varlookup} and assumption (\localref{desug:env})}
    \notag
    \\
    \intertext{\crossrule}
@@ -198,7 +198,7 @@ Assume:
             width=3.3in,
          ]
          {
-            \upgamma, (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v')
+            \upgamma', (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v')
             \\
             \upgamma'_1, \uprho \closeDefsFwdR \upgamma'_2
             \\
@@ -207,7 +207,7 @@ Assume:
             \upgamma'_1 \concat \upgamma'_2 \concat \upgamma'_3, e^{\dag} \evalFwdS u
          }
          {
-            \upgamma, \exApp{e}{e'}
+            \upgamma', \exApp{e}{e'}
             \evalFwdS
             u
          }
@@ -293,9 +293,9 @@ Assume:
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\evalFwdS$-let-rec}}]
          {
-            \upgamma', \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {\upgamma^{\dag}}'
+            \upgamma', \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {\upgamma^{\ddagger}}
             \\
-            \upgamma' \concat {\upgamma^{\dag}}', e \evalFwdS v'
+            \upgamma' \concat {\upgamma^{\ddagger}}, e \evalFwdS v'
          }
          {
             \upgamma', \exLetRecPiecewise{\seq{\bind{\exVar{x}}{\upsigma}}}{e} \evalFwdS v'
@@ -307,9 +307,9 @@ Assume:
    \notag
    \\
    &
-   \text{Then $\upgamma \concat \upgamma^{\dag} \desugarFwdS \upgamma' \concat {\upgamma^{\dag}}'$}
+   \text{Then $\upgamma \concat \upgamma^{\dag} \desugarFwdS \upgamma' \concat {\upgamma^{\ddagger}}$}
    &
-   \text{assumption \localref{desug:env} and \lemref{closedefs-eq}}
+   \text{assumption (\localref{desug:env}) and \lemref{closedefs-eq}}
    \notag
    \\
    &
