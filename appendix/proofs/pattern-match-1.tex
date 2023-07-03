@@ -65,17 +65,18 @@ By case analysis on $\matchFwdS$ derivation.
    v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
    \text{Def.~$\upsigma_i$, \localref{match}, \lemref{match-domains-agree}}
-   \notag
+   \locallabel{gamma}
    \\
    &
    \forall i' \neq i.v, \upsigma_i'\;\matchNeg
    &
    \text{\localref{desugar}, \lemref{match-domains-agree}}
-   \notag
+   \locallabel{no-match}
    \\
    &
    \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
+   \text{\localref{gamma}, \localref{no-match}, \lemref{match-increasing}}
    \notag
 \end{flalign}
 \end{proof}
