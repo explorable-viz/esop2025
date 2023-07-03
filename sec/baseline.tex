@@ -21,17 +21,18 @@ Informally, the equivalence of the semantics means that desugaring a surface ter
 produces the same result as surface-evaluating to a surface value and then desugaring the surface value.
 We formalise the equivalence of these semantics as the following
 theorem.
+%  $\upGamma \vdash s : A, \; \upgamma : \upGamma, 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $\upGamma \vdash s : A, \; \upgamma : \upGamma, \; s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
+   Suppose $s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{thm:semantics-eq-1}
-   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{thm:semantics-eq-2}
+   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
+   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{semantics-eq-2}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   For \thmref{semantics-eq}.1 see \appref{semantics-eq-1}, and for \thmref{semantics-eq}.2, see \appref{semantics-eq-2}
+   For (1) see \appref{semantics-eq-1}, and for (2), see \appref{semantics-eq-2}
 \end{proof}
 \thmref{semantics-eq} relies on pattern-matching in the surface and core languages producing
 environments that coincide sensibly. We state this as \lemref{matching-bi}. We need to
