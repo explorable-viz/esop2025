@@ -75,7 +75,7 @@ Assume:
    \qedLocal
    v \desugarFwdS v'
    &
-   \text{assumption \localref{desug:env} and \lemref{lemma:varlookup}}
+   \text{assumption (\localref{desug:env}) and \lemref{lemma:varlookup}}
    \notag
    \\
    \intertext{\crossrule}
@@ -134,14 +134,14 @@ Assume:
    \notag
    \\
    &
-   \qedLocal
-   \text{$\upgamma, \seq{s}' \evalSugS \seq{v}^{\dag}$, and $\upgamma', \seq{e}' \evalFwdS \seq{v}'$, with $\seq{v}^{\dag} \desugarFwdS \seq{v}'$}
+   \seq{v} \desugarFwdS \seq{v}'
    &
    \text{IH}
    \notag
    \\
    &
-   \text{This gives us $\upgamma, s \evalSugS \exConstr{c}{\seq{v}^{\dag}}$}
+   \qedLocal
+   \exConstr{c}{\seq{v}} \desugarFwdS \exConstr{c}{\seq{v}'}
    &
    \text{$\evalSugS$-constr}
    \notag
@@ -316,7 +316,7 @@ Assume:
    &
    \text{Then we conclude that $\upgamma \concat \upgamma' \desugarFwdS {\upgamma^{\dag}} \concat {\upgamma^{\dag}}'$}
    &
-   \text{assumption \localref{desug:env} and \lemref{closedefs-eq}}
+   \text{assumption (\localref{desug:env}) and \lemref{closedefs-eq}}
    \notag
    \\
    &
