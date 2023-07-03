@@ -38,11 +38,17 @@ By case analysis on $\matchFwdS$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}]
+         \inferrule*[left={\ruleName{$\desugarFwdR$-clauses}}]
          {
-            \clause{p_i}{s_i} \desugarFwdS \upsigma_i
-            \quad
-            (\forall i \numleq j)
+            \inferrule*[left={\ruleName{$\desugarFwdS$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
+            {
+               s_i \desugarFwdS e_i
+               \\
+               \upsigma_i \eqdef \mkElimF(p_i)(e_i)
+            }
+            {
+               (\clause{p_i}{s_i}) \desugarFwdS \upsigma_i
+            }
          }
          {
             \upmu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}}) \desugarFwdS \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin} = \upsigma
