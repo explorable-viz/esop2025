@@ -44,7 +44,7 @@
          \compatPatt{p}{p'}
       }
       {
-         \compatPatt{p\cdot\seq{p_{\dag}}}{p'\cdot\seq{p_{\dag}}'}
+         \compatPatt{p\cdot\seq{p}}{p'\cdot\seq{p}'}
       }
       %
       \and
@@ -53,10 +53,10 @@
          lab={\ruleName{$\compatPattSym$-tail}}
       ]
       {
-         \compatPatt{\seq{p_{\dag}}}{\seq{p_{\dag}}'}
+         \compatPatt{\seq{p}}{\seq{p}'}
       }
       {
-         \compatPatt{p\cdot\seq{p_{\dag}}}{p\cdot\seq{p_{\dag}}'}
+         \compatPatt{p\cdot\seq{p}}{p\cdot\seq{p}'}
       }
    \end{smathpar}}
    {\flushleft \shadebox{$\compatPatt{c}{\upmu}$}
@@ -73,14 +73,16 @@
       %
       \and
       %
-      \inferrule*[]
+      \inferrule*[
+         right={$\upmu \neq \seqEmpty$}
+      ]
       {
          \compatPatt{c}{c'}
          \\
          \compatPatt{c}{\upmu}
       }
       {
-         \compatPatt{c}{c'\cdot\upmu}
+         \compatPatt{c}({c'\cdot\upmu)}
       }
    \end{smathpar}}
    \caption{Disjointness of patterns and clauses}
