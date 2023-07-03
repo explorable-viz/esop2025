@@ -31,7 +31,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         \upmu_i \desugarFwdS \sigma_i
+         \upmu_i \desugarFwdS \upsigma_i
          \quad
          (\forall i \numleq \length{\seq{x}})
          \\
@@ -40,7 +40,7 @@
       {
          \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
          \desugarFwdR
-         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
       }
       %
       \and
@@ -49,12 +49,12 @@
       {
          s \desugarFwdR e
          \\
-         \upmu \desugarFwdS\sigma
+         \upmu \desugarFwdS\upsigma
       }
       {
          \exMatch{s}{\upmu}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \exApp{\exFun{\upsigma}}{e}
       }
       %
       \and
@@ -81,12 +81,12 @@
          \\
          s_2 \desugarFwdR e_2
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+         \upsigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exFun{\sigma}}{e}
+         \exApp{\exFun{\upsigma}}{e}
       }
       %
       \and

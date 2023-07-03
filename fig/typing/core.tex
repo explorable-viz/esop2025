@@ -74,10 +74,10 @@
    %
    \inferrule*
    {
-      \upGamma \vdash \sigma : \elimTy{A}{B}
+      \upGamma \vdash \upsigma : \elimTy{A}{B}
    }
    {
-      \upGamma \vdash \exLambda{\sigma} : \tyFun{A}{B}
+      \upGamma \vdash \exLambda{\upsigma} : \tyFun{A}{B}
    }
    %
    \and
@@ -214,10 +214,10 @@
       \\
       \upGamma \vdash \uprho: \upDelta
       \\
-      \upGamma \concat \upDelta \vdash \sigma: \elimTy{A}{B}
+      \upGamma \concat \upDelta \vdash \upsigma: \elimTy{A}{B}
    }
    {
-      \vdash \exClosure{\upgamma}{\uprho}{\sigma}: \tyFun{A}{B}
+      \vdash \exClosure{\upgamma}{\uprho}{\upsigma}: \tyFun{A}{B}
    }
    %
    \and
@@ -257,16 +257,15 @@
          \textnormal{$\upDelta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \upGamma \concat \upDelta \vdash \sigma_i: \elimTy{A_i}{B_i}
+         \upGamma \concat \upDelta \vdash \upsigma_i: \elimTy{A_i}{B_i}
          \quad
          (\forall i \numleq \length{\seq{x}})
       }
       {
-         \upGamma \vdash \seq{\bind{x}{\sigma}}: \upDelta
+         \upGamma \vdash \seq{\bind{x}{\upsigma}}: \upDelta
       }
    \end{smathpar}
    \end{minipage}
    \caption{Typing rules for core language}
    \label{fig:core-language:typing}
    \end{figure}
-   

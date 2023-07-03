@@ -21,7 +21,7 @@ Informally, the equivalence of the semantics means that desugaring a surface ter
 produces the same result as surface-evaluating to a surface value and then desugaring the surface value.
 We formalise the equivalence of these semantics as the following
 theorem.
-%  $\upGamma \vdash s : A, \; \upgamma : \upGamma, 
+%  $\upGamma \vdash s : A, \; \upgamma : \upGamma,
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugarFwdS e, \; and \; \upgamma \desugarFwdS \upgamma'$, then:
@@ -39,8 +39,8 @@ environments that coincide sensibly. We state this as \lemref{matching-bi}. We n
 also establish that environment lookup commutes with desugaring, \lemref{lemma:varlookup}. Due to the fact
 that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
 the precondition to \thmref{semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some 
-properties on recursively defined functions and the eliminators they desugar to so that we can characterize 
+a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some
+properties on recursively defined functions and the eliminators they desugar to so that we can characterize
 their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \begin{lemma}
    \label{lem:lemma:varlookup}
@@ -54,13 +54,13 @@ their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose we have $v \desugarFwdS v'$, and $\upmu \desugarFwdS \upsigma$, Then:
+   Suppose we have $u \desugarFwdS v$, and $\upmu \desugarFwdS \upsigma$, Then:
    \hfill
    \begin{enumerate}
-      \item If $v, \upmu\matchFwdS \upgamma, s$ then $v',\upsigma \matchFwdS \upgamma', e$ with $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
-      \item If $v', \upsigma \matchFwdS \upgamma', e$ then $v, \upmu \matchFwdS \upgamma, s$ and $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
+      \item If $u, \upmu\matchFwdS \upgamma, s$ then $v,\upsigma \matchFwdS \upgamma', e$ with $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
+      \item If $v, \upsigma \matchFwdS \upgamma', e$ then $u, \upmu \matchFwdS \upgamma, s$ and $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
    \end{enumerate}
-   
+
 \end{lemma}
 \begin{proof}
    As in \thmref{semantics-eq}, we split the proof into 2 parts, for \lemref{matching-bi}.1 see \appref{proofs:matching-bi-1} and for \lemref{matching-bi}.2, see \appref{proofs:matching-bi-2}.
@@ -95,20 +95,20 @@ Proving \lemref{disjoint-clause-elim} is quite challenging, but is a requirement
 Our current intuition is that we need to prove some properties about eliminators in order to make this tractable.
 We shall break these down.
 \subsubsection{Vertical Recursion}
-For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses. 
-The definition of this, at the top of \figref{desugar-func-qual-do} ($\desugarFwdS$-clauses) 
-demonstrates the need to join the eliminator formed by desugaring the previous equations with the 
+For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses.
+The definition of this, at the top of \figref{desugar-func-qual-do} ($\desugarFwdS$-clauses)
+demonstrates the need to join the eliminator formed by desugaring the previous equations with the
 next clause in the definition. We need this join operation ($\disjjoin$) to always be defined
 for well-typed definitions of a recursive function. We have captured this intuition with the maxim
 "disjoint join preserves joinability". We will make this notion more formal in a revision of this draft.
 \subsubsection{Horizontal Recursion}
 The other part that makes this difficult is the notion of curried patterns. An eliminator is
 a branching structure as we have noted. However an individual clause is sequential with no branching.
-The branching is introduced when we consider multiple clauses for the same function. We need the proof 
-of the lemma to be constructive, to show exactly how we compute the join when it is defined. 
+The branching is introduced when we consider multiple clauses for the same function. We need the proof
+of the lemma to be constructive, to show exactly how we compute the join when it is defined.
 Our intuition is that the only point in an eliminator where we encounter branching
-is at the point of disjoint constructors, however this branch may be nested deeply inside other 
-constructor and record patterns. We think we need to revise our definition of eliminators 
+is at the point of disjoint constructors, however this branch may be nested deeply inside other
+constructor and record patterns. We think we need to revise our definition of eliminators
 in order to make this intuition clear and easy to prove, as our current approach to proving
 \lemref{disjoint-clause-elim} relies on this unproven fact.
 % \begin{theorem}
@@ -125,7 +125,7 @@ in order to make this intuition clear and easy to prove, as our current approach
 % \end{proof}
 % \begin{lemma}
 %    Suppose we have $c_1,c_2$ clauses, such that $\upGamma \vdash c_1: \tyFun{A}{B},\; c_2:\tyFun{A}{B}$ and $\compatPatt{c_1}{c_2}$
-%    Then $c_1 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c}{\seq{p}} \elimmapsto \upsigma$ and 
+%    Then $c_1 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c}{\seq{p}} \elimmapsto \upsigma$ and
 %    $c_2 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c'}{\seq{p}} \elimmapsto \upsigma'$
 % \end{lemma}
 \clearpage
@@ -145,8 +145,8 @@ in order to make this intuition clear and easy to prove, as our current approach
 \clearpage
 
 \subsection{Desugaring}
-The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is 
-consistent in both the core and surface languages is imperative for \thmref{semantics-eq}. We disallow certain combinations of 
+The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is
+consistent in both the core and surface languages is imperative for \thmref{semantics-eq}. We disallow certain combinations of
 patterns which might otherwise be allowed in another language. For example, we do not allow clauses formed in the following fashion:
 {\small
 \begin{lstlisting}[language=Fluid]
@@ -157,8 +157,8 @@ patterns which might otherwise be allowed in another language. For example, we d
    bar y ... = ...
 \end{lstlisting}}
 In other words, when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name,
-and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish 
-both arguments. This does not mean that the rest of the function can be ill-typed. Just because we have distinguished 
+and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish
+both arguments. This does not mean that the rest of the function can be ill-typed. Just because we have distinguished
 the two clauses in the following example, we still cannot consider it a well-formed program.
 {\small
 \begin{lstlisting}[language = Fluid]

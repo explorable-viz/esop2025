@@ -63,9 +63,9 @@
       &=
       \kappa
       \\
-      \elimArgsF(\pi \cons \seq{\pi})(\sigma)
+      \elimArgsF(\pi \cons \seq{\pi})(\upsigma)
       &=
-      \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
+      \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\upsigma))
       %========================================
       \intertext{
       \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\upGamma \concat \upGamma')\;A)$}
@@ -96,13 +96,13 @@
       &=
       \elimConstr{\elimBind{c}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessF_{c}(e)
       \\
-      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\upsigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\upsigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
-      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\upsigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\upsigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
       \orElseF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=

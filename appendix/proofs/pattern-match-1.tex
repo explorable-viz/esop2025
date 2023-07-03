@@ -1,14 +1,19 @@
-By induction on $\matchFwdS$. 
-Assume:
-\begin{equation}
-   v \desugarFwdS v' 
-\end{equation}
-\begin{equation}
-   v, \upmu\matchFwdS \upgamma
-\end{equation}
+By case analysis on $\matchFwdS$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
+   &
+   u \desugar v
+   &\text{suppose}
+   \\
+   &
+   \upmu \desugar \upsigma
+   &\text{suppose}
+   \\
+   &
+   u, \upmu \match \upgamma
+   &\text{suppose}
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
@@ -20,14 +25,58 @@ Assume:
          {
             v, p_i \matchFwdS \upgamma
             \\
-            \forall j \ne i.\nexists \upgamma. \, v, p_j \matchFwdS \upgamma
+            \forall i' \ne i.\nexists \upgamma. \, v, p_i \matchFwdS \upgamma
          }
          {
-            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_n}{s_n}} \matchFwdR{p_i} \upgamma, s_i
+            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
          }
       \end{smathpar}
    }
    &
+   \locallabel{match}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugarFwdR$-clauses}}]
+         {
+            \inferrule*[left={\ruleName{$\desugarFwdS$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
+            {
+               s_i \desugar e_i
+               \\
+               \upsigma_i \eqdef \mkElimF(p_i)(e_i)
+            }
+            {
+               (\clause{p_i}{s_i}) \desugar \upsigma_i
+            }
+         }
+         {
+            \upmu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+            \desugar
+            \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin} = \upsigma
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar}
+   \\
+   &
+   v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   &
+   \text{Def.~$\upsigma_i$, \localref{match}, \lemref{match-domains-agree}}
+   \locallabel{gamma}
+   \\
+   &
+   \forall i' \neq i.v, \upsigma_i'\;\matchNeg
+   &
+   \text{\localref{desugar}, \lemref{match-domains-agree}}
+   \locallabel{no-match}
+   \\
+   &
+   \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   &
+   \text{\localref{gamma}, \localref{no-match}, \lemref{match-increasing}}
    \notag
 \end{flalign}
 \end{proof}

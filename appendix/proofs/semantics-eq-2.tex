@@ -1,12 +1,12 @@
 By induction on derivations of $\evalFwdS$ We use the term \textit{inversion on} a rule, to mean that we have established the conclusion to a judgement,
 and we are therefore able to establish the premises of that rule. This is generally possible as we have fixed our inputs to the non-deterministic judgements, such as desugaring. \newline
-Assume: 
+Assume:
 \begin{equation}
    \upGamma \vdash \bind{s}{A}
 \end{equation}
 \begin{equation}
    \upgamma : \upGamma
-\end{equation}   
+\end{equation}
 \begin{equation}
    s \desugarFwdS e
 \end{equation}
@@ -18,7 +18,7 @@ Assume:
 \small
 \begin{flalign}
    \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
@@ -92,7 +92,7 @@ Assume:
          }
          {
             \upgamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
-         }         
+         }
       \end{smathpar}
    }
    &
@@ -161,7 +161,7 @@ Assume:
             \\
             \upgamma'_1, \uprho \closeDefsFwdR \upgamma'_2
             \\
-            v', \sigma \matchFwdS \upgamma_3, e^{\dag}
+            v', \upsigma \matchFwdS \upgamma_3, e^{\dag}
             \\
             \upgamma'_1 \concat \upgamma'_2 \concat \upgamma'_3, e^{\dag} \evalFwdS u
          }
@@ -275,7 +275,7 @@ Assume:
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
          {
-            \upmu_i \desugarFwdR \sigma_i
+            \upmu_i \desugarFwdR \upsigma_i
             \quad
             (\forall i \numleq \length{\seq{x}})
             \\
@@ -284,7 +284,7 @@ Assume:
          {
             \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
             \desugarFwdR
-            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+            \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
          }
       \end{smathpar}
    }

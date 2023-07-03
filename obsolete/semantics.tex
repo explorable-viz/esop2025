@@ -15,8 +15,8 @@
       handle
    \end{tabularx}
    \\[3mm]
-   {\small \flushleft \shadebox{$V, \sigma \match P$}%
-   \hfill \textbfit{$\sigma$ matches $V$ and yields closed $P$}}
+   {\small \flushleft \shadebox{$V, \upsigma \match P$}%
+   \hfill \textbfit{$\upsigma$ matches $V$ and yields closed $P$}}
    \begin{smathpar}
       \inferrule*
       {
@@ -64,9 +64,9 @@
       %
       \inferrule*
       {
-         V, \elimRecord{\seq{\ell}}{P} \match \sigma
+         V, \elimRecord{\seq{\ell}}{P} \match \upsigma
          \\
-         U, \sigma \match Q
+         U, \upsigma \match Q
       }
       {
          \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{\seq{\ell}, \ell'}{P}
@@ -90,35 +90,35 @@
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
    \begin{salign}
-      \exApp{(\exFun{\sigma})}{V}
+      \exApp{(\exFun{\upsigma})}{V}
       &\reduce
       M
       \quad
-      \textit{if }V, \sigma \match M
+      \textit{if }V, \upsigma \match M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
       \subst{M}{T}{\alpha}
       \\
-      \exMatch{V}{\sigma}
+      \exMatch{V}{\upsigma}
       &\reduce
       M
       \quad
-      \textit{if }V, \sigma \match M
+      \textit{if }V, \upsigma \match M
       \\
-      \exHandle{\exReturn{V}}{\exFun{\sigma}}
+      \exHandle{\exReturn{V}}{\exFun{\upsigma}}
       &\reduce
       M
       \quad
-      \textit{if }\exReturn{V}, \sigma \match M
+      \textit{if }\exReturn{V}, \upsigma \match M
       \\
       \begin{split}
-      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\upsigma}}
       &\reduce
-      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})}
+      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\upsigma}}}})}
       \\
       &\quad\;\;\,
-      \textit{if }\exOp{\ell}{V}, \sigma \match M
+      \textit{if }\exOp{\ell}{V}, \upsigma \match M
       \textit{ and }
       \ell \notin \BL(\mathcal{E})
       \end{split}

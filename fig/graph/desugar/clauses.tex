@@ -27,12 +27,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}, right={$\upmu \neq \seqEmpty$}]
       {
-         c \desugarFwdR c', \sigma, E
+         c \desugarFwdR c', \upsigma, E
          \\
          \upmu \desugarFwdR \upmu', \tau, E'
       }
       {
-         c \cons \upmu \desugarFwdR \sigma \disjjoin \tau, E \cup E'
+         c \cons \upmu \desugarFwdR \upsigma \disjjoin \tau, E \cup E'
       }
    \end{smathpar}
    \\[2mm]
@@ -58,13 +58,13 @@
          \\
          \seq{q}, s_2 \desugarFwdR \seq{q}', s_2', e', E'
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+         \upsigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
       }
       {
          \qualGuard{s_1} \cons \seq{q}, s_2
          \desugarFwdR
          \qualGuard{s_1'} \cons \seq{q}', s_2',
-         \exApp{\exFun{\sigma}}{e},
+         \exApp{\exFun{\upsigma}}{e},
          E \cup E'
       }
       %
@@ -76,13 +76,13 @@
          \\
          \seq{q}, s_2 \desugarFwdR \seq{q}', s_2', e', E'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \exError)
+         \upsigma = \orElseF(\mkElimF(p)(e'), \exError)
       }
       {
          \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
          \desugarFwdR
          \qualDeclaration{p}{s_1'} \cons \seq{q}', s_2',
-         \exApp{\exFun{\sigma}}{e},
+         \exApp{\exFun{\upsigma}}{e},
          E \cup E'
       }
       %
@@ -94,13 +94,13 @@
          \\
          \seq{q}, s_2 \desugarFwdR \seq{q}', s_2', e', E'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
+         \upsigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \qualGenerator{p}{s_1} \cons \seq{q}, s_2
          \desugarFwdR
          \qualGenerator{p}{s_1'} \cons \seq{q}', s_2',
-         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e},
+         \exApp{\exApp{\varConcatMap}{\exFun{\upsigma}}}{e},
          E \cup E'
       }
    \end{smathpar}
@@ -127,13 +127,13 @@
          \\
          \seq{d} \desugarFwdR \seq{d}', e', E'
          \\
-         \sigma = \mkElimF(\pattVar{\varAnon})(e')
+         \upsigma = \mkElimF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
          \desugarFwdR
          s' \cons \seq{d}',
-         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}},
+         \exApp{\exApp{\varBind}{e}}{\exFun{\upsigma}},
          E \cup E'
       }
       %
@@ -145,7 +145,7 @@
          \\
          \seq{d} \desugarFwdR, \seq{d}', e', E'
          \\
-         \orElseF(\mkElimF(p)(e'),\varFail) = \sigma
+         \orElseF(\mkElimF(p)(e'),\varFail) = \upsigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
@@ -153,7 +153,7 @@
          \stmtBind{p}{s'} \cons \seq{d}',
          \exApp
             {\exApp{\varBind}{e}}
-            {\exFun{\sigma}},
+            {\exFun{\upsigma}},
          E \cup E'
       }
       %
@@ -165,13 +165,13 @@
          \\
          \seq{d} \desugarFwdR \seq{d}, e', E'
          \\
-         \orElseF(\mkElimF(p)(e'), \exError) = \sigma
+         \orElseF(\mkElimF(p)(e'), \exError) = \upsigma
       }
       {
          \stmtDeclaration{p}{s} \cons \seq{d}
          \desugarFwdR
          \stmtDeclaration{p}{s'} \cons \seq{d}',
-         \exApp{\exFun{\sigma}}{e},
+         \exApp{\exFun{\upsigma}}{e},
          E \cup E'
       }
    \end{smathpar}
