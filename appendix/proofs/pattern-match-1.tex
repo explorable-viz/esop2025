@@ -59,12 +59,23 @@ By case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{desugar}
    \\
    &
    v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
    \text{Def.~$\upsigma_i$, \localref{match}, \lemref{match-domains-agree}}
+   \notag
+   \\
+   &
+   \forall i' \neq i.v, \upsigma_i'\;\matchNeg
+   &
+   \text{\localref{desugar}, \lemref{match-domains-agree}}
+   \notag
+   \\
+   &
+   \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   &
    \notag
 \end{flalign}
 \end{proof}
