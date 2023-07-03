@@ -8,7 +8,7 @@
          \upsigma \disjjoin \upsigma' = \uptau
       }
       {
-         \exApp{\uplambda}{\upsigma} \disjjoin \exApp{\uplambda}{\upsigma'} = \exApp{\uplambda}{\uptau}
+         (\exApp{\uplambda}{\upsigma}) \disjjoin (\exApp{\uplambda}{\upsigma'}) = \exApp{\uplambda}{\uptau}
       }
       %
       \and
@@ -46,7 +46,7 @@
          \upkappa \disjjoin \upkappa' = \upkappa^{\dag}
       }
       {
-         (\elimBind{c}{\upkappa})\cons(\upsigma \disjjoin \upsigma') = (\elimBind{c}{\upkappa^{\dag}})\cons \uptau
+         (\elimBind{c}{\upkappa} \cons \upsigma) \disjjoin \upsigma' = (\elimBind{c}{\upkappa^{\dag}})\cons \uptau
       }
       %
       \and
@@ -55,7 +55,8 @@
          lab={\ruleName{$\disjjoin$-no-overlap}}
       ]
       {
-         dom(\elimConstr{\seq{\elimBind{c}{\upsigma}}}) \cap dom(\elimConstr{\seq{\elimBind{c'}{\upsigma'}}}) = \emptyset
+         % \dom(\elimConstr{\seq{\elimBind{c}{\upsigma}}}) \cap \dom(\elimConstr{\seq{\elimBind{c'}{\upsigma'}}}) = \emptyset
+         \seq{c} \cap \seq{c}' = \emptyset
       }
       {
          \elimConstr{\seq{\elimBind{c}{\upsigma}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\upsigma'}}} = \elimConstr{\seq{\elimBind{c}{\upsigma}}} \cup \elimConstr{\seq{\elimBind{c'}{\upsigma'}}}
