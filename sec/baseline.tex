@@ -132,6 +132,7 @@ in order to make this intuition clear and easy to prove, as our current approach
 \input{fig/baseline/surface/syntax}
 \input{fig/typing/surface}
 \input{fig/typing/patts-clauses}
+\input{fig/patt-clauses/disjoint-patts}
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
 \clearpage
@@ -157,15 +158,14 @@ patterns which might otherwise be allowed in another language. For example, we d
 \end{lstlisting}}
 In other words, when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name,
 and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish 
-both arguments. As pattern matching proceeds from left to right, this means that the following \textit{is} allowed:
+both arguments. This does not mean that the rest of the function can be ill-typed. Just because we have distinguished 
+the two clauses in the following example, we still cannot consider it a well-formed program.
 {\small
 \begin{lstlisting}[language = Fluid]
-   baz :: forall a b. List a -> List a -> b
    baz (Cons y ys) (Cons z zs) = ...
    baz  Nil         x          = ...
 \end{lstlisting}}
 
-\input{fig/patt-clauses/disjoint-patts}
 \input{fig/patt-clauses/disjjoin}
 \input{fig/patt-clauses/disjjoin2}
 \input{fig/baseline/desugar/term}
