@@ -34,31 +34,31 @@
     \begin{salign}
         \exprType{\param} &: \Expr \rightarrow \ExprType  
         \\
-        \exprType \ \exInt{n}  &= \etypeS   
+        \exprType  (\exInt{n} ) &= \etypeS   
         \\
-        \exprType \ x  &= \etypeS  
+        \exprType  (x)  &= \etypeS  
         \\
-        \exprType \  (\{\seq{(x:s)}\})  &= \etypeS  
+        \exprType   (\{\seq{(x:s)}\})  &= \etypeS  
         \\
-        \exprType \ (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE 
+        \exprType  (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE 
         \\
-        \exprType \ (\exIfThenElse{s}{s_1}{s_2}) &= \etypeS
+        \exprType  (\exIfThenElse{s}{s_1}{s_2}) &= \etypeS
         \\
-        \exprType \  (\exRecProj{s}{x}) &= \etypeE 
+        \exprType   (\exRecProj{s}{x}) &= \etypeE 
         \\
-        \exprType \ (\exApp{s}{s'}) &= \etypeE 
+        \exprType  (\exApp{s}{s'}) &= \etypeE 
         \\
-        \exprType \  (\exLetRecPiecewise{g}{s}) &= \etypeE 
+        \exprType   (\exLetRecPiecewise{g}{s}) &= \etypeE 
         \\
-        \exprType \  (\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}) &= \etypeS 
+        \exprType   (\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}) &= \etypeS 
         \\
-        \exprType \  ({\lambda\upmu}) &= \etypeS 
+        \exprType   ({\lambda\upmu}) &= \etypeS 
         \\
-        \exprType \ ({\exList{s}{l}}) &= \etypeS 
+        \exprType  ({\exList{s}{l}}) &= \etypeS 
         \\
-        \exprType \ ({\exListComp{s}{\seq{q}}}) &= \etypeS 
+        \exprType  ({\exListComp{s}{\seq{q}}}) &= \etypeS 
         \\
-        \exprType \ ({\exListEnum{s}{s'}}) &= \etypeS 
+        \exprType  ({\exListEnum{s}{s'}}) &= \etypeS 
     \end{salign}
     \caption{Expr to ExprType Function}
  \end{figure}
