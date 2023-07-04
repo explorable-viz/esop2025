@@ -179,7 +179,7 @@ Case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{(\localref{curried-match}), (\localref{curried-desugar}), Def.~$e$}
-   \notag
+   \locallabel{lambda-desugar}
    \\
    &
    v, \uptau \match \upgamma', e
@@ -188,7 +188,7 @@ Case analysis on $\matchFwdS$ derivation.
    \quad (\exists\upgamma')
    &
    \text{(\localref{curried-match-i}), \lemref{match-increasing}}
-   \notag
+   \locallabel{curried-gamma}
    \\
    &
    \forall i \numleq j.p_i \neq p \implies
@@ -217,11 +217,11 @@ Case analysis on $\matchFwdS$ derivation.
    &
    \qedLocal \exists \upgamma', e.v, \upsigma \desugar \upgamma', e
    \textit{ with }
-   s \desugar e
-   \textit{ and }
    \upgamma' \desugar \upgamma
+   \textit{ and }
+   s \desugar e
    &
-   \text{\lemref{match-increasing}}
+   \text{\lemref{match-increasing}, (\localref{curried-gamma}), (\localref{lambda-desugar})}
    \notag
 \end{flalign}
 \end{proof}
