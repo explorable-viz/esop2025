@@ -1,4 +1,4 @@
-By case analysis on $\matchFwdS$ derivation.
+Case analysis on $\matchFwdS$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
@@ -28,7 +28,7 @@ By case analysis on $\matchFwdS$ derivation.
             \forall i' \ne i.\nexists \upgamma. \, v, p_i \matchFwdS \upgamma
          }
          {
-            u, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
+            u, \upmu = (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \matchFwdR{p_i} \upgamma, s_i
          }
       \end{smathpar}
    }
@@ -51,7 +51,7 @@ By case analysis on $\matchFwdS$ derivation.
             }
          }
          {
-            \upmu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+            \upmu
             \desugar
             \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin} = \upsigma
          }
@@ -70,13 +70,13 @@ By case analysis on $\matchFwdS$ derivation.
    &
    \forall i' \neq i.v, \upsigma_i'\;\matchNeg
    &
-   \text{\localref{desugar}, \lemref{match-domains-agree}}
+   \text{(\localref{desugar}), \lemref{match-domains-agree}}
    \locallabel{no-match}
    \\
    &
    \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
-   \text{\localref{gamma}, \localref{no-match}, \lemref{match-increasing}}
+   \text{(\localref{gamma}), (\localref{no-match}), \lemref{match-increasing}}
    \notag
    \\
    \intertext{\crossrule}
@@ -91,12 +91,29 @@ By case analysis on $\matchFwdS$ derivation.
          {
             u, p \match \upgamma
             \\
-            (\forall i \numleq j.\text{if }p_i = p\text{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu'\text{ else }v, p_i\;\matchNeg)
+            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu'\textit{ else }v, p_i\;\matchNeg)
          }
          {
-            u, \upmu = \seqRange{((p_1 \cons \clause{\seq{p_1}')}{s_1})}{((p_j \cons \clause{\seq{p_j}')}{s_j})}
+            u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1}')}{s_1}}{\clause{(p_j \cons \seq{p_j}')}{s_j}})
             \match
             \upgamma, \exLambda{\upmu'} = \upsigma
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}]
+         {
+            c_i \desugarFwdS \upsigma_i
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \upmu \desugarFwdS \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin}
          }
       \end{smathpar}
    }
