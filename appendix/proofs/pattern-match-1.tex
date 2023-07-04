@@ -33,7 +33,7 @@ Case analysis on $\matchFwdS$ derivation.
       \end{smathpar}
    }
    &
-   \locallabel{match}
+   \locallabel{uncurried-match}
    \\
    &
    \derivation{\derivationWidth}{
@@ -64,7 +64,7 @@ Case analysis on $\matchFwdS$ derivation.
    &
    v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
    &
-   \text{Def.~$\upsigma_i$, \localref{match}, \lemref{match-domains-agree}}
+   \text{Def.~$\upsigma_i$, \localref{uncurried-match}, \lemref{match-domains-agree}}
    \locallabel{gamma}
    \\
    &
@@ -101,7 +101,7 @@ Case analysis on $\matchFwdS$ derivation.
       \end{smathpar}
    }
    &
-   \notag
+   \locallabel{curried-match}
    \\
    &
    \derivation{\derivationWidth}{
@@ -130,6 +130,12 @@ Case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{inversion}
+   \notag
+   \\
+   &
+   \forall i.p_i = p \implies \exists\upgamma'.v, \upsigma'_i \match \upgamma', \exLambda{\upsigma_i}
+   &
+   \text{(\localref{uncurried-match}), \lemref{match-domains-agree}}
    \notag
 \end{flalign}
 \end{proof}
