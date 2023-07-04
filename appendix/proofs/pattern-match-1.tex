@@ -158,6 +158,21 @@ Case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+         {
+            \upmu' \desugar \disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p}
+         }
+         {
+            s = \exFun{\upmu'} \desugar e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
    v, \uptau \match \upgamma', e
    \wedge
    \upgamma' \desugar \upgamma
