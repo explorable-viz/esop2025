@@ -91,10 +91,10 @@ Case analysis on $\matchFwdS$ derivation.
          {
             u, p \match \upgamma
             \\
-            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu'\textit{ else }v, p_i\;\matchNeg)
+            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}}{s_i}) \in \upmu'\textit{ else }v, p_i\;\matchNeg)
          }
          {
-            u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1}')}{s_1}}{\clause{(p_j \cons \seq{p_j}')}{s_j}})
+            u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
             \match
             \upgamma, \exLambda{\upmu'} = \upsigma
          }
@@ -106,14 +106,14 @@ Case analysis on $\matchFwdS$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugarFwdR$-clauses}}]
+         \inferrule*[lab={\ruleName{$\desugar$-clauses}}]
          {
-            \clause{(p_i \cons \seq{p_i}')}{s_i} \desugarFwdS \upsigma_i
+            (\clause{(p_i \cons \seq{p_i})}{s_i}) \desugar \upsigma_i
             \quad
             (\forall i \numleq j)
          }
          {
-            \upmu \desugarFwdS \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin}
+            \upmu \desugar \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin}
          }
       \end{smathpar}
    }
