@@ -85,7 +85,7 @@ Case analysis on $\matchFwdS$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-curried}},
+            left={\ruleName{$\match$-curried}},
             right={$\upmu' \neq \seqEmpty$}
          ]
          {
@@ -106,28 +106,30 @@ Case analysis on $\matchFwdS$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-clauses}}]
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
          {
-            \inferrule*[lab={\ruleName{$\desugar$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+            \inferrule*[
+               left={\ruleName{$\desugar$-clause-curried}},
+               right={$(\forall i \numleq j)$}
+            ]
             {
-               \clause{\seq{p}}{s} \desugar \upsigma
+               \clause{\seq{p_i}}{s_i} \desugar \upsigma_i
+               \\
+               \upsigma'_i \eqdef \mkElimF(p_i)(\exFun{\upsigma})
             }
             {
-               (\clause{(p' \cons \seq{p})}{s})
+               (\clause{(p_i \cons \seq{p_i})}{s_i})
                \desugar
-               \mkElimF(p')(\exFun{\upsigma})
+               \upsigma'_i
             }
-            \\
-            (\clause{(p_i \cons \seq{p_i})}{s_i}) \desugar \upsigma_i
-            \quad
-            (\forall i \numleq j)
          }
          {
-            \upmu \desugar \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin}
+            \upmu \desugar \seqRangeOp{\upsigma'_1}{\upsigma'_j}{\disjjoin}
          }
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
 \end{flalign}
 \end{proof}
