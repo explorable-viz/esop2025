@@ -96,7 +96,7 @@ Case analysis on $\matchFwdS$ derivation.
          {
             u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
             \match
-            \upgamma, \exFun{\upmu'} = \upsigma
+            \upgamma, \exFun{\upmu'}
          }
       \end{smathpar}
    }
@@ -125,6 +125,7 @@ Case analysis on $\matchFwdS$ derivation.
          }
          {
             \upmu \desugar \seqRangeOp{\upsigma'_1}{\upsigma'_j}{\disjjoin}
+            = \upsigma
          }
       \end{smathpar}
    }
@@ -142,14 +143,14 @@ Case analysis on $\matchFwdS$ derivation.
    \locallabel{curried-match-i}
    \\
    &
-   \uptau \eqdef \disjjoin\set{\upsigma'_i \mid \forall i.p_i = p}
+   \uptau \eqdef \disjjoin\set{\upsigma'_i \mid \forall i \numleq j.p_i = p}
    \neq \seqEmpty
    &
    \upmu' \neq \seqEmpty
    \notag
    \\
    &
-   v, \uptau \match \upgamma', \exFun{(\disjjoin\set{\upsigma_i \mid \forall i.p_i = p})}
+   v, \uptau \match \upgamma', \exFun{(\disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p})}
    \wedge
    \upgamma' \desugar \upgamma
    \quad (\exists\upgamma')
@@ -158,14 +159,14 @@ Case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
-   \forall i.p_i \neq p \implies
+   \forall i \numleq j.p_i \neq p \implies
    v, \upsigma'_i\;\matchNeg
    &
    \text{(\localref{curried-match}), \lemref{match-domains-agree}}
    \locallabel{curried-no-match}
    \\
    &
-   \uptau' \eqdef \disjjoin\set{\upsigma'_i \mid \forall i.p_i \neq p}
+   \uptau' \eqdef \disjjoin\set{\upsigma'_i \mid \forall i \numleq j.p_i \neq p}
    &
    \notag
    \\
@@ -173,6 +174,18 @@ Case analysis on $\matchFwdS$ derivation.
    v, \uptau'\;\matchNeg
    &
    \text{(\localref{curried-no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   &
+   \upsigma = \uptau \disjjoin \uptau'
+   &
+   \text{$\disjjoin$ comm./assoc.}
+   \notag
+   \\
+   &
+   v, \upsigma \match \upgamma', \exFun{(\disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p})}
+   &
+   \text{\lemref{match-increasing}}
    \notag
 \end{flalign}
 \end{proof}
