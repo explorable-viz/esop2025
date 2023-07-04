@@ -96,7 +96,7 @@ Case analysis on $\matchFwdS$ derivation.
          {
             u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
             \match
-            \upgamma, \exLambda{\upmu'} = \upsigma
+            \upgamma, \exFun{\upmu'} = \upsigma
          }
       \end{smathpar}
    }
@@ -133,14 +133,23 @@ Case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
-   \forall i.p_i = p \implies \upgamma'_i.v, \upsigma'_i \match \upgamma', \exLambda{\upsigma_i}
-   (\exists \upgamma'_i)
+   \forall i.p_i = p \implies
+   \exists \upgamma'_i.\upgamma'_i.v, \upsigma'_i \match \upgamma', \exFun{\upsigma_i}
+   \wedge
+   \upgamma'_i \desugar \upgamma
    &
    \text{(\localref{uncurried-match}), \lemref{match-domains-agree}}
    \notag
    \\
    &
    \uptau \eqdef \disjjoin\set{\upsigma'_i \mid \forall i.p_i = p}
+   &
+   \notag
+   \\
+   &
+   v, \uptau \match \upgamma', \exFun{(\disjjoin\set{\upsigma_i \mid \forall i.p_i = p})}
+   \wedge
+   \upgamma' \desugar \upgamma
    &
    \notag
 \end{flalign}
