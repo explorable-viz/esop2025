@@ -59,10 +59,10 @@ Case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{inversion}
-   \locallabel{desugar}
+   \locallabel{uncurried-desugar}
    \\
    &
-   v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   v, \upsigma_i \match \upgamma', e_i\textit{ with }\upgamma \desugar \upgamma'
    &
    \text{Def.~$\upsigma_i$, \localref{uncurried-match}, \lemref{match-domains-agree}}
    \locallabel{uncurried-gamma}
@@ -70,14 +70,14 @@ Case analysis on $\matchFwdS$ derivation.
    &
    \forall i' \neq i.v, \upsigma_i'\;\matchNeg
    &
-   \text{(\localref{desugar}), \lemref{match-domains-agree}}
+   \text{(\localref{uncurried-desugar}), \lemref{match-domains-agree}}
    \locallabel{no-match}
    \\
    &
    \qedLocal
    \exists \upgamma', e.v, \upsigma \match \upgamma', e
-   \wedge \upgamma \desugar \upgamma'
-   \wedge s \desugar e
+   \textit{ with }\upgamma \desugar \upgamma'
+   \textit{ and }s \desugar e
    &
    \text{(\localref{uncurried-gamma}), (\localref{no-match}), \lemref{match-increasing}}
    \notag
@@ -134,12 +134,12 @@ Case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{curried-desugar}
    \\
    &
    \forall i.p_i = p \implies
    \exists \upgamma'_i.\upgamma'_i.v, \upsigma'_i \match \upgamma', \exFun{\upsigma_i}
-   \wedge
+   \textit{ with }
    \upgamma'_i \desugar \upgamma
    &
    \text{(\localref{curried-match}), \lemref{match-domains-agree}}
@@ -162,7 +162,15 @@ Case analysis on $\matchFwdS$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-lambda}}]
          {
-            \upmu' \desugar \disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p}
+            \inferrule*[left={\ruleName{$\desugar$-clause-curried}}]
+            {
+               \clause{\seq{p_i}}{s_i} \desugar \upsigma_i
+               \quad
+               (\forall i \numleq j.p_i = p)
+            }
+            {
+               \upmu' \desugar \disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p}
+            }
          }
          {
             s = \exFun{\upmu'} \desugar e
@@ -170,11 +178,12 @@ Case analysis on $\matchFwdS$ derivation.
       \end{smathpar}
    }
    &
+   \text{(\localref{curried-match}), (\localref{curried-desugar}), Def.~$e$}
    \notag
    \\
    &
    v, \uptau \match \upgamma', e
-   \wedge
+   \textit{ with }
    \upgamma' \desugar \upgamma
    \quad (\exists\upgamma')
    &
@@ -206,7 +215,11 @@ Case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
-   v, \upsigma \match \upgamma', e
+   \qedLocal \exists \upgamma', e.v, \upsigma \desugar \upgamma', e
+   \textit{ with }
+   s \desugar e
+   \textit{ and }
+   \upgamma' \desugar \upgamma
    &
    \text{\lemref{match-increasing}}
    \notag
