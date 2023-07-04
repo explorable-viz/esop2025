@@ -108,6 +108,16 @@ Case analysis on $\matchFwdS$ derivation.
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-clauses}}]
          {
+            \inferrule*[lab={\ruleName{$\desugar$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+            {
+               \clause{\seq{p}}{s} \desugar \upsigma
+            }
+            {
+               (\clause{(p' \cons \seq{p})}{s})
+               \desugar
+               \mkElimF(p')(\exFun{\upsigma})
+            }
+            \\
             (\clause{(p_i \cons \seq{p_i})}{s_i}) \desugar \upsigma_i
             \quad
             (\forall i \numleq j)
