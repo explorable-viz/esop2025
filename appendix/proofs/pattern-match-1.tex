@@ -149,17 +149,30 @@ Case analysis on $\matchFwdS$ derivation.
    \notag
    \\
    &
-   \uptau' \eqdef \disjjoin\set{\upsigma'_i \mid \forall i.p_i \neq p}
-   &
-   \notag
-   \\
-   &
    v, \uptau \match \upgamma', \exFun{(\disjjoin\set{\upsigma_i \mid \forall i.p_i = p})}
    \wedge
    \upgamma' \desugar \upgamma
    \quad (\exists\upgamma')
    &
    \text{(\localref{curried-match-i}), \lemref{match-increasing}}
+   \notag
+   \\
+   &
+   \forall i.p_i \neq p \implies
+   v, \upsigma'_i\;\matchNeg
+   &
+   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
+   \locallabel{curried-no-match}
+   \\
+   &
+   \uptau' \eqdef \disjjoin\set{\upsigma'_i \mid \forall i.p_i \neq p}
+   &
+   \notag
+   \\
+   &
+   v, \uptau'\;\matchNeg
+   &
+   \text{(\localref{curried-no-match}), \lemref{match-increasing}}
    \notag
 \end{flalign}
 \end{proof}
