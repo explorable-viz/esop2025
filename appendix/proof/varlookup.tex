@@ -1,13 +1,19 @@
-We assume the following:
-\begin{equation}
-    \gamma \desugarFwdS \gamma'
-\end{equation}
-\begin{equation}
-    v \desugarFwdS v'
-\end{equation}
 \begin{proof}
+   \small
     \begin{flalign}
-    \intertext{\crossrule}
+      \\
+      &
+      v \desugarFwdS v'
+      &
+      \text{suppose}
+      \locallabel{v-desugar}
+      \\
+      &
+      \gamma \desugarFwdS \gamma'
+      &
+      \text{suppose}
+      \locallabel{gamma-desugar}
+      \\
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \Case{\bind{x}{v} \in \gamma}
     &
@@ -28,14 +34,14 @@ We assume the following:
     &
     \exists i.\; v = v_i
     &
-    \text{Assumption (1)}
+    \text{(1)}
     \notag
     \\
     &
     \qedLocal
     \bind{x}{v'} \in \gamma'
     &
-    \text{Assumption (2), and $\desugarFwdS$}
+    \text{(2), and $\desugarFwdS$}
     \notag
     \\
     \Case{\bind{x}{v'} \in \gamma'}
@@ -56,14 +62,14 @@ We assume the following:
     &
     \exists i.\; v' = v'_i
     &
-    \text{Assumption (1)}
+    \text{(\localref{v-desugar})}
     \notag
     \\
     &
     \qedLocal
     \bind{x}{v} \in \gamma
     &
-    \text{Assumption (2) and inversion on $\desugarFwdS$}
+    \text{(\localref{gamma-desugar}) and inversion on $\desugarFwdS$}
     \notag
     \end{flalign}
  \end{proof}
