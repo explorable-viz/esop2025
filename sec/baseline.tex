@@ -136,4 +136,30 @@ as the precondition to \thmref{semantics-eq}.
 \input{fig/baseline/desugar/disjjoin}
 \input{fig/baseline/desugar/value}
 
+\begin{lemma}
+   \label{lem:match-domains-agree}
+   Suppose $u \desugar v$ and $\sigma = \mkElimF(p, \kappa)$.
+   \begin{enumerate}
+      \item If $u, p \match \gamma$ then $\exists \gamma'.v, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $u, p\;\matchNeg$ then $v, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+   Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
+   \begin{enumerate}
+      \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $\seq{u}, \seq{p}\;\matchNeg$ then $\seq{v}, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+   \label{lem:match-increasing}
+   Suppose $v, \sigma \match \gamma, \kappa_1$. Then $\exists \kappa.v, \sigma \disjjoin \tau \match \gamma, \kappa$ and:
+   \begin{enumerate}
+      \item If $v, \tau \match \gamma, \kappa_2$ then $\kappa = \kappa_1 \disjjoin \kappa_2$.
+      \item If $v, \tau\;\matchNeg$ then $\kappa = \kappa_1$.
+   \end{enumerate}
+\end{lemma}
+
 \clearpage
