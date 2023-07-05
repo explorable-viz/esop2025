@@ -44,14 +44,12 @@ theorem.
 \begin{proof}
    For (1) see \appref{semantics-eq-1}, and for (2), see \appref{semantics-eq-2}
 \end{proof}
-\thmref{semantics-eq} relies on pattern-matching in the surface and core languages producing
-environments that coincide sensibly. We state this as \lemref{matching-bi}. We need to
-also establish that environment lookup commutes with desugaring, \lemref{lemma:varlookup}. Due to the fact
-that desugaring of values is not a total relation, we require that both $s$ and $\gamma$ can be desugared as
-the precondition to \thmref{semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some
-properties on recursively defined functions and the eliminators they desugar to so that we can characterize
-their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
+
+\thmref{semantics-eq} relies on an analogous lemma for pattern-matching (\lemref{matching-bi}) and recursive
+definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
+(\lemref{lemma:varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
+as the precondition to \thmref{semantics-eq}.
+
 \begin{lemma}
    \label{lem:lemma:varlookup}
    Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$, then
