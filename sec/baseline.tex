@@ -21,9 +21,9 @@ associated with the function.
 \subsubsection{Desugaring Of Values, Environments and Recursive Definitions}
 
 In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
-one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define
-desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\rho$).
-Once this extension to the desugaring relation has been carefully defined, in figure \figref{closures}, we can state and prove our theorem.
+one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to
+define desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core
+$\rho$).
 
 \subsubsection{Equivalence of Semantics}
 
@@ -42,7 +42,7 @@ theorem.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   For (1) see \appref{semantics-eq-1}, and for (2), see \appref{semantics-eq-2}
+   For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
 \end{proof}
 
 \thmref{semantics-eq} relies on an analogous lemma for pattern-matching (\lemref{matching-bi}) and recursive
@@ -52,17 +52,14 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:lemma:varlookup}
-   Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$, then
-   $$
-      \bind{x}{v} \in \gamma \quad \iff \quad \bind{x}{v'} \in \gamma'
-   $$
+   Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
 \end{lemma}
 \begin{proof}
    See \appref{proofs:varlookup}
 \end{proof}
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$, Then:
+   Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$.
    \hfill
    \begin{enumerate}
       \item If $u, \mu\matchFwdS \gamma, s$ then $\exists \gamma', e.v,\sigma \matchFwdS \gamma', e$ with $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
@@ -71,11 +68,11 @@ as the precondition to \thmref{semantics-eq}.
 
 \end{lemma}
 \begin{proof}
-   As in \thmref{semantics-eq}, we split the proof into 2 parts, for (1) see \appref{proofs:matching-bi-1} and for (2), see \appref{proofs:matching-bi-2}.
+   For (1) see \appref{proofs:matching-bi-1}. For (2) see \appref{proofs:matching-bi-2}.
 \end{proof}
 \begin{lemma}
    \label{lem:closedefs-eq}
-   Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$. Then
+   Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$.
    \hfill
    \begin{enumerate}
       \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugarFwdS \gamma_2'$
@@ -83,7 +80,7 @@ as the precondition to \thmref{semantics-eq}.
    \end{enumerate}
 \end{lemma}
 \begin{proof}
-   see \appref{proofs:close-defs-eq}
+   See \appref{proofs:close-defs-eq}
 \end{proof}
 % \begin{lemma}
 %    \label{lem:match-then-desugar}
