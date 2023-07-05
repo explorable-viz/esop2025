@@ -1,81 +1,81 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \matchFwdS \gamma$}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \match \gamma$}
    \begin{smathpar}
       \inferrule*[
-        lab={\ruleName{$\matchFwdS$-empty}}
+        lab={\ruleName{$\match$-empty}}
       ]
       {
          \strut
       }
       {
-         \seqEmpty, \seqEmpty \matchFwdS \varnothing
+         \seqEmpty, \seqEmpty \match \varnothing
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-seq}}
+         lab={\ruleName{$\match$-seq}}
       ]
       {
-         v, p \matchFwdS \gamma
+         v, p \match \gamma
          \\
-         \seq{u}, \seq{p}' \matchFwdS \gamma'
+         \seq{u}, \seq{p}' \match \gamma'
       }
       {
-         v \cons \seq{u}, p \cons \seq{p}' \matchFwdS \gamma \disjunion \gamma'
+         v \cons \seq{u}, p \cons \seq{p}' \match \gamma \disjunion \gamma'
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox {$v, p \matchFwdS \gamma$}
+   {\small \flushleft \shadebox {$v, p \match \gamma$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-var}}
+         lab={\ruleName{$\match$-var}}
       ]
       {
          \strut
       }
       {
-         v, x \matchFwdS \set{\bind{\exVar{x}}{v}}
+         v, x \match \set{\bind{\exVar{x}}{v}}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-constr}}
+         lab={\ruleName{$\match$-constr}}
       ]
       {
-         \seq{v},\seq{p} \matchFwdS \gamma
+         \seq{v},\seq{p} \match \gamma
       }
       {
-         \exConstr{c}{\seq{v}},\exConstr{c}{\seq{p}} \matchFwdS \gamma
+         \exConstr{c}{\seq{v}},\exConstr{c}{\seq{p}} \match \gamma
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-nonempty-list}}
+         lab={\ruleName{$\match$-nonempty-list}}
       ]
       {
-         v, p \matchFwdS \gamma
+         v, p \match \gamma
          \\
-         v', o \matchFwdS \gamma'
+         v', o \match \gamma'
       }
       {
-         \cCons(v, v'), \pattList{p}{o} \matchFwdS \gamma \disjunion \gamma'
+         \cCons(v, v'), \pattList{p}{o} \match \gamma \disjunion \gamma'
       }
       %
       \and
       % %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-record}}
+         lab={\ruleName{$\match$-record}}
       ]
       {
-         \seq{u}, \seq{p} \matchFwdS \gamma
+         \seq{u}, \seq{p} \match \gamma
          \quad
          \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
       }
       {
-         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \matchFwdS \gamma
+         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \match \gamma
       }
    \end{smathpar}}
    \\[3mm]
@@ -117,7 +117,7 @@
          \forall i' \ne i.\nexists \gamma. \, v, p_{i'} \match \gamma
       }
       {
-         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \gamma, s_i
+         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \match{p_i} \gamma, s_i
       }
       %
       \and
