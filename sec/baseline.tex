@@ -57,6 +57,7 @@ as the precondition to \thmref{semantics-eq}.
 \begin{proof}
    See \appref{proofs:varlookup}
 \end{proof}
+
 \begin{lemma}
    \label{lem:matching-bi}
    Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$.
@@ -70,6 +71,7 @@ as the precondition to \thmref{semantics-eq}.
 \begin{proof}
    For (1) see \appref{proofs:matching-bi-1}. For (2) see \appref{proofs:matching-bi-2}.
 \end{proof}
+
 \begin{lemma}
    \label{lem:closedefs-eq}
    Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$.
@@ -82,13 +84,7 @@ as the precondition to \thmref{semantics-eq}.
 \begin{proof}
    See \appref{proofs:close-defs-eq}
 \end{proof}
-% \begin{lemma}
-%    \label{lem:match-then-desugar}
-%    Suppose we have $\Gamma \vdash\mu\,:\,A \to B$, and $v, \mu \matchFwdS \gamma$ then $\exists \sigma.\; \mu \desugarFwdS \sigma$.
-% \end{lemma}
-% \begin{proof}
-%    see \appref{match-then-desugar}.
-% \end{proof}
+
 \begin{lemma}
    \label{lem:disjoint-clause-elim}
    If $\compatPatt{c}{\mu}$ and $c \desugarFwdS \sigma,\,\mu\desugarFwdS\sigma'$ then $\exists\tau.\,\sigma \disjjoin\sigma' = \tau$
@@ -96,43 +92,10 @@ as the precondition to \thmref{semantics-eq}.
 \begin{proof}
    see \appref{disjoint-clause-elim}
 \end{proof}
+
 Proving \lemref{disjoint-clause-elim} is quite challenging, but is a requirement for the proof of \thmref{semantics-eq}.
 Our current intuition is that we need to prove some properties about eliminators in order to make this tractable.
-We shall break these down.
-\subsubsection{Vertical Recursion}
-For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses.
-The definition of this, at the top of \figref{desugar-func-qual-do} ($\desugarFwdS$-clauses)
-demonstrates the need to join the eliminator formed by desugaring the previous equations with the
-next clause in the definition. We need this join operation ($\disjjoin$) to always be defined
-for well-typed definitions of a recursive function. We have captured this intuition with the maxim
-"disjoint join preserves joinability". We will make this notion more formal in a revision of this draft.
-\subsubsection{Horizontal Recursion}
-The other part that makes this difficult is the notion of curried patterns. An eliminator is
-a branching structure as we have noted. However an individual clause is sequential with no branching.
-The branching is introduced when we consider multiple clauses for the same function. We need the proof
-of the lemma to be constructive, to show exactly how we compute the join when it is defined.
-Our intuition is that the only point in an eliminator where we encounter branching
-is at the point of disjoint constructors, however this branch may be nested deeply inside other
-constructor and record patterns. We think we need to revise our definition of eliminators
-in order to make this intuition clear and easy to prove, as our current approach to proving
-\lemref{disjoint-clause-elim} relies on this unproven fact.
-% \begin{theorem}
-%    \label{thm:join-preserves-join}
-%    The disjoint join of eliminators is joinability-preserving, that is:
-%    $$
-%       \sigma_1 \disjjoin \sigma_2 = \tau' \opAnd \sigma_2 \disjjoin \sigma_3 = \tau'_1 \opAnd \sigma_1 \disjjoin \sigma_3 = \tau'_2
-%       \newline
-%       \implies \sigma_3 \disjjoin \tau' = \sigma_2 \disjjoin \tau'_1 = \sigma_1 \disjjoin \tau'_2 = \tau
-%    $$
-% \end{theorem}
-% \begin{proof}
-%    Temporarily Omitted.
-% \end{proof}
-% \begin{lemma}
-%    Suppose we have $c_1,c_2$ clauses, such that $\Gamma \vdash c_1: \tyFun{A}{B},\; c_2:\tyFun{A}{B}$ and $\compatPatt{c_1}{c_2}$
-%    Then $c_1 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c}{\seq{p}} \elimmapsto \sigma$ and
-%    $c_2 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c'}{\seq{p}} \elimmapsto \sigma'$
-% \end{lemma}
+
 \clearpage
 \input{fig/baseline/surface/syntax}
 \input{fig/typing/surface}
