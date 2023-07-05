@@ -85,7 +85,7 @@ Induction on $\match$ derivation.
       \end{smathpar}
    }
    &
-   \notag
+   \locallabel{match-constr}
    \\
    &
    \derivation{\derivationWidth}{
@@ -101,7 +101,7 @@ Induction on $\match$ derivation.
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{desugar-constr}
    \\
    &
    \sigma \eqdef \elimArgsF(\seq{p},\kappa)
@@ -115,6 +115,17 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
+   \seq{v}, \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma' \desugar \gamma
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
