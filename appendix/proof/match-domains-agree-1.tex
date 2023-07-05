@@ -84,21 +84,24 @@ Induction on $\match$ derivation.
          }
       \end{smathpar}
    }
+   &
+   \notag
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            left={\ruleName{$\match$-constr}}
-         ]
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
          {
-            \seq{u},\seq{p} \match \gamma
+            \seq{u} \desugar \seq{v}
          }
          {
-            \exConstr{c}{\seq{u}},\exConstr{c}{\seq{p}} \match \gamma
+             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
          }
       \end{smathpar}
    }
+   &
+   \text{inversion}
+   \notag
    \\
    &
    \mkElimF(\exConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\elimArgsF(\seq{p},\kappa)}}
@@ -106,5 +109,21 @@ Induction on $\match$ derivation.
    \text{Def.~\mkElimF}
    \notag
    \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime
+         }
+         {
+            \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
+            \match
+            \gamma, \kappa^\twoPrime
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
