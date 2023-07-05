@@ -37,6 +37,30 @@ We disallow certain combinations of patterns which are commonly allowed in other
    baz  Nil         x          = ...
 \end{lstlisting}}
 
+\clearpage
+\input{fig/baseline/surface/syntax}
+\input{fig/typing/surface}
+\input{fig/typing/patts-clauses}
+\input{fig/patt-clauses/disjoint-patts}
+\input{fig/baseline/surface/eval}
+\input{fig/baseline/surface/match}
+\clearpage
+
+\subsection{Core Language}
+
+\input{fig/baseline/core/syntax}
+\input{fig/typing/core}
+\input{fig/baseline/core/eval}
+\input{fig/baseline/core/match}
+\clearpage
+
+\subsection{Desugaring}
+
+\input{fig/baseline/desugar/term}
+\input{fig/baseline/desugar/clauses}
+\input{fig/baseline/desugar/disjjoin}
+\input{fig/baseline/desugar/value}
+
 \subsubsection{Desugaring Of Values, Environments and Recursive Definitions}
 
 In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
@@ -46,11 +70,6 @@ $\rho$).
 
 \subsubsection{Equivalence of Semantics}
 
-Informally, the equivalence of the semantics means that desugaring a surface term and surface environment
-produces the same result as surface-evaluating to a surface value and then desugaring the surface value.
-We formalise the equivalence of these semantics as the following
-theorem.
-%  $\Gamma \vdash s : A, \; \gamma : \Gamma,
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugarFwdS e \; and \; \gamma \desugarFwdS \gamma'$, then:
@@ -103,30 +122,6 @@ as the precondition to \thmref{semantics-eq}.
 \begin{proof}
    See \appref{proofs:close-defs-eq}
 \end{proof}
-
-\clearpage
-\input{fig/baseline/surface/syntax}
-\input{fig/typing/surface}
-\input{fig/typing/patts-clauses}
-\input{fig/patt-clauses/disjoint-patts}
-\input{fig/baseline/surface/eval}
-\input{fig/baseline/surface/match}
-\clearpage
-
-\subsection{Core Language}
-
-\input{fig/baseline/core/syntax}
-\input{fig/typing/core}
-\input{fig/baseline/core/eval}
-\input{fig/baseline/core/match}
-\clearpage
-
-\subsection{Desugaring}
-
-\input{fig/baseline/desugar/term}
-\input{fig/baseline/desugar/clauses}
-\input{fig/baseline/desugar/disjjoin}
-\input{fig/baseline/desugar/value}
 
 \begin{lemma}
    \label{lem:match-domains-agree}
