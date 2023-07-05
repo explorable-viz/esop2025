@@ -114,12 +114,12 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime
+            \seq{v}, \elimArgsF(\seq{p},\kappa) \match \gamma', \kappa
          }
          {
-            \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\elimArgsF(\seq{p},\kappa)}}
             \match
-            \gamma, \kappa^\twoPrime
+            \gamma', \kappa
          }
       \end{smathpar}
    }
