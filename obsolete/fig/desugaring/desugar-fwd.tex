@@ -29,7 +29,7 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-          \clausesFwdF(\seq{c_i}) = \upsigma_i
+          \clausesFwdF(\seq{c_i}) = \sigma_i
          \quad
          (\forall i \leq j)
          \\
@@ -38,7 +38,7 @@
       {
          \exLetRecPiecewise{\seqRange{\bind{x_1}{\seq{c_1}}}{\bind{x_j}{\seq{c_j}}}}{s}
          \desugarFwdR
-         \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
       %
       \and
@@ -47,12 +47,12 @@
       {
          s \desugarFwdThunkR e
          \\
-         \clausesFwdF(\seq{c}) = \upsigma
+         \clausesFwdF(\seq{c}) = \sigma
       }
       {
          \exMatch{s}{\seq{c}}
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
@@ -79,12 +79,12 @@
          \\
          s_2 \desugarFwdThunkR e_2
          \\
-         \upsigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
@@ -146,12 +146,12 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \upsigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\annot{\cNil}{\alpha}}}
       }
       {
          \annQualGuard{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
@@ -162,12 +162,12 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \upsigma = \orElseFwdF(\mkElimFwdF(p)(e'), \exError)
+         \sigma = \orElseFwdF(\mkElimFwdF(p)(e'), \exError)
       }
       {
          \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
@@ -178,12 +178,12 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \upsigma = \orElseFwdF(\mkElimFwdF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseFwdF(\mkElimFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
          \desugarFwdR
-         \exApp{\exApp{\varConcatMap}{\exFun{\upsigma}}}{e}
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
    \end{smathpar}
    {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
@@ -205,12 +205,12 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \upsigma = \mkElimFwdF(\pattVar{\varAnon})(e')
+         \sigma = \mkElimFwdF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
          \desugarFwdR
-         \exApp{\exApp{\varBind}{e}}{\exFun{\upsigma}}
+         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
       }
       %
       \and
@@ -221,14 +221,14 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\mkElimFwdF(p)(e'),\varFail) = \upsigma
+         \orElseFwdF(\mkElimFwdF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
          \desugarFwdR
          \exApp
             {\exApp{\varBind}{e}}
-            {\exFun{\upsigma}}
+            {\exFun{\sigma}}
       }
       %
       \and
@@ -239,12 +239,12 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\mkElimFwdF(p)(e'), \exError) = \upsigma
+         \orElseFwdF(\mkElimFwdF(p)(e'), \exError) = \sigma
       }
       {
          \smash{\stmtDeclaration{p}{s} \cons \seq{d}}
          \desugarFwdR
-         \smash{\exApp{\exFun{\upsigma}}{e}}
+         \smash{\exApp{\exFun{\sigma}}{e}}
       }
    \end{smathpar}
    {\flushleft \shadebox{$r \desugarFwdR e$}

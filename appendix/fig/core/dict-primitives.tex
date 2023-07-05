@@ -6,12 +6,12 @@
    \dictMap &: \Val{(\tyFun{A}{B})} \times \Val{(\tyDict{A})} \to \Val{(\tyDict{B})}
    % =============================================================
    \\
-   \dictMap(v, d_{\upalpha})
+   \dictMap(v, d_{\alpha})
    &=
-   (\annDict{\seq{\bind{s}{(\upalpha', v')}}}{\upbeta}, \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta)})
+   (\annDict{\seq{\bind{s}{(\alpha', v')}}}{\beta}, \bigcup\set{\seq{E}} \cup \set{(\alpha, \beta)})
    \\
-   &\quad\textit{where }\upbeta\textit{ fresh and }
-   \set{\seq{\bind{s}{(\upalpha', (v',E))}}} = \Dmap(\uplambda(\upalpha', u).(\upalpha', \apply(v, u)), d)
+   &\quad\textit{where }\beta\textit{ fresh and }
+   \set{\seq{\bind{s}{(\alpha', (v',E))}}} = \Dmap(\lambda(\alpha', u).(\alpha', \apply(v, u)), d)
    \\[2mm]
    % =============================================================
    \dictIntersectionWith
@@ -19,47 +19,47 @@
    \Val{(\tyFun{A}{\tyFun{B}{A'}})} \times \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A'})}
    % =============================================================
    \\
-   \dictIntersectionWith(v, d_{\upalpha}, d'_{\upalpha'})
+   \dictIntersectionWith(v, d_{\alpha}, d'_{\alpha'})
    &=
-    (\annDict{\seq{\bind{s}{(\upbeta', v'}}}{\upbeta},
-    \bigcup\set{\seq{E}} \cup \set{(\upalpha, \upbeta), (\upalpha', \upbeta)}
+    (\annDict{\seq{\bind{s}{(\beta', v'}}}{\beta},
+    \bigcup\set{\seq{E}} \cup \set{(\alpha, \beta), (\alpha', \beta)}
    \\
-   &\quad\textit{ where }\upbeta\textit{ fresh and }
-   \set{\seq{\bind{s}{(\upbeta', (v',E))}}} = \DintersectionWith(f, d, d')
+   &\quad\textit{ where }\beta\textit{ fresh and }
+   \set{\seq{\bind{s}{(\beta', (v',E))}}} = \DintersectionWith(f, d, d')
    \\
    &\quad\textit{ and }
-   f((\upbeta', u), (\_, u')) = (\upbeta', \apply(v, (u, u')))
+   f((\beta', u), (\_, u')) = (\beta', \apply(v, (u, u')))
    \\[2mm]
    % =============================================================
    \dictDisjUnion &: \Val{(\tyDict{A})}^2 \to \Val{(\tyDict{A})}
    % =============================================================
    \\
-   \dictDisjUnion(d_{\upalpha}, d'_{\upalpha'})
+   \dictDisjUnion(d_{\alpha}, d'_{\alpha'})
    &=
-   ((d \disjunion d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
-   \quad\;\textit{iff }\upbeta\textit{ fresh and }\dom{d} \cap \dom{d'} = \varnothing
+   ((d \disjunion d')_{\beta}, \set{(\alpha, \beta), (\alpha', \beta)})
+   \quad\;\textit{iff }\beta\textit{ fresh and }\dom{d} \cap \dom{d'} = \varnothing
    \\[2mm]
    % =============================================================
    \dictDifference &: \Val{(\tyDict{A})} \times \Val{(\tyDict{B})} \to \Val{(\tyDict{A})}
    % =============================================================
    \\
-   \dictDifference(d_{\upalpha}, d'_{\upbeta})
+   \dictDifference(d_{\alpha}, d'_{\beta})
    &=
-   ((\Ddifference(d, d')_{\upbeta}, \set{(\upalpha, \upbeta), (\upalpha', \upbeta)})
-   \quad\;\textit{where }\upbeta\textit{ fresh}
+   ((\Ddifference(d, d')_{\beta}, \set{(\alpha, \beta), (\alpha', \beta)})
+   \quad\;\textit{where }\beta\textit{ fresh}
    \\[2mm]
    % =============================================================
    \dictGet &: \Val{\tyStr} \times \Val{(\tyDict{A})} \to \Val{A}
    % =============================================================
    \\
-   \dictGet(\annStr{s}{\upalpha}, d_{\upalpha'}) &= (v, \varnothing)
-   \quad\textit{iff }\bind{s}{(\upbeta, v)} \in d
+   \dictGet(\annStr{s}{\alpha}, d_{\alpha'}) &= (v, \varnothing)
+   \quad\textit{iff }\bind{s}{(\beta, v)} \in d
    \\[2mm]
    % =============================================================
    \dictFoldl &: \Val{(\tyFun{B}{\tyFun{A}{B}})} \times \Val{B} \times \Val{(\tyDict{A})} \to \Val{B}
    % =============================================================
    \\
-   \dictFoldl(v, u, d_\upalpha) &= \Dfoldl(f, (u, \varnothing), d)
+   \dictFoldl(v, u, d_\alpha) &= \Dfoldl(f, (u, \varnothing), d)
    \\
    &\quad\textit{where }
    f(s, (v', E), (\_, u')) = (v^\dagger, E \cup E')\textit{ where }(v^\dagger, E') = \apply(v, (v', u'))
@@ -68,11 +68,11 @@
    \dictFromRecord &: \Val{(\tyRec{\seqRange{\bind{x_1}{A}}{\bind{x_n}{A}}})} \to \Val{(\tyDict{A})}
    % =============================================================
    \\
-   \dictFromRecord(\annRec{\seq{\bind{x}{v}}}{\upalpha})
+   \dictFromRecord(\annRec{\seq{\bind{x}{v}}}{\alpha})
    &=
-   (\annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha'},
-    \set{(\upalpha, \upalpha')} \cup (\upalpha, \set{\seq{\upbeta}})
-   \quad\textit{where }\upalpha', \seq{\upbeta}\textit{ fresh and }\str(x_i) = s_i
+   (\annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
+    \set{(\alpha, \alpha')} \cup (\alpha, \set{\seq{\beta}})
+   \quad\textit{where }\alpha', \seq{\beta}\textit{ fresh and }\str(x_i) = s_i
 \end{align*}
 \caption{Foreign functions for dictionaries; $\dictFromRecord$ assumes embedding $\str: \Var \hookrightarrow \Str$}
 \end{figure}

@@ -3,16 +3,16 @@
       %========================================
       \PattSeqOpt &:: \Cxt \to \Set{Set}
       \\
-      \PattSeqOpt\;\upGamma &\eqdef 1 + \exists A.\PattSeq\;A\;\upGamma
+      \PattSeqOpt\;\Gamma &\eqdef 1 + \exists A.\PattSeq\;A\;\Gamma
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \Patt\;A\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B)$}
+      \flushleft\shadebox{$\mkElimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \mkElimF
       &::
-      \Patt\;A\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B
+      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
       \mkElimF(\pattVar{x})(\kappa)
@@ -33,12 +33,12 @@
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \ListRestPatt\;A\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B)$}
+      \flushleft\shadebox{$\mkElimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \mkElimF
       &::
-      \ListRestPatt\;A\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;B \to \Elim\;\upGamma\;A\;B
+      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
       \mkElimF(\pattListEnd)(\kappa)
@@ -51,32 +51,32 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;A \to \Cont\;\upGamma\;A)$}
+      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
       }
       %========================================
       \elimArgsF
       &::
-      \PattSeqOpt\;\upGamma' \to \Cont\;(\upGamma \concat \upGamma')\;A \to \Cont\;\upGamma\;A
+      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A
       \\
       %========================================
       \elimArgsF(\seqEmpty)(\kappa)
       &=
       \kappa
       \\
-      \elimArgsF(\pi \cons \seq{\pi})(\upsigma)
+      \elimArgsF(\pi \cons \seq{\pi})(\sigma)
       &=
-      \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\upsigma))
+      \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
       %========================================
       \intertext{
-      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\upGamma' \to (\Cont\;(\upGamma \concat \upGamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\upGamma \concat \upGamma')\;A)$}
+      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
       }
       %========================================
       \begin{split}
       \orElseF
       &::
-      \PattSeqOpt\;\upGamma' \to\\
+      \PattSeqOpt\;\Gamma' \to\\
       &\phantom{aj.}
-      \Cont\;(\upGamma \concat \upGamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\upGamma \concat \upGamma')\;A
+      \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
       \end{split}
       \\
       %========================================
@@ -96,13 +96,13 @@
       &=
       \elimConstr{\elimBind{c}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessF_{c}(e)
       \\
-      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\upsigma}}, e)
+      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\upsigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
-      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\upsigma}}, e)
+      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\upsigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
       \\
       \orElseF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
@@ -110,16 +110,16 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\upGamma\;\datatype{\upSigma}{c}\;A$}
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A$}
       }
       %========================================
       \unlessF
-      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\upGamma\;\datatype{\upSigma}{c}\;A
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A
       \\
       %========================================
       \unlessF_{c}(e)
       &=
-      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\upSigma}{c} \setminus \set{c}}
+      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Sigma}{c} \setminus \set{c}}
       \\
       %========================================
    \end{salign}

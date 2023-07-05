@@ -1,9 +1,9 @@
 Assume the following:
 \begin{equation}
-   \upgamma_1 \desugarFwdS \upgamma_2
+   \gamma_1 \desugarFwdS \gamma_2
 \end{equation}
 \begin{equation}
-   g \desugarFwdS \uprho
+   g \desugarFwdS \rho
 \end{equation}
 \begin{proof}
    \begin{flalign}
@@ -21,12 +21,12 @@ Assume the following:
             {
                g = \seq{\bind{x}{\mu}}
                \\
-               v_i = \exClosure{\upgamma_1}{g}{\upmu_i}
+               v_i = \exClosure{\gamma_1}{g}{\mu_i}
                \quad
                \forall i \le \length{\seq{x}}
             }
             {
-               \upgamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+               \gamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
             }
          \end{smathpar}
       }
@@ -38,14 +38,14 @@ Assume the following:
          \begin{smathpar}
             \inferrule*[]
             {
-               \uprho = \set{\seq{\bind{x}{\upsigma}}}
+               \rho = \set{\seq{\bind{x}{\sigma}}}
                \\
-               v'_i = \exClosureNew{\upgamma_2}{\uprho}{\upsigma_i}
+               v'_i = \exClosureNew{\gamma_2}{\rho}{\sigma_i}
                \quad
                (\forall i \numleq \length{\seq{x}})
             }
             {
-               \upgamma_2, \uprho
+               \gamma_2, \rho
                \closeDefsFwdR
                \set{\seq{\bind{x}{v'}}}
             }
@@ -57,12 +57,12 @@ Assume the following:
       &
       \forall i \numleq \length{\seq{x}} \; v_i \desugarFwdS v'_i
       &
-      \text{$g \desugarFwdS \uprho \opAnd \upgamma_1 \desugarFwdS \upgamma_2$}
+      \text{$g \desugarFwdS \rho \opAnd \gamma_1 \desugarFwdS \gamma_2$}
       \notag
       \\
       &
       \qedLocal
-      \upgamma_1' \desugarFwdS \upgamma_2'
+      \gamma_1' \desugarFwdS \gamma_2'
       &
       \text{$\desugarFwdS$-env}
       \notag
@@ -77,14 +77,14 @@ Assume the following:
          \begin{smathpar}
             \inferrule*[]
             {
-               \uprho = \set{\seq{\bind{x}{\upsigma}}}
+               \rho = \set{\seq{\bind{x}{\sigma}}}
                \\
-               v'_i = \exClosureNew{\upgamma_2}{\uprho}{\upsigma_i}
+               v'_i = \exClosureNew{\gamma_2}{\rho}{\sigma_i}
                \quad
                (\forall i \numleq \length{\seq{x}})
             }
             {
-               \upgamma_2, \uprho
+               \gamma_2, \rho
                \closeDefsFwdR
                \set{\seq{\bind{x}{v'}}}
             }
@@ -100,12 +100,12 @@ Assume the following:
             {
                g = \seq{\bind{x}{\mu}}
                \\
-               v_i = \exClosure{\upgamma_1}{g}{\upmu_i}
+               v_i = \exClosure{\gamma_1}{g}{\mu_i}
                \quad
                \forall i \le \length{\seq{x}}
             }
             {
-               \upgamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+               \gamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
             }
          \end{smathpar}
       }
@@ -115,12 +115,12 @@ Assume the following:
       &
       \forall i\numleq \length{\seq{x}}\; v_i \desugarFwdS v'_i
       &
-      \text{$g \desugarFwdS \uprho \opAnd \upgamma_1 \desugarFwdS \upgamma_2$}
+      \text{$g \desugarFwdS \rho \opAnd \gamma_1 \desugarFwdS \gamma_2$}
       \notag
       \\
       &
       \qedLocal
-      \upgamma_1' \desugarFwdS \upgamma_2'
+      \gamma_1' \desugarFwdS \gamma_2'
       &
       \text{$\desugarFwdS$-env}
       \notag

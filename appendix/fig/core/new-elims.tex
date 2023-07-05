@@ -2,16 +2,16 @@
    \begin{minipage}[t]{0.7\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
           &\textit{Eliminator}&
-          \lowlight{$\Elim\;\upGamma\,A\;K$}
+          \lowlight{$\Elim\;\Gamma\,A\;K$}
           \\
-          $\upsigma, \uptau ::=$
+          $\sigma, \tau ::=$
           &
           $\exVar{e}$
           &
           expression
           \\
           &
-          $\elimPhi{\seq{\exPair{p}{\upsigma}}}$
+          $\elimPhi{\seq{\exPair{p}{\sigma}}}$
           &
           branch node
           \\
@@ -44,7 +44,7 @@
 \end{figure}
 
 \begin{figure}
-   {\small \flushleft \shadebox{$\seq{p},\upsigma \elimmapsto \uptau$}
+   {\small \flushleft \shadebox{$\seq{p},\sigma \elimmapsto \tau$}
    \begin{smathpar}
       \inferrule*
       {
@@ -68,20 +68,20 @@
       %
       \inferrule*
       {
-         \seq{p},\upsigma \elimmapsto \uptau
+         \seq{p},\sigma \elimmapsto \tau
       }
       {
-         p\cdot\seq{p},\elimPhi{\exPair{p}{\upsigma}\cdot\seq{\exPair{p}{\upsigma}}'} \elimmapsto \uptau
+         p\cdot\seq{p},\elimPhi{\exPair{p}{\sigma}\cdot\seq{\exPair{p}{\sigma}}'} \elimmapsto \tau
       }
       %
       \and
       %
       \inferrule*
       {
-         \exVar{p'}\notin\phiKeys{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
+         \exVar{p'}\notin\phiKeys{\elimPhi{\seq{\exPair{p}{\sigma}}}}
       }
       {
-         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\upsigma}}} \elimmapsto \emptyset  
+         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\sigma}}} \elimmapsto \emptyset
       }
    \end{smathpar}
    }
@@ -89,7 +89,7 @@
 \end{figure}
 
 \begin{figure}
-   {\small \flushleft \shadebox{$\upsigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau$}
+   {\small \flushleft \shadebox{$\sigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau$}
    \begin{smathpar}
       \inferrule*
       {
@@ -113,33 +113,33 @@
       %
       \inferrule*
       {
-         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \upsigma 
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \sigma
       }
       {
-         \emptyset \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\upsigma}}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \upsigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau
-      }
-      {
-         \elimPhi{\exPair{p}{\upsigma} \cdot \seq{\exPair{p}{\upsigma}}' } \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\uptau} \cdot \seq{\exPair{p}{\upsigma}}'}
+         \emptyset \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\sigma}}
       }
       %
       \and
       %
       \inferrule*
       {
-         p' \notin \phiKeys{\elimPhi{\seq{\exPair{p}{\upsigma}}}}
+         \sigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau
+      }
+      {
+         \elimPhi{\exPair{p}{\sigma} \cdot \seq{\exPair{p}{\sigma}}' } \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\tau} \cdot \seq{\exPair{p}{\sigma}}'}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         p' \notin \phiKeys{\elimPhi{\seq{\exPair{p}{\sigma}}}}
          \\
-         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \uptau
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau
       }
       {
-         \elimPhi{\seq{\exPair{p}{\upsigma}}} \disjjoin \exPair{p'\cdot\seq{p}}{\exVar{e}} = \elimPhi{\seq{\exPair{p}{\upsigma}} \cdot \exPair{p'}{\uptau}}
+         \elimPhi{\seq{\exPair{p}{\sigma}}} \disjjoin \exPair{p'\cdot\seq{p}}{\exVar{e}} = \elimPhi{\seq{\exPair{p}{\sigma}} \cdot \exPair{p'}{\tau}}
       }
    \end{smathpar}}
 \end{figure}
-   
+

@@ -1,17 +1,17 @@
 By induction on derivations of $\evalSugS$. \newline
-Assume: 
+Assume:
 \begin{equation}
-   \upGamma \vdash \bind{s_0}{A}
+   \Gamma \vdash \bind{s_0}{A}
 \end{equation}
 \begin{equation}
-   \upgamma : \upGamma
+   \gamma : \Gamma
 \end{equation}
 \begin{equation}
    s_0 \desugarFwdS e_0
 \end{equation}
 \begin{equation}
    \locallabel{desug:env}
-   \upgamma \desugarFwdS \upgamma'
+   \gamma \desugarFwdS \gamma'
 \end{equation}
 \begin{proof}
 \small
@@ -28,7 +28,7 @@ Assume:
             \strut
          }
          {
-            {\upgamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+            {\gamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
          }
       \end{smathpar}
    }
@@ -63,7 +63,7 @@ Assume:
             \strut
          }
          {
-            \upgamma_2 \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalFwdS v'
+            \gamma_2 \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalFwdS v'
          }
       \end{smathpar}
    }
@@ -87,10 +87,10 @@ Assume:
             lab={\ruleName{$\evalSugS$-constr}}
          ]
          {
-            \upgamma, \seq{s} \evalSugS \seq{v}
+            \gamma, \seq{s} \evalSugS \seq{v}
          }
          {
-            \upgamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
+            \gamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
          }
       \end{smathpar}
    }
@@ -122,10 +122,10 @@ Assume:
             lab={\ruleName{$\evalFwdS$-constr}}
          ]
          {
-            \upgamma', \seq{e} \evalFwdS \seq{v}'
+            \gamma', \seq{e} \evalFwdS \seq{v}'
          }
          {
-            \upgamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+            \gamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
          }
       \end{smathpar}
    }
@@ -154,16 +154,16 @@ Assume:
             width=3in,
          ]
          {
-            \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{g}{\upmu}, v)
+            \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
             \\
-            \upgamma_1, g \closeDefsS \upgamma_2
+            \gamma_1, g \closeDefsS \gamma_2
             \\
-            v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
+            v, \mu \matchFwdR{p} \gamma_3, s^\dag
             \\
-            \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
+            \gamma_1 \concat \gamma_2 \concat \gamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
          }
          {
-            \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
+            \gamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
          }
       \end{smathpar}
    }
@@ -198,16 +198,16 @@ Assume:
             width=3.3in,
          ]
          {
-            \upgamma', (e, e') \evalS (\exClosure{\upgamma_1}{\uprho}{\upsigma}, v')
+            \gamma', (e, e') \evalS (\exClosure{\gamma_1}{\rho}{\sigma}, v')
             \\
-            \upgamma'_1, \uprho \closeDefsFwdR \upgamma'_2
+            \gamma'_1, \rho \closeDefsFwdR \gamma'_2
             \\
-            v', \upsigma \matchFwdS \upgamma'_3, e^{\dag}
+            v', \sigma \matchFwdS \gamma'_3, e^{\dag}
             \\
-            \upgamma'_1 \concat \upgamma'_2 \concat \upgamma'_3, e^{\dag} \evalFwdS u
+            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
          }
          {
-            \upgamma', \exApp{e}{e'}
+            \gamma', \exApp{e}{e'}
             \evalFwdS
             u
          }
@@ -218,7 +218,7 @@ Assume:
    \notag
    \\
    &
-   \exClosure{\upgamma_1}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'_1}{\uprho}{\upsigma}
+   \exClosure{\gamma_1}{g}{\mu} \desugarFwdS \exClosure{\gamma'_1}{\rho}{\sigma}
    &
    \text{IH}
    \\
@@ -229,15 +229,15 @@ Assume:
    \notag
    \\
    &
-   \upgamma_2 \desugarFwdS \upgamma'_2
+   \gamma_2 \desugarFwdS \gamma'_2
    &
    \text{\lemref{closedefs-eq}}
    \notag
    \\
    &
-   \upgamma_3 \desugarFwdS \upgamma'_3 \opAnd s^{\dag} \desugarFwdS e^{\dag}
+   \gamma_3 \desugarFwdS \gamma'_3 \opAnd s^{\dag} \desugarFwdS e^{\dag}
    &
-   \text{$\upmu \desugarFwdS \upsigma$ and \lemref{matching-bi}}
+   \text{$\mu \desugarFwdS \sigma$ and \lemref{matching-bi}}
    \notag
    \\
    &
@@ -254,12 +254,12 @@ Assume:
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \upgamma, g \closeDefsS \upgamma^{\dag}
+            \gamma, g \closeDefsS \gamma^{\dag}
             \\
-            \upgamma \concat \upgamma^{\dag}, s \evalSugS v
+            \gamma \concat \gamma^{\dag}, s \evalSugS v
          }
          {
-            \upgamma, \exLetRecPiecewise{g}{s} \evalSugS v
+            \gamma, \exLetRecPiecewise{g}{s} \evalSugS v
          }
       \end{smathpar}
    }
@@ -271,16 +271,16 @@ Assume:
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugarFwdS$-let-rec}}]
          {
-            \upmu_i \desugarFwdR \upsigma_i
+            \mu_i \desugarFwdR \sigma_i
             \quad
             (\forall i \numleq \length{\seq{x}})
             \\
             s \desugarFwdR e
          }
          {
-            \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
+            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
             \desugarFwdR
-            \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
+            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
          }
       \end{smathpar}
    }
@@ -293,12 +293,12 @@ Assume:
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\evalFwdS$-let-rec}}]
          {
-            \upgamma', \seq{\bind{\exVar{x}}{\upsigma}} \closeDefsS {\upgamma^{\ddagger}}
+            \gamma', \seq{\bind{\exVar{x}}{\sigma}} \closeDefsS {\gamma^{\ddagger}}
             \\
-            \upgamma' \concat {\upgamma^{\ddagger}}, e \evalFwdS v'
+            \gamma' \concat {\gamma^{\ddagger}}, e \evalFwdS v'
          }
          {
-            \upgamma', \exLetRecPiecewise{\seq{\bind{\exVar{x}}{\upsigma}}}{e} \evalFwdS v'
+            \gamma', \exLetRecPiecewise{\seq{\bind{\exVar{x}}{\sigma}}}{e} \evalFwdS v'
          }
       \end{smathpar}
    }
@@ -307,7 +307,7 @@ Assume:
    \notag
    \\
    &
-   \text{Then $\upgamma \concat \upgamma^{\dag} \desugarFwdS \upgamma' \concat {\upgamma^{\ddagger}}$}
+   \text{Then $\gamma \concat \gamma^{\dag} \desugarFwdS \gamma' \concat {\gamma^{\ddagger}}$}
    &
    \text{assumption (\localref{desug:env}) and \lemref{closedefs-eq}}
    \notag

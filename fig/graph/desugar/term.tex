@@ -5,12 +5,12 @@
       {
          \raw{s} \desugarFwdR \raw{s}', \raw{e}, E
          \\
-         \upalpha, \upbeta\textit{ fresh}
+         \alpha, \beta\textit{ fresh}
       }
       {
          \annot{\raw{s}}{\addrNull}
          \desugarFwdR
-         \annot{\raw{s}'}{\upalpha}, \annot{\raw{e}}{\upbeta}, E \cup \set{(\upalpha, \upbeta)}
+         \annot{\raw{s}'}{\alpha}, \annot{\raw{e}}{\beta}, E \cup \set{(\alpha, \beta)}
       }
    \end{smathpar}
    {\flushleft \shadebox{$\raw{s} \desugarFwdR \raw{s}', \raw{e}, E$}\hfill}
@@ -33,11 +33,11 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         g_i = \bind{x_i}{\upmu_i}
+         g_i = \bind{x_i}{\mu_i}
          \\
-         g'_i = \bind{x_i}{\upmu_i'}
+         g'_i = \bind{x_i}{\mu_i'}
          \\
-         \upmu_i \desugarFwdR \upmu_i', \upsigma_i, E_i
+         \mu_i \desugarFwdR \mu_i', \sigma_i, E_i
          \quad
          (\forall i \numleq \length{\seq{g}})
          \\
@@ -47,7 +47,7 @@
          \exLetRecPiecewise{\seq{g}}{s}
          \desugarFwdR
          \exLetRecPiecewise{\seq{g}'}{s'},
-         \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e},
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e},
          \bigcup{\seq{E}} \cup E'
       }
       %
@@ -57,13 +57,13 @@
       {
          s \desugarFwdR s', e, E
          \\
-         \upmu \desugarFwdR \upmu', \upsigma, E'
+         \mu \desugarFwdR \mu', \sigma, E'
       }
       {
-         \exMatch{s}{\upmu}
+         \exMatch{s}{\mu}
          \desugarFwdR
-         \exMatch{s'}{\upmu'},
-         \exApp{\exFun{\upsigma}}{e},
+         \exMatch{s'}{\mu'},
+         \exApp{\exFun{\sigma}}{e},
          E \cup E'
       }
       %
@@ -93,13 +93,13 @@
          \\
          s_2 \desugarFwdR s_2', e_2, E_2
          \\
-         \upsigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
          \exIfThenElse{s'}{s_1'}{s_2'},
-         \exApp{\exFun{\upsigma}}{e},
+         \exApp{\exFun{\sigma}}{e},
          E \cup E_1 \cup E_2
       }
       %
@@ -135,12 +135,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
       {
-         \seq{d} \desugarFwdR \annot{\seq{\raw{d}}}{\upalpha}, e, E
+         \seq{d} \desugarFwdR \annot{\seq{\raw{d}}}{\alpha}, e, E
       }
       {
          \exDo{\seq{d}}
          \desugarFwdR
-         \annot{(\exDo{\annot{\seq{\raw{d}}}{\addrNull}})}{\upalpha}, e, E
+         \annot{(\exDo{\annot{\seq{\raw{d}}}{\addrNull}})}{\alpha}, e, E
       }
    \end{smathpar}
    \\[2mm]

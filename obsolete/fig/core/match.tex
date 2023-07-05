@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upalpha$}\hfill \textit{with }$\dom{\upgamma} = \bigcup(\seq{\BV(w)})$%
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \matchFwdR{\seq{w}} \gamma, \kappa', \alpha$}\hfill \textit{with }$\dom{\gamma} = \bigcup(\seq{\BV(w)})$%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\matchFwdS$-seq-empty}}
@@ -8,7 +8,7 @@
           \strut
        }
        {
-          \seqEmpty, \upkappa \matchFwdR{\seqEmpty} \emptyset, \upkappa, \top
+          \seqEmpty, \kappa \matchFwdR{\seqEmpty} \emptyset, \kappa, \top
        }
        %
        \and
@@ -17,28 +17,28 @@
           lab={\ruleName{$\matchFwdS$-seq-non-empty}}
        ]
        {
-          v, \upsigma \matchFwdR{w} \upgamma, \uptau, \upalpha
+          v, \sigma \matchFwdR{w} \gamma, \tau, \alpha
           \\
-          \seq{u}, \uptau \matchFwdR{\seq{w}'} \upgamma', \upkappa, \upbeta
+          \seq{u}, \tau \matchFwdR{\seq{w}'} \gamma', \kappa, \beta
        }
        {
           v \cons \seq{u},
-          \upsigma
+          \sigma
           \matchFwdR{w \cons \seq{w}'}
-          \upgamma \disjunion \upgamma',
-          \upkappa,
-          \upalpha \meet \upbeta
+          \gamma \disjunion \gamma',
+          \kappa,
+          \alpha \meet \beta
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \upsigma \matchFwdR{w} \upgamma, \upkappa, \upalpha$}\hfill \textit{with }$\dom{\upgamma} = \BV(w)$%
+    {\small \flushleft \shadebox{$v, \sigma \matchFwdR{w} \gamma, \kappa, \alpha$}\hfill \textit{with }$\dom{\gamma} = \BV(w)$%
     \begin{smathpar}
        \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
        {
           \strut
        }
        {
-          v, \elimVar{x}{\upkappa} \matchFwdR{\mVar{x}{\erase{v}}} \set{\bind{x}{v}}, \upkappa, \top
+          v, \elimVar{x}{\kappa} \matchFwdR{\mVar{x}{\erase{v}}} \set{\bind{x}{v}}, \kappa, \top
        }
        %
        \and
@@ -47,31 +47,31 @@
           lab={\ruleName{$\matchFwdS$-record}}
        ]
        {
-          \seq{u}, \upkappa \matchFwdR{\seq{w}} \upgamma, \upkappa', \upbeta
+          \seq{u}, \kappa \matchFwdR{\seq{w}} \gamma, \kappa', \beta
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
-          \annRec{\seq{\bind{x}{v}}}{\upalpha},
-          \elimRec{\seq{y}}{\upkappa}
+          \annRec{\seq{\bind{x}{v}}}{\alpha},
+          \elimRec{\seq{y}}{\kappa}
           \matchFwdR{\mRec{\seq{\bind{y}{w}}}}
-          \upgamma, \upkappa', \upalpha \meet \upbeta
+          \gamma, \kappa', \alpha \meet \beta
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
        {
-          \seq{v}, \upkappa' \matchFwdR{\seq{w}} \upgamma, \upkappa^\twoPrime, \upbeta
+          \seq{v}, \kappa' \matchFwdR{\seq{w}} \gamma, \kappa^\twoPrime, \beta
        }
        {
-          \annConstr{c'}{\seq{v}}{\upalpha}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
+          \annConstr{c'}{\seq{v}}{\alpha}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
           \matchFwdR{\mConstr{c'}{\seq{w}}}
-          \upgamma, \upkappa^\twoPrime, \upalpha \meet \upbeta
+          \gamma, \kappa^\twoPrime, \alpha \meet \beta
        }
     \end{smathpar}}
     \\[2mm]
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa' \matchBwdR{\seq{w}} \upgamma, \upkappa, \upalpha$}\hfill \textit{with }$\dom{\upgamma} \subseteq \textstyle{\bigcup}\seq{\BV(w)}$%
+    {\small \flushleft \shadebox{$\seq{v}, \kappa' \matchBwdR{\seq{w}} \gamma, \kappa, \alpha$}\hfill \textit{with }$\dom{\gamma} \subseteq \textstyle{\bigcup}\seq{\BV(w)}$%
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\matchBwdS$-seq-empty}}
@@ -80,9 +80,9 @@
           \strut
        }
        {
-          \seqEmpty, \upkappa
+          \seqEmpty, \kappa
           \matchBwdR{\seqEmpty}
-          \emptyset, \upkappa, \upalpha
+          \emptyset, \kappa, \alpha
        }
        %
        \and
@@ -91,22 +91,22 @@
           lab={\ruleName{$\matchBwdS$-seq-non-empty}}
        ]
        {
-          v, \upsigma
+          v, \sigma
           \matchBwdR{w'}
-          \upgamma, \uptau, \upalpha
+          \gamma, \tau, \alpha
           \\
-          \seq{u}, \uptau
+          \seq{u}, \tau
           \matchBwdR{\seq{w}}
-          \upgamma', \upkappa, \upalpha
+          \gamma', \kappa, \alpha
        }
        {
-          v \cons \seq{u}, \upsigma
+          v \cons \seq{u}, \sigma
           \matchBwdR{w' \cons \seq{w}}
-          \upgamma \disjunion \upgamma', \upkappa, \upalpha
+          \gamma \disjunion \gamma', \kappa, \alpha
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \upsigma \matchBwdR{w} \upgamma, \upkappa, \upalpha$}\hfill \textit{with }$\dom{\upgamma} \subseteq \BV(w)$%
+    {\small \flushleft \shadebox{$v, \sigma \matchBwdR{w} \gamma, \kappa, \alpha$}\hfill \textit{with }$\dom{\gamma} \subseteq \BV(w)$%
     \begin{smathpar}
        %
        \and
@@ -116,23 +116,23 @@
           \strut
        }
        {
-          (\set{\bind{x}{\bot_{\raw{v}}}} \concat \upgamma)(x), \elimVar{x}{\upkappa}
+          (\set{\bind{x}{\bot_{\raw{v}}}} \concat \gamma)(x), \elimVar{x}{\kappa}
           \matchBwdR{\mVar{x}{\raw{v}}}
-          \upgamma, \upkappa, \upalpha
+          \gamma, \kappa, \alpha
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\matchBwdS$-record}}]
        {
-          \seq{v}, \upkappa'
+          \seq{v}, \kappa'
           \matchBwdR{\seq{w}}
-          \upgamma, \upkappa, \upalpha
+          \gamma, \kappa, \alpha
        }
        {
-          \annRec{\seq{\bind{x}{v}}}{\upalpha}, \elimRec{\seq{x}}{\upkappa'}
+          \annRec{\seq{\bind{x}{v}}}{\alpha}, \elimRec{\seq{x}}{\kappa'}
           \matchBwdR{\mRec{\seq{\bind{x}{w}}}}
-          \upgamma, \upkappa, \upalpha
+          \gamma, \kappa, \alpha
        }
        %
        \and
@@ -141,15 +141,15 @@
           lab={\ruleName{$\matchBwdS$-constr}}
        ]
        {
-          \seq{v}, \upkappa'
+          \seq{v}, \kappa'
           \matchBwdR{\seq{w}}
-          \upgamma, \upkappa, \upalpha
+          \gamma, \kappa, \alpha
        }
        {
-          \annConstr{c}{\seq{v}}{\upalpha},
-          \elimConstr{\elimBind{c}{\upkappa'}}
+          \annConstr{c}{\seq{v}}{\alpha},
+          \elimConstr{\elimBind{c}{\kappa'}}
           \matchBwdR{\mConstr{c}{\seq{w}}}
-          \upgamma, \upkappa, \upalpha
+          \gamma, \kappa, \alpha
        }
     \end{smathpar}}
 

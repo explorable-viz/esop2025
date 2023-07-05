@@ -2,7 +2,7 @@
 \label{sec:graph}
 \subsection{Dependence graphs}
 
-$G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{addresses} $\upalpha, \upbeta
+$G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{addresses} $\alpha, \beta
 \in \Addr$ which serve as vertices.  Addresses include a distinguished address $\addrNull$ called the
 \emph{null} address.
 
@@ -11,13 +11,13 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \end{definition}
 
 \begin{definition}
-   For any $G = (V, E)$, any $V' \subseteq V$ and any $\upalpha \notin V$, define $\mkAddr{G}{V'}{\upalpha} = (V \cup \set{\upalpha}, E \cup (V' \times \set{\upalpha}))$.
+   For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
 \end{definition}
 
 \begin{definition}[Neighbours]
    For any $G = (V,E)$ define the \emph{in neighbours} and \emph{out neighbours} as the following functions of type $V \to \powerset V$:
    \begin{itemize}
-      \item $\inN{G}(\upalpha) = \set{\upalpha' \in V \mid (\upalpha', \upalpha) \in E}$
+      \item $\inN{G}(\alpha) = \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
       \item $\outN{G} = \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
