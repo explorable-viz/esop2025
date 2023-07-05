@@ -104,7 +104,12 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \mkElimF(\exConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\elimArgsF(\seq{p},\kappa)}}
+   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\exConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
    &
    \text{Def.~\mkElimF}
    \notag
@@ -114,10 +119,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \elimArgsF(\seq{p},\kappa) \match \gamma', \kappa
+            \seq{v}, \sigma \match \gamma', \kappa
          }
          {
-            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\elimArgsF(\seq{p},\kappa)}}
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
             \match
             \gamma', \kappa
          }
