@@ -316,9 +316,11 @@
 \newcommand*{\SVal}[1]{\Set{SVal}\;{#1}}
 \newcommand*{\Var}{\Set{Var}}
 \newcommand*{\Doc}{\Set{Doc}}
+\newcommand*{\Integer}{\Set{Int}}
 \newcommand*{\RecursiveFunction}{\Set{RecFunc}}
 \newcommand*{\MayFail}{\Set{MayFail}}
 \newcommand*{\Qualifier}{\Set{Qualifier}}
+
 
 % operations
 \newcommand{\FV}{\opName{FV}}
@@ -410,6 +412,7 @@
 \newcommand*{\Show}{\opName{show}}
 \newcommand*{\exprType}{\opName{exprType}}
 \newcommand*{\parens}{\opName{parens}}
+\newcommand*{\precedence}{\opName{prec}}
 
 % Dictionary operations
 \newcommand*{\Dfoldl}{\opName{D.foldl}}
@@ -442,5 +445,8 @@
 
 % Pretty printing function macros
 \newcommand*{\exPrettyFunction}[1]{\llbracket#1\rrbracket}
+\newcommand*{\exSimpleFunction}[1]{\exPrettyFunction{#1}^S}
+\newcommand*{\exApplicationFunction}[1]{\exPrettyFunction{#1}^A}
+\newcommand*{\exBinaryAppFunction}[2]{\llbracket#1 \ #2\rrbracket^B}
 \newcommand*{\etypeS}{\kw{S}}
 \newcommand*{\etypeE}{\kw{E}}

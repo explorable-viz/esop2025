@@ -1,43 +1,46 @@
 \begin{figure}
     \begin{salign}
-        \exPrettyFunction{\param} &: \Patt \rightarrow \Sem
+        \exPrettyFunction{\param} &: \Patt \rightarrow \Doc
         \\
-        \exPrettyFunction{x}_\etypeE &= \exLayoutText{\str(x)}
+        \exPrettyFunction{x} &= \exLayoutText{\str(x)}
         \\
-        \exPrettyFunction{\{\seq{x:p}\}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,p)}}_\etypeE}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \exPrettyFunction{\{\seq{x:p}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,p)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
-        \exPrettyFunction{\pattConstr{c}{\seq{p}}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}_\etypeE}}{\exLayoutText{\kw{"\symRParens"}}}
+        \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
         \\[2mm]
-        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Sem
+        \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Doc
         \\
-        \exPrettyFunction{\exLayoutEmpty}_\etypeE &= \exLayoutEmpty
+        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
         \\
-        \exPrettyFunction{(x',p')}_\etypeE &= {\exLayoutAppBeside{\exLayoutText{\str(x')}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p'}}_\etypeE}}
+        \exPrettyFunction{(x',p')} &= {\exLayoutAppBeside{\exLayoutText{\str(x')}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p'}}}}
         \\
-        \exPrettyFunction{(x',p')\cons\seq{(x,p)}}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{(x',p')}_\etypeE}{\exPrettyFunction{\seq{(x,p)}}_\etypeE}
+        \exPrettyFunction{(x',p')\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x',p')}}{\exPrettyFunction{\seq{(x,p)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Sem
+        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Doc
         \\
-        \exPrettyFunction{p}_\etypeE &= \exPrettyFunction{p}_\etypeE
+        \exPrettyFunction{p} &= \exPrettyFunction{p}
         \\ 
-        \exPrettyFunction{p'\cons\seq{p}}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{p'}_\etypeE}{\exPrettyFunction{\seq{p}}_\etypeE}
+        \exPrettyFunction{p'\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p'}}{\exPrettyFunction{\seq{p}}}
         \\[2mm] 
-        \exPrettyFunction{\param}&: \ListRest \rightarrow \Sem 
+        \exPrettyFunction{\param}&: \ListRest \rightarrow \Doc 
         \\
-        \exPrettyFunction{\exListEnd}_\etypeE &= \exLayoutText{\kw{"\exListEnd"}}
+        \exPrettyFunction{\exListEnd} &= \exLayoutText{\kw{"\exListEnd"}}
         \\
-        \exPrettyFunction{\exListNext{s}{l}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symComma"}}}{\exPrettyFunction{s}_\etypeE}}{\exPrettyFunction{l}_\etypeE}
+        \exPrettyFunction{\exListNext{s}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symComma"}}}{\exPrettyFunction{s}}}{\exPrettyFunction{l}}
         \\[2mm]
-        \exPrettyFunction{\param}&: \Qualifier^+ \rightarrow \Sem
+        \exPrettyFunction{\param}&: \Qualifier^+ \rightarrow \Doc
         \\
-        \exPrettyFunction{\qualGuard{s}}_\etypeE &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}_\etypeE}
+        \exPrettyFunction{\qualGuard{s}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exPrettyFunction{s}}
         \\
-        \exPrettyFunction{\qualDeclaration{p}{s}}_\etypeE &=  \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{p}_\etypeE}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}_\etypeE}   
+        \exPrettyFunction{\qualDeclaration{p}{s}} &=  \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}}   
         \\
-        \exPrettyFunction{\qualGenerator{p}{s}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}_\etypeE}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}_\etypeE} 
+        \exPrettyFunction{\qualGenerator{p}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}} 
         \\
-        \exPrettyFunction{\kw{q'}\cons\seq{q}}_\etypeE &= \exLayoutAppBeside{\exPrettyFunction{q'}_\etypeE}{\exPrettyFunction{\seq{q}}_\etypeE} 
+        \exPrettyFunction{\kw{q'}\cons\seq{q}} &= \exLayoutAppBeside{\exPrettyFunction{q'}}{\exPrettyFunction{\seq{q}}} 
+        \\[2mm]
     \end{salign}
     \caption{Pretty Function Continued}
 \end{figure}
 \clearpage
+
+
