@@ -19,7 +19,7 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-var}}
+            left={\ruleName{$\match$-var}}
          ]
          {
             \strut
@@ -40,7 +40,7 @@ Induction on $\match$ derivation.
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\match$-var}}]
+         \inferrule*[left={\ruleName{$\match$-var}}]
          {
             \strut
          }
@@ -56,7 +56,7 @@ Induction on $\match$ derivation.
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-env}}]
+         \inferrule*[left={\ruleName{$\desugar$-env}}]
          {
              u \desugar v
          }
@@ -67,5 +67,22 @@ Induction on $\match$ derivation.
     }
    &
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-constr}}
+         ]
+         {
+            \seq{u},\seq{p} \match \gamma
+         }
+         {
+            \exConstr{c}{\seq{u}},\exConstr{c}{\seq{p}} \match \gamma
+         }
+      \end{smathpar}
+   }
 \end{flalign}
 \end{proof}
