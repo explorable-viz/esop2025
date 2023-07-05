@@ -45,12 +45,6 @@ We also have some more esoteric relations, for joining eliminators ($\disjjoin$)
 We use $\evalFwdS$ to denote evaluation of core-language expressions. As the language isn't strongly
 normalizing, we note that evaluation is partial. Therefore most theorems/lemmas involving this relation
 rely on assumptions of the form $\upgamma,e\evalFwdS v$, only considering executions that succeed.
-\subsubsection{$\evalSugS$}
-Whilst our implementation implements the $\evalFwdS$ relation, this is not the relation
-we want to present to the user, as it does not include syntactic sugar. Instead, we have $\evalSugS$,
-which defines the evaluation of terms in our surface language (including those with syntactic sugar).
-To justify this, we have had to prove that the surface semantics defined by $\evalSugS$ coincide
-appropriately with the core semantics defined by $\evalFwdS$, this is the focus of \thmref{semantics-eq}.
 
 \subsubsection{$\desugarFwdS$}
 As the surface language makes use of a substantial amount of syntactic sugar, we have had to be careful
