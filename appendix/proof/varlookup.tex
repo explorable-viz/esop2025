@@ -2,13 +2,13 @@
    \small
     \begin{flalign}
       &
-      v \desugarFwdS v'
+      v \desugar v'
       &
       \text{suppose}
       \locallabel{v-desugar}
       \\
       &
-      \gamma \desugarFwdS \gamma'
+      \gamma \desugar \gamma'
       &
       \text{suppose}
       \locallabel{gamma-desugar}
@@ -20,10 +20,10 @@
         \begin{smathpar}
             \inferrule*[]
             {
-                v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+                v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
             }
             {
-                \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+                \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
             }
         \end{smathpar}
     }
@@ -40,7 +40,7 @@
     \qedLocal
     \bind{x}{v'} \in \gamma'
     &
-    \text{(2), and $\desugarFwdS$}
+    \text{(2), and $\desugar$}
     \notag
     \\
     \Case{\bind{x}{v'} \in \gamma'}
@@ -49,10 +49,10 @@
         \begin{smathpar}
             \inferrule*[]
             {
-                v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+                v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
             }
             {
-                \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+                \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
             }
         \end{smathpar}
     }
@@ -68,7 +68,7 @@
     \qedLocal
     \bind{x}{v} \in \gamma
     &
-    \text{(\localref{gamma-desugar}) and inversion on $\desugarFwdS$}
+    \text{(\localref{gamma-desugar}) and inversion on $\desugar$}
     \notag
     \end{flalign}
  \end{proof}

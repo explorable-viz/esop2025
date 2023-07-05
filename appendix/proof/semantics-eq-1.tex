@@ -3,12 +3,12 @@ By induction on derivation of $\evalSugS$.
 \small
 \begin{flalign}
    &
-   s_0 \desugarFwdS e_0
+   s_0 \desugar e_0
    &
    \notag
    \\
    &
-   \gamma \desugarFwdS \gamma'
+   \gamma \desugar \gamma'
    &
    \locallabel{desug:env}
    \\
@@ -35,13 +35,13 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugarFwdS$-var}}
+            lab={\ruleName{$\desugar$-var}}
          ]
          {
             \strut
          }
          {
-            \exVar{x} \desugarFwdS \exVar{x}
+            \exVar{x} \desugar \exVar{x}
          }
       \end{smathpar}
    }
@@ -69,7 +69,7 @@ By induction on derivation of $\evalSugS$.
    \\
    &
    \qedLocal
-   \text{$v \desugarFwdS v'$.}
+   \text{$v \desugar v'$.}
    &
    \text{\lemref{lemma:varlookup} and (\localref{desug:env})}
    \notag
@@ -97,13 +97,13 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugarFwdS$-constr}}
+            lab={\ruleName{$\desugar$-constr}}
          ]
          {
-            \seq{s} \desugarFwdS \seq{e}
+            \seq{s} \desugar \seq{e}
          }
          {
-            \exConstr{c}{\seq{s}} \desugarFwdS \exConstr{c}{\seq{e}}
+            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
          }
       \end{smathpar}
    }
@@ -130,14 +130,14 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \text{$\seq{v} \desugarFwdS \seq{v}'$}
+   \text{$\seq{v} \desugar \seq{v}'$}
    &
    \text{IH}
    \notag
    \\
    &
    \qedLocal
-   \text{$\exConstr{c}{\seq{v}} \desugarFwdS \exConstr{c}{\seq{v}'}$}
+   \text{$\exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}$}
    &
    \notag
    \intertext{\crossrule}
@@ -170,15 +170,15 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugarFwdS$-app}}
+            lab={\ruleName{$\desugar$-app}}
          ]
          {
-            s \desugarFwdS e
+            s \desugar e
             \\
-            s' \desugarFwdS e'
+            s' \desugar e'
          }
          {
-            \exApp{s}{s'} \desugarFwdS \exApp{e}{e'}
+            \exApp{s}{s'} \desugar \exApp{e}{e'}
          }
       \end{smathpar}
    }
@@ -214,30 +214,30 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \exClosure{\gamma_1}{g}{\mu} \desugarFwdS \exClosure{\gamma'_1}{\rho}{\sigma}
+   \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
    &
    \text{IH}
    \\
    &
-   v \desugarFwdS v'
+   v \desugar v'
    &
    \text{IH}
    \notag
    \\
    &
-   \gamma_2 \desugarFwdS \gamma'_2
+   \gamma_2 \desugar \gamma'_2
    &
    \text{\lemref{closedefs-eq}}
    \notag
    \\
    &
-   \gamma_3 \desugarFwdS \gamma'_3 \opAnd s^{\dag} \desugarFwdS e^{\dag}
+   \gamma_3 \desugar \gamma'_3 \opAnd s^{\dag} \desugar e^{\dag}
    &
-   \text{$\mu \desugarFwdS \sigma$ and \lemref{matching-bi}}
+   \text{$\mu \desugar \sigma$ and \lemref{matching-bi}}
    \notag
    \\
    &
-   v^{\dag} \desugarFwdS u
+   v^{\dag} \desugar u
    &
    \text{IH}
    \notag
@@ -265,17 +265,17 @@ By induction on derivation of $\evalSugS$.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugarFwdS$-let-rec}}]
+         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
          {
-            \mu_i \desugarFwdR \sigma_i
+            \mu_i \desugar \sigma_i
             \quad
             (\forall i \numleq \length{\seq{x}})
             \\
-            s \desugarFwdR e
+            s \desugar e
          }
          {
             \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
-            \desugarFwdR
+            \desugar
             \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
          }
       \end{smathpar}
@@ -303,14 +303,14 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \text{Then $\gamma \concat \gamma^{\dag} \desugarFwdS \gamma' \concat {\gamma^{\ddagger}}$}
+   \text{Then $\gamma \concat \gamma^{\dag} \desugar \gamma' \concat {\gamma^{\ddagger}}$}
    &
    \text{(\localref{desug:env}) and \lemref{closedefs-eq}}
    \notag
    \\
    &
    \qedLocal
-   \text{Use these environments to establish that $v \desugarFwdS v'$}
+   \text{Use these environments to establish that $v \desugar v'$}
    &
    \text{IH}
    \notag

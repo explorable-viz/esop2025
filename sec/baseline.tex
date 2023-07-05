@@ -69,11 +69,11 @@ To relate the surface semantics to the core semantics, we must extend desugaring
 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugarFwdS e \; and \; \gamma \desugarFwdS \gamma'$, then:
+   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
-   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{semantics-eq-2}
+   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugar v'$ \label{semantics-eq-1}
+   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugar v'$   \label{semantics-eq-2}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -87,7 +87,7 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:lemma:varlookup}
-   Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
+   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
 \end{lemma}
 \begin{proof}
    See \appref{proofs:varlookup}
@@ -95,11 +95,11 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$.
+   Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
    \hfill
    \begin{enumerate}
-      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
-      \item If $v, \sigma \match \gamma', e$ then $u, \mu \match \gamma, s$ and $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
+      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$
+      \item If $v, \sigma \match \gamma', e$ then $u, \mu \match \gamma, s$ and $\gamma \desugar \gamma'$ and $s \desugar e$
    \end{enumerate}
 
 \end{lemma}
@@ -109,11 +109,11 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:closedefs-eq}
-   Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$.
+   Suppose $\gamma_1 \desugar \gamma_2$ and $g \desugar \rho$.
    \hfill
    \begin{enumerate}
-      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugarFwdS \gamma_2'$
-      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugarFwdS \gamma_2'$
+      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugar \gamma_2'$
+      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugar \gamma_2'$
    \end{enumerate}
 \end{lemma}
 \begin{proof}

@@ -4,11 +4,11 @@ Start with the following assumptions:
 \end{equation}
 \begin{equation}
    \locallabel{desugar-left}
-   c \desugarFwdS \sigma
+   c \desugar \sigma
 \end{equation}
 \begin{equation}
    \locallabel{desugar-right}
-   \mu \desugarFwdS \sigma'
+   \mu \desugar \sigma'
 \end{equation}
 We proceed by induction on the derivation of $\compatPattSym$
 \begin{proof}
@@ -65,13 +65,13 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugarFwdS \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugar \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
    &
    \text{(\localref{desugar-left})}
    \notag
    \\
    &
-   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugarFwdS \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \tau'
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugar \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \tau'
    &
    \text{(\localref{desugar-right})}
    \notag
@@ -112,13 +112,13 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugarFwdS \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugar \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
    &
    \text{(\localref{desugar-left})}
    \notag
    \\
    &
-   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugarFwdS \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau'
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugar \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau'
    &
    \text{(\localref{desugar-right})}
    \notag
@@ -213,7 +213,7 @@ We proceed by induction on the derivation of $\compatPattSym$
    \notag
    \\
    &
-   c \desugarFwdS \sigma
+   c \desugar \sigma
    &
    \text{(\localref{desugar-left})}
    \notag
@@ -224,12 +224,12 @@ We proceed by induction on the derivation of $\compatPattSym$
    \text{premise}
    \\
    &
-   \forall c_i,c_j \in \mu.\; c_i \desugarFwdS \sigma_i,\; c_k \desugarFwdS \sigma_j,\; \exists \tau_{i,j}.\;\sigma_i \disjjoin \sigma_j = \tau_{i,j}
+   \forall c_i,c_j \in \mu.\; c_i \desugar \sigma_i,\; c_k \desugar \sigma_j,\; \exists \tau_{i,j}.\;\sigma_i \disjjoin \sigma_j = \tau_{i,j}
    &
    \text{premise}
    \\
    &
-   \mu \desugarFwdS \sigma'
+   \mu \desugar \sigma'
    &
    \text{(\localref{desugar-right})}
    \notag
