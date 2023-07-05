@@ -204,12 +204,12 @@
 \newcommand*{\exNil}{\kw{[]}}
 \newcommand*{\exRecEmpty}{\kw{()}}
 
+
 % Expressions.
 \newcommand{\symLambda}{\uplambda}
 \newcommand*{\exAppPrimTwo}[3]{{#1}#2{#3}} % DELETE ME
 \newcommand*{\exDict}[1]{\ldblbrace#1\rdblbrace}
 \newcommand*{\exExtern}[1]{#1}
-\newcommand*{\exLambda}[1]{\symLambda{#1}}
 \newcommand*{\exLet}[3]{\kw{let}\;{#1}\symEqual{#2}\;\kw{in}\;{#3}}
 \newcommand*{\exLetRec}[2]{\kw{let}\;{#1}\;\kw{in}\;{#2}}
 \newcommand*{\exRec}[1]{\{#1\}}
@@ -299,6 +299,8 @@
 \newcommand{\PattSeq}{\Set{PattSeq}}
 \newcommand{\PattSeqOpt}{\Set{PattSeqOpt}}
 \newcommand{\SExpr}{\Set{SExpr}}
+\newcommand{\ExprType}{\Set{ExprType}}
+\newcommand{\Sem}{\Set{Sem}}
 \newcommand{\Type}{\Set{Type}}
 \newcommand*{\DataDef}{\Set{DataDef}}
 \newcommand*{\DataEnv}{\Set{DataEnv}}
@@ -406,6 +408,8 @@
 \newcommand*{\dictFromRecord}{\opName{fromRecord}}
 \newcommand*{\str}{\opName{str}}
 \newcommand*{\Show}{\opName{show}}
+\newcommand*{\exprType}{\opName{exprType}}
+\newcommand*{\parens}{\opName{parens}}
 
 % Dictionary operations
 \newcommand*{\Dfoldl}{\opName{D.foldl}}
@@ -438,3 +442,5 @@
 
 % Pretty printing function macros
 \newcommand*{\exPrettyFunction}[1]{\llbracket#1\rrbracket}
+\newcommand*{\etypeS}{\kw{S}}
+\newcommand*{\etypeE}{\kw{E}}

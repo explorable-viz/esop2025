@@ -1,4 +1,4 @@
-By case analysis on $\matchFwdS$ derivation.
+Case analysis on $\matchFwdS$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
@@ -11,7 +11,7 @@ By case analysis on $\matchFwdS$ derivation.
    &\text{suppose}
    \\
    &
-   u, \upmu \match \upgamma
+   u, \upmu \match \upgamma, s
    &\text{suppose}
    \\
    \intertext{\crossrule}
@@ -23,24 +23,24 @@ By case analysis on $\matchFwdS$ derivation.
             lab={\ruleName{$\matchFwdS$-uncurried}}
          ]
          {
-            v, p_i \matchFwdS \upgamma
+            u, p_i \matchFwdS \upgamma
             \\
             \forall i' \ne i.\nexists \upgamma. \, v, p_i \matchFwdS \upgamma
          }
          {
-            v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
+            u, \upmu = (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \matchFwdR{p_i} \upgamma, s_i = s
          }
       \end{smathpar}
    }
    &
-   \locallabel{match}
+   \locallabel{uncurried-match}
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugarFwdR$-clauses}}]
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
          {
-            \inferrule*[left={\ruleName{$\desugarFwdS$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
+            \inferrule*[left={\ruleName{$\desugar$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
             {
                s_i \desugar e_i
                \\
@@ -51,7 +51,7 @@ By case analysis on $\matchFwdS$ derivation.
             }
          }
          {
-            \upmu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+            \upmu
             \desugar
             \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin} = \upsigma
          }
@@ -59,24 +59,169 @@ By case analysis on $\matchFwdS$ derivation.
    }
    &
    \text{inversion}
-   \locallabel{desugar}
+   \locallabel{uncurried-desugar}
    \\
    &
-   v, \upsigma_i \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   v, \upsigma_i \match \upgamma', e_i\textit{ with }\upgamma \desugar \upgamma'
    &
-   \text{Def.~$\upsigma_i$, \localref{match}, \lemref{match-domains-agree}}
-   \locallabel{gamma}
+   \text{Def.~$\upsigma_i$, \localref{uncurried-match}, \lemref{match-domains-agree}}
+   \locallabel{uncurried-gamma}
    \\
    &
    \forall i' \neq i.v, \upsigma_i'\;\matchNeg
    &
-   \text{\localref{desugar}, \lemref{match-domains-agree}}
+   \text{(\localref{uncurried-desugar}), \lemref{match-domains-agree}}
    \locallabel{no-match}
    \\
    &
-   \qedLocal v, \upsigma \match \upgamma', e_i \wedge \upgamma \desugar \upgamma'
+   \qedLocal
+   \exists \upgamma', e.v, \upsigma \match \upgamma', e
+   \textit{ with }\upgamma \desugar \upgamma'
+   \textit{ and }s \desugar e
    &
-   \text{\localref{gamma}, \localref{no-match}, \lemref{match-increasing}}
+   \text{(\localref{uncurried-gamma}), (\localref{no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-curried}},
+            right={$\upmu' \neq \seqEmpty$}
+         ]
+         {
+            u, p \match \upgamma
+            \\
+            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}}{s_i}) \in \upmu'\textit{ else }v, p_i\;\matchNeg)
+         }
+         {
+            u, \upmu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+            \match
+            \upgamma, \exFun{\upmu'} = s
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{curried-match}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
+         {
+            \inferrule*[
+               left={\ruleName{$\desugar$-clause-curried}},
+               right={$(\forall i \numleq j)$}
+            ]
+            {
+               \clause{\seq{p_i}}{s_i} \desugar \upsigma_i
+               \\
+               \upsigma'_i \eqdef \mkElimF(p_i)(\exFun{\upsigma_i})
+            }
+            {
+               (\clause{(p_i \cons \seq{p_i})}{s_i})
+               \desugar
+               \upsigma'_i
+            }
+         }
+         {
+            \upmu \desugar \seqRangeOp{\upsigma'_1}{\upsigma'_j}{\disjjoin}
+            = \upsigma
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{curried-desugar}
+   \\
+   &
+   \forall i.p_i = p \implies
+   \exists \upgamma'_i.\upgamma'_i.v, \upsigma'_i \match \upgamma', \exFun{\upsigma_i}
+   \textit{ with }
+   \upgamma'_i \desugar \upgamma
+   &
+   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
+   \locallabel{curried-match-i}
+   \\
+   &
+   \uptau \eqdef \disjjoin\set{\upsigma'_i \mid \forall i \numleq j.p_i = p}
+   \neq \seqEmpty
+   &
+   \upmu' \neq \seqEmpty
+   \notag
+   \\
+   &
+   e \eqdef \exFun{(\disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p})}
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+         {
+            \inferrule*[left={\ruleName{$\desugar$-clause-curried}}]
+            {
+               \clause{\seq{p_i}}{s_i} \desugar \upsigma_i
+               \quad
+               (\forall i \numleq j.p_i = p)
+            }
+            {
+               \upmu' \desugar \disjjoin\set{\upsigma_i \mid \forall i \numleq j.p_i = p}
+            }
+         }
+         {
+            s = \exFun{\upmu'} \desugar e
+         }
+      \end{smathpar}
+   }
+   &
+   \text{(\localref{curried-match}), (\localref{curried-desugar}), Def.~$e$}
+   \locallabel{lambda-desugar}
+   \\
+   &
+   v, \uptau \match \upgamma', e
+   \textit{ with }
+   \upgamma' \desugar \upgamma
+   \quad (\exists\upgamma')
+   &
+   \text{(\localref{curried-match-i}), \lemref{match-increasing}}
+   \locallabel{curried-gamma}
+   \\
+   &
+   \forall i \numleq j.p_i \neq p \implies
+   v, \upsigma'_i\;\matchNeg
+   &
+   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
+   \locallabel{curried-no-match}
+   \\
+   &
+   \uptau' \eqdef \disjjoin\set{\upsigma'_i \mid \forall i \numleq j.p_i \neq p}
+   &
+   \notag
+   \\
+   &
+   v, \uptau'\;\matchNeg
+   &
+   \text{(\localref{curried-no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   &
+   \upsigma = \uptau \disjjoin \uptau'
+   &
+   \text{$\disjjoin$ comm./assoc.}
+   \notag
+   \\
+   &
+   \qedLocal \exists \upgamma', e.v, \upsigma \desugar \upgamma', e
+   \textit{ with }
+   \upgamma' \desugar \upgamma
+   \textit{ and }
+   s \desugar e
+   &
+   \text{\lemref{match-increasing}, (\localref{curried-gamma}), (\localref{lambda-desugar})}
    \notag
 \end{flalign}
 \end{proof}

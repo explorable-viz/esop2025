@@ -1,56 +1,60 @@
 \begin{figure}
     \begin{salign}
-        \exPrettyFunction{\param}  &: \SExpr \rightarrow \Doc
+        \exPrettyFunction{\param}  &: \SExpr \rightarrow \Sem
         \\
-        \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
+        \exPrettyFunction{s}_\etypeS &= \text{if} \  \exprType(s) \symEqual \etypeS \ \text{then} \  \exPrettyFunction{s}_\etypeE \  \text{else} \  \parens(\exPrettyFunction{s}_\etypeE)
         \\
-        \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
+        \exPrettyFunction{\exInt{n}}_\etypeE &= \exLayoutText{\Show(x)} 
         \\
-        \exPrettyFunction{\{\seq{(x:s)}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,s)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \exPrettyFunction{x}_\etypeE &=  \exLayoutText{\str(x)} 
         \\
-        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}}}
+        \exPrettyFunction{\{\seq{(x:s)}\}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,s)}}}_\etypeE}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
-        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\kw{"else"}}}{ \exPrettyFunction{s_2}}}}}}
+        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}}_\etypeE &= \exLayoutAppBeside{\exPrettyFunction{s}_\etypeE}{\exLayoutAppBeside{\exLayoutText{\str(\oplus)}}{\exPrettyFunction{s'}_\etypeE}}
         \\
-        \exPrettyFunction{\exRecProj{s}{x}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"."}}}{\exLayoutText{\str(x)}}}
+        \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}}_\etypeE &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}_\etypeE}{\exLayoutAppBeside{\exLayoutText{\kw{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}_\etypeE}{\exLayoutAppBeside{\exLayoutText{\kw{"else"}}}{ \exPrettyFunction{s_2}_\etypeE}}}}}
         \\
-        \exPrettyFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exPrettyFunction{s}}{\exPrettyFunction{s'}}
+        \exPrettyFunction{\exRecProj{s}{x}}_\etypeE &= \exLayoutAppBeside{\exPrettyFunction{s}_\etypeE}{\exLayoutAppBeside{\exLayoutText{\kw{"."}}}{\exLayoutText{\str(x)}}}
         \\
-        \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{\exApp{s}{s'}}_\etypeE &= \exLayoutAppBeside{\exPrettyFunction{s}_\etypeS}{\exPrettyFunction{s'}_\etypeS}
         \\
-        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{(\UnitVal\symComma\seq{(p,s')})}}
+        \exPrettyFunction{\exLetRecPiecewise{g}{s}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}_\etypeE}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}_\etypeE}
         \\
-        \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}}_\etypeE &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}_\etypeE}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{(\UnitVal\symComma\seq{(p,s')})}_\etypeE}
         \\
-        \exPrettyFunction{\exList{s}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}}}{\exPrettyFunction{l}}
+        \exPrettyFunction{\lambda\upmu}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}_\etypeE}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
-        \exPrettyFunction{\exListComp{s}{\seq{q}}} &= \exLayoutAppBeside{\exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{ \exPrettyFunction{s}}}{\exLayoutText{\kw{"\symVLine"}}}}{\exPrettyFunction{\seq{q}}}}{\exLayoutText{\kw{"\symRBrack"}}}  
+        \exPrettyFunction{\exList{s}{l}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}_\etypeE}}{\exPrettyFunction{l}_\etypeE}
+        \\
+        \exPrettyFunction{\exListComp{s}{\seq{q}}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{ \exPrettyFunction{s}_\etypeE}}{\exLayoutText{\kw{"\symVLine"}}}}{\exPrettyFunction{\seq{q}}_\etypeE}}{\exLayoutText{\kw{"\symRBrack"}}}  
+        \\
+        \exPrettyFunction{\exListEnum{s}{s'}}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}_\etypeE}}{\exLayoutText{\kw{".."}}}}{\exPrettyFunction{s'}_\etypeE}}{ \exLayoutText{\kw{"\symRBrack"}}}      
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \Doc
+        \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \Sem
         \\
-        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \exPrettyFunction{\exLayoutEmpty}_\etypeE &= \exLayoutEmpty
         \\
-        \exPrettyFunction{(x,s)} &= \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{":"}}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{(x,s)}_\etypeE &= \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{":"}}}}{\exPrettyFunction{s}_\etypeE}
         \\
-        \exPrettyFunction{(x',s')\cons\seq{(x,s)}} &= \exLayoutAppATop{\exPrettyFunction{(x',s')}}{\exPrettyFunction{\seq{(x,s)}}}
+        \exPrettyFunction{(x',s')\cons\seq{(x,s)}}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{(x',s')}_\etypeE}{\exPrettyFunction{\seq{(x,s)}}_\etypeE}
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Var + 1)\times \Clause^+ \rightarrow \Doc
+        \exPrettyFunction{\param} &: (\Var + 1)\times \Clause^+ \rightarrow \Sem
         \\
-        \exPrettyFunction{(\UnitVal\symComma\seq{p}=s)} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}} 
+        \exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}_\etypeE &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{\seq{p}}_\etypeE}{\exLayoutText{\kw{"="}}}}{\exPrettyFunction{s}_\etypeE} 
         \\
-        \exPrettyFunction{(\UnitVal\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}}{\exPrettyFunction{\UnitVal\symComma\upmu}}
+        \exPrettyFunction{(\UnitVal\symComma(\seq{p}=s)\cons\upmu)}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}_\etypeE}{\exPrettyFunction{\UnitVal\symComma\upmu}_\etypeE}
         \\
-        \exPrettyFunction{(x\symComma\seq{p}=s)} &= \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}}
+        \exPrettyFunction{(x\symComma\seq{p}=s)}_\etypeE &= \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exPrettyFunction{(\UnitVal\symComma\seq{p}=s)}_\etypeE}
         \\
-        \exPrettyFunction{(x\symComma(\seq{p}=s)\cons\upmu)} &= \exLayoutAppATop{\exPrettyFunction{(x\symComma\seq{p}=s)}}{\exPrettyFunction{(x\symComma\upmu)}}
+        \exPrettyFunction{(x\symComma(\seq{p}=s)\cons\upmu)}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{(x\symComma\seq{p}=s)}_\etypeE}{\exPrettyFunction{(x\symComma\upmu)}_\etypeE}
         \\[2mm]
-        \exPrettyFunction{\param} &: \RecursiveFunction^+ \rightarrow \Doc
+        \exPrettyFunction{\param} &: \RecursiveFunction^+ \rightarrow \Sem
         \\
-        \exPrettyFunction{x\symColon\upmu} &= \exPrettyFunction{(x\symComma\upmu)}
+        \exPrettyFunction{x\symColon\upmu}_\etypeE &= \exPrettyFunction{(x\symComma\upmu)}_\etypeE
         \\
-        \exPrettyFunction{x'\symColon\upmu'\cons\seq{(x\symColon\upmu)}} &= \exLayoutAppATop{\exPrettyFunction{(x'\symComma\upmu')}}{\exPrettyFunction{\seq{(x\symComma\upmu)}}}
+        \exPrettyFunction{x'\symColon\upmu'\cons\seq{(x\symColon\upmu)}}_\etypeE &= \exLayoutAppATop{\exPrettyFunction{(x'\symComma\upmu')}_\etypeE}{\exPrettyFunction{\seq{(x\symComma\upmu)}}_\etypeE}
     \end{salign}
     \caption{Pretty Function}
  \end{figure}
-
+\clearpage
  
