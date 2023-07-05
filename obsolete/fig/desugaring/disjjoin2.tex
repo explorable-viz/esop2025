@@ -1,0 +1,83 @@
+\begin{figure}
+   {\flushleft \shadebox{$\sigma \disjjoin (\clause{\seq{p}}{s}) = \tau$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-last}}
+      ]
+      {
+         s \desugarFwdS e
+      }
+      {
+         \varepsilon \disjjoin s = e
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-lambda}}
+      ]
+      {
+         \sigma \disjjoin \exPair{\seq{p}}{s} = \tau
+      }
+      {
+         (\elimBind{p}{\exFun{\sigma}}) \disjjoin (\clause{p\cdot\seq{p}}{s}) = \elimBind{p}{\tau}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-var}}
+      ]
+      {
+         \sigma \disjjoin \exPair{\seq{p}}{s} = \tau
+      }
+      {
+         (\elimBind{\exVar{x}}{\sigma}) \disjjoin (\clause{\exVar{x}\cdot\seq{p}}{s}) = \elimBind{\exVar{x}}{\tau}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-constr-eq}}
+      ]
+      {
+         \sigma \disjjoin \exPair{\seq{p}\cdot\seq{p}'}{s} = \tau
+      }
+      {
+         (\elimBind{c}{\sigma}) \disjjoin (\clause{\exConstr{c}{\seq{p}}\cdot\seq{p}'}{s}) = (\elimBind{c}{\tau})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-constr-neq}},
+         right={$\exVar{c'} \notin \dom{\seq{c}}$}
+      ]
+      {
+         \varepsilon \disjjoin \exPair{\seq{p}'\cdot\seq{p}}{s} = \tau
+      }
+      {
+         \elimConstr{\seq{\elimBind{c}{\sigma}}} \disjjoin (\clause{\exConstr{c'}{\seq{p}'}\cdot \seq{p}}{s}) = \elimPair{\seq{\elimBind{c}{\sigma}}}{\elimBind{c'}{\tau}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-record}}
+      ]
+      {
+         \sigma \disjjoin \exPair{\seq{p}\cdot \seq{p}'}{s} = \tau
+      }
+      {
+         (\elimBind{\newRecPatt{\seq{x}}}{\sigma}) \disjjoin (\clause{\elimRec{x}{\seq{p}} \cdot \seq{p}'}{s}) = \elimBind{\newRecPatt{\seq{x}}}{\tau}
+      }
+   \end{smathpar}
+   }
+   {\flushleft \shadebox{$\sigma \disjjoin \exPair{\seq{p}}{s}$}
+   \begin{smathpar}
+   \end{smathpar}}
+   {\flushleft \shadebox{$\sigma \disjjoin \mu$}
+   \begin{smathpar}
+   \end{smathpar}}
+\caption{Second Attempt At Def of disjjoin}
+\end{figure}

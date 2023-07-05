@@ -1,13 +1,13 @@
 \begin{figure}
-{\small \flushleft \shadebox{$\upDelta \vdash T: K$}%
-\hfill \textbfit{$T$ has kind $K$ in $\upDelta$}}
+{\small \flushleft \shadebox{$\Delta \vdash T: K$}%
+\hfill \textbfit{$T$ has kind $K$ in $\Delta$}}
 \begin{smathpar}
    \inferrule*
    {
-      \bind{\alpha}{K} \in \upDelta
+      \bind{\alpha}{K} \in \Delta
    }
    {
-      \upDelta \vdash \tyVar{\alpha}: K
+      \Delta \vdash \tyVar{\alpha}: K
    }
    %
    \and
@@ -17,119 +17,119 @@
       \strut
    }
    {
-      \upDelta \vdash \tyInt: \kiType
+      \Delta \vdash \tyInt: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash A: \kiType
+      \Delta \vdash A: \kiType
       \\
-      \upDelta \vdash C: \kiComp
+      \Delta \vdash C: \kiComp
    }
    {
-      \upDelta \vdash \tyFun{A}{C}: \kiType
+      \Delta \vdash \tyFun{A}{C}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash C: \kiComp
+      \Delta \vdash C: \kiComp
       \\
-      \upDelta \vdash D: \kiComp
+      \Delta \vdash D: \kiComp
    }
    {
-      \upDelta \vdash \tyHandler{C}{D}: \kiType
+      \Delta \vdash \tyHandler{C}{D}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash C: \kiComp
+      \Delta \vdash C: \kiComp
       \\
-      \upDelta \vdash D: \kiComp
+      \Delta \vdash D: \kiComp
    }
    {
-      \upDelta \vdash \tyHandler{C}{D}: \kiType
+      \Delta \vdash \tyHandler{C}{D}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash A_i: \kiType
+      \Delta \vdash A_i: \kiType
       \quad
       (\forall i \in \length{\seq{A}})
    }
    {
-      \upDelta \vdash \seq{\bind{\ell}{A}}: \kiRow
+      \Delta \vdash \seq{\bind{\ell}{A}}: \kiRow
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash R: \kiRow
+      \Delta \vdash R: \kiRow
    }
    {
-      \upDelta \vdash \tyRecord{R}: \kiType
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \upDelta \vdash R: \kiRow
-   }
-   {
-      \upDelta \vdash \tyVariant{R}: \kiType
+      \Delta \vdash \tyRecord{R}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash R: \kiRow
+      \Delta \vdash R: \kiRow
+   }
+   {
+      \Delta \vdash \tyVariant{R}: \kiType
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash R: \kiRow
       \\
-      \upDelta \vdash A: \kiType
+      \Delta \vdash A: \kiType
    }
    {
-      \upDelta \vdash \tyComp{A}{R}: \kiComp
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \cxtExtend{\upDelta}{\bind{\alpha}{K}} \vdash C: \kiComp
-   }
-   {
-      \upDelta \vdash \tyForall{\alpha}{K}{C}: \kiType
+      \Delta \vdash \tyComp{A}{R}: \kiComp
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash C: \kiComp
+      \cxtExtend{\Delta}{\bind{\alpha}{K}} \vdash C: \kiComp
    }
    {
-      \upDelta \vdash C: \kiCont
+      \Delta \vdash \tyForall{\alpha}{K}{C}: \kiType
    }
    %
    \and
    %
    \inferrule*
    {
-      \upDelta \vdash A: \kiType
+      \Delta \vdash C: \kiComp
+   }
+   {
+      \Delta \vdash C: \kiCont
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Delta \vdash A: \kiType
       \\
-      \upDelta \vdash E: \kiCont
+      \Delta \vdash E: \kiCont
    }
    {
-      \upDelta \vdash \elimTy{A}{E}: \kiCont
+      \Delta \vdash \elimTy{A}{E}: \kiCont
    }
 \end{smathpar}
 \caption{Kinding rules}

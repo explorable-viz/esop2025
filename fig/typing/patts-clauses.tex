@@ -1,8 +1,8 @@
 \begin{figure}
 
    %% Patterns
-   
-   \flushleft \shadebox{$p: A \dashv \upGamma $}
+
+   \flushleft \shadebox{$p: A \dashv \Gamma $}
    \begin{smathpar}
       \inferrule*
       {
@@ -18,12 +18,12 @@
          right={$\length{\seq{x}} = j$}
       ]
       {
-         p_i: A_i \dashv \upGamma_i
+         p_i: A_i \dashv \Gamma_i
          \quad
          (\forall i \numleq n)
       }
       {
-         \pattRec{\seq{\bind{x}{p}}}: \tyRec{\seq{\bind{x}{A}}} \dashv \seqRangeOp{\upGamma_1}{\upGamma_n}{\concat}
+         \pattRec{\seq{\bind{x}{p}}}: \tyRec{\seq{\bind{x}{A}}} \dashv \seqRangeOp{\Gamma_1}{\Gamma_n}{\concat}
       }
       %
       \and
@@ -40,29 +40,29 @@
       %
       \inferrule*
       {
-         p: A \dashv \upGamma
+         p: A \dashv \Gamma
          \\
-         p': \tyList{A} \dashv \upGamma'
+         p': \tyList{A} \dashv \Gamma'
       }
       {
-         \pattCons{p}{p'}: \tyList{A} \dashv \upGamma \concat \upGamma'
+         \pattCons{p}{p'}: \tyList{A} \dashv \Gamma \concat \Gamma'
       }
       %
       \and
       %
       \inferrule*
       {
-         p: A \dashv \upGamma
+         p: A \dashv \Gamma
          \\
-         o: \tyList{A} \dashv \upGamma'
+         o: \tyList{A} \dashv \Gamma'
       }
       {
-         \pattList{p}{o} : \tyList{A} \dashv \upGamma \concat \upGamma'
+         \pattList{p}{o} : \tyList{A} \dashv \Gamma \concat \Gamma'
       }
    \end{smathpar}
    \vspace{3mm}
-   
-   \flushleft \shadebox{$o: \tyList{A} \dashv \upGamma $}
+
+   \flushleft \shadebox{$o: \tyList{A} \dashv \Gamma $}
    \begin{smathpar}
       \inferrule*
       {
@@ -76,26 +76,26 @@
       %
       \inferrule*
       {
-         p : A \dashv \upGamma
+         p : A \dashv \Gamma
          \\
-         o : \tyList{A} \dashv \upGamma'
+         o : \tyList{A} \dashv \Gamma'
       }
       {
-         (\pattListNext{p}{o}) : \tyList{A} \dashv \upGamma \concat \upGamma'
+         (\pattListNext{p}{o}) : \tyList{A} \dashv \Gamma \concat \Gamma'
       }
       \end{smathpar}
       \vspace{3mm}
-      
-      \flushleft \shadebox{$\upGamma \vdash \upmu: \tyFun{A}{B}$}
+
+      \flushleft \shadebox{$\Gamma \vdash \mu: \tyFun{A}{B}$}
       \begin{smathpar}
       \inferrule*
       {
-         p: A \dashv \upGamma'
+         p: A \dashv \Gamma'
          \\
-         \upGamma \concat \upGamma' \vdash s: B
+         \Gamma \concat \Gamma' \vdash s: B
       }
       {
-         \upGamma \vdash \clauseUncurried{p}{s} : \tyFun{A}{B}
+         \Gamma \vdash \clauseUncurried{p}{s} : \tyFun{A}{B}
       }
       %
       \and
@@ -104,12 +104,12 @@
          right={$\seq{p} \neq \seqEmpty$}
       ]
       {
-         p : A \dashv \upGamma'
+         p : A \dashv \Gamma'
          \\
-         \upGamma \concat \upGamma' \vdash \clause{\seq{p}'}{s} : \tyFun{A'}{B}
+         \Gamma \concat \Gamma' \vdash \clause{\seq{p}'}{s} : \tyFun{A'}{B}
       }
       {
-         \upGamma \vdash \clauseUncurried{(p \cdot \seq{p})}{s} : \tyFun{A}{\tyFun{A'}{B}}
+         \Gamma \vdash \clauseUncurried{(p \cdot \seq{p})}{s} : \tyFun{A}{\tyFun{A'}{B}}
       }
       %
       \and
@@ -117,18 +117,17 @@
       \inferrule*[
       ]
       {
-         \upGamma \vdash c: \tyFun{A}{B}
+         \Gamma \vdash c: \tyFun{A}{B}
          \\
-         \compatPatt{c}{\upmu}
+         \compatPatt{c}{\mu}
          \\
-         \upGamma \vdash \upmu : \tyFun{A}{B}
+         \Gamma \vdash \mu : \tyFun{A}{B}
       }
       {
-         \upGamma \vdash c \cdot \upmu: \tyFun{A}{B}
+         \Gamma \vdash c \cdot \mu: \tyFun{A}{B}
       }
    \end{smathpar}
-   
+
 \caption{Typing rules for patterns and clauses}
 \label{fig:surface-language:typing-pattern}
 \end{figure}
-   

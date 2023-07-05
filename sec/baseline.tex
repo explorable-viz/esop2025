@@ -1,133 +1,42 @@
-\section{Baseline language (without graphs)}
+\section{Baseline language}
 \label{sec:baseline}
 \subsection{Surface Language}
 
-When presenting a program execution, we want to give the appearence to the user that they are executing parts
-of the surface language directly. To that end we formalise and present a notion of evaluation of surface
-terms, which we present to the user in the debugger. We most formalise a notion of values in the surface
-language, which mostly correspond to values in the core language. We then present proof that directly
-evaluating a surface program produces the same result as desugaring it to a core program and then evaluating, justifying our presentation of the surface semantics to the debugger.
+When presenting a program execution, we want to give the appearence that the user is executing parts of the
+surface language directly. To that end we formalise the evaluation of surface terms and a corresponding notion
+of value in the surface language, which corresponds to values in the core language except in the case of
+closures, which contain surface expressions (and, recursively, surface values). Later we prove that directly
+evaluating a surface program $s$ and desugaring the resulting value produces the same core language value as
+desugaring $s$ to a core program and then evaluating, justifying our presentation of the surface semantics in
+the debugger.
 
-\subsubsection{Desugaring Of Values, Environments and Recursive Definitions}
+\subsubsection{Mutual recursion}
 
-In order to state the theorem, we must extend our definition of desugaring to values. For values, we only have
-one interesting case, that of surface closures. To define the desugaring of surface-closures, we need to define
-desugaring for environments, and recursively-defined functions (in surface language $\seq{g}$, in core $\uprho$).
-Once this extension to the desugaring relation has been carefully defined, in figure \figref{closures}, we can state and prove our theorem.
+\figref{close-defs-surface} defines the relation $\closeDefsS$ which creates the environments associated with
+a block of mutually recursively defined functions. Given an environment $\gamma$ and a sequence of recursively
+defined functions $g = \seq{\bind{x}{\mu}}$ (read $x$ as the function name and $\mu$ as the clauses of the
+function), we split the sequence into each individual function $\bind{x}{\mu}$ and form the closure
+associated with the function.
 
-\subsubsection{Equivalence of Semantics}
+\subsubsection{Piecewise function definitions}
 
-Informally, the equivalence of the semantics means that desugaring a surface term and surface environment
-produces the same result as surface-evaluating to a surface value and then desugaring the surface value.
-We formalise the equivalence of these semantics as the following
-theorem.
-%  $\upGamma \vdash s : A, \; \upgamma : \upGamma,
-\begin{theorem}
-   \label{thm:semantics-eq}
-   Suppose $s \desugarFwdS e \; and \; \upgamma \desugarFwdS \upgamma'$, then:
-\hfill
-\begin{enumerate}
-   \item $ If \; \upgamma, s \evalSugS v \; then \; \upgamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
-   \item $If \; \upgamma',e \evalFwdS v' \; then \; \upgamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{semantics-eq-2}
-\end{enumerate}
-\end{theorem}
-\begin{proof}
-   For (1) see \appref{semantics-eq-1}, and for (2), see \appref{semantics-eq-2}
-\end{proof}
-\thmref{semantics-eq} relies on pattern-matching in the surface and core languages producing
-environments that coincide sensibly. We state this as \lemref{matching-bi}. We need to
-also establish that environment lookup commutes with desugaring, \lemref{lemma:varlookup}. Due to the fact
-that desugaring of values is not a total relation, we require that both $s$ and $\upgamma$ can be desugared as
-the precondition to \thmref{semantics-eq}. We also need to establish that closing
-a set of definitions behaves the way we want it to, in \lemref{closedefs-eq}. We also need to establish some
-properties on recursively defined functions and the eliminators they desugar to so that we can characterize
-their surface evaluation properly, which we do in \lemref{disjoint-clause-elim}.
-\begin{lemma}
-   \label{lem:lemma:varlookup}
-   Suppose $\upgamma \desugarFwdS \upgamma'$ and $v \desugarFwdS v'$, then
-   $$
-      \bind{x}{v} \in \upgamma \quad \iff \quad \bind{x}{v'} \in \upgamma'
-   $$
-\end{lemma}
-\begin{proof}
-   See \appref{proofs:varlookup}
-\end{proof}
-\begin{lemma}
-   \label{lem:matching-bi}
-   Suppose $v \desugarFwdS v'$ and $\upmu \desugarFwdS \upsigma$, Then:
-   \hfill
-   \begin{enumerate}
-      \item If $u, \upmu\matchFwdS \upgamma, s$ then $\exists \upgamma', e.v,\upsigma \matchFwdS \upgamma', e$ with $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
-      \item If $v, \upsigma \matchFwdS \upgamma', e$ then $u, \upmu \matchFwdS \upgamma, s$ and $\upgamma \desugarFwdS \upgamma'$ and $s \desugarFwdS e$
-   \end{enumerate}
+We disallow certain combinations of patterns which are commonly allowed in other languages, such as:%
+{\small
+\begin{lstlisting}[language=Fluid]
+   foo (Cons y ys) (Cons z zs) = ...
+   foo  x           Nil        = ...
 
-\end{lemma}
-\begin{proof}
-   As in \thmref{semantics-eq}, we split the proof into 2 parts, for (1) see \appref{proofs:matching-bi-1} and for (2), see \appref{proofs:matching-bi-2}.
-\end{proof}
-\begin{lemma}
-   \label{lem:closedefs-eq}
-   Suppose $\upgamma_1 \desugarFwdS \upgamma_2$ and $g \desugarFwdS \uprho$. Then
-   \hfill
-   \begin{enumerate}
-      \item If $\upgamma_1, g \closeDefsS \upgamma_1'$ then $\upgamma_2, \uprho \closeDefsS \upgamma_2'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
-      \item If $\upgamma_2, \uprho \closeDefsS \upgamma_2'$, then $\upgamma_1, g, \closeDefsS \upgamma_1'$ where $\upgamma_1' \desugarFwdS \upgamma_2'$
-   \end{enumerate}
-\end{lemma}
-\begin{proof}
-   see \appref{proofs:close-defs-eq}
-\end{proof}
-% \begin{lemma}
-%    \label{lem:match-then-desugar}
-%    Suppose we have $\upGamma \vdash\upmu\,:\,A \to B$, and $v, \upmu \matchFwdS \upgamma$ then $\exists \upsigma.\; \upmu \desugarFwdS \upsigma$.
-% \end{lemma}
-% \begin{proof}
-%    see \appref{match-then-desugar}.
-% \end{proof}
-\begin{lemma}
-   \label{lem:disjoint-clause-elim}
-   If $\compatPatt{c}{\upmu}$ and $c \desugarFwdS \upsigma,\,\upmu\desugarFwdS\upsigma'$ then $\exists\uptau.\,\upsigma \disjjoin\upsigma' = \uptau$
-\end{lemma}
-\begin{proof}
-   see \appref{disjoint-clause-elim}
-\end{proof}
-Proving \lemref{disjoint-clause-elim} is quite challenging, but is a requirement for the proof of \thmref{semantics-eq}.
-Our current intuition is that we need to prove some properties about eliminators in order to make this tractable.
-We shall break these down.
-\subsubsection{Vertical Recursion}
-For now, we are using the term "vertical recursion" to mean the case of desugaring a sequence of clauses.
-The definition of this, at the top of \figref{desugar-func-qual-do} ($\desugarFwdS$-clauses)
-demonstrates the need to join the eliminator formed by desugaring the previous equations with the
-next clause in the definition. We need this join operation ($\disjjoin$) to always be defined
-for well-typed definitions of a recursive function. We have captured this intuition with the maxim
-"disjoint join preserves joinability". We will make this notion more formal in a revision of this draft.
-\subsubsection{Horizontal Recursion}
-The other part that makes this difficult is the notion of curried patterns. An eliminator is
-a branching structure as we have noted. However an individual clause is sequential with no branching.
-The branching is introduced when we consider multiple clauses for the same function. We need the proof
-of the lemma to be constructive, to show exactly how we compute the join when it is defined.
-Our intuition is that the only point in an eliminator where we encounter branching
-is at the point of disjoint constructors, however this branch may be nested deeply inside other
-constructor and record patterns. We think we need to revise our definition of eliminators
-in order to make this intuition clear and easy to prove, as our current approach to proving
-\lemref{disjoint-clause-elim} relies on this unproven fact.
-% \begin{theorem}
-%    \label{thm:join-preserves-join}
-%    The disjoint join of eliminators is joinability-preserving, that is:
-%    $$
-%       \upsigma_1 \disjjoin \upsigma_2 = \uptau' \opAnd \upsigma_2 \disjjoin \upsigma_3 = \uptau'_1 \opAnd \upsigma_1 \disjjoin \upsigma_3 = \uptau'_2
-%       \newline
-%       \implies \upsigma_3 \disjjoin \uptau' = \upsigma_2 \disjjoin \uptau'_1 = \upsigma_1 \disjjoin \uptau'_2 = \uptau
-%    $$
-% \end{theorem}
-% \begin{proof}
-%    Temporarily Omitted.
-% \end{proof}
-% \begin{lemma}
-%    Suppose we have $c_1,c_2$ clauses, such that $\upGamma \vdash c_1: \tyFun{A}{B},\; c_2:\tyFun{A}{B}$ and $\compatPatt{c_1}{c_2}$
-%    Then $c_1 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c}{\seq{p}} \elimmapsto \upsigma$ and
-%    $c_2 \desugarFwdS \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \exConstr{c'}{\seq{p}} \elimmapsto \upsigma'$
-% \end{lemma}
+   bar x ... = ...
+   bar y ... = ...
+\end{lstlisting}}
+
+\noindent In particular, ``aligned'' variable patterns must have the same name, and variable patterns and any other kind of pattern may only be aligned if we have already been able to distinguish both arguments. Thus the following is allowed:%
+{\small
+\begin{lstlisting}[language = Fluid]
+   baz (Cons y ys) (Cons z zs) = ...
+   baz  Nil         x          = ...
+\end{lstlisting}}
+
 \clearpage
 \input{fig/baseline/surface/syntax}
 \input{fig/typing/surface}
@@ -136,6 +45,7 @@ in order to make this intuition clear and easy to prove, as our current approach
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
 \clearpage
+
 \subsection{Core Language}
 
 \input{fig/baseline/core/syntax}
@@ -145,31 +55,95 @@ in order to make this intuition clear and easy to prove, as our current approach
 \clearpage
 
 \subsection{Desugaring}
-The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is
-consistent in both the core and surface languages is imperative for \thmref{semantics-eq}. We disallow certain combinations of
-patterns which might otherwise be allowed in another language. For example, we do not allow clauses formed in the following fashion:
-{\small
-\begin{lstlisting}[language=Fluid]
-   foo (Cons y ys) (Cons z zs) = ...
-   foo  x           Nil        = ...
 
-   bar x ... = ...
-   bar y ... = ...
-\end{lstlisting}}
-In other words, when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name,
-and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish
-both arguments. This does not mean that the rest of the function can be ill-typed. Just because we have distinguished
-the two clauses in the following example, we still cannot consider it a well-formed program.
-{\small
-\begin{lstlisting}[language = Fluid]
-   baz (Cons y ys) (Cons z zs) = ...
-   baz  Nil         x          = ...
-\end{lstlisting}}
-
-\input{fig/patt-clauses/disjjoin}
-\input{fig/patt-clauses/disjjoin2}
 \input{fig/baseline/desugar/term}
 \input{fig/baseline/desugar/clauses}
+\input{fig/baseline/desugar/disjjoin}
 \input{fig/baseline/desugar/value}
+
+\subsubsection{Desugaring Of Values}
+
+To relate the surface semantics to the core semantics, we must extend desugaring to values, which in turn requires desugaring for surface environments $\upgamma$ and recursively functions $\seq{g}$ (\figref{desugar:values}).
+
+\subsubsection{Equivalence of Semantics}
+
+\begin{theorem}
+   \label{thm:semantics-eq}
+   Suppose $s \desugarFwdS e \; and \; \gamma \desugarFwdS \gamma'$, then:
+\hfill
+\begin{enumerate}
+   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
+   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{semantics-eq-2}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+   For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
+\end{proof}
+
+\thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}) and recursive
+definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
+(\lemref{lemma:varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
+as the precondition to \thmref{semantics-eq}.
+
+\begin{lemma}
+   \label{lem:lemma:varlookup}
+   Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
+\end{lemma}
+\begin{proof}
+   See \appref{proofs:varlookup}
+\end{proof}
+
+\begin{lemma}
+   \label{lem:matching-bi}
+   Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$.
+   \hfill
+   \begin{enumerate}
+      \item If $u, \mu\matchFwdS \gamma, s$ then $\exists \gamma', e.v,\sigma \matchFwdS \gamma', e$ with $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
+      \item If $v, \sigma \matchFwdS \gamma', e$ then $u, \mu \matchFwdS \gamma, s$ and $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
+   \end{enumerate}
+
+\end{lemma}
+\begin{proof}
+   For (1) see \appref{proofs:matching-bi-1}. For (2) see \appref{proofs:matching-bi-2}.
+\end{proof}
+
+\begin{lemma}
+   \label{lem:closedefs-eq}
+   Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$.
+   \hfill
+   \begin{enumerate}
+      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugarFwdS \gamma_2'$
+      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugarFwdS \gamma_2'$
+   \end{enumerate}
+\end{lemma}
+\begin{proof}
+   See \appref{proofs:close-defs-eq}
+\end{proof}
+
+\begin{lemma}
+   \label{lem:match-domains-agree}
+   Suppose $u \desugar v$ and $\sigma = \mkElimF(p, \kappa)$.
+   \begin{enumerate}
+      \item If $u, p \match \gamma$ then $\exists \gamma'.v, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $u, p\;\matchNeg$ then $v, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+   Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
+   \begin{enumerate}
+      \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $\seq{u}, \seq{p}\;\matchNeg$ then $\seq{v}, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+   \label{lem:match-increasing}
+   Suppose $v, \sigma \match \gamma, \kappa_1$. Then $\exists \kappa.v, \sigma \disjjoin \tau \match \gamma, \kappa$ and:
+   \begin{enumerate}
+      \item If $v, \tau \match \gamma, \kappa_2$ then $\kappa = \kappa_1 \disjjoin \kappa_2$.
+      \item If $v, \tau\;\matchNeg$ then $\kappa = \kappa_1$.
+   \end{enumerate}
+\end{lemma}
 
 \clearpage

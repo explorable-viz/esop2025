@@ -15,8 +15,8 @@
       handle
    \end{tabularx}
    \\[3mm]
-   {\small \flushleft \shadebox{$V, \upsigma \match P$}%
-   \hfill \textbfit{$\upsigma$ matches $V$ and yields closed $P$}}
+   {\small \flushleft \shadebox{$V, \sigma \match P$}%
+   \hfill \textbfit{$\sigma$ matches $V$ and yields closed $P$}}
    \begin{smathpar}
       \inferrule*
       {
@@ -35,7 +35,7 @@
          V, P_i \match Q
       }
       {
-         \exVariant{\ell_i}{V}, \elimVariant{\ell}{P}{P'} \match \upGamma, Q
+         \exVariant{\ell_i}{V}, \elimVariant{\ell}{P}{P'} \match \Gamma, Q
       }
       %
       \and
@@ -64,9 +64,9 @@
       %
       \inferrule*
       {
-         V, \elimRecord{\seq{\ell}}{P} \match \upsigma
+         V, \elimRecord{\seq{\ell}}{P} \match \sigma
          \\
-         U, \upsigma \match Q
+         U, \sigma \match Q
       }
       {
          \exRecordExtend{V}{\bind{\ell'}{U}}, \elimRecord{\seq{\ell}, \ell'}{P}
@@ -90,35 +90,35 @@
    {\small \flushleft \shadebox{$M \reduce N$}%
    \hfill \textbfit{$M$ reduces to $N$}}
    \begin{salign}
-      \exApp{(\exFun{\upsigma})}{V}
+      \exApp{(\exFun{\sigma})}{V}
       &\reduce
       M
       \quad
-      \textit{if }V, \upsigma \match M
+      \textit{if }V, \sigma \match M
       \\
       \exPolyApp{(\exPolyFun{\alpha}{M})}{T}
       &\reduce
       \subst{M}{T}{\alpha}
       \\
-      \exMatch{V}{\upsigma}
+      \exMatch{V}{\sigma}
       &\reduce
       M
       \quad
-      \textit{if }V, \upsigma \match M
+      \textit{if }V, \sigma \match M
       \\
-      \exHandle{\exReturn{V}}{\exFun{\upsigma}}
+      \exHandle{\exReturn{V}}{\exFun{\sigma}}
       &\reduce
       M
       \quad
-      \textit{if }\exReturn{V}, \upsigma \match M
+      \textit{if }\exReturn{V}, \sigma \match M
       \\
       \begin{split}
-      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\upsigma}}
+      \exHandle{\plug{\mathcal{E}}{\exOp{\ell}{V}}}{\exFun{\sigma}}
       &\reduce
-      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\upsigma}}}})}
+      \exApp{M}{(\exFun{\elimVar{y}{\exHandle{\plug{\mathcal{E}}{\exReturn{y}}}{\exFun{\sigma}}}})}
       \\
       &\quad\;\;\,
-      \textit{if }\exOp{\ell}{V}, \upsigma \match M
+      \textit{if }\exOp{\ell}{V}, \sigma \match M
       \textit{ and }
       \ell \notin \BL(\mathcal{E})
       \end{split}

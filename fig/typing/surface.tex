@@ -1,202 +1,202 @@
 \begin{figure}
 
-   \flushleft \shadebox{$\upGamma \vdash \seq{g}: \upDelta$}
+   \flushleft \shadebox{$\Gamma \vdash \seq{g}: \Delta$}
    \begin{smathpar}
       \inferrule*[right={
-         \textnormal{$\upDelta = \seq{\bind{x}{\tyFun{A}{B}}}$}
+         \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \upGamma \concat \upDelta \vdash \upmu_i: \tyFun{A_i}{B_i}
+         \Gamma \concat \Delta \vdash \mu_i: \tyFun{A_i}{B_i}
          \quad
          (\forall i \numleq j)
       }
       {
-         \upGamma \vdash \seqRange{\bind{x_1}{\upmu_1}}{\bind{x_j}{\upmu_j}}: \upDelta
+         \Gamma \vdash \seqRange{\bind{x_1}{\mu_1}}{\bind{x_j}{\mu_j}}: \Delta
       }
    \end{smathpar}
-   
+
    \vspace{5pt}
-   \flushleft \shadebox{$\upGamma \vdash s: A$}
+   \flushleft \shadebox{$\Gamma \vdash s: A$}
    \begin{smathpar}
-      \inferrule*[right={$\primOp: \tyForeign{(A,B)}{C} \in \upGamma$}]
+      \inferrule*[right={$\primOp: \tyForeign{(A,B)}{C} \in \Gamma$}]
       {
-         \upGamma \vdash s: A
+         \Gamma \vdash s: A
          \\
-         \upGamma \vdash s': B
+         \Gamma \vdash s': B
       }
       {
-         \upGamma \vdash \exBinaryApp{s}{\oplus}{s'}: C
+         \Gamma \vdash \exBinaryApp{s}{\oplus}{s'}: C
       }
       %
       \and
       %
       \inferrule*[]
       {
-         \upGamma \vdash \upmu: \tyFun{A}{B}
+         \Gamma \vdash \mu: \tyFun{A}{B}
       }
       {
-         \upGamma \vdash \exApp{\uplambda}{\upmu}: \tyFun{A}{B}
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         \upGamma \vdash \seq{g}: \upDelta
-         \\
-         \upGamma \concat \upDelta \vdash s: A
-      }
-      {
-         \upGamma \vdash \exLetRec{\seq{g}}{s}: A
+         \Gamma \vdash \exApp{\lambda}{\mu}: \tyFun{A}{B}
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: \tyBool
+         \Gamma \vdash \seq{g}: \Delta
          \\
-         \upGamma \vdash s_1: A
-         \\
-         \upGamma \vdash s_2: A
+         \Gamma \concat \Delta \vdash s: A
       }
       {
-         \upGamma \vdash \exIfThenElse{s}{s_1}{s_2}: A
+         \Gamma \vdash \exLetRec{\seq{g}}{s}: A
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: A
+         \Gamma \vdash s: \tyBool
          \\
-         \upGamma \vdash \upmu: \tyFun{A}{B}
+         \Gamma \vdash s_1: A
+         \\
+         \Gamma \vdash s_2: A
       }
       {
-         \upGamma \vdash \exMatch{s}{\upmu}: B
+         \Gamma \vdash \exIfThenElse{s}{s_1}{s_2}: A
       }
       %
       \and
       %
       \inferrule*
       {
-         p: A \dashv \upGamma'
+         \Gamma \vdash s: A
          \\
-         \upGamma \vdash s: A
-         \\
-         \upGamma \concat \upGamma' \vdash s': B
+         \Gamma \vdash \mu: \tyFun{A}{B}
       }
       {
-         \upGamma \vdash \exLet{p}{s}{s'}: B
+         \Gamma \vdash \exMatch{s}{\mu}: B
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s : A
+         p: A \dashv \Gamma'
          \\
-         \upGamma \vdash r : \tyList{A}
+         \Gamma \vdash s: A
+         \\
+         \Gamma \concat \Gamma' \vdash s': B
       }
       {
-         \upGamma \vdash \exList{s}{r} : \tyList{A}
+         \Gamma \vdash \exLet{p}{s}{s'}: B
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: \tyInt
+         \Gamma \vdash s : A
          \\
-         \upGamma \vdash s': \tyInt
+         \Gamma \vdash r : \tyList{A}
       }
       {
-         \upGamma \vdash \exListEnum{s}{s'}: \tyList{\tyInt}
+         \Gamma \vdash \exList{s}{r} : \tyList{A}
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash \seq{q} \dashv \upDelta
+         \Gamma \vdash s: \tyInt
          \\
-         \upGamma \concat \upDelta \vdash s: A
+         \Gamma \vdash s': \tyInt
       }
       {
-         \upGamma \vdash \exListComp{s}{\seq{q}}: \tyList{A}
+         \Gamma \vdash \exListEnum{s}{s'}: \tyList{\tyInt}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \Gamma \vdash \seq{q} \dashv \Delta
+         \\
+         \Gamma \concat \Delta \vdash s: A
+      }
+      {
+         \Gamma \vdash \exListComp{s}{\seq{q}}: \tyList{A}
       }
       \end{smathpar}
-   
+
       % List rest
       \vspace{5pt}
-      \flushleft \shadebox{$\upGamma \vdash r: \tyList{A}$}
+      \flushleft \shadebox{$\Gamma \vdash r: \tyList{A}$}
       \begin{smathpar}
       \inferrule*
       {
          \strut
       }
       {
-         \upGamma \vdash \exListEnd : \tyList{A}
+         \Gamma \vdash \exListEnd : \tyList{A}
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s : A
+         \Gamma \vdash s : A
          \\
-         \upGamma \vdash r : \tyList{A}
+         \Gamma \vdash r : \tyList{A}
       }
       {
-         \upGamma \vdash \exListNext{s}{r} : \tyList{A}
+         \Gamma \vdash \exListNext{s}{r} : \tyList{A}
       }
       \end{smathpar}
-   
+
       \vspace{0.1em}
       %% Qualifiers
-   
-      \flushleft \shadebox{$\upGamma \vdash \seq{q} \dashv \upDelta $}
+
+      \flushleft \shadebox{$\Gamma \vdash \seq{q} \dashv \Delta $}
       \begin{smathpar}
       \inferrule*
       {
          \strut
       }
       {
-         \upGamma \vdash \seqEmpty \dashv \seqEmpty
+         \Gamma \vdash \seqEmpty \dashv \seqEmpty
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: \tyBool
+         \Gamma \vdash s: \tyBool
       }
       {
-         \upGamma \vdash \qualGuard{s} \dashv \seqEmpty
+         \Gamma \vdash \qualGuard{s} \dashv \seqEmpty
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: \tyList{A}
+         \Gamma \vdash s: \tyList{A}
          \\
-         p: A \dashv \upDelta
+         p: A \dashv \Delta
       }
       {
-         \upGamma \vdash \qualGenerator{p}{s} \dashv \upDelta
+         \Gamma \vdash \qualGenerator{p}{s} \dashv \Delta
       }
       %
       \and
       %
       \inferrule*
       {
-         \upGamma \vdash s: A
+         \Gamma \vdash s: A
          \\
-         p: A \dashv \upDelta
+         p: A \dashv \Delta
       }
       {
-         \upGamma \vdash \qualDeclaration{p}{s} \dashv \upDelta
+         \Gamma \vdash \qualDeclaration{p}{s} \dashv \Delta
       }
       %
       \and
@@ -205,15 +205,14 @@
          right={$\seq{q} \neq \seqEmpty$}
       ]
       {
-         \upGamma \vdash q \dashv \upGamma'
+         \Gamma \vdash q \dashv \Gamma'
          \\
-         \upGamma \concat \upGamma' \vdash \seq{q} \dashv \upDelta
+         \Gamma \concat \Gamma' \vdash \seq{q} \dashv \Delta
       }
       {
-         \upGamma \vdash q \cons \seq{q} \dashv \upDelta
+         \Gamma \vdash q \cons \seq{q} \dashv \Delta
       }
    \end{smathpar}
    \caption{Typing rules for surface terms (additional forms only) and qualifiers}
    \label{fig:surface-language:typing-term}
    \end{figure}
-   

@@ -2,21 +2,21 @@
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
           &\textit{Eliminator}&
-          \lowlight{$\Elim\;\upGamma\,A\;K$}
+          \lowlight{$\Elim\;\Gamma\,A\;K$}
           \\
-          $\upsigma, \uptau ::=$
+          $\sigma, \tau ::=$
           &
-          $\elimVar{x}{\upkappa}$
+          $\elimVar{x}{\kappa}$
           &
           variable
           \\
           &
-          $\elimRec{\seq{x}}{\upkappa}$
+          $\elimRec{\seq{x}}{\kappa}$
           &
           record
           \\
           &
-          $\elimConstr{\seq{\elimBind{c}{\upsigma}}}$
+          $\elimConstr{\seq{\elimBind{c}{\sigma}}}$
           &
           data value
           \\[0mm]
@@ -47,46 +47,46 @@
       core-term
       \\
       &
-      $\upsigma$
+      $\sigma$
       &
       eliminator
       \\[2mm]
       \end{tabularx}
    \end{minipage}
-   {\small \flushleft \shadebox{$\upGamma \vdash \upsigma: \elimTy{A}{K}$}%
-   \hfill \textbfit{$\upsigma$ has type $\elimTy{A}{K}$ under $\upGamma$}}
+   {\small \flushleft \shadebox{$\Gamma \vdash \sigma: \elimTy{A}{K}$}%
+   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\Gamma$}}
    \begin{smathpar}
    \inferrule*
    {
-      \upGamma \cons \bind{x}{A} \vdash \kappa: K
+      \Gamma \cons \bind{x}{A} \vdash \kappa: K
    }
    {
-      \upGamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
+      \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
    }
    %
    \and
    %
    \inferrule*
    [
-      %right={$\datatype{\upSigma}{c} = \datatype{\upSigma}{c} = D$}
+      %right={$\datatype{\Sigma}{c} = \datatype{\Sigma}{c} = D$}
    ]
    {
-      (\upSigma(c) = D\quad \forall c \in \seq{c})
+      (\Sigma(c) = D\quad \forall c \in \seq{c})
       \\
-      (\upGamma \vdash \upkappa: K \quad \forall \upkappa \in \seq{\upkappa})
+      (\Gamma \vdash \kappa: K \quad \forall \kappa \in \seq{\kappa})
    }
    {
-      \upGamma \vdash \{\seq{\elimBind{c}{\upkappa}}\}: \elimTy{D}{K}
+      \Gamma \vdash \{\seq{\elimBind{c}{\kappa}}\}: \elimTy{D}{K}
    }
    %
    \and
    %
    \inferrule*
    {
-      \upGamma \vdash \kappa: K
+      \Gamma \vdash \kappa: K
    }
    {
-      \upGamma
+      \Gamma
       \vdash
       \elimRecEmpty{\kappa}: \elimTy{\tyRecEmpty}{K}
    }
@@ -95,12 +95,12 @@
    %
    \inferrule*
    {
-      \upGamma \vdash \elimRec{\seq{x}}{\upsigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
    }
    {
-      \upGamma
+      \Gamma
       \vdash
-      \elimRec{\seq{x} \cons y}{\upsigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
+      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }
    \end{smathpar}
    \caption{Syntax and Typing of Eliminators}

@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\upgamma \desugarFwdS \upgamma'$}
+    {\small \flushleft \shadebox{$\gamma \desugarFwdS \gamma'$}
     \begin{smathpar}
         \inferrule*[]
         {
@@ -10,40 +10,34 @@
         }
     \end{smathpar}
     }
-    %
-    \and
-    %
-    {\small \flushleft \shadebox {$g \desugarFwdS \uprho$}
+    {\small \flushleft \shadebox {$g \desugarFwdS \rho$}
     \begin{smathpar}
         \inferrule*
         {
-            \upmu_i \desugarFwdS \upsigma_i
+            \mu_i \desugarFwdS \sigma_i
             \quad
             (\forall i \le \length{\seq{x}})
         }
         {
-            \seq{\bind{x}{\upmu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma}}}
+            \seq{\bind{x}{\mu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\sigma}}}
         }
     \end{smathpar}
     }
-    %
-    \and
-    %
     {\small \flushleft \shadebox {$u \desugarFwdS v$}
         \begin{smathpar}
             \inferrule*[lab={\ruleName{$\desugarFwdS$-closure}}]
             {
-                \upgamma \desugarFwdS \upgamma'
+                \gamma \desugarFwdS \gamma'
                 \\
-                g \desugarFwdS \uprho
+                g \desugarFwdS \rho
                 \\
-                \upmu \desugarFwdS \upsigma
+                \mu \desugarFwdS \sigma
             }
             {
-                \exClosure{\upgamma}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+                \exClosure{\gamma}{g}{\mu} \desugarFwdS \exClosure{\gamma'}{\rho}{\sigma}
             }
         \end{smathpar}
     }
     \caption{Desugaring for environments, recursive definitions and values}
-    \label{fig:closures}
+    \label{fig:desugar:values}
 \end{figure}

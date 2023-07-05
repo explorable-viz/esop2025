@@ -3,14 +3,14 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarFwdR$-lambda}}]
       {
-         \upmu
+         \mu
          \desugarFwdR
-         \upsigma
+         \sigma
       }
       {
-         \exFun{\upmu}
+         \exFun{\mu}
          \desugarFwdS
-         \exFun{\upsigma}
+         \exFun{\sigma}
       }
       %
       \and
@@ -31,16 +31,16 @@
       %
       \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
       {
-         \upmu_i \desugarFwdS \upsigma_i
+         \mu_i \desugarFwdS \sigma_i
          \quad
          (\forall i \numleq \length{\seq{x}})
          \\
          s \desugarFwdR e
       }
       {
-         \exLetRecPiecewise{\seq{\bind{x}{\upmu}}}{s}
+         \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
          \desugarFwdR
-         \exLetRecPiecewise{\seq{\bind{x}{\upsigma}}}{e}
+         \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
       %
       \and
@@ -49,12 +49,12 @@
       {
          s \desugarFwdR e
          \\
-         \upmu \desugarFwdS\upsigma
+         \mu \desugarFwdS\sigma
       }
       {
-         \exMatch{s}{\upmu}
+         \exMatch{s}{\mu}
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
@@ -81,12 +81,12 @@
          \\
          s_2 \desugarFwdR e_2
          \\
-         \upsigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
          \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
