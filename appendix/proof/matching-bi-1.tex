@@ -1,0 +1,227 @@
+Case analysis on $\matchFwdS$ derivation.
+\begin{proof}
+\small
+\begin{flalign}
+   &
+   u \desugar v
+   &\text{suppose}
+   \\
+   &
+   \mu \desugar \sigma
+   &\text{suppose}
+   \\
+   &
+   u, \mu \match \gamma, s
+   &\text{suppose}
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\matchFwdS$-uncurried}}
+         ]
+         {
+            u, p_i \matchFwdS \gamma
+            \\
+            \forall i' \ne i.\nexists \gamma. \, v, p_i \matchFwdS \gamma
+         }
+         {
+            u, \mu = (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \matchFwdR{p_i} \gamma, s_i = s
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{uncurried-match}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
+         {
+            \inferrule*[left={\ruleName{$\desugar$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
+            {
+               s_i \desugar e_i
+               \\
+               \sigma_i \eqdef \mkElimF(p_i)(e_i)
+            }
+            {
+               (\clause{p_i}{s_i}) \desugar \sigma_i
+            }
+         }
+         {
+            \mu
+            \desugar
+            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{uncurried-desugar}
+   \\
+   &
+   v, \sigma_i \match \gamma', e_i\textit{ with }\gamma \desugar \gamma'
+   &
+   \text{Def.~$\sigma_i$, \localref{uncurried-match}, \lemref{match-domains-agree}}
+   \locallabel{uncurried-gamma}
+   \\
+   &
+   \forall i' \neq i.v, \sigma_i'\;\matchNeg
+   &
+   \text{(\localref{uncurried-desugar}), \lemref{match-domains-agree}}
+   \locallabel{no-match}
+   \\
+   &
+   \qedLocal
+   \exists \gamma', e.v, \sigma \match \gamma', e
+   \textit{ with }\gamma \desugar \gamma'
+   \textit{ and }s \desugar e
+   &
+   \text{(\localref{uncurried-gamma}), (\localref{no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-curried}},
+            right={$\mu' \neq \seqEmpty$}
+         ]
+         {
+            u, p \match \gamma
+            \\
+            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}}{s_i}) \in \mu'\textit{ else }v, p_i\;\matchNeg)
+         }
+         {
+            u, \mu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+            \match
+            \gamma, \exFun{\mu'} = s
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{curried-match}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
+         {
+            \inferrule*[
+               left={\ruleName{$\desugar$-clause-curried}},
+               right={$(\forall i \numleq j)$}
+            ]
+            {
+               \clause{\seq{p_i}}{s_i} \desugar \sigma_i
+               \\
+               \sigma'_i \eqdef \mkElimF(p_i)(\exFun{\sigma_i})
+            }
+            {
+               (\clause{(p_i \cons \seq{p_i})}{s_i})
+               \desugar
+               \sigma'_i
+            }
+         }
+         {
+            \mu \desugar \seqRangeOp{\sigma'_1}{\sigma'_j}{\disjjoin}
+            = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{curried-desugar}
+   \\
+   &
+   \forall i.p_i = p \implies
+   \exists \gamma'_i.\gamma'_i.v, \sigma'_i \match \gamma', \exFun{\sigma_i}
+   \textit{ with }
+   \gamma'_i \desugar \gamma
+   &
+   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
+   \locallabel{curried-match-i}
+   \\
+   &
+   \tau \eqdef \disjjoin\set{\sigma'_i \mid \forall i \numleq j.p_i = p}
+   \neq \seqEmpty
+   &
+   \mu' \neq \seqEmpty
+   \notag
+   \\
+   &
+   e \eqdef \exFun{(\disjjoin\set{\sigma_i \mid \forall i \numleq j.p_i = p})}
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+         {
+            \inferrule*[left={\ruleName{$\desugar$-clause-curried}}]
+            {
+               \clause{\seq{p_i}}{s_i} \desugar \sigma_i
+               \quad
+               (\forall i \numleq j.p_i = p)
+            }
+            {
+               \mu' \desugar \disjjoin\set{\sigma_i \mid \forall i \numleq j.p_i = p}
+            }
+         }
+         {
+            s = \exFun{\mu'} \desugar e
+         }
+      \end{smathpar}
+   }
+   &
+   \text{(\localref{curried-match}), (\localref{curried-desugar}), Def.~$e$}
+   \locallabel{lambda-desugar}
+   \\
+   &
+   v, \tau \match \gamma', e
+   \textit{ with }
+   \gamma' \desugar \gamma
+   \quad (\exists\gamma')
+   &
+   \text{(\localref{curried-match-i}), \lemref{match-increasing}}
+   \locallabel{curried-gamma}
+   \\
+   &
+   \forall i \numleq j.p_i \neq p \implies
+   v, \sigma'_i\;\matchNeg
+   &
+   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
+   \locallabel{curried-no-match}
+   \\
+   &
+   \tau' \eqdef \disjjoin\set{\sigma'_i \mid \forall i \numleq j.p_i \neq p}
+   &
+   \notag
+   \\
+   &
+   v, \tau'\;\matchNeg
+   &
+   \text{(\localref{curried-no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   &
+   \sigma = \tau \disjjoin \tau'
+   &
+   \text{\lemref{disjjoin-assoc-comm}}
+   \notag
+   \\
+   &
+   \qedLocal \exists \gamma', e.v, \sigma \desugar \gamma', e
+   \textit{ with }
+   \gamma' \desugar \gamma
+   \textit{ and }
+   s \desugar e
+   &
+   \text{\lemref{match-increasing}, (\localref{curried-gamma}), (\localref{lambda-desugar})}
+   \notag
+\end{flalign}
+\end{proof}
