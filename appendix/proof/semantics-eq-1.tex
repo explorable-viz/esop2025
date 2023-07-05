@@ -1,21 +1,17 @@
-By induction on derivations of $\evalSugS$.
-Assume:
-\begin{equation}
-   \Gamma \vdash \bind{s_0}{A}
-\end{equation}
-\begin{equation}
-   \gamma : \Gamma
-\end{equation}
-\begin{equation}
-   s_0 \desugarFwdS e_0
-\end{equation}
-\begin{equation}
-   \locallabel{desug:env}
-   \gamma \desugarFwdS \gamma'
-\end{equation}
+By induction on derivation of $\evalSugS$.
 \begin{proof}
 \small
 \begin{flalign}
+   &
+   s_0 \desugarFwdS e_0
+   &
+   \notag
+   \\
+   &
+   \gamma \desugarFwdS \gamma'
+   &
+   \locallabel{desug:env}
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
@@ -50,7 +46,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{Inversion on $\desugarFwdS$}
+   \text{inversion}
    \notag
    \\
    &
@@ -68,7 +64,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{inversion on $\evalFwdS$}
+   \text{inversion}
    \notag
    \\
    &
@@ -112,7 +108,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{Inversion of $\desugarFwdS$}
+   \text{inversion}
    \notag
    \\
    &
@@ -130,7 +126,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{Inversion on $\evalFwdS$}
+   \text{inversion}
    \notag
    \\
    &
@@ -187,7 +183,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{Inversion on $\desugarFwdS$}
+   \text{inversion}
    \notag
    \\
    &
@@ -214,7 +210,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{Inversion on $\evalFwdS$-app}
+   \text{inversion}
    \notag
    \\
    &
@@ -285,7 +281,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{inversion on $\desugarFwdS$-let-rec}
+   \text{inversion}
    \notag
    \\
    &
@@ -303,7 +299,7 @@ Assume:
       \end{smathpar}
    }
    &
-   \text{inversion on $\evalFwdS$-let-rec}
+   \text{inversion}
    \notag
    \\
    &
