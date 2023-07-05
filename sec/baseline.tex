@@ -101,6 +101,7 @@ as the precondition to \thmref{semantics-eq}.
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
 \clearpage
+
 \subsection{Core Language}
 
 \input{fig/baseline/core/syntax}
@@ -110,9 +111,10 @@ as the precondition to \thmref{semantics-eq}.
 \clearpage
 
 \subsection{Desugaring}
-The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring pattern matching is
-consistent in both the core and surface languages is imperative for \thmref{semantics-eq}. We disallow certain combinations of
-patterns which might otherwise be allowed in another language. For example, we do not allow clauses formed in the following fashion:
+The most interesting cases of desugaring in our language are those relating to sequences of clauses. Ensuring
+pattern matching is consistent in both the core and surface languages is imperative for \thmref{semantics-eq}.
+We disallow certain combinations of patterns which might otherwise be allowed in another language. For
+example, we do not allow clauses formed in the following fashion:%
 {\small
 \begin{lstlisting}[language=Fluid]
    foo (Cons y ys) (Cons z zs) = ...
@@ -121,10 +123,12 @@ patterns which might otherwise be allowed in another language. For example, we d
    bar x ... = ...
    bar y ... = ...
 \end{lstlisting}}
-In other words, when we have variable patterns, the appropriately indexed arguments must all be variable patterns with the same name,
-and when we have a position where we have a variable pattern and a constructor, we must have already been able to distinguish
-both arguments. This does not mean that the rest of the function can be ill-typed. Just because we have distinguished
-the two clauses in the following example, we still cannot consider it a well-formed program.
+
+In other words, when we have variable patterns, the appropriately indexed arguments must all be variable
+patterns with the same name, and when we have a position where we have a variable pattern and a constructor,
+we must have already been able to distinguish both arguments. This does not mean that the rest of the function
+can be ill-typed. Just because we have distinguished the two clauses in the following example, we still cannot
+consider it a well-formed program.%
 {\small
 \begin{lstlisting}[language = Fluid]
    baz (Cons y ys) (Cons z zs) = ...
