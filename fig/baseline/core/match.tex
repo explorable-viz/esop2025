@@ -1,71 +1,71 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \matchFwdS \gamma, \kappa'$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, \kappa'$}\hfill
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-empty}}
+          lab={\ruleName{$\match$-seq-empty}}
        ]
        {
           \strut
        }
        {
-          \seqEmpty, \kappa \matchFwdS \varnothing, \kappa
+          \seqEmpty, \kappa \match \varnothing, \kappa
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-non-empty}}
+          lab={\ruleName{$\match$-seq-non-empty}}
        ]
        {
-          v, \sigma \matchFwdS \gamma, \kappa
+          v, \sigma \match \gamma, \kappa
           \\
-          \seq{u}, \kappa \matchFwdS \gamma', \kappa'
+          \seq{u}, \kappa \match \gamma', \kappa'
        }
        {
           v \cons \seq{u},
           \sigma
-          \matchFwdS
+          \match
           \gamma \disjunion \gamma',
           \kappa'
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \sigma \matchFwdS \gamma, \kappa$}
+    {\small \flushleft \shadebox{$v, \sigma \match \gamma, \kappa$}
     \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
+       \inferrule*[lab={\ruleName{$\match$-var}}]
        {
           \strut
        }
        {
-          v, \elimVar{x}{\kappa} \matchFwdS \set{\bind{x}{v}}, \kappa
+          v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-record}}
+          lab={\ruleName{$\match$-record}}
        ]
        {
-          \seq{u}, \kappa \matchFwdS \gamma, \kappa'
+          \seq{u}, \kappa \match \gamma, \kappa'
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
           \exRec{\seq{\bind{x}{v}}},
           \elimRec{\seq{y}}{\kappa}
-          \matchFwdS
+          \match
           \gamma, \kappa'
        }
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
+       \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \kappa' \matchFwdS \gamma, \kappa^\twoPrime
+          \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime
        }
        {
           \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
-          \matchFwdS
+          \match
           \gamma, \kappa^\twoPrime
        }
     \end{smathpar}}

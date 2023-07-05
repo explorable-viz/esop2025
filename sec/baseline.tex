@@ -63,17 +63,17 @@ We disallow certain combinations of patterns which are commonly allowed in other
 
 \subsubsection{Desugaring Of Values}
 
-To relate the surface semantics to the core semantics, we must extend desugaring to values, which in turn requires desugaring for surface environments $\upgamma$ and recursively functions $\seq{g}$ (\figref{desugar:values}).
+To relate the surface semantics to the core semantics, we must extend desugaring to values, which in turn requires desugaring for surface environments $\upgamma$ and recursive functions $\seq{g}$ (\figref{desugar:values}).
 
 \subsubsection{Equivalence of Semantics}
 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugarFwdS e \; and \; \gamma \desugarFwdS \gamma'$, then:
+   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugarFwdS v'$ \label{semantics-eq-1}
-   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugarFwdS v'$   \label{semantics-eq-2}
+   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugar v'$ \label{semantics-eq-1}
+   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugar v'$   \label{semantics-eq-2}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -87,7 +87,7 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:lemma:varlookup}
-   Suppose $\gamma \desugarFwdS \gamma'$ and $v \desugarFwdS v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
+   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
 \end{lemma}
 \begin{proof}
    See \appref{proofs:varlookup}
@@ -95,11 +95,11 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:matching-bi}
-   Suppose $v \desugarFwdS v'$ and $\mu \desugarFwdS \sigma$.
+   Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
    \hfill
    \begin{enumerate}
-      \item If $u, \mu\matchFwdS \gamma, s$ then $\exists \gamma', e.v,\sigma \matchFwdS \gamma', e$ with $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
-      \item If $v, \sigma \matchFwdS \gamma', e$ then $u, \mu \matchFwdS \gamma, s$ and $\gamma \desugarFwdS \gamma'$ and $s \desugarFwdS e$
+      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$
+      \item If $v, \sigma \match \gamma', e$ then $u, \mu \match \gamma, s$ and $\gamma \desugar \gamma'$ and $s \desugar e$
    \end{enumerate}
 
 \end{lemma}
@@ -109,11 +109,11 @@ as the precondition to \thmref{semantics-eq}.
 
 \begin{lemma}
    \label{lem:closedefs-eq}
-   Suppose $\gamma_1 \desugarFwdS \gamma_2$ and $g \desugarFwdS \rho$.
+   Suppose $\gamma_1 \desugar \gamma_2$ and $g \desugar \rho$.
    \hfill
    \begin{enumerate}
-      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugarFwdS \gamma_2'$
-      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugarFwdS \gamma_2'$
+      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugar \gamma_2'$
+      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugar \gamma_2'$
    \end{enumerate}
 \end{lemma}
 \begin{proof}
@@ -129,7 +129,12 @@ as the precondition to \thmref{semantics-eq}.
    \end{enumerate}
 \end{lemma}
 
+\begin{proof}
+   See \appref{proofs:match-domains-agree}.
+\end{proof}
+
 \begin{lemma}
+   \label{lem:match-domains-agree-seq}
    Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
    \begin{enumerate}
       \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
@@ -143,6 +148,18 @@ as the precondition to \thmref{semantics-eq}.
    \begin{enumerate}
       \item If $v, \tau \match \gamma, \kappa_2$ then $\kappa = \kappa_1 \disjjoin \kappa_2$.
       \item If $v, \tau\;\matchNeg$ then $\kappa = \kappa_1$.
+   \end{enumerate}
+\end{lemma}
+
+$\disjjoin$ is a partial commutative monoid. Write $x \eqif y$ to mean $x$ is defined iff $y$ is defined, in
+which case $x = y$.
+
+\begin{lemma}
+   \label{lem:disjjoin-assoc-comm}
+   \item
+   \begin{enumerate}
+   \item $\sigma_1 \disjjoin (\sigma_2 \disjjoin \sigma_3) \eqif (\sigma_1 \disjjoin \sigma_2) \disjjoin \sigma_3$
+   \item $\sigma \disjjoin \tau \eqif \tau \disjjoin \sigma$
    \end{enumerate}
 \end{lemma}
 

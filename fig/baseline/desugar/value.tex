@@ -1,40 +1,40 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\gamma \desugarFwdS \gamma'$}
+    {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
     \begin{smathpar}
-        \inferrule*[]
+        \inferrule*[lab={\ruleName{$\desugar$-env}}]
         {
-            v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+            v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
         }
         {
-            \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+            \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
         }
     \end{smathpar}
     }
-    {\small \flushleft \shadebox {$g \desugarFwdS \rho$}
+    {\small \flushleft \shadebox {$g \desugar \rho$}
     \begin{smathpar}
         \inferrule*
         {
-            \mu_i \desugarFwdS \sigma_i
+            \mu_i \desugar \sigma_i
             \quad
             (\forall i \le \length{\seq{x}})
         }
         {
-            \seq{\bind{x}{\mu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\sigma}}}
+            \seq{\bind{x}{\mu}} \desugar \set{\seq{\bind{\exVar{x}}{\sigma}}}
         }
     \end{smathpar}
     }
-    {\small \flushleft \shadebox {$u \desugarFwdS v$}
+    {\small \flushleft \shadebox {$u \desugar v$}
         \begin{smathpar}
-            \inferrule*[lab={\ruleName{$\desugarFwdS$-closure}}]
+            \inferrule*[lab={\ruleName{$\desugar$-closure}}]
             {
-                \gamma \desugarFwdS \gamma'
+                \gamma \desugar \gamma'
                 \\
-                g \desugarFwdS \rho
+                g \desugar \rho
                 \\
-                \mu \desugarFwdS \sigma
+                \mu \desugar \sigma
             }
             {
-                \exClosure{\gamma}{g}{\mu} \desugarFwdS \exClosure{\gamma'}{\rho}{\sigma}
+                \exClosure{\gamma}{g}{\mu} \desugar \exClosure{\gamma'}{\rho}{\sigma}
             }
         \end{smathpar}
     }

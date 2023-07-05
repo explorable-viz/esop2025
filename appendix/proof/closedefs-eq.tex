@@ -1,16 +1,22 @@
-Assume the following:
-\begin{equation}
-   \gamma_1 \desugarFwdS \gamma_2
-\end{equation}
-\begin{equation}
-   g \desugarFwdS \rho
-\end{equation}
 \begin{proof}
+   \small
    \begin{flalign}
+      &
+      \gamma_1 \desugar \gamma_2
+      &
+      \text{suppose}
+      \locallabel{gamma-desugar}
+      \\
+      &
+      g \desugar \rho
+      &
+      \text{suppose}
+      \locallabel{g-desugar}
+      \\
       \intertext{\crossrule}
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       &
-      \subcaseName{$\closeDefsS$-then-$\desugarFwdS$}
+      \subcaseName{$\closeDefsS$-then-$\desugar$}
       &
       \notag
       \\
@@ -55,20 +61,20 @@ Assume the following:
       \notag
       \\
       &
-      \forall i \numleq \length{\seq{x}} \; v_i \desugarFwdS v'_i
+      \forall i \numleq \length{\seq{x}} \; v_i \desugar v'_i
       &
-      \text{$g \desugarFwdS \rho \opAnd \gamma_1 \desugarFwdS \gamma_2$}
+      \text{(\localref{g-desugar}), (\localref{gamma-desugar})}
       \notag
       \\
       &
       \qedLocal
-      \gamma_1' \desugarFwdS \gamma_2'
+      \gamma_1' \desugar \gamma_2'
       &
-      \text{$\desugarFwdS$-env}
+      \text{$\desugar$-env}
       \notag
       \\
       &
-      \subcaseName{$\desugarFwdS$-then-$\closeDefsS$}
+      \subcaseName{$\desugar$-then-$\closeDefsS$}
       &
       \notag
       \\
@@ -113,16 +119,16 @@ Assume the following:
       \notag
       \\
       &
-      \forall i\numleq \length{\seq{x}}\; v_i \desugarFwdS v'_i
+      \forall i\numleq \length{\seq{x}}.v_i \desugar v'_i
       &
-      \text{$g \desugarFwdS \rho \opAnd \gamma_1 \desugarFwdS \gamma_2$}
+      \text{(\localref{g-desugar}), (\localref{gamma-desugar})}
       \notag
       \\
       &
       \qedLocal
-      \gamma_1' \desugarFwdS \gamma_2'
+      \gamma_1' \desugar \gamma_2'
       &
-      \text{$\desugarFwdS$-env}
+      \text{$\desugar$-env}
       \notag
    \end{flalign}
 \end{proof}

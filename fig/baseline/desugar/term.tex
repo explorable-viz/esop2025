@@ -1,158 +1,158 @@
 \begin{figure}
-   {\flushleft \shadebox{$s \desugarFwdR e$}\hfill}
+   {\flushleft \shadebox{$s \desugar e$}\hfill}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-lambda}}]
+      \inferrule*[lab={\ruleName{$\desugar$-lambda}}]
       {
          \mu
-         \desugarFwdR
+         \desugar
          \sigma
       }
       {
          \exFun{\mu}
-         \desugarFwdS
+         \desugar
          \exFun{\sigma}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-binary-apply}}]
+      \inferrule*[lab={\ruleName{$\desugar$-binary-apply}}]
       {
-         s_1 \desugarFwdR e_1
+         s_1 \desugar e_1
          \\
-         s_2 \desugarFwdR e_2
+         s_2 \desugar e_2
       }
       {
          \exBinaryApp{s_1}{\oplus}{s_2}
-         \desugarFwdR
+         \desugar
          \exForeignApp{\oplus}{e, e'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-let-rec}}]
+      \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
       {
-         \mu_i \desugarFwdS \sigma_i
+         \mu_i \desugar \sigma_i
          \quad
          (\forall i \numleq \length{\seq{x}})
          \\
-         s \desugarFwdR e
+         s \desugar e
       }
       {
          \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
-         \desugarFwdR
+         \desugar
          \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-match}}]
+      \inferrule*[lab={\ruleName{$\desugar$-match}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         \mu \desugarFwdS\sigma
+         \mu \desugar\sigma
       }
       {
          \exMatch{s}{\mu}
-         \desugarFwdR
+         \desugar
          \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-non-empty-list}}]
+      \inferrule*[lab={\ruleName{$\desugar$-non-empty-list}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         l \desugarFwdR e'
+         l \desugar e'
       }
       {
          \exList{s}{l}
-         \desugarFwdR
+         \desugar
          \exConstr{\cCons}{e, e'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-if}}]
+      \inferrule*[lab={\ruleName{$\desugar$-if}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         s_1 \desugarFwdR e_1
+         s_1 \desugar e_1
          \\
-         s_2 \desugarFwdR e_2
+         s_2 \desugar e_2
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
          \exIfThenElse{s}{s_1}{s_2}
-         \desugarFwdR
+         \desugar
          \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-enum}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-enum}}]
       {
-         s_1 \desugarFwdR e
+         s_1 \desugar e
          \\
-         s_2 \desugarFwdR e'
+         s_2 \desugar e'
       }
       {
          \exListEnum{s_1}{s_2}
-         \desugarFwdR
+         \desugar
          \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
       {
-         \seq{q}, s \desugarFwdR e
+         \seq{q}, s \desugar e
       }
       {
          \exListComp{s}{\seq{q}}
-         \desugarFwdR
+         \desugar
          e
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do}}]
+      \inferrule*[lab={\ruleName{$\desugar$-do}}]
       {
-         \seq{d} \desugarFwdR e
+         \seq{d} \desugar e
       }
       {
          \exDo{\seq{d}}
-         \desugarFwdR
+         \desugar
          e
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$l \desugarFwdR e$}
+   {\flushleft \shadebox{$l \desugar e$}
    \hfill \phantom{blah}}% \textbfit{$l$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-cons}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-rest-cons}}]
       {
          \strut
       }
       {
          \exListEnd
-         \desugarFwdR
+         \desugar
          \exListEnd,
          \cNil
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-rest-end}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-rest-end}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         l \desugarFwdR e'
+         l \desugar e'
       }
       {
          \exListNext{s}{l}
-         \desugarFwdR
+         \desugar
          \exConstr{\cCons}{e, e'}
       }
    \end{smathpar}

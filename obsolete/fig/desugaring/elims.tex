@@ -1,35 +1,35 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\sigma \desugarFwdS \sigma'$}%
-   \hfill \textbfit{$K \subseteq dom(\desugarFwdS)$}} % \sigma$ has type $\Elim\;\Gamma\;A\;(\SExpr\;\Gamma\;B) $, $\sigma'$ has type $\Elim\;\Gamma\;A\;(\Expr\;\Gamma\;B))
+   {\small \flushleft \shadebox{$\sigma \desugar \sigma'$}%
+   \hfill \textbfit{$K \subseteq dom(\desugar)$}} % \sigma$ has type $\Elim\;\Gamma\;A\;(\SExpr\;\Gamma\;B) $, $\sigma'$ has type $\Elim\;\Gamma\;A\;(\Expr\;\Gamma\;B))
    \begin{smathpar}
       \inferrule*[]
       {
-         \kappa \desugarFwdS \kappa'
+         \kappa \desugar \kappa'
       }
       {
-         \elimBind{x}{\kappa} \desugarFwdS \elimBind{x}{\kappa'}
+         \elimBind{x}{\kappa} \desugar \elimBind{x}{\kappa'}
       }
       %
       \and
       %
       \inferrule*[]
       {
-         \kappa_i \desugarFwdS \kappa_i'
+         \kappa_i \desugar \kappa_i'
          \quad
          \forall i \le \length{\seq{\elimBind{c}{\kappa}}}
       }
       {
-         \elimConstr{\seq{\elimBind{c}{\kappa}}} \desugarFwdS \elimConstr{\seq{\elimBind{c}{\kappa'}}}
+         \elimConstr{\seq{\elimBind{c}{\kappa}}} \desugar \elimConstr{\seq{\elimBind{c}{\kappa'}}}
       }
       %
       \and
       %
       \inferrule*[]
       {
-         \kappa \desugarFwdS \kappa'
+         \kappa \desugar \kappa'
       }
       {
-         \elimRec{\seq{c}}{\kappa} \desugarFwdS \elimRec{\seq{c}}{\kappa'}
+         \elimRec{\seq{c}}{\kappa} \desugar \elimRec{\seq{c}}{\kappa'}
       }
    \end{smathpar}
 \caption{(Partial) desugaring of eliminators}

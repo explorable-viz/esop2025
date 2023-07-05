@@ -1,13 +1,18 @@
-We assume the following:
-\begin{equation}
-    \gamma \desugarFwdS \gamma'
-\end{equation}
-\begin{equation}
-    v \desugarFwdS v'
-\end{equation}
 \begin{proof}
+   \small
     \begin{flalign}
-    \intertext{\crossrule}
+      &
+      v \desugar v'
+      &
+      \text{suppose}
+      \locallabel{v-desugar}
+      \\
+      &
+      \gamma \desugar \gamma'
+      &
+      \text{suppose}
+      \locallabel{gamma-desugar}
+      \\
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \Case{\bind{x}{v} \in \gamma}
     &
@@ -15,10 +20,10 @@ We assume the following:
         \begin{smathpar}
             \inferrule*[]
             {
-                v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+                v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
             }
             {
-                \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+                \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
             }
         \end{smathpar}
     }
@@ -28,14 +33,14 @@ We assume the following:
     &
     \exists i.\; v = v_i
     &
-    \text{Assumption (1)}
+    \text{(1)}
     \notag
     \\
     &
     \qedLocal
     \bind{x}{v'} \in \gamma'
     &
-    \text{Assumption (2), and $\desugarFwdS$}
+    \text{(2), and $\desugar$}
     \notag
     \\
     \Case{\bind{x}{v'} \in \gamma'}
@@ -44,10 +49,10 @@ We assume the following:
         \begin{smathpar}
             \inferrule*[]
             {
-                v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+                v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
             }
             {
-                \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+                \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
             }
         \end{smathpar}
     }
@@ -56,14 +61,14 @@ We assume the following:
     &
     \exists i.\; v' = v'_i
     &
-    \text{Assumption (1)}
+    \text{(\localref{v-desugar})}
     \notag
     \\
     &
     \qedLocal
     \bind{x}{v} \in \gamma
     &
-    \text{Assumption (2) and inversion on $\desugarFwdS$}
+    \text{(\localref{gamma-desugar}) and inversion on $\desugar$}
     \notag
     \end{flalign}
  \end{proof}
