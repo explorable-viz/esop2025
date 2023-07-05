@@ -80,9 +80,31 @@ Induction on $\match$ derivation.
             \seq{u},\seq{p} \match \gamma
          }
          {
+            u = \exConstr{c}{\seq{u}},\exConstr{c}{\seq{p}} \match \gamma
+         }
+      \end{smathpar}
+   }
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-constr}}
+         ]
+         {
+            \seq{u},\seq{p} \match \gamma
+         }
+         {
             \exConstr{c}{\seq{u}},\exConstr{c}{\seq{p}} \match \gamma
          }
       \end{smathpar}
    }
+   \\
+   &
+   \mkElimF(\exConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\elimArgsF(\seq{p},\kappa)}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
 \end{flalign}
 \end{proof}
