@@ -13,5 +13,59 @@ Induction on $\match$ derivation.
    &
    \text{suppose}
    \notag
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\match$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            u, x \match \set{\bind{\exVar{x}}{u}} = \gamma
+         }
+      \end{smathpar}
+   }
+   \\
+   &
+   \mkElimF(x, \kappa) = \elimVar{x}{\kappa}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\match$-var}}]
+         {
+            \strut
+         }
+         {
+            v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-env}}]
+         {
+             u \desugar v
+         }
+         {
+             \gamma = \set{\bind{x}{u}} \desugar \set{\bind{x}{v}}
+         }
+      \end{smathpar}
+    }
+   &
+   \notag
 \end{flalign}
 \end{proof}
