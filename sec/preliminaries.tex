@@ -33,40 +33,4 @@ clear from context.
 
 \input{fig/baseline/continuation-elims.tex}
 
-\subsection{Important Relations}
-
-\subsubsection{$\evalFwdS$}
-We use $\evalFwdS$ to denote evaluation of core-language expressions. As the language isn't strongly
-normalizing, we note that evaluation is partial. Therefore most theorems/lemmas involving this relation
-rely on assumptions of the form $\gamma,e\evalFwdS v$, only considering executions that succeed.
-
-\subsubsection{$\desugarFwdS$}
-As the surface language makes use of a substantial amount of syntactic sugar, we have had to be careful
-when defining the desugaring relation, $\desugarFwdS$. This relation is not only defined on $\SExpr \times \Expr$,
-but on the multiple auxiliary data-structures we use in the implementation. For example, we have defined
-$\mu \desugarFwdS \sigma$, ie the desugaring of a function defined equationally into an eliminator.
-In general, desugaring is not total. We need a theorem that states that well-typed surface programs can
-always be desugared into well-typed core-programs, but have not completed this at this time.
-
-\subsubsection{$\matchFwdS$}
-We have a slightly less traditional notion of pattern matching, however the general form is the same.
-Pattern matching has to do two things, first to determine whether a value matches a particular pattern,
-and second to associate parts of the value with appropriate variables in a pattern.
-In our case, pattern matching can be performed in both the surface and the core language,
-but with the judgements having the same form. We take either a sequence of clauses ($\mu$), or
-an eliminator ($\sigma$), and a value $v$. The pattern matching judgement produces
-an environment $\gamma$, with the pattern variables bound appropriately, and a continuation,
-containing the remaining work to be done. Thus the pattern matching judgement takes the form
-$v, \mu / \sigma \matchFwdS \gamma, \kappa$. As part of the theorem relating surface and
-core semantics, we have a lemma which relates pattern matching in the surface language,
-and pattern matching in the core language, this is \lemref{matching-bi}.
-
-\subsubsection{$\closeDefsS$}
-This relation, which we call \textit{closeDefs}, is how we create the environments we need to
-evaluate recursively defined functions. The way to read the judgement is thus: given an
-ambient environment $\gamma$, and a sequence of recursively defined functions $g = \seq{\bind{x}{\mu}}$
-(read $x$ as the function name and $\mu$ as the clauses of the function), we split the sequence into
-each invidiual function (ie each $\bind{x}{\mu}$), then take the closure that defines each function
-and add that to the environment. Hopefully this should make it easier to read \figref{close-defs-surface}.
-
 \clearpage
