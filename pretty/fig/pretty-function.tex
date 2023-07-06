@@ -6,9 +6,9 @@
         \\
         \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
         \\
-        \exPrettyFunction{\{\seq{(x:s)}\}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrace"}}}{\exPrettyFunction{\seq{(x,s)}}}}{\exLayoutText{\kw{"\symRBrace"}}}
+        \exPrettyFunction{\{\seq{(x:s)}\}} &= \curlyBraces(\exPrettyFunction{\seq{(x,s)}})
         \\
-        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exBinaryAppFunction{\precedence(\oplus)}{(\exBinaryApp{s}{\oplus}{s'})}
+        \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exBinaryAppFunction{(\precedence(\oplus),(\exBinaryApp{s}{\oplus}{s'}))}
         \\
         \exPrettyFunction{\exIfThenElse{s}{s_1}{s_2}} &= \exLayoutAppBeside{\exLayoutText{\kw{"if"}}}{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutAppBeside{\exLayoutText{\kw{"then"}}}{\exLayoutAppBeside{\exPrettyFunction{s_1}}{\exLayoutAppBeside{\exLayoutText{\kw{"else"}}}{ \exPrettyFunction{s_2}}}}}}
         \\
@@ -19,6 +19,8 @@
         \exPrettyFunction{\exLetRecPiecewise{g}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"let"}}}{\exPrettyFunction{g}}}{\exLayoutText{\kw{"in"}}}}{\exPrettyFunction{s}}
         \\
         \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{(\UnitVal\symComma\seq{(p,s')})}}
+        \\
+        \exPrettyFunction{\lambda\upmu} &= \parens(\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}) 
         \\
         \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}}{\exLayoutText{\kw{"\symRBrace"}}}
         \\
@@ -56,3 +58,4 @@
  \end{figure}
 \clearpage
  
+%    pretty (Lambda cs) = parentheses (text str.fun :--: pretty cs) -- recursive call to pretty made 
