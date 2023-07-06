@@ -147,19 +147,19 @@
    {
       \Gamma
       \vdash
-      \elimRecEmpty{\kappa}: \elimTy{\tyRecEmpty}{K}
+      \elimRecord{}{\kappa}: \elimTy{\tyRecEmpty}{K}
    }
    %
    \and
    %
    \inferrule*
    {
-      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+      \Gamma \vdash \elimRecord{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
    }
    {
       \Gamma
       \vdash
-      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
+      \elimRecord{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }
    \end{smathpar}
    \\[2mm]

@@ -185,7 +185,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   \mkElimF(\pattRecord{\seq{\bind{x}{p}}}, \kappa) = \elimRecord{\seq{x}}{\sigma}
    &
    \text{Def.~\mkElimF}
    \notag
@@ -204,14 +204,19 @@ Induction on $\match$ derivation.
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-constr}}]
+         \inferrule*[
+            lab={\ruleName{$\match$-record}}
+         ]
          {
-            \seq{v}, \sigma \match \gamma', \kappa
+            \seq{u}, \kappa \match \gamma, \kappa'
+            \\
+            \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
          }
          {
-            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \exRec{\seq{\bind{x}{v}}},
+            \elimRecord{\seq{y}}{\kappa}
             \match
-            \gamma', \kappa
+            \gamma, \kappa'
          }
       \end{smathpar}
    }
