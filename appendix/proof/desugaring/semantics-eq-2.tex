@@ -110,14 +110,23 @@ By induction on derivation of $\evalFwdS$
       \end{smathpar}
    }
    &
-   \text{inversion $\desugar$}
+   \text{inversion}
    \notag
    \\
    &
+   \gamma, \seq{s} \evalSugS \seq{v}
+   \textit{ with }
+   \seq{v} \desugar \seq{v}'
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-constr}}
+            left={\ruleName{$\evalSugS$-constr}}
          ]
          {
             \gamma, \seq{s} \evalSugS \seq{v}
@@ -132,16 +141,21 @@ By induction on derivation of $\evalFwdS$
    \notag
    \\
    &
-   \seq{v} \desugar \seq{v}'
-   &
-   \text{IH}
-   \notag
-   \\
-   &
    \qedLocal
-   \exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-constr}}
+         ]
+         {
+            \seq{v} \desugar \seq{v}'
+         }
+         {
+            \exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}
+         }
+      \end{smathpar}
+   }
    &
-   \text{$\evalSugS$-constr}
    \notag
    \\
    \intertext{\crossrule}
