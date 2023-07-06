@@ -17,14 +17,14 @@
    \vspace{5pt}
    \flushleft \shadebox{$\Gamma \vdash s: A$}
    \begin{smathpar}
-      \inferrule*[right={$\primOp: \tyForeign{(A,B)}{C} \in \Gamma$}]
+      \inferrule*[right={$\primOp: \tyForeign{(A,A')}{B} \in \Gamma$}]
       {
          \Gamma \vdash s: A
          \\
-         \Gamma \vdash s': B
+         \Gamma \vdash s': A'
       }
       {
-         \Gamma \vdash \exBinaryApp{s}{\oplus}{s'}: C
+         \Gamma \vdash \exBinaryApp{s}{\oplus}{s'}: B
       }
       %
       \and
