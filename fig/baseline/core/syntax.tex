@@ -69,48 +69,67 @@
    \end{minipage}%
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-          &\textit{Recursive functions}&
-          \lowlight{$\RecDefs\;\Gamma\;\Gamma'$}
-          \\
-          $\rho ::=$
-          &
-          $\set{\seq{\bind{x}{\sigma}}}$
-          &
-          \\[2mm]
-          &\textit{Value}&
-          \lowlight{$\Val{A}$}
-          \\
-          $u, v ::=$
-          &
-          $\exInt{n}$
-          &
-          integer
-          \\
-          &
-          $\exStr{z}$
-          &
-          string
-          \\
-          &
-          $\exRec{\seq{\bind{x}{v}}}$
-          &
-          record
-          \\
-          &
-          $\exDict{\seq{\bind{s}{v}}}$
-          &
-          dictionary
-          \\
-          &
-          $\exConstr{c}{\seq{v}}$
-          &
-          data value
-          \\
-          &
-          $\exClosure{\gamma}{\rho}{\sigma}$
-          &
-          closure
-          \\[0mm]
+         &\textit{Eliminator}&
+         \lowlight{$\Elim\;\Gamma\,A\;K$}
+         \\
+         $\sigma, \tau ::=$
+         &
+         $\elimVar{x}{\kappa}$
+         &
+         variable
+         \\
+         &
+         $\elimRec{\seq{x}}{\kappa}$
+         &
+         record
+         \\
+         &
+         $\elimConstr{\seq{\elimBind{c}{\sigma}}}$
+         &
+         data value
+         \\[2mm]
+         &\textit{Recursive functions}&
+         \lowlight{$\RecDefs\;\Gamma\;\Gamma'$}
+         \\
+         $\rho ::=$
+         &
+         $\set{\seq{\bind{x}{\sigma}}}$
+         &
+         \\[2mm]
+         &\textit{Value}&
+         \lowlight{$\Val{A}$}
+         \\
+         $u, v ::=$
+         &
+         $\exInt{n}$
+         &
+         integer
+         \\
+         &
+         $\exStr{z}$
+         &
+         string
+         \\
+         &
+         $\exRec{\seq{\bind{x}{v}}}$
+         &
+         record
+         \\
+         &
+         $\exDict{\seq{\bind{s}{v}}}$
+         &
+         dictionary
+         \\
+         &
+         $\exConstr{c}{\seq{v}}$
+         &
+         data value
+         \\
+         &
+         $\exClosure{\gamma}{\rho}{\sigma}$
+         &
+         closure
+         \\[0mm]
       \end{tabularx}
    \end{minipage}
 \caption{Core language (baseline): syntax}
