@@ -228,5 +228,81 @@ Induction on $\match$ derivation.
    }
    &
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-nonempty-list}}
+         ]
+         {
+            v, p \match \gamma
+            \\
+            v', o \match \gamma'
+         }
+         {
+            \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-constr}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         {
+            \seq{u} \desugar \seq{v}
+         }
+         {
+             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-constr}
+   \\
+   &
+   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \seq{v}, \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma' \desugar \gamma
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            \seq{v}, \sigma \match \gamma', \kappa
+         }
+         {
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \match
+            \gamma', \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
