@@ -25,11 +25,15 @@
         \\
         \exPrettyFunction{(x',p')\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x',p')}}{\exPrettyFunction{\seq{(x,p)}}}
         \\[2mm]
-        \exPrettyFunction{\param} &: \Patt^+ \rightarrow \Doc
+        \exPrettyFunction{\param} &: \PattConstrType \times \Patt^+ \rightarrow \Doc
         \\
-        \exPrettyFunction{p} &= \exPrettyFunction{p}
+        \exPrettyFunction{(\param\symComma{p})} &= \exPrettyFunction{p}
         \\ 
-        \exPrettyFunction{p'\cons\seq{p}} &= \exLayoutAppATop{\exPrettyFunction{p'}}{\exPrettyFunction{\seq{p}}}
+        \exPrettyFunction{(\ptypePair\symComma{(p'\cons\seq{p})})} &= \exLayoutAppBeside{\exPrettyFunction{p'}}{\exLayoutAppBeside{\exLayoutText{\kw{"\symComma"}}}{\exPrettyFunction{(\ptypePair\symComma\seq{p})}}}
+        \\
+        \exPrettyFunction{(\ptypeList\symComma{(p'\cons\seq{p})})} &= \exLayoutAppBeside{\exPrettyFunction{p'}}{\exLayoutAppBeside{\exLayoutText{\kw{"\symColon"}}}{\exPrettyFunction{(\ptypeList\symComma\seq{p})}}}
+        \\
+        \exPrettyFunction{(\ptypeOther\symComma{(p'\cons\seq{p})})} &= \exLayoutAppBeside{\exPrettyFunction{p'}}{\exPrettyFunction{(\ptypeOther\symComma\seq{p})}}
         \\[2mm] 
         \exPrettyFunction{\param}&: \ListRest \rightarrow \Doc 
         \\
