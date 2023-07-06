@@ -1,5 +1,11 @@
 \begin{figure}
     \begin{salign}
+        %    pretty (ListNonEmpty ann (Record _ xss) l) = emptyDoc :--: (((highlightIf ann $ text str.lBracket) .<>. (highlightIf ann $ curlyBraces (pretty (true × xss)))) .-. pretty l)
+        % instance Ann a => Pretty (Boolean × List (Bind (Expr a))) where
+        % pretty (_ × (Cons s Nil)) = text (key s) .<>. text str.colon .<>. pretty (val s)
+        % pretty (false × (Cons s xss)) = (text (key s) .<>. text str.colon .<>. pretty (val s) .<>. text str.comma) .-. pretty (false × xss)
+        % pretty (true × (Cons s xss)) = text (key s) .<>. text str.colon .<>. pretty (val s) .<>. text str.comma .<>. pretty (true × xss)
+        % pretty (_ × Nil) = emptyDoc
         \exPrettyFunction{\param}  &: \SExpr \rightarrow \Doc
         \\
         \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
@@ -28,13 +34,15 @@
         \\
         \exPrettyFunction{\exListEnum{s}{s'}} &= \brackets(\exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutText{\kw{".."}}}}{\exPrettyFunction{s'}})      
         \\[2mm]
-        \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \Doc
+        \exPrettyFunction{\param} &: \Boolean \times (\Var \times \SExpr)^* \rightarrow \Doc
         \\
-        \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
+        \exPrettyFunction{(\param\symComma\exLayoutEmpty)} &= \exLayoutEmpty
         \\
-        \exPrettyFunction{(x,s)} &= \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{":"}}}}{\exPrettyFunction{s}}
+        \exPrettyFunction{(\param\symComma(x,s))} &= \exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutText{\str(x)}}{\exLayoutText{\kw{":"}}}}{\exPrettyFunction{s}}
         \\
-        \exPrettyFunction{(x',s')\cons\seq{(x,s)}} &= \exLayoutAppATop{\exPrettyFunction{(x',s')}}{\exPrettyFunction{\seq{(x,s)}}}
+        \exPrettyFunction{(\kw{true}\symComma((x',s')\cons\seq{(x,s)}))} &= \exLayoutAppBeside{\exPrettyFunction{(\kw{true}\symComma(x',s'))}}{\exPrettyFunction{(\kw{true}\symComma\seq{(x,s)})}}
+        \\
+        \exPrettyFunction{(\kw{false}\symComma((x',s')\cons\seq{(x,s)}))} &= \exLayoutAppATop{\exPrettyFunction{(\kw{false}\symComma(x',s'))}}{\exPrettyFunction{(\kw{false}\symComma\seq{(x,s)})}}
         \\[2mm]
         \exPrettyFunction{\param} &: (\Var + 1)\times \Clause^+ \rightarrow \Doc
         \\
