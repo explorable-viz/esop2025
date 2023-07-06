@@ -1,0 +1,245 @@
+\begin{figure}
+   \small{\flushleft \shadebox{$\Gamma \vdash e: A$}%
+   \hfill \textbfit{$e$ has type $A$ under $\Gamma$}}
+   \begin{smathpar}
+   \inferrule*[right={$x : A \in \Gamma$}]
+   {
+      \strut
+   }
+   {
+      \Gamma \vdash \exVar{x}: A
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \strut
+   }
+   {
+      \Gamma \vdash \exInt{n}: \tyInt
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
+   {
+      \Gamma \vdash \seq{e: A}
+   }
+   {
+      \Gamma \vdash \exConstr{c}{\seq{e}}: D
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash e_i: \tyStr
+      \\
+      \Gamma \vdash e'_i: A
+      \quad
+      (\forall i \numleq \length{\seq{e}})
+   }
+   {
+      \Gamma \vdash \exDict{\seq{\bind{e}{e}}'}: \tyDict{A}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \seq{e: A}
+   }
+   {
+      \Gamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      right={$i \numleq \length{\seq{x}}$}
+   ]
+   {
+      \Gamma \vdash e: \tyRec{\seq{\bind{x}{A}}}
+   }
+   {
+      \Gamma \vdash \exRecProj{e}{x_i}: A_i
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \sigma : \elimTy{A}{B}
+   }
+   {
+      \Gamma \vdash \exFun{\sigma} : \tyFun{A}{B}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      right={$f: \tyForeign{\seq{A}}{B} \in \Phi$}
+   ]
+   {
+      \Gamma \vdash \seq{e: A}
+   }
+   {
+      \Gamma \vdash f(\seq{e}): B
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash e: \tyFun{A}{B}
+      \\
+      \Gamma \vdash e': A
+   }
+   {
+      \Gamma \vdash \exApp{e}{e'}: B
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \rho: \Delta
+      \\
+      \Gamma \concat \Delta \vdash e: A
+   }
+   {
+      \Gamma \vdash \exLetRec{\rho}{e}: A
+   }
+   \end{smathpar}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\Gamma \vdash \sigma: \elimTy{A}{K}$}%
+   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\Gamma$}}
+   \begin{smathpar}
+   \inferrule*
+   {
+      \Gamma \cons \bind{x}{A} \vdash \kappa: K
+   }
+   {
+      \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      (\Sigma(c) = D\quad \forall c \in \seq{c})
+      \\
+      (\Gamma \vdash \kappa: K \quad \forall \kappa \in \seq{\kappa})
+   }
+   {
+      \Gamma \vdash \{\seq{\elimBind{c}{\kappa}}\}: \elimTy{D}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \kappa: K
+   }
+   {
+      \Gamma
+      \vdash
+      \elimRecEmpty{\kappa}: \elimTy{\tyRecEmpty}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+   }
+   {
+      \Gamma
+      \vdash
+      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
+   }
+   \end{smathpar}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\vdash v: A$}%
+   \hfill \textbfit{$v$ has type $A$}}
+   \begin{smathpar}
+   \inferrule*
+   {
+      \strut
+   }
+   {
+      \vdash \exInt{n}: \tyInt
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \vdash \seq{v: A}
+   }
+   {
+      \vdash \exRec{\seq{\bind{x}{v}}}: \tyRec{\seq{\bind{x}{A}}}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \vdash \gamma: \Gamma
+      \\
+      \Gamma \vdash \rho: \Delta
+      \\
+      \Gamma \concat \Delta \vdash \sigma: \elimTy{A}{B}
+   }
+   {
+      \vdash \exClosure{\gamma}{\rho}{\sigma}: \tyFun{A}{B}
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
+   {
+      \Gamma \vdash \seq{v: A}
+   }
+   {
+      \Gamma \vdash \exConstr{c}{\seq{v}}: \tyData{D}
+   }
+   \end{smathpar}
+   \\[2mm]
+   \begin{minipage}[t]{0.4\textwidth}%
+   {\small \flushleft \shadebox{$\vdash \gamma: \Gamma$}%
+   \hfill \textbfit{$\gamma$ has type $\Gamma$}}
+   \begin{smathpar}
+   \inferrule*
+   {
+      \vdash \seq{v: A}
+   }
+   {
+      \vdash \seq{\bind{x}{v}}: \seq{\bind{x}{A}}
+   }
+   \end{smathpar}
+   \end{minipage}%
+   \hspace{5mm}%
+   \begin{minipage}[t]{0.5\textwidth}%
+   {\small \flushleft \shadebox{$\Gamma \vdash \rho: \Delta$}%
+   \hfill \textbfit{$\rho$ has type $\Delta$ under $\Gamma$}}
+   \begin{smathpar}
+      \inferrule*[right={
+         \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
+      }]
+      {
+         \Gamma \concat \Delta \vdash \seq{\sigma: \elimTy{A}{B}}
+      }
+      {
+         \Gamma \vdash \seq{\bind{x}{\sigma}}: \Delta
+      }
+   \end{smathpar}
+   \end{minipage}
+   \caption{Typing rules for core language}
+   \label{fig:core-language:typing}
+\end{figure}
