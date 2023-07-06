@@ -149,7 +149,7 @@
          \gamma, s \evalSugR{S} u
       }
       {
-         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\cNil)
+         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u,\cNil}
       }
       %
       \and
@@ -189,7 +189,7 @@
          \gamma, s \evalSugR{S} \cFalse
       }
       {
-         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} []
+         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \cNil
       }
       %
       \and
@@ -233,7 +233,7 @@
          \gamma, l \evalSugR{S'} v'
       }
       {
-         \gamma, \exListNext{s}{l} \evalSugR{\trListNext{S}{S'}} \cCons(v, v')
+         \gamma, (\exListNext{s}{l}) \evalSugR{\trListNext{S}{S'}} \exConstr{\cCons}{v, v'}
       }
    \end{smathpar}
    }
@@ -248,7 +248,7 @@
             \\
             v_i = \exClosure{\gamma}{g}{\mu_i}
             \quad
-            \forall i \le \length{\seq{x}}
+            (\forall i \le \length{\seq{x}})
          }
          {
             \gamma, g \closeDefsS \set{\seq{\bind{x}{v}}}

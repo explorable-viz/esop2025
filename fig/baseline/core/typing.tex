@@ -22,14 +22,14 @@
    %
    \and
    %
-   \inferrule*[]
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
    {
-      \Gamma \vdash \seq{e}: \seq{A}
-      \\
-      d: (c: \tyFun{\seq{A}}{D})
+      \Gamma \vdash \seq{e: A}
    }
    {
-      \Gamma \vdash \exConstr{c}{\seq{e}}: d
+      \Gamma \vdash \exConstr{c}{\seq{e}}: D
    }
    %
    \and
@@ -50,9 +50,7 @@
    %
    \inferrule*
    {
-      \Gamma \vdash e_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \Gamma \vdash \seq{e: A}
    }
    {
       \Gamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
@@ -86,9 +84,7 @@
       right={$f: \tyForeign{\seq{A}}{B} \in \Phi$}
    ]
    {
-      \Gamma \vdash e_i: A
-      \quad
-      (\forall i \numleq j)
+      \Gamma \vdash \seq{e: A}
    }
    {
       \Gamma \vdash f(\seq{e}): B
@@ -110,34 +106,60 @@
    %
    \inferrule*
    {
-      \strut
-   }
-   {
-      \Gamma \vdash \exNil: \tyList{A}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \Gamma \vdash e: A
-      \\
-      \Gamma \vdash e': \tyList{A}
-   }
-   {
-      \Gamma \vdash (\exCons{e}{e'}): \tyList{A}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
       \Gamma \vdash \rho: \Delta
       \\
       \Gamma \concat \Delta \vdash e: A
    }
    {
       \Gamma \vdash \exLetRec{\rho}{e}: A
+   }
+   \end{smathpar}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\Gamma \vdash \sigma: \elimTy{A}{K}$}%
+   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\Gamma$}}
+   \begin{smathpar}
+   \inferrule*
+   {
+      \Gamma \cons \bind{x}{A} \vdash \kappa: K
+   }
+   {
+      \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      (\Sigma(c) = D\quad \forall c \in \seq{c})
+      \\
+      (\Gamma \vdash \kappa: K \quad \forall \kappa \in \seq{\kappa})
+   }
+   {
+      \Gamma \vdash \{\seq{\elimBind{c}{\kappa}}\}: \elimTy{D}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \kappa: K
+   }
+   {
+      \Gamma
+      \vdash
+      \elimRecord{}{\kappa}: \elimTy{\tyRecEmpty}{K}
+   }
+   %
+   \and
+   %
+   \inferrule*
+   {
+      \Gamma \vdash \elimRecord{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
+   }
+   {
+      \Gamma
+      \vdash
+      \elimRecord{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
    }
    \end{smathpar}
    \\[2mm]
@@ -156,54 +178,10 @@
    %
    \inferrule*
    {
-      \strut
-   }
-   {
-      \Gamma \vdash \exTrue: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \Gamma \vdash \exFalse: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \vdash v_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \vdash \seq{v: A}
    }
    {
       \vdash \exRec{\seq{\bind{x}{v}}}: \tyRec{\seq{\bind{x}{A}}}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \vdash \exNil: \tyList{A}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \vdash u: A
-      \\
-      \vdash v: \tyList{A}
-   }
-   {
-      \vdash (\exCons{u}{v}): \tyList{A}
    }
    %
    \and
@@ -222,14 +200,14 @@
    %
    \and
    %
-   \inferrule*[]
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
    {
-      \Gamma \vdash \seq{v}: \seq{A}
-      \\
-      d: (c: \tyFun{\seq{A}}{D})
+      \Gamma \vdash \seq{v: A}
    }
    {
-      \Gamma \vdash \exConstr{c}{\seq{v}}: d
+      \Gamma \vdash \exConstr{c}{\seq{v}}: \tyData{D}
    }
    \end{smathpar}
    \\[2mm]
@@ -239,17 +217,15 @@
    \begin{smathpar}
    \inferrule*
    {
-      \vdash v_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \vdash \seq{v: A}
    }
    {
       \vdash \seq{\bind{x}{v}}: \seq{\bind{x}{A}}
    }
    \end{smathpar}
    \end{minipage}%
-   \hspace{1.5cm}
-   \begin{minipage}[t]{0.6\textwidth}%
+   \hspace{5mm}%
+   \begin{minipage}[t]{0.5\textwidth}%
    {\small \flushleft \shadebox{$\Gamma \vdash \rho: \Delta$}%
    \hfill \textbfit{$\rho$ has type $\Delta$ under $\Gamma$}}
    \begin{smathpar}
@@ -257,9 +233,7 @@
          \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \Gamma \concat \Delta \vdash \sigma_i: \elimTy{A_i}{B_i}
-         \quad
-         (\forall i \numleq \length{\seq{x}})
+         \Gamma \concat \Delta \vdash \seq{\sigma: \elimTy{A}{B}}
       }
       {
          \Gamma \vdash \seq{\bind{x}{\sigma}}: \Delta
@@ -268,4 +242,4 @@
    \end{minipage}
    \caption{Typing rules for core language}
    \label{fig:core-language:typing}
-   \end{figure}
+\end{figure}

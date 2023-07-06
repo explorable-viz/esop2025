@@ -18,19 +18,3 @@ $\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
 $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_i}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \length{\seq{A}}$. Although saturated calls are technically part of the surface and
 core languages, user programs by convention use the first-class representation.
-
-\subsection{Continuations and Eliminators}
-
-A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are a trie-like
-structures in the core language into which surface-language pattern-matching constructs are desugared. An
-eliminator $\sigma$ is said to be \textit{partial} if it is not defined for every value of its type;
-well-typed eliminators are never partial.
-
-Eliminators are polymorphic in the type of the object they return, which we call the continuation type. An
-eliminator can either return an eliminator, or an expression we usually refer to as the body. We use
-$\elimTyArrow$ both in the syntax of eliminators and the syntax of eliminator types; the meaning should be
-clear from context.
-
-\input{fig/baseline/continuation-elims.tex}
-
-\clearpage

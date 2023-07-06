@@ -1,6 +1,19 @@
 \begin{figure}
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.2cm}L{3.6cm}}
+         &\textit{Contin.~type}&
+         \\
+         $K ::=$
+         &
+         $A$
+         &
+         term
+         \\
+         &
+         $\elimTy{A}{K}$
+         &
+         eliminator
+         \\[2mm]
          &\textit{Expression}&
          \lowlight{$\Expr\;\Gamma\;A$}
          \\
@@ -64,53 +77,86 @@
          $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
          &
          recursive let
-         \\[4mm]
+         \\[3mm]
       \end{tabularx}
    \end{minipage}%
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
-          &\textit{Recursive functions}&
-          \lowlight{$\RecDefs\;\Gamma\;\Gamma'$}
-          \\
-          $\rho ::=$
-          &
-          $\set{\seq{\bind{x}{\sigma}}}$
-          &
-          \\[2mm]
-          &\textit{Value}&
-          \lowlight{$\Val{A}$}
-          \\
-          $u, v ::=$
-          &
-          $\exInt{n}$
-          &
-          integer
-          \\
-          &
-          $\exStr{z}$
-          &
-          string
-          \\
-          &
-          $\exRec{\seq{\bind{x}{v}}}$
-          &
-          record
-          \\
-          &
-          $\exDict{\seq{\bind{s}{v}}}$
-          &
-          dictionary
-          \\
-          &
-          $\exConstr{c}{\seq{v}}$
-          &
-          data value
-          \\
-          &
-          $\exClosure{\gamma}{\rho}{\sigma}$
-          &
-          closure
-          \\[0mm]
+         &\textit{Continuation}&
+         \lowlight{$K$}
+         \\
+         $\kappa ::=$
+         &
+         $e$
+         &
+         expression
+         \\
+         &
+         $\sigma$
+         &
+         eliminator
+         \\[2mm]
+         &\textit{Eliminator}&
+         \lowlight{$\Elim\;\Gamma\,A\;K$}
+         \\
+         $\sigma, \tau ::=$
+         &
+         $\elimVar{x}{\kappa}$
+         &
+         variable
+         \\
+         &
+         $\elimRecord{\seq{x}}{\kappa}$
+         &
+         record
+         \\
+         &
+         $\elimConstr{\seq{\elimBind{c}{\sigma}}}$
+         &
+         data value
+         \\[2mm]
+         &\textit{Recursive functions}&
+         \lowlight{$\RecDefs\;\Gamma\;\Gamma'$}
+         \\
+         $\rho ::=$
+         &
+         $\set{\seq{\bind{x}{\sigma}}}$
+         &
+         \\[2mm]
+         &\textit{Value}&
+         \lowlight{$\Val{A}$}
+         \\
+         $u, v ::=$
+         &
+         $\exInt{n}$
+         &
+         integer
+         \\
+         &
+         $\exStr{z}$
+         &
+         string
+         \\
+         &
+         $\exRec{\seq{\bind{x}{v}}}$
+         &
+         record
+         \\
+         &
+         $\exDict{\seq{\bind{s}{v}}}$
+         &
+         dictionary
+         \\
+         &
+         $\exConstr{c}{\seq{v}}$
+         &
+         data value
+         \\
+         &
+         $\exClosure{\gamma}{\rho}{\sigma}$
+         &
+         closure
+         \\[0mm]
       \end{tabularx}
    \end{minipage}
 \caption{Core language (baseline): syntax}

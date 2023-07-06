@@ -1,31 +1,28 @@
 \begin{figure}
-
-   \flushleft \shadebox{$\Gamma \vdash \seq{g}: \Delta$}
+   \flushleft \shadebox{$\Gamma \vdash g: \Delta$}
    \begin{smathpar}
       \inferrule*[right={
          \textnormal{$\Delta = \seq{\bind{x}{\tyFun{A}{B}}}$}
       }]
       {
-         \Gamma \concat \Delta \vdash \mu_i: \tyFun{A_i}{B_i}
-         \quad
-         (\forall i \numleq j)
+         \Gamma \concat \Delta \vdash \seq{\mu: \tyFun{A}{B}}
       }
       {
-         \Gamma \vdash \seqRange{\bind{x_1}{\mu_1}}{\bind{x_j}{\mu_j}}: \Delta
+         \Gamma \vdash \seq{\bind{x}{\mu}}: \Delta
       }
    \end{smathpar}
 
    \vspace{5pt}
    \flushleft \shadebox{$\Gamma \vdash s: A$}
    \begin{smathpar}
-      \inferrule*[right={$\primOp: \tyForeign{(A,B)}{C} \in \Gamma$}]
+      \inferrule*[right={$\primOp: \tyForeign{(A,A')}{B} \in \Gamma$}]
       {
          \Gamma \vdash s: A
          \\
-         \Gamma \vdash s': B
+         \Gamma \vdash s': A'
       }
       {
-         \Gamma \vdash \exBinaryApp{s}{\oplus}{s'}: C
+         \Gamma \vdash \exBinaryApp{s}{\oplus}{s'}: B
       }
       %
       \and
@@ -42,12 +39,12 @@
       %
       \inferrule*
       {
-         \Gamma \vdash \seq{g}: \Delta
+         \Gamma \vdash g: \Delta
          \\
          \Gamma \concat \Delta \vdash s: A
       }
       {
-         \Gamma \vdash \exLetRec{\seq{g}}{s}: A
+         \Gamma \vdash \exLetRec{g}{s}: A
       }
       %
       \and

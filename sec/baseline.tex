@@ -2,21 +2,17 @@
 \label{sec:baseline}
 \subsection{Surface Language}
 
-When presenting a program execution, we want to give the appearence that the user is executing parts of the
-surface language directly. To that end we formalise the evaluation of surface terms and a corresponding notion
-of value in the surface language, which corresponds to values in the core language except in the case of
-closures, which contain surface expressions (and, recursively, surface values). Later we prove that directly
-evaluating a surface program $s$ and desugaring the resulting value produces the same core language value as
-desugaring $s$ to a core program and then evaluating, justifying our presentation of the surface semantics in
-the debugger.
+To allow us to give the appearance that the user is executing surface programs directly, we formalise the
+evaluation of surface terms and corresponding notion of surface value. Surface values differ from core values
+only in the case of closures, which contain surface expressions other surface values. Later we prove that
+directly evaluating a surface program $s$ and desugaring the resulting value produces the same core language
+value as desugaring $s$ to a core program and then evaluating, justifying our presentation of the surface
+semantics in the debugger.
 
 \subsubsection{Mutual recursion}
 
 \figref{close-defs-surface} defines the relation $\closeDefsS$ which creates the environments associated with
-a block of mutually recursively defined functions. Given an environment $\gamma$ and a sequence of recursively
-defined functions $g = \seq{\bind{x}{\mu}}$ (read $x$ as the function name and $\mu$ as the clauses of the
-function), we split the sequence into each individual function $\bind{x}{\mu}$ and form the closure
-associated with the function.
+a block of mutually recursively defined functions $g = \seq{\bind{x}{\mu}}$ (read $x$ as the function name and $\mu$ as the defining clauses of the function).
 
 \subsubsection{Piecewise function definitions}
 
@@ -37,19 +33,30 @@ We disallow certain combinations of patterns which are commonly allowed in other
    baz  Nil         x          = ...
 \end{lstlisting}}
 
-\clearpage
 \input{fig/baseline/surface/syntax}
-\input{fig/typing/surface}
-\input{fig/typing/patts-clauses}
-\input{fig/patt-clauses/disjoint-patts}
+\input{fig/baseline/surface/typing}
+\input{fig/baseline/surface/typing/clauses}
+\input{fig/baseline/surface/typing/disjoint-patts}
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
-\clearpage
 
+\clearpage
 \subsection{Core Language}
 
+\subsubsection{Continuations and Eliminators}
+
+A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are a trie-like
+structures in the core language into which surface-language pattern-matching constructs are desugared. An
+eliminator $\sigma$ is said to be \textit{partial} if it is not defined for every value of its type;
+well-typed eliminators are never partial.
+
+Eliminators are polymorphic in the type of the object they return, which we call the continuation type. An
+eliminator can either return an eliminator, or an expression we usually refer to as the body. We use
+$\elimTyArrow$ both in the syntax of eliminators and the syntax of eliminator types; the meaning should be
+clear from context.
+
 \input{fig/baseline/core/syntax}
-\input{fig/typing/core}
+\input{fig/baseline/core/typing}
 \input{fig/baseline/core/eval}
 \input{fig/baseline/core/match}
 \clearpage
@@ -61,7 +68,7 @@ We disallow certain combinations of patterns which are commonly allowed in other
 \input{fig/baseline/desugar/disjjoin}
 \input{fig/baseline/desugar/value}
 
-\subsubsection{Desugaring Of Values}
+\subsubsection{Desugaring Values}
 
 To relate the surface semantics to the core semantics, we must extend desugaring to values, which in turn requires desugaring for surface environments $\upgamma$ and recursive functions $\seq{g}$ (\figref{desugar:values}).
 

@@ -47,7 +47,7 @@
          \seq{v},\seq{p} \match \gamma
       }
       {
-         \exConstr{c}{\seq{v}},\exConstr{c}{\seq{p}} \match \gamma
+         \exConstr{c}{\seq{v}},\pattConstr{c}{\seq{p}} \match \gamma
       }
       %
       \and
@@ -61,21 +61,22 @@
          v', o \match \gamma'
       }
       {
-         \cCons(v, v'), \pattList{p}{o} \match \gamma \disjunion \gamma'
+         \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
       }
       %
       \and
-      % %
+      %
       \inferrule*[
          lab={\ruleName{$\match$-record}}
       ]
       {
          \seq{u}, \seq{p} \match \gamma
          \quad
-         \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
+         \exRecord{\seq{\bind{y}{u}}}
+         \subseteq \exRecord{\seq{\bind{x}{v}}}
       }
       {
-         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \match \gamma
+         \exRecord{\seq{\bind{x}{v}}}, \pattRecord{\seq{\bind{y}{p}}} \match \gamma
       }
    \end{smathpar}}
    \\[3mm]
@@ -102,7 +103,7 @@
          v', o \match \gamma'
       }
       {
-         \cCons(v, v'), (\pattListNext{p}{o}) \match \gamma \disjunion \gamma'
+         \exConstr{\cCons}{v, v'}, (\pattListNext{p}{o}) \match \gamma \disjunion \gamma'
       }
    \end{smathpar}}
    \\[3mm]
@@ -112,12 +113,12 @@
          lab={\ruleName{$\match$-uncurried}}
       ]
       {
-         v, p_i \match \gamma
+         v, p_{i} \match \gamma
          \\
-         \forall i' \ne i.\nexists \gamma. \, v, p_{i'} \match \gamma
+         (\forall i' \numleq j.i' \ne i \implies v, p_{i'} \matchNeg)
       }
       {
-         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \match{p_i} \gamma, s_i
+         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \match \gamma, s_i
       }
       %
       \and
@@ -129,10 +130,12 @@
       {
          v, p \match \gamma
          \\
-         (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}'}{s_i}) \in \mu\textit{ else }v, p_i\;\matchNeg)
+         (\forall i \numleq j.p_i = p \implies (\clause{\seq{p_i}}{s_i}) \in \mu)
+         \\
+         (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
       }
       {
-         v, (\seqRange{\clause{(p_1 \cons \seq{p_1}')}{s_1}}{\clause{(p_j \cons \seq{p_j}')}{s_j}})
+         v, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
          \match
          \gamma,
          \exFun{\mu}

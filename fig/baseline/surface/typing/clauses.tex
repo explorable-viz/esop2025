@@ -1,6 +1,21 @@
 \begin{figure}
 
    %% Patterns
+   \flushleft \shadebox{$\seq{p: A} \dashv \Gamma $}
+   \begin{smathpar}
+      \inferrule*[
+         right={$\length{\seq{p}} = n$}
+      ]
+      {
+         p_i: A_i \dashv \Gamma_i
+         \quad
+         (\forall i \numleq n)
+      }
+      {
+         \seq{p: A} \dashv \seqRangeOp{\Gamma_1}{\Gamma_n}{\concat}
+      }
+   \end{smathpar}
+   \vspace{3mm}
 
    \flushleft \shadebox{$p: A \dashv \Gamma $}
    \begin{smathpar}
@@ -9,43 +24,30 @@
          \strut
       }
       {
-         \pattVar{x}: A \dashv \seqEmpty, \exVar{x}: A
+         \pattVar{x}: A \dashv \set{\bind{x}{A}}
       }
       %
       \and
       %
       \inferrule*[
-         right={$\length{\seq{x}} = j$}
       ]
       {
-         p_i: A_i \dashv \Gamma_i
-         \quad
-         (\forall i \numleq n)
+         \seq{p: A} \dashv \Gamma
       }
       {
-         \pattRec{\seq{\bind{x}{p}}}: \tyRec{\seq{\bind{x}{A}}} \dashv \seqRangeOp{\Gamma_1}{\Gamma_n}{\concat}
+         \pattRec{\seq{\bind{x}{p}}}: \tyRec{\seq{\bind{x}{A}}} \dashv \Gamma
       }
       %
       \and
       %
-      \inferrule*
+      \inferrule*[
+         right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+      ]
       {
-         \strut
+         \seq{p: A} \dashv \Gamma
       }
       {
-         \pattNil: \tyList{A} \dashv \seqEmpty
-      }
-      %
-      \and
-      %
-      \inferrule*
-      {
-         p: A \dashv \Gamma
-         \\
-         p': \tyList{A} \dashv \Gamma'
-      }
-      {
-         \pattCons{p}{p'}: \tyList{A} \dashv \Gamma \concat \Gamma'
+         \pattConstr{c}{\seq{p}}: \tyData{D} \dashv \Gamma
       }
       %
       \and
