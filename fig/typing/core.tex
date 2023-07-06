@@ -22,14 +22,14 @@
    %
    \and
    %
-   \inferrule*[]
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
    {
-      \Gamma \vdash \seq{e}: \seq{A}
-      \\
-      d: (c: \tyFun{\seq{A}}{D})
+      \Gamma \vdash \seq{e: A}
    }
    {
-      \Gamma \vdash \exConstr{c}{\seq{e}}: d
+      \Gamma \vdash \exConstr{c}{\seq{e}}: D
    }
    %
    \and
@@ -50,9 +50,7 @@
    %
    \inferrule*
    {
-      \Gamma \vdash e_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \Gamma \vdash \seq{e: A}
    }
    {
       \Gamma \vdash \exRec{\seq{\bind{x}{e}}}: \tyRec{\seq{\bind{x}{A}}}
