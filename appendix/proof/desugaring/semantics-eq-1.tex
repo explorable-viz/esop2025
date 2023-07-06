@@ -5,11 +5,13 @@ By induction on derivation of $\evalSugS$.
    &
    s_0 \desugar e_0
    &
+   \text{suppose}
    \notag
    \\
    &
    \gamma \desugar \gamma'
    &
+   \text{suppose}
    \locallabel{desug:env}
    \\
    \intertext{\crossrule}
@@ -71,7 +73,7 @@ By induction on derivation of $\evalSugS$.
    \qedLocal
    \text{$v \desugar v'$.}
    &
-   \text{\lemref{varlookup} and (\localref{desug:env})}
+   \text{\lemref{varlookup}, (\localref{desug:env})}
    \notag
    \\
    \intertext{\crossrule}
@@ -233,7 +235,7 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma_3 \desugar \gamma'_3 \opAnd s^{\dag} \desugar e^{\dag}
    &
-   \text{$\mu \desugar \sigma$ and \lemref{matching-bi}}
+   \text{$\mu \desugar \sigma$, \lemref{matching-bi}}
    \notag
    \\
    &
@@ -305,7 +307,7 @@ By induction on derivation of $\evalSugS$.
    &
    \text{Then $\gamma \concat \gamma^{\dag} \desugar \gamma' \concat {\gamma^{\ddagger}}$}
    &
-   \text{(\localref{desug:env}) and \lemref{closedefs-eq}}
+   \text{(\localref{desug:env}), \lemref{closedefs-eq}}
    \notag
    \\
    &
