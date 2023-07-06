@@ -37,6 +37,12 @@
         \\
         \exPrettyFunction{(\ptypeOther\symComma{(p'\cons\seq{p})})} &= \exLayoutAppBeside{\exPrettyFunction{p'}}{\exPrettyFunction{(\ptypeOther\symComma\seq{p})}}
         \\[2mm] 
+        \exPrettyFunction{\param} &: \ListRestPatt \rightarrow \Doc 
+        \\
+        \exPrettyFunction{\pattListEnd} &= \exLayoutText{\kw{"\symRBrack"}}
+        \\
+        \exPrettyFunction{\pattListNext{p}{o}} &= \exLayoutAppBeside{\exLayoutText{\kw{"\symComma"}}}{\exLayoutAppBeside{\exPrettyFunction{p}}{\exPrettyFunction{l}}}
+        \\[2mm]
         \exPrettyFunction{\param}&: \ListRest \rightarrow \Doc 
         \\
         \exPrettyFunction{\exListEnd} &= \exLayoutText{\kw{"\exListEnd"}}
