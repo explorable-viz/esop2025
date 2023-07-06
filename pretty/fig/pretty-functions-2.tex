@@ -8,16 +8,14 @@
         \\
         \exPrettyFunction{\pattConstr{c}{\seq{p}}} &=
         \begin{cases}
-            \exLayoutAppBeside{\exLayoutText{\str(c)}}{\exPrettyFunction{\seq{p}}} & {c} \symEqual\symEqual \kw{"Empty"}
+            \exLayoutAppBeside{\exLayoutText{\str(c)}}{\exPrettyFunction{(\ptypeOther\symComma\seq{p})}} & {c} \symEqual\symEqual \kw{"Empty"}
             \\
             \parens(\exPrettyFunction{(\ptypePair\symComma\seq{p})}) & {c} \symEqual\symEqual \kw{"Pair"}
             \\
             \parens(\exPrettyFunction{(\ptypeList\symComma\seq{p})}) & {c} \symEqual\symEqual \kw{":"}
             \\
-            \parens(\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exPrettyFunction{\seq{p}}}) & \kw{otherwise}
+            \parens(\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exPrettyFunction{(\ptypeOther\symComma\seq{p})}}) & \kw{otherwise}
         \end{cases}    
-        \\
-        \exPrettyFunction{\pattConstr{c}{\seq{p}}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\str(c)}}{\exLayoutText{\kw{"\symLParens"}}}}{\exPrettyFunction{\seq{p}}}}{\exLayoutText{\kw{"\symRParens"}}}
         \\[2mm]
         \exPrettyFunction{\param}&: (\Var \times \Patt)^* \rightarrow \Doc
         \\
