@@ -149,7 +149,7 @@
          \gamma, s \evalSugR{S} u
       }
       {
-         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\cNil)
+         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u,\cNil}
       }
       %
       \and
@@ -189,7 +189,7 @@
          \gamma, s \evalSugR{S} \cFalse
       }
       {
-         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} []
+         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \cNil
       }
       %
       \and
