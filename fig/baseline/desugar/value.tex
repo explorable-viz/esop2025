@@ -3,23 +3,10 @@
     \begin{smathpar}
         \inferrule*[lab={\ruleName{$\desugar$-env}}]
         {
-            v_i \desugar v'_i \quad (\forall i \le \length{\seq{x}})
+            \seq{v} \desugar \seq{v}'
         }
         {
             \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
-        }
-    \end{smathpar}
-    }
-    {\small \flushleft \shadebox {$g \desugar \rho$}
-    \begin{smathpar}
-        \inferrule*
-        {
-            \mu_i \desugar \sigma_i
-            \quad
-            (\forall i \le \length{\seq{x}})
-        }
-        {
-            \seq{\bind{x}{\mu}} \desugar \set{\seq{\bind{\exVar{x}}{\sigma}}}
         }
     \end{smathpar}
     }
@@ -29,15 +16,15 @@
             {
                 \gamma \desugar \gamma'
                 \\
-                g \desugar \rho
+                \seq{\mu} \desugar \seq{\sigma}
                 \\
                 \mu \desugar \sigma
             }
             {
-                \exClosure{\gamma}{g}{\mu} \desugar \exClosure{\gamma'}{\rho}{\sigma}
+                \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
             }
         \end{smathpar}
     }
-    \caption{Desugaring for environments, recursive definitions and values}
+    \caption{Desugaring for environments and values}
     \label{fig:desugar:values}
 \end{figure}

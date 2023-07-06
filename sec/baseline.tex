@@ -34,9 +34,6 @@ We disallow certain combinations of patterns which are commonly allowed in other
 \end{lstlisting}}
 
 \input{fig/baseline/surface/syntax}
-\input{fig/baseline/surface/typing}
-\input{fig/baseline/surface/typing/clauses}
-\input{fig/baseline/surface/typing/disjoint-patts}
 \input{fig/baseline/surface/eval}
 \input{fig/baseline/surface/match}
 
@@ -47,20 +44,13 @@ We disallow certain combinations of patterns which are commonly allowed in other
 
 A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are a trie-like
 structures in the core language into which surface-language pattern-matching constructs are desugared. An
-eliminator $\sigma$ is said to be \textit{partial} if it is not defined for every value of its type;
-well-typed eliminators are never partial.
-
-Eliminators are polymorphic in the type of the object they return, which we call the continuation type. An
-eliminator can either return an eliminator, or an expression we usually refer to as the body. We use
-$\elimTyArrow$ both in the syntax of eliminators and the syntax of eliminator types; the meaning should be
-clear from context.
+eliminator $\sigma$ is said to be \textit{partial} if it is not defined for every element of its domain.
 
 \input{fig/baseline/core/syntax}
-\input{fig/baseline/core/typing}
 \input{fig/baseline/core/eval}
 \input{fig/baseline/core/match}
-\clearpage
 
+\clearpage
 \subsection{Desugaring}
 
 \input{fig/baseline/desugar/term}
@@ -89,16 +79,15 @@ To relate the surface semantics to the core semantics, we must extend desugaring
 
 \thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}) and recursive
 definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
-(\lemref{lemma:varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
+(\lemref{varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
 as the precondition to \thmref{semantics-eq}.
 
+Desugaring commutes with environment extension.
+
 \begin{lemma}
-   \label{lem:lemma:varlookup}
-   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
+   \label{lem:varlookup}
+   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\gamma \cons \bind{x}{v} \desugar \gamma' \cons \bind{x}{v'}$.
 \end{lemma}
-\begin{proof}
-   See \appref{proofs:varlookup}
-\end{proof}
 
 \begin{lemma}
    \label{lem:matching-bi}
@@ -141,6 +130,19 @@ as the precondition to \thmref{semantics-eq}.
 \end{proof}
 
 \begin{lemma}
+   \label{lem:match-domains-agree-list-rest}
+   Suppose $u \desugar v$ and $\sigma = \mkElimF(o, \kappa)$.
+   \begin{enumerate}
+      \item If $u, o \match \gamma$ then $\exists \gamma'.v, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $u, o\;\matchNeg$ then $v, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+   See \appref{proofs:match-domains-agree-list-rest}.
+\end{proof}
+
+\begin{lemma}
    \label{lem:match-domains-agree-seq}
    Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
    \begin{enumerate}
@@ -158,8 +160,7 @@ as the precondition to \thmref{semantics-eq}.
    \end{enumerate}
 \end{lemma}
 
-$\disjjoin$ is a partial commutative monoid. Write $x \eqif y$ to mean $x$ is defined iff $y$ is defined, in
-which case $x = y$.
+$\disjjoin$ is a partial commutative monoid.
 
 \begin{lemma}
    \label{lem:disjjoin-assoc-comm}
@@ -169,5 +170,3 @@ which case $x = y$.
    \item $\sigma \disjjoin \tau \eqif \tau \disjjoin \sigma$
    \end{enumerate}
 \end{lemma}
-
-\clearpage

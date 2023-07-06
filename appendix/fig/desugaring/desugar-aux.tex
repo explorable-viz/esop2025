@@ -110,16 +110,16 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A$}
+      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A$ \emph{where} $\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
       }
       %========================================
       \unlessF
-      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;\datatype{\Sigma}{c}\;A
+      &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A
       \\
       %========================================
       \unlessF_{c}(e)
       &=
-      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\seq{B}} \in \datatype{\Sigma}{c} \setminus \set{c}}
+      \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \bind{c'}{\tyForeign{\seq{B}}{D}} \in \Sigma \wedge c \neq c'}
       \\
       %========================================
    \end{salign}
