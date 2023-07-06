@@ -161,7 +161,7 @@ Induction on $\match$ derivation.
       \end{smathpar}
    }
    &
-   \locallabel{match-constr}
+   \locallabel{match-record}
    \\
    &
    \derivation{\derivationWidth}{
@@ -177,7 +177,7 @@ Induction on $\match$ derivation.
    }
    &
    \text{inversion}
-   \locallabel{desugar-constr}
+   \locallabel{desugar-record}
    \\
    &
    \sigma \eqdef \elimArgsF(\seq{p},\kappa)
@@ -191,13 +191,19 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
+   \seq{u}' \desugar \seq{v}'
+   &
+   (\localref{match-record}, \localref{desugar-record})
+   \notag
+   \\
+   &
    \seq{v}', \sigma \match \gamma', \kappa
    \textit{ and }
    \gamma' \desugar \gamma
    \quad
    (\exists \gamma')
    &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \text{(\localref{match-record}), \lemref{match-domains-agree-seq} (1)}
    \notag
    \\
    &
