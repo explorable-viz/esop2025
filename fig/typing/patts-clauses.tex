@@ -24,7 +24,7 @@
          \strut
       }
       {
-         \pattVar{x}: A \dashv \seqEmpty, \exVar{x}: A
+         \pattVar{x}: A \dashv \set{\bind{x}{A}}
       }
       %
       \and
@@ -40,7 +40,9 @@
       %
       \and
       %
-      \inferrule*
+      \inferrule*[
+         right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+      ]
       {
          \seq{p: A} \dashv \Gamma
       }
