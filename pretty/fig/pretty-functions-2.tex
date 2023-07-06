@@ -23,9 +23,9 @@
         \\
         \exPrettyFunction{\exLayoutEmpty} &= \exLayoutEmpty
         \\
-        \exPrettyFunction{(x',p')} &= {\exLayoutAppBeside{\exLayoutText{\str(x')}}{\exLayoutAppBeside{\exLayoutText{\kw{":"}}}{\exPrettyFunction{p'}}}}
+        \exPrettyFunction{(x',p')} &= {\exLayoutAppBeside{\exLayoutText{\str(x')}}{\exLayoutAppBeside{\exLayoutText{\kw{"\symColon"}}}{\exPrettyFunction{p'}}}}
         \\
-        \exPrettyFunction{(x',p')\cons\seq{(x,p)}} &= \exLayoutAppATop{\exPrettyFunction{(x',p')}}{\exPrettyFunction{\seq{(x,p)}}}
+        \exPrettyFunction{(x',p')\cons\seq{(x,p)}} &= \exLayoutAppATop{\exLayoutAppBeside{\exPrettyFunction{(x',p')}}{\exLayoutText{\kw{"\symComma"}}}}{\exPrettyFunction{\seq{(x,p)}}}
         \\[2mm]
         \exPrettyFunction{\param} &: \PattConstrType \times \Patt^+ \rightarrow \Doc
         \\
@@ -59,7 +59,7 @@
         \\
         \exPrettyFunction{\qualGenerator{p}{s}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{p}}{\exLayoutText{\kw{"$\leftarrow$"}}}}{\exPrettyFunction{s}} 
         \\
-        \exPrettyFunction{\kw{q'}\cons\seq{q}} &= \exLayoutAppBeside{\exPrettyFunction{q'}}{\exPrettyFunction{\seq{q}}} 
+        \exPrettyFunction{{q'}\cons\seq{q}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{q'}}{\exLayoutText{\kw{"\symComma"}}}}{\seq{q}}
         \\[2mm]
     \end{salign}
     \caption{Pretty Function Continued}
