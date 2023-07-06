@@ -130,9 +130,7 @@
    %
    \inferrule*
    {
-      \vdash v_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \vdash \seq{v: A}
    }
    {
       \vdash \exRec{\seq{\bind{x}{v}}}: \tyRec{\seq{\bind{x}{A}}}
@@ -154,14 +152,14 @@
    %
    \and
    %
-   \inferrule*[]
+   \inferrule*[
+      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+   ]
    {
-      \Gamma \vdash \seq{v}: \seq{A}
-      \\
-      d: (c: \tyFun{\seq{A}}{D})
+      \Gamma \vdash \seq{v: A}
    }
    {
-      \Gamma \vdash \exConstr{c}{\seq{v}}: d
+      \Gamma \vdash \exConstr{c}{\seq{v}}: \tyData{D}
    }
    \end{smathpar}
    \\[2mm]
@@ -171,9 +169,7 @@
    \begin{smathpar}
    \inferrule*
    {
-      \vdash v_i: A_i
-      \quad
-      (\forall i \numleq \length{\seq{x}})
+      \vdash \seq{v: A}
    }
    {
       \vdash \seq{\bind{x}{v}}: \seq{\bind{x}{A}}
