@@ -238,12 +238,12 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-nonempty-list}}
          ]
          {
-            v, p \match \gamma
+            u, p \match \gamma
             \\
-            v', o \match \gamma'
+            u', o \match \gamma'
          }
          {
-            \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
+            \exConstr{\cCons}{u, u'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
          }
       \end{smathpar}
    }
@@ -255,10 +255,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-constr}}]
          {
-            \seq{u} \desugar \seq{v}
+            (u, u') \desugar (v, v')
          }
          {
-             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
+            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
          }
       \end{smathpar}
    }
@@ -267,12 +267,12 @@ Induction on $\match$ derivation.
    \locallabel{desugar-constr}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   \mkElimF(\pattList{p}{o}, \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
    &
    \text{Def.~\mkElimF}
    \notag
