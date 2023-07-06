@@ -1,6 +1,21 @@
 \begin{figure}
 
    %% Patterns
+   \flushleft \shadebox{$\seq{p: A} \dashv \Gamma $}
+   \begin{smathpar}
+      \inferrule*[
+         right={$\length{\seq{p}} = n$}
+      ]
+      {
+         p_i: A_i \dashv \Gamma_i
+         \quad
+         (\forall i \numleq n)
+      }
+      {
+         \seq{p: A} \dashv \seqRangeOp{\Gamma_1}{\Gamma_n}{\concat}
+      }
+   \end{smathpar}
+   \vspace{3mm}
 
    \flushleft \shadebox{$p: A \dashv \Gamma $}
    \begin{smathpar}
@@ -15,7 +30,6 @@
       \and
       %
       \inferrule*[
-         right={$\length{\seq{x}} = n$}
       ]
       {
          p_i: A_i \dashv \Gamma_i
@@ -35,7 +49,7 @@
          p': \tyList{A} \dashv \Gamma'
       }
       {
-         \pattCons{p}{p'}: \tyList{A} \dashv \Gamma \concat \Gamma'
+         \pattConstr{c}{\seq{p}}: \tyList{A} \dashv \Gamma \concat \Gamma'
       }
       %
       \and
