@@ -1,6 +1,19 @@
 \begin{figure}
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.2cm}L{3.6cm}}
+         &\textit{Contin.~type}&
+         \\
+         $K ::=$
+         &
+         $A$
+         &
+         term
+         \\
+         &
+         $\elimTy{A}{K}$
+         &
+         eliminator
+         \\[2mm]
          &\textit{Expression}&
          \lowlight{$\Expr\;\Gamma\;A$}
          \\
@@ -64,7 +77,11 @@
          $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
          &
          recursive let
-         \\[2mm]
+         \\[3mm]
+      \end{tabularx}
+   \end{minipage}%
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
          &\textit{Continuation}&
          \lowlight{$K$}
          \\
@@ -78,11 +95,7 @@
          $\sigma$
          &
          eliminator
-         \\[0mm]
-      \end{tabularx}
-   \end{minipage}%
-   \begin{minipage}[t]{0.48\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+         \\[2mm]
          &\textit{Eliminator}&
          \lowlight{$\Elim\;\Gamma\,A\;K$}
          \\
@@ -143,7 +156,7 @@
          $\exClosure{\gamma}{\rho}{\sigma}$
          &
          closure
-         \\[12mm]
+         \\[0mm]
       \end{tabularx}
    \end{minipage}
 \caption{Core language (baseline): syntax}
