@@ -32,7 +32,7 @@
          \kappa \disjjoin \kappa' = \kappa^{\dag}
       }
       {
-         \elimRecord{\seq{x}}{\kappa} \disjjoin \elimRecord{\seq{x}}{\kappa'} = \elimRecord{\seq{x}}{\kappa^{\dag}}
+         (\elimRecord{\seq{x}}{\kappa}) \disjjoin (\elimRecord{\seq{x}}{\kappa'}) = \elimRecord{\seq{x}}{\kappa^{\dag}}
       }
       %
       \and
@@ -55,8 +55,7 @@
          lab={\ruleName{$\disjjoin$-no-overlap}}
       ]
       {
-         % \dom(\elimConstr{\seq{\elimBind{c}{\sigma}}}) \cap \dom(\elimConstr{\seq{\elimBind{c'}{\sigma'}}}) = \emptyset
-         \seq{c} \cap \seq{c}' = \emptyset
+         \seq{c} \cap \seq{c}' = \varnothing
       }
       {
          \elimConstr{\seq{\elimBind{c}{\sigma}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\sigma'}}} = \elimConstr{\seq{\elimBind{c}{\sigma}}} \cup \elimConstr{\seq{\elimBind{c'}{\sigma'}}}
