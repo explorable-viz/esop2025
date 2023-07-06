@@ -130,54 +130,12 @@
    %
    \inferrule*
    {
-      \strut
-   }
-   {
-      \Gamma \vdash \exTrue: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \Gamma \vdash \exFalse: \tyBool
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
       \vdash v_i: A_i
       \quad
       (\forall i \numleq \length{\seq{x}})
    }
    {
       \vdash \exRec{\seq{\bind{x}{v}}}: \tyRec{\seq{\bind{x}{A}}}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \strut
-   }
-   {
-      \vdash \exNil: \tyList{A}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \vdash u: A
-      \\
-      \vdash v: \tyList{A}
-   }
-   {
-      \vdash (\exCons{u}{v}): \tyList{A}
    }
    %
    \and
