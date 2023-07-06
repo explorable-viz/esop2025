@@ -2,17 +2,13 @@
     \begin{salign}
         %    pretty (ListNonEmpty ann (Record _ xss) l) = emptyDoc :--: (((highlightIf ann $ text str.lBracket) .<>. (highlightIf ann $ curlyBraces (pretty (true × xss)))) .-. pretty l)
         % instance Ann a => Pretty (Boolean × List (Bind (Expr a))) where
-        % pretty (_ × (Cons s Nil)) = text (key s) .<>. text str.colon .<>. pretty (val s)
-        % pretty (false × (Cons s xss)) = (text (key s) .<>. text str.colon .<>. pretty (val s) .<>. text str.comma) .-. pretty (false × xss)
-        % pretty (true × (Cons s xss)) = text (key s) .<>. text str.colon .<>. pretty (val s) .<>. text str.comma .<>. pretty (true × xss)
-        % pretty (_ × Nil) = emptyDoc
         \exPrettyFunction{\param}  &: \SExpr \rightarrow \Doc
         \\
         \exPrettyFunction{\exInt{n}} &= \exLayoutText{\Show(x)} 
         \\
         \exPrettyFunction{x} &=  \exLayoutText{\str(x)} 
         \\
-        \exPrettyFunction{\{\seq{(x:s)}\}} &= \curlyBraces(\exPrettyFunction{\seq{(x,s)}})
+        \exPrettyFunction{\{\seq{(x:s)}\}} &= \curlyBraces(\exPrettyFunction{(\kw{false}\symComma\seq{(x,s)})})
         \\
         \exPrettyFunction{\exBinaryApp{s}{\oplus}{s'}} &= \exBinaryAppFunction{(\precedence(\oplus),(\exBinaryApp{s}{\oplus}{s'}))}
         \\
@@ -27,6 +23,8 @@
         \exPrettyFunction{\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}} &=  \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"match"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{"as"}}}}{\exPrettyFunction{(\UnitVal\symComma\seq{(p,s')})}}
         \\
         \exPrettyFunction{\lambda\upmu} &= \parens(\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}) 
+        \\
+        \exPrettyFunction{\exList{\{\seq{(x:s)}\}}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\curlyBraces(\exPrettyFunction{(\kw{true}\symComma\seq{(x,s)})})}}{\exPrettyFunction{l}}
         \\
         \exPrettyFunction{\exList{s}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}}}{\exPrettyFunction{l}}
         \\
