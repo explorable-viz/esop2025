@@ -22,13 +22,11 @@
         \\
         \exPrettyFunction{\lambda\upmu} &= \parens(\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}) 
         \\
-        \exPrettyFunction{\lambda\upmu} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"fun"}}}{\exLayoutText{\kw{"\symLBrace"}}}}{\exPrettyFunction{(\UnitVal\symComma\upmu)}}}{\exLayoutText{\kw{"\symRBrace"}}}
-        \\
         \exPrettyFunction{\exList{s}{l}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}}}{\exPrettyFunction{l}}
         \\
-        \exPrettyFunction{\exListComp{s}{\seq{q}}} &= \exLayoutAppBeside{\exLayoutAppBeside{ \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{ \exPrettyFunction{s}}}{\exLayoutText{\kw{"\symVLine"}}}}{\exPrettyFunction{\seq{q}}}}{\exLayoutText{\kw{"\symRBrack"}}}  
+        \exPrettyFunction{\exListComp{s}{\seq{q}}} &= \brackets(\exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutText{\kw{"\symVLine"}}}}{\exPrettyFunction{\seq{q}}})
         \\
-        \exPrettyFunction{\exListEnum{s}{s'}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exLayoutText{\kw{"\symLBrack"}}}{\exPrettyFunction{s}}}{\exLayoutText{\kw{".."}}}}{\exPrettyFunction{s'}}}{ \exLayoutText{\kw{"\symRBrack"}}}      
+        \exPrettyFunction{\exListEnum{s}{s'}} &= \brackets(\exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{s}}{\exLayoutText{\kw{".."}}}}{\exPrettyFunction{s'}})      
         \\[2mm]
         \exPrettyFunction{\param} &: (\Var \times \SExpr)^* \rightarrow \Doc
         \\
