@@ -278,7 +278,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}, \sigma \match \gamma', \kappa
+   (v, v'), \sigma \match \gamma', \kappa
    \textit{ and }
    \gamma' \desugar \gamma
    \quad
@@ -293,10 +293,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \sigma \match \gamma', \kappa
+            (v, v'), \sigma \match \gamma', \kappa
          }
          {
-            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
             \match
             \gamma', \kappa
          }
