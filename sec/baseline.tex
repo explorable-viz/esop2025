@@ -79,16 +79,15 @@ To relate the surface semantics to the core semantics, we must extend desugaring
 
 \thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}) and recursive
 definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
-(\lemref{lemma:varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
+(\lemref{varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
 as the precondition to \thmref{semantics-eq}.
 
+Desugaring commutes with environment extension.
+
 \begin{lemma}
-   \label{lem:lemma:varlookup}
-   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\bind{x}{v} \in \gamma$ iff $\bind{x}{v'} \in \gamma'$.
+   \label{lem:varlookup}
+   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\gamma \cons \bind{x}{v} \desugar \gamma' \cons \bind{x}{v'}$.
 \end{lemma}
-\begin{proof}
-   See \appref{proofs:varlookup}
-\end{proof}
 
 \begin{lemma}
    \label{lem:matching-bi}
