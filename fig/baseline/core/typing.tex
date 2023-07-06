@@ -130,9 +130,11 @@
    %
    \inferrule*
    {
-      (\Sigma(c) = D\quad \forall c \in \seq{c})
-      \\
-      (\Gamma \vdash \kappa: K \quad \forall \kappa \in \seq{\kappa})
+      (\bind{c_i}{\tyForeign{\seq{A}_i}{D}} \in \Sigma
+       \implies
+       \Gamma \vdash \kappa_i: \elimTy{\seq{A}_i}{K})
+      \quad
+      (\forall i \numleq \length{\seq{c}})
    }
    {
       \Gamma \vdash \{\seq{\elimBind{c}{\kappa}}\}: \elimTy{D}{K}
