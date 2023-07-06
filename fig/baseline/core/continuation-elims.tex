@@ -16,52 +16,5 @@
       \\[0mm]
       \end{tabularx}
    \end{minipage}
-   {\small \flushleft \shadebox{$\Gamma \vdash \sigma: \elimTy{A}{K}$}%
-   \hfill \textbfit{$\sigma$ has type $\elimTy{A}{K}$ under $\Gamma$}}
-   \begin{smathpar}
-   \inferrule*
-   {
-      \Gamma \cons \bind{x}{A} \vdash \kappa: K
-   }
-   {
-      \Gamma \vdash (\elimVar{x}{\kappa}): \elimTy{A}{K}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      (\Sigma(c) = D\quad \forall c \in \seq{c})
-      \\
-      (\Gamma \vdash \kappa: K \quad \forall \kappa \in \seq{\kappa})
-   }
-   {
-      \Gamma \vdash \{\seq{\elimBind{c}{\kappa}}\}: \elimTy{D}{K}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \Gamma \vdash \kappa: K
-   }
-   {
-      \Gamma
-      \vdash
-      \elimRecEmpty{\kappa}: \elimTy{\tyRecEmpty}{K}
-   }
-   %
-   \and
-   %
-   \inferrule*
-   {
-      \Gamma \vdash \elimRec{\seq{x}}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}}}}{\elimTy{B}{K}}
-   }
-   {
-      \Gamma
-      \vdash
-      \elimRec{\seq{x} \cons y}{\sigma}: \elimTy{\tyRec{\seq{\bind{x}{A}} \cons \bind{y}{B}}}{K}
-   }
-   \end{smathpar}
    \caption{Syntax and Typing of Eliminators}
 \end{figure}
