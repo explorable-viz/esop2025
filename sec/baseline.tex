@@ -130,6 +130,19 @@ Desugaring commutes with environment extension.
 \end{proof}
 
 \begin{lemma}
+   \label{lem:match-domains-agree-list-rest}
+   Suppose $u \desugar v$ and $\sigma = \mkElimF(o, \kappa)$.
+   \begin{enumerate}
+      \item If $u, o \match \gamma$ then $\exists \gamma'.v, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $u, o\;\matchNeg$ then $v, \sigma\;\matchNeg$.
+   \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+   See \appref{proofs:match-domains-agree-list-rest}.
+\end{proof}
+
+\begin{lemma}
    \label{lem:match-domains-agree-seq}
    Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
    \begin{enumerate}
