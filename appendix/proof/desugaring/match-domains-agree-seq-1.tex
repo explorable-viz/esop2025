@@ -12,20 +12,14 @@ Induction on $\match$ derivation.
    \seq{u} \desugar \seq{v}
    &
    \text{suppose}
-   \notag
-   \\
-   &
-   \kappa' = \elimArgsF(\seq{p}, \kappa)
-   &
-   \text{suppose}
-   \locallabel{suppose-kappa}
+   \locallabel{suppose-seq-u}
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-empty}}
+            left={\ruleName{$\match$-seq-empty}}
           ]
           {
              \strut
@@ -39,9 +33,9 @@ Induction on $\match$ derivation.
    \locallabel{match-empty}
    \\
    &
-   \kappa' = \elimArgsF(\seqEmpty,\kappa) = \kappa
+   \elimArgsF(\seqEmpty,\kappa) = \kappa
    &
-   \text{(\localref{suppose-kappa}), Def.~\elimArgsF}
+   \text{Def.~\elimArgsF}
    \notag
    \\
    &
@@ -61,81 +55,110 @@ Induction on $\match$ derivation.
    }
    &
    \notag
-   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-list-rest-cons}}
+            left={\ruleName{$\match$-seq-non-empty}}
          ]
          {
-            u_1, p, \match \gamma_1
+            u, p \match \gamma_1
             \\
-            u_2, o \match \gamma_2
+            \seq{u}', \seq{p}' \match \gamma_2
          }
          {
-            u = \exConstr{\cCons}{u_1, u_2}, (\pattListNext{p}{o}) \match \gamma_1 \disjunion \gamma_2 = \gamma
+            \seq{u} = u \cons \seq{u}', \seq{p} = p \cons \seq{p}' \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
       \end{smathpar}
    }
    &
-   \locallabel{match-constr}
+   \locallabel{match-seq}
+   \text{(\localref{suppose-seq-u})}
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         \inferrule*[left={\ruleName{$\desugar$-seq-non-empty}}]
          {
-            (u_1, u_2) \desugar (v_1, v_2)
+            u \desugar v
+            \\
+            \seq{u}' \desugar \seq{v}'
          }
          {
-            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v, v'} = v
+            u \cons \seq{u}' \desugar v \cons \seq{v}' = \seq{v}
          }
       \end{smathpar}
    }
    &
    \text{inversion}
-   \locallabel{desugar-constr}
+   \locallabel{desugar-seq}
    \\
    &
-   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p}',\kappa)
    &
    \notag
    \\
    &
-   \mkElimF((\pattListNext{p}{o}), \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
+   \seq{v}', \kappa' \match \gamma_2', \kappa
+   \textit{ with }
+   \gamma_2 \desugar \gamma_2'
+   \quad (\exists \gamma_2')
+   &
+   \text{(\localref{match-seq}), (\localref{desugar-seq}), IH}
+   \locallabel{match-v-seq}
+   \\
+   &
+   \sigma \eqdef \mkElimF(p, \kappa')
+   &
+   \notag
+   \\
+   &
+   v, \sigma \match \gamma_1', \kappa'
+   \textit{ with }
+   \gamma_1 \desugar \gamma_1'
+   \quad (\exists \gamma_1')
+   &
+   \text{(\localref{match-seq}), (\localref{desugar-seq}), \lemref{match-domains-agree}}
+   \locallabel{match-v}
+   \\
+   &
+   \elimArgsF(p \cons \seq{p}', \kappa) = \sigma
    &
    \text{Def.~\mkElimF}
-   \notag
-   \\
-   &
-   (v_1, v_2), \sigma \match \gamma', \kappa
-   \textit{ and }
-   \gamma \desugar \gamma'
-   \quad
-   (\exists \gamma')
-   &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
    \notag
    \\
    &
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-constr}}]
+         \inferrule*[
+            left={\ruleName{$\match$-seq-non-empty}}
+         ]
          {
-            (v_1, v_2), \sigma \match \gamma', \kappa
+            v, \sigma \match \gamma_1', \kappa'
+            \\
+            \seq{v}', \kappa' \match \gamma_2', \kappa
          }
          {
-            \exConstr{\cCons}{v_1, v_2}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            v \cons \seq{v}',
+            \sigma
             \match
-            \gamma', \kappa
+            \gamma_1' \disjunion \gamma_2',
+            \kappa
          }
-      \end{smathpar}
+        \end{smathpar}
    }
    &
+   \text{(\localref{match-v}), (\localref{match-v-seq})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \gamma = \gamma_1 \disjunion \gamma_2 \desugar \gamma_1' \disjunion \gamma_2' = \gamma'
+   &
+   \text{(\localref{match-v}), (\localref{match-v-seq})}
    \notag
 \end{flalign}
 \end{proof}
