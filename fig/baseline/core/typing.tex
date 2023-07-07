@@ -23,7 +23,7 @@
    \and
    %
    \inferrule*[
-      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+      right={$\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
    ]
    {
       \Gamma \vdash \seq{e: A}
@@ -130,7 +130,7 @@
    %
    \inferrule*
    {
-      (\bind{c_i}{\tyForeign{\seq{A}_i}{D}} \in \Sigma
+      (\datatype{\Sigma}{c_i} = \tyForeign{\seq{A}_i}{D} \in
        \implies
        \Gamma \vdash \kappa_i: \elimTy{\seq{A}_i}{K})
       \quad
@@ -203,7 +203,7 @@
    \and
    %
    \inferrule*[
-      right={$\datatype{\Sigma}{c} = \tyFun{\seq{A}}{D}$}
+      right={$\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
    ]
    {
       \Gamma \vdash \seq{v: A}

@@ -2,17 +2,17 @@
 \label{sec:baseline}
 \subsection{Surface Language}
 
-To allow us to give the appearance that the user is executing surface programs directly, we formalise the
-evaluation of surface terms and corresponding notion of surface value. Surface values differ from core values
-only in the case of closures, which contain surface expressions other surface values. Later we prove that
-directly evaluating a surface program $s$ and desugaring the resulting value produces the same core language
-value as desugaring $s$ to a core program and then evaluating, justifying our presentation of the surface
-semantics in the debugger.
+To allow the user to execute surface programs directly, we formalise the evaluation of surface terms and
+corresponding notion of surface value. Surface values differ from core values only in the case of closures,
+which contain surface expressions other surface values. Later we prove that directly evaluating a surface
+program $s$ and desugaring the resulting value produces the same core language value as desugaring $s$ to a
+core program and then evaluating, justifying our presentation of the surface semantics in the debugger.
 
 \subsubsection{Mutual recursion}
 
-\figref{close-defs-surface} defines the relation $\closeDefsS$ which creates the environments associated with
-a block of mutually recursively defined functions $g = \seq{\bind{x}{\mu}}$ (read $x$ as the function name and $\mu$ as the defining clauses of the function).
+\figref{close-defs-surface} defines the relation $\closeDefsS$, called \emph{close defs}, which creates the
+closures associated with a block of mutually recursive functions $g = \seq{\bind{x}{\mu}}$. (Read $x$ as the
+function name and $\mu$ as the defining clauses of the function.)
 
 \subsubsection{Piecewise function definitions}
 
@@ -42,9 +42,9 @@ We disallow certain combinations of patterns which are commonly allowed in other
 
 \subsubsection{Continuations and Eliminators}
 
-A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are a trie-like
-structures in the core language into which surface-language pattern-matching constructs are desugared. An
-eliminator $\sigma$ is said to be \textit{partial} if it is not defined for every element of its domain.
+A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like
+structures into which surface-language pattern-matching constructs are desugared. An eliminator $\sigma$ is
+said to be \textit{partial} if it is not defined for every element of its domain.
 
 \input{fig/baseline/core/syntax}
 \input{fig/baseline/core/eval}
@@ -58,31 +58,28 @@ eliminator $\sigma$ is said to be \textit{partial} if it is not defined for ever
 \input{fig/baseline/desugar/disjjoin}
 \input{fig/baseline/desugar/value}
 
-\subsubsection{Desugaring Values}
-
-To relate the surface semantics to the core semantics, we must extend desugaring to values, which in turn requires desugaring for surface environments $\upgamma$ and recursive functions $\seq{g}$ (\figref{desugar:values}).
+\figrefTwo{baseline:desugar}{desugar-func-qual-do} define the desugaring relation $\desugar$, which we extend pointwise to sequences.
 
 \subsubsection{Equivalence of Semantics}
+
+\thmref{semantics-eq} is non-trivial only for desugarable $s$ and $\upgamma$; for now we conjecture that
+well-typed terms desugar.
 
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
 \hfill
 \begin{enumerate}
-   \item $ If \; \gamma, s \evalSugS v \; then \; \gamma', e \evalFwdS v' \; where \; v \desugar v'$ \label{semantics-eq-1}
-   \item $If \; \gamma',e \evalFwdS v' \; then \; \gamma, s \evalSugS v \; where \; v \desugar v'$   \label{semantics-eq-2}
+   \item If $\gamma, s \evalSugS v$ then $\gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
+   \item If $\gamma',e \evalFwdS v'$ then $\gamma, s \evalSugS v$ with $v \desugar v'$  \label{semantics-eq-2}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
    For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
 \end{proof}
 
-\thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}) and recursive
-definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
-(\lemref{varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
-as the precondition to \thmref{semantics-eq}.
-
-Desugaring commutes with environment extension.
+\thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}), recursive
+definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlookup}).
 
 \begin{lemma}
    \label{lem:varlookup}
@@ -108,8 +105,8 @@ Desugaring commutes with environment extension.
    Suppose $\gamma_1 \desugar \gamma_2$ and $g \desugar \rho$.
    \hfill
    \begin{enumerate}
-      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\gamma_2, \rho \closeDefsS \gamma_2'$ where $\gamma_1' \desugar \gamma_2'$
-      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\gamma_1, g, \closeDefsS \gamma_1'$ where $\gamma_1' \desugar \gamma_2'$
+      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\exists \gamma_2'.\gamma_2, \rho \closeDefsS \gamma_2'$ with $\gamma_1' \desugar \gamma_2'$
+      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\exists \gamma_1'.\gamma_1, g, \closeDefsS \gamma_1'$ with $\gamma_1' \desugar \gamma_2'$
    \end{enumerate}
 \end{lemma}
 \begin{proof}
