@@ -6,7 +6,7 @@ By induction on derivation of $\evalSugS$.
    s_0 \desugar e_0
    &
    \text{suppose}
-   \notag
+   \locallabel{desug:expr}
    \\
    &
    \gamma \desugar \gamma'
@@ -31,7 +31,8 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \notag
+   \text{suppose}
+   \locallabel{var:surface}
    \\
    &
    \derivation{\derivationWidth}{
@@ -48,8 +49,14 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{inversion}
+   \text{$\desugar$}
    \notag
+   \\
+   &
+   \upgamma_1 \desugar \upgamma_2
+   &
+   (\localref{desug:env})
+   \locallabel{desug:env-rest}
    \\
    &
    \derivation{\derivationWidth}{
@@ -66,7 +73,7 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{inversion}
+   \text{$\evalFwdS$}
    \notag
    \\
    &
