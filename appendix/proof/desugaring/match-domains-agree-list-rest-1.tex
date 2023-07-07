@@ -19,17 +19,17 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-nonempty-list}}
+            left={\ruleName{$\match$-list-rest-cons}}
          ]
          {
-            u, p \match \gamma_1
+            u, p, \match \gamma_1
             \\
             u', o \match \gamma_2
          }
          {
-            \exConstr{\cCons}{u, u'}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
+            \exConstr{\cCons}{u, u'}, (\pattListNext{p}{o}) \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
-      \end{smathpar}
+         \end{smathpar}
    }
    &
    \locallabel{match-constr}
@@ -56,7 +56,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \mkElimF(\pattList{p}{o}, \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
+   \mkElimF((\pattListNext{p}{o}), \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
    &
    \text{Def.~\mkElimF}
    \notag
