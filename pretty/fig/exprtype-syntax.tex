@@ -25,7 +25,6 @@
 
  \begin{figure}
     \begin{salign}
-<<<<<<< HEAD
         \exprType{\param} &: \Expr \rightarrow \ExprType  
         \\
         \exprType  (\exInt{n} ) &= \etypeS   
@@ -35,7 +34,6 @@
         \exprType   (\{\seq{(x:s)}\})  &= \etypeS  
         \\
         \exprType  (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE 
-=======
         \Sem = \ExprType \rightarrow \Doc
     \end{salign}
     \caption{ExprType to Doc Function}
@@ -52,11 +50,9 @@
         \exprType \  (\{\seq{(x:s)}\})  &= \etypeS
         \\
         \exprType \ (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE
->>>>>>> main
         \\
         \exprType  (\exIfThenElse{s}{s_1}{s_2}) &= \etypeS
         \\
-<<<<<<< HEAD
         \exprType   (\exRecProj{s}{x}) &= \etypeS
         \\
         \exprType  (\exApp{s}{s'}) &= \etypeE 
@@ -72,23 +68,6 @@
         \exprType  ({\exListComp{s}{\seq{q}}}) &= \etypeS 
         \\
         \exprType  ({\exListEnum{s}{s'}}) &= \etypeS 
-=======
-        \exprType \  (\exRecProj{s}{x}) &= \etypeE
-        \\
-        \exprType \ (\exApp{s}{s'}) &= \etypeE
-        \\
-        \exprType \  (\exLetRecPiecewise{g}{s}) &= \etypeE
-        \\
-        \exprType \  (\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}) &= \etypeS
-        \\
-        \exprType \  ({\lambda\mu}) &= \etypeS
-        \\
-        \exprType \ ({\exList{s}{l}}) &= \etypeS
-        \\
-        \exprType \ ({\exListComp{s}{\seq{q}}}) &= \etypeS
-        \\
-        \exprType \ ({\exListEnum{s}{s'}}) &= \etypeS
->>>>>>> main
     \end{salign}
     \caption{Expr to ExprType Function}
  \end{figure}
