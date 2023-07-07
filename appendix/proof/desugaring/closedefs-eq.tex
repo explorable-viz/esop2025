@@ -43,10 +43,10 @@
       \locallabel{closed-surface}
       \\
       &
-      \uprho = \set{\seq{\bind{x}{\upsigma}}} \text{ with } \seq{\upmu} \desugar \seq{\upsigma} \quad (\exists \seq{\upsigma})
+      \rho = \set{\seq{\bind{x}{\sigma}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\sigma})
       &
       \text{(\localref{g-desugar})}
-      \locallabel{uprho-exists}
+      \locallabel{rho-exists}
       \\
       &
       \derivation{\derivationWidth}{
@@ -69,7 +69,7 @@
          \end{smathpar}
       }
       &
-      \text{(\localref{uprho-exists})}
+      \text{(\localref{rho-exists})}
       \notag
       \\
       &
@@ -86,14 +86,14 @@
                   right={$\forall i. \numleq \length{\seq{x}}$}
                ]
                {
-                  \upgamma_1 \desugar \upgamma_2
+                  \gamma_1 \desugar \gamma_2
                   \\
-                  g \desugar \uprho
+                  g \desugar \rho
                   \\
-                  \upmu_i \desugar \upsigma_i
+                  \upmu_i \desugar \sigma_i
                }
                {
-                  v_i = \exClosure{\upgamma_1}{g}{\upmu_i} \desugar \exClosure{\upgamma_2}{\uprho}{\upsigma_i}
+                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
                }
             }
             {
@@ -116,14 +116,14 @@
                left={\ruleName{$\closeDefsS$-core}}
             ]
             {
-               \uprho = \set{\seq{\bind{x}{\upsigma}}}
+               \rho = \set{\seq{\bind{x}{\sigma}}}
                \\
-               v'_i = \exClosure{\upgamma_2}{\uprho}{\upsigma_i}
+               v'_i = \exClosure{\gamma_2}{\rho}{\sigma_i}
                \quad
                (\forall i \numleq \length{\seq{x}})
             }
             {
-               \upgamma_2, \uprho
+               \gamma_2, \rho
                \closeDefsFwdR
                \set{\seq{\bind{x}{v'}}}
             }
@@ -134,7 +134,7 @@
       \locallabel{close-rho}
       \\
       &
-      g = \set{\seq{\bind{x}{\upmu}}} \text{ with } \seq{\upmu} \desugar \seq{\upsigma} \quad (\exists \seq{\upmu})
+      g = \set{\seq{\bind{x}{\upmu}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\upmu})
       &
       \text{(\localref{g-desugar})}
       \locallabel{g-exists}
@@ -176,14 +176,14 @@
                   right={$\forall i. \numleq \length{\seq{x}}$}
                ]
                {
-                  \upgamma_1 \desugar \upgamma_2
+                  \gamma_1 \desugar \gamma_2
                   \\
-                  g \desugar \uprho
+                  g \desugar \rho
                   \\
-                  \upmu_i \desugar \upsigma_i
+                  \upmu_i \desugar \sigma_i
                }
                {
-                  v_i = \exClosure{\upgamma_1}{g}{\upmu_i} \desugar \exClosure{\upgamma_2}{\uprho}{\upsigma_i}
+                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
                }
             }
             {
