@@ -19,6 +19,77 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
+            lab={\ruleName{$\match$-list-rest-nil}}
+         ]
+         {
+            \strut
+         }
+         {
+            \cNil, \pattListEnd \match \varnothing = \gamma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-constr}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         {
+            \strut
+         }
+         {
+            \cNil \desugar \cNil
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-constr}
+   \\
+   &
+   \elimArgsF(\seqEmpty,\kappa) = \kappa
+   &
+   \text{Def.~\elimArgsF}
+   \notag
+   \\
+   &
+   \mkElimF(\pattListEnd, \kappa) = \elimConstr{\elimBind{\cNil}{\kappa}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            \inferrule*[left={\ruleName{$\match$-seq-empty}}]
+            {
+               \strut
+            }
+            {
+               \seqEmpty, \kappa \match \varnothing, \kappa
+            }
+         }
+         {
+            \cNil, \elimConstr{\elimBind{\cNil}{\kappa}}
+            \match
+            \varnothing, \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
             left={\ruleName{$\match$-list-rest-cons}}
          ]
          {
@@ -83,77 +154,6 @@ Induction on $\match$ derivation.
             \exConstr{\cCons}{v_1, v_2}, \elimConstr{\elimBind{\cCons}{\sigma}}
             \match
             \gamma', \kappa
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\match$-list-rest-nil}}
-         ]
-         {
-            \strut
-         }
-         {
-            \cNil, \pattListEnd \match \varnothing = \gamma
-         }
-      \end{smathpar}
-   }
-   &
-   \locallabel{match-constr}
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-constr}}]
-         {
-            \strut
-         }
-         {
-            \cNil \desugar \cNil
-         }
-      \end{smathpar}
-   }
-   &
-   \text{inversion}
-   \locallabel{desugar-constr}
-   \\
-   &
-   \elimArgsF(\seqEmpty,\kappa) = \kappa
-   &
-   \text{Def.~\elimArgsF}
-   \notag
-   \\
-   &
-   \mkElimF(\pattListEnd, \kappa) = \elimConstr{\elimBind{\cNil}{\kappa}}
-   &
-   \text{Def.~\mkElimF}
-   \notag
-   \\
-   &
-   \qedLocal
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-constr}}]
-         {
-            \inferrule*[left={\ruleName{$\match$-seq-empty}}]
-            {
-               \strut
-            }
-            {
-               \seqEmpty, \kappa \match \varnothing, \kappa
-            }
-         }
-         {
-            \cNil, \elimConstr{\elimBind{\cNil}{\kappa}}
-            \match
-            \varnothing, \kappa
          }
       \end{smathpar}
    }
