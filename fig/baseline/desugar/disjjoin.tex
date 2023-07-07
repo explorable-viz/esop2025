@@ -55,10 +55,14 @@
          lab={\ruleName{$\disjjoin$-no-overlap}}
       ]
       {
-         \seq{c} \cap \seq{c}' = \varnothing
+         \sigma = \elimConstr{\seq{\elimBind{c}{\sigma}}}
+         \\
+         \sigma' = \elimConstr{\seq{\elimBind{c'}{\sigma'}}}
+         \\
+         \dom{\sigma} \cap \dom{\sigma'} = \varnothing
       }
       {
-         \elimConstr{\seq{\elimBind{c}{\sigma}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\sigma'}}} = \elimConstr{\seq{\elimBind{c}{\sigma}}} \cup \elimConstr{\seq{\elimBind{c'}{\sigma'}}}
+         \sigma \disjjoin \sigma' = \sigma \cup \sigma'
       }
    \end{smathpar}}
    \caption{Disjoint join of (partial) continuations}
