@@ -62,12 +62,12 @@
        %
        \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime, V
+          \seq{v}, \kappa \match \gamma, \kappa', V
        }
        {
-          \annConstr{c'}{\seq{v}}{\alpha}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
+          \annConstr{c}{\seq{v}}{\alpha}, (\elimBind{c}{\kappa}) \cons \sigma
           \match
-          \gamma, \kappa^\twoPrime, V \cup \set{\alpha}
+          \gamma, \kappa', V \cup \set{\alpha}
        }
     \end{smathpar}}
  \caption{Core semantics (dependence graphs): matching}

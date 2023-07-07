@@ -25,31 +25,15 @@
 
  \begin{figure}
     \begin{salign}
-        \exprType{\param} &: \Expr \rightarrow \ExprType  
-        \\
-        \exprType  (\exInt{n} ) &= \etypeS   
-        \\
-        \exprType  (x)  &= \etypeS  
-        \\
-        \exprType   (\{\seq{(x:s)}\})  &= \etypeS  
-        \\
-        \exprType  (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE 
-        \Sem = \ExprType \rightarrow \Doc
-    \end{salign}
-    \caption{ExprType to Doc Function}
- \end{figure}
-
- \begin{figure}
-    \begin{salign}
         \exprType{\param} &: \Expr \rightarrow \ExprType
         \\
-        \exprType \ \exInt{n}  &= \etypeS
+        \exprType  (\exInt{n})  &= \etypeS
         \\
-        \exprType \ x  &= \etypeS
+        \exprType (x)   &= \etypeS
         \\
-        \exprType \  (\{\seq{(x:s)}\})  &= \etypeS
+        \exprType   (\{\seq{(x:s)}\})  &= \etypeS
         \\
-        \exprType \ (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE
+        \exprType  (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE
         \\
         \exprType  (\exIfThenElse{s}{s_1}{s_2}) &= \etypeS
         \\

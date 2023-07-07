@@ -95,7 +95,7 @@ Induction on $\match$ derivation.
             \seq{u} \desugar \seq{v}
          }
          {
-             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
+             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}} = v
          }
       \end{smathpar}
    }
@@ -104,18 +104,18 @@ Induction on $\match$ derivation.
    \locallabel{desugar-constr}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p},\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\kappa'}}
    &
    \text{Def.~\mkElimF}
    \notag
    \\
    &
-   \seq{v}, \sigma \match \gamma', \kappa
+   \seq{v}, \kappa' \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -130,10 +130,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \sigma \match \gamma', \kappa
+            \seq{v}, \kappa' \match \gamma', \kappa
          }
          {
-            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\kappa'}}
             \match
             \gamma', \kappa
          }
@@ -153,10 +153,10 @@ Induction on $\match$ derivation.
          {
             \seq{u}', \seq{p} \match \gamma
             \quad
-            \set{\seq{\bind{\exVar{y}}{u}}'} \subseteq \set{\seq{\bind{\exVar{x}}{u}}}
+            \exRecord{\seq{\bind{\exVar{y}}{u}}'} \subseteq \exRecord{\seq{\bind{\exVar{x}}{u}}}
          }
          {
-            \set{\seq{\bind{\exVar{x}}{u}}}, \set{\seq{\bind{\exVar{y}}{p}}} \match \gamma
+            u = \exRecord{\seq{\bind{\exVar{x}}{u}}}, \exRecord{\seq{\bind{\exVar{y}}{p}}} \match \gamma
          }
       \end{smathpar}
    }
@@ -171,7 +171,7 @@ Induction on $\match$ derivation.
             \seq{u} \desugar \seq{v}
          }
          {
-             \exRecord{\seq{\bind{x}{u}}} \desugar \exRecord{\seq{\bind{x}{v}}}
+             \exRecord{\seq{\bind{x}{u}}} \desugar \exRecord{\seq{\bind{x}{v}}} = v
          }
       \end{smathpar}
    }
@@ -180,12 +180,12 @@ Induction on $\match$ derivation.
    \locallabel{desugar-record}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p},\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattRecord{\seq{\bind{y}{p}}}, \kappa) = \elimRecord{\seq{y}}{\sigma}
+   \mkElimF(\pattRecord{\seq{\bind{y}{p}}}, \kappa) = \elimRecord{\seq{y}}{\kappa'}
    &
    \text{Def.~\mkElimF}
    \notag
@@ -197,7 +197,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}', \sigma \match \gamma', \kappa
+   \seq{v}', \kappa' \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -214,15 +214,15 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-record}}
          ]
          {
-            \seq{v}', \kappa \match \gamma, \kappa'
+            \seq{v}', \kappa' \match \gamma, \kappa
             \\
             \exRec{\seq{\bind{y}{v}}'} \subseteq \exRec{\seq{\bind{x}{v}}}
          }
          {
             \exRec{\seq{\bind{x}{v}}},
-            \elimRecord{\seq{y}}{\kappa}
+            \elimRecord{\seq{y}}{\kappa'}
             \match
-            \gamma, \kappa'
+            \gamma, \kappa
          }
       \end{smathpar}
    }
@@ -238,33 +238,33 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-nonempty-list}}
          ]
          {
-            u, p \match \gamma_1
+            u_1, p \match \gamma_1
             \\
-            u', o \match \gamma_2
+            u_2, o \match \gamma_2
          }
          {
-            \exConstr{\cCons}{u, u'}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
+            u = \exConstr{\cCons}{u_1, u_2}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
       \end{smathpar}
    }
    &
-   \locallabel{match-constr}
+   \locallabel{match-cons}
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-constr}}]
          {
-            (u, u') \desugar (v, v')
+            (u_1, u_2) \desugar (v_1, v_2)
          }
          {
-            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
+            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v_1, v_2} = v
          }
       \end{smathpar}
    }
    &
    \text{inversion}
-   \locallabel{desugar-constr}
+   \locallabel{desugar-cons}
    \\
    &
    \sigma \eqdef \elimArgsF(p \cons o,\kappa)
@@ -278,13 +278,13 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   (v, v'), \sigma \match \gamma', \kappa
+   (v_1, v_2), \sigma \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
    (\exists \gamma')
    &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \text{(\localref{match-cons}), (\localref{desugar-cons}), \lemref{match-domains-agree-seq} (1)}
    \notag
    \\
    &
@@ -293,10 +293,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            (v, v'), \sigma \match \gamma', \kappa
+            (v_1, v_2), \sigma \match \gamma', \kappa
          }
          {
-            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            \exConstr{\cCons}{v_1, v_2}, \elimConstr{\elimBind{\cCons}{\sigma}}
             \match
             \gamma', \kappa
          }

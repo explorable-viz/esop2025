@@ -54,7 +54,7 @@ said to be \textit{partial} if it is not defined for every element of its domain
 \subsection{Desugaring}
 
 \input{fig/baseline/desugar/term}
-\input{fig/baseline/desugar/clauses}
+\input{fig/baseline/desugar/qualifier}
 \input{fig/baseline/desugar/disjjoin}
 \input{fig/baseline/desugar/value}
 
@@ -83,7 +83,7 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
 
 \begin{lemma}
    \label{lem:varlookup}
-   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\gamma \cons \bind{x}{v} \desugar \gamma' \cons \bind{x}{v'}$.
+   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
 \end{lemma}
 \begin{proof}
    Trivially follows from definition of environment desugaring.
@@ -143,10 +143,10 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
 
 \begin{lemma}
    \label{lem:match-domains-agree-seq}
-   Suppose $\seq{u} \desugar \seq{v}$ and $\sigma = \elimArgsF(\seq{p}, \kappa)$.
+   Suppose $\seq{u} \desugar \seq{v}$ and $\kappa' = \elimArgsF(\seq{p}, \kappa)$.
    \begin{enumerate}
-      \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
-      \item If $\seq{u}, \seq{p}\;\matchNeg$ then $\seq{v}, \sigma\;\matchNeg$.
+      \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \kappa' \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
+      \item If $\seq{u}, \seq{p}\;\matchNeg$ then $\seq{v}, \kappa'\;\matchNeg$.
    \end{enumerate}
 \end{lemma}
 
