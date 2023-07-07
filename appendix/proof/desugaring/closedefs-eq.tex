@@ -112,28 +112,40 @@
       &
       \derivation{\derivationWidth}{
          \begin{smathpar}
-            \inferrule*[]
+            \inferrule*[
+               left={\ruleName{$\closeDefsS$-core}}
+            ]
             {
-               \rho = \set{\seq{\bind{x}{\sigma}}}
+               \uprho = \set{\seq{\bind{x}{\upsigma}}}
                \\
-               v'_i = \exClosureNew{\gamma_2}{\rho}{\sigma_i}
+               v'_i = \exClosure{\upgamma_2}{\uprho}{\upsigma_i}
                \quad
                (\forall i \numleq \length{\seq{x}})
             }
             {
-               \gamma_2, \rho
+               \upgamma_2, \uprho
                \closeDefsFwdR
                \set{\seq{\bind{x}{v'}}}
             }
          \end{smathpar}
       }
       &
-      \notag
+      \text{suppose}
+      \locallabel{close-rho}
+      \\
+      &
+      g = \set{\seq{\bind{x}{\upmu}}} \text{ with } \seq{\upmu} \desugar \seq{\upsigma} \quad (\exists \seq{\upmu})
+      &
+      \text{(\localref{g-desugar})}
+      \locallabel{g-exists}
       \\
       &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*
+            [
+               left={\ruleName{$\closeDefsS$-surface}}
+            ]
             {
                g = \seq{\bind{x}{\mu}}
                \\
@@ -147,19 +159,39 @@
          \end{smathpar}
       }
       &
+      \text{(\localref{g-exists})}
       \notag
       \\
       &
-      \forall i\numleq \length{\seq{x}}.v_i \desugar v'_i
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            [
+               left={\ruleName{$\desugar$-env}}
+            ]
+            {
+               \inferrule*
+               [
+                  left={\ruleName{$\desugar$-closure}},
+                  right={$\forall i. \numleq \length{\seq{x}}$}
+               ]
+               {
+                  \upgamma_1 \desugar \upgamma_2
+                  \\
+                  g \desugar \uprho
+                  \\
+                  \upmu_i \desugar \upsigma_i
+               }
+               {
+                  v_i = \exClosure{\upgamma_1}{g}{\upmu_i} \desugar \exClosure{\upgamma_2}{\uprho}{\upsigma_i}
+               }
+            }
+            {
+               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v'}}}
+            }
+         \end{smathpar}
+      }
       &
-      \text{(\localref{g-desugar}), (\localref{gamma-desugar})}
-      \notag
-      \\
-      &
-      \qedLocal
-      \gamma_1' \desugar \gamma_2'
-      &
-      \text{$\desugar$-env}
       \notag
    \end{flalign}
 \end{proof}
