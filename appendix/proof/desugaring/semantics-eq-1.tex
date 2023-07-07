@@ -279,18 +279,28 @@ By induction on derivation of $\evalSugS$.
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \gamma, (g = \seq{\bind{x}{\mu}}) \closeDefsS \gamma^{\dag}
+            \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
             \\
             \gamma \concat \gamma^{\dag}, s \evalSugS v
          }
          {
-            \gamma, \exLetRecPiecewise{g}{s} \evalSugS v
+            \gamma, \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s} \evalSugS v
          }
       \end{smathpar}
    }
    &
    \notag
    \\
+   % & % Really not sure if these are needed for this to work
+   % \exists e. s \desugar e
+   % &
+   % \text{(IH)}
+   % \\
+   % &
+   % \mu_i \desugar \sigma_i \;(\forall i \numleq \length{\seq{x}})
+   % &
+   % \text{(IH)}
+   % \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
@@ -332,14 +342,21 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \text{Then $\gamma \concat \gamma^{\dag} \desugar \gamma' \concat {\gamma^{\ddagger}}$}
+   \gamma^{\dag} \desugar \gamma^{\ddagger}
    &
-   \text{(\localref{desug:env}), \lemref{closedefs-eq}}
+   \text{(\lemref{closedefs-eq})}
+   \locallabel{desug:gamma-dag}
+   \\
+   &
+   \qedLocal
+   \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
+   &
+   \text{(\localref{desug:env}), (\localref{desug:gamma-dag})}
    \notag
    \\
    &
    \qedLocal
-   \text{Use these environments to establish that $v \desugar v'$}
+   v \desugar v'
    &
    \text{IH}
    \notag
