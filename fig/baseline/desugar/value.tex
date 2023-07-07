@@ -1,49 +1,30 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\upgamma \desugarFwdS \upgamma'$}
+    {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
     \begin{smathpar}
-        \inferrule*[]
+        \inferrule*[lab={\ruleName{$\desugar$-env}}]
         {
-            v_i \desugarFwdS v'_i \quad (\forall i \le \length{\seq{x}})
+            \seq{v} \desugar \seq{v}'
         }
         {
-            \set{\seq{\bind{x}{v}}} \desugarFwdS \set{\seq{\bind{x}{v}}'}
+            \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
         }
     \end{smathpar}
     }
-    %
-    \and
-    %
-    {\small \flushleft \shadebox {$g \desugarFwdS \uprho$}
-    \begin{smathpar}
-        \inferrule*
-        {
-            \upmu_i \desugarFwdS \upsigma_i
-            \quad
-            (\forall i \le \length{\seq{x}})
-        }
-        {
-            \seq{\bind{x}{\upmu}} \desugarFwdS \set{\seq{\bind{\exVar{x}}{\upsigma}}}
-        }
-    \end{smathpar}
-    }
-    %
-    \and
-    %
-    {\small \flushleft \shadebox {$u \desugarFwdS v$}
+    {\small \flushleft \shadebox {$u \desugar v$}
         \begin{smathpar}
-            \inferrule*[lab={\ruleName{$\desugarFwdS$-closure}}]
+            \inferrule*[lab={\ruleName{$\desugar$-closure}}]
             {
-                \upgamma \desugarFwdS \upgamma'
+                \gamma \desugar \gamma'
                 \\
-                g \desugarFwdS \uprho
+                \seq{\mu} \desugar \seq{\sigma}
                 \\
-                \upmu \desugarFwdS \upsigma
+                \mu \desugar \sigma
             }
             {
-                \exClosure{\upgamma}{g}{\upmu} \desugarFwdS \exClosure{\upgamma'}{\uprho}{\upsigma}
+                \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
             }
         \end{smathpar}
     }
-    \caption{Desugaring for environments, recursive definitions and values}
-    \label{fig:closures}
+    \caption{Desugaring for environments and values}
+    \label{fig:desugar:values}
 \end{figure}

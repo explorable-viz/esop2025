@@ -1,0 +1,341 @@
+By induction on derivation of $\evalFwdS$
+\begin{proof}
+\small
+\begin{flalign}
+   &
+   s \desugar e
+   &
+   \text{suppose}
+   \notag
+   \\
+   &
+   \gamma \desugar \gamma'
+   &
+   \text{suppose}
+   \locallabel{desug:env}
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            {\gamma^{\dag}}' \cdot (\bind{x}{v'}), x \evalFwdS v'
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            \exVar{x} \desugar \exVar{x}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            {\gamma^{\dag}} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \qedLocal
+   v \desugar v'
+   &
+   \text{(\localref{desug:env}), \lemref{varlookup}}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-constr}}
+         ]
+         {
+            \gamma', \seq{e} \evalFwdS \seq{v}'
+         }
+         {
+            \gamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-constr}}
+         ]
+         {
+            \seq{s} \desugar \seq{e}
+         }
+         {
+            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma, \seq{s} \evalSugS \seq{v}
+   \textit{ with }
+   \seq{v} \desugar \seq{v}'
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\evalSugS$-constr}}
+         ]
+         {
+            \gamma, \seq{s} \evalSugS \seq{v}
+         }
+         {
+            \gamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-constr}}
+         ]
+         {
+            \seq{v} \desugar \seq{v}'
+         }
+         {
+            \exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-apply}},
+            width=3.3in,
+         ]
+         {
+            \gamma, (e, e') \evalS (\exClosure{\gamma'_1}{\rho}{\sigma}, v')
+            \\
+            \gamma'_1, \rho \closeDefsFwdR \gamma'_2
+            \\
+            v', \sigma \match \gamma_3, e^{\dag}
+            \\
+            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+         }
+         {
+            \gamma', \exApp{e}{e'}
+            \evalFwdS
+            u
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-app}}
+         ]
+         {
+            s \desugar e
+            \\
+            s' \desugar e'
+         }
+         {
+            \exApp{s}{s'} \desugar \exApp{e'}{}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{Inversion on $\desugar$}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3in,
+         ]
+         {
+            \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
+            \\
+            \gamma_1, g \closeDefsS \gamma_2
+            \\
+            v, \mu \match \gamma_3, s^\dag
+            \\
+            \gamma_1 \concat \gamma_2 \concat \gamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
+         }
+         {
+            \gamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{Inversion on $\evalSugS$-app}
+   \notag
+   \\
+   &
+   \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   v \desugar v'
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \gamma_2 \desugar  \gamma'_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \gamma_3 \desugar \gamma'_3 \desugar \opAnd s^{\dag} \desugar e^{\dag}
+   &
+   \text{$\mu \desugar \sigma$, \lemref{matching-bi}}
+   \notag
+   \\
+   &
+   \qedLocal
+   v^{\dag} \desugar u
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-let-rec}}
+         ]
+         {
+            \gamma, g \closeDefsS \gamma'
+            \\
+            \gamma \concat \gamma', s \evalSugR{S} v
+         }
+         {
+            \gamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
+         {
+            \mu_i \desugar \sigma_i
+            \quad
+            (\forall i \numleq \length{\seq{x}})
+            \\
+            s \desugar e
+         }
+         {
+            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
+            \desugar
+            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{$\desugar$-let-rec}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalFwdS$-let-rec}}
+         ]
+         {
+            {\gamma^{\dag}}, \set{\seq{\bind{x}{\sigma}}} \closeDefsFwdR {\gamma^{\dag}}'
+            \\
+            {\gamma^{\dag}} \concat {\gamma^{\dag}}', e \evalFwdS v
+         }
+         {
+            {\gamma^{\dag}}, \exLetRec{\seq{\bind{x}{\sigma}}}{e}
+            \evalFwdS
+            v
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \text{Then we conclude that $\gamma \concat \gamma' \desugar {\gamma^{\dag}} \concat {\gamma^{\dag}}'$}
+   &
+   \text{(\localref{desug:env}), \lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \qedLocal
+   v \desugar v'
+   &
+   \text{IH}
+   \notag
+\end{flalign}
+\end{proof}

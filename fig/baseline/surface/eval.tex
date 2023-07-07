@@ -1,31 +1,31 @@
 \begin{figure}
-   {\small \flushleft \tallshadebox{$\upgamma, \seq{s} \evalSugR{\seq{S}} \seq{v}$}%
+   {\small \flushleft \tallshadebox{$\gamma, \seq{s} \evalSugR{\seq{S}} \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalSugS$-seq}}
       ]
       {
-         \upgamma, s_i \evalSugR{S_i} v_i
+         \gamma, s_i \evalSugR{S_i} v_i
          \quad
          (\forall i \numleq \length{\seq{s}})
       }
       {
-         \upgamma, \seq{s} \evalSugR{\seq{S}} \seq{v}
+         \gamma, \seq{s} \evalSugR{\seq{S}} \seq{v}
       }
       %
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \tallshadebox{$\upgamma, s \evalSugR{S} v$}%
+   {\small \flushleft \tallshadebox{$\gamma, s \evalSugR{S} v$}%
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\evalSugS$-nonempty-list}}]
       {
-         \upgamma, s \evalSugR{S} v
+         \gamma, s \evalSugR{S} v
          \\
-         \upgamma, l \evalSugR{S'} v'
+         \gamma, l \evalSugR{S'} v'
       }
       {
-         \upgamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v')
+         \gamma, \exList{s}{l} \evalSugR{\trList{S}{S'}} \cCons(v, v')
       }
       %
       \and
@@ -33,10 +33,10 @@
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-comp}}
       ]{
-         \upgamma, \seq{q}, s \evalSugR{\seq{Q},S} v
+         \gamma, \seq{q}, s \evalSugR{\seq{Q},S} v
       }
       {
-         \upgamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
+         \gamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
       }
       %
       \and
@@ -46,16 +46,16 @@
          width=3in,
       ]
       {
-         \upgamma, (s, s') \evalSugR{(S,S')} (\exClosure{\upgamma_1}{g}{\upmu}, v)
+         \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
          \\
-         \upgamma_1, g \closeDefsS \upgamma_2
+         \gamma_1, g \closeDefsS \gamma_2
          \\
-         v, \upmu \matchFwdR{p} \upgamma_3, s^\dag
+         v, \mu \match \gamma_3, s^\dag
          \\
-         \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, s^\dag \evalSugR{S^\dag} v'
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, s^\dag \evalSugR{S^\dag} v'
       }
       {
-         \upgamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v'
+         \gamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v'
       }
       %
       \and
@@ -64,12 +64,12 @@
          lab={\ruleName{$\evalSugS$-bin-app}}
       ]
       {
-         \upgamma, (s_1, s_2) \evalSugR{S_1, S_2} (u_1, u_2)
+         \gamma, (s_1, s_2) \evalSugR{S_1, S_2} (u_1, u_2)
          \\
-         \upgamma, \hat{\oplus}(u_1, u_2) = u
+         \gamma, \hat{\oplus}(u_1, u_2) = u
       }
       {
-         \upgamma, s_1 \oplus s_1 \evalSugR{\trBinApp{S_1}{S_2}{t}} u
+         \gamma, s_1 \oplus s_1 \evalSugR{\trBinApp{S_1}{S_2}{t}} u
       }
       %
       \and
@@ -78,12 +78,12 @@
          lab={\ruleName{$\evalSugS$-if-true}}
       ]
       {
-         \upgamma, s \evalSugR{S} \cTrue
+         \gamma, s \evalSugR{S} \cTrue
          \\
-         \upgamma, s_1 \evalSugR{S_1} u
+         \gamma, s_1 \evalSugR{S_1} u
       }
       {
-         \upgamma, \exIfThenElse{s}{s_1}{s_2}\evalSugR{\exIfThenElse{S}{S_1}{s_2}} u
+         \gamma, \exIfThenElse{s}{s_1}{s_2}\evalSugR{\exIfThenElse{S}{S_1}{s_2}} u
       }
       %
       \and
@@ -92,12 +92,12 @@
          lab={\ruleName{$\evalSugS$-if-false}}
       ]
       {
-         \upgamma, s \evalSugR{S} \cFalse
+         \gamma, s \evalSugR{S} \cFalse
          \\
-         \upgamma, s_2 \evalSugR{S_2} u
+         \gamma, s_2 \evalSugR{S_2} u
       }
       {
-         \upgamma, \exIfThenElse{s}{s_{1}}{s_{2}}\evalSugR{\exIfThenElse{S}{s_1}{S2}} u
+         \gamma, \exIfThenElse{s}{s_{1}}{s_{2}}\evalSugR{\exIfThenElse{S}{s_1}{S2}} u
       }
       %
       \and
@@ -106,12 +106,12 @@
          lab={\ruleName{$\evalSugS$-let-rec}}
       ]
       {
-         \upgamma, g \closeDefsS \upgamma'
+         \gamma, g \closeDefsS \gamma'
          \\
-         \upgamma \concat \upgamma', s \evalSugR{S} v
+         \gamma \concat \gamma', s \evalSugR{S} v
       }
       {
-         \upgamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
+         \gamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
       }
       %
       \and
@@ -120,14 +120,14 @@
          lab={\ruleName{$\evalSugS$-match-as}}
       ]
       {
-         \upgamma, s \evalSugR{S} v
+         \gamma, s \evalSugR{S} v
          \\
-         v, \seq{\clauseUncurried{p}{s}}' \matchFwdS \upgamma', s_i
+         v, \seq{\clauseUncurried{p}{s}}' \match \gamma', s_i
          \\
-         \upgamma \concat \upgamma', s_i \evalSugR{S'} v'
+         \gamma \concat \gamma', s_i \evalSugR{S'} v'
       }
       {
-         \upgamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v'
+         \gamma, \exMatch{s}{\seq{\clauseUncurried{p}{s}}'} \evalSugR{\trMatchAs{S}{\clauseUncurried{p'}{S'}}} v'
       }
       %
       \and
@@ -136,20 +136,20 @@
          lab={\ruleName{$\evalSugS$-enum}}
       ]
       {
-         \upgamma, \exApp{\exApp{\varEnumFromTo}{s_1}}{s_2} \evalSugR{\trSurfaceApp{(\trSurfaceApp{\varEnumFromTo}{S_1}{\exClosure{\varepsilon}{\varepsilon}{\clause{y}{S'}}})}{S_2}{S^{\dag}}} v
+         \gamma, \exApp{\exApp{\varEnumFromTo}{s_1}}{s_2} \evalSugR{\trSurfaceApp{(\trSurfaceApp{\varEnumFromTo}{S_1}{\exClosure{\varepsilon}{\varepsilon}{\clause{y}{S'}}})}{S_2}{S^{\dag}}} v
       }
       {
-         \upgamma, \exListEnum{s_1}{s_2} \evalSugR{\trEnum{S_1}{S_2}} v
+         \gamma, \exListEnum{s_1}{s_2} \evalSugR{\trEnum{S_1}{S_2}} v
       }
    \end{smathpar}}
    {\small \flushleft \tallshadebox{$\seq{q}, s \evalSugR{\seq{Q},S} v$}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
       {
-         \upgamma, s \evalSugR{S} u
+         \gamma, s \evalSugR{S} u
       }
       {
-         \upgamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \cCons(u,\cNil)
+         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u,\cNil}
       }
       %
       \and
@@ -158,14 +158,14 @@
          lab={\ruleName{$\evalSugS$-list-comp-decl}}
       ]
       {
-         \upgamma, s' \evalSugR{S'} u'
+         \gamma, s' \evalSugR{S'} u'
          \\
-         p, u' \matchS \upgamma'
+         p, u' \match \gamma'
          \\
-         (\upgamma \cons \upgamma'), \seq{q},s \evalSugR{\seq{Q},S} u
+         (\gamma \cons \gamma'), \seq{q},s \evalSugR{\seq{Q},S} u
       }
       {
-         \upgamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
+         \gamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
       }
       %
       \and
@@ -174,10 +174,10 @@
          lab={\ruleName{$\evalSugS$-list-comp-gen}}
       ]
       {
-         \upgamma, \exApp{\exApp{\varConcatMap}{\uplambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
+         \gamma, \exApp{\exApp{\varConcatMap}{\lambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
       }
       {
-         \upgamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
+         \gamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
       }
       %
       \and
@@ -186,10 +186,10 @@
          lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
       ]
       {
-         \upgamma, s \evalSugR{S} \cFalse
+         \gamma, s \evalSugR{S} \cFalse
       }
       {
-         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} []
+         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \cNil
       }
       %
       \and
@@ -198,19 +198,16 @@
          lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
       ]
       {
-         \upgamma, \seq{q}, s' \evalSugR{\seq{Q},S} v
+         \gamma, \seq{q}, s' \evalSugR{\seq{Q},S} v
          \\
-         \upgamma, s \evalSugR{S} \cTrue
+         \gamma, s \evalSugR{S} \cTrue
       }
       {
-         \upgamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
+         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
       }
    \end{smathpar}}
-   \caption{Surface semantics: evaluation}
-\end{figure}
-\begin{figure}
-   \ContinuedFloat
-   {\small \flushleft \tallshadebox{$\upgamma, r \evalSugS v$}
+   \\[3mm]
+   {\small \flushleft \tallshadebox{$\gamma, r \evalSugS v$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalSugS$-list-rest-end}}
@@ -219,7 +216,7 @@
          \strut
       }
       {
-         \upgamma, \exListEnd \evalSugR{\trListEnd} \cNil
+         \gamma, \exListEnd \evalSugR{\trListEnd} \cNil
       }
       %
       \and
@@ -228,30 +225,30 @@
          lab={\ruleName{$\evalSugS$-list-rest-next}}
       ]
       {
-         \upgamma, s \evalSugR{S} v
+         \gamma, s \evalSugR{S} v
          \\
-         \upgamma, l \evalSugR{S'} v'
+         \gamma, l \evalSugR{S'} v'
       }
       {
-         \upgamma, \exListNext{s}{l} \evalSugR{\trListNext{S}{S'}} \cCons(v, v')
+         \gamma, (\exListNext{s}{l}) \evalSugR{\trListNext{S}{S'}} \exConstr{\cCons}{v, v'}
       }
    \end{smathpar}
    }
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
-   {\small, \flushleft \shadebox{$\upgamma, g \closeDefsS \upgamma'$}
+   {\small, \flushleft \shadebox{$\gamma, g \closeDefsS \gamma'$}
       \begin{smathpar}
          \inferrule*
          {
             g = \seq{\bind{x}{\mu}}
             \\
-            v_i = \exClosure{\upgamma}{g}{\upmu_i}
+            v_i = \exClosure{\gamma}{g}{\mu_i}
             \quad
-            \forall i \le \length{\seq{x}}
+            (\forall i \le \length{\seq{x}})
          }
          {
-            \upgamma, g \closeDefsS \set{\seq{\bind{x}{v}}}
+            \gamma, g \closeDefsS \set{\seq{\bind{x}{v}}}
          }
       \end{smathpar}}
    \caption{Surface semantics: recursive definitions}

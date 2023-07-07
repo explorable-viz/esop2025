@@ -1,0 +1,308 @@
+Induction on $\match$ derivation.
+\begin{proof}
+\small
+\begin{flalign}
+   &
+   u, p \match \gamma
+   &
+   \text{suppose}
+   \notag
+   \\
+   &
+   u \desugar v
+   &
+   \text{suppose}
+   \notag
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            u, x \match \set{\bind{\exVar{x}}{u}} = \gamma
+         }
+      \end{smathpar}
+   }
+   \\
+   &
+   \mkElimF(x, \kappa) = \elimVar{x}{\kappa}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-var}}]
+         {
+            \strut
+         }
+         {
+            v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-env}}]
+         {
+             u \desugar v
+         }
+         {
+             \gamma = \set{\bind{x}{u}} \desugar \set{\bind{x}{v}}
+         }
+      \end{smathpar}
+    }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-constr}}
+         ]
+         {
+            \seq{u},\seq{p} \match \gamma
+         }
+         {
+            u = \exConstr{c}{\seq{u}},\pattConstr{c}{\seq{p}} \match \gamma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-constr}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         {
+            \seq{u} \desugar \seq{v}
+         }
+         {
+             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-constr}
+   \\
+   &
+   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \seq{v}, \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma \desugar \gamma'
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            \seq{v}, \sigma \match \gamma', \kappa
+         }
+         {
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \match
+            \gamma', \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{u}', \seq{p} \match \gamma
+            \quad
+            \set{\seq{\bind{\exVar{y}}{u}}'} \subseteq \set{\seq{\bind{\exVar{x}}{u}}}
+         }
+         {
+            \set{\seq{\bind{\exVar{x}}{u}}}, \set{\seq{\bind{\exVar{y}}{p}}} \match \gamma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-record}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-record}}]
+         {
+            \seq{u} \desugar \seq{v}
+         }
+         {
+             \exRecord{\seq{\bind{x}{u}}} \desugar \exRecord{\seq{\bind{x}{v}}}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-record}
+   \\
+   &
+   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\pattRecord{\seq{\bind{y}{p}}}, \kappa) = \elimRecord{\seq{y}}{\sigma}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \seq{u}' \desugar \seq{v}'
+   &
+   (\localref{match-record}, \localref{desugar-record})
+   \notag
+   \\
+   &
+   \seq{v}', \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma \desugar \gamma'
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-record}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{v}', \kappa \match \gamma, \kappa'
+            \\
+            \exRec{\seq{\bind{y}{v}}'} \subseteq \exRec{\seq{\bind{x}{v}}}
+         }
+         {
+            \exRec{\seq{\bind{x}{v}}},
+            \elimRecord{\seq{y}}{\kappa}
+            \match
+            \gamma, \kappa'
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-nonempty-list}}
+         ]
+         {
+            u, p \match \gamma_1
+            \\
+            u', o \match \gamma_2
+         }
+         {
+            \exConstr{\cCons}{u, u'}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-constr}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         {
+            (u, u') \desugar (v, v')
+         }
+         {
+            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-constr}
+   \\
+   &
+   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\pattList{p}{o}, \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   (v, v'), \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma \desugar \gamma'
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            (v, v'), \sigma \match \gamma', \kappa
+         }
+         {
+            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            \match
+            \gamma', \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+\end{flalign}
+\end{proof}

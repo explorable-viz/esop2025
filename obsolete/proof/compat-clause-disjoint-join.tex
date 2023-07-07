@@ -1,0 +1,244 @@
+Start with the following assumptions:
+\begin{equation}
+   \compatPatt{c}{\mu}
+\end{equation}
+\begin{equation}
+   \locallabel{desugar-left}
+   c \desugar \sigma
+\end{equation}
+\begin{equation}
+   \locallabel{desugar-right}
+   \mu \desugar \sigma'
+\end{equation}
+We proceed by induction on the derivation of $\compatPattSym$
+\begin{proof}
+\small
+\begin{flalign}
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[]
+         {
+            \exists i.\; (\compatPatt{p_i}{p_i'})
+            \opAnd
+            \forall j < i.\; p_j = p'_j
+         }
+         {
+            \compatPatt{(\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s})}{(\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'})}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \text{Have three cases for $\compatPatt{p_i}{p'_i}$}
+   &
+   \notag
+   \\
+   \subcase{}
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPatt{}{}$-constr-neq}}
+         ]
+         {
+            \exVar{c} \neq \exVar{c'}
+         }
+         {
+            \compatPatt{\exConstr{c}{\seq{p}''}}{\exConstr{c'}{\seq{p}'''}}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \text{Let $\tau = \seqRangeOp{p''_1}{p''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
+   &
+   \notag
+   \\
+   &
+   \text{Let $\tau' = \seqRangeOp{p'''_1}{p'''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s})$}
+   &
+   \notag
+   \\
+   &
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugar \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
+   &
+   \text{(\localref{desugar-left})}
+   \notag
+   \\
+   &
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugar \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \tau'
+   &
+   \text{(\localref{desugar-right})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \sigma \disjjoin (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto \elimPair{\elimBind{c}{\tau}}{\elimBind{c'}{\tau'}}
+   &
+   \text{$\disjjoin$-constr-neq}
+   \notag
+   \\
+   \subcase{}
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPatt{}{}$-constr-eq}}
+         ]
+         {
+            \compatPatt{\seq{p}''}{\seq{p}'''}
+         }
+         {
+            \compatPatt{\exConstr{c}{\seq{p}''}}{\exConstr{c}{\seq{p}'''}}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \text{Let $\tau = \seqRangeOp{p''_1}{p''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
+   &
+   \notag
+   \\
+   &
+   \text{Let $\tau' = \seqRangeOp{p'''_1}{p'''_n}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s})$}
+   &
+   \notag
+   \\
+   &
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p_i \cdot \seq{p}}{s}) \desugar \sigma = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau
+   &
+   \text{(\localref{desugar-left})}
+   \notag
+   \\
+   &
+   (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) \desugar \sigma' = \seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \tau'
+   &
+   \text{(\localref{desugar-right})}
+   \notag
+   \\
+   &
+   \exists i'.\; \compatPatt{p''_{i'}}{p'''_{i'}} \opAnd \forall j' < i'.\; p''_{j'} = p'''_{j'}
+   &
+   \text{inversion on $\compatPatt{\seq{p}}{\seq{p}'}$}
+   \\
+   &
+   \text{If $p''_{i'} = \exConstr{c}{\seq{p}^{\dag}} \opAnd p'''_{i'} = \exConstr{c'}{\seq{p}'^{\dag}}$ with $\Sigma(c) = \Sigma(c') \opAnd c \neq c'$ then:}
+   &
+   \\
+   &
+   \tau = \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto c \elimmapsto \seqRangeOp{p^{\dag}_1}{p^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p''_{i'+1}}{p''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})
+   &
+   \text{By (4)}
+   \notag
+   \\
+   &
+   \tau' = \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto c' \elimmapsto \seqRangeOp{p'^{\dag}_1}{p'^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p'''_{i'+1}}{p'''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s'})
+   &
+   \text{By (4)}
+   \notag
+   \\
+   &
+   \text{Let $\tau^{\dag} = \seqRangeOp{p^{\dag}_1}{p^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p''_{i'+1}}{p''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}}{s})$}
+   &
+   \notag
+   \\
+   &
+   \text{Let $\tau'^{\dag} = \seqRangeOp{p'^{\dag}_1}{p'^{\dag}_{m}}{\elimmapsto} \elimmapsto \seqRangeOp{p'''_{i'+1}}{p'''_{n}}{\elimmapsto} \elimmapsto (\varepsilon \disjjoin \clause{\seq{p}'}{s'})$}
+   &
+   \notag
+   \\
+   &
+   \sigma \disjjoin (\clause{\seqRangeOp{p_1}{p_{i-1}}{\cdot}\cdot p'_i \cdot \seq{p}'}{s'}) =
+   &
+   \notag
+   \\
+   &
+   \quad\seqRangeOp{p_1}{p_{i-1}}{\elimmapsto} \elimmapsto c \elimmapsto \seqRangeOp{p''_1}{p''_{i'-1}}{\elimmapsto} \elimmapsto \elimPair{\elimBind{c}{\tau^{\dag}}}{\elimBind{c'}{\tau'^{\dag}}}
+   &
+   \notag
+   \\
+   &
+   \text{If ¬$(5)$, repeat until find non-equal constructors, then construct join accordingly}
+   &
+   \notag
+   \\
+   \subcase{}
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\compatPatt{}{}$-record}}
+         ]
+         {
+            \compatPatt{\seq{p}}{\seq{p}'}
+         }
+         {
+            \compatPatt{\exRecord{\seq{\bind{\exVar{x}}{p}}}}{\exRecord{\seq{\bind{\exVar{x}}{p}}'}}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \text{Isomorphic proof to the constr-eq case}
+   &
+   \notag
+\end{flalign}
+\begin{flalign}
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            right={$\length{\mu}\ge2$}
+         ]
+         {
+            \forall c_i \in \mu. \; \compatPatt{c}{c_i}
+         }
+         {
+            \compatPatt{c}{\mu}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   c \desugar \sigma
+   &
+   \text{(\localref{desugar-left})}
+   \notag
+   \\
+   &
+   \forall c_i \in \mu.\; \exists \tau_i.\; \sigma \disjjoin \sigma_i = \tau_i
+   &
+   \text{premise}
+   \\
+   &
+   \forall c_i,c_j \in \mu.\; c_i \desugar \sigma_i,\; c_k \desugar \sigma_j,\; \exists \tau_{i,j}.\;\sigma_i \disjjoin \sigma_j = \tau_{i,j}
+   &
+   \text{premise}
+   \\
+   &
+   \mu \desugar \sigma'
+   &
+   \text{(\localref{desugar-right})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \exists \tau.\;\sigma \disjjoin \sigma' = \tau
+   &
+   \thmref{join-preserves-join}
+   \notag
+\end{flalign}
+\end{proof}

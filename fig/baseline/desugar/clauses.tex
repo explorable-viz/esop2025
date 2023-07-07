@@ -1,5 +1,5 @@
 \begin{figure}
-   {\flushleft \shadebox{$\upmu \desugar \upsigma$}
+   {\flushleft \shadebox{$\mu \desugar \sigma$}
    \hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugar$-clause-uncurried}}]
@@ -14,150 +14,150 @@
       %
       \inferrule*[lab={\ruleName{$\desugar$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
       {
-         \clause{\seq{p}}{s} \desugar \upsigma
+         \clause{\seq{p}}{s} \desugar \sigma
       }
       {
          (\clause{(p' \cons \seq{p})}{s})
          \desugar
-         \mkElimF(p')(\exFun{\upsigma})
+         \mkElimF(p')(\exFun{\sigma})
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugar$-clauses}}]
       {
-         c_i \desugar \upsigma_i
+         c_i \desugar \sigma_i
          \quad
          (\forall i \numleq j)
       }
       {
-         \seqRange{c_1}{c_j} \desugar \seqRangeOp{\upsigma_1}{\upsigma_j}{\disjjoin}
+         \seqRange{c_1}{c_j} \desugar \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$\seq{q}, s \desugarFwdR e$}
+   {\flushleft \shadebox{$\seq{q}, s \desugar e$}
    \hfill \phantom{blah}}% \textbfit{$\seq{q}, s$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-done}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
       {
-         s \desugarFwdR e
+         s \desugar e
       }
       {
          \seqEmpty, s
-         \desugarFwdR
+         \desugar
          \exConstr{\cCons}{e, \cNil}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-guard}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
       {
-         s_1 \desugarFwdR e
+         s_1 \desugar e
          \\
-         \seq{q}, s_2 \desugarFwdR e'
+         \seq{q}, s_2 \desugar e'
          \\
-         \upsigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
       }
       {
          \qualGuard{s_1} \cons \seq{q}, s_2
-         \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \desugar
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-decl}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
       {
-         s_1 \desugarFwdR e
+         s_1 \desugar e
          \\
-         \seq{q}, s_2 \desugarFwdR e'
+         \seq{q}, s_2 \desugar e'
          \\
-         \upsigma = \orElseF(\mkElimF(p)(e'), \exError)
+         \sigma = \orElseF(\mkElimF(p)(e'), \exError)
       }
       {
          \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
-         \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \desugar
+         \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-list-comp-gen}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
       {
-         s_1 \desugarFwdR e
+         s_1 \desugar e
          \\
-         \seq{q}, s_2 \desugarFwdR e'
+         \seq{q}, s_2 \desugar e'
          \\
-         \upsigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \qualGenerator{p}{s_1} \cons \seq{q}, s_2
-         \desugarFwdR
-         \exApp{\exApp{\varConcatMap}{\exFun{\upsigma}}}{e}
+         \desugar
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$\seq{d} \desugarFwdR e$}
+   {\flushleft \shadebox{$\seq{d} \desugar e$}
    \hfill \phantom{blah}}% \textbfit{$\seq{d}$ forward-desugars to $e$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-end}}]
+      \inferrule*[lab={\ruleName{$\desugar$-do-end}}]
       {
-         s \desugarFwdR e
+         s \desugar e
       }
       {
          \stmtVoid{s}
-         \desugarFwdR
+         \desugar
          e
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-void}}]
+      \inferrule*[lab={\ruleName{$\desugar$-do-void}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         \seq{d} \desugarFwdR e'
+         \seq{d} \desugar e'
          \\
-         \upsigma = \mkElimF(\pattVar{\varAnon})(e')
+         \sigma = \mkElimF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
-         \desugarFwdR
-         \exApp{\exApp{\varBind}{e}}{\exFun{\upsigma}}
+         \desugar
+         \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-gen}}]
+      \inferrule*[lab={\ruleName{$\desugar$-do-gen}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         \seq{d} \desugarFwdR e'
+         \seq{d} \desugar e'
          \\
-         \orElseF(\mkElimF(p)(e'),\varFail) = \upsigma
+         \orElseF(\mkElimF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
-         \desugarFwdR
+         \desugar
          \exApp
             {\exApp{\varBind}{e}}
-            {\exFun{\upsigma}}
+            {\exFun{\sigma}}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugarFwdR$-do-decl}}]
+      \inferrule*[lab={\ruleName{$\desugar$-do-decl}}]
       {
-         s \desugarFwdR e
+         s \desugar e
          \\
-         \seq{d} \desugarFwdR e'
+         \seq{d} \desugar e'
          \\
-         \orElseF(\mkElimF(p)(e'), \exError) = \upsigma
+         \orElseF(\mkElimF(p)(e'), \exError) = \sigma
       }
       {
          \stmtDeclaration{p}{s} \cons \seq{d}
-         \desugarFwdR
-         \exApp{\exFun{\upsigma}}{e}
+         \desugar
+         \exApp{\exFun{\sigma}}{e}
       }
    \end{smathpar}
    \caption{Baseline language: Desugaring of function definitions, qualifiers and statements}

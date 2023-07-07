@@ -1,22 +1,22 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}$}%
+   {\small \flushleft \shadebox{$G, \gamma, \seq{e}, V \evalFwdS G', \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalFwdS$-seq}}
       ]
       {
-         G_{i - 1}, \upgamma, e_i, V \evalFwdS G_i, v_i
+         G_{i - 1}, \gamma, e_i, V \evalFwdS G_i, v_i
          \quad
          (\forall i \numleq \length{\seq{e}})
       }
       {
-         G_0, \upgamma, \seq{e}, V \evalFwdS G_{\length{\seq{e}}}, \seq{v}
+         G_0, \gamma, \seq{e}, V \evalFwdS G_{\length{\seq{e}}}, \seq{v}
       }
       %
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$G, \upgamma, e, V \evalFwdS G', v$}%
+   {\small \flushleft \shadebox{$G, \gamma, e, V \evalFwdS G', v$}%
    \begin{smathpar}
       \inferrule*[
       lab={\ruleName{$\evalFwdS$-var}}
@@ -25,7 +25,7 @@
          \strut
       }
       {
-         G, \upgamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdS G, v
+         G, \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalFwdS G, v
       }
       %
       \and
@@ -37,10 +37,10 @@
          \strut
       }
       {
-         G, \upgamma, \annInt{n}{\upalpha}, V
+         G, \gamma, \annInt{n}{\alpha}, V
          \evalFwdS
-         \mkAddr{G}{V \cup \set{\upalpha}}{\upalpha'},
-         \annInt{n}{\upalpha'}
+         \mkAddr{G}{V \cup \set{\alpha}}{\alpha'},
+         \annInt{n}{\alpha'}
       }
       %
       \and
@@ -52,23 +52,23 @@
          \strut
       }
       {
-         G, \upgamma, \annStr{s}{\upalpha}, V
+         G, \gamma, \annStr{s}{\alpha}, V
          \evalFwdS
-         \mkAddr{G}{V \cup \set{\upalpha}}{\upalpha'},
-         \annStr{s}{\upalpha'}
+         \mkAddr{G}{V \cup \set{\alpha}}{\alpha'},
+         \annStr{s}{\alpha'}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
       {
-         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         G, \upgamma, \annRec{\seq{\bind{x}{e}}}{\upalpha}, V
+         G, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalFwdS
-         \mkAddr{G'}{V \cup \set{\upalpha}}{\upalpha'},
-         \annRec{\seq{\bind{x}{v}}}{\upalpha'}
+         \mkAddr{G'}{V \cup \set{\alpha}}{\alpha'},
+         \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
       \and
@@ -77,38 +77,38 @@
          lab={\ruleName{$\evalFwdS$-project}}
       ]
       {
-         G, \upgamma, e, V \evalFwdS G', \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\upalpha}
+         G, \gamma, e, V \evalFwdS G', \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
       }
       {
-         G, \upgamma, \exRecProj{e}{y}, V \evalFwdS G', u
+         G, \gamma, \exRecProj{e}{y}, V \evalFwdS G', u
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
       {
-         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{\annStr{s}{\upbeta}}
+         G, \gamma, \seq{e}, V \evalFwdS G', \seq{\annStr{s}{\beta}}
          \\
-         G', \upgamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
+         G', \gamma, \seq{e}', V \evalFwdS G^\twoPrime, \seq{v}
       }
       {
-         G, \upgamma, \annDict{\seq{\bind{e}{e}}'}{\upalpha},         V
+         G, \gamma, \annDict{\seq{\bind{e}{e}}'}{\alpha},         V
          \evalFwdS
-         \mkAddr{G^\twoPrime}{V \cup \set{\upalpha}}{\upalpha'},
-         \annDict{\seq{\bind{s}{(\upbeta, v)}}}{\upalpha'},
+         \mkAddr{G^\twoPrime}{V \cup \set{\alpha}}{\alpha'},
+         \annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
       {
-         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalFwdS G', \seq{v}
       }
       {
-         G, \upgamma, \exConstr{c}{\seq{e}}, V
+         G, \gamma, \exConstr{c}{\seq{e}}, V
          \evalFwdS
-         \mkAddr{G'}{V}{\upalpha},
-         \annConstr{c}{\seq{v}}{\upalpha}
+         \mkAddr{G'}{V}{\alpha},
+         \annConstr{c}{\seq{v}}{\alpha}
       }
       %
       \and
@@ -118,10 +118,10 @@
          \strut
       }
       {
-         G, \upgamma, \exFun{\upsigma}, V
+         G, \gamma, \exFun{\sigma}, V
          \evalFwdS
          G,
-         \annClosure{\upgamma}{\seqEmpty}{\upsigma}{V}
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{V}
       }
       %
       \and
@@ -131,16 +131,16 @@
          width=3.3in,
       ]
       {
-         G, \upgamma, (e, e'), V \evalS G', (\annClosure{\upgamma_1}{\uprho}{\upsigma}{V_1}, v)
+         G, \gamma, (e, e'), V \evalS G', (\annClosure{\gamma_1}{\rho}{\sigma}{V_1}, v)
          \\
-         \upgamma_1, \uprho, V_1 \closeDefsFwdR \upgamma_2
+         \gamma_1, \rho, V_1 \closeDefsFwdR \gamma_2
          \\
-         v, \upsigma \matchFwdS \upgamma_3, e, V_2
+         v, \sigma \match \gamma_3, e, V_2
          \\
-         G', \upgamma_1 \concat \upgamma_2 \concat \upgamma_3, e, V_1 \cup V_2 \evalFwdS G^\twoPrime, u
+         G', \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalFwdS G^\twoPrime, u
       }
       {
-         G, \upgamma, \exApp{e}{e'}, V
+         G, \gamma, \exApp{e}{e'}, V
          \evalFwdS
          G^\twoPrime, u
       }
@@ -151,12 +151,12 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         G, \upgamma, \seq{e}, V \evalFwdS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalFwdS G', \seq{v}
          \\
          \interpret{f}(G', \seq{v}) = (G^\twoPrime, u)
       }
       {
-         G, \upgamma, \exForeignApp{f}{\seq{e}}, V
+         G, \gamma, \exForeignApp{f}{\seq{e}}, V
          \evalFwdS
          G^\twoPrime, u
       }
@@ -167,12 +167,12 @@
          lab={\ruleName{$\evalFwdS$-let}}
       ]
       {
-         G, \upgamma, e, V \evalFwdS G', v
+         G, \gamma, e, V \evalFwdS G', v
          \\
-         G', \upgamma \cons (\bind{x}{v}), e', V \evalFwdS G^\twoPrime, v'
+         G', \gamma \cons (\bind{x}{v}), e', V \evalFwdS G^\twoPrime, v'
       }
       {
-         G, \upgamma, \exLet{x}{e}{e'}, V
+         G, \gamma, \exLet{x}{e}{e'}, V
          \evalFwdS
          G^\twoPrime, v'
       }
@@ -183,30 +183,30 @@
          lab={\ruleName{$\evalFwdS$-let-rec}}
       ]
       {
-         \upgamma, \set{\seq{\bind{x}{\upsigma}}}, V \closeDefsFwdR \upgamma'
+         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefsFwdR \gamma'
          \\
-         G, \upgamma \concat \upgamma', e, V \evalFwdS G', v
+         G, \gamma \concat \gamma', e, V \evalFwdS G', v
       }
       {
-         G, \upgamma, \exLetRec{\seq{\bind{x}{\upsigma}}}{e}, V
+         G, \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
          \evalFwdS
          G', v
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\upgamma, \uprho, V \closeDefsFwdR \upgamma'$}
-    \hfill\textit{ with }$\dom{\uprho} = \dom{\upgamma}$%
+   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefsFwdR \gamma'$}
+    \hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
    \begin{smathpar}
       \inferrule*[]
       {
-         \uprho = \set{\seq{\bind{x}{\upsigma}}}
+         \rho = \set{\seq{\bind{x}{\sigma}}}
          \\
-         v_i = \annClosure{\upgamma}{\uprho}{\upsigma_i}{V'}
+         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{V'}
          \quad
          (\forall i \numleq \length{\seq{x}})
       }
       {
-         \upgamma, \uprho, V
+         \gamma, \rho, V
          \closeDefsFwdR
          \set{\seq{\bind{x}{v}}}
       }

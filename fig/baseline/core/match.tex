@@ -1,72 +1,72 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdS \upgamma, \upkappa'$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, \kappa'$}\hfill
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-empty}}
+          lab={\ruleName{$\match$-seq-empty}}
        ]
        {
           \strut
        }
        {
-          \seqEmpty, \upkappa \matchFwdS \varnothing, \upkappa
+          \seqEmpty, \kappa \match \varnothing, \kappa
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-non-empty}}
+          lab={\ruleName{$\match$-seq-non-empty}}
        ]
        {
-          v, \upsigma \matchFwdS \upgamma, \upkappa
+          v, \sigma \match \gamma, \kappa
           \\
-          \seq{u}, \upkappa \matchFwdS \upgamma', \upkappa'
+          \seq{u}, \kappa \match \gamma', \kappa'
        }
        {
           v \cons \seq{u},
-          \upsigma
-          \matchFwdS
-          \upgamma \disjunion \upgamma',
-          \upkappa'
+          \sigma
+          \match
+          \gamma \disjunion \gamma',
+          \kappa'
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \upsigma \matchFwdS \upgamma, \upkappa$}
+    {\small \flushleft \shadebox{$v, \sigma \match \gamma, \kappa$}
     \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
+       \inferrule*[lab={\ruleName{$\match$-var}}]
        {
           \strut
        }
        {
-          v, \elimVar{x}{\upkappa} \matchFwdS \set{\bind{x}{v}}, \upkappa
+          v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-record}}
+          lab={\ruleName{$\match$-record}}
        ]
        {
-          \seq{u}, \upkappa \matchFwdS \upgamma, \upkappa'
+          \seq{u}, \kappa \match \gamma, \kappa'
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
           \exRec{\seq{\bind{x}{v}}},
-          \elimRec{\seq{y}}{\upkappa}
-          \matchFwdS
-          \upgamma, \upkappa'
+          \elimRecord{\seq{y}}{\kappa}
+          \match
+          \gamma, \kappa'
        }
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
+       \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \upkappa' \matchFwdS \upgamma, \upkappa^\twoPrime
+          \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime
        }
        {
-          \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
-          \matchFwdS
-          \upgamma, \upkappa^\twoPrime
+          \exConstr{c'}{\seq{v}}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
+          \match
+          \gamma, \kappa^\twoPrime
        }
     \end{smathpar}}
  \caption{Core semantics (baseline): matching}

@@ -1,73 +1,73 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \upkappa \matchFwdS \upgamma, \upkappa', V$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, \kappa', V$}\hfill
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-empty}}
+          lab={\ruleName{$\match$-seq-empty}}
        ]
        {
           \strut
        }
        {
-          \seqEmpty, \upkappa \matchFwdS \varnothing, \upkappa, \varnothing
+          \seqEmpty, \kappa \match \varnothing, \kappa, \varnothing
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-seq-non-empty}}
+          lab={\ruleName{$\match$-seq-non-empty}}
        ]
        {
-          v, \upsigma \matchFwdS \upgamma, \upkappa, V
+          v, \sigma \match \gamma, \kappa, V
           \\
-          \seq{u}, \upkappa \matchFwdS \upgamma', \upkappa', V'
+          \seq{u}, \kappa \match \gamma', \kappa', V'
        }
        {
           v \cons \seq{u},
-          \upsigma
-          \matchFwdS
-          \upgamma \disjunion \upgamma',
-          \upkappa',
+          \sigma
+          \match
+          \gamma \disjunion \gamma',
+          \kappa',
           V \cup V'
        }
     \end{smathpar}}
 
-    {\small \flushleft \shadebox{$v, \upsigma \matchFwdS \upgamma, \upkappa, V$}
+    {\small \flushleft \shadebox{$v, \sigma \match \gamma, \kappa, V$}
     \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\matchFwdS$-var}}]
+       \inferrule*[lab={\ruleName{$\match$-var}}]
        {
           \strut
        }
        {
-          v, \elimVar{x}{\upkappa} \matchFwdS \set{\bind{x}{v}}, \upkappa, \varnothing
+          v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa, \varnothing
        }
        %
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\matchFwdS$-record}}
+          lab={\ruleName{$\match$-record}}
        ]
        {
-          \seq{u}, \upkappa \matchFwdS \upgamma, \upkappa', V
+          \seq{u}, \kappa \match \gamma, \kappa', V
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
-          \annRec{\seq{\bind{x}{v}}}{\upalpha},
-          \elimRec{\seq{y}}{\upkappa}
-          \matchFwdS
-          \upgamma, \upkappa', V \cup \set{\upalpha}
+          \annRec{\seq{\bind{x}{v}}}{\alpha},
+          \elimRecord{\seq{y}}{\kappa}
+          \match
+          \gamma, \kappa', V \cup \set{\alpha}
        }
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\matchFwdS$-constr}}]
+       \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \upkappa' \matchFwdS \upgamma, \upkappa^\twoPrime, V
+          \seq{v}, \kappa' \match \gamma, \kappa^\twoPrime, V
        }
        {
-          \annConstr{c'}{\seq{v}}{\upalpha}, \elimConstr{\elimBind{c'}{\upkappa'} \cons \seq{\elimBind{c}{\upkappa}}}
-          \matchFwdS
-          \upgamma, \upkappa^\twoPrime, V \cup \set{\upalpha}
+          \annConstr{c'}{\seq{v}}{\alpha}, \elimConstr{\elimBind{c'}{\kappa'} \cons \seq{\elimBind{c}{\kappa}}}
+          \match
+          \gamma, \kappa^\twoPrime, V \cup \set{\alpha}
        }
     \end{smathpar}}
  \caption{Core semantics (dependence graphs): matching}

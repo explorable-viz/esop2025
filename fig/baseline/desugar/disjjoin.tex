@@ -1,0 +1,65 @@
+\begin{figure}
+   {\flushleft \shadebox{$\kappa \disjjoin \kappa' = \kappa^{\dag}$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-lambda}}
+      ]
+      {
+         \sigma \disjjoin \sigma' = \tau
+      }
+      {
+         (\exApp{\lambda}{\sigma}) \disjjoin (\exApp{\lambda}{\sigma'}) = \exApp{\lambda}{\tau}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin${-var}}}
+      ]
+      {
+         \kappa \disjjoin \kappa' = \kappa^{\dag}
+      }
+      {
+         (\elimBind{\exVar{x}}{\kappa}) \disjjoin (\elimBind{\exVar{x}}{\kappa'}) = \elimBind{\exVar{x}}{\kappa^{\dag}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-record}}
+      ]
+      {
+         \kappa \disjjoin \kappa' = \kappa^{\dag}
+      }
+      {
+         (\elimRecord{\seq{x}}{\kappa}) \disjjoin (\elimRecord{\seq{x}}{\kappa'}) = \elimRecord{\seq{x}}{\kappa^{\dag}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-overlap}}
+      ]
+      {
+         \sigma \disjjoin \sigma' = (\elimBind{c}{\kappa'})\cons \tau
+         \\
+         \kappa \disjjoin \kappa' = \kappa^{\dag}
+      }
+      {
+         ((\elimBind{c}{\kappa}) \cons \sigma) \disjjoin \sigma' = (\elimBind{c}{\kappa^{\dag}})\cons \tau
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\disjjoin$-no-overlap}}
+      ]
+      {
+         \seq{c} \cap \seq{c}' = \varnothing
+      }
+      {
+         \elimConstr{\seq{\elimBind{c}{\sigma}}} \disjjoin \elimConstr{\seq{\elimBind{c'}{\sigma'}}} = \elimConstr{\seq{\elimBind{c}{\sigma}}} \cup \elimConstr{\seq{\elimBind{c'}{\sigma'}}}
+      }
+   \end{smathpar}}
+   \caption{Disjoint join of (partial) continuations}
+\end{figure}

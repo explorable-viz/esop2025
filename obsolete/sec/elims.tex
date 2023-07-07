@@ -1,0 +1,38 @@
+\section{Eliminators}
+We present some facts/strong intuitions about eliminators which we use in our proofs in \appref{baseline}.
+
+\input{appendix/fig/core/new-elims}
+
+\begin{theorem}
+   \label{thm:join-preserves-join}
+   The disjoint join of eliminators is joinability-preserving, that is:
+   $$
+      \sigma_1 \disjjoin \sigma_2 = \tau' \opAnd \sigma_2 \disjjoin \sigma_3 = \tau'_1 \opAnd \sigma_1 \disjjoin \sigma_3 = \tau'_2
+      \newline
+      \implies \sigma_3 \disjjoin \tau' = \sigma_2 \disjjoin \tau'_1 = \sigma_1 \disjjoin \tau'_2 = \tau
+   $$
+\end{theorem}
+\begin{proof}
+   Temporarily Omitted.
+\end{proof}
+
+An eliminator with no instances of the \textit{branch} constructor, we call it a \textit{singleton} eliminator.
+Singletons allow us to define a notion of an eliminators \textit{prefix}.
+
+\begin{definition}
+   If $\exists \sigma'.\; \sigma \elimmapsto \sigma' = \tau$ then we say $\sigma$ is a prefix of $\tau$,
+   and write $\sigma \leq \tau$. Given two eliminators $\sigma,\sigma'$ we write $\tau = \sigma \sqcap \sigma'$
+   to mean $\tau$ is the longest shared prefix of $\sigma$ and $\sigma'$
+\end{definition}
+\begin{lemma}
+   If $c$ a clause, and $c \desugar \sigma$, then $\sigma$ is a singleton.
+\end{lemma}
+\begin{proof}
+   Branch nodes are introduced only during the disjoint join, never during desugaring.
+\end{proof}
+\begin{lemma}
+   For two singleton eliminators $\sigma = \seqRangeOp{p_1}{p_m}{\elimmapsto} \elimmapsto (\exConstr{c}{\seq{p}} \elimmapsto \tau)$ and
+   $\sigma' = \seqRangeOp{p_1}{p_m}{\elimmapsto} \elimmapsto (\exConstr{c'}{\seq{p}'} \elimmapsto \tau')$.
+   Let $\sigma \sqcap \sigma' = \sigma^{\dag}$, then
+   $\sigma \disjjoin \sigma' = \sigma^{\dag} \elimmapsto \elimPair{\exConstr{c}{\seq{p}} \elimmapsto \tau}{\exConstr{c'}{\seq{p}'} \elimmapsto \tau'}$
+\end{lemma}

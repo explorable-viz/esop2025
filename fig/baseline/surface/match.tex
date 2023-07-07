@@ -1,85 +1,86 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \matchFwdS \upgamma$}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \match \gamma$}
    \begin{smathpar}
       \inferrule*[
-        lab={\ruleName{$\matchFwdS$-empty}}
+        lab={\ruleName{$\match$-empty}}
       ]
       {
          \strut
       }
       {
-         \seqEmpty, \seqEmpty \matchFwdS \varnothing
+         \seqEmpty, \seqEmpty \match \varnothing
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-seq}}
+         lab={\ruleName{$\match$-seq}}
       ]
       {
-         v, p \matchFwdS \upgamma
+         v, p \match \gamma
          \\
-         \seq{u}, \seq{p}' \matchFwdS \upgamma'
+         \seq{u}, \seq{p}' \match \gamma'
       }
       {
-         v \cons \seq{u}, p \cons \seq{p}' \matchFwdS \upgamma \disjunion \upgamma'
+         v \cons \seq{u}, p \cons \seq{p}' \match \gamma \disjunion \gamma'
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox {$v, p \matchFwdS \upgamma$}
+   {\small \flushleft \shadebox {$v, p \match \gamma$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-var}}
+         lab={\ruleName{$\match$-var}}
       ]
       {
          \strut
       }
       {
-         v, x \matchFwdS \set{\bind{\exVar{x}}{v}}
+         v, x \match \set{\bind{\exVar{x}}{v}}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-constr}}
+         lab={\ruleName{$\match$-constr}}
       ]
       {
-         \seq{v},\seq{p} \matchFwdS \upgamma
+         \seq{v},\seq{p} \match \gamma
       }
       {
-         \exConstr{c}{\seq{v}},\exConstr{c}{\seq{p}} \matchFwdS \upgamma
+         \exConstr{c}{\seq{v}},\pattConstr{c}{\seq{p}} \match \gamma
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-nonempty-list}}
+         lab={\ruleName{$\match$-nonempty-list}}
       ]
       {
-         v, p \matchFwdS \upgamma
+         v, p \match \gamma
          \\
-         v', o \matchFwdS \upgamma'
+         v', o \match \gamma'
       }
       {
-         \cCons(v, v'), \pattList{p}{o} \matchFwdS \upgamma \disjunion \upgamma'
+         \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
       }
       %
       \and
-      % %
+      %
       \inferrule*[
-         lab={\ruleName{$\matchFwdS$-record}}
+         lab={\ruleName{$\match$-record}}
       ]
       {
-         \seq{u}, \seq{p} \matchFwdS \upgamma
+         \seq{u}, \seq{p} \match \gamma
          \quad
-         \set{\seq{\bind{\exVar{y}}{u}}} \subseteq \set{\seq{\bind{\exVar{x}}{v}}}
+         \exRecord{\seq{\bind{y}{u}}}
+         \subseteq \exRecord{\seq{\bind{x}{v}}}
       }
       {
-         \set{\seq{\bind{\exVar{x}}{v}}}, \set{\seq{\bind{\exVar{y}}{p}}} \matchFwdS \upgamma
+         \exRecord{\seq{\bind{x}{v}}}, \pattRecord{\seq{\bind{y}{p}}} \match \gamma
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$v, o \match \upgamma$}
+   {\small \flushleft \shadebox{$v, o \match \gamma$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\match$-nil}}
@@ -97,45 +98,47 @@
          lab={\ruleName{$\match$-cons}}
       ]
       {
-         v, p, \match \upgamma
+         v, p, \match \gamma
          \\
-         v', o \match \upgamma'
+         v', o \match \gamma'
       }
       {
-         \cCons(v, v'), (\pattListNext{p}{o}) \match \upgamma \disjunion \upgamma'
+         \exConstr{\cCons}{v, v'}, (\pattListNext{p}{o}) \match \gamma \disjunion \gamma'
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$v, \upmu \match \upgamma, s$}
+   {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\match$-uncurried}}
       ]
       {
-         v, p_i \match \upgamma
+         v, p_{i} \match \gamma
          \\
-         \forall i' \ne i.\nexists \upgamma. \, v, p_{i'} \match \upgamma
+         (\forall i' \numleq j.i' \ne i \implies v, p_{i'} \matchNeg)
       }
       {
-         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \matchFwdR{p_i} \upgamma, s_i
+         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \match \gamma, s_i
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\match$-curried}},
-         right={$\upmu \neq \seqEmpty$}
+         right={$\mu \neq \seqEmpty$}
       ]
       {
-         v, p \match \upgamma
+         v, p \match \gamma
          \\
-         (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}'}{s_i}) \in \upmu\textit{ else }v, p_i\;\matchNeg)
+         (\forall i \numleq j.p_i = p \implies (\clause{\seq{p_i}}{s_i}) \in \mu)
+         \\
+         (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
       }
       {
-         v, (\seqRange{\clause{(p_1 \cons \seq{p_1}')}{s_1}}{\clause{(p_j \cons \seq{p_j}')}{s_j}})
+         v, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
          \match
-         \upgamma,
-         \exFun{\upmu}
+         \gamma,
+         \exFun{\mu}
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
