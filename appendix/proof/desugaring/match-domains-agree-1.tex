@@ -104,18 +104,18 @@ Induction on $\match$ derivation.
    \locallabel{desugar-constr}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p},\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\kappa'}}
    &
    \text{Def.~\mkElimF}
    \notag
    \\
    &
-   \seq{v}, \sigma \match \gamma', \kappa
+   \seq{v}, \kappa' \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -130,7 +130,7 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \sigma \match \gamma', \kappa
+            \seq{v}, \kappa' \match \gamma', \kappa
          }
          {
             \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
