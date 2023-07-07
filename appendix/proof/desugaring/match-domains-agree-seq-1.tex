@@ -93,7 +93,7 @@ Induction on $\match$ derivation.
             \seq{u}' \desugar \seq{v}'
          }
          {
-            u \cons \seq{u}' \desugar v \cons \seq{v}'
+            u \cons \seq{u}' \desugar v \cons \seq{v}' = \seq{v}
          }
       \end{smathpar}
    }
@@ -112,7 +112,7 @@ Induction on $\match$ derivation.
    \gamma_2 \desugar \gamma_2'
    \quad (\exists \gamma_2')
    &
-   \notag
+   \locallabel{match-v-seq}
    \\
    &
    \sigma \eqdef \mkElimF(p, \kappa')
@@ -126,12 +126,44 @@ Induction on $\match$ derivation.
    \quad (\exists \gamma_1')
    &
    \text{(\localref{match-seq}), (\localref{desugar-seq}), \lemref{match-domains-agree}}
-   \notag
+   \locallabel{match-v}
    \\
    &
    \elimArgsF(p \cons \seq{p}', \kappa) = \sigma
    &
    \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\match$-seq-non-empty}}
+         ]
+         {
+            v, \sigma \match \gamma_1', \kappa'
+            \\
+            \seq{v}', \kappa' \match \gamma_2', \kappa
+         }
+         {
+            v \cons \seq{v}',
+            \sigma
+            \match
+            \gamma_1' \disjunion \gamma_2',
+            \kappa
+         }
+        \end{smathpar}
+   }
+   &
+   \text{(\localref{match-v}), (\localref{match-v-seq})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \gamma = \gamma_1 \disjunion \gamma_2 \desugar \gamma_1' \disjunion \gamma_2' = \gamma'
+   &
+   \text{(\localref{match-v}), (\localref{match-v-seq})}
    \notag
 \end{flalign}
 \end{proof}
