@@ -3,13 +3,13 @@ Induction on $\match$ derivation.
 \small
 \begin{flalign}
    &
-   u, o \match \gamma
+   \seq{u}, \seq{p} \match \gamma
    &
    \text{suppose}
    \notag
    \\
    &
-   u \desugar v
+   \seq{u} \desugar \seq{v}
    &
    \text{suppose}
    \notag
@@ -19,18 +19,18 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-list-rest-nil}}
-         ]
-         {
-            \strut
-         }
-         {
-            \cNil, \pattListEnd \match \varnothing = \gamma
-         }
-      \end{smathpar}
+            lab={\ruleName{$\match$-empty}}
+          ]
+          {
+             \strut
+          }
+          {
+             \seqEmpty, \seqEmpty \match \varnothing
+          }
+       \end{smathpar}
    }
    &
-   \notag
+   \locallabel{match-empty}
    \\
    &
    \derivation{\derivationWidth}{
