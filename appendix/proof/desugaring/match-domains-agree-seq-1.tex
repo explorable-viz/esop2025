@@ -25,7 +25,7 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-empty}}
+            left={\ruleName{$\match$-seq-empty}}
           ]
           {
              \strut
@@ -67,7 +67,7 @@ Induction on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-seq}}
+            left={\ruleName{$\match$-seq-non-empty}}
          ]
          {
             u, p \match \gamma_1
@@ -86,7 +86,7 @@ Induction on $\match$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-seq}}]
+         \inferrule*[left={\ruleName{$\desugar$-seq-non-empty}}]
          {
             u \desugar v
             \\
@@ -99,7 +99,7 @@ Induction on $\match$ derivation.
    }
    &
    \text{inversion}
-   \locallabel{desugar-constr}
+   \locallabel{desugar-seq}
    \\
    &
    \kappa' \eqdef \elimArgsF(\seq{p}',\kappa)
@@ -107,8 +107,25 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
+   \seq{v}', \kappa' \match \gamma_2', \kappa
+   \textit{ with }
+   \gamma_2 \desugar \gamma_2'
+   \quad (\exists \gamma_2')
+   &
+   \notag
+   \\
+   &
    \sigma \eqdef \mkElimF(p, \kappa')
    &
+   \notag
+   \\
+   &
+   v, \sigma \match \gamma_1', \kappa'
+   \textit{ with }
+   \gamma_1 \desugar \gamma_1'
+   \quad (\exists \gamma_1')
+   &
+   \text{(\localref{match-seq}), (\localref{desugar-seq}), \lemref{match-domains-agree}}
    \notag
    \\
    &
