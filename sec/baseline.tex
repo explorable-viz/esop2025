@@ -62,6 +62,9 @@ said to be \textit{partial} if it is not defined for every element of its domain
 
 \subsubsection{Equivalence of Semantics}
 
+For terms that are not necessarily well-typed, desugaring is not total, so \thmref{semantics-eq} is
+non-trivial only for desugarable $s$ and $\upgamma$.
+
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
@@ -75,12 +78,8 @@ said to be \textit{partial} if it is not defined for every element of its domain
    For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
 \end{proof}
 
-\thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}) and recursive
-definitions (\lemref{closedefs-eq}), and also that environment lookup commutes with desugaring
-(\lemref{varlookup}). Desugaring is not total, so we require that both $s$ and $\gamma$ can be desugared
-as the precondition to \thmref{semantics-eq}.
-
-Desugaring commutes with environment extension.
+\thmref{semantics-eq} relies on analogous lemmas for pattern-matching (\lemref{matching-bi}), recursive
+definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlookup}).
 
 \begin{lemma}
    \label{lem:varlookup}
