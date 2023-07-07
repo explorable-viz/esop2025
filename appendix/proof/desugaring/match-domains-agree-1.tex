@@ -104,18 +104,18 @@ Induction on $\match$ derivation.
    \locallabel{desugar-constr}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p},\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\sigma}}
+   \mkElimF(\pattConstr{c}{\seq{p}}, \kappa) = \elimConstr{\elimBind{c}{\kappa'}}
    &
    \text{Def.~\mkElimF}
    \notag
    \\
    &
-   \seq{v}, \sigma \match \gamma', \kappa
+   \seq{v}, \kappa' \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -130,10 +130,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            \seq{v}, \sigma \match \gamma', \kappa
+            \seq{v}, \kappa' \match \gamma', \kappa
          }
          {
-            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\sigma}}
+            \exConstr{c}{\seq{v}}, \elimConstr{\elimBind{c}{\kappa'}}
             \match
             \gamma', \kappa
          }
@@ -180,12 +180,12 @@ Induction on $\match$ derivation.
    \locallabel{desugar-record}
    \\
    &
-   \sigma \eqdef \elimArgsF(\seq{p},\kappa)
+   \kappa' \eqdef \elimArgsF(\seq{p},\kappa)
    &
    \notag
    \\
    &
-   \mkElimF(\pattRecord{\seq{\bind{y}{p}}}, \kappa) = \elimRecord{\seq{y}}{\sigma}
+   \mkElimF(\pattRecord{\seq{\bind{y}{p}}}, \kappa) = \elimRecord{\seq{y}}{\kappa'}
    &
    \text{Def.~\mkElimF}
    \notag
@@ -197,7 +197,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}', \sigma \match \gamma', \kappa
+   \seq{v}', \kappa' \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -214,15 +214,15 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-record}}
          ]
          {
-            \seq{v}', \kappa \match \gamma, \kappa'
+            \seq{v}', \kappa' \match \gamma, \kappa
             \\
             \exRec{\seq{\bind{y}{v}}'} \subseteq \exRec{\seq{\bind{x}{v}}}
          }
          {
             \exRec{\seq{\bind{x}{v}}},
-            \elimRecord{\seq{y}}{\kappa}
+            \elimRecord{\seq{y}}{\kappa'}
             \match
-            \gamma, \kappa'
+            \gamma, \kappa
          }
       \end{smathpar}
    }
@@ -248,7 +248,7 @@ Induction on $\match$ derivation.
       \end{smathpar}
    }
    &
-   \locallabel{match-constr}
+   \locallabel{match-cons}
    \\
    &
    \derivation{\derivationWidth}{
@@ -264,7 +264,7 @@ Induction on $\match$ derivation.
    }
    &
    \text{inversion}
-   \locallabel{desugar-constr}
+   \locallabel{desugar-cons}
    \\
    &
    \sigma \eqdef \elimArgsF(p \cons o,\kappa)
@@ -284,7 +284,7 @@ Induction on $\match$ derivation.
    \quad
    (\exists \gamma')
    &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \text{(\localref{match-cons}), (\localref{desugar-cons}), \lemref{match-domains-agree-seq} (1)}
    \notag
    \\
    &

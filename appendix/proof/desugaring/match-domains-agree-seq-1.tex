@@ -3,81 +3,59 @@ Induction on $\match$ derivation.
 \small
 \begin{flalign}
    &
-   u, o \match \gamma
+   \seq{u}, \seq{p} \match \gamma
    &
    \text{suppose}
    \notag
    \\
    &
-   u \desugar v
+   \seq{u} \desugar \seq{v}
    &
    \text{suppose}
    \notag
+   \\
+   &
+   \kappa' = \elimArgsF(\seq{p}, \kappa)
+   &
+   \text{suppose}
+   \locallabel{suppose-kappa}
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-list-rest-nil}}
-         ]
-         {
-            \strut
-         }
-         {
-            \cNil, \pattListEnd \match \varnothing = \gamma
-         }
-      \end{smathpar}
+            left={\ruleName{$\match$-empty}}
+          ]
+          {
+             \strut
+          }
+          {
+             \seq{u} = \seqEmpty, \seq{p} = \seqEmpty \match \varnothing = \gamma
+          }
+       \end{smathpar}
    }
    &
-   \notag
+   \locallabel{match-empty}
    \\
    &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-constr}}]
-         {
-            \strut
-         }
-         {
-            \cNil \desugar \cNil
-         }
-      \end{smathpar}
-   }
+   \kappa' = \elimArgsF(\seqEmpty,\kappa) = \kappa
    &
-   \text{inversion}
-   \locallabel{desugar-constr}
-   \\
-   &
-   \elimArgsF(\seqEmpty,\kappa) = \kappa
-   &
-   \text{Def.~\elimArgsF}
-   \notag
-   \\
-   &
-   \mkElimF(\pattListEnd, \kappa) = \elimConstr{\elimBind{\cNil}{\kappa}}
-   &
-   \text{Def.~\mkElimF}
+   \text{(\localref{suppose-kappa}), Def.~\elimArgsF}
    \notag
    \\
    &
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-constr}}]
+         \inferrule*[
+            left={\ruleName{$\match$-seq-empty}}
+         ]
          {
-            \inferrule*[left={\ruleName{$\match$-seq-empty}}]
-            {
-               \strut
-            }
-            {
-               \seqEmpty, \kappa \match \varnothing, \kappa
-            }
+            \strut
          }
          {
-            \cNil, \elimConstr{\elimBind{\cNil}{\kappa}}
-            \match
-            \varnothing, \kappa
+            \seqEmpty, \kappa \match \varnothing, \kappa
          }
       \end{smathpar}
    }
