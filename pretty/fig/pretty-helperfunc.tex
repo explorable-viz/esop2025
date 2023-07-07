@@ -1,5 +1,19 @@
 \begin{figure}
     \begin{salign}
+         % pretty (Dictionary ann sss) = highlightIf ann $ dictBrackets (pretty sss)
+        % instance Ann a => Pretty (List (Pair (Expr a))) where
+        % pretty (Cons (Pair e e') Nil) = pretty e :--: text str.colonEq :--: pretty e'
+        % pretty (Cons (Pair e e') sss) = pretty e :--: text str.colonEq :--: pretty e' .<>. text str.comma :--: pretty sss
+        % pretty Nil = emptyDoc      
+        \exPrettyFunction{\param} &: (\Expr \times \Expr)^* \rightarrow \Doc
+        \\
+        \exPrettyFunction{(\kw{s1'}\symComma\kw{s2'})\cons\seq{(\kw{s1}\symComma\kw{s2})}} &= \exLayoutAppBeside{\exLayoutAppBeside{\exLayoutAppBeside{\exPrettyFunction{s1'}}{\exLayoutText{\kw{"\symColon"}}}}{\exPrettyFunction{\kw{s2'}}}}{\exPrettyFunction{\seq{(\kw{s1}\symComma\kw{s2})}}}
+    \end{salign}
+    \caption{Dictionary to Doc Function}
+\end{figure}
+
+\begin{figure}
+    \begin{salign}
         \exSimpleFunction{\param}  &: \SExpr \rightarrow \Doc
         \\
         \exSimpleFunction{s} &= \text{if} \  \exprType(s) \symEqual \etypeS \ \text{then} \  \exPrettyFunction{s} \  \text{else} \  \parens(\exPrettyFunction{s})
