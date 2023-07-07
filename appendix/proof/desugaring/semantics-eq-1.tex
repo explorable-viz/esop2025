@@ -324,6 +324,27 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
+   \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
+   \textit{ with }
+   \gamma^{\dag} \desugar \gamma^{\ddagger}
+   &
+   \text{(\lemref{closedefs-eq})}
+   \\
+   &
+   \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
+   &
+   \text{(\localref{desug:env})}
+   \notag
+   \\
+   &
+   \gamma' \concat \gamma^{\ddagger}, e \evalFwdS v'
+   \textit{ with }
+   v \desugar v'
+   &
+   \text{(IH)}
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\evalFwdS$-let-rec}}]
@@ -338,27 +359,6 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{inversion}
-   \notag
-   \\
-   &
-   \gamma^{\dag} \desugar \gamma^{\ddagger}
-   &
-   \text{(\lemref{closedefs-eq})}
-   \locallabel{desug:gamma-dag}
-   \\
-   &
-   \qedLocal
-   \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
-   &
-   \text{(\localref{desug:env}), (\localref{desug:gamma-dag})}
-   \notag
-   \\
-   &
-   \qedLocal
-   v \desugar v'
-   &
-   \text{IH}
    \notag
 \end{flalign}
 \end{proof}
