@@ -86,12 +86,14 @@ Induction on $\match$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         \inferrule*[left={\ruleName{$\desugar$-seq}}]
          {
-            (u_1, u_2) \desugar (v_1, v_2)
+            u_1 \desugar v_1
+            \\
+            \seq{u}' \desugar \seq{v}'
          }
          {
-            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v, v'} = v
+            u_1 \cons \seq{u}' \desugar v_1 \cons \seq{v}'
          }
       \end{smathpar}
    }
