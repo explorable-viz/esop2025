@@ -70,12 +70,12 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-seq}}
          ]
          {
-            u_1, p_1 \match \gamma_1
+            u, p \match \gamma_1
             \\
             \seq{u}', \seq{p}' \match \gamma_2
          }
          {
-            \seq{u} = u_1 \cons \seq{u}', \seq{p} = p_1 \cons \seq{p}' \match \gamma_1 \disjunion \gamma_2 = \gamma
+            \seq{u} = u \cons \seq{u}', \seq{p} = p \cons \seq{p}' \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
       \end{smathpar}
    }
@@ -88,12 +88,12 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-seq}}]
          {
-            u_1 \desugar v_1
+            u \desugar v
             \\
             \seq{u}' \desugar \seq{v}'
          }
          {
-            u_1 \cons \seq{u}' \desugar v_1 \cons \seq{v}'
+            u \cons \seq{u}' \desugar v \cons \seq{v}'
          }
       \end{smathpar}
    }
@@ -107,12 +107,12 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   \sigma \eqdef \mkElimF(p_1, \kappa')
+   \sigma \eqdef \mkElimF(p, \kappa')
    &
    \notag
    \\
    &
-   \elimArgsF(p_1 \cons \seq{p}', \kappa) = \sigma
+   \elimArgsF(p \cons \seq{p}', \kappa) = \sigma
    &
    \text{Def.~\mkElimF}
    \notag
