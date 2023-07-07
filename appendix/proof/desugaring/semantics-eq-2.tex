@@ -6,13 +6,19 @@ By induction on derivation of $\evalFwdS$
    s \desugar e
    &
    \text{suppose}
-   \notag
+   \locallabel{desug:expr}
    \\
    &
    \gamma \desugar \gamma'
    &
    \text{suppose}
    \locallabel{desug:env}
+   \\
+   &
+   \gamma', e \evalFwdS v'
+   &
+   \text{suppose}
+   \locallabel{eval:core}
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,7 +32,7 @@ By induction on derivation of $\evalFwdS$
             \strut
          }
          {
-            {\gamma^{\dag}}' \cdot (\bind{x}{v'}), x \evalFwdS v'
+            \gamma' = \gamma_2 \cdot (\bind{x}{v'}), x \evalFwdS v'
          }
       \end{smathpar}
    }
@@ -48,7 +54,13 @@ By induction on derivation of $\evalFwdS$
       \end{smathpar}
    }
    &
-   \text{inversion}
+   \text{$\desugar$}
+   \notag
+   \\
+   &
+   \gamma = \gamma_1 \cons (\bind{x}{v}) \text{ with } \gamma_1 \desugar \gamma_2
+   &
+   \text{(\localref{desug:env})}
    \notag
    \\
    &
@@ -61,12 +73,11 @@ By induction on derivation of $\evalFwdS$
             \strut
          }
          {
-            {\gamma^{\dag}} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+            \gamma = \gamma_1 \cons (\bind{x}{v}), \exVar{x} \evalSugS v
          }
       \end{smathpar}
    }
    &
-   \text{inversion}
    \notag
    \\
    &
