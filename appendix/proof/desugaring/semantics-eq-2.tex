@@ -277,15 +277,17 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-let-rec}}
+            lab={\ruleName{$\evalFwdS$-let-rec}}
          ]
          {
-            \gamma, g \closeDefsS \gamma'
+            \gamma', \set{\seq{\bind{x}{\sigma}}} \closeDefsFwdR \gamma'
             \\
-            \gamma \concat \gamma', s \evalSugR{S} v
+            \gamma' \concat {\gamma^{\ddagger}}, e \evalFwdS v
          }
          {
-            \gamma, \exLetRecPiecewise{g}{s} \evalSugR{\trLetRec{g}{S}} v
+            \gamma', \exLetRec{\seq{\bind{x}{\sigma}}}{e}
+            \evalFwdS
+            v'
          }
       \end{smathpar}
    }
@@ -297,9 +299,7 @@ By induction on derivation of $\evalFwdS$
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
          {
-            \mu_i \desugar \sigma_i
-            \quad
-            (\forall i \numleq \length{\seq{x}})
+            \seq{\mu} \desugar \seq{\sigma}
             \\
             s \desugar e
          }
@@ -315,38 +315,46 @@ By induction on derivation of $\evalFwdS$
    \notag
    \\
    &
+   \exists \gamma^{\dag}.\; \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
+   \textit{ with }
+   \gamma^{\dag} \desugar \gamma^{\ddagger}
+   &
+   \lemref{closedefs-eq}
+   \notag
+   \\
+   &
+   \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
+   &
+   (\localref{desug:env})
+   \notag
+   \\
+   &
+   \gamma \concat \gamma^{\dag}, s \evalSugS v
+   \textit{ with }
+   v \desugar v'
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-let-rec}}
+            lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            {\gamma^{\dag}}, \set{\seq{\bind{x}{\sigma}}} \closeDefsFwdR {\gamma^{\dag}}'
+            \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
             \\
-            {\gamma^{\dag}} \concat {\gamma^{\dag}}', e \evalFwdS v
+            \gamma \concat \gamma^{\dag}, s \evalSugR{S} v
          }
          {
-            {\gamma^{\dag}}, \exLetRec{\seq{\bind{x}{\sigma}}}{e}
-            \evalFwdS
-            v
+            \gamma, \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s} \evalSugS v
          }
       \end{smathpar}
    }
    &
    \text{inversion}
-   \notag
-   \\
-   &
-   \text{Then we conclude that $\gamma \concat \gamma' \desugar {\gamma^{\dag}} \concat {\gamma^{\dag}}'$}
-   &
-   \text{(\localref{desug:env}), \lemref{closedefs-eq}}
-   \notag
-   \\
-   &
-   \qedLocal
-   v \desugar v'
-   &
-   \text{IH}
    \notag
 \end{flalign}
 \end{proof}
