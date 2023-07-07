@@ -12,7 +12,7 @@ Induction on $\match$ derivation.
    \seq{u} \desugar \seq{v}
    &
    \text{suppose}
-   \notag
+   \locallabel{suppose-seq-u}
    \\
    &
    \kappa' = \elimArgsF(\seq{p}, \kappa)
@@ -61,14 +61,13 @@ Induction on $\match$ derivation.
    }
    &
    \notag
-   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-seq}}
+            left={\ruleName{$\match$-seq}}
          ]
          {
             u_1, p_1 \match \gamma_1
@@ -81,7 +80,8 @@ Induction on $\match$ derivation.
       \end{smathpar}
    }
    &
-   \locallabel{match-constr}
+   \locallabel{match-seq}
+   \text{(\localref{suppose-seq-u})}
    \\
    &
    \derivation{\derivationWidth}{
@@ -100,44 +100,5 @@ Induction on $\match$ derivation.
    &
    \text{inversion}
    \locallabel{desugar-constr}
-   \\
-   &
-   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
-   &
-   \notag
-   \\
-   &
-   \mkElimF((\pattListNext{p}{o}), \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
-   &
-   \text{Def.~\mkElimF}
-   \notag
-   \\
-   &
-   (v_1, v_2), \sigma \match \gamma', \kappa
-   \textit{ and }
-   \gamma \desugar \gamma'
-   \quad
-   (\exists \gamma')
-   &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
-   \notag
-   \\
-   &
-   \qedLocal
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-constr}}]
-         {
-            (v_1, v_2), \sigma \match \gamma', \kappa
-         }
-         {
-            \exConstr{\cCons}{v_1, v_2}, \elimConstr{\elimBind{\cCons}{\sigma}}
-            \match
-            \gamma', \kappa
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
 \end{flalign}
 \end{proof}
