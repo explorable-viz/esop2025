@@ -246,6 +246,7 @@ By induction on derivation of $\evalSugS$.
    \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
    &
    \text{IH}
+   \notag
    \\
    &
    v \desugar v'
@@ -322,11 +323,12 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
+   \exists \gamma'.\; \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    &
    \text{(\lemref{closedefs-eq})}
+   \notag
    \\
    &
    \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
@@ -340,6 +342,7 @@ By induction on derivation of $\evalSugS$.
    v \desugar v'
    &
    \text{(IH)}
+   \notag
    \\
    &
    \qedLocal
