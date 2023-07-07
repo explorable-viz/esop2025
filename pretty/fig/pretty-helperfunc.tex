@@ -1,0 +1,38 @@
+\begin{figure}
+    \begin{salign}
+        \exSimpleFunction{\param}  &: \SExpr \rightarrow \Doc
+        \\
+        \exSimpleFunction{s} &= \text{if} \  \exprType(s) \symEqual \etypeS \ \text{then} \  \exPrettyFunction{s} \  \text{else} \  \parens(\exPrettyFunction{s})
+    \end{salign}
+    \caption{Simple Expression Function}
+ \end{figure}
+
+\begin{figure}
+    \begin{salign}
+        \exApplicationFunction{\param}  &: \SExpr \rightarrow \Doc
+        \\
+        \exApplicationFunction{\exApp{s}{s'}} &= \exLayoutAppBeside{\exApplicationFunction{s}}{\exApplicationFunction{s'}}
+        \\
+        \exApplicationFunction{s} &= \exSimpleFunction{s}
+    \end{salign}
+    \caption{Application Function}
+\end{figure}
+
+\begin{figure}
+    \begin{salign}
+        \exBinaryAppFunction{(\param,\param)}  &: \Integer \times \SExpr \rightarrow \Doc
+        \\
+        \exBinaryAppFunction{(\exInt{n}\symComma(\exBinaryApp{s}{\oplus}{s'}))} &= 
+        \begin{cases}
+            & \text{if} \  \precedence(\oplus) \le \exInt{n} \ \text{then} \  \parens(\text{d})  
+            \\
+            & \text{otherwise} \  \text{d}
+        \end{cases}
+        \\
+        & \text{where} \ \text{d} \symEqual  \exLayoutAppBeside{\exLayoutAppBeside{\exBinaryAppFunction{(\precedence(\oplus),s)}}{\exLayoutText{\oplus}}}{\exBinaryAppFunction{(\precedence(\oplus),s')}}
+        \\
+        \exBinaryAppFunction{(\param\symComma\kw{s})} &= \exApplicationFunction{s}
+    \end{salign}
+    \caption{Binary Application Function}
+\end{figure}
+\clearpage
