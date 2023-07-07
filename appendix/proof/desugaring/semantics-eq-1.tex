@@ -15,7 +15,7 @@ By induction on derivation of $\evalSugS$.
    \locallabel{desug:env}
    \\
    &
-   \gamma, s \evalSugS v
+   \gamma, s_0 \evalSugS v
    &
    \text{suppose}
    \locallabel{eval:surf}
@@ -126,6 +126,15 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
+   \gamma', e \evalFwdS \seq{v}'
+   \textit{ with }
+   \seq{v} \desugar \seq{v}'
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -144,14 +153,20 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \text{$\seq{v} \desugar \seq{v}'$}
-   &
-   \text{IH}
-   \notag
-   \\
-   &
    \qedLocal
-   \text{$\exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}$}
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-constr}}
+         ]
+         {
+            \seq{v} \desugar \seq{v}'
+         }
+         {
+            \exConstr{c}{\seq{v}} \desugar \exConstr{c}{\seq{v}'}
+         }
+      \end{smathpar}
+   }
    &
    \notag
    \intertext{\crossrule}
@@ -264,7 +279,7 @@ By induction on derivation of $\evalSugS$.
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \gamma, g \closeDefsS \gamma^{\dag}
+            \gamma, (g = \seq{\bind{x}{\mu}}) \closeDefsS \gamma^{\dag}
             \\
             \gamma \concat \gamma^{\dag}, s \evalSugS v
          }
