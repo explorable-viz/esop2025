@@ -22,12 +22,12 @@ Induction on $\match$ derivation.
             left={\ruleName{$\match$-list-rest-cons}}
          ]
          {
-            u, p, \match \gamma_1
+            u_1, p, \match \gamma_1
             \\
-            u', o \match \gamma_2
+            u_2, o \match \gamma_2
          }
          {
-            \exConstr{\cCons}{u, u'}, (\pattListNext{p}{o}) \match \gamma_1 \disjunion \gamma_2 = \gamma
+            u = \exConstr{\cCons}{u_1, u_2}, (\pattListNext{p}{o}) \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
       \end{smathpar}
    }
@@ -39,10 +39,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-constr}}]
          {
-            (u, u') \desugar (v, v')
+            (u_1, u_2) \desugar (v_1, v_2)
          }
          {
-            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
+            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v, v'} = v
          }
       \end{smathpar}
    }
@@ -62,7 +62,7 @@ Induction on $\match$ derivation.
    \notag
    \\
    &
-   (v, v'), \sigma \match \gamma', \kappa
+   (v_1, v_2), \sigma \match \gamma', \kappa
    \textit{ and }
    \gamma \desugar \gamma'
    \quad
@@ -77,10 +77,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            (v, v'), \sigma \match \gamma', \kappa
+            (v_1, v_2), \sigma \match \gamma', \kappa
          }
          {
-            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            \exConstr{\cCons}{v_1, v_2}, \elimConstr{\elimBind{\cCons}{\sigma}}
             \match
             \gamma', \kappa
          }

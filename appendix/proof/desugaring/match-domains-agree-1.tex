@@ -95,7 +95,7 @@ Induction on $\match$ derivation.
             \seq{u} \desugar \seq{v}
          }
          {
-             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}}
+             \exConstr{c}{\seq{u}} \desugar \exConstr{c}{\seq{v}} = v
          }
       \end{smathpar}
    }
@@ -153,10 +153,10 @@ Induction on $\match$ derivation.
          {
             \seq{u}', \seq{p} \match \gamma
             \quad
-            \set{\seq{\bind{\exVar{y}}{u}}'} \subseteq \set{\seq{\bind{\exVar{x}}{u}}}
+            \exRecord{\seq{\bind{\exVar{y}}{u}}'} \subseteq \exRecord{\seq{\bind{\exVar{x}}{u}}}
          }
          {
-            \set{\seq{\bind{\exVar{x}}{u}}}, \set{\seq{\bind{\exVar{y}}{p}}} \match \gamma
+            u = \exRecord{\seq{\bind{\exVar{x}}{u}}}, \exRecord{\seq{\bind{\exVar{y}}{p}}} \match \gamma
          }
       \end{smathpar}
    }
@@ -171,7 +171,7 @@ Induction on $\match$ derivation.
             \seq{u} \desugar \seq{v}
          }
          {
-             \exRecord{\seq{\bind{x}{u}}} \desugar \exRecord{\seq{\bind{x}{v}}}
+             \exRecord{\seq{\bind{x}{u}}} \desugar \exRecord{\seq{\bind{x}{v}}} = v
          }
       \end{smathpar}
    }
@@ -243,7 +243,7 @@ Induction on $\match$ derivation.
             u_2, o \match \gamma_2
          }
          {
-            \exConstr{\cCons}{u_1, u_2}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
+            u = \exConstr{\cCons}{u_1, u_2}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
          }
       \end{smathpar}
    }
@@ -258,7 +258,7 @@ Induction on $\match$ derivation.
             (u_1, u_2) \desugar (v_1, v_2)
          }
          {
-            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v_1, v_2}
+            \exConstr{\cCons}{u_1, u_2} \desugar \exConstr{\cCons}{v_1, v_2} = v
          }
       \end{smathpar}
    }
