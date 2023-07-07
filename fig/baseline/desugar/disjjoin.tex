@@ -17,10 +17,10 @@
          lab={\ruleName{$\disjjoin${-var}}}
       ]
       {
-         \kappa \disjjoin \kappa' = \kappa^{\dag}
+         \kappa_1 \disjjoin \kappa_2 = \kappa
       }
       {
-         (\elimBind{\exVar{x}}{\kappa}) \disjjoin (\elimBind{\exVar{x}}{\kappa'}) = \elimBind{\exVar{x}}{\kappa^{\dag}}
+         (\elimBind{\exVar{x}}{\kappa_1}) \disjjoin (\elimBind{\exVar{x}}{\kappa_2}) = \elimBind{\exVar{x}}{\kappa}
       }
       %
       \and
@@ -29,10 +29,10 @@
          lab={\ruleName{$\disjjoin$-record}}
       ]
       {
-         \kappa \disjjoin \kappa' = \kappa^{\dag}
+         \kappa_1 \disjjoin \kappa_2 = \kappa
       }
       {
-         (\elimRecord{\seq{x}}{\kappa}) \disjjoin (\elimRecord{\seq{x}}{\kappa'}) = \elimRecord{\seq{x}}{\kappa^{\dag}}
+         (\elimRecord{\seq{x}}{\kappa_1}) \disjjoin (\elimRecord{\seq{x}}{\kappa_2}) = \elimRecord{\seq{x}}{\kappa}
       }
       %
       \and
@@ -41,12 +41,12 @@
          lab={\ruleName{$\disjjoin$-overlap}}
       ]
       {
-         \sigma \disjjoin \sigma' = (\elimBind{c}{\kappa'})\cons \tau
+         \sigma \disjjoin \sigma' = (\elimBind{c}{\kappa_2})\cons \tau
          \\
-         \kappa \disjjoin \kappa' = \kappa^{\dag}
+         \kappa_1 \disjjoin \kappa_2 = \kappa
       }
       {
-         ((\elimBind{c}{\kappa}) \cons \sigma) \disjjoin \sigma' = (\elimBind{c}{\kappa^{\dag}})\cons \tau
+         ((\elimBind{c}{\kappa_1}) \cons \sigma) \disjjoin \sigma' = (\elimBind{c}{\kappa})\cons \tau
       }
       %
       \and
