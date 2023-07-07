@@ -2,5 +2,91 @@ Induction on $\match$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
+   &
+   u, o \match \gamma
+   &
+   \text{suppose}
+   \notag
+   \\
+   &
+   u \desugar v
+   &
+   \text{suppose}
+   \notag
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-nonempty-list}}
+         ]
+         {
+            u, p \match \gamma_1
+            \\
+            u', o \match \gamma_2
+         }
+         {
+            \exConstr{\cCons}{u, u'}, \pattList{p}{o} \match \gamma_1 \disjunion \gamma_2 = \gamma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{match-constr}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-constr}}]
+         {
+            (u, u') \desugar (v, v')
+         }
+         {
+            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{desugar-constr}
+   \\
+   &
+   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
+   &
+   \notag
+   \\
+   &
+   \mkElimF(\pattList{p}{o}, \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
+   &
+   \text{Def.~\mkElimF}
+   \notag
+   \\
+   &
+   (v, v'), \sigma \match \gamma', \kappa
+   \textit{ and }
+   \gamma \desugar \gamma'
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-constr}}]
+         {
+            (v, v'), \sigma \match \gamma', \kappa
+         }
+         {
+            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            \match
+            \gamma', \kappa
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
