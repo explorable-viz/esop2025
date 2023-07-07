@@ -113,10 +113,10 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-constr}}]
          {
-            (u, u') \desugar (v, v')
+            \strut
          }
          {
-            \exConstr{\cCons}{u, u'} \desugar \exConstr{\cCons}{v, v'}
+            \cNil \desugar \cNil
          }
       \end{smathpar}
    }
@@ -125,24 +125,15 @@ Induction on $\match$ derivation.
    \locallabel{desugar-constr}
    \\
    &
-   \sigma \eqdef \elimArgsF(p \cons o,\kappa)
+   \elimArgsF(\seqEmpty,\kappa) = \kappa
    &
+   \text{Def.~\elimArgsF}
    \notag
    \\
    &
-   \mkElimF((\pattListNext{p}{o}), \kappa) = \elimConstr{\elimBind{\cCons}{\sigma}}
+   \mkElimF(\pattListEnd, \kappa) = \elimConstr{\elimBind{\cNil}{\kappa}}
    &
    \text{Def.~\mkElimF}
-   \notag
-   \\
-   &
-   (v, v'), \sigma \match \gamma', \kappa
-   \textit{ and }
-   \gamma \desugar \gamma'
-   \quad
-   (\exists \gamma')
-   &
-   \text{(\localref{match-constr}), (\localref{desugar-constr}), \lemref{match-domains-agree-seq} (1)}
    \notag
    \\
    &
@@ -151,12 +142,18 @@ Induction on $\match$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\match$-constr}}]
          {
-            (v, v'), \sigma \match \gamma', \kappa
+            \inferrule*[left={\ruleName{$\match$-seq-empty}}]
+            {
+               \strut
+            }
+            {
+               \seqEmpty, \kappa \match \varnothing, \kappa
+            }
          }
          {
-            \exConstr{\cCons}{v, v'}, \elimConstr{\elimBind{\cCons}{\sigma}}
+            \cNil, \elimConstr{\elimBind{\cNil}{\kappa}}
             \match
-            \gamma', \kappa
+            \varnothing, \kappa
          }
       \end{smathpar}
    }
