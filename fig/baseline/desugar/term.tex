@@ -155,6 +155,42 @@
       }
    \end{smathpar}
    \\[2mm]
+   {\flushleft \shadebox{$\mu \desugar \sigma$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\desugar$-clause-uncurried}}]
+      {
+         s \desugar e
+      }
+      {
+         (\clause{p}{s}) \desugar \mkElimF(p)(e)
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugar$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      {
+         \clause{\seq{p}}{s} \desugar \sigma
+      }
+      {
+         (\clause{(p' \cons \seq{p})}{s})
+         \desugar
+         \mkElimF(p')(\exFun{\sigma})
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugar$-clauses}}]
+      {
+         c_i \desugar \sigma_i
+         \quad
+         (\forall i \numleq j)
+      }
+      {
+         \seqRange{c_1}{c_j} \desugar \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
+      }
+   \end{smathpar}
+   \\[2mm]
    {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
    \begin{smathpar}
        \inferrule*[lab={\ruleName{$\desugar$-env}}]
