@@ -1,0 +1,25 @@
+\begin{figure}
+    \begin{salign}
+        \together &: \Doc \times \Doc \times \Doc \rightarrow \Doc 
+        \\
+        \together(\kw{d1},\kw{d2},\kw{d3}) &= \exLayoutAppBeside{\kw{d1}}{\exLayoutAppBeside{\kw{d2}}{\kw{d3}}}
+        \\[2mm]
+        \parens &: \Doc \rightarrow \Doc 
+        \\
+        \parens(\kw{d}) &= \together(\exLayoutText{\kw{"\symLParens"}}\symComma\kw{d}\symComma\exLayoutText{\kw{"\symRParens"}})
+        \\[2mm]
+        \brackets &: \Doc \rightarrow \Doc 
+        \\
+        \brackets(\kw{d}) &= \together(\exLayoutText{\kw{"\symLBrack"}}\symComma\kw{d}\symComma\exLayoutText{\kw{"\symRBrack"}})
+        \\[2mm]
+        \curlyBraces &: \Doc \rightarrow \Doc 
+        \\
+        \curlyBraces({\kw{d}}) &= \together(\exLayoutText{\kw{"\symLBrace"}}\symComma\kw{d}\symComma\exLayoutText{\kw{"\symRBrace"}}) 
+        \\[2mm]
+        \dictBrackets &: \Doc \rightarrow \Doc 
+        \\
+        \dictBrackets(\kw{d}) &= \together(\exLayoutText{\kw{"\symLBrace\symVLine"}}\symComma\kw{d}\symComma\exLayoutText{\kw{"\symVLine\symRBrace"}}) 
+    \end{salign}
+    \caption{Bracketing Helper Function}    
+\end{figure}
+\clearpage
