@@ -10,21 +10,21 @@
       \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \elimF(\pattVar{x})(\kappa)
+      \elimF(\pattVar{x}, \kappa)
       &=
       \elimVar{x}{\kappa}
       \\
-      \elimF(\pattConstr{c}{\seq{p}})(\kappa)
+      \elimF(\pattConstr{c}{\seq{p}}, \kappa)
       &=
-      \elimConstr{\elimBind{c}{\elimArgsF(\seq{p})(\kappa)}}
+      \elimConstr{\elimBind{c}{\elimArgsF(\seq{p}, \kappa)}}
       \\
-      \elimF(\pattList{p}{o})(\kappa)
+      \elimF(\pattList{p}{o}, \kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o)(\kappa)}}
+      \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o, \kappa)}}
       \\
-      \elimF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
+      \elimF(\pattRecord{\seq{\bind{x}{p}}}, \kappa)
       &=
-      \elimRecord{\seq{x}}{\elimArgsF(\seq{p})(\kappa)}
+      \elimRecord{\seq{x}}{\elimArgsF(\seq{p}, \kappa)}
       \\
       %========================================
       \intertext{
