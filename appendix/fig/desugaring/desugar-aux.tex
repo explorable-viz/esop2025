@@ -7,45 +7,45 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \mkElimF
+      \elimF
       &::
       \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \mkElimF(\pattVar{x})(\kappa)
+      \elimF(\pattVar{x})(\kappa)
       &=
       \elimVar{x}{\kappa}
       \\
-      \mkElimF(\pattConstr{c}{\seq{p}})(\kappa)
+      \elimF(\pattConstr{c}{\seq{p}})(\kappa)
       &=
       \elimConstr{\elimBind{c}{\elimArgsF(\seq{p})(\kappa)}}
       \\
-      \mkElimF(\pattList{p}{o})(\kappa)
+      \elimF(\pattList{p}{o})(\kappa)
       &=
       \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o)(\kappa)}}
       \\
-      \mkElimF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
+      \elimF(\pattRecord{\seq{\bind{x}{p}}})(\kappa)
       &=
       \elimRecord{\seq{x}}{\elimArgsF(\seq{p})(\kappa)}
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\mkElimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\elimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \mkElimF
+      \elimF
       &::
       \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
       \\
       %========================================
-      \mkElimF(\pattListEnd)(\kappa)
+      \elimF(\pattListEnd)(\kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
       \\
-      \mkElimF(\pattListNext{p}{o})(\kappa)
+      \elimF(\pattListNext{p}{o})(\kappa)
       &=
       \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o)(\kappa)}}
       \\[2mm]
@@ -65,7 +65,7 @@
       \\
       \elimArgsF(\pi \cons \seq{\pi})(\sigma)
       &=
-      \mkElimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
+      \elimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
       %========================================
       \intertext{
       \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}

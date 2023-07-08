@@ -7,7 +7,7 @@
          s \desugar s', e, E
       }
       {
-         \clause{p}{s} \desugar \clause{p}{s'}, \mkElimF(p)(e), E
+         \clause{p}{s} \desugar \clause{p}{s'}, \elimF(p)(e), E
       }
       %
       \and
@@ -20,7 +20,7 @@
          \clause{p' \cons \seq{p}}{s}
          \desugar
          \clause{p' \cons \seq{p}}{s'},
-         \mkElimF(p')(\exFun{\sigma}), E
+         \elimF(p')(\exFun{\sigma}), E
       }
       %
       \and
@@ -76,7 +76,7 @@
          \\
          \seq{q}, s_2 \desugar \seq{q}', s_2', e', E'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \exError)
+         \sigma = \orElseF(\elimF(p)(e'), \exError)
       }
       {
          \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
@@ -94,7 +94,7 @@
          \\
          \seq{q}, s_2 \desugar \seq{q}', s_2', e', E'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseF(\elimF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \qualGenerator{p}{s_1} \cons \seq{q}, s_2
@@ -127,7 +127,7 @@
          \\
          \seq{d} \desugar \seq{d}', e', E'
          \\
-         \sigma = \mkElimF(\pattVar{\varAnon})(e')
+         \sigma = \elimF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
@@ -145,7 +145,7 @@
          \\
          \seq{d} \desugar, \seq{d}', e', E'
          \\
-         \orElseF(\mkElimF(p)(e'),\varFail) = \sigma
+         \orElseF(\elimF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
@@ -165,7 +165,7 @@
          \\
          \seq{d} \desugar \seq{d}, e', E'
          \\
-         \orElseF(\mkElimF(p)(e'), \exError) = \sigma
+         \orElseF(\elimF(p)(e'), \exError) = \sigma
       }
       {
          \stmtDeclaration{p}{s} \cons \seq{d}
