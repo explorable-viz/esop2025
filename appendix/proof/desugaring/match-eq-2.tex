@@ -1,3 +1,4 @@
+Case analysis on $\desugar$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
@@ -12,5 +13,31 @@
    &
    v, \sigma \match \gamma, e
    &\text{suppose}
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-clauses-uncurried}},
+            right={$\forall i, i' \numleq j.p_i \neq p_{i'}$}
+         ]
+         {
+            s_i \desugar e_i
+            \\
+            \sigma_i \eqdef \elimF(p_i, e_i)
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \mu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+            \desugar
+            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
