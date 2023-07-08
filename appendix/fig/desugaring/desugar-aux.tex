@@ -7,7 +7,7 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
       \elimF(\pattVar{x})(\kappa)
@@ -28,35 +28,35 @@
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\elimF :: \ListRestPatt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \elimF(\pattListEnd)(\kappa)
+      \elimF(\pattListEnd, \kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
       \\
-      \elimF(\pattListNext{p}{o})(\kappa)
+      \elimF((\pattListNext{p}{o}), \kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o)(\kappa)}}
+      \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o, \kappa)}}
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
+      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
       }
       %========================================
       \elimArgsF(\seqEmpty)(\kappa)
       &=
       \kappa
       \\
-      \elimArgsF(\pi \cons \seq{\pi})(\sigma)
+      \elimArgsF(\pi \cons \seq{\pi}, \sigma)
       &=
-      \elimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
+      \elimF(\pi, \elimArgsF(\seq{\pi}, \sigma))
       %========================================
       \intertext{
-      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
+      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
       }
       %========================================
-      \orElseF_{\seqEmpty}(e, e')
+      \orElseF(\seqEmpty, e, e')
       &=
       e
       \\
@@ -89,7 +89,7 @@
       \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A$ \emph{where} $\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
       }
       %========================================
-      \unlessF_{c}(e)
+      \unlessF(c, e)
       &=
       \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \datatype{\Sigma}{c'} = \tyForeign{\seq{B}}{D} \wedge c \neq c'}
       \\
