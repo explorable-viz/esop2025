@@ -44,13 +44,13 @@
       \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
       %========================================
       }
-      \elimArgsF(\seqEmpty)(\kappa)
+      \elimArgsF(\seqEmpty, \kappa)
       &=
       \kappa
       \\
-      \elimArgsF(\pi \cons \seq{\pi})(\sigma)
+      \elimArgsF(\pi \cons \seq{\pi}, \sigma)
       &=
-      \elimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
+      \elimF(\pi)(\elimArgsF(\seq{\pi}, \sigma))
       %========================================
       \orElseF_{\seqEmpty}(e, e')
       &=
@@ -82,14 +82,14 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A$ \emph{where} $\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
+      \flushleft\shadebox{$\orElseF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A$ \emph{where} $\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
       }
       %========================================
-      \unlessF
+      \orElseF
       &:: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A
       \\
       %========================================
-      \unlessF_{c}(e)
+      \orElseF_{c}(e)
       &=
       \elimConstr{\elimBind{c'}{\iterateF(\length{\seq{B}}, \lambda\kappa.\elimVar{x}{\kappa})(e)} \mid \datatype{\Sigma}{c'} = \tyForeign{\seq{B}}{D} \wedge c \neq c'}
       \\
