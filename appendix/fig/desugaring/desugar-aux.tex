@@ -64,25 +64,25 @@
       &=
       \elimVar{x}{\orElseF(\seq{\pi}, \kappa, e)}
       \\
-      \orElseF_{\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}}(\elimRecord{\seq{x}}{\kappa}, e)
+      \orElseF(\pattRecord{\seq{\bind{x}{p}}} \cons \seq{\pi}, \elimRecord{\seq{x}}{\kappa}, e)
       &=
-      \elimRecord{\seq{x}}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}
+      \elimRecord{\seq{x}}{\orElseF(\seq{p} \concat \seq{\pi}, \kappa, e)}
       \\
-      \orElseF_{\pattConstr{c}{\seq{p}} \cons \seq{\pi}}(\elimConstr{\elimBind{c}{\kappa}}, e)
+      \orElseF(\pattConstr{c}{\seq{p}} \cons \seq{\pi}, \elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseF_{\seq{p} \concat \seq{\pi}}(\kappa, e)}} \disjjoin \unlessF_{c}(e)
+      \elimConstr{\elimBind{c}{\orElseF(\seq{p} \concat \seq{\pi}, \kappa, e)}} \disjjoin \unlessF(c, e)
       \\
-      \orElseF_{\pattList{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF(\pattList{p}{o} \cons \seq{\pi}, \elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \disjjoin \unlessF(\cCons, e)
       \\
-      \orElseF_{\pattListNext{p}{o} \cons \seq{\pi}}(\elimConstr{\elimBind{\cCons}{\sigma}}, e)
+      \orElseF((\pattListNext{p}{o}) \cons \seq{\pi}, \elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF_{p \cons o \cons \seq{\pi}}(\sigma)}} \disjjoin \unlessF_{\cCons}(e)
+      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \disjjoin \unlessF(\cCons, e)
       \\
-      \orElseF_{\pattListEnd \cons \seq{\pi}}(\elimConstr{\elimBind{\cNil}{\kappa}}, e)
+      \orElseF(\pattListEnd \cons \seq{\pi}, \elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{\orElseF_{\seq{\pi}}(\kappa)}} \disjjoin \unlessF_{\cNil}(e)
+      \elimConstr{\elimBind{\cNil}{\orElseF(\seq{\pi}, \kappa)}} \disjjoin \unlessF(\cNil, e)
       \\[2mm]
       %========================================
       \intertext{
