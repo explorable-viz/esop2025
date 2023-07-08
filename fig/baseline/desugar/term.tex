@@ -168,9 +168,11 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-clause-curried}}, right={$\seq{p} \neq \seqEmpty$}]
+      \inferrule*[lab={\ruleName{$\desugar$-clauses-curried}}, right={$\seq{p} \neq \seqEmpty$}]
       {
-         \clause{\seq{p}}{s} \desugar \sigma
+         (\clause{\seq{p}_i}{s_i}) \desugar \sigma_i
+         \\
+         (\forall i \numleq j)
       }
       {
          (\clause{(p' \cons \seq{p})}{s})
