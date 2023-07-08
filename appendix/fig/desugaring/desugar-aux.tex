@@ -7,13 +7,8 @@
       \\[2mm]
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
+      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
-      %========================================
-      \elimF
-      &::
-      \Patt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
-      \\
       %========================================
       \elimF(\pattVar{x})(\kappa)
       &=
@@ -36,11 +31,6 @@
       \flushleft\shadebox{$\elimF :: \ListRestPatt\;A\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
       }
       %========================================
-      \elimF
-      &::
-      \ListRestPatt\;A\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B
-      \\
-      %========================================
       \elimF(\pattListEnd)(\kappa)
       &=
       \elimConstr{\elimBind{\cNil}{\kappa}}
@@ -52,13 +42,8 @@
       %========================================
       \intertext{
       \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
+      %========================================
       }
-      %========================================
-      \elimArgsF
-      &::
-      \PattSeqOpt\;\Gamma' \to \Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A
-      \\
-      %========================================
       \elimArgsF(\seqEmpty)(\kappa)
       &=
       \kappa
@@ -66,19 +51,6 @@
       \elimArgsF(\pi \cons \seq{\pi})(\sigma)
       &=
       \elimF(\pi)(\elimArgsF(\seq{\pi})(\sigma))
-      %========================================
-      \intertext{
-      \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \to (\Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A)$}
-      }
-      %========================================
-      \begin{split}
-      \orElseF
-      &::
-      \PattSeqOpt\;\Gamma' \to\\
-      &\phantom{aj.}
-      \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A
-      \end{split}
-      \\
       %========================================
       \orElseF_{\seqEmpty}(e, e')
       &=
