@@ -162,7 +162,7 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\mkElimFwdF(p)(e'), \exError)
+         \sigma = \orElseFwdF(\elimFwdF(p)(e'), \exError)
       }
       {
          \annQualDeclaration{p}{s}{\alpha} \cons \seq{q}, s'
@@ -178,7 +178,7 @@
          \\
          \seq{q}, s' \desugarFwdThunkR e'
          \\
-         \sigma = \orElseFwdF(\mkElimFwdF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseFwdF(\elimFwdF(p)(e'), \annot{\cNil}{\alpha})
       }
       {
          \annQualGenerator{p}{s}{\alpha} \cons \seq{q}, s'
@@ -205,7 +205,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \sigma = \mkElimFwdF(\pattVar{\varAnon})(e')
+         \sigma = \elimFwdF(\pattVar{\varAnon})(e')
       }
       {
          s \cons \seq{d}
@@ -221,7 +221,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\mkElimFwdF(p)(e'),\varFail) = \sigma
+         \orElseFwdF(\elimFwdF(p)(e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
@@ -239,7 +239,7 @@
          \\
          \seq{d} \desugarFwdThunkR e'
          \\
-         \orElseFwdF(\mkElimFwdF(p)(e'), \exError) = \sigma
+         \orElseFwdF(\elimFwdF(p)(e'), \exError) = \sigma
       }
       {
          \smash{\stmtDeclaration{p}{s} \cons \seq{d}}

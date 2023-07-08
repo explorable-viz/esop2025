@@ -36,7 +36,7 @@
          \\
          \seq{q}, s_2 \desugar e'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \exError)
+         \sigma = \orElseF(\elimF(p, e'), \exError)
       }
       {
          \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
@@ -52,7 +52,7 @@
          \\
          \seq{q}, s_2 \desugar e'
          \\
-         \sigma = \orElseF(\mkElimF(p)(e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseF(\elimF(p, e'), \annot{\cNil}{\alpha})
       }
       {
          \qualGenerator{p}{s_1} \cons \seq{q}, s_2
@@ -82,7 +82,7 @@
          \\
          \seq{d} \desugar e'
          \\
-         \sigma = \mkElimF(\pattVar{\varAnon})(e')
+         \sigma = \elimF(\pattVar{\varAnon}, e')
       }
       {
          s \cons \seq{d}
@@ -98,7 +98,7 @@
          \\
          \seq{d} \desugar e'
          \\
-         \orElseF(\mkElimF(p)(e'),\varFail) = \sigma
+         \orElseF(\elimF(p, e'),\varFail) = \sigma
       }
       {
          \stmtBind{p}{s} \cons \seq{d}
@@ -116,7 +116,7 @@
          \\
          \seq{d} \desugar e'
          \\
-         \orElseF(\mkElimF(p)(e'), \exError) = \sigma
+         \orElseF(\elimF(p, e'), \exError) = \sigma
       }
       {
          \stmtDeclaration{p}{s} \cons \seq{d}
