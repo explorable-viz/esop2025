@@ -38,7 +38,7 @@ Case analysis on $\desugar$ derivation.
       \end{smathpar}
    }
    &
-   \notag
+   \locallabel{desugar-uncurried}
    \\
    &
    v, \sigma_i \match \gamma, e_i\text{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
@@ -54,6 +54,33 @@ Case analysis on $\desugar$ derivation.
    \forall i' \neq i.u, p_{i'}\;\matchNeg
    &
    \text{\lemref{match-domains-agree}}
+   \locallabel{gamma-uncurried}
+   \\
+   &
+   \qedLocal
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\match$-uncurried}}
+         ]
+         {
+            u, p_{i} \match \gamma'
+            \\
+            (\forall i' \numleq j.i' \ne i \implies v, p_{i'}\;\matchNeg)
+         }
+         {
+            u, (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma', s_i
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   s_i \desugar e_i\text{ and }\gamma' \desugar \gamma
+   &
+   \text{(\localref{desugar-uncurried}), (\localref{gamma-uncurried})}
    \notag
 \end{flalign}
 \end{proof}
