@@ -20,13 +20,14 @@ Case analysis on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\desugar$-clauses}},
-            right={$\forall i.\forall i' \neq i.p_i \neq p_{i'}$}
+            left={\ruleName{$\desugar$-fun-uncurried}}
          ]
          {
             s_i \desugar e_i
             \\
             \sigma_i \eqdef \elimF(p_i, e_i)
+            \\
+            (\forall i' \neq i.p_i \neq p_{i'})
             \quad
             (\forall i \numleq j)
          }
@@ -82,5 +83,32 @@ Case analysis on $\desugar$ derivation.
    &
    \text{(\localref{desugar-uncurried}), (\localref{gamma-uncurried})}
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-fun-curried}}
+         ]
+         {
+            (\clause{\seq{p_i}}{s_i}) \desugar \sigma_i
+            \\
+            \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
+            \\
+            \seq{p_i} \neq \seqEmpty
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \mu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+            \desugar
+            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{desugar-curried}
 \end{flalign}
 \end{proof}

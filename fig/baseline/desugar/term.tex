@@ -159,13 +159,14 @@
    \hfill}
    \begin{smathpar}
       \inferrule*[
-         right={$\forall i.\forall i' \neq i.p_i \neq p_{i'}$}
-         lab={\ruleName{$\desugar$-clauses}},
+         lab={\ruleName{$\desugar$-fun-uncurried}}
       ]
       {
          s_i \desugar e_i
          \\
          \sigma_i \eqdef \elimF(p_i, e_i)
+         \\
+         (\forall i' \neq i.p_i \neq p_{i'})
          \quad
          (\forall i \numleq j)
       }
@@ -178,13 +179,14 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-curried}},
-         right={$\forall i \numleq j.\seq{p_i} \neq \seqEmpty$}
+         lab={\ruleName{$\desugar$-fun-curried}}
       ]
       {
          (\clause{\seq{p_i}}{s_i}) \desugar \sigma_i
          \\
          \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
+         \\
+         \seq{p_i} \neq \seqEmpty
          \quad
          (\forall i \numleq j)
       }
