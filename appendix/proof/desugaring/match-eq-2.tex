@@ -1,0 +1,86 @@
+Case analysis on $\desugar$ derivation.
+\begin{proof}
+\small
+\begin{flalign}
+   &
+   u \desugar v
+   &\text{suppose}
+   \\
+   &
+   \mu \desugar \sigma
+   &\text{suppose}
+   \\
+   &
+   v, \sigma \match \gamma, e
+   &\text{suppose}
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses}},
+            right={$\forall i.\forall i' \neq i.p_i \neq p_{i'}$}
+         ]
+         {
+            s_i \desugar e_i
+            \\
+            \sigma_i \eqdef \elimF(p_i, e_i)
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \mu = (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+            \desugar
+            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{desugar-uncurried}
+   \\
+   &
+   v, \sigma_i \match \gamma, e_i\text{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
+   \quad
+   (\exists i)
+   &
+   \text{\lemref{match-increasing-two} (2)}
+   \notag
+   \\
+   &
+   u, p_i \match \gamma'\text{ with }\gamma' \desugar \gamma
+   \text{ and }
+   \forall i' \neq i.u, p_{i'}\;\matchNeg
+   &
+   \text{\lemref{match-domains-agree}}
+   \locallabel{gamma-uncurried}
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-uncurried}}
+         ]
+         {
+            u, p_{i} \match \gamma'
+            \\
+            (\forall i' \numleq j.i' \ne i \implies v, p_{i'}\;\matchNeg)
+         }
+         {
+            u, (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma', s_i
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   s_i \desugar e_i\text{ and }\gamma' \desugar \gamma
+   &
+   \text{(\localref{desugar-uncurried}), (\localref{gamma-uncurried})}
+   \notag
+\end{flalign}
+\end{proof}
