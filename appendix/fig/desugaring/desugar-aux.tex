@@ -4,7 +4,7 @@
       \PattSeqOpt &:: \Cxt \to \Set{Set}
       \\
       \PattSeqOpt\;\Gamma &\eqdef 1 + \exists A.\PattSeq\;A\;\Gamma
-      \\[2mm]
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
@@ -37,8 +37,8 @@
       \\
       \elimF((\pattListNext{p}{o}), \kappa)
       &=
-      \elimConstr{\elimBind{\cCons}{\elimArgsF(p \cons o, \kappa)}}
-      \\[2mm]
+      \elimConstr{\elimBind{\cCons}{\elimF(p, \elimF(o, \kappa))}}
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
@@ -83,7 +83,7 @@
       \orElseF(\pattListEnd \cons \seq{\pi}, \elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
       \elimConstr{\elimBind{\cNil}{\orElseF(\seq{\pi}, \kappa)}} \disjjoin \unlessF(\cNil, e)
-      \\[2mm]
+      \\
       %========================================
       \intertext{
       \flushleft\shadebox{$\unlessF :: \Pi(c: \Ctr).\Expr\;\seqEmpty\;A \to \Elim\;\Gamma\;D\;A$ \emph{where} $\datatype{\Sigma}{c} = \tyForeign{\seq{A}}{D}$}
