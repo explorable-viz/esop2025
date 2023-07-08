@@ -42,7 +42,7 @@ Case analysis on $\desugar$ derivation.
    \locallabel{desugar-uncurried}
    \\
    &
-   v, \sigma_i \match \gamma, e_i\text{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
+   v, \sigma_i \match \gamma, e_i\textit{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
    \quad
    (\exists i)
    &
@@ -50,8 +50,8 @@ Case analysis on $\desugar$ derivation.
    \notag
    \\
    &
-   u, p_i \match \gamma'\text{ with }\gamma' \desugar \gamma
-   \text{ and }
+   u, p_i \match \gamma'\textit{ with }\gamma' \desugar \gamma
+   \textit{ and }
    \forall i' \neq i.u, p_{i'}\;\matchNeg
    &
    \text{\lemref{match-domains-agree}}
@@ -79,7 +79,7 @@ Case analysis on $\desugar$ derivation.
    \\
    &
    \qedLocal
-   s_i \desugar e_i\text{ and }\gamma' \desugar \gamma
+   s_i \desugar e_i\textit{ and }\gamma' \desugar \gamma
    &
    \text{(\localref{desugar-uncurried}), (\localref{gamma-uncurried})}
    \notag
@@ -112,8 +112,9 @@ Case analysis on $\desugar$ derivation.
    \locallabel{desugar-curried}
    \\
    &
-   \forall i \numleq j.v, \sigma'_i\;matchNeg\text{ or }v, \sigma'_i \match \gamma, \exFun{\sigma_i}
+   \forall i \numleq j.v, \sigma'_i\;\matchNeg\textit{ or }v, \sigma'_i \match \gamma, \exFun{\sigma_i}
    &
+   \text{\lemref{match-increasing-two}}
    \notag
 \end{flalign}
 \end{proof}
