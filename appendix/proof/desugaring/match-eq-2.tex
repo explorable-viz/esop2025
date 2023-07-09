@@ -152,7 +152,7 @@ Case analysis on $\desugar$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-curried}},
+            left={\ruleName{$\match$-curried}},
             right={$\mu \neq \seqEmpty$}
          ]
          {
@@ -177,18 +177,20 @@ Case analysis on $\desugar$ derivation.
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-lambda}}]
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
          {
-            \mu' \desugar \sigma
+            \mu' \desugar \disjjoin\set{\sigma_i \mid p_i = p})
          }
          {
-            s = \exFun{\mu'} \desugar \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
+            s
             = \exFun{(\disjjoin\set{\sigma_i \mid p_i = p})}
+            = \exFun{\mu'} \desugar \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
             = e
          }
       \end{smathpar}
    }
    &
+   \text{(Def.~$\disjjoin$)}
    \notag
 \end{flalign}
 \end{proof}
