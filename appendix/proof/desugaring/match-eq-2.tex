@@ -148,6 +148,7 @@ Case analysis on $\desugar$ derivation.
    \notag
    \\
    &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -166,6 +167,22 @@ Case analysis on $\desugar$ derivation.
             \match
             \gamma',
             \exFun{\mu'}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-lambda}}]
+         {
+            \mu' \desugar \sigma
+         }
+         {
+            s = \exFun{\mu'} \desugar \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
          }
       \end{smathpar}
    }
