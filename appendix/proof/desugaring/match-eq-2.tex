@@ -118,16 +118,16 @@ Case analysis on $\desugar$ derivation.
    \notag
    \\
    &
-   (\exists i.v, \sigma'_i \match \gamma, \exFun{\sigma_i})\text { and }(\forall i \numleq j.v, \sigma'_i \match \gamma, \exFun{\sigma_i} \iff p_i = p)
+   \forall i \numleq j.v, \sigma'_i \match \gamma, \exFun{\sigma_i} \iff p_i = p
    \quad
    (\exists p)
    &
    \text{\lemref{match-increasing-two} (2)}
-   \notag
+   \locallabel{p-equals}
    &
    \\
    &
-   e = \disjjoin\set{\exFun{\sigma_i} \mid i \numleq j\text{ and }v, \sigma'_i \match \gamma, \exFun{\sigma_{i}}}
+   e = \disjjoin\set{\exFun{\sigma_i} \mid i \numleq j\textit{ and }v, \sigma'_i \match \gamma, \exFun{\sigma_{i}}}
    = \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
    &
    \text{\lemref{match-increasing-two} (3)}
@@ -137,6 +137,14 @@ Case analysis on $\desugar$ derivation.
    \forall i \numleq j.p_i \neq p \iff v, \sigma'_i\;\matchNeg \iff u, p_{i}\;\matchNeg
    &
    \text{\lemref{match-domains-agree} (2)}
+   \notag
+   \\
+   &
+   \exists i.v, \sigma'_i \match \gamma, \exFun{\sigma_i}\textit{ with }p_i = p\textit{ and }u, p \match \gamma'\textit{ with }\gamma' \desugar \gamma
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{p-equals}, \lemref{match-domains-agree} (1))}
    \notag
    \\
    &
@@ -151,7 +159,7 @@ Case analysis on $\desugar$ derivation.
             \\
             \mu' \eqdef (\clause{\seq{p_i}}{s_i} \mid \forall i \numleq j.p_i = p)
             \\
-            (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
+            (\forall i \numleq j.p_i \neq p \implies u, p_i\;\matchNeg)
          }
          {
             u, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
