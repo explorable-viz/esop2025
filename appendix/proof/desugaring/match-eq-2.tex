@@ -118,16 +118,16 @@ Case analysis on $\desugar$ derivation.
    \notag
    \\
    &
-   v, \sigma'_i \match \gamma, \exFun{\sigma_i}\text { and }(\forall i' \numleq j.v, \sigma'_{i'} \match \gamma, \exFun{\sigma_{i'}} \iff p_{i'} = p_i)
+   (\exists i.v, \sigma'_i \match \gamma, \exFun{\sigma_i})\text { and }(\forall i \numleq j.v, \sigma'_i \match \gamma, \exFun{\sigma_i} \iff p_i = p)
    \quad
-   (\exists i \numleq j)
+   (\exists p)
    &
    \text{\lemref{match-increasing-two} (2)}
    \notag
    &
    \\
    &
-   e = \disjjoin\set{\exFun{\sigma_{i'}} \mid i' \numleq j\text{ and }v, \sigma'_{i'} \match \gamma, \exFun{\sigma_{i'}}}
+   e = \disjjoin\set{\exFun{\sigma_i} \mid i \numleq j\text{ and }v, \sigma'_i \match \gamma, \exFun{\sigma_{i}}}
    &
    \text{\lemref{match-increasing-two} (3)}
    \notag
