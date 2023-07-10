@@ -214,8 +214,42 @@ By induction on derivation of $\evalFwdS$
       \end{smathpar}
    }
    &
-   \text{Inversion on $\desugar$}
+   \text{inversion}
    \notag
+   \\
+   &
+   \gamma, s \evalSugS \exClosure{\gamma_1}{g}{\mu}
+   \textit{ with }
+   \gamma_1 \desugar \gamma'_1
+   \opAnd
+   g \desugar \rho
+   \opAnd 
+   \mu \desugar \sigma
+   &
+   \text{(IH)}
+   \\
+   &
+   \gamma, s' \evalSugS v
+   \textit{ with }
+   v \desugar v'
+   &
+   \text{(IH)}
+   \\
+   &
+   \exists \gamma_2.\; \gamma_1, g \closeDefsS \gamma_2
+   \textit{ with }
+   \gamma_2 \desugar \gamma'_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \\
+   &
+   \exists \gamma_3, s^{\dag}.\; v, \mu \match \gamma_3, s^{\dag}
+   \textit{ with }
+   \gamma_3 \desugar \gamma'_3
+   \opAnd
+   s^{\dag} \desugar e^{\dag}
+   &
+   \text{\lemref{match-eq}}
    \\
    &
    \derivation{\derivationWidth}{
