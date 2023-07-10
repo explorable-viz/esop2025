@@ -129,7 +129,7 @@ By induction on derivation of $\evalFwdS$
    \textit{ with }
    \seq{v} \desugar \seq{v}'
    &
-   \text{IH}
+   \text{(IH)}
    \notag
    \\
    &
@@ -175,7 +175,7 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-apply}},
+            lab={\ruleName{$\evalFwdS$-app}},
             width=3.3in,
          ]
          {
@@ -214,10 +214,57 @@ By induction on derivation of $\evalFwdS$
       \end{smathpar}
    }
    &
-   \text{Inversion on $\desugar$}
+   \text{inversion}
    \notag
    \\
    &
+   \gamma, s \evalSugS \exClosure{\gamma_1}{g}{\mu}
+   \textit{ with }
+   \gamma_1 \desugar \gamma'_1
+   \opAnd
+   g \desugar \rho
+   \opAnd 
+   \mu \desugar \sigma
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \gamma, s' \evalSugS v
+   \textit{ with }
+   v \desugar v'
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \exists \gamma_2.\; \gamma_1, g \closeDefsS \gamma_2
+   \textit{ with }
+   \gamma_2 \desugar \gamma'_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \exists \gamma_3, s^{\dag}.\; v, \mu \match \gamma_3, s^{\dag}
+   \textit{ with }
+   \gamma_3 \desugar \gamma'_3
+   \opAnd
+   s^{\dag} \desugar e^{\dag}
+   &
+   \text{\lemref{match-eq}}
+   \notag
+   \\
+   &
+   \gamma_1 \concat \gamma_2 \concat \gamma_3, s^{\dag} \evalSugS v^{\dag}
+   \textit{ with }
+   v^{\dag} \desugar u
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -238,37 +285,6 @@ By induction on derivation of $\evalFwdS$
          }
       \end{smathpar}
    }
-   &
-   \text{Inversion on $\evalSugS$-app}
-   \notag
-   \\
-   &
-   \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   v \desugar v'
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   \gamma_2 \desugar  \gamma'_2
-   &
-   \text{\lemref{closedefs-eq}}
-   \notag
-   \\
-   &
-   \gamma_3 \desugar \gamma'_3 \desugar \opAnd s^{\dag} \desugar e^{\dag}
-   &
-   \text{$\mu \desugar \sigma$, \lemref{match-eq}}
-   \notag
-   \\
-   &
-   \qedLocal
-   v^{\dag} \desugar u
    &
    \notag
    \\
@@ -320,7 +336,7 @@ By induction on derivation of $\evalFwdS$
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    &
-   \lemref{closedefs-eq}
+   \text{\lemref{closedefs-eq}}
    \notag
    \\
    &

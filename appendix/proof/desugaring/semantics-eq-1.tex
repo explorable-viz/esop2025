@@ -130,7 +130,7 @@ By induction on derivation of $\evalSugS$.
    \textit{ with }
    \seq{v} \desugar \seq{v}'
    &
-   \text{IH}
+   \text{(IH)}
    \notag
    \\
    &
@@ -216,10 +216,57 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
+   \gamma', e \evalFwdS \exClosure{\gamma'_1}{\rho}{\sigma}
+   \textit{ with }
+   \gamma_1 \desugar \gamma_2
+   \opAnd
+   g \desugar \rho
+   \opAnd
+   \mu \desugar \sigma
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \gamma', e' \evalFwdS v'
+   \textit{ with }
+   v \desugar v'
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \exists \gamma'_2.\; \gamma'_1, \rho \closeDefsS \gamma'_2
+   \textit{ with }
+   \gamma_2 \desugar \gamma'_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   \exists \gamma'_3, e^{\dag}.\; v', \sigma \match \gamma'_3, e^{\dag}
+   \textit{ with }
+   \gamma_3 \desugar \gamma'_3
+   \opAnd
+   s^{\dag} \desugar e^{\dag}
+   &
+   \text{\lemref{match-eq}}
+   \notag
+   \\
+   &
+   \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+   \textit{ with }
+   v^{\dag} \desugar u
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-apply}},
+            lab={\ruleName{$\evalFwdS$-app}},
             width=3.3in,
          ]
          {
@@ -239,38 +286,8 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{inversion}
    \notag
    \\
-   &
-   \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   v \desugar v'
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   \gamma_2 \desugar \gamma'_2
-   &
-   \text{\lemref{closedefs-eq}}
-   \notag
-   \\
-   &
-   \gamma_3 \desugar \gamma'_3 \opAnd s^{\dag} \desugar e^{\dag}
-   &
-   \text{$\mu \desugar \sigma$, \lemref{match-eq}}
-   \notag
-   \\
-   &
-   v^{\dag} \desugar u
-   &
-   \text{IH}
-   \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
@@ -327,7 +344,7 @@ By induction on derivation of $\evalSugS$.
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    &
-   \text{(\lemref{closedefs-eq})}
+   \text{\lemref{closedefs-eq}}
    \notag
    \\
    &
