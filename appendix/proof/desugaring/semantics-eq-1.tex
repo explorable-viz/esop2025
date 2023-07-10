@@ -251,8 +251,18 @@ By induction on derivation of $\evalSugS$.
    s^{\dag} \desugar e^{\dag}
    &
    \text{\lemref{match-eq}}
+   \notag
    \\
    &
+   \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+   \textit{ with }
+   v^{\dag} \desugar u
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -276,38 +286,8 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{inversion}
    \notag
    \\
-   &
-   \exClosure{\gamma_1}{g}{\mu} \desugar \exClosure{\gamma'_1}{\rho}{\sigma}
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   v \desugar v'
-   &
-   \text{IH}
-   \notag
-   \\
-   &
-   \gamma_2 \desugar \gamma'_2
-   &
-   \text{\lemref{closedefs-eq}}
-   \notag
-   \\
-   &
-   \gamma_3 \desugar \gamma'_3 \opAnd s^{\dag} \desugar e^{\dag}
-   &
-   \text{$\mu \desugar \sigma$, \lemref{match-eq}}
-   \notag
-   \\
-   &
-   v^{\dag} \desugar u
-   &
-   \text{IH}
-   \notag
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
