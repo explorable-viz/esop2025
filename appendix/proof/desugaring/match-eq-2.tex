@@ -131,7 +131,7 @@ Case analysis on $\desugar$ derivation.
    = \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
    &
    \text{\lemref{match-increasing-two} (3)}
-   \notag
+   \locallabel{e-eq}
    \\
    &
    \forall i \numleq j.p_i \neq p \iff v, \sigma'_i\;\matchNeg \iff u, p_{i}\;\matchNeg
@@ -179,7 +179,15 @@ Case analysis on $\desugar$ derivation.
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-lambda}}]
          {
-            \mu' \desugar \disjjoin\set{\sigma_i \mid p_i = p}
+            \inferrule*[]
+            {
+               \seq{p_i} = s_i \desugar \sigma_i
+               \quad
+               (\forall i \numleq j.p_i = p)
+            }
+            {
+               \mu' \desugar \disjjoin\set{\sigma_i \mid p_i = p}
+            }
          }
          {
             s
@@ -192,7 +200,7 @@ Case analysis on $\desugar$ derivation.
       \end{smathpar}
    }
    &
-   \text{(Def.~$\disjjoin$)}
+   \text{(Def.~$\disjjoin$), (\localref{e-eq})}
    \notag
 \end{flalign}
 \end{proof}
