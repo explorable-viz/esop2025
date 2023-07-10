@@ -2,7 +2,7 @@
    {\small \flushleft \shadebox{$\seq{v}, \seq{p} \match \gamma$}
    \begin{smathpar}
       \inferrule*[
-        lab={\ruleName{$\match$-empty}}
+        lab={\ruleName{$\match$-seq-empty}}
       ]
       {
          \strut
@@ -14,7 +14,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\match$-seq}}
+         lab={\ruleName{$\match$-seq-non-empty}}
       ]
       {
          v, p \match \gamma
@@ -118,7 +118,7 @@
          (\forall i' \numleq j.i' \ne i \implies v, p_{i'}\;\matchNeg)
       }
       {
-         v, \seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}} \match \gamma, s_i
+         v, (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma, s_i
       }
       %
       \and
@@ -130,7 +130,7 @@
       {
          v, p \match \gamma
          \\
-         (\forall i \numleq j.p_i = p \implies (\clause{\seq{p_i}}{s_i}) \in \mu)
+         \mu \eqdef (\clause{\seq{p_i}}{s_i} \mid \forall i \numleq j.p_i = p)
          \\
          (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
       }
