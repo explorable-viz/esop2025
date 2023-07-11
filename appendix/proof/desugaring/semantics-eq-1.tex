@@ -32,7 +32,7 @@ By induction on derivation of $\evalSugS$.
             \strut
          }
          {
-            {\gamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+            \gamma = {\gamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
          }
       \end{smathpar}
    }
@@ -49,21 +49,22 @@ By induction on derivation of $\evalSugS$.
             \strut
          }
          {
-            \exVar{x} \desugar \exVar{x}
+            s_0 = \exVar{x} \desugar \exVar{x} = e_0
          }
       \end{smathpar}
    }
    &
-   \text{$\desugar$}
+   \text{inversion}
    \notag
    \\
    &
-   \gamma_1 \desugar \gamma_2
+   \gamma_1\cons{\bind{x}{v}} \desugar \gamma_2\cons\bind{x}{v'}
    &
    (\localref{desug:env})
    \notag
    \\
    &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -78,14 +79,13 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
-   \text{$\evalFwdS$}
    \notag
    \\
    &
    \qedLocal
    \text{$v \desugar v'$.}
    &
-   \text{\lemref{varlookup}, (\localref{desug:env})}
+   \text{\lemref{varlookup}}
    \notag
    \\
    \intertext{\crossrule}
