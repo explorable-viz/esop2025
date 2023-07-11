@@ -217,8 +217,10 @@ By induction on derivation of $\evalSugS$.
    g \desugar \rho
    \opAnd
    \mu \desugar \sigma
+   \quad
+   (\exists \gamma_1,\rho,\sigma)
    &
-   \text{(IH)}
+   \text{(IH), $\desugar$-closure}
    \notag
    \\
    &
@@ -230,21 +232,31 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \exists \gamma'_2.\; \gamma'_1, \rho \closeDefsS \gamma'_2
+   \gamma'_1, \rho \closeDefsS \gamma'_2
    \textit{ with }
    \gamma_2 \desugar \gamma'_2
+   \quad
+   (\exists \gamma'_2) 
    &
    \text{\lemref{closedefs-eq}}
    \notag
    \\
    &
-   \exists \gamma'_3, e^{\dag}.\; v', \sigma \match \gamma'_3, e^{\dag}
+   v', \sigma \match \gamma'_3, e^{\dag}
    \textit{ with }
    \gamma_3 \desugar \gamma'_3
    \opAnd
    s^{\dag} \desugar e^{\dag}
+   \quad
+   (\exists \gamma'_3, e^{\dag})
    &
    \text{\lemref{match-eq}}
+   \notag
+   \\
+   &
+   \gamma_1\concat\gamma_2\concat\gamma_3 \desugar \gamma'_1\concat\gamma'_2\concat\gamma'_3
+   &
+   \text{\lemref{varlookup}}
    \notag
    \\
    &
@@ -303,16 +315,6 @@ By induction on derivation of $\evalSugS$.
    &
    \notag
    \\
-   % & % Really not sure if these are needed for this to work
-   % \exists e. s \desugar e
-   % &
-   % \text{(IH)}
-   % \\
-   % &
-   % \mu_i \desugar \sigma_i \;(\forall i \numleq \length{\seq{x}})
-   % &
-   % \text{(IH)}
-   % \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
@@ -334,9 +336,11 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \exists \gamma'.\; \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
+   \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
+   \quad
+   (\exists \gamma')
    &
    \text{\lemref{closedefs-eq}}
    \notag
@@ -351,6 +355,8 @@ By induction on derivation of $\evalSugS$.
    \gamma' \concat \gamma^{\ddagger}, e \evalFwdS v'
    \textit{ with }
    v \desugar v'
+   \quad
+   (\exists v')
    &
    \text{(IH)}
    \notag
