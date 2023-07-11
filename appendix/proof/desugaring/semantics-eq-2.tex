@@ -3,7 +3,7 @@ By induction on derivation of $\evalFwdS$
 \small
 \begin{flalign}
    &
-   s \desugar e
+   s_0 \desugar e_0
    &
    \text{suppose}
    \locallabel{desug:expr}
@@ -15,7 +15,7 @@ By induction on derivation of $\evalFwdS$
    \locallabel{desug:env}
    \\
    &
-   \gamma', e \evalFwdS v'
+   \gamma', e \evalFwdS v'_0
    &
    \text{suppose}
    \locallabel{eval:core}
@@ -49,7 +49,7 @@ By induction on derivation of $\evalFwdS$
             \strut
          }
          {
-            \exVar{x} \desugar \exVar{x}
+            s_0 = \exVar{x} \desugar \exVar{x} = e_0
          }
       \end{smathpar}
    }
@@ -58,12 +58,13 @@ By induction on derivation of $\evalFwdS$
    \notag
    \\
    &
-   \gamma = \gamma_1 \cons (\bind{x}{v}) \text{ with } \gamma_1 \desugar \gamma_2
+   \gamma = \gamma_1 \cons (\bind{x}{v}) \desugar \gamma_2 \cons (\bind{x}{v})
    &
-   \text{(\localref{desug:env})}
+   \text{(\localref{desug:env}), \lemref{varlookup}}
    \notag
    \\
    &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
@@ -78,13 +79,6 @@ By induction on derivation of $\evalFwdS$
       \end{smathpar}
    }
    &
-   \notag
-   \\
-   &
-   \qedLocal
-   v \desugar v'
-   &
-   \text{(\localref{desug:env}), \lemref{varlookup}}
    \notag
    \\
    \intertext{\crossrule}
