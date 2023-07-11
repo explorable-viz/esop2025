@@ -69,8 +69,8 @@ well-typed terms desugar.
    Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
 \hfill
 \begin{enumerate}
-   \item If $\gamma, s \evalSugS v$ then $\gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
-   \item If $\gamma',e \evalFwdS v'$ then $\gamma, s \evalSugS v$ with $v \desugar v'$  \label{semantics-eq-2}
+   \item If $\gamma, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
+   \item If $\gamma',e \evalFwdS v'$ then $\exists v.\; \gamma, s \evalSugS v$ with $v \desugar v'$  \label{semantics-eq-2}
 \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -82,7 +82,7 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
 
 \begin{lemma}
    \label{lem:varlookup}
-   Suppose $\gamma \desugar \gamma'$ and $v \desugar v'$. Then $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
+   $\gamma \desugar \gamma'$ and $v \desugar v' \;\iff\; \gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
 \end{lemma}
 \begin{proof}
    Trivially follows from definition of environment desugaring.
