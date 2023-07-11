@@ -21,7 +21,12 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
       \item $\outN{G} = \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
-
+We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
+\begin{definition}[Subgraph Extension]
+   For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where 
+   $G''$ is the \textit{induced subgraph} $G[V' \cup V^{\dag}]$ formed by extending $G'$ with the vertices in $V^{\dag}$,
+   and all edges with both endpoints in the set $V' \cup V^{\dag}$.
+\end{definition}
 \subsection{Surface language (dependence graph formulation)}
 
 \subsection{Core language (dependence graph formulation)}
@@ -38,3 +43,4 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \subsection{Backwards slicing (dependence graph formulation)}
 
 \input{fig/graph/bwd-slice}
+\input{fig/graph/fwd-slice}
