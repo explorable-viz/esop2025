@@ -162,19 +162,19 @@
          lab={\ruleName{$\desugar$-fun}}
       ]
       {
-         \seqRange{(p_1, \clause{\seq{p_1}}{s_1})}
-                  {(p_j, \clause{\seq{p_1}}{s_j})}
+         \seqRange{(p_1, \clause{\pi_1}{s_1})}
+                  {(p_j, \clause{\pi_1}{s_j})}
          \desugar \sigma
       }
       {
-         \seqRange{\clause{p_1 \cons \seq{p_1}}{s_1}}
-                  {\clause{p_j \cons \seq{p_j}}{s_j}}
+         \seqRange{\clause{p_1 \cons \pi_1}{s_1}}
+                  {\clause{p_j \cons \pi_j}{s_j}}
          \desugar
          \sigma
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$\seqRange{(\seq{p_1}, k_1)}{(\seq{p_j}, k_j)} \desugar \kappa$}
+   {\flushleft \shadebox{$\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa$}
    \hfill}
    \begin{smathpar}
       \inferrule*[
@@ -193,13 +193,13 @@
          lab={\ruleName{$\desugar$-clauses-curry}}
       ]
       {
-         \seqRange{(p_1, \clause{\seq{p_1}}{s_1})}{(p_j, \clause{\seq{p_j}}{s_j})}
+         \seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}
          \desugar
          \sigma
       }
       {
-         \seqRange{(\seqEmpty, \clause{p_1 \cons \seq{p_1}}{s_1})}
-                  {(\seqEmpty, \clause{p_j \cons \seq{p_j}}{s_j})}
+         \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                  {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
          \desugar
          \exFun{\sigma}
       }
@@ -210,10 +210,10 @@
          lab={\ruleName{$\desugar$-clauses-var}}
       ]
       {
-         \seqRange{(\seq{p_1}, k_1)}{(\seq{p_j}, k_j)} \desugar \kappa
+         \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa
       }
       {
-         \seqRange{(\pattVar{x} \cons \seq{p_1}, k_1)}{(\pattVar{x} \cons \seq{p_j}, k_j)}
+         \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
          \desugar
          \elimVar{x}{\kappa}
       }
@@ -224,11 +224,11 @@
          lab={\ruleName{$\desugar$-clauses-record}}
       ]
       {
-         \seqRange{(\seq{p_1} \concat \seq{p_1}', k_1)}{(\seq{p_j} \concat \seq{p_j}', k_j)} \desugar \kappa
+         \seqRange{(\pi_1 \concat \pi_1', k_1)}{(\pi_j \concat \pi_j', k_j)} \desugar \kappa
       }
       {
-         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \seq{p_1}', k_1)}
-                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \seq{p_j}', k_j)}
+         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1', k_1)}
+                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j', k_j)}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
@@ -240,13 +240,13 @@
          right={$\forall i \numleq j.\datatype{c_i} = D$}
       ]
       {
-         ((\seq{p_i} \concat \seq{p_i}', c_i) \mid c_i = c) \desugar \kappa_c
+         ((\pi_i \concat \pi_i', c_i) \mid c_i = c) \desugar \kappa_c
          \quad
          (\forall c \in \ctrsF(D))
       }
       {
-         \seqRange{(\pattConstr{c_1}{\seq{p_1}} \cons \seq{p_1}', k_1)}
-                  {(\pattConstr{c_j}{\seq{p_j}} \cons \seq{p_j}', k_j)}
+         \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
+                  {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
