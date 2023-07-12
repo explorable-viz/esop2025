@@ -16,3 +16,68 @@ declaration
 $\stmtBind{p}{s}$
 &
 generator
+
+
+{\flushleft \shadebox{$\seq{d} \desugar e$}
+\hfill \phantom{blah}}% \textbfit{$\seq{d}$ desugars to $e$}}
+\begin{smathpar}
+   \inferrule*[lab={\ruleName{$\desugar$-do-end}}]
+   {
+      s \desugar e
+   }
+   {
+      \stmtVoid{s}
+      \desugar
+      e
+   }
+   %
+   \and
+   %
+   \inferrule*[lab={\ruleName{$\desugar$-do-void}}]
+   {
+      s \desugar e
+      \\
+      \seq{d} \desugar e'
+      \\
+      \sigma = \elimF(\pattVar{\varAnon}, e')
+   }
+   {
+      s \cons \seq{d}
+      \desugar
+      \exApp{\exApp{\varBind}{e}}{\exFun{\sigma}}
+   }
+   %
+   \and
+   %
+   \inferrule*[lab={\ruleName{$\desugar$-do-gen}}]
+   {
+      s \desugar e
+      \\
+      \seq{d} \desugar e'
+      \\
+      \orElseF(\elimF(p, e'),\varFail) = \sigma
+   }
+   {
+      \stmtBind{p}{s} \cons \seq{d}
+      \desugar
+      \exApp
+         {\exApp{\varBind}{e}}
+         {\exFun{\sigma}}
+   }
+   %
+   \and
+   %
+   \inferrule*[lab={\ruleName{$\desugar$-do-decl}}]
+   {
+      s \desugar e
+      \\
+      \seq{d} \desugar e'
+      \\
+      \orElseF(\elimF(p, e'), \exError) = \sigma
+   }
+   {
+      \stmtDeclaration{p}{s} \cons \seq{d}
+      \desugar
+      \exApp{\exFun{\sigma}}{e}
+   }
+\end{smathpar}
