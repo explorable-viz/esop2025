@@ -176,39 +176,10 @@
       \and
       %
       \inferrule*[
-         right={$\forall i.\forall i' \neq i.p_i \neq p_{i'}$}
-         lab={\ruleName{$\desugar$-clauses}},
       ]
       {
-         s_i \desugar e_i
-         \\
-         \sigma_i \eqdef \elimF(p_i, e_i)
-         \quad
-         (\forall i \numleq j)
       }
       {
-         (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
-         \desugar
-         \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-curried}},
-         right={$\forall i \numleq j.\seq{p_i} \neq \seqEmpty$}
-      ]
-      {
-         (\clause{\seq{p_i}}{s_i}) \desugar \sigma_i
-         \\
-         \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
-         \quad
-         (\forall i \numleq j)
-      }
-      {
-         (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
-         \desugar
-         \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
       }
    \end{smathpar}
    \\[2mm]
