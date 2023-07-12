@@ -203,6 +203,20 @@
          \desugar
          \exFun{\sigma}
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-var}}
+      ]
+      {
+         \seqRange{(\seq{p_1}, k_1)}{(\seq{p_j}, k_j)} \desugar \kappa
+      }
+      {
+         \seqRange{(\pattVar{x} \cons \seq{p_1}, k_1)}{(\pattVar{x} \cons \seq{p_j}, k_j)}
+         \desugar
+         \elimVar{x}{\kappa}
+      }
    \end{smathpar}
    \\[2mm]
    \begin{minipage}[t]{0.48\textwidth}
