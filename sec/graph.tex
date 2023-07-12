@@ -49,7 +49,9 @@ We analagously use $\fwdSliceS$ to denote the forward slicing relation. In contr
 slicing, we provide the forward slicing relation with a set of input nodes, and compute the set of
 internal and output nodes that the input nodes are sufficient to compute. Formally:
 \begin{definition}[Forwards Slicing (Graph)]
-   For a dependence graph $G = (V,E)$
+   For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subset V$, we write $V_{in}, G \fwdSliceS G'$ to mean that
+   $G'$ is the maximal slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where
+   $V' = \set{v \mid v \in V,\; \exists v' \in V_{in}.\; P_G(v, v') \opAnd {v},G\bwdSliceS G'' \subseteq V'}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$
 \end{definition}
 \subsection{Surface language (dependence graph formulation)}
 
