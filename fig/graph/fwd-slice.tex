@@ -1,3 +1,27 @@
 \begin{figure}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\fwdSliceS$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         \emptyset, G' \fwdSliceR{G} G' 
+      }
+      %
+      \and 
+      %
+      \inferrule*[
+         lab={\ruleName{$\fwdSliceS$-skip}},
+         right={$\alpha \in V(G')$}
+      ]
+      {
+         V, G' \fwdSliceR{G} G''
+      }
+      {
+         \set{\alpha} \cup V, G' \fwdSliceR{G} G''
+      }
+   \end{smathpar}
    \caption{Forward Slicing (Naive Graph Formulation)}
 \end{figure}
