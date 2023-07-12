@@ -21,6 +21,11 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    The sequence can be empty, in which case the path is simply $(v,v') \in E$.
 \end{definition}
 
+\begin{definition}[Sources and Sinks]
+   For a graph $G = (V,E)$, we define the sources $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$, and the sinks
+   $T(G) = \set{v \in V \mid \outN{G}(v) = \emptyset}$
+\end{definition}
+
 \begin{definition}
    For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
 \end{definition}
