@@ -1,0 +1,145 @@
+\begin{figure}
+   \begin{minipage}[t]{0.7\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
+          &\textit{Eliminator}&
+          \lowlight{$\Elim\;\Gamma\,A\;K$}
+          \\
+          $\sigma, \tau ::=$
+          &
+          $\exVar{e}$
+          &
+          expression
+          \\
+          &
+          $\elimPhi{\seq{\exPair{p}{\sigma}}}$
+          &
+          branch node
+          \\
+          &
+          $\emptyset$
+          &
+          empty eliminator
+          \\
+          &\textit{Extended Patterns}&
+          \\
+          $\pstar ::=$
+          &
+          $\pattConstr{c}{}$
+          &
+          constructor pattern
+          \\
+          &
+          $\exRecord{}_{\seq{x}}$
+          &
+          record pattern
+          \\
+          &
+          $\exVar{x}$
+          &
+          ground variable pattern
+          \\
+      \end{tabularx}
+   \end{minipage}
+\caption{Grammar for new eliminators}
+\end{figure}
+
+\begin{figure}
+   {\small \flushleft \shadebox{$\seq{p},\sigma \elimmapsto \tau$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \seq{p},\exVar{e} \elimmapsto \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \seq{p},\emptyset \elimmapsto \emptyset
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \seq{p},\sigma \elimmapsto \tau
+      }
+      {
+         p\cdot\seq{p},\elimPhi{\exPair{p}{\sigma}\cdot\seq{\exPair{p}{\sigma}}'} \elimmapsto \tau
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \exVar{p'}\notin\phiKeys{\elimPhi{\seq{\exPair{p}{\sigma}}}}
+      }
+      {
+         p'\cdot\seq{p}', \elimPhi{\seq{\exPair{p}{\sigma}}} \elimmapsto \emptyset
+      }
+   \end{smathpar}
+   }
+   \caption{Eliminator lookup}
+\end{figure}
+
+\begin{figure}
+   {\small \flushleft \shadebox{$\sigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau$}
+   \begin{smathpar}
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \exVar{e} \disjjoin \exPair{\seq{p}}{\exVar{e'}} = \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \strut
+      }
+      {
+         \emptyset \disjjoin \exPair{\varepsilon}{\exVar{e}} = \exVar{e}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \sigma
+      }
+      {
+         \emptyset \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\sigma}}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         \sigma \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau
+      }
+      {
+         \elimPhi{\exPair{p}{\sigma} \cdot \seq{\exPair{p}{\sigma}}' } \disjjoin \exPair{p\cdot\seq{p}}{\exVar{e}} = \elimPhi{\exPair{p}{\tau} \cdot \seq{\exPair{p}{\sigma}}'}
+      }
+      %
+      \and
+      %
+      \inferrule*
+      {
+         p' \notin \phiKeys{\elimPhi{\seq{\exPair{p}{\sigma}}}}
+         \\
+         \emptyset \disjjoin \exPair{\seq{p}}{\exVar{e}} = \tau
+      }
+      {
+         \elimPhi{\seq{\exPair{p}{\sigma}}} \disjjoin \exPair{p'\cdot\seq{p}}{\exVar{e}} = \elimPhi{\seq{\exPair{p}{\sigma}} \cdot \exPair{p'}{\tau}}
+      }
+   \end{smathpar}}
+\end{figure}
+
