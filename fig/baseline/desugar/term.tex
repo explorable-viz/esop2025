@@ -232,6 +232,23 @@
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-constr}}
+      ]
+      {
+         \desugar \kappa_c
+         \quad
+         (\forall c \in \ctrsF(D))
+      }
+      {
+         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \seq{p_1}', k_1)}
+                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \seq{p_j}', k_j)}
+         \desugar
+         \elimRecord{\seq{x}}{\kappa}
+      }
    \end{smathpar}
    \\[2mm]
    \begin{minipage}[t]{0.48\textwidth}
