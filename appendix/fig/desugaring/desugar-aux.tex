@@ -7,52 +7,6 @@
       \\
       %========================================
       \intertext{
-      \flushleft\shadebox{$\elimF :: \Patt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
-      }
-      %========================================
-      \elimF(\pattVar{x})(\kappa)
-      &=
-      \elimVar{x}{\kappa}
-      \\
-      \elimF(\pattConstr{c}{\seq{p}}, \kappa)
-      &=
-      \elimConstr{\elimBind{c}{\elimArgsF(\seq{p}, \kappa)}}
-      \\
-      \elimF(\pattList{p}{o}, \kappa)
-      &=
-      \elimConstr{\elimBind{\cCons}{\elimF(p, \elimF(o, \kappa))}}
-      \\
-      \elimF(\pattRecord{\seq{\bind{x}{p}}}, \kappa)
-      &=
-      \elimRecord{\seq{x}}{\elimArgsF(\seq{p}, \kappa)}
-      \\
-      %========================================
-      \intertext{
-      \flushleft\shadebox{$\elimF :: \ListRestPatt\;A\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;B \to \Elim\;\Gamma\;A\;B)$}
-      }
-      %========================================
-      \elimF(\pattListEnd, \kappa)
-      &=
-      \elimConstr{\elimBind{\cNil}{\kappa}}
-      \\
-      \elimF((\pattListNext{p}{o}), \kappa)
-      &=
-      \elimConstr{\elimBind{\cCons}{\elimF(p, \elimF(o, \kappa))}}
-      \\
-      %========================================
-      \intertext{
-      \flushleft\shadebox{$\elimArgsF :: \PattSeqOpt\;\Gamma' \times (\Cont\;(\Gamma \concat \Gamma')\;A \to \Cont\;\Gamma\;A)$}
-      }
-      %========================================
-      \elimArgsF(\seqEmpty)(\kappa)
-      &=
-      \kappa
-      \\
-      \elimArgsF(\pi \cons \seq{\pi}, \sigma)
-      &=
-      \elimF(\pi, \elimArgsF(\seq{\pi}, \sigma))
-      %========================================
-      \intertext{
       \flushleft\shadebox{$\orElseF :: \PattSeqOpt\;\Gamma' \times \Cont\;(\Gamma \concat \Gamma')\;A \times \Expr\;\cxtEmpty\;A \to \Cont\;(\Gamma \concat \Gamma')\;A$}
       }
       %========================================
@@ -70,19 +24,19 @@
       \\
       \orElseF(\pattConstr{c}{\seq{p}} \cons \seq{\pi}, \elimConstr{\elimBind{c}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{c}{\orElseF(\seq{p} \concat \seq{\pi}, \kappa, e)}} \disjjoin \unlessF(c, e)
+      \elimConstr{\elimBind{c}{\orElseF(\seq{p} \concat \seq{\pi}, \kappa, e)}} \cup \unlessF(c, e)
       \\
       \orElseF(\pattList{p}{o} \cons \seq{\pi}, \elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \disjjoin \unlessF(\cCons, e)
+      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \cup \unlessF(\cCons, e)
       \\
       \orElseF((\pattListNext{p}{o}) \cons \seq{\pi}, \elimConstr{\elimBind{\cCons}{\sigma}}, e)
       &=
-      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \disjjoin \unlessF(\cCons, e)
+      \elimConstr{\elimBind{\cCons}{\orElseF(p \cons o \cons \seq{\pi}, \sigma)}} \cup \unlessF(\cCons, e)
       \\
       \orElseF(\pattListEnd \cons \seq{\pi}, \elimConstr{\elimBind{\cNil}{\kappa}}, e)
       &=
-      \elimConstr{\elimBind{\cNil}{\orElseF(\seq{\pi}, \kappa)}} \disjjoin \unlessF(\cNil, e)
+      \elimConstr{\elimBind{\cNil}{\orElseF(\seq{\pi}, \kappa)}} \cup \unlessF(\cNil, e)
       \\
       %========================================
       \intertext{
