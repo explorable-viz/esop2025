@@ -164,8 +164,9 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
    \label{lem:match-increasing-two}
    Suppose $v, \sigma \match \gamma, \kappa$ where $s = \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}$ and $\forall i \numleq j.\sigma_i = \elimF(p_i, \kappa_i)$.
    \begin{enumerate}
-      \item $\forall i \numleq j.v, \sigma_i \match \gamma', \kappa_i \implies \gamma' = \gamma$.
-      \item $\exists i \numleq j.v, \sigma_i \match \gamma, \kappa_i$ and $(\forall i' \numleq j.v, \sigma_{i'} \match \gamma, \kappa_{i'} \iff p_{i'} = p_i)$.
+      \item $\forall i \numleq j.v, \sigma_i\;\matchNeg$ or $v, \sigma_i \match \gamma, \kappa_i$.
+      \item $\exists i \numleq j.v, \sigma_i \match \gamma, \kappa_i$.
+      \item $\exists p.(\forall i \numleq j.v, \sigma_{i} \match \gamma, \kappa_{i} \iff p_{i} = p)$.
       \item $\kappa = \disjjoin\set{\kappa_i \mid i \numleq j\text{ and }v, \sigma_i \match \gamma, \kappa_i}$
    \end{enumerate}
 \end{lemma}
