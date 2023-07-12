@@ -212,33 +212,37 @@
       }
    \end{smathpar}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
-   \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\desugar$-env}}]
-       {
-           \seq{v} \desugar \seq{v}'
-       }
-       {
-           \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
-       }
-   \end{smathpar}
-   }
-   \\[2mm]
-   {\small \flushleft \shadebox {$u \desugar v$}
-       \begin{smathpar}
-           \inferrule*[lab={\ruleName{$\desugar$-closure}}]
-           {
-               \gamma \desugar \gamma'
-               \\
-               \seq{\mu} \desugar \seq{\sigma}
-               \\
-               \mu \desugar \sigma
-           }
-           {
-               \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
-           }
-       \end{smathpar}
-   }
+   \begin{minipage}[t]{0.48\textwidth}
+      {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-env}}]
+         {
+            \seq{v} \desugar \seq{v}'
+         }
+         {
+            \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
+         }
+      \end{smathpar}
+      }
+   \end{minipage}%
+   \hspace{2mm}%
+   \begin{minipage}[t]{0.48\textwidth}
+      {\small \flushleft \shadebox {$u \desugar v$}
+         \begin{smathpar}
+            \inferrule*[lab={\ruleName{$\desugar$-closure}}]
+            {
+                  \gamma \desugar \gamma'
+                  \\
+                  \seq{\mu} \desugar \seq{\sigma}
+                  \\
+                  \mu \desugar \sigma
+            }
+            {
+                  \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
+            }
+         \end{smathpar}
+      }
+   \end{minipage}
    \caption{Baseline language: desugaring for terms, function definitions, environments and closures}
    \label{fig:baseline:desugar}
 \end{figure}
