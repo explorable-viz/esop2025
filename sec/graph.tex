@@ -57,6 +57,7 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
    For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subset V$, we write $V_{in}, G \fwdSliceS G'$ to mean that
    $G'$ is the maximal slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we (temporarily) define $V'$ as the fixpoint of the following equation:
    $V' = \set{v \mid v \in V,\; \exists v' \in V_{in}.\; P_G(v, v') \opAnd {v},G\bwdSliceS G'' \subseteq V'}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$
+   An non-recursive definition of $V'$ can be given as follows: $V' = \set{v \in V \mid v, G \bwdSliceS G'' \opAnd T(G'') \subseteq V_{in}}$
 \end{definition}
 \subsection{Surface language (dependence graph formulation)}
 
