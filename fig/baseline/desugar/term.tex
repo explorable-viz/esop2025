@@ -212,11 +212,11 @@
          lab={\ruleName{$\desugar$-clauses-record}}
       ]
       {
-         \seqRange{(\pi_1 \concat \pi_1', k_1)}{(\pi_j \concat \pi_j', k_j)} \desugar \kappa
+         \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa
       }
       {
-         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1', k_1)}
-                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j', k_j)}
+         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
+                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
