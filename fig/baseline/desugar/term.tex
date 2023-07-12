@@ -236,16 +236,17 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-constr}}
+         lab={\ruleName{$\desugar$-clauses-constr}},
+         right={$\forall i \numleq j.\datatype{c_i} = D$}
       ]
       {
-         \desugar \kappa_c
+         ((\seq{p_i} \concat \seq{p_i}', c_i) \mid c_i = c) \desugar \kappa_c
          \quad
          (\forall c \in \ctrsF(D))
       }
       {
-         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \seq{p_1}', k_1)}
-                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \seq{p_j}', k_j)}
+         \seqRange{(\pattConstr{c_1}{\seq{p_1}} \cons \seq{p_1}', k_1)}
+                  {(\pattConstr{c_j}{\seq{p_j}} \cons \seq{p_j}', k_j)}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
