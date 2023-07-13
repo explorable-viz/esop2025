@@ -108,18 +108,6 @@
          \desugar
          e
       }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\desugar$-do}}]
-      {
-         \seq{d} \desugar e
-      }
-      {
-         \exDo{\seq{d}}
-         \desugar
-         e
-      }
    \end{smathpar}
    \\[2mm]
    {\flushleft \shadebox{$l \desugar e$}
@@ -155,71 +143,130 @@
    \hfill}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\desugar$-fun-uncurried}}
+         lab={\ruleName{$\desugar$-fun}}
       ]
       {
-         s_i \desugar e_i
-         \\
-         \sigma_i \eqdef \elimF(p_i, e_i)
-         \\
-         (\forall i' \neq i.p_i \neq p_{i'})
-         \quad
-         (\forall i \numleq j)
+         \seqRange{(p_1, \clause{\pi_1}{s_1})}
+                  {(p_j, \clause{\pi_1}{s_j})}
+         \desugar \sigma
       }
       {
-         (\seqRange{\clause{p_1}{s_1}}{\clause{p_j}{s_j}})
+         \seqRange{\clause{p_1 \cons \pi_1}{s_1}}
+                  {\clause{p_j \cons \pi_j}{s_j}}
          \desugar
-         \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
+         \sigma
+      }
+   \end{smathpar}
+   \\[2mm]
+   {\flushleft \shadebox{$\seq{(\pi, k)} \desugar \kappa$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-end}}
+      ]
+      {
+         s \desugar e
+      }
+      {
+         (\seqEmpty, \clause{\seqEmpty}{s}) \desugar e
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-fun-curried}}
+         lab={\ruleName{$\desugar$-clauses-curry}}
       ]
       {
-         (\clause{\seq{p_i}}{s_i}) \desugar \sigma_i
-         \\
-         \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
-         \\
-         \seq{p_i} \neq \seqEmpty
-         \quad
-         (\forall i \numleq j)
+         \seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}
+         \desugar
+         \sigma
       }
       {
-         (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+         \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                  {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
          \desugar
-         \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}
+         \exFun{\sigma}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-var}}
+      ]
+      {
+         \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa
+      }
+      {
+         \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
+         \desugar
+         \elimVar{x}{\kappa}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-record}}
+      ]
+      {
+         \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa
+      }
+      {
+         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
+                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
+         \desugar
+         \elimRecord{\seq{x}}{\kappa}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-clauses-constr}},
+         right={$\forall i \numleq j.\datatype{c_i} = D$}
+      ]
+      {
+         ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_c
+         \quad
+         (\forall c \in \ctrsF(D))
+      }
+      {
+         \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
+                  {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
+         \desugar
+         \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \ctrsF(D)}
       }
    \end{smathpar}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
-   \begin{smathpar}
-       \inferrule*[lab={\ruleName{$\desugar$-env}}]
-       {
-           \seq{v} \desugar \seq{v}'
-       }
-       {
-           \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
-       }
-   \end{smathpar}
-   }
-   \\[2mm]
-   {\small \flushleft \shadebox {$u \desugar v$}
-       \begin{smathpar}
-           \inferrule*[lab={\ruleName{$\desugar$-closure}}]
-           {
-               \gamma \desugar \gamma'
-               \\
-               \seq{\mu} \desugar \seq{\sigma}
-               \\
-               \mu \desugar \sigma
-           }
-           {
-               \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
-           }
-       \end{smathpar}
-   }
-   \caption{Baseline language: desugaring for terms, function definitions, environments and values}
+   \begin{minipage}[t]{0.48\textwidth}
+      {\small \flushleft \shadebox{$\gamma \desugar \gamma'$}
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-env}}]
+         {
+            \seq{v} \desugar \seq{v}'
+         }
+         {
+            \set{\seq{\bind{x}{v}}} \desugar \set{\seq{\bind{x}{v}}'}
+         }
+      \end{smathpar}
+      }
+   \end{minipage}%
+   \hspace{2mm}%
+   \begin{minipage}[t]{0.48\textwidth}
+      {\small \flushleft \shadebox {$u \desugar v$}
+         \begin{smathpar}
+            \inferrule*[lab={\ruleName{$\desugar$-closure}}]
+            {
+                  \gamma \desugar \gamma'
+                  \\
+                  \seq{\mu} \desugar \seq{\sigma}
+                  \\
+                  \mu \desugar \sigma
+            }
+            {
+                  \exClosure{\gamma}{\seq{\bind{x}{\mu}}}{\mu} \desugar \exClosure{\gamma'}{\seq{\bind{x}{\sigma}}}{\sigma}
+            }
+         \end{smathpar}
+      }
+   \end{minipage}
+   \caption{Baseline language: desugaring for terms, function definitions, environments and closures}
    \label{fig:baseline:desugar}
 \end{figure}

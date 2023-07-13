@@ -1,144 +1,98 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \match \gamma$}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{(\pi, k)} \match \gamma, s$}
    \begin{smathpar}
       \inferrule*[
-        lab={\ruleName{$\match$-seq-empty}}
+        lab={\ruleName{$\match$-done-uncurried}}
       ]
       {
          \strut
       }
       {
-         \seqEmpty, \seqEmpty \match \varnothing
+         \seqEmpty, (\seqEmpty, \clause{\seqEmpty}{s}) \match \seqEmpty, s
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\match$-seq-non-empty}}
-      ]
-      {
-         v, p \match \gamma
-         \\
-         \seq{u}, \seq{p} \match \gamma'
-      }
-      {
-         v \cons \seq{u}, p \cons \seq{p} \match \gamma \disjunion \gamma'
-      }
-   \end{smathpar}}
-   \\[3mm]
-   {\small \flushleft \shadebox {$v, p \match \gamma$}
-   \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\match$-var}}
+        lab={\ruleName{$\match$-done-curried}}
       ]
       {
          \strut
       }
       {
-         v, x \match \set{\bind{\exVar{x}}{v}}
+         \seqEmpty, (\seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                              {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})})
+         \match
+         \seqEmpty, \exFun{(\seq{\clause{p \cons \pi}{s}})}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\match$-constr}}
+        lab={\ruleName{$\match$-var}}
       ]
       {
-         \seq{v},\seq{p} \match \gamma
+         \seq{v}, (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+         \match \gamma, s
       }
       {
-         \exConstr{c}{\seq{v}},\pattConstr{c}{\seq{p}} \match \gamma
+         v \cons \seq{v}, (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                    {(\pattVar{x} \cons \pi_j, k_j)})
+         \match
+         \set{\bind{x}{v}} \disjunion \gamma, s
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\match$-nonempty-list}}
+        lab={\ruleName{$\match$-record}}
       ]
       {
-         v, p \match \gamma
+         \seq{u} \concat \seq{v}',
+         (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
+         \match \gamma, s
          \\
-         v', o \match \gamma'
+         \exRecord{\seq{\bind{y}{u}}} \subseteq \exRecord{\seq{\bind{x}{v}}}
       }
       {
-         \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\match$-record}}
-      ]
-      {
-         \seq{u}, \seq{p} \match \gamma
-         \quad
-         \exRecord{\seq{\bind{y}{u}}}
-         \subseteq \exRecord{\seq{\bind{x}{v}}}
-      }
-      {
-         \exRecord{\seq{\bind{x}{v}}}, \pattRecord{\seq{\bind{y}{p}}} \match \gamma
-      }
-   \end{smathpar}}
-   \\[3mm]
-   {\small \flushleft \shadebox{$v, o \match \gamma$}
-   \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\match$-list-rest-nil}}
-      ]
-      {
-         \strut
-      }
-      {
-         \cNil, \pattListEnd \match \varnothing
+         \exRecord{\seq{\bind{x}{v}}} \cons \seq{v}',
+         (\seqRange{(\pattRecord{\seq{\bind{y}{p_1}}} \cons \pi_1, k_1)}
+                   {(\pattRecord{\seq{\bind{y}{p_j}}} \cons \pi_j, k_j)})
+         \match
+         \gamma, s
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\match$-list-rest-cons}}
+        lab={\ruleName{$\match$-constr}}
       ]
       {
-         v, p, \match \gamma
-         \\
-         v', o \match \gamma'
+         \seq{v} \concat \seq{v}',
+         ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+         \match \gamma, s
       }
       {
-         \exConstr{\cCons}{v, v'}, (\pattListNext{p}{o}) \match \gamma \disjunion \gamma'
+         \exConstr{c}{\seq{v}} \cons \seq{v}',
+         (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
+                   {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+         \match
+         \gamma, s
       }
    \end{smathpar}}
    \\[3mm]
    {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\match$-uncurried}}
+         lab={\ruleName{$\match$-fun}}
       ]
       {
-         v, p_{i} \match \gamma
-         \\
-         (\forall i' \numleq j.i' \ne i \implies v, p_{i'}\;\matchNeg)
+         v, (\seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}) \match \gamma, s
       }
       {
-         v, (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma, s_i
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\match$-curried}},
-         right={$\mu \neq \seqEmpty$}
-      ]
-      {
-         v, p \match \gamma
-         \\
-         \mu \eqdef (\clause{\seq{p_i}}{s_i} \mid \forall i \numleq j.p_i = p)
-         \\
-         (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
-      }
-      {
-         v, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+         v, (\seqRange{\clause{p_1 \cons \pi_1}{s_1}}{\clause{p_j \cons \pi_j}{s_j}})
          \match
-         \gamma,
-         \exFun{\mu}
+         \gamma, s
       }
    \end{smathpar}}
    \caption{Surface semantics: pattern matching}
