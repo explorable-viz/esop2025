@@ -99,6 +99,7 @@ we first state the following lemma which we need to prove \thmref{semantics-eq}.
 \begin{proof}
    Immediate from definition of environment desugaring.
 \end{proof}
+
 \begin{lemma}
    \label{lem:match-eq}
    Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
@@ -107,10 +108,22 @@ we first state the following lemma which we need to prove \thmref{semantics-eq}.
       \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
       \item If $v, \sigma \match \gamma, e$ then $\exists \gamma', s.u, \mu \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
-
 \end{lemma}
 \begin{proof}
-   For (1) see \appref{proofs:match-eq-1}. For (2) see \appref{proofs:match-eq-2}.
+   Immediate from definitions of $\desugar$ and $\match$ for $\mu$ and \lemref{match-seq-eq}.
+\end{proof}
+
+\begin{lemma}
+   \label{lem:match-seq-eq}
+   Suppose $\seq{u} \desugar \seq{v}$ and $\seq{(\pi, k)} \desugar \kappa$.
+   \hfill
+   \begin{enumerate}
+      \item If $\seq{u}, \seq{(\pi, k)} \match \gamma, s$ then $\exists \gamma', e.\seq{v},\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
+      \item If $\seq{v}, \sigma \match \gamma, e$ then $\exists \gamma', s.\seq{u}, \seq{(\pi, k)} \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
+   \end{enumerate}
+\end{lemma}
+\begin{proof}
+   For (1) see \appref{proofs:match-seq-eq-1}. For (2) see \appref{proofs:match-seq-eq-2}.
 \end{proof}
 
 \begin{lemma}
@@ -125,71 +138,3 @@ we first state the following lemma which we need to prove \thmref{semantics-eq}.
 \begin{proof}
    See \appref{proofs:close-defs-eq}
 \end{proof}
-
-\begin{lemma}
-   \label{lem:match-domains-agree}
-   Suppose $u \desugar v$ and $\sigma = \elimF(p, \kappa)$.
-   \begin{enumerate}
-      \item If $u, p \match \gamma$ and $v, \sigma \match \gamma'$ then $\gamma \desugar \gamma'$.
-      \item $u, p\;\matchNeg$ iff $v, \sigma\;\matchNeg$.
-   \end{enumerate}
-\end{lemma}
-
-\begin{proof}
-   See \appref{proofs:match-domains-agree}.
-\end{proof}
-
-\begin{lemma}
-   \label{lem:match-domains-agree-list-rest}
-   Suppose $u \desugar v$ and $\sigma = \elimF(o, \kappa)$.
-   \begin{enumerate}
-      \item If $u, o \match \gamma$ then $\exists \gamma'.v, \sigma \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
-      \item If $u, o\;\matchNeg$ then $v, \sigma\;\matchNeg$.
-   \end{enumerate}
-\end{lemma}
-
-\begin{proof}
-   See \appref{proofs:match-domains-agree-list-rest}.
-\end{proof}
-
-\begin{lemma}
-   \label{lem:match-domains-agree-seq}
-   Suppose $\seq{u} \desugar \seq{v}$ and $\kappa' = \elimArgsF(\seq{p}, \kappa)$.
-   \begin{enumerate}
-      \item If $\seq{u}, \seq{p} \match \gamma$ then $\exists \gamma'.\seq{v}, \kappa' \match \gamma', \kappa$ with $\gamma \desugar \gamma'$.
-      \item If $\seq{u}, \seq{p}\;\matchNeg$ then $\seq{v}, \kappa'\;\matchNeg$.
-   \end{enumerate}
-\end{lemma}
-
-\begin{lemma}
-   \label{lem:match-increasing}
-   Suppose $v, \sigma \match \gamma, \kappa_1$. Then $\exists \kappa.v, \sigma \disjjoin \tau \match \gamma, \kappa$ and:
-   \begin{enumerate}
-      \item If $v, \tau \match \gamma, \kappa_2$ then $\kappa = \kappa_1 \disjjoin \kappa_2$.
-      \item If $v, \tau\;\matchNeg$ then $\kappa = \kappa_1$.
-   \end{enumerate}
-\end{lemma}
-
-\todo{Consolidate with \lemref{match-increasing}?}
-
-\begin{lemma}
-   \label{lem:match-increasing-two}
-   Suppose $v, \sigma \match \gamma, \kappa$ where $s = \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin}$ and $\forall i \numleq j.\sigma_i = \elimF(p_i, \kappa_i)$.
-   \begin{enumerate}
-      \item $\forall i \numleq j.v, \sigma_i\;\matchNeg$ or $v, \sigma_i \match \gamma, \kappa_i$.
-      \item $\exists i \numleq j.v, \sigma_i \match \gamma, \kappa_i$.
-      \item $\exists p.(\forall i \numleq j.v, \sigma_{i} \match \gamma, \kappa_{i} \iff p_{i} = p)$.
-      \item $\kappa = \disjjoin\set{\kappa_i \mid i \numleq j\text{ and }v, \sigma_i \match \gamma, \kappa_i}$
-   \end{enumerate}
-\end{lemma}
-
-$\disjjoin$ is a partial commutative monoid.
-
-\begin{lemma}
-   \label{lem:disjjoin-assoc-comm}
-   \item
-   \begin{enumerate}
-   \item $\sigma_1 \disjjoin (\sigma_2 \disjjoin \sigma_3) \eqif (\sigma_1 \disjjoin \sigma_2) \disjjoin \sigma_3$
-   \item $\sigma \disjjoin \tau \eqif \tau \disjjoin \sigma$
-   \end{enumerate}
-\end{lemma}
