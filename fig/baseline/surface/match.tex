@@ -48,14 +48,16 @@
         lab={\ruleName{$\match$-record}}
       ]
       {
-         \seq{u} \concat \seq{v}', ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+         \seq{u} \concat \seq{v}',
+         (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
          \match \gamma, s
          \\
          \exRecord{\seq{\bind{y}{u}}} \subseteq \exRecord{\seq{\bind{x}{v}}}
       }
       {
-         v \cons \seq{v}, (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                    {(\pattVar{x} \cons \pi_j, k_j)})
+         \exRecord{\seq{\bind{x}{v}}} \cons \seq{v}',
+         (\seqRange{(\pattRecord{\seq{\bind{y}{p_1}}} \cons \pi_1, k_1)}
+                   {(\pattRecord{\seq{\bind{y}{p_j}}} \cons \pi_j, k_j)})
          \match
          \set{\bind{x}{v}} \disjunion \gamma, s
       }
