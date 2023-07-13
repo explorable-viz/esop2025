@@ -378,5 +378,20 @@ By induction on derivation of $\evalSugS$.
    }
    &
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp}}
+         ]{
+            \gamma, \seq{q}, s \evalSugR{\seq{Q},S} v
+         }
+         {
+            \gamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
+         }
+      \end{smathpar}
+   }
 \end{flalign}
 \end{proof}
