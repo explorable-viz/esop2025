@@ -25,6 +25,22 @@
          \match
          \seqEmpty, \exFun{(\seq{\clause{p \cons \pi}{s}})}
       }
+      %
+      \and
+      %
+      \inferrule*[
+        lab={\ruleName{$\match$-var}}
+      ]
+      {
+         \seq{v}, (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+         \match \gamma, s
+      }
+      {
+         v \cons \seq{v}, (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                    {(\pattVar{x} \cons \pi_j, k_j)})
+         \match
+         \set{\bind{x}{v}} \disjunion \gamma, s
+      }
    \end{smathpar}}
    \\[3mm]
    {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
