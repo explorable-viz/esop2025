@@ -69,11 +69,11 @@
       ]
       {
          \seq{v} \concat \seq{v}',
-         (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
+         ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
          \match \gamma, s
       }
       {
-         \exConstr{c}{\seq{v}},
+         \exConstr{c}{\seq{v}} \cons \seq{v}',
          (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
                    {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
          \match
