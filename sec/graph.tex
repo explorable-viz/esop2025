@@ -10,6 +10,22 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
+\begin{definition}[Induced subgraph]
+   For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
+   by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(s,t) \mid s,t \in V' \opAnd (s,t) \in E}$.
+\end{definition}
+
+\begin{definition}[Path]
+   For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $P_G(v, v')$, to mean that there is a
+   \textit{path} from $v$ to $v'$ in $G$, meaning $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$.
+   The sequence can be empty, in which case the path is simply $(v,v') \in E$.
+\end{definition}
+
+\begin{definition}[Sources and Sinks]
+   For a graph $G = (V,E)$, we define the sources $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$, and the sinks
+   $T(G) = \set{v \in V \mid \outN{G}(v) = \emptyset}$
+\end{definition}
+
 \begin{definition}
    For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
 \end{definition}
@@ -21,7 +37,28 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
       \item $\outN{G} = \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
-
+We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
+\begin{definition}[Subgraph Extension]
+   For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where 
+   $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
+\end{definition}
+We use $\bwdSliceS$ to denote the backwards slicing relation. Intuitively, the relation 
+$\bwdSliceS$, when given a set of outputs of interest computes the subgraph of the computation that
+contains only the nodes necessary for the computation of those outputs. More formally:
+\begin{definition}[Backwards Slicing (Graph)]
+   For a dependence graph $G = (V,E)$, and a set of output nodes $V_{out} \subset V$, we write $V_{out}, G \bwdSliceS G'$ to mean 
+   that $G'$ is the minimal slice of $G$ with respect to $V_{out}$, defined as
+   $G' = (V', E')$ where $V' = \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v,v') \in E}$  
+\end{definition}
+We analagously use $\fwdSliceS$ to denote the forward slicing relation. In contrast to backwards
+slicing, we provide the forward slicing relation with a set of input nodes, and compute the set of
+internal and output nodes that the input nodes are sufficient to compute. Formally:
+\begin{definition}[Forwards Slicing (Graph)]
+   For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subset V$, we write $V_{in}, G \fwdSliceS G'$ to mean that
+   $G'$ is the maximal slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we (temporarily) define $V'$ as the fixpoint of the following equation:
+   $V' = \set{v \mid v \in V,\; \exists v' \in V_{in}.\; P_G(v, v') \opAnd {v},G\bwdSliceS G'' \subseteq V'}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$
+   An non-recursive definition of $V'$ can be given as follows: $V' = \set{v \in V \mid v, G \bwdSliceS G'' \opAnd T(G'') \subseteq V_{in}}$
+\end{definition}
 \subsection{Surface language (dependence graph formulation)}
 
 \subsection{Core language (dependence graph formulation)}
@@ -38,3 +75,4 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \subsection{Backwards slicing (dependence graph formulation)}
 
 \input{fig/graph/bwd-slice}
+\input{fig/graph/fwd-slice}

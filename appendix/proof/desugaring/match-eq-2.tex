@@ -20,13 +20,14 @@ Case analysis on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\desugar$-clauses}},
-            right={$\forall i.\forall i' \neq i.p_i \neq p_{i'}$}
+            left={\ruleName{$\desugar$-fun-uncurried}}
          ]
          {
             s_i \desugar e_i
             \\
             \sigma_i \eqdef \elimF(p_i, e_i)
+            \\
+            (\forall i' \neq i.p_i \neq p_{i'})
             \quad
             (\forall i \numleq j)
          }
@@ -41,7 +42,7 @@ Case analysis on $\desugar$ derivation.
    \locallabel{desugar-uncurried}
    \\
    &
-   v, \sigma_i \match \gamma, e_i\text{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
+   v, \sigma_i \match \gamma, e_i\textit{ with }\forall i' \neq i.v, \sigma_i\;\matchNeg
    \quad
    (\exists i)
    &
@@ -49,8 +50,8 @@ Case analysis on $\desugar$ derivation.
    \notag
    \\
    &
-   u, p_i \match \gamma'\text{ with }\gamma' \desugar \gamma
-   \text{ and }
+   u, p_i \match \gamma'\textit{ with }\gamma' \desugar \gamma
+   \textit{ and }
    \forall i' \neq i.u, p_{i'}\;\matchNeg
    &
    \text{\lemref{match-domains-agree}}
@@ -78,9 +79,128 @@ Case analysis on $\desugar$ derivation.
    \\
    &
    \qedLocal
-   s_i \desugar e_i\text{ and }\gamma' \desugar \gamma
+   s_i \desugar e_i\textit{ and }\gamma' \desugar \gamma
    &
    \text{(\localref{desugar-uncurried}), (\localref{gamma-uncurried})}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-fun-curried}}
+         ]
+         {
+            (\clause{\seq{p_i}}{s_i}) \desugar \sigma_i
+            \\
+            \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
+            \\
+            \seq{p_i} \neq \seqEmpty
+            \quad
+            (\forall i \numleq j)
+         }
+         {
+            \mu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+            \desugar
+            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{desugar-curried}
+   \\
+   &
+   \forall i \numleq j.v, \sigma'_i\;\matchNeg\textit{ or }v, \sigma'_i \match \gamma, \exFun{\sigma_i}
+   &
+   \text{\lemref{match-increasing-two} (1)}
+   \notag
+   \\
+   &
+   \forall i \numleq j.v, \sigma'_i \match \gamma, \exFun{\sigma_i} \iff p_i = p
+   \quad
+   (\exists p)
+   &
+   \text{\lemref{match-increasing-two} (2)}
+   \locallabel{p-equals}
+   &
+   \\
+   &
+   e = \disjjoin\set{\exFun{\sigma_i} \mid i \numleq j\textit{ and }v, \sigma'_i \match \gamma, \exFun{\sigma_{i}}}
+   = \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
+   &
+   \text{\lemref{match-increasing-two} (3)}
+   \locallabel{e-eq}
+   \\
+   &
+   \forall i \numleq j.p_i \neq p \iff v, \sigma'_i\;\matchNeg \iff u, p_{i}\;\matchNeg
+   &
+   \text{\lemref{match-domains-agree} (2)}
+   \notag
+   \\
+   &
+   \exists i.v, \sigma'_i \match \gamma, \exFun{\sigma_i}\textit{ with }p_i = p\textit{ and }u, p \match \gamma'\textit{ with }\gamma' \desugar \gamma
+   \quad
+   (\exists \gamma')
+   &
+   \text{(\localref{p-equals}, \lemref{match-domains-agree} (1))}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-curried}},
+            right={$\mu \neq \seqEmpty$}
+         ]
+         {
+            u, p \match \gamma'
+            \\
+            \mu' \eqdef (\clause{\seq{p_i}}{s_i} \mid \forall i \numleq j.p_i = p)
+            \\
+            (\forall i \numleq j.p_i \neq p \implies u, p_i\;\matchNeg)
+         }
+         {
+            u, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+            \match
+            \gamma',
+            \exFun{\mu'}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+         {
+            \inferrule*[]
+            {
+               \seq{p_i} = s_i \desugar \sigma_i
+               \quad
+               (\forall i \numleq j.p_i = p)
+            }
+            {
+               \mu' \desugar \disjjoin\set{\sigma_i \mid p_i = p}
+            }
+         }
+         {
+            s
+            = \exFun{\mu'}
+            = \exFun{(\disjjoin\set{\sigma_i \mid p_i = p})}
+            \desugar
+            \disjjoin\set{\exFun{\sigma_i} \mid p_i = p}
+            = e
+         }
+      \end{smathpar}
+   }
+   &
+   \text{(Def.~$\disjjoin$), (\localref{e-eq})}
    \notag
 \end{flalign}
 \end{proof}
