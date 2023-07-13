@@ -86,6 +86,7 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
 \begin{proof}
    Immediate from definition of environment desugaring.
 \end{proof}
+
 \begin{lemma}
    \label{lem:match-eq}
    Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
@@ -94,10 +95,22 @@ definitions (\lemref{closedefs-eq}), and environment extension (\lemref{varlooku
       \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
       \item If $v, \sigma \match \gamma, e$ then $\exists \gamma', s.u, \mu \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
-
 \end{lemma}
 \begin{proof}
-   For (1) see \appref{proofs:match-eq-1}. For (2) see \appref{proofs:match-eq-2}.
+   Immediate from definitions of $\desugar$ and $\match$ for $\mu$ and \lemref{match-seq-eq}.
+\end{proof}
+
+\begin{lemma}
+   \label{lem:match-seq-eq}
+   Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
+   \hfill
+   \begin{enumerate}
+      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
+      \item If $v, \sigma \match \gamma, e$ then $\exists \gamma', s.u, \mu \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
+   \end{enumerate}
+\end{lemma}
+\begin{proof}
+   For (1) see \appref{proofs:match-seq-eq-1}. For (2) see \appref{proofs:match-seq-eq-2}.
 \end{proof}
 
 \begin{lemma}
