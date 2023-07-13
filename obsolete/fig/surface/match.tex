@@ -1,0 +1,145 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{p} \match \gamma$}
+   \begin{smathpar}
+      \inferrule*[
+        lab={\ruleName{$\match$-seq-empty}}
+      ]
+      {
+         \strut
+      }
+      {
+         \seqEmpty, \seqEmpty \match \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-seq-non-empty}}
+      ]
+      {
+         v, p \match \gamma
+         \\
+         \seq{u}, \seq{p} \match \gamma'
+      }
+      {
+         v \cons \seq{u}, p \cons \seq{p} \match \gamma \disjunion \gamma'
+      }
+   \end{smathpar}}
+   \\[3mm]
+   {\small \flushleft \shadebox {$v, p \match \gamma$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\match$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         v, x \match \set{\bind{\exVar{x}}{v}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-constr}}
+      ]
+      {
+         \seq{v},\seq{p} \match \gamma
+      }
+      {
+         \exConstr{c}{\seq{v}},\pattConstr{c}{\seq{p}} \match \gamma
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-nonempty-list}}
+      ]
+      {
+         v, p \match \gamma
+         \\
+         v', o \match \gamma'
+      }
+      {
+         \exConstr{\cCons}{v, v'}, \pattList{p}{o} \match \gamma \disjunion \gamma'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-record}}
+      ]
+      {
+         \seq{u}, \seq{p} \match \gamma
+         \quad
+         \exRecord{\seq{\bind{y}{u}}}
+         \subseteq \exRecord{\seq{\bind{x}{v}}}
+      }
+      {
+         \exRecord{\seq{\bind{x}{v}}}, \pattRecord{\seq{\bind{y}{p}}} \match \gamma
+      }
+   \end{smathpar}}
+   \\[3mm]
+   {\small \flushleft \shadebox{$v, o \match \gamma$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\match$-list-rest-nil}}
+      ]
+      {
+         \strut
+      }
+      {
+         \cNil, \pattListEnd \match \varnothing
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-list-rest-cons}}
+      ]
+      {
+         v, p, \match \gamma
+         \\
+         v', o \match \gamma'
+      }
+      {
+         \exConstr{\cCons}{v, v'}, (\pattListNext{p}{o}) \match \gamma \disjunion \gamma'
+      }
+   \end{smathpar}}
+   \\[3mm]
+   {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\match$-uncurried}}
+      ]
+      {
+         v, p_{i} \match \gamma
+         \\
+         (\forall i' \numleq j.i' \ne i \implies v, p_{i'}\;\matchNeg)
+      }
+      {
+         v, (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma, s_i
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-curried}},
+         right={$\mu \neq \seqEmpty$}
+      ]
+      {
+         v, p \match \gamma
+         \\
+         \mu \eqdef (\clause{\seq{p_i}}{s_i} \mid \forall i \numleq j.p_i = p)
+         \\
+         (\forall i \numleq j.p_i \neq p \implies v, p_i\;\matchNeg)
+      }
+      {
+         v, (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
+         \match
+         \gamma,
+         \exFun{\mu}
+      }
+   \end{smathpar}}
+   \caption{Surface semantics: pattern matching}
+\end{figure}
