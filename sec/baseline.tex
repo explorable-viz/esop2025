@@ -65,7 +65,7 @@ well-typed terms desugar.
 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$, then:
+   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$.
 \hfill
 \begin{enumerate}
    \item If $\gamma, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
@@ -77,17 +77,15 @@ well-typed terms desugar.
 \end{proof}
 
 \thmref{semantics-eq} relies on the following lemmas for pattern-matching (\lemref{match-eq}), recursive
-definitions (\lemref{closedefs-eq}) and environment extension (\lemref{varlookup}). Since the 
-evaluation of list-comprehensions in the surface language relies on an auxiliary judgement, $\gamma, \seq{q}, s \evalSugS v$
-we first state the following lemma which we need to prove \thmref{semantics-eq}.
+definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) and list comprehensions~(\thmref{semantics-eq}).
 
 \begin{theorem}
    \label{thm:list-comp-eq}
-   Suppose $\seq{q},s \desugar e and\; \gamma \desugar \gamma'$, then:
-   \begin{itemize}
+   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$:
+   \begin{enumerate}
       \item If $\gamma, \seq{q}, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$
       \item If $\gamma', e \evalFwdS v'$ then $\exists v.\; \gamma, \seq{q}, s \evalSugS v$ with $v \desugar v'$
-   \end{itemize} 
+   \end{enumerate}
 \end{theorem}
 \begin{proof}
    For (1) see \appref{list-comp-eq-1}. For (2) see \appref{list-comp-eq-2}.
