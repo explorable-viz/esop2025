@@ -1,4 +1,19 @@
 \begin{figure}
+   {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\match$-fun}}
+      ]
+      {
+         v, (\seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}) \match \gamma, s
+      }
+      {
+         v, (\seqRange{\clause{p_1 \cons \pi_1}{s_1}}{\clause{p_j \cons \pi_j}{s_j}})
+         \match
+         \gamma, s
+      }
+   \end{smathpar}}
+   \\[3mm]
    {\small \flushleft \shadebox{$\seq{v}, \seq{(\pi, k)} \match \gamma, s$}
    \begin{smathpar}
       \inferrule*[
@@ -76,21 +91,6 @@
          \exConstr{c}{\seq{v}} \cons \seq{v}',
          (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
                    {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
-         \match
-         \gamma, s
-      }
-   \end{smathpar}}
-   \\[3mm]
-   {\small \flushleft \shadebox{$v, \mu \match \gamma, s$}
-   \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\match$-fun}}
-      ]
-      {
-         v, (\seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}) \match \gamma, s
-      }
-      {
-         v, (\seqRange{\clause{p_1 \cons \pi_1}{s_1}}{\clause{p_j \cons \pi_j}{s_j}})
          \match
          \gamma, s
       }
