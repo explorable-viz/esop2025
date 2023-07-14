@@ -430,16 +430,16 @@ Induction on surface-language $\match$ derivation.
             right={$\forall i \numleq j.\datatype{c_i} = D$}
          ]
          {
-            ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_c
+            ((\pi_i \concat \pi_i', k_i) \mid c_i = c') \desugar \kappa_c
             \\
-            (\forall c \in \ctrsF(D))
+            (\forall c' \in \set{\seq{c}})
          }
          {
             \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
                      {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
             \\
             \desugar
-            \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \ctrsF(D)}
+            \elimConstr{\elimBind{c'}{\kappa_{c'}} \mid c' \in \set{\seq{c}}}
             \Lowlight{\;= \kappa}
          }
       \end{smathpar}
