@@ -446,5 +446,24 @@ Induction on surface-language $\match$ derivation.
    &
    \text{inversion}
    \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\match$-constr}}]
+         {
+            \seq{v}^\dagger \concat \seq{v}', \kappa \match \gamma', e
+         }
+         {
+            \Lowlight{\seq{v} =\;}
+            \exConstr{c}{\seq{v}^\dagger} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
+            \match
+            \gamma', e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
