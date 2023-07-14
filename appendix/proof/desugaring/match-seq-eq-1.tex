@@ -334,6 +334,7 @@ Induction on surface-language $\match$ derivation.
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
    \\
    &
@@ -422,26 +423,28 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \caseDerivation{\derivationWidth}{
+   \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-clauses-constr}},
+            left={\ruleName{$\desugar$-clauses-constr}},
             right={$\forall i \numleq j.\datatype{c_i} = D$}
          ]
          {
             ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_c
-            \quad
+            \\
             (\forall c \in \ctrsF(D))
          }
          {
             \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
                      {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
+            \\
             \desugar
             \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \ctrsF(D)}
          }
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
 \end{flalign}
 \end{proof}
