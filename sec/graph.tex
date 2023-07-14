@@ -11,7 +11,10 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \begin{definition}[Opposite graph]
    For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
-
+\begin{definition}[Complement]
+   For a set $X$ and $X' \subseteq X$, we write $X^c \subseteq X$ to denote the \textit{complement} 
+   of $X'$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.  
+\end{definition}
 \begin{definition}[Induced subgraph]
    For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
    by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(s,t) \in E \mid s,t \in V'}$.
@@ -73,8 +76,9 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
 
 \begin{lemma}[De Morgan dual of Forward Slice]
       For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
-      of the inputs which we write $V_{in}^c$, then if we backwards slice in $G^{-1}$, and take the complement of the
-      result, we obtain a forward slice with respect to $V_{in}$:
+      of $V_{in}\;w.r.t\;T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
+      result $\bwdSliceR{G^{-1}}(V_{in}^c) w.r.t\; S(G)$, we obtain 
+      a forward slice with respect to $V_{in}$:
       $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{lemma}
 
