@@ -26,20 +26,16 @@ Induction on surface-language $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-var}}
+            lab={\ruleName{$\match$-done-uncurried}}
           ]
           {
-             \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
-             \match \gamma^\dagger, s
+             \strut
           }
           {
              \Lowlight{\seq{u} =\;}
-             u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                         {(\pattVar{x} \cons \pi_j, k_j)})
-             \match
-             \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
+             \seqEmpty, (\seqEmpty, \clause{\seqEmpty}{s}) \match \envEmpty\Lowlight{\;= \gamma}, s
           }
-       \end{smathpar}
+      \end{smathpar}
    }
    &
    \notag
@@ -48,50 +44,39 @@ Induction on surface-language $\match$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\desugar$-clauses-var}}
+            lab={\ruleName{$\desugar$-clauses-done}}
          ]
          {
-            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
+            s \desugar e
          }
          {
-            \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
-            \desugar
-            (\elimVar{x}{\kappa'})\Lowlight{\,= \kappa}
+            (\seqEmpty, \clause{\seqEmpty}{s}) \desugar e
          }
       \end{smathpar}
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{done-uncurried-inversion}
    \\
    &
-   \seq{v} = v \cons \seq{v}'\text{ with }u \desugar v\text{ and }\seq{u}' \desugar \seq{v}'
-   \quad
-   (\exists v, \seq{v}')
+   \seq{v} = \seqEmpty
    &
    \text{(\localref{us-desugar-vs})}
    \notag
    \\
    &
-   \seq{v}', \kappa \match \gamma^\ddagger, e
-   \textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
-   \textit{ and }s \desugar e
-   \quad
-   (\exists\gamma^\ddagger, e)
-   &
-   \text{IH}
-   \locallabel{var-IH}
-   \\
-   &
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\match$-var}}]
+         \inferrule*[
+            lab={\ruleName{$\match$-done}}
+         ]
          {
-            \seq{v}', \kappa' \match \gamma^\ddagger, e
+            \strut
          }
          {
-            v \cons \seq{v};, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
+            \Lowlight{\seq{v} =\;}
+            \seqEmpty, e \match \envEmpty, e
          }
       \end{smathpar}
    }
@@ -100,13 +85,9 @@ Induction on surface-language $\match$ derivation.
    \\
    &
    \qedLocal
-   \set{\bind{x}{u}} \disjunion \gamma^\dagger
-   \desugar
-   \set{\bind{x}{v}} \disjunion \gamma^\ddagger
-   \textit{ and }
-   s \desugar e
+   \envEmpty \desugar \envEmpty\text{ and }s \desugar e
    &
-   \text{($u \desugar v$), (\localref{var-IH})}
+   \text{(\localref{done-uncurried-inversion})}
    \notag
    \\
    \intertext{\crossrule}
@@ -213,6 +194,318 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \text{(\localref{done-curried-inversion})}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-var}}
+          ]
+          {
+             \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+             \match \gamma^\dagger, s
+          }
+          {
+             \Lowlight{\seq{u} =\;}
+             u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                         {(\pattVar{x} \cons \pi_j, k_j)})
+             \match
+             \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
+          }
+       \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses-var}}
+         ]
+         {
+            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
+         }
+         {
+            \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
+            \desugar
+            (\elimVar{x}{\kappa'})\Lowlight{\,= \kappa}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \seq{v} = v \cons \seq{v}'\text{ with }u \desugar v\text{ and }\seq{u}' \desugar \seq{v}'
+   \quad
+   (\exists v, \seq{v}')
+   &
+   \text{(\localref{us-desugar-vs})}
+   \notag
+   \\
+   &
+   \seq{v}', \kappa' \match \gamma^\ddagger, e
+   \textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
+   \textit{ and }s \desugar e
+   \quad
+   (\exists\gamma^\ddagger, e)
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-var}}]
+         {
+            \seq{v}', \kappa' \match \gamma^\ddagger, e
+         }
+         {
+            v \cons \seq{v}, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\ddagger, e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \set{\bind{x}{u}} \disjunion \gamma^\dagger
+   \desugar
+   \set{\bind{x}{v}} \disjunion \gamma^\ddagger
+   \textit{ and }
+   s \desugar e
+   &
+   \text{($u \desugar v$)}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{u}^\ddagger \concat \seq{u}',
+            (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
+            \match \gamma, s
+            \\
+            \exRecord{\seq{\bind{y}{u}}^\ddagger} \subseteq \exRecord{\seq{\bind{x}{u}}^\dagger}
+         }
+         {
+            \Lowlight{\seq{u} =\;}
+            \exRecord{\seq{\bind{x}{u}}^\dagger} \cons \seq{u}',
+            (\seqRange{(\pattRecord{\seq{\bind{y}{p_1}}} \cons \pi_1, k_1)}
+                      {(\pattRecord{\seq{\bind{y}{p_j}}} \cons \pi_j, k_j)})
+            \\
+            \match
+            \gamma, s
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses-record}}
+         ]
+         {
+            \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa'
+         }
+         {
+            \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
+                     {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
+            \\
+            \desugar
+            (\elimRecord{\seq{x}}{\kappa'})
+            \Lowlight{\;= \kappa}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \seq{v} = \exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}'
+   \textit{ with }
+   \seq{u}^\dagger \desugar \seq{v}^\dagger
+   \textit{ and }
+   \seq{u}' \desugar \seq{v}'
+   \quad
+   (\exists \seq{v}^\dagger, \seq{v}')
+   &
+   \text{(\localref{us-desugar-vs})}
+   \notag
+   \\
+   &
+   \exRec{\seq{\bind{y}{v}}^\ddagger} \subseteq \exRec{\seq{\bind{x}{v}}^\dagger}
+   \textit{ with }
+   \seq{u}^\ddagger \desugar \seq{v}^\ddagger
+   \quad
+   (\exists \seq{v}^\ddagger)
+   &
+   \notag
+   \\
+   &
+   \seq{u}^\ddagger \concat \seq{u}' \desugar \seq{v}^\ddagger \concat \seq{v}'
+   &
+   \notag
+   \\
+   &
+   \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma', e
+   \textit{ with }
+   \gamma \desugar \gamma'\textit{ and }s \desugar e
+   \quad
+   (\exists \gamma', e)
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma', e
+            \\
+            \exRec{\seq{\bind{y}{v}}^\ddagger} \subseteq \exRec{\seq{\bind{x}{v}}^\dagger}
+         }
+         {
+            \Lowlight{\seq{v} =\;}\exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}',
+            \elimRecord{\seq{y}}{\kappa}
+            \match
+            \gamma', e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-constr}}
+         ]
+         {
+            \seq{u}^\dagger \concat \seq{u}',
+            ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+            \match \gamma, s
+         }
+         {
+            \Lowlight{\seq{u} =\;}
+            \exConstr{c}{\seq{u}^\dagger} \cons \seq{u}',
+            (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
+                      {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+            \match
+            \gamma, s
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses-constr}},
+            right={$\forall i \numleq j.\datatype{c_i} = D$}
+         ]
+         {
+            ((\pi_i \concat \pi_i', k_i) \mid c_i = c') \desugar \kappa_{c'}
+            \\
+            (\forall c' \in \set{\seq{c}})
+         }
+         {
+            \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
+                     {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
+            \\
+            \desugar
+            \elimConstr{\elimBind{c'}{\kappa_{c'}} \mid c' \in \set{\seq{c}}}
+            \Lowlight{\;= \kappa}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{constr-inversion}
+   \\
+   &
+   \seq{v} = \exConstr{c}{\seq{v}^\dagger} \cons \seq{v}'
+   \textit{ with }
+   \seq{u}^\dagger \desugar \seq{v}^\dagger
+   \textit{ and }
+   \seq{u}' \desugar \seq{v}'
+   \quad
+   (\exists \seq{v}^\dagger, \seq{v}')
+   &
+   \text{(\localref{us-desugar-vs})}
+   \notag
+   \\
+   &
+   \seq{u}^\dagger \concat \seq{u}' \desugar \seq{v}^\dagger \concat \seq{v}'
+   &
+   \notag
+   \\
+   &
+   ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_{c}
+   &
+   \text{(\localref{constr-inversion})}
+   \notag
+   \\
+   &
+   \seq{v}^\dagger \concat \seq{v}', \kappa_c \match \gamma', e
+   \textit{ with }
+   \gamma' \desugar \gamma
+   \textit{ and }
+   s \desugar e
+   \quad
+   (\exists \gamma', e)
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \sigma \eqdef
+   \kappa \setminus \set{\elimBind{c}{\kappa_c}}
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\match$-constr}}]
+         {
+            \seq{v}^\dagger \concat \seq{v}', \kappa_c \match \gamma', e
+         }
+         {
+            \Lowlight{\seq{v} =\;}
+            \exConstr{c}{\seq{v}^\dagger} \cons \seq{v}', \Lowlight{\kappa =\;}((\elimBind{c}{\kappa_c}) \cons \sigma)
+            \match
+            \gamma', e
+         }
+      \end{smathpar}
+   }
+   &
    \notag
 \end{flalign}
 \end{proof}
