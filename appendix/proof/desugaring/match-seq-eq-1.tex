@@ -446,7 +446,7 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{constr-inversion}
    \\
    &
    \seq{v} = \exConstr{c}{\seq{v}^\dagger} \cons \seq{v}'
@@ -466,7 +466,17 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
+   ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_{c}
+   &
+   \text{(\localref{constr-inversion})}
+   \notag
+   \\
+   &
    \seq{v}^\dagger \concat \seq{v}', \kappa_c \match \gamma', e
+   \textit{ with }
+   \gamma' \desugar \gamma
+   \textit{ and }
+   s \desugar e
    \quad
    (\exists \gamma', e)
    &
