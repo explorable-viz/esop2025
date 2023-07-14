@@ -26,6 +26,26 @@ Induction on surface-language $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
+            lab={\ruleName{$\match$-done-uncurried}}
+          ]
+          {
+             \strut
+          }
+          {
+             \Lowlight{\seq{u} =\;}
+             \seqEmpty, (\seqEmpty, \clause{\seqEmpty}{s}) \match \envEmpty\Lowlight{\;= \gamma}, s
+          }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
             left={\ruleName{$\match$-var}}
           ]
           {
@@ -213,26 +233,6 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \text{(\localref{done-curried-inversion})}
-   \notag
-   \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\match$-done-uncurried}}
-          ]
-          {
-             \strut
-          }
-          {
-             \Lowlight{\seq{u} =\;}
-             \seqEmpty, (\seqEmpty, \clause{\seqEmpty}{s}) \match \envEmpty\Lowlight{\;= \gamma}, s
-          }
-      \end{smathpar}
-   }
-   &
    \notag
 \end{flalign}
 \end{proof}
