@@ -151,8 +151,7 @@
          \desugar \sigma
       }
       {
-         \seqRange{(\clause{p_1 \cons \pi_1}{s_1})}
-                  {(\clause{p_j \cons \pi_j}{s_j})}
+         \seq{\clause{p \cons \pi}{s}}
          \desugar
          \sigma
       }
@@ -162,7 +161,7 @@
    \hfill}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-end}}
+         lab={\ruleName{$\desugar$-clauses-done}}
       ]
       {
          s \desugar e
@@ -174,10 +173,10 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-curry}}
+         lab={\ruleName{$\desugar$-clauses-curried}}
       ]
       {
-         \seq{(p, \clause{\pi}{s})}
+         \seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}
          \desugar
          \sigma
       }
