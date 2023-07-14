@@ -60,17 +60,19 @@ said to be \textit{partial} if it is not defined for every element of its domain
 
 \subsubsection{Equivalence of Semantics}
 
+Write $\gamma, s\,\evalSugS$ to mean $\exists v.\,\gamma, s \evalSugS v$ and similarly for the other
+relations.
+
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$.
-\hfill
 \begin{enumerate}
-   \item If $\gamma, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
-   \item If $\gamma',e \evalFwdS v'$ then $\exists v.\; \gamma, s \evalSugS v$ with $v \desugar v'$  \label{semantics-eq-2}
+   \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalFwdS$.
+   \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalFwdS v'$ then $v \desugar v'$.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
+   See \apprefTwo{semantics-eq-1}{semantics-eq-2}.
 \end{proof}
 
 \thmref{semantics-eq} relies on the following lemmas for pattern-matching (\lemref{match-eq}), recursive
