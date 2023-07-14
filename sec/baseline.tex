@@ -5,7 +5,7 @@
 To allow the user to execute surface programs directly, we formalise the evaluation of surface terms and
 corresponding notion of surface value. Surface values differ from core values only in the case of closures,
 which contain surface expressions other surface values. Later we prove that directly evaluating a surface
-program $s$ and desugaring the resulting value produces the same core language value as desugaring $s$ to a
+program $s$ and desugaring the resulting value is equivalent to desugaring $s$ to a
 core program and then evaluating, justifying our presentation of the surface semantics in the debugger.
 
 \subsubsection{Mutual recursion}
@@ -30,7 +30,7 @@ We disallow certain combinations of patterns which are commonly allowed in other
 {\small
 \begin{lstlisting}[language = Fluid]
    baz (Cons y ys)  x = ...
-   baz  Nil         x          = ...
+   baz  Nil         x = ...
 \end{lstlisting}}
 
 \input{fig/baseline/surface/syntax}
