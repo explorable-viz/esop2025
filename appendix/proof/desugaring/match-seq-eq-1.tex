@@ -1,18 +1,24 @@
-Case analysis on $\match$ derivation.
+Induction on surface-language $\match$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
    &
-   u \desugar v
-   &\text{suppose}
+   \seq{u} \desugar \seq{v}
+   &
+   \text{suppose}
+   \locallabel{us-desugar-vs}
    \\
    &
-   \mu \desugar \sigma
-   &\text{suppose}
+   \seq{(\pi, k)} \desugar \kappa
+   &
+   \text{suppose}
+   \notag
    \\
    &
-   u, \mu \match \gamma, s
-   &\text{suppose}
+   \seq{u}, \seq{(\pi, k)} \match \gamma, s
+   &
+   \text{suppose}
+   \notag
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,66 +26,87 @@ Case analysis on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-uncurried}}
-         ]
-         {
-            u, p_i \match \gamma
-            \\
-            \forall i' \ne i.\nexists \gamma. \, v, p_i \match \gamma
-         }
-         {
-            u, \mu = (\seqRange{\clauseUncurried{p_1}{s_1}}{\clauseUncurried{p_j}{s_j}}) \match \gamma, s_i = s
-         }
-      \end{smathpar}
+            left={\ruleName{$\match$-var}}
+          ]
+          {
+             \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+             \match \gamma^\dagger, s
+          }
+          {
+             \Lowlight{\seq{u} =\;}
+             u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                         {(\pattVar{x} \cons \pi_j, k_j)})
+             \match
+             \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
+          }
+       \end{smathpar}
    }
    &
-   \locallabel{uncurried-match}
+   \notag
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses-var}}
+         ]
          {
-            \inferrule*[left={\ruleName{$\desugar$-clause-uncurried}}, right={$(\forall i \numleq j)$}]
-            {
-               s_i \desugar e_i
-               \\
-               \sigma_i \eqdef \elimF(p_i, e_i)
-            }
-            {
-               (\clause{p_i}{s_i}) \desugar \sigma_i
-            }
+            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
          }
          {
-            \mu
+            \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
             \desugar
-            \seqRangeOp{\sigma_1}{\sigma_j}{\disjjoin} = \sigma
+            (\elimVar{x}{\kappa'})\Lowlight{\,= \kappa}
          }
       \end{smathpar}
    }
    &
    \text{inversion}
-   \locallabel{uncurried-desugar}
+   \notag
    \\
    &
-   v, \sigma_i \match \gamma', e_i\textit{ with }\gamma \desugar \gamma'
+   \seq{v} = v \cons \seq{v}'\text{ with }u \desugar v\text{ and }\seq{u}' \desugar \seq{v}'
+   \quad
+   (\exists v, \seq{v}')
    &
-   \text{Def.~$\sigma_i$, \localref{uncurried-match}, \lemref{match-domains-agree}}
-   \locallabel{uncurried-gamma}
+   \text{(\localref{us-desugar-vs})}
+   \notag
    \\
    &
-   \forall i' \neq i.v, \sigma_i'\;\matchNeg
+   \seq{v}', \kappa \match \gamma^\ddagger, e
+   \textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
+   \textit{ and }s \desugar e
+   \quad
+   (\exists\gamma^\ddagger, e)
    &
-   \text{(\localref{uncurried-desugar}), \lemref{match-domains-agree}}
-   \locallabel{no-match}
+   \text{IH}
+   \locallabel{var-IH}
    \\
    &
    \qedLocal
-   \exists \gamma', e.v, \sigma \match \gamma', e
-   \textit{ with }\gamma \desugar \gamma'
-   \textit{ and }s \desugar e
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-var}}]
+         {
+            \seq{v}', \kappa' \match \gamma^\ddagger, e
+         }
+         {
+            v \cons \seq{v};, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
+         }
+      \end{smathpar}
+   }
    &
-   \text{(\localref{uncurried-gamma}), (\localref{no-match}), \lemref{match-increasing}}
+   \notag
+   \\
+   &
+   \qedLocal
+   \set{\bind{x}{u}} \disjunion \gamma^\dagger
+   \desugar
+   \set{\bind{x}{v}} \disjunion \gamma^\ddagger
+   \textit{ and }
+   s \desugar e
+   &
+   \text{($u \desugar v$), (\localref{var-IH})}
    \notag
    \\
    \intertext{\crossrule}
@@ -88,140 +115,104 @@ Case analysis on $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\match$-curried}},
-            right={$\mu' \neq \seqEmpty$}
-         ]
-         {
-            u, p \match \gamma
-            \\
-            (\forall i \numleq j.\textit{if }p_i = p\textit{ then }(\clause{\seq{p_i}}{s_i}) \in \mu'\textit{ else }v, p_i\;\matchNeg)
-         }
-         {
-            u, \mu = (\seqRange{\clause{(p_1 \cons \seq{p_1})}{s_1}}{\clause{(p_j \cons \seq{p_j})}{s_j}})
-            \match
-            \gamma, \exFun{\mu'} = s
-         }
-      \end{smathpar}
+            left={\ruleName{$\match$-done-curried}}
+          ]
+          {
+             \strut
+          }
+          {
+             \Lowlight{\seq{u} =\;}
+             \seqEmpty, (\seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                                  {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}) \\
+             \match
+             \envEmpty\Lowlight{\;=\gamma}, \exFun{(\seq{\clause{p \cons \pi}{s}})}\Lowlight{\;=s}
+          }
+       \end{smathpar}
    }
    &
-   \locallabel{curried-match}
+   \notag
    \\
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[left={\ruleName{$\desugar$-clauses}}]
+         \inferrule*[
+            left={\ruleName{$\desugar$-clauses-curried}}
+         ]
          {
-            \inferrule*[
-               left={\ruleName{$\desugar$-clause-curried}},
-               right={$(\forall i \numleq j)$}
-            ]
-            {
-               \clause{\seq{p_i}}{s_i} \desugar \sigma_i
-               \\
-               \sigma'_i \eqdef \elimF(p_i, \exFun{\sigma_i})
-            }
-            {
-               (\clause{(p_i \cons \seq{p_i})}{s_i})
-               \desugar
-               \sigma'_i
-            }
+            \seqRange{(p_1, \clause{\pi_1}{s_1})}{(p_j, \clause{\pi_j}{s_j})}
+            \desugar
+            \sigma
          }
          {
-            \mu \desugar \seqRangeOp{\sigma'_1}{\sigma'_j}{\disjjoin}
-            = \sigma
+            \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                     {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
+            \desugar
+            \exFun{\sigma}\Lowlight{\;=\kappa}
+         }
+       \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \locallabel{done-curried-inversion}
+   \\
+   &
+   \seq{v} = \seqEmpty
+   &
+   \text{(\localref{us-desugar-vs})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-done}}
+         ]
+         {
+            \strut
+         }
+         {
+            \Lowlight{\seq{v} =\;}
+            \seqEmpty, \exFun{\sigma} \match \envEmpty, \exFun{\sigma}
          }
       \end{smathpar}
    }
    &
-   \text{inversion}
-   \locallabel{curried-desugar}
-   \\
-   &
-   \forall i.p_i = p \implies
-   \exists \gamma'_i.\gamma'_i.v, \sigma'_i \match \gamma', \exFun{\sigma_i}
-   \textit{ with }
-   \gamma'_i \desugar \gamma
-   &
-   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
-   \locallabel{curried-match-i}
-   \\
-   &
-   \tau \eqdef \disjjoin\set{\sigma'_i \mid \forall i \numleq j.p_i = p}
-   \neq \seqEmpty
-   &
-   \mu' \neq \seqEmpty
    \notag
    \\
    &
-   e \eqdef \exFun{(\disjjoin\set{\sigma_i \mid \forall i \numleq j.p_i = p})}
+   \qedLocal
+   \envEmpty \desugar \envEmpty
    &
    \notag
    \\
    &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[left={\ruleName{$\desugar$-lambda}}]
          {
-            \inferrule*[left={\ruleName{$\desugar$-clause-curried}}]
+            \inferrule*[
+               left={\ruleName{$\desugar$-fun}}
+            ]
             {
-               \clause{\seq{p_i}}{s_i} \desugar \sigma_i
-               \quad
-               (\forall i \numleq j.p_i = p)
+               \seqRange{(p_1, \clause{\pi_1}{s_1})}
+                        {(p_j, \clause{\pi_1}{s_j})}
+               \desugar \sigma
             }
             {
-               \mu' \desugar \disjjoin\set{\sigma_i \mid \forall i \numleq j.p_i = p}
+               \seq{\clause{p \cons \pi}{s}}
+               \desugar
+               \sigma
             }
          }
          {
-            s = \exFun{\mu'} \desugar e
+            \exFun{(\seq{\clause{p \cons \pi}{s}})} \desugar \exFun{\sigma}
          }
       \end{smathpar}
    }
    &
-   \text{(\localref{curried-match}), (\localref{curried-desugar}), Def.~$e$}
-   \locallabel{lambda-desugar}
-   \\
-   &
-   v, \tau \match \gamma', e
-   \textit{ with }
-   \gamma' \desugar \gamma
-   \quad (\exists\gamma')
-   &
-   \text{(\localref{curried-match-i}), \lemref{match-increasing}}
-   \locallabel{curried-gamma}
-   \\
-   &
-   \forall i \numleq j.p_i \neq p \implies
-   v, \sigma'_i\;\matchNeg
-   &
-   \text{(\localref{curried-match}), \lemref{match-domains-agree}}
-   \locallabel{curried-no-match}
-   \\
-   &
-   \tau' \eqdef \disjjoin\set{\sigma'_i \mid \forall i \numleq j.p_i \neq p}
-   &
-   \notag
-   \\
-   &
-   v, \tau'\;\matchNeg
-   &
-   \text{(\localref{curried-no-match}), \lemref{match-increasing}}
-   \notag
-   \\
-   &
-   \sigma = \tau \disjjoin \tau'
-   &
-   \text{\lemref{disjjoin-assoc-comm}}
-   \notag
-   \\
-   &
-   \qedLocal \exists \gamma', e.v, \sigma \desugar \gamma', e
-   \textit{ with }
-   \gamma' \desugar \gamma
-   \textit{ and }
-   s \desugar e
-   &
-   \text{\lemref{match-increasing}, (\localref{curried-gamma}), (\localref{lambda-desugar})}
+   \text{(\localref{done-curried-inversion})}
    \notag
 \end{flalign}
 \end{proof}

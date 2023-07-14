@@ -1,72 +1,51 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, \kappa'$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, e$}\hfill
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\match$-seq-empty}}
+          lab={\ruleName{$\match$-done}}
        ]
        {
           \strut
        }
        {
-          \seqEmpty, \kappa \match \envEmpty, \kappa
+          \seqEmpty, e \match \envEmpty, e
        }
        %
        \and
        %
-       \inferrule*[
-          lab={\ruleName{$\match$-seq-non-empty}}
-       ]
-       {
-          v, \sigma \match \gamma, \kappa
-          \\
-          \seq{u}, \kappa \match \gamma', \kappa'
-       }
-       {
-          v \cons \seq{u},
-          \sigma
-          \match
-          \gamma \disjunion \gamma',
-          \kappa'
-       }
-    \end{smathpar}}
-
-    {\small \flushleft \shadebox{$v, \sigma \match \gamma, \kappa$}
-    \begin{smathpar}
        \inferrule*[lab={\ruleName{$\match$-var}}]
        {
-          \strut
+          \seq{v}, \kappa \match \gamma, e
        }
        {
-          v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa
+          v \cons \seq{v}, \elimVar{x}{\kappa} \match \set{\bind{x}{v}} \disjunion \gamma, e
        }
-       %
-       \and
-       %
+       \\
        \inferrule*[
           lab={\ruleName{$\match$-record}}
        ]
        {
-          \seq{u}, \kappa \match \gamma, \kappa'
+          \seq{u} \concat \seq{v}', \kappa \match \gamma, e
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
-          \exRec{\seq{\bind{x}{v}}},
+          \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
           \elimRecord{\seq{y}}{\kappa}
           \match
-          \gamma, \kappa'
+          \gamma, e
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \kappa \match \gamma, \kappa'
+          \seq{v} \concat \seq{v}', \kappa \match \gamma, e
        }
        {
-          \exConstr{c}{\seq{v}}, (\elimBind{c}{\kappa}) \cons \sigma
+          \exConstr{c}{\seq{v}} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
           \match
-          \gamma, \kappa'
+          \gamma, e
        }
     \end{smathpar}}
  \caption{Core semantics: matching}
