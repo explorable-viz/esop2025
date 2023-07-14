@@ -73,12 +73,14 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}', \kappa \match \gamma^\ddagger, e\textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
+   \seq{v}', \kappa \match \gamma^\ddagger, e
+   \textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
+   \textit{ and }s \desugar e
    \quad
    (\exists\gamma^\ddagger, e)
    &
    \text{IH}
-   \notag
+   \locallabel{var-IH}
    \\
    &
    \qedLocal
@@ -101,8 +103,10 @@ Induction on surface-language $\match$ derivation.
    \set{\bind{x}{u}} \disjunion \gamma^\dagger
    \desugar
    \set{\bind{x}{v}} \disjunion \gamma^\ddagger
+   \textit{ and }
+   s \desugar e
    &
-   \text{($u \desugar v$)}
+   \text{($u \desugar v$), (\localref{var-IH})}
    \notag
    \\
    \intertext{\crossrule}
@@ -149,7 +153,7 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \text{inversion}
-   \notag
+   \locallabel{done-curried-inversion}
    \\
    &
    \seq{v} = \seqEmpty
@@ -174,6 +178,41 @@ Induction on surface-language $\match$ derivation.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \qedLocal
+   \envEmpty \desugar \envEmpty
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+         {
+            \inferrule*[
+               left={\ruleName{$\desugar$-fun}}
+            ]
+            {
+               \seqRange{(p_1, \clause{\pi_1}{s_1})}
+                        {(p_j, \clause{\pi_1}{s_j})}
+               \desugar \sigma
+            }
+            {
+               \seq{\clause{p \cons \pi}{s}}
+               \desugar
+               \sigma
+            }
+         }
+         {
+            \exFun{(\seq{\clause{p \cons \pi}{s}})} \desugar \exFun{\sigma}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{(\localref{done-curried-inversion})}
    \notag
 \end{flalign}
 \end{proof}
