@@ -29,8 +29,9 @@ Induction on surface-language $\match$ derivation.
              \match \gamma^\dagger, s
           }
           {
-             \seq{u} = u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                                   {(\pattVar{x} \cons \pi_j, k_j)})
+             \Lowlight{\seq{u} =\;}
+             u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                         {(\pattVar{x} \cons \pi_j, k_j)})
              \match
              \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
           }
@@ -98,6 +99,29 @@ Induction on surface-language $\match$ derivation.
    \set{\bind{x}{v}} \disjunion \gamma^\ddagger
    &
    \text{($u \desugar v$)}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-done-curried}}
+          ]
+          {
+             \strut
+          }
+          {
+             \Lowlight{\seq{u} =\;}
+             \seqEmpty, (\seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                                  {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}) \\
+             \match
+             \envEmpty\Lowlight{\;=\gamma}, \exFun{(\seq{\clause{p \cons \pi}{s}})}\Lowlight{\;=s}
+          }
+       \end{smathpar}
+   }
+   &
    \notag
 \end{flalign}
 \end{proof}
