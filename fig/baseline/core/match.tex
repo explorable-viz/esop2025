@@ -20,34 +20,32 @@
        {
           v \cons \seq{v}, \elimVar{x}{\kappa} \match \set{\bind{x}{v}} \disjunion \gamma, e
        }
-       %
-       \and
-       %
+       \\
        \inferrule*[
           lab={\ruleName{$\match$-record}}
        ]
        {
-          \seq{u}, \kappa \match \gamma, \kappa'
+          \seq{u} \concat \seq{v}', \kappa \match \gamma, e
           \\
           \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
        }
        {
-          \exRec{\seq{\bind{x}{v}}},
+          \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
           \elimRecord{\seq{y}}{\kappa}
           \match
-          \gamma, \kappa'
+          \gamma, e
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v}, \kappa \match \gamma, \kappa'
+          \seq{v} \concat \seq{v}', \kappa \match \gamma, e
        }
        {
-          \exConstr{c}{\seq{v}}, (\elimBind{c}{\kappa}) \cons \sigma
+          \exConstr{c}{\seq{v}} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
           \match
-          \gamma, \kappa'
+          \gamma, e
        }
     \end{smathpar}}
  \caption{Core semantics: matching}
