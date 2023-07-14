@@ -42,7 +42,12 @@ We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
    For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
    $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
 \end{definition}
-We use $\bwdSliceS$ to denote the backwards slicing relation. Intuitively, the relation
+We characterize slicing with 2 functions/relations, of the following types:
+\begin{itemize}
+   \item $\bwdSliceS \;:\; \powerset{S(G)} \to \powerset{T(G)}$
+   \item $\fwdSliceS \;:\; \powerset{T(G)} \to \powerset{S(G)}$
+\end{itemize}
+We use $\bwdSliceS$ to denote the backwards slicing relation. Intuitively, the relation 
 $\bwdSliceS$, when given a set of outputs of interest computes the subgraph of the computation that
 contains only the nodes necessary for the computation of those outputs. More formally:
 \begin{definition}[Backwards Slicing (Graph)]
@@ -55,9 +60,15 @@ slicing, we provide the forward slicing relation with a set of input nodes, and 
 internal and output nodes that the input nodes are sufficient to compute. Formally:
 \begin{definition}[Forwards Slicing (Graph)]
    For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subset V$, we write $V_{in}, G \fwdSliceS G'$ to mean that
-   $G'$ is the maximal slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we (temporarily) define $V'$ as the fixpoint of the following equation:
-   $V' = \set{v \mid v \in V,\; \exists v' \in V_{in}.\; P_G(v, v') \opAnd {v},G\bwdSliceS G'' \subseteq V'}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$
-   An non-recursive definition of $V'$ can be given as follows: $V' = \set{v \in V \mid v, G \bwdSliceS G'' \opAnd T(G'') \subseteq V_{in}}$
+   $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
+   $V' = \set{v \in V \mid v, G \bwdSliceS G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$.
+\end{definition}
+
+\begin{definition}[de Morgan dual of Forward Slice]
+      For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the compliment
+      of the inputs which we write $V_{in}^c$, then if we backwards slice in $G^{-1}$, and take the complement of the
+      result, we obtain a forward slice with respect to $V_{in}$:
+      $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{definition}
 
 \subsection{Core language (dependence graph formulation)}
