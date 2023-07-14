@@ -16,7 +16,7 @@
       \intertext{\crossrule}
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       &
-      \subcaseName{$\closeDefsS$-then-$\desugar$}
+      \subcaseName{$\closeDefs$-then-$\desugar$}
       &
       \notag
       \\
@@ -24,7 +24,7 @@
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefsS$-surface}}
+               left={\ruleName{$\closeDefs$-surface}}
             ]
             {
                g = \seq{\bind{x}{\mu}}
@@ -34,7 +34,7 @@
                (\forall i \le \length{\seq{x}})
             }
             {
-               \gamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+               \gamma_1, g \closeDefs \set{\seq{\bind{x}{v}}}
             }
          \end{smathpar}
       }
@@ -52,7 +52,7 @@
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefsS$-core}}
+               left={\ruleName{$\closeDefs$-core}}
             ]
             {
                \rho = \set{\seq{\bind{x}{\sigma}}}
@@ -63,7 +63,7 @@
             }
             {
                \gamma_2, \rho
-               \closeDefsFwdR
+               \closeDefs
                \set{\seq{\bind{x}{v'}}}
             }
          \end{smathpar}
@@ -105,7 +105,7 @@
       \notag
       \\
       &
-      \subcaseName{$\desugar$-then-$\closeDefsS$}
+      \subcaseName{$\desugar$-then-$\closeDefs$}
       &
       \notag
       \\
@@ -113,7 +113,7 @@
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefsS$-core}}
+               left={\ruleName{$\closeDefs$-core}}
             ]
             {
                \rho = \set{\seq{\bind{x}{\sigma}}}
@@ -124,7 +124,7 @@
             }
             {
                \gamma_2, \rho
-               \closeDefsFwdR
+               \closeDefs
                \set{\seq{\bind{x}{v'}}}
             }
          \end{smathpar}
@@ -144,7 +144,7 @@
          \begin{smathpar}
             \inferrule*
             [
-               left={\ruleName{$\closeDefsS$-surface}}
+               left={\ruleName{$\closeDefs$-surface}}
             ]
             {
                g = \seq{\bind{x}{\mu}}
@@ -154,7 +154,7 @@
                (\forall i \le \length{\seq{x}})
             }
             {
-               \gamma_1, g \closeDefsS \set{\seq{\bind{x}{v}}}
+               \gamma_1, g \closeDefs \set{\seq{\bind{x}{v}}}
             }
          \end{smathpar}
       }

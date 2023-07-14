@@ -1,139 +1,139 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\gamma, \seq{e} \evalFwdS \seq{v}$}%
+   {\small \flushleft \shadebox{$\gamma, \seq{e} \evalSugS \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-seq}}
+         lab={\ruleName{$\evalSugS$-seq}}
       ]
       {
-         \gamma, e_i \evalFwdS v_i
+         \gamma, e_i \evalSugS v_i
          \quad
          (\forall i \numleq \length{\seq{e}})
       }
       {
-         \gamma, \seq{e} \evalFwdS \seq{v}
+         \gamma, \seq{e} \evalSugS \seq{v}
       }
    \end{smathpar}}
-   {\small \flushleft \shadebox{$\gamma, e \evalFwdS v$}%
+   {\small \flushleft \shadebox{$\gamma, e \evalSugS v$}%
    \begin{smathpar}
       \inferrule*[
-      lab={\ruleName{$\evalFwdS$-var}}
+      lab={\ruleName{$\evalSugS$-var}}
       ]
       {
          \strut
       }
       {
-         \gamma \cons (\bind{x}{v}), \exVar{x} \evalFwdS v
+         \gamma \cons (\bind{x}{v}), \exVar{x} \evalSugS v
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-int}}
+         lab={\ruleName{$\evalSugS$-int}}
       ]
       {
          \strut
       }
       {
          \gamma, \exInt{n}
-         \evalFwdS
+         \evalSugS
          \exInt{n}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-str}}
+         lab={\ruleName{$\evalSugS$-str}}
       ]
       {
          \strut
       }
       {
          \gamma, \exStr{z}
-         \evalFwdS
+         \evalSugS
          \exStr{z}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+      \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
       {
-         \gamma, \seq{e} \evalFwdS \seq{v}
+         \gamma, \seq{e} \evalSugS \seq{v}
       }
       {
          \gamma, \exRec{\seq{\bind{x}{e}}}
-         \evalFwdS
+         \evalSugS
          \exRec{\seq{\bind{x}{v}}}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-project}}
+         lab={\ruleName{$\evalSugS$-project}}
       ]
       {
-         \gamma, e \evalFwdS \exRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}
+         \gamma, e \evalSugS \exRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}
       }
       {
-         \gamma, \exRecProj{e}{y} \evalFwdS u
+         \gamma, \exRecProj{e}{y} \evalSugS u
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+      \inferrule*[lab={\ruleName{$\evalSugS$-dict}}]
       {
-         \gamma, \seq{e} \evalFwdS \seq{\exStr{z}}
+         \gamma, \seq{e} \evalSugS \seq{\exStr{z}}
          \\
-         \gamma, \seq{e}' \evalFwdS \seq{v}
+         \gamma, \seq{e}' \evalSugS \seq{v}
       }
       {
          \gamma,
          \exDict{\seq{\bind{e}{e}}'}
-         \evalFwdS
+         \evalSugS
          \exDict{\seq{\bind{s}{v}}}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+      \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
       {
-         \gamma, \seq{e} \evalFwdS \seq{v}
+         \gamma, \seq{e} \evalSugS \seq{v}
       }
       {
          \gamma, \exConstr{c}{\seq{e}}
-         \evalFwdS
+         \evalSugS
          \exConstr{c}{\seq{v}}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+      \inferrule*[lab={\ruleName{$\evalSugS$-lambda}}]
       {
          \strut
       }
       {
          \gamma, \exFun{\sigma}
-         \evalFwdS
+         \evalSugS
          \exClosure{\gamma}{\seqEmpty}{\sigma}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-app}},
+         lab={\ruleName{$\evalSugS$-app}},
          width=3.3in,
       ]
       {
          \gamma, (e, e') \evalS (\exClosure{\gamma_1}{\rho}{\sigma}, v)
          \\
-         \gamma_1, \rho \closeDefsFwdR \gamma_2
+         \gamma_1, \rho \closeDefs \gamma_2
          \\
          v, \sigma \match \gamma_3, e
          \\
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e \evalFwdS u
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e \evalSugS u
       }
       {
          \gamma, \exApp{e}{e'}
-         \evalFwdS
+         \evalSugS
          u
       }
       %
@@ -143,53 +143,53 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         \gamma, \seq{e} \evalFwdS \seq{v}
+         \gamma, \seq{e} \evalSugS \seq{v}
          \\
          \interpret{f}(\seq{v}) = u
       }
       {
          \gamma, \exForeignApp{f}{\seq{e}}
-         \evalFwdS
+         \evalSugS
          u
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-let}}
+         lab={\ruleName{$\evalSugS$-let}}
       ]
       {
-         \gamma, e \evalFwdS v
+         \gamma, e \evalSugS v
          \\
-         \gamma \cons (\bind{x}{v}), e' \evalFwdS v', E'
+         \gamma \cons (\bind{x}{v}), e' \evalSugS v', E'
       }
       {
          \gamma, \exLet{x}{e}{e'}
-         \evalFwdS
+         \evalSugS
          v'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalFwdS$-let-rec}}
+         lab={\ruleName{$\evalSugS$-let-rec}}
       ]
       {
-         \gamma, \set{\seq{\bind{x}{\sigma}}} \closeDefsFwdR \gamma'
+         \gamma, \set{\seq{\bind{x}{\sigma}}} \closeDefs \gamma'
          \\
-         \gamma \concat \gamma', e \evalFwdS v
+         \gamma \concat \gamma', e \evalSugS v
       }
       {
          \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}
-         \evalFwdS
+         \evalSugS
          v
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \rho \closeDefsFwdR \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
+   {\small \flushleft \shadebox{$\gamma, \rho \closeDefs \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\closeDefsS$-core}}
+         lab={\ruleName{$\closeDefs$-core}}
       ]
       {
          \rho = \set{\seq{\bind{x}{\sigma}}}
@@ -200,7 +200,7 @@
       }
       {
          \gamma, \rho
-         \closeDefsFwdR
+         \closeDefs
          \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}

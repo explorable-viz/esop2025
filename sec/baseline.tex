@@ -10,7 +10,7 @@ core program and then evaluating, justifying our presentation of the surface sem
 
 \subsubsection{Mutual recursion}
 
-\figref{close-defs-surface} defines the relation $\closeDefsS$, called \emph{close defs}, which creates the
+\figref{close-defs-surface} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
 closures associated with a block of mutually recursive functions $g = \seq{\bind{x}{\mu}}$. (Read $x$ as the
 function name and $\mu$ as the defining clauses of the function.)
 
@@ -60,31 +60,31 @@ said to be \textit{partial} if it is not defined for every element of its domain
 
 \subsubsection{Equivalence of Semantics}
 
-\thmref{semantics-eq} is non-trivial only for desugarable $s$ and $\gamma$; for now we conjecture that
-well-typed terms desugar.
+Write $\gamma, s\,\evalSugS$ to mean $\exists v.\,\gamma, s \evalSugS v$ and similarly for the other
+relations.
 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$.
-\hfill
+   Suppose $s \desugar e$ and $\gamma \desugar \gamma'$.
 \begin{enumerate}
-   \item If $\gamma, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$ \label{semantics-eq-1}
-   \item If $\gamma',e \evalFwdS v'$ then $\exists v.\; \gamma, s \evalSugS v$ with $v \desugar v'$  \label{semantics-eq-2}
+   \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+   \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalSugS v'$ then $v \desugar v'$.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   For (1) see \appref{semantics-eq-1}. For (2) see \appref{semantics-eq-2}.
+   See \apprefTwo{semantics-eq-1}{semantics-eq-2}.
 \end{proof}
 
-\thmref{semantics-eq} relies on the following lemmas for pattern-matching (\lemref{match-eq}), recursive
-definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) and list comprehensions~(\thmref{list-comp-eq}).
+\thmref{semantics-eq} relies on the auxiliary lemmas for list comprehensions~(\thmref{list-comp-eq}),
+ßenvironment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq}) and recursive definitions
+(\lemref{closedefs-eq}).
 
 \begin{theorem}
    \label{thm:list-comp-eq}
-   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$:
+   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$.
    \begin{enumerate}
-      \item If $\gamma, \seq{q}, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$
-      \item If $\gamma', e \evalFwdS v'$ then $\exists v.\; \gamma, \seq{q}, s \evalSugS v$ with $v \desugar v'$
+      \item $\gamma, \seq{q}, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+      \item If $\gamma, \seq{q}, s \evalSugS v$ and $\gamma', e \evalSugS v'$ then $v \desugar v'$.
    \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -92,7 +92,7 @@ definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) 
 \end{proof}
 \begin{lemma}
    \label{lem:varlookup}
-   $\gamma \desugar \gamma'$ and $v \desugar v' \;\iff\; \gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
+   ($\gamma \desugar \gamma'$ and $v \desugar v'$) iff $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
 \end{lemma}
 \begin{proof}
    Immediate from definition of environment desugaring.
@@ -103,8 +103,8 @@ definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) 
    Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
    \hfill
    \begin{enumerate}
-      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
-      \item If $v, \sigma \match \gamma, e$ then $\exists \gamma', s.u, \mu \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
+      \item $u, \mu\,\match$ iff $v,\sigma\,\match$.
+      \item If $u, \mu \match \gamma', s$ and $v, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}
@@ -116,12 +116,12 @@ definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) 
    Suppose $\seq{u} \desugar \seq{v}$ and $\seq{(\pi, k)} \desugar \kappa$.
    \hfill
    \begin{enumerate}
-      \item If $\seq{u}, \seq{(\pi, k)} \match \gamma, s$ then $\exists \gamma', e.\seq{v},\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
-      \item If $\seq{v}, \sigma \match \gamma, e$ then $\exists \gamma', s.\seq{u}, \seq{(\pi, k)} \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
+      \item $\seq{u}, \seq{(\pi, k)}\,\match$ iff $\seq{v},\sigma\,\match$.
+      \item If $\seq{u}, \seq{(\pi, k)} \match \gamma', s$ and $\seq{v}, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}
-   For (1) see \appref{proofs:match-seq-eq-1}. For (2) see \appref{proofs:match-seq-eq-2}.
+   See \apprefTwo{proofs:match-seq-eq-1}{proofs:match-seq-eq-2}.
 \end{proof}
 
 \begin{lemma}
@@ -129,8 +129,8 @@ definitions (\lemref{closedefs-eq}), environment extension (\lemref{varlookup}) 
    Suppose $\gamma_1 \desugar \gamma_2$ and $g \desugar \rho$.
    \hfill
    \begin{enumerate}
-      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\exists \gamma_2'.\gamma_2, \rho \closeDefsS \gamma_2'$ with $\gamma_1' \desugar \gamma_2'$.
-      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\exists \gamma_1'.\gamma_1, g, \closeDefsS \gamma_1'$ with $\gamma_1' \desugar \gamma_2'$.
+      \item $\gamma_1, g\,\closeDefs$ iff $\gamma_2, \rho\,\closeDefs$.
+      \item If $\gamma_1, g, \closeDefs \gamma_1'$ and $\gamma_2, \rho \closeDefs \gamma_2'$ then $\gamma_1' \desugar \gamma_2'$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}

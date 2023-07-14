@@ -2,7 +2,7 @@
     {\small \flushleft \shadebox{$\gamma, \seq{e}, \alpha \evalFwdR{\seq{T}} \seq{v}$}%
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-var}}
+          lab={\ruleName{$\evalSugS$-var}}
        ]
        {
           \gamma, e_i, \alpha \evalFwdR{T_i} v_i
@@ -19,7 +19,7 @@
     {\small \flushleft \shadebox{$\gamma, e, \alpha \evalFwdR{T} v$}%
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-sugar}}
+          lab={\ruleName{$\evalSugS$-sugar}}
        ]
        {
           \rho, e \evalFwdR{T} v
@@ -31,7 +31,7 @@
        \and
        %
        \inferrule*[
-       lab={\ruleName{$\evalFwdS$-var}}
+       lab={\ruleName{$\evalSugS$-var}}
        ]
        {
           \strut
@@ -43,7 +43,7 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-int}}
+          lab={\ruleName{$\evalSugS$-int}}
        ]
        {
           \strut
@@ -55,7 +55,7 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-str}}
+          lab={\ruleName{$\evalSugS$-str}}
        ]
        {
           \strut
@@ -66,7 +66,7 @@
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-record}}]
+       \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
        {
           \gamma, \seq{e}, \alpha \evalFwdR{\seq{T}} \seq{v}
        }
@@ -78,7 +78,7 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-project}}
+          lab={\ruleName{$\evalSugS$-project}}
        ]
        {
           \gamma, e, \alpha \evalFwdR{T} \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\beta}
@@ -89,7 +89,7 @@
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-dict}}]
+       \inferrule*[lab={\ruleName{$\evalSugS$-dict}}]
        {
           \gamma, \seq{e}, \alpha \evalFwdR{\seq{T}} \seq{\annStr{s}{\beta}}
           \\
@@ -105,7 +105,7 @@
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-constr}}]
+       \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
        {
           \gamma, \seq{e}, \alpha \evalFwdR{\seq{T}} \seq{v}
        }
@@ -117,7 +117,7 @@
        %
        \and
        %
-       \inferrule*[lab={\ruleName{$\evalFwdS$-lambda}}]
+       \inferrule*[lab={\ruleName{$\evalSugS$-lambda}}]
        {
           \strut
        }
@@ -130,7 +130,7 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-apply}},
+          lab={\ruleName{$\evalSugS$-apply}},
           width=3.2in,
        ]
        {
@@ -163,7 +163,7 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-let}}
+          lab={\ruleName{$\evalSugS$-let}}
        ]
        {
           \gamma, e, \alpha \evalFwdR{T} v
@@ -177,10 +177,10 @@
        \and
        %
        \inferrule*[
-          lab={\ruleName{$\evalFwdS$-let-rec}}
+          lab={\ruleName{$\evalSugS$-let-rec}}
        ]
        {
-          \gamma, \set{\seq{\bind{x}{\sigma}}}, \alpha \closeDefsFwdR \gamma'
+          \gamma, \set{\seq{\bind{x}{\sigma}}}, \alpha \closeDefs \gamma'
           \\
           \gamma \concat \gamma', e, \alpha \evalFwdR{T} v
        }
@@ -191,10 +191,10 @@
        }
     \end{smathpar}}
     \\[2mm]
-    {\small \flushleft \shadebox{$\gamma, \rho, \alpha \closeDefsFwdR \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
+    {\small \flushleft \shadebox{$\gamma, \rho, \alpha \closeDefs \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
     \begin{smathpar}
        \inferrule*[
-          lab={\ruleName{$\closeDefsFwdR$-rec-defs}},
+          lab={\ruleName{$\closeDefs$-rec-defs}},
           width=4in,
        ]
        {
@@ -210,7 +210,7 @@
        }
        {
           \gamma, \rho, \alpha
-          \closeDefsFwdR
+          \closeDefs
           \set{\seq{\bind{x}{v}}}
        }
     \end{smathpar}

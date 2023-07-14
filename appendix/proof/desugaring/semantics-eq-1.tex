@@ -68,13 +68,13 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-var}}
+            lab={\ruleName{$\evalSugS$-var}}
          ]
          {
             \strut
          }
          {
-            \gamma_2 \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalFwdS v'
+            \gamma_2 \cdot (\bind{\exVar{x}}{v'}), \exVar{x} \evalSugS v'
          }
       \end{smathpar}
    }
@@ -119,7 +119,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalFwdS \seq{v}'
+   \gamma', e \evalSugS \seq{v}'
    \textit{ with }
    \seq{v} \desugar \seq{v}'
    \quad
@@ -133,13 +133,13 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-constr}}
+            lab={\ruleName{$\evalSugS$-constr}}
          ]
          {
-            \gamma', \seq{e} \evalFwdS \seq{v}'
+            \gamma', \seq{e} \evalSugS \seq{v}'
          }
          {
-            \gamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+            \gamma', \exConstr{c}{\seq{e}} \evalSugS \exConstr{c}{\seq{v}'}
          }
       \end{smathpar}
    }
@@ -175,7 +175,7 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
             \\
-            \gamma_1, g \closeDefsS \gamma_2
+            \gamma_1, g \closeDefs \gamma_2
             \\
             v, \mu \match \gamma_3, s^\dag
             \\
@@ -210,7 +210,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalFwdS \exClosure{\gamma'_1}{\rho}{\sigma}
+   \gamma', e \evalSugS \exClosure{\gamma'_1}{\rho}{\sigma}
    \textit{ with }
    \gamma_1 \desugar \gamma_2
    \opAnd
@@ -224,7 +224,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e' \evalFwdS v'
+   \gamma', e' \evalSugS v'
    \textit{ with }
    v \desugar v'
    &
@@ -232,11 +232,11 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma'_1, \rho \closeDefsS \gamma'_2
+   \gamma'_1, \rho \closeDefs \gamma'_2
    \textit{ with }
    \gamma_2 \desugar \gamma'_2
    \quad
-   (\exists \gamma'_2) 
+   (\exists \gamma'_2)
    &
    \text{\lemref{closedefs-eq}}
    \notag
@@ -260,7 +260,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+   \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalSugS u
    \textit{ with }
    v^{\dag} \desugar u
    &
@@ -272,21 +272,21 @@ By induction on derivation of $\evalSugS$.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-app}},
+            lab={\ruleName{$\evalSugS$-app}},
             width=3.3in,
          ]
          {
             \gamma', (e, e') \evalS (\exClosure{\gamma_1}{\rho}{\sigma}, v')
             \\
-            \gamma'_1, \rho \closeDefsFwdR \gamma'_2
+            \gamma'_1, \rho \closeDefs \gamma'_2
             \\
             v', \sigma \match \gamma'_3, e^{\dag}
             \\
-            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalSugS u
          }
          {
             \gamma', \exApp{e}{e'}
-            \evalFwdS
+            \evalSugS
             u
          }
       \end{smathpar}
@@ -303,7 +303,7 @@ By induction on derivation of $\evalSugS$.
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
+            \gamma, \seq{\bind{x}{\mu}} \closeDefs \gamma^{\dag}
             \\
             \gamma \concat \gamma^{\dag}, s \evalSugS v
          }
@@ -336,7 +336,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', \seq{\bind{x}{\sigma}} \closeDefsS \gamma^{\ddagger}
+   \gamma', \seq{\bind{x}{\sigma}} \closeDefs \gamma^{\ddagger}
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    \quad
@@ -352,7 +352,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma' \concat \gamma^{\ddagger}, e \evalFwdS v'
+   \gamma' \concat \gamma^{\ddagger}, e \evalSugS v'
    \textit{ with }
    v \desugar v'
    \quad
@@ -365,14 +365,14 @@ By induction on derivation of $\evalSugS$.
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalFwdS$-let-rec}}]
+         \inferrule*[lab={\ruleName{$\evalSugS$-let-rec}}]
          {
-            \gamma', \seq{\bind{\exVar{x}}{\sigma}} \closeDefsS {\gamma^{\ddagger}}
+            \gamma', \seq{\bind{\exVar{x}}{\sigma}} \closeDefs {\gamma^{\ddagger}}
             \\
-            \gamma' \concat {\gamma^{\ddagger}}, e \evalFwdS v'
+            \gamma' \concat {\gamma^{\ddagger}}, e \evalSugS v'
          }
          {
-            \gamma', \exLetRecPiecewise{\seq{\bind{\exVar{x}}{\sigma}}}{e} \evalFwdS v'
+            \gamma', \exLetRecPiecewise{\seq{\bind{\exVar{x}}{\sigma}}}{e} \evalSugS v'
          }
       \end{smathpar}
    }
