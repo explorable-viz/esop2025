@@ -65,7 +65,7 @@ relations.
 
 \begin{theorem}
    \label{thm:semantics-eq}
-   Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$.
+   Suppose $s \desugar e$ and $\gamma \desugar \gamma'$.
 \begin{enumerate}
    \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
    \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalSugS v'$ then $v \desugar v'$.
@@ -81,10 +81,10 @@ relations.
 
 \begin{theorem}
    \label{thm:list-comp-eq}
-   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$:
+   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$.
    \begin{enumerate}
-      \item If $\gamma, \seq{q}, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalSugS v'$ with $v \desugar v'$
-      \item If $\gamma', e \evalSugS v'$ then $\exists v.\; \gamma, \seq{q}, s \evalSugS v$ with $v \desugar v'$
+      \item $\gamma, \seq{q}, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+      \item If $\gamma, \seq{q}, s \evalSugS v$ and $\gamma', e \evalSugS v'$ then $v \desugar v'$.
    \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -92,7 +92,7 @@ relations.
 \end{proof}
 \begin{lemma}
    \label{lem:varlookup}
-   $\gamma \desugar \gamma'$ and $v \desugar v' \;\iff\; \gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
+   ($\gamma \desugar \gamma'$ and $v \desugar v'$) iff $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
 \end{lemma}
 \begin{proof}
    Immediate from definition of environment desugaring.
@@ -103,8 +103,8 @@ relations.
    Suppose $v \desugar v'$ and $\mu \desugar \sigma$.
    \hfill
    \begin{enumerate}
-      \item If $u, \mu\match \gamma, s$ then $\exists \gamma', e.v,\sigma \match \gamma', e$ with $\gamma \desugar \gamma'$ and $s \desugar e$.
-      \item If $v, \sigma \match \gamma, e$ then $\exists \gamma', s.u, \mu \match \gamma', s$ and $\gamma' \desugar \gamma$ and $s \desugar e$.
+      \item $u, \mu\,\match$ iff $v,\sigma\,\match$.
+      \item If $u, \mu \match \gamma', s$ and $v, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}
