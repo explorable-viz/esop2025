@@ -34,11 +34,6 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    \end{itemize}
 \end{definition}
 
-\begin{definition}[Neighbourhoods]
-   For a graph $G = (V,E)$ and a set of nodes $V' \subseteq V$, we write $N_G(V')$ to mean the \textit{neighbourhood}
-   of $V'$, that is: $N_G(V') = \set{v \in V \mid v \notin V' \opAnd \exists v' \in V'.\; (v,v') \in E}$ 
-\end{definition}
-We will see later how the definition of a neighbourhood can be used to define a more efficient forward slicing algorithm.
 \begin{definition}
    For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
 \end{definition}
@@ -50,6 +45,16 @@ We will see later how the definition of a neighbourhood can be used to define a 
       \item $\outN{G} = \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
+We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
+\begin{definition}[Neighbourhoods]
+   For a graph $G = (V,E)$ and a set of nodes $V' \subseteq V$, we write $\inN{G}(V')$ and $\outN{G}{V'}$ to mean the following:
+   \begin{itemize}
+      \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'. \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
+      \item $\outN{G}(V') = \inN{G^{-1}}(V')$
+   \end{itemize}
+\end{definition}
+We will see later how the definition of a neighbourhood can be used to define a more efficient forward slicing algorithm.
+
 We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \begin{definition}[Subgraph Extension]
    For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
