@@ -284,5 +284,34 @@ Induction on surface-language $\match$ derivation.
    &
    \text{($u \desugar v$), (\localref{var-IH})}
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{u}^\ddagger \concat \seq{u}',
+            (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
+            \match \gamma, s
+            \\
+            \exRecord{\seq{\bind{y}{u}}^\ddagger} \subseteq \exRecord{\seq{\bind{x}{u}}^\dagger}
+         }
+         {
+            \Lowlight{\seq{u} =\;}
+            \exRecord{\seq{\bind{x}{u}}^\dagger} \cons \seq{u}',
+            (\seqRange{(\pattRecord{\seq{\bind{y}{p_1}}} \cons \pi_1, k_1)}
+                      {(\pattRecord{\seq{\bind{y}{p_j}}} \cons \pi_j, k_j)})
+            \\
+            \match
+            \gamma, s
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
