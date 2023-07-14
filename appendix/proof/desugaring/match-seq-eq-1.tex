@@ -267,7 +267,7 @@ Induction on surface-language $\match$ derivation.
             \seq{v}', \kappa' \match \gamma^\ddagger, e
          }
          {
-            v \cons \seq{v};, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
+            v \cons \seq{v}, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
          }
       \end{smathpar}
    }
@@ -318,7 +318,7 @@ Induction on surface-language $\match$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-clauses-record}}
+            left={\ruleName{$\desugar$-clauses-record}}
          ]
          {
             \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa'
@@ -332,5 +332,29 @@ Induction on surface-language $\match$ derivation.
          }
       \end{smathpar}
    }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-record}}
+         ]
+         {
+            \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+            \\
+            \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+         }
+         {
+            \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
+            \elimRecord{\seq{y}}{\kappa}
+            \match
+            \gamma, e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
