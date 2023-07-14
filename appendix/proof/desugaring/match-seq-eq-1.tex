@@ -249,7 +249,7 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}', \kappa \match \gamma^\ddagger, e
+   \seq{v}', \kappa' \match \gamma^\ddagger, e
    \textit{ with }\gamma^\dagger \desugar \gamma^\ddagger
    \textit{ and }s \desugar e
    \quad
@@ -313,5 +313,24 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-clauses-record}}
+         ]
+         {
+            \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa'
+         }
+         {
+            \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
+                     {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
+            \desugar
+            (\elimRecord{\seq{x}}{\kappa'})
+            \Lowlight{\;= \kappa}
+         }
+      \end{smathpar}
+   }
 \end{flalign}
 \end{proof}
