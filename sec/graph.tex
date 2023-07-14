@@ -27,8 +27,11 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \end{definition}
 
 \begin{definition}[Sources and Sinks]
-   For a graph $G = (V,E)$, we define the sources $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$, and the sinks
-   $T(G) = \set{v \in V \mid \outN{G}(v) = \emptyset}$
+   For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
+   \begin{itemize}
+      \item $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$
+      \item $T(G) = \set{v \in V \mid S(G^{-1})}$
+   \end{itemize}
 \end{definition}
 
 \begin{definition}[Neighbourhoods]
