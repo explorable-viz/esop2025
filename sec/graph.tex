@@ -1,5 +1,7 @@
 \section{Dependence graph formulation}
 \label{sec:graph}
+We start by introducing dependency graphs, and some standard graph-theoretic notions,
+alongside the notation we use to denote them, then we 
 \subsection{Dependence graphs}
 
 $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{addresses} $\alpha, \beta
@@ -12,13 +14,13 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 
 \begin{definition}[Induced subgraph]
    For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
-   by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(s,t) \mid s,t \in V' \opAnd (s,t) \in E}$.
+   by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(s,t) \in E \mid s,t \in V'}$.
 \end{definition}
 
 \begin{definition}[Path]
    For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $P_G(v, v')$, to mean that there is a
-   \textit{path} from $v$ to $v'$ in $G$, meaning $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$.
-   The sequence can be empty, in which case the path is simply $(v,v') \in E$.
+   \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
+   or that $(v, v') \in E$. 
 \end{definition}
 
 \begin{definition}[Sources and Sinks]
@@ -76,6 +78,9 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
       $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{definition}
 
+% A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
+% check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not, 
+% leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
 \subsection{Core language (dependence graph formulation)}
 
 \input{fig/graph/core/syntax}
