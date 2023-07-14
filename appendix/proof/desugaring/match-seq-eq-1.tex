@@ -394,5 +394,31 @@ Induction on surface-language $\match$ derivation.
    }
    &
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\match$-constr}}
+         ]
+         {
+            \seq{u}^\dagger \concat \seq{u}',
+            ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+            \match \gamma, s
+         }
+         {
+            \Lowlight{\seq{u} =\;}
+            \exConstr{c}{\seq{u}^\dagger} \cons \seq{u}',
+            (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
+                      {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+            \match
+            \gamma, s
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
