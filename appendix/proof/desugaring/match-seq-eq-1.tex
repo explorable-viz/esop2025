@@ -10,11 +10,15 @@ Induction on surface-language $\match$ derivation.
    \\
    &
    \seq{(\pi, k)} \desugar \kappa
-   &\text{suppose}
+   &
+   \text{suppose}
+   \notag
    \\
    &
    \seq{u}, \seq{(\pi, k)} \match \gamma, s
-   &\text{suppose}
+   &
+   \text{suppose}
+   \notag
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,7 +129,7 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \caseDerivation{\derivationWidth}{
+   \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             left={\ruleName{$\desugar$-clauses-curried}}
@@ -139,12 +143,18 @@ Induction on surface-language $\match$ derivation.
             \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
                      {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
             \desugar
-            \exFun{\sigma}
+            \exFun{\sigma}\Lowlight{\;=\kappa}
          }
        \end{smathpar}
    }
    &
    \text{inversion}
+   \notag
+   \\
+   &
+   \seq{v} = \seqEmpty
+   &
+   \text{(\localref{us-desugar-vs})}
    \notag
 \end{flalign}
 \end{proof}
