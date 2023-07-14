@@ -256,7 +256,7 @@ Induction on surface-language $\match$ derivation.
    (\exists\gamma^\ddagger, e)
    &
    \text{IH}
-   \locallabel{var-IH}
+   \notag
    \\
    &
    \qedLocal
@@ -282,7 +282,7 @@ Induction on surface-language $\match$ derivation.
    \textit{ and }
    s \desugar e
    &
-   \text{($u \desugar v$), (\localref{var-IH})}
+   \text{($u \desugar v$)}
    \notag
    \\
    \intertext{\crossrule}
@@ -345,6 +345,7 @@ Induction on surface-language $\match$ derivation.
    \quad
    (\exists \seq{v}^\dagger, \seq{v}')
    &
+   \text{(\localref{us-desugar-vs})}
    \notag
    \\
    &
@@ -362,18 +363,24 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma, e
+   \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma', e
+   \textit{ with }
+   \gamma \desugar \gamma'\textit{ and }s \desugar e
+   \quad
+   (\exists \gamma', e)
    &
+   \text{IH}
    \notag
    \\
    &
+   \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             left={\ruleName{$\match$-record}}
          ]
          {
-            \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma, e
+            \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma', e
             \\
             \exRec{\seq{\bind{y}{v}}^\ddagger} \subseteq \exRec{\seq{\bind{x}{v}}^\dagger}
          }
@@ -381,7 +388,7 @@ Induction on surface-language $\match$ derivation.
             \Lowlight{\seq{v} =\;}\exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}',
             \elimRecord{\seq{y}}{\kappa}
             \match
-            \gamma, e
+            \gamma', e
          }
       \end{smathpar}
    }
