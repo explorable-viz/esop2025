@@ -267,7 +267,7 @@ Induction on surface-language $\match$ derivation.
             \seq{v}', \kappa' \match \gamma^\ddagger, e
          }
          {
-            v \cons \seq{v}, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
+            v \cons \seq{v}, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\ddagger, e
          }
       \end{smathpar}
    }
@@ -338,6 +338,10 @@ Induction on surface-language $\match$ derivation.
    \\
    &
    \seq{v} = \exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}'
+   \textit{ with }
+   \seq{u}^\dagger \desugar \seq{v}^\dagger
+   \textit{ and }
+   \seq{u}' \desugar \seq{v}'
    \quad
    (\exists \seq{v}^\dagger, \seq{v}')
    &
@@ -349,6 +353,16 @@ Induction on surface-language $\match$ derivation.
    \seq{u}^\ddagger \desugar \seq{v}^\ddagger
    \quad
    (\exists \seq{v}^\ddagger)
+   &
+   \notag
+   \\
+   &
+   \seq{v}^\ddagger \concat \seq{v}' \desugar \seq{u}^\ddagger \concat \seq{u}'
+   &
+   \notag
+   \\
+   &
+   \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma, e
    &
    \notag
    \\
