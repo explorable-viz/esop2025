@@ -4,7 +4,9 @@ Induction on surface-language $\match$ derivation.
 \begin{flalign}
    &
    \seq{u} \desugar \seq{v}
-   &\text{suppose}
+   &
+   \text{suppose}
+   \locallabel{us-desugar-vs}
    \\
    &
    \seq{(\pi, k)} \desugar \kappa
@@ -23,14 +25,14 @@ Induction on surface-language $\match$ derivation.
             lab={\ruleName{$\match$-var}}
           ]
           {
-             \seq{v}, (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
-             \match \gamma, s
+             \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+             \match \gamma^\dagger, s
           }
           {
-             v \cons \seq{v}, (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                        {(\pattVar{x} \cons \pi_j, k_j)})
+             \seq{u} = u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
+                                                   {(\pattVar{x} \cons \pi_j, k_j)})
              \match
-             \set{\bind{x}{v}} \disjunion \gamma, s
+             \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
           }
        \end{smathpar}
    }
@@ -44,17 +46,25 @@ Induction on surface-language $\match$ derivation.
             lab={\ruleName{$\desugar$-clauses-var}}
          ]
          {
-            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa
+            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
          }
          {
             \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
             \desugar
-            \elimVar{x}{\kappa}
+            (\elimVar{x}{\kappa'})\Lowlight{\,= \kappa}
          }
       \end{smathpar}
    }
    &
    \text{inversion}
+   \notag
+   \\
+   &
+   \seq{v} = v \cons \seq{v}'\text{ with }u \desugar v\text{ and }\seq{u}' \desugar \seq{v}'
+   \quad
+   (\exists v, \seq{v}')
+   &
+   \text{(\localref{us-desugar-vs})}
    \notag
    \\
    &
