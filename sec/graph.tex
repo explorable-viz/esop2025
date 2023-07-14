@@ -63,6 +63,13 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
    $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
    $V' = \set{v \in V \mid v, G \bwdSliceS G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v') \mid v,v' \in V' \opAnd (v, v') \in E}$.
 \end{definition}
+
+\begin{definition}[de Morgan dual of Forward Slice]
+      For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the compliment
+      of the inputs which we write $V_{in}^c$, then if we backwards slice in $G^{-1}$, and take the complement of the
+      result, we obtain a forward slice with respect to $V_{in}$:
+      $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
+\end{definition}
 \subsection{Surface language (dependence graph formulation)}
 
 \subsection{Core language (dependence graph formulation)}
