@@ -41,7 +41,7 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
-   \caseDerivation{\derivationWidth}{
+   \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\desugar$-clauses-done}}
@@ -55,6 +55,39 @@ Induction on surface-language $\match$ derivation.
       \end{smathpar}
    }
    &
+   \text{inversion}
+   \locallabel{done-uncurried-inversion}
+   \\
+   &
+   \seq{v} = \seqEmpty
+   &
+   \text{(\localref{us-desugar-vs})}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\match$-done}}
+         ]
+         {
+            \strut
+         }
+         {
+            \Lowlight{\seq{v} =\;}
+            \seqEmpty, e \match \envEmpty, e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \envEmpty \desugar \envEmpty\text{ and }s \desugar e
+   &
+   \text{(\localref{done-uncurried-inversion})}
    \notag
    \\
    \intertext{\crossrule}
