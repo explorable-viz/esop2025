@@ -326,6 +326,7 @@ Induction on surface-language $\match$ derivation.
          {
             \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
                      {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
+            \\
             \desugar
             (\elimRecord{\seq{x}}{\kappa'})
             \Lowlight{\;= \kappa}
@@ -336,18 +337,25 @@ Induction on surface-language $\match$ derivation.
    \notag
    \\
    &
+   \seq{v} = \exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}'
+   \quad
+   (\exists \seq{v}^\dagger, \seq{v}')
+   &
+   \notag
+   \\
+   &
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             left={\ruleName{$\match$-record}}
          ]
          {
-            \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+            \seq{v}^\ddagger \concat \seq{v}', \kappa \match \gamma, e
             \\
-            \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+            \exRec{\seq{\bind{y}{v}}^\ddagger} \subseteq \exRec{\seq{\bind{x}{v}}^\dagger}
          }
          {
-            \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
+            \Lowlight{\seq{v} =\;}\exRec{\seq{\bind{x}{v}}^\dagger} \cons \seq{v}',
             \elimRecord{\seq{y}}{\kappa}
             \match
             \gamma, e
