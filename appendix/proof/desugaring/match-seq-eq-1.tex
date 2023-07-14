@@ -22,7 +22,7 @@ Induction on surface-language $\match$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\match$-var}}
+            left={\ruleName{$\match$-var}}
           ]
           {
              \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
@@ -43,7 +43,7 @@ Induction on surface-language $\match$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-clauses-var}}
+            left={\ruleName{$\desugar$-clauses-var}}
          ]
          {
             \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
@@ -73,6 +73,31 @@ Induction on surface-language $\match$ derivation.
    (\exists\gamma^\ddagger, e)
    &
    \text{IH}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[left={\ruleName{$\match$-var}}]
+         {
+            \seq{v}', \kappa' \match \gamma^\ddagger, e
+         }
+         {
+            v \cons \seq{v};, \elimVar{x}{\kappa'} \match \set{\bind{x}{v}} \disjunion \gamma^\dagger, e
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \qedLocal
+   \set{\bind{x}{u}} \disjunion \gamma^\dagger
+   \desugar
+   \set{\bind{x}{v}} \disjunion \gamma^\ddagger
+   &
+   \text{($u \desugar v$)}
    \notag
 \end{flalign}
 \end{proof}
