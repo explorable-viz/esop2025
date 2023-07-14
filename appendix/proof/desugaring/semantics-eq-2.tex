@@ -1,4 +1,4 @@
-By induction on derivation of $\evalFwdS$
+By induction on derivation of $\evalSugS$
 \begin{proof}
 \small
 \begin{flalign}
@@ -15,7 +15,7 @@ By induction on derivation of $\evalFwdS$
    \locallabel{desug:env}
    \\
    &
-   \gamma', e \evalFwdS v'_0
+   \gamma', e \evalSugS v'_0
    &
    \text{suppose}
    \locallabel{eval:core}
@@ -26,13 +26,13 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-var}}
+            lab={\ruleName{$\evalSugS$-var}}
          ]
          {
             \strut
          }
          {
-            \gamma' = \gamma_2 \cdot (\bind{x}{v'}), x \evalFwdS v'
+            \gamma' = \gamma_2 \cdot (\bind{x}{v'}), x \evalSugS v'
          }
       \end{smathpar}
    }
@@ -87,13 +87,13 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-constr}}
+            lab={\ruleName{$\evalSugS$-constr}}
          ]
          {
-            \gamma', \seq{e} \evalFwdS \seq{v}'
+            \gamma', \seq{e} \evalSugS \seq{v}'
          }
          {
-            \gamma', \exConstr{c}{\seq{e}} \evalFwdS \exConstr{c}{\seq{v}'}
+            \gamma', \exConstr{c}{\seq{e}} \evalSugS \exConstr{c}{\seq{v}'}
          }
       \end{smathpar}
    }
@@ -170,21 +170,21 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-app}},
+            lab={\ruleName{$\evalSugS$-app}},
             width=3.3in,
          ]
          {
             \gamma, (e, e') \evalS (\exClosure{\gamma'_1}{\rho}{\sigma}, v')
             \\
-            \gamma'_1, \rho \closeDefsFwdR \gamma'_2
+            \gamma'_1, \rho \closeDefs \gamma'_2
             \\
             v', \sigma \match \gamma'_3, e^{\dag}
             \\
-            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalFwdS u
+            \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalSugS u
          }
          {
             \gamma', \exApp{e}{e'}
-            \evalFwdS
+            \evalSugS
             u
          }
       \end{smathpar}
@@ -218,7 +218,7 @@ By induction on derivation of $\evalFwdS$
    \gamma_1 \desugar \gamma'_1
    \opAnd
    g \desugar \rho
-   \opAnd 
+   \opAnd
    \mu \desugar \sigma
    \quad
    (\exists \gamma_1, g, \mu)
@@ -235,7 +235,7 @@ By induction on derivation of $\evalFwdS$
    \notag
    \\
    &
-   \gamma_1, g \closeDefsS \gamma_2
+   \gamma_1, g \closeDefs \gamma_2
    \textit{ with }
    \gamma_2 \desugar \gamma'_2
    \quad
@@ -281,7 +281,7 @@ By induction on derivation of $\evalFwdS$
          {
             \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
             \\
-            \gamma_1, g \closeDefsS \gamma_2
+            \gamma_1, g \closeDefs \gamma_2
             \\
             v, \mu \match \gamma_3, s^\dag
             \\
@@ -301,16 +301,16 @@ By induction on derivation of $\evalFwdS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalFwdS$-let-rec}}
+            lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \gamma', \set{\seq{\bind{x}{\sigma}}} \closeDefsFwdR \gamma'
+            \gamma', \set{\seq{\bind{x}{\sigma}}} \closeDefs \gamma'
             \\
-            \gamma' \concat {\gamma^{\ddagger}}, e \evalFwdS v
+            \gamma' \concat {\gamma^{\ddagger}}, e \evalSugS v
          }
          {
             \gamma', \exLetRec{\seq{\bind{x}{\sigma}}}{e}
-            \evalFwdS
+            \evalSugS
             v'
          }
       \end{smathpar}
@@ -339,7 +339,7 @@ By induction on derivation of $\evalFwdS$
    \notag
    \\
    &
-   \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
+   \gamma, \seq{\bind{x}{\mu}} \closeDefs \gamma^{\dag}
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    \quad
@@ -370,7 +370,7 @@ By induction on derivation of $\evalFwdS$
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
          {
-            \gamma, \seq{\bind{x}{\mu}} \closeDefsS \gamma^{\dag}
+            \gamma, \seq{\bind{x}{\mu}} \closeDefs \gamma^{\dag}
             \\
             \gamma \concat \gamma^{\dag}, s \evalSugR{S} v
          }

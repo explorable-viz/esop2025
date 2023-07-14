@@ -10,7 +10,7 @@ core program and then evaluating, justifying our presentation of the surface sem
 
 \subsubsection{Mutual recursion}
 
-\figref{close-defs-surface} defines the relation $\closeDefsS$, called \emph{close defs}, which creates the
+\figref{close-defs-surface} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
 closures associated with a block of mutually recursive functions $g = \seq{\bind{x}{\mu}}$. (Read $x$ as the
 function name and $\mu$ as the defining clauses of the function.)
 
@@ -67,8 +67,8 @@ relations.
    \label{thm:semantics-eq}
    Suppose $s \desugar e \; and \; \gamma \desugar \gamma'$.
 \begin{enumerate}
-   \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalFwdS$.
-   \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalFwdS v'$ then $v \desugar v'$.
+   \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+   \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalSugS v'$ then $v \desugar v'$.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -83,8 +83,8 @@ relations.
    \label{thm:list-comp-eq}
    Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$:
    \begin{enumerate}
-      \item If $\gamma, \seq{q}, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalFwdS v'$ with $v \desugar v'$
-      \item If $\gamma', e \evalFwdS v'$ then $\exists v.\; \gamma, \seq{q}, s \evalSugS v$ with $v \desugar v'$
+      \item If $\gamma, \seq{q}, s \evalSugS v$ then $\exists v'.\; \gamma', e \evalSugS v'$ with $v \desugar v'$
+      \item If $\gamma', e \evalSugS v'$ then $\exists v.\; \gamma, \seq{q}, s \evalSugS v$ with $v \desugar v'$
    \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -129,8 +129,8 @@ relations.
    Suppose $\gamma_1 \desugar \gamma_2$ and $g \desugar \rho$.
    \hfill
    \begin{enumerate}
-      \item If $\gamma_1, g \closeDefsS \gamma_1'$ then $\exists \gamma_2'.\gamma_2, \rho \closeDefsS \gamma_2'$ with $\gamma_1' \desugar \gamma_2'$.
-      \item If $\gamma_2, \rho \closeDefsS \gamma_2'$, then $\exists \gamma_1'.\gamma_1, g, \closeDefsS \gamma_1'$ with $\gamma_1' \desugar \gamma_2'$.
+      \item If $\gamma_1, g \closeDefs \gamma_1'$ then $\exists \gamma_2'.\gamma_2, \rho \closeDefs \gamma_2'$ with $\gamma_1' \desugar \gamma_2'$.
+      \item If $\gamma_2, \rho \closeDefs \gamma_2'$, then $\exists \gamma_1'.\gamma_1, g, \closeDefs \gamma_1'$ with $\gamma_1' \desugar \gamma_2'$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}

@@ -48,7 +48,7 @@
       {
          \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
          \\
-         \gamma_1, g \closeDefsS \gamma_2
+         \gamma_1, g \closeDefs \gamma_2
          \\
          v, \mu \match \gamma_3, s^\dag
          \\
@@ -106,7 +106,7 @@
          lab={\ruleName{$\evalSugS$-let-rec}}
       ]
       {
-         \gamma, g \closeDefsS \gamma'
+         \gamma, g \closeDefs \gamma'
          \\
          \gamma \concat \gamma', s \evalSugR{S} v
       }
@@ -237,10 +237,10 @@
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
-   {\small, \flushleft \shadebox{$\gamma, g \closeDefsS \gamma'$}
+   {\small, \flushleft \shadebox{$\gamma, g \closeDefs \gamma'$}
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\closeDefsS$-surface}}
+            lab={\ruleName{$\closeDefs$-surface}}
          ]
          {
             g = \seq{\bind{x}{\mu}}
@@ -250,7 +250,7 @@
             (\forall i \le \length{\seq{x}})
          }
          {
-            \gamma, g \closeDefsS \set{\seq{\bind{x}{v}}}
+            \gamma, g \closeDefs \set{\seq{\bind{x}{v}}}
          }
       \end{smathpar}}
    \caption{Surface semantics: recursive definitions}
