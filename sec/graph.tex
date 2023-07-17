@@ -12,8 +12,8 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 \begin{definition}[Complement]
-   For a set $X$ and $X' \subseteq X$, we write $X^c \subseteq X$ to denote the \textit{complement} 
-   of $X'$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.  
+   For a set $X$ and $Y \subseteq X$, we write $Y^c \subseteq X$ to denote the \textit{complement} 
+   of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.  
 \end{definition}
 \begin{definition}[Induced subgraph]
    For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
@@ -24,14 +24,6 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $P_G(v, v')$, to mean that there is a
    \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
    or that $(v, v') \in E$. 
-\end{definition}
-
-\begin{definition}[Sources and Sinks]
-   For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
-   \begin{itemize}
-      \item $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$
-      \item $T(G) = \set{v \in V \mid S(G^{-1})}$
-   \end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -49,11 +41,20 @@ We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set o
 \begin{definition}[Neighbourhoods]
    For a graph $G = (V,E)$ and a set of nodes $V' \subseteq V$, we write $\inN{G}(V')$ and $\outN{G}{V'}$ to mean the following:
    \begin{itemize}
-      \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'. \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
+      \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
       \item $\outN{G}(V') = \inN{G^{-1}}(V')$
    \end{itemize}
 \end{definition}
 We will see later how the definition of a neighbourhood can be used to define a more efficient forward slicing algorithm.
+
+\begin{definition}[Sources and Sinks]
+   For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
+   \begin{itemize}
+      \item $S(G) = \set{v \in V \mid \inN{G}(v) = \emptyset}$
+      \item $T(G) = \set{v \in V \mid S(G^{-1})}$
+   \end{itemize}
+\end{definition}
+
 \begin{definition}[Subgraph]
    We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \end{definition}
