@@ -20,6 +20,20 @@
          k, s \orElse \seqRange{k'_1}{k'_j}
       }
       {
+         \pattVar{x} \cons k, s
+         \orElse
+         \seqRange{\pattVar{x} \cons k'_1}{\pattVar{x} \cons k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-record}}
+      ]
+      {
+         k, s \orElse \seqRange{k'_1}{k'_j}
+      }
+      {
          k, s
          \orElse
          \seqRange{\pattVar{x} \cons k'_1}{\pattVar{x} \cons k'_j}
