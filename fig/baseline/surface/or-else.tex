@@ -1,13 +1,29 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$k, s^\dagger \orElse \seq{k}$}
+   {\small \flushleft \shadebox{$k, s \orElse \seq{k}$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\orElse$-done}}
       ]
       {
+         \strut
       }
       {
+         (\clause{\seqEmpty}{s}), s' \orElse \clause{\seqEmpty}{s}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-var}}
+      ]
+      {
+         k, s \orElse \seqRange{k'_1}{k'_j}
+      }
+      {
+         k, s
+         \orElse
+         \seqRange{\pattVar{x} \cons k'_1}{\pattVar{x} \cons k'_j}
       }
    \end{smathpar}}
-   \caption{Completing a clause with a default value $s'$}
+   \caption{Completing an (uncurried) clause with a default value}
 \end{figure}
