@@ -46,13 +46,13 @@
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdSliceS$-done}},
-         right={$\nexists \alpha \in N(V).\; \outN{G}(\alpha) \subseteq V$}
+         right={$\nexists \alpha \in N(V).\; \outN{G}(\alpha) \subseteq V(G')$}
       ]
       {
          \strut
       }
       {
-         V, G' \fwdSliceR{G} G' 
+         G' \fwdSliceR{G} G' 
       }
       % %
       % \and 
@@ -75,12 +75,14 @@
          right={$\alpha \notin V(G')$}
       ]
       {
+         \alpha \in \inN{G}(G')
+         \\
          \outN{G}(\alpha) \subseteq V
          \\
-         V \cup \set{\alpha}, G' \disjunion \set{\alpha} \fwdSliceR{G} G''
+         G' \disjunion \set{\alpha} \fwdSliceR{G} G''
       }
       {
-         V, G' \fwdSliceR{G} G''
+         G' \fwdSliceR{G} G''
       }
    \end{smathpar}}
    \caption{Backwards and Forwards slicing (graph formulation)}
