@@ -394,5 +394,36 @@ By induction on derivation of $\evalSugS$.
          }
       \end{smathpar}
    }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
+         {
+            \seq{q}, s \desugar e
+         }
+         {
+            \exListComp{s}{\seq{q}}
+            \desugar
+            e
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma', e \evalS v'
+   \text{ with }
+   v \desugar v'
+   \quad
+   (\exists v')
+   &
+   \text{\thmref{list-comp-eq}}
+   \notag
+   \\
 \end{flalign}
 \end{proof}
