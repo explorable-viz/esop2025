@@ -72,7 +72,7 @@ $\bwdSliceR{G}$, when given a set of outputs of interest computes the subgraph o
 contains only the nodes necessary for the computation of those outputs. More formally:
 \begin{definition}[Backwards Slicing (Graph)]
    For a dependence graph $G = (V,E)$, and a set of output nodes $V_{out} \subseteq V$, we write $V_{out}, G \bwdSliceS G'$ to mean
-   that $G'$ is the minimal slice of $G$ with respect to $V_{out}$, defined as
+   that $G'$ is the slice of $G$ with respect to $V_{out}$, defined as
    $G' = (V', E')$ where $V' = \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \in E \mid v,v' \in V'}$
 \end{definition}
 
@@ -87,12 +87,21 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
 
 \begin{lemma}[De Morgan dual of Forward Slice]
       For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
-      of $V_{in}\;w.r.t\;T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
-      result $\bwdSliceR{G^{-1}}(V_{in}^c) w.r.t\; S(G)$, we obtain 
+      of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
+      result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain 
       a forward slice with respect to $V_{in}$:
       $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{lemma}
 
+We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
+Informally, we start with our subgraph, then we only consider it's neighbourhood. If we can add a new node from 
+it's neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
+We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. 
+This lets us grow the slice without considering each node in the graph $\length{V}$ times.
+
+\begin{definition}[Forward Slicing (Efficient Version)]
+   
+\end{definition}
 % A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
 % check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not, 
 % leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
