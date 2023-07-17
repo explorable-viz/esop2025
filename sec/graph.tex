@@ -74,13 +74,14 @@ contains only the nodes necessary for the computation of those outputs. More for
    that $G'$ is the minimal slice of $G$ with respect to $V_{out}$, defined as
    $G' = (V', E')$ where $V' = \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \in E \mid v,v' \in V'}$
 \end{definition}
+
 We analogously use $\fwdSliceR{G}$ to denote the forward slicing relation. In contrast to backwards
 slicing, we provide the forward slicing relation with a set of input nodes, and compute the set of
 internal and output nodes that the input nodes are sufficient to compute. Formally:
 \begin{definition}[Forwards Slicing (Graph)]
-   For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subseteq V$, we write $V_{in}, G \fwdSliceR{G} G'$ to mean that
+   For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subseteq V$, we write $G[V_{in}]\fwdSliceR{G} G'$ to mean that
    $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
-   $V' = \set{v \in V \mid v, G \bwdSliceR{G} G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
+   $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
 \end{definition}
 
 \begin{lemma}[De Morgan dual of Forward Slice]
