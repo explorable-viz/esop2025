@@ -31,12 +31,16 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         k, s \orElse \seqRange{k'_1}{k'_j}
+         \seq{p} \cons k, s
+         \orElse
+         \seqRange{\seq{p}'_1 \cons k'_1}
+                  {\seq{p}'_j \cons k'_j}
       }
       {
-         k, s
+         \pattRecord{\seq{\bind{x}{p}}} \cons k, s
          \orElse
-         \seqRange{\pattVar{x} \cons k'_1}{\pattVar{x} \cons k'_j}
+         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}'} \cons k'_1}
+                  {\pattRecord{\seq{\bind{x}{p_j}}'} \cons k'_j}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
