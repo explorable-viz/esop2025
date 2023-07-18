@@ -32,16 +32,16 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         \seq{p} \cons k, s
+         (\clause{\seq{p} \cons \pi}{s}), s'
          \orElse
-         \seqRange{\seq{p}'_1 \cons k'_1}
-                  {\seq{p}'_j \cons k'_j}
+         \seqRange{(\clause{\seq{p_1} \cons \pi_1}{s_1})}
+                  {(\clause{\seq{p_j} \cons \pi_j}{s_j})}
       }
       {
          (\clause{\pattRecord{\seq{\bind{x}{p}}} \cons \pi}{s}), s'
          \orElse
-         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}'} \cons k'_1}
-                  {\pattRecord{\seq{\bind{x}{p_j}}'} \cons k'_j}
+         \seqRange{(\clause{\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1}{s_1})}
+                  {(\clause{\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j}{s_j})}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
