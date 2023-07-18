@@ -99,14 +99,60 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
       {
-         \seq{q}, s \desugar e
+         s \desugar e
       }
       {
-         \exListComp{s}{\seq{q}}
+         \exListComp{s}{\seqEmpty}
          \desugar
-         e
+         \exConstr{\cCons}{e, \exNil}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+      {
+         s \desugar e
+         \\
+         \exListComp{s'}{\seq{q}} \desugar e'
+         \\
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+      }
+      {
+         \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+         \desugar
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
+      {
+         s \desugar e
+         \\
+         (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+      }
+      {
+         \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
+         \desugar
+         \exApp{\exFun{\sigma}}{e}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
+      {
+         s \desugar e
+         \\
+         (p, \exListComp{s'}{\seq{q}}), \exNil \orElse \mu
+         \\
+         \mu \desugar \sigma
+      }
+      {
+         \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
+         \desugar
+         \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
    \end{smathpar}
    \\[2mm]
@@ -157,7 +203,7 @@
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$\seq{(\pi, k)} \desugar \kappa$}
+   {\flushleft \tallshadebox{$\seq{(\pi, k)} \desugar \kappa$}
    \hfill}
    \begin{smathpar}
       \inferrule*[
