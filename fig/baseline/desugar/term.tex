@@ -210,8 +210,9 @@
          \seq{k} \desugar \kappa
       }
       {
-         \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
-                  {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
+         (\seqRange{\pattRecord{\seq{\bind{x}{p_1}}}}{\pattRecord{\seq{\bind{x}{p_j}}}})
+         \unzipWith{\cons}
+         \seq{k}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
       }
