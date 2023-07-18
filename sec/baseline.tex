@@ -120,16 +120,16 @@ environment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq})
    \end{enumerate}
 \end{lemma}
 \begin{proof}
-   Immediate from definitions of $\desugar$ and $\match$ for $\mu$ and \lemref{match-seq-eq}.
+   Immediate from \lemref{match-seq-eq} and definitions of $\desugar$ and $\match$ for $\mu$.
 \end{proof}
 
 \begin{lemma}
    \label{lem:match-seq-eq}
-   Suppose $\seq{u} \desugar \seq{v}$ and $\seq{(\pi, k)} \desugar \kappa$.
+   Suppose $\seq{u} \desugar \seq{v}$ and $\seq{k} \desugar \kappa$.
    \hfill
    \begin{enumerate}
-      \item $\seq{u}, \seq{(\pi, k)}\,\match$ iff $\seq{v},\sigma\,\match$.
-      \item If $\seq{u}, \seq{(\pi, k)} \match \gamma', s$ and $\seq{v}, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
+      \item $\seq{u}, \seq{k}\,\match$ iff $\seq{v},\sigma\,\match$.
+      \item If $\seq{u}, \seq{k} \match \gamma', s$ and $\seq{v}, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}
