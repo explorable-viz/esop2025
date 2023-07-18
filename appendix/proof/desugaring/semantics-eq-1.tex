@@ -451,12 +451,49 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma, s' \evalSugR{S'} u'
             \\
-            p, u' \match \gamma'
+            u', (\clause{p}{\exListComp{s}{\seq{q}}})\match \gamma^\dag
             \\
-            (\gamma \cons \gamma'), \exListComp{s}{\seq{q}} \evalSugR{\seq{Q},S} u
+            (\gamma \cons \gamma^\dag), \exListComp{s}{\seq{q}} \evalSugR{\seq{Q},S} u
          }
          {
             \gamma, \exListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\evalSugS$-lambda}}]
+         {
+            \strut
+         }
+         {
+            \gamma, \exFun{\sigma}
+            \evalSugS
+            \exClosure{\gamma}{\seqEmpty}{\sigma}
          }
       \end{smathpar}
    }
