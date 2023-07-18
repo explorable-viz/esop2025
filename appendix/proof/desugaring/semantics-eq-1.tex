@@ -431,8 +431,104 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists v')
    &
-   \text{(\localref{desug:env}), (4),(5), \thmref{list-comp-eq}}
+   \text{\thmref{list-comp-eq}}
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
+         {
+            \gamma, s \evalSugR{S} u
+         }
+         {
+            \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-decl}}
+         ]
+         {
+            \gamma, s' \evalSugR{S'} u'
+            \\
+            p, u' \match \gamma'
+            \\
+            (\gamma \cons \gamma'), \exListComp{s}{\seq{q}} \evalSugR{\seq{Q},S} u
+         }
+         {
+            \gamma, \exListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-gen}}
+         ]
+         {
+            (p, \exListComp{s'}{\seq{q}}), \exNil \orElse \mu
+            \\
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+         }
+         {
+            \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
+         ]
+         {
+            \gamma, s \evalSugR{S} \cFalse
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfFalse{S}{q}} \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
+         ]
+         {
+            \gamma, \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} v
+            \\
+            \gamma, s \evalSugR{S} \cTrue
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
+         }
+      \end{smathpar}
+   }
+   &
    \\
 \end{flalign}
 \end{proof}
