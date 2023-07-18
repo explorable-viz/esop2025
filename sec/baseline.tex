@@ -1,5 +1,6 @@
 \section{Baseline language}
 \label{sec:baseline}
+
 \subsection{Surface Language}
 
 To allow the user to execute surface programs directly, we formalise the evaluation of surface terms and
@@ -32,6 +33,16 @@ We disallow certain combinations of patterns which are commonly allowed in other
    baz (Cons y ys)  x = ...
    baz  Nil         x = ...
 \end{lstlisting}}
+
+Let $k$ range over $(\pi, \clause{\pi'}{s})$ pairs, where $\pi$ acts as a stack of active patterns. Then the following notation is useful for processing piecewise function definitions:
+
+\begin{definition}
+   Suppose $k = (\pi, \clause{\pi'}{s})$.
+   \begin{enumerate}
+      \item Define $p \unzipWith{\cons} k \eqdef (p \cons \pi, \clause{\pi'}{s})$.
+      \item Define $\pi^\dagger \unzipWith{\concat} k \eqdef (\pi^\dagger \concat \pi, \clause{\pi'}{s})$.
+   \end{enumerate}
+\end{definition}
 
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}
