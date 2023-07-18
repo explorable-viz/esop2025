@@ -398,6 +398,10 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
+   \gamma, \seq{q}, s \evalSugS v
+   &
+   \\
+   &
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
@@ -416,13 +420,18 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
+   \seq{q}. s \desugar e
+   &
+   \\
+   &
+   \qedLocal
    \gamma', e \evalS v'
    \text{ with }
    v \desugar v'
    \quad
    (\exists v')
    &
-   \text{\thmref{list-comp-eq}}
+   \text{(\localref{desug:env}), (4),(5), \thmref{list-comp-eq}}
    \notag
    \\
 \end{flalign}
