@@ -157,7 +157,7 @@
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$\seq{(\pi, k)} \desugar \kappa$}
+   {\flushleft \shadebox{$\seq{k} \desugar \kappa$}
    \hfill}
    \begin{smathpar}
       \inferrule*[
@@ -193,10 +193,10 @@
          lab={\ruleName{$\desugar$-clauses-var}}
       ]
       {
-         \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa
+         \seq{k} \desugar \kappa
       }
       {
-         \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
+         \seq{\pattVar{x}} \unzipWith{\cons} \seq{k}
          \desugar
          \elimVar{x}{\kappa}
       }
@@ -207,7 +207,7 @@
          lab={\ruleName{$\desugar$-clauses-record}}
       ]
       {
-         \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa
+         \seq{k} \desugar \kappa
       }
       {
          \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
