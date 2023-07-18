@@ -149,7 +149,7 @@
          \gamma, s \evalSugR{S} u
       }
       {
-         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u,\cNil}
+         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
       }
       %
       \and
@@ -174,7 +174,9 @@
          lab={\ruleName{$\evalSugS$-list-comp-gen}}
       ]
       {
-         \gamma, \exApp{\exApp{\varConcatMap}{\lambda \{p = \exListComp{s'}{\seq{q}} \}}}{s} \evalSugS u
+         (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+         \\
+         \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
       }
       {
          \gamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
@@ -189,7 +191,7 @@
          \gamma, s \evalSugR{S} \cFalse
       }
       {
-         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \cNil
+         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \exNil
       }
       %
       \and
@@ -216,7 +218,7 @@
          \strut
       }
       {
-         \gamma, \exListEnd \evalSugR{\trListEnd} \cNil
+         \gamma, \exListEnd \evalSugR{\trListEnd} \exNil
       }
       %
       \and
@@ -237,7 +239,7 @@
    \caption{Surface semantics: evaluation}
 \end{figure}
 \begin{figure}
-   {\small, \flushleft \shadebox{$\gamma, g \closeDefs \gamma'$}
+   {\small\flushleft \shadebox{$\gamma, g \closeDefs \gamma'$}
       \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\closeDefs$-surface}}

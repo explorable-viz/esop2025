@@ -9,21 +9,21 @@
       {
          \seqEmpty, s
          \desugar
-         \exConstr{\cCons}{e, \cNil}
+         \exConstr{\cCons}{e, \exNil}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
       {
-         s_1 \desugar e
+         s \desugar e
          \\
-         \seq{q}, s_2 \desugar e'
+         \seq{q}, s' \desugar e'
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
       }
       {
-         \qualGuard{s_1} \cons \seq{q}, s_2
+         \qualGuard{s} \cons \seq{q}, s'
          \desugar
          \exApp{\exFun{\sigma}}{e}
       }
@@ -32,14 +32,12 @@
       %
       \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
       {
-         s_1 \desugar e
+         s \desugar e
          \\
-         \seq{q}, s_2 \desugar e'
-         \\
-         \sigma = \orElseF(\elimF(p, e'), \exError)
+         (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
       }
       {
-         \qualDeclaration{p}{s_1} \cons \seq{q}, s_2
+         \qualDeclaration{p}{s} \cons \seq{q}, s'
          \desugar
          \exApp{\exFun{\sigma}}{e}
       }
@@ -48,14 +46,14 @@
       %
       \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
       {
-         s_1 \desugar e
+         s \desugar e
          \\
-         \seq{q}, s_2 \desugar e'
+         (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
          \\
-         \sigma = \orElseF(\elimF(p, e'), \annot{\cNil}{\alpha})
+         \mu \desugar \sigma
       }
       {
-         \qualGenerator{p}{s_1} \cons \seq{q}, s_2
+         \qualGenerator{p}{s} \cons \seq{q}, s'
          \desugar
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }

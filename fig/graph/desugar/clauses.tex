@@ -47,7 +47,7 @@
          \seqEmpty, s
          \desugar
          \seqEmpty, s',
-         \exConstr{\cCons}{e, \cNil}, E
+         \exConstr{\cCons}{e, \exNil}, E
       }
       %
       \and
@@ -58,7 +58,7 @@
          \\
          \seq{q}, s_2 \desugar \seq{q}', s_2', e', E'
          \\
-         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\cNil}}
+         \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
       }
       {
          \qualGuard{s_1} \cons \seq{q}, s_2
@@ -94,7 +94,7 @@
          \\
          \seq{q}, s_2 \desugar \seq{q}', s_2', e', E'
          \\
-         \sigma = \orElseF(\elimF(p, e'), \annot{\cNil}{\alpha})
+         \sigma = \orElseF(\elimF(p, e'), \annot{\exNil}{\alpha})
       }
       {
          \qualGenerator{p}{s_1} \cons \seq{q}, s_2
