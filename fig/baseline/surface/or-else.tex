@@ -51,24 +51,24 @@
          right={$\datatype{c} = D$}
       ]
       {
-         (\pi \concat \pi', s), s'
+         \pi \unzipWith{\concat} k, s
          \orElse
-         \seqRange{(\clause{\pi_1 \concat \pi'_1}{s_1})}
-                  {(\clause{\pi_j \concat \pi'_j}{s_j})}
+         \seqRange{\pi_1 \unzipWith{\concat} k_1}
+                  {\pi_j \unzipWith{\concat} k_j}
          \\
          \set{\seq{c}} \eqdef \ctrsF(D) \setminus \set{c}
          \\
          k_i =
          (\clause{\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq n_i} \cons
-         (\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s'})
+         (\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s})
          \quad
          (\forall i \numleq \length{\seq{c}}.\arity{c_i} = n_i)
       }
       {
-         (\pattConstr{c}{\pi} \cons \pi', s), s'
+         \pattConstr{c}{\pi} \unzipWith{\cons} k, s
          \orElse
-         \seqRange{(\clause{\pattConstr{c}{\pi_1} \cons \pi'_1}{s_1})}
-                  {(\clause{\pattConstr{c}{\pi_j} \cons \pi'_j}{s_j})}
+         \seqRange{\pattConstr{c}{\pi_1} \unzipWith{\cons} k_1}
+                  {\pattConstr{c}{\pi_j} \unzipWith{\cons} k_j}
          \concat
          \seq{k}
       }
