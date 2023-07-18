@@ -1,5 +1,6 @@
 \section{Baseline language}
 \label{sec:baseline}
+
 \subsection{Surface Language}
 
 To allow the user to execute surface programs directly, we formalise the evaluation of surface terms and
@@ -32,6 +33,17 @@ We disallow certain combinations of patterns which are commonly allowed in other
    baz (Cons y ys)  x = ...
    baz  Nil         x = ...
 \end{lstlisting}}
+
+Let $k$ range over $(\pi, \clause{\pi'}{s})$ pairs. The first component $\pi$ is a stack of subpatterns active during the processing of a single top-level pattern $p$, and is initially contains only $p$ and ends up empty. The second component $\pi'$ stores the remaining top-level patterns, and is non-empty only for curried functions. The following notation is useful for processing piecewise function definitions:
+
+\begin{definition}
+   Suppose $k = (\pi, \clause{\pi'}{s})$.
+   \begin{enumerate}
+      \item Define $p \clauseWith{\cons} k \eqdef (p \cons \pi, \clause{\pi'}{s})$.
+      \item Define $\pi^\dagger \clauseWith{\concat} k \eqdef (\pi^\dagger \concat \pi, \clause{\pi'}{s})$.
+   \end{enumerate}
+   This notation extends to same-length sequences, so that for example $\seq{p} \clauseWith{\cons} \seq{k} = \seq{(p \cons \pi, \clause{\pi'}{s})}$.
+\end{definition}
 
 \input{fig/baseline/surface/syntax}
 \input{fig/baseline/surface/eval}
@@ -108,16 +120,16 @@ environment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq})
    \end{enumerate}
 \end{lemma}
 \begin{proof}
-   Immediate from definitions of $\desugar$ and $\match$ for $\mu$ and \lemref{match-seq-eq}.
+   Immediate from \lemref{match-seq-eq} and definitions of $\desugar$ and $\match$ for $\mu$.
 \end{proof}
 
 \begin{lemma}
    \label{lem:match-seq-eq}
-   Suppose $\seq{u} \desugar \seq{v}$ and $\seq{(\pi, k)} \desugar \kappa$.
+   Suppose $\seq{u} \desugar \seq{v}$ and $\seq{k} \desugar \kappa$.
    \hfill
    \begin{enumerate}
-      \item $\seq{u}, \seq{(\pi, k)}\,\match$ iff $\seq{v},\sigma\,\match$.
-      \item If $\seq{u}, \seq{(\pi, k)} \match \gamma', s$ and $\seq{v}, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
+      \item $\seq{u}, \seq{k}\,\match$ iff $\seq{v},\sigma\,\match$.
+      \item If $\seq{u}, \seq{k} \match \gamma', s$ and $\seq{v}, \sigma \match \gamma, e$ then $\gamma' \desugar \gamma$ and $s \desugar e$.
    \end{enumerate}
 \end{lemma}
 \begin{proof}

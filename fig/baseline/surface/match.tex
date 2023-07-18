@@ -14,7 +14,7 @@
       }
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$\seq{v}, \seq{(\pi, k)} \match \gamma, s$}
+   {\small \flushleft \shadebox{$\seq{v}, \seq{k} \match \gamma, s$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\match$-done-uncurried}}
@@ -35,8 +35,8 @@
          \strut
       }
       {
-         \seqEmpty, (\seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
-                              {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})})
+         \seqEmpty,
+         \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}{(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
          \match
          \envEmpty, \exFun{(\seq{\clause{p \cons \pi}{s}})}
       }
@@ -47,12 +47,10 @@
          lab={\ruleName{$\match$-var}}
       ]
       {
-         \seq{v}, (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
-         \match \gamma, s
+         \seq{v}, \seq{k} \match \gamma, s
       }
       {
-         v \cons \seq{v}, (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                    {(\pattVar{x} \cons \pi_j, k_j)})
+         v \cons \seq{v}, \seq{x} \clauseWith{\cons} \seq{k}
          \match
          \set{\bind{x}{v}} \disjunion \gamma, s
       }
@@ -64,15 +62,17 @@
       ]
       {
          \seq{u} \concat \seq{v}',
-         (\seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)})
+         (\seqRange{\seq{p_1}}{\seq{p_j}})
+         \clauseWith{\concat} \seq{k}
          \match \gamma, s
          \\
          \exRecord{\seq{\bind{y}{u}}} \subseteq \exRecord{\seq{\bind{x}{v}}}
       }
       {
          \exRecord{\seq{\bind{x}{v}}} \cons \seq{v}',
-         (\seqRange{(\pattRecord{\seq{\bind{y}{p_1}}} \cons \pi_1, k_1)}
-                   {(\pattRecord{\seq{\bind{y}{p_j}}} \cons \pi_j, k_j)})
+         (\seqRange{\pattRecord{\seq{\bind{y}{p_1}}}}{\pattRecord{\seq{\bind{y}{p_j}}}})
+         \clauseWith{\cons}
+         \seq{k}
          \match
          \gamma, s
       }
@@ -84,13 +84,14 @@
       ]
       {
          \seq{v} \concat \seq{v}',
-         ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+         ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c)
          \match \gamma, s
       }
       {
          \exConstr{c}{\seq{v}} \cons \seq{v}',
-         (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
-                   {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+         \seq{\pattConstr{c}{\pi}}
+         \clauseWith{\cons}
+         \seq{k}
          \match
          \gamma, s
       }

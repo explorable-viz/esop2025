@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$(\pi, s), s' \orElse \mu$}
+   {\small \flushleft \shadebox{$k, s \orElse \mu$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\orElse$-done}}
@@ -8,7 +8,7 @@
          \strut
       }
       {
-         (\seqEmpty, s), s' \orElse \clause{\seqEmpty}{s}
+         (\seqEmpty, \clause{\seqEmpty}{s}), s' \orElse \clause{\seqEmpty}{s}
       }
       %
       \and
@@ -17,13 +17,13 @@
          lab={\ruleName{$\orElse$-var}}
       ]
       {
-         (\pi, s), s' \orElse \seqRange{(\clause{\pi_1}{s_1})}{(\clause{\pi_j}{s_j})}
+         k, s \orElse \seqRange{k_1}{k_j}
       }
       {
-         (\pattVar{x} \cons \pi, s), s'
+         \pattVar{x} \clauseWith{\cons} k, s
          \orElse
-         \seqRange{(\clause{\pattVar{x} \cons \pi_1}{s_1})}
-                  {(\clause{\pattVar{x} \cons \pi_j}{s_j})}
+         \seqRange{\pattVar{x} \clauseWith{\cons} k_1}
+                  {\pattVar{x} \clauseWith{\cons} k_j}
       }
       %
       \and
@@ -32,45 +32,44 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         (\seq{p} \concat \pi, s), s'
+         \seq{p} \clauseWith{\concat} k, s
          \orElse
-         \seqRange{(\clause{\seq{p_1} \concat \pi_1}{s_1})}
-                  {(\clause{\seq{p_j} \concat \pi_j}{s_j})}
+         \seqRange{\seq{p_1} \clauseWith{\concat} k_1}
+                  {\seq{p_j} \clauseWith{\concat} k_j}
       }
       {
-         (\pattRecord{\seq{\bind{x}{p}}} \cons \pi, s), s'
+         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s
          \orElse
-         \seqRange{(\clause{\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1}{s_1})}
-                  {(\clause{\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j}{s_j})}
+         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k_1}
+                  {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k_j}
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\orElse$-constr}},
-         right={$\datatype{c} = D$}
+         right={$\ctrsF(D) = c \cons \set{\seq{c}}$}
       ]
       {
-         (\pi \concat \pi', s), s'
+         \pi \clauseWith{\concat} k, s
          \orElse
-         \seqRange{(\clause{\pi_1 \concat \pi'_1}{s_1})}
-                  {(\clause{\pi_j \concat \pi'_j}{s_j})}
+         \seqRange{\pi_1 \clauseWith{\concat} k_1}
+                  {\pi_j \clauseWith{\concat} k_j}
          \\
-         \set{\seq{c}} \eqdef \ctrsF(D) \setminus \set{c}
-         \\
-         k_i =
-         (\clause{\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq n_i} \cons
-         (\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s'})
+         k'_i =
+         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s})
          \quad
-         (\forall i \numleq \length{\seq{c}}.\arity{c_i} = n_i)
+         (\forall i \numleq \length{\seq{c}})
       }
       {
-         (\pattConstr{c}{\pi} \cons \pi', s), s'
+         \pattConstr{c}{\pi} \clauseWith{\cons} k, s
          \orElse
-         \seqRange{(\clause{\pattConstr{c}{\pi_1} \cons \pi'_1}{s_1})}
-                  {(\clause{\pattConstr{c}{\pi_j} \cons \pi'_j}{s_j})}
+         (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k_1}
+                   {\pattConstr{c}{\pi_j} \clauseWith{\cons} k_j})
          \concat
-         \seq{k}
+         (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
+         \clauseWith{\cons} k'_i
+         \mid i \numleq \length{\seq{c}})
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
