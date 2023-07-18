@@ -380,61 +380,6 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp}}
-         ]{
-            \gamma, \seq{q}, s \evalSugR{\seq{Q},S} v
-         }
-         {
-            \gamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \gamma, \seq{q}, s \evalSugS v
-   &
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
-         {
-            \seq{q}, s \desugar e
-         }
-         {
-            \exListComp{s}{\seq{q}}
-            \desugar
-            e
-         }
-      \end{smathpar}
-   }
-   &
-   \text{inversion}
-   \notag
-   \\
-   &
-   \seq{q}. s \desugar e
-   &
-   \\
-   &
-   \qedLocal
-   \gamma', e \evalS v'
-   \text{ with }
-   v \desugar v'
-   \quad
-   (\exists v')
-   &
-   \text{\thmref{list-comp-eq}}
-   \notag
-   \\
-   \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
@@ -449,6 +394,51 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
+         {
+            s \desugar e
+         }
+         {
+            \exListComp{s}{\seqEmpty}
+            \desugar
+            \exConstr{\cCons}{e, \exNil}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma', e \evalS v' 
+   \textit{ with }
+   u \desugar v
+   \quad
+   (\exists v)
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma', e \evalS v
+         }
+         {
+            \gamma', \exConstr{\cCons}{e, \exNil} \evalS \exConstr{\cCons}{v, \exNil}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
