@@ -50,9 +50,9 @@
       {
          s \desugar e
          \\
-         \seq{q}, s' \desugar e'
+         (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
          \\
-         \sigma = \orElseF(\elimF(p, e'), \exNil)
+         \mu \desugar \sigma
       }
       {
          \qualGenerator{p}{s} \cons \seq{q}, s'
