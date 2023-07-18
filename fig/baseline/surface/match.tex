@@ -36,9 +36,7 @@
       }
       {
          \seqEmpty,
-         \seq{\seqEmpty}
-         \unzipWith{}
-         (\seq{p} \clauseCons \mu)
+         \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}{(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
          \match
          \envEmpty, \exFun{(\seq{\clause{p \cons \pi}{s}})}
       }
@@ -49,10 +47,10 @@
          lab={\ruleName{$\match$-var}}
       ]
       {
-         \seq{v}, \mu \match \gamma, s
+         \seq{v}, \seq{k} \match \gamma, s
       }
       {
-         v \cons \seq{v}, \seq{x} \unzipWith{\cons} \mu
+         v \cons \seq{v}, \seq{x} \unzipWith{\cons} \seq{k}
          \match
          \set{\bind{x}{v}} \disjunion \gamma, s
       }
