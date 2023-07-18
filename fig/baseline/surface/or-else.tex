@@ -57,10 +57,10 @@
          \\
          \set{\seq{c}} = \set{c' \mid \datatype{c'} = D} \setminus \set{c}
          \\
-         \seq{k} =
-         (\clause{\pattConstr{c'}{\seqRange{\pattVar{x}_1}{\pattVar{x}_n}}}{s'}
-         \mid
-         c' \in \set{\seq{c}}\textit{ and } \arity{c'} = n)
+         k_i =
+         \clause{\pattConstr{c_i}{\seqRange{\pattVar{x}_1}{\pattVar{x}_{n_i}}}}{s'}
+         \quad
+         (\forall i \numleq \length{\seq{c}}.\arity{c_i} = n_i)
       }
       {
          (\clause{\pattConstr{c}{\pi} \cons \pi'}{s}), s'
