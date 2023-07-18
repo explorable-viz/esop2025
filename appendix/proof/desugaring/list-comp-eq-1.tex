@@ -27,14 +27,58 @@ By induction on derivation of $\evalSugS$
          \begin{smathpar}
             \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
             {
-               \gamma, s \evalSugR{S} u
+               \gamma, s \evalSugR{S} v
             }
             {
-               \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u,\cNil}
+               \gamma, \seqEmpty, s \evalSugR{\seqEmpty, S} \exConstr{\cCons}{v,\cNil}
             }
          \end{smathpar}
       }
       &
+      \notag
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
+            {
+               s \desugar e
+            }
+            {
+               \seqEmpty, s
+               \desugar
+               \exConstr{\cCons}{e, \cNil}
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      \gamma', e \evalS v' 
+      \text{ with }
+      v \desugar v'
+      \quad
+      (\exists v')
+      &
+      \text{\thmref{semantics-eq}}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule
+            {
+               \gamma', e \evalS v'
+            }
+            {
+               \gamma', \exConstr{\cCons}{e, \exNil} \evalS \exConstr{\cCons}{v', \exNil}
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
       \\
       \intertext{\crossrule}
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
