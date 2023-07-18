@@ -30,13 +30,68 @@
       %
       \and
       %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-list-comp}}
-      ]{
-         \gamma, \seq{q}, s \evalSugR{\seq{Q},S} v
+      \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
+      {
+         \gamma, s \evalSugR{S} u
       }
       {
-         \gamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
+         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-comp-decl}}
+      ]
+      {
+         \gamma, s' \evalSugR{S'} u'
+         \\
+         p, u' \match \gamma'
+         \\
+         (\gamma \cons \gamma'), \exListComp{s}{\seq{q}} \evalSugR{\seq{Q},S} u
+      }
+      {
+         \gamma, \exListComp{s}{\qualDeclaration{p}{s'} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-comp-gen}}
+      ]
+      {
+         (p, \exListComp{s'}{\seq{q}}), \exNil \orElse \mu
+         \\
+         \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+      }
+      {
+         \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
+      ]
+      {
+         \gamma, s \evalSugR{S} \cFalse
+      }
+      {
+         \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfFalse{S}{q}} \exNil
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
+      ]
+      {
+         \gamma, \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} v
+         \\
+         \gamma, s \evalSugR{S} \cTrue
+      }
+      {
+         \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
       }
       %
       \and
@@ -140,72 +195,6 @@
       }
       {
          \gamma, \exListEnum{s_1}{s_2} \evalSugR{\trEnum{S_1}{S_2}} v
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\seq{q}, s \evalSugR{\seq{Q},S} v$}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
-      {
-         \gamma, s \evalSugR{S} u
-      }
-      {
-         \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-list-comp-decl}}
-      ]
-      {
-         \gamma, s' \evalSugR{S'} u'
-         \\
-         p, u' \match \gamma'
-         \\
-         (\gamma \cons \gamma'), \seq{q},s \evalSugR{\seq{Q},S} u
-      }
-      {
-         \gamma, \qualDeclaration{p}{s'} \cons \seq{q}, s \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-list-comp-gen}}
-      ]
-      {
-         (p, \exListComp{s'}{\seq{q}}), \exNil \orElse \mu
-         \\
-         \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
-      }
-      {
-         \gamma, \qualGenerator{p}{s'} \cons \seq{q}, s \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
-      ]
-      {
-         \gamma, s \evalSugR{S} \cFalse
-      }
-      {
-         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfFalse{S}{q}} \exNil
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
-      ]
-      {
-         \gamma, \seq{q}, s' \evalSugR{\seq{Q},S} v
-         \\
-         \gamma, s \evalSugR{S} \cTrue
-      }
-      {
-         \gamma, \qualGuard{s} \cons \seq{q}, s' \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
       }
    \end{smathpar}}
    \\[3mm]
