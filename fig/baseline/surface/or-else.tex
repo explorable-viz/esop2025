@@ -32,13 +32,13 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         (\seq{p} \concat \pi, s), s'
+         \seq{p} \unzipWith{\concat} k, s'
          \orElse
          \seqRange{(\clause{\seq{p_1} \concat \pi_1}{s_1})}
                   {(\clause{\seq{p_j} \concat \pi_j}{s_j})}
       }
       {
-         (\pattRecord{\seq{\bind{x}{p}}} \cons \pi, s), s'
+         \pattRecord{\seq{\bind{x}{p}}} \unzipWith{\cons} k, s
          \orElse
          \seqRange{(\clause{\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1}{s_1})}
                   {(\clause{\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j}{s_j})}
