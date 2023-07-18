@@ -17,12 +17,13 @@
          lab={\ruleName{$\orElse$-var}}
       ]
       {
-         \clause{\pi}{s}, s' \orElse \seqRange{k'_1}{k'_j}
+         (\clause{\pi}{s}), s' \orElse \seqRange{(\clause{\pi_1}{s_1})}{(\clause{\pi_j}{s_j})}
       }
       {
          (\clause{\pattVar{x} \cons \pi}{s}), s'
          \orElse
-         \seqRange{\pattVar{x} \cons k'_1}{\pattVar{x} \cons k'_j}
+         \seqRange{(\clause{\pattVar{x} \cons \pi_1}{s_1})}
+                  {(\clause{\pattVar{x} \cons \pi_j}{s_j})}
       }
       %
       \and
