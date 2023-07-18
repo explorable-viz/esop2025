@@ -32,16 +32,30 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         (\clause{\seq{p} \cons \pi}{s}), s'
+         (\clause{\seq{p} \concat \pi}{s}), s'
          \orElse
-         \seqRange{(\clause{\seq{p_1} \cons \pi_1}{s_1})}
-                  {(\clause{\seq{p_j} \cons \pi_j}{s_j})}
+         \seqRange{(\clause{\seq{p_1} \concat \pi_1}{s_1})}
+                  {(\clause{\seq{p_j} \concat \pi_j}{s_j})}
       }
       {
          (\clause{\pattRecord{\seq{\bind{x}{p}}} \cons \pi}{s}), s'
          \orElse
          \seqRange{(\clause{\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1}{s_1})}
                   {(\clause{\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j}{s_j})}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-constr}}
+      ]
+      {
+         (\clause{\pi \concat \pi'}{s}), s'
+         \orElse
+      }
+      {
+         (\clause{\pattConstr{c}{\pi} \cons \pi'}{s}), s'
+         \orElse
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
