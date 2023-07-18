@@ -1,0 +1,76 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$k, s \orElse \mu$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\orElse$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         (\clause{\seqEmpty}{s}), s' \orElse \clause{\seqEmpty}{s}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-var}}
+      ]
+      {
+         (\clause{\pi}{s}), s' \orElse \seqRange{(\clause{\pi_1}{s_1})}{(\clause{\pi_j}{s_j})}
+      }
+      {
+         (\clause{\pattVar{x} \cons \pi}{s}), s'
+         \orElse
+         \seqRange{(\clause{\pattVar{x} \cons \pi_1}{s_1})}
+                  {(\clause{\pattVar{x} \cons \pi_j}{s_j})}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-record}}
+      ]
+      {
+         (\clause{\seq{p} \concat \pi}{s}), s'
+         \orElse
+         \seqRange{(\clause{\seq{p_1} \concat \pi_1}{s_1})}
+                  {(\clause{\seq{p_j} \concat \pi_j}{s_j})}
+      }
+      {
+         (\clause{\pattRecord{\seq{\bind{x}{p}}} \cons \pi}{s}), s'
+         \orElse
+         \seqRange{(\clause{\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1}{s_1})}
+                  {(\clause{\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j}{s_j})}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-constr}},
+         right={$\datatype{c} = D$}
+      ]
+      {
+         (\clause{\pi \concat \pi'}{s}), s'
+         \orElse
+         \seqRange{(\clause{\pi_1 \concat \pi'_1}{s_1})}
+                  {(\clause{\pi_j \concat \pi'_j}{s_j})}
+         \\
+         \set{\seq{c}} \eqdef \ctrsF(D) \setminus \set{c}
+         \\
+         k_i =
+         (\clause{\pattConstr{c_i}{\seqRange{\pattVar{x}_1}{\pattVar{x}_{n_i}}}}{s'})
+         \quad
+         (\forall i \numleq \length{\seq{c}}.\arity{c_i} = n_i)
+      }
+      {
+         (\clause{\pattConstr{c}{\pi} \cons \pi'}{s}), s'
+         \orElse
+         \seqRange{(\clause{\pattConstr{c}{\pi_1} \cons \pi'_1}{s_1})}
+                  {(\clause{\pattConstr{c}{\pi_j} \cons \pi'_j}{s_j})}
+         \concat
+         \seq{k}
+      }
+   \end{smathpar}}
+   \caption{Completing an (uncurried) clause with a default value}
+\end{figure}
