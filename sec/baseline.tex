@@ -67,9 +67,8 @@ said to be \textit{partial} if it is not defined for every element of its domain
 \subsection{Desugaring}
 
 \input{fig/baseline/desugar/term}
-\input{fig/baseline/desugar/qualifier}
 
-\figrefTwo{baseline:desugar}{desugar-func-qual-do} define the desugaring relation $\desugar$, which we extend pointwise to sequences.
+\figref{baseline:desugar} defines the desugaring relation $\desugar$, which we extend pointwise to sequences.
 
 \subsubsection{Equivalence of Semantics}
 
@@ -88,21 +87,21 @@ relations.
    See \apprefTwo{semantics-eq-1}{semantics-eq-2}.
 \end{proof}
 
-\thmref{semantics-eq} relies on the auxiliary lemmas for list comprehensions~(\thmref{list-comp-eq}),
+\thmref{semantics-eq} relies on the auxiliary lemmas for
 environment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq}) and recursive definitions
 (\lemref{closedefs-eq}).
 
-\begin{theorem}
-   \label{thm:list-comp-eq}
-   Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$.
-   \begin{enumerate}
-      \item $\gamma, \seq{q}, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
-      \item If $\gamma, \seq{q}, s \evalSugS v$ and $\gamma', e \evalSugS v'$ then $v \desugar v'$.
-   \end{enumerate}
-\end{theorem}
-\begin{proof}
-   For (1) see \appref{list-comp-eq-1}. For (2) see \appref{list-comp-eq-2}.
-\end{proof}
+% \begin{theorem}
+%    \label{thm:list-comp-eq}
+%    Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$.
+%    \begin{enumerate}
+%       \item $\gamma, \seq{q}, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+%       \item If $\gamma, \seq{q}, s \evalSugS v$ and $\gamma', e \evalSugS v'$ then $v \desugar v'$.
+%    \end{enumerate}
+% \end{theorem}
+% \begin{proof}
+%    For (1) see \appref{list-comp-eq-1}. For (2) see \appref{list-comp-eq-2}.
+% \end{proof}
 \begin{lemma}
    \label{lem:varlookup}
    ($\gamma \desugar \gamma'$ and $v \desugar v'$) iff $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.

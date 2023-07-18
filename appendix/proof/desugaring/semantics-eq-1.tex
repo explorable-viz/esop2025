@@ -380,17 +380,16 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp}}
-         ]{
-            \gamma, \seq{q}, s \evalSugR{\seq{Q},S} v
+         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
+         {
+            \gamma, s \evalSugR{S} u
          }
          {
-            \gamma,  \exListComp{s}{\seq{q}} \evalSugR{\trListComp{S}{Q}} v
+            \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
          }
       \end{smathpar}
    }
@@ -398,20 +397,16 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma, \seq{q}, s \evalSugS v
-   &
-   \\
-   &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp}}]
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
          {
-            \seq{q}, s \desugar e
+            s \desugar e
          }
          {
-            \exListComp{s}{\seq{q}}
+            \exListComp{s}{\seqEmpty}
             \desugar
-            e
+            \exConstr{\cCons}{e, \exNil}
          }
       \end{smathpar}
    }
@@ -420,19 +415,161 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \seq{q}. s \desugar e
+   \gamma', e \evalS v' 
+   \textit{ with }
+   u \desugar v
+   \quad
+   (\exists v)
    &
+   \text{(IH)}
+   \notag
    \\
    &
    \qedLocal
-   \gamma', e \evalS v'
-   \text{ with }
-   v \desugar v'
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma', e \evalS v
+         }
+         {
+            \gamma', \exConstr{\cCons}{e, \exNil} \evalS \exConstr{\cCons}{v, \exNil}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-decl}}
+         ]
+         {
+            \gamma, s \evalSugR{S'} u'
+            \\
+            u', (\clause{p}{\exListComp{s'}{\seq{q}}})\match \gamma^\dag
+            \\
+            (\gamma \cons \gamma^\dag), \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} u
+         }
+         {
+            \gamma, \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma', e \evalS v' 
+   \textit{ with }
+   u' \desugar v'
    \quad
    (\exists v')
    &
-   \text{(\localref{desug:env}), (4),(5), \thmref{list-comp-eq}}
+   \text{(IH)}
    \notag
+   \\
+   &
+   v', \sigma \match \gamma^\ddagger
+   \textit{ with }
+   \gamma^\dag \desugar \gamma^\ddagger
+   \quad
+   (\exists \gamma^\ddagger)
+   &
+   \text{\lemref{match-eq}}
+   \notag
+   \\
+   &
+   \gamma', \exApp{\lambda}{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+   \textit{ with }
+   \gamma \desugar \gamma'
+   \quad
+   (\exists \gamma')
+   &
+   \text{$\evalS$}
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-gen}}
+         ]
+         {
+            (p, \exListComp{s'}{\seq{q}}), \exNil \orElse \mu
+            \\
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+         }
+         {
+            \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
+         ]
+         {
+            \gamma, s \evalSugR{S} \cFalse
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfFalse{S}{q}} \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
+         ]
+         {
+            \gamma, \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} v
+            \\
+            \gamma, s \evalSugR{S} \cTrue
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
+         }
+      \end{smathpar}
+   }
+   &
    \\
 \end{flalign}
 \end{proof}
