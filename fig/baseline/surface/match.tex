@@ -50,7 +50,7 @@
          \seq{v}, \seq{k} \match \gamma, s
       }
       {
-         v \cons \seq{v}, \seq{x} \unzipWith{\cons} \seq{k}
+         v \cons \seq{v}, \seq{x} \clauseWith{\cons} \seq{k}
          \match
          \set{\bind{x}{v}} \disjunion \gamma, s
       }
@@ -63,7 +63,7 @@
       {
          \seq{u} \concat \seq{v}',
          (\seqRange{\seq{p_1}}{\seq{p_j}})
-         \unzipWith{\concat} \seq{k}
+         \clauseWith{\concat} \seq{k}
          \match \gamma, s
          \\
          \exRecord{\seq{\bind{y}{u}}} \subseteq \exRecord{\seq{\bind{x}{v}}}
@@ -71,7 +71,7 @@
       {
          \exRecord{\seq{\bind{x}{v}}} \cons \seq{v}',
          (\seqRange{\pattRecord{\seq{\bind{y}{p_1}}}}{\pattRecord{\seq{\bind{y}{p_j}}}})
-         \unzipWith{\cons}
+         \clauseWith{\cons}
          \seq{k}
          \match
          \gamma, s
@@ -84,13 +84,13 @@
       ]
       {
          \seq{v} \concat \seq{v}',
-         ((\pi_i \unzipWith{\concat} k_i) \mid c_i = c)
+         ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c)
          \match \gamma, s
       }
       {
          \exConstr{c}{\seq{v}} \cons \seq{v}',
          \seq{\pattConstr{c}{\pi}}
-         \unzipWith{\cons}
+         \clauseWith{\cons}
          \seq{k}
          \match
          \gamma, s

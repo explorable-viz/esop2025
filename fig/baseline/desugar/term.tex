@@ -196,7 +196,7 @@
          \seq{k} \desugar \kappa
       }
       {
-         \seq{\pattVar{x}} \unzipWith{\cons} \seq{k}
+         \seq{\pattVar{x}} \clauseWith{\cons} \seq{k}
          \desugar
          \elimVar{x}{\kappa}
       }
@@ -211,7 +211,7 @@
       }
       {
          (\seqRange{\pattRecord{\seq{\bind{x}{p_1}}}}{\pattRecord{\seq{\bind{x}{p_j}}}})
-         \unzipWith{\cons}
+         \clauseWith{\cons}
          \seq{k}
          \desugar
          \elimRecord{\seq{x}}{\kappa}
@@ -224,13 +224,13 @@
          right={$\forall i \numleq j.\datatype{c_i} = D$}
       ]
       {
-         ((\pi_i \unzipWith{\concat} k_i) \mid c_i = c) \desugar \kappa_c
+         ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c) \desugar \kappa_c
          \quad
          (\forall c \in \set{\seq{c}})
       }
       {
          \seq{\pattConstr{c}{\pi}}
-         \unzipWith{\cons}
+         \clauseWith{\cons}
          \seq{k}
          \desugar
          \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \set{\seq{c}}}

@@ -20,10 +20,10 @@
          k, s \orElse \seqRange{k_1}{k_j}
       }
       {
-         \pattVar{x} \unzipWith{\cons} k, s
+         \pattVar{x} \clauseWith{\cons} k, s
          \orElse
-         \seqRange{\pattVar{x} \unzipWith{\cons} k_1}
-                  {\pattVar{x} \unzipWith{\cons} k_j}
+         \seqRange{\pattVar{x} \clauseWith{\cons} k_1}
+                  {\pattVar{x} \clauseWith{\cons} k_j}
       }
       %
       \and
@@ -32,16 +32,16 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         \seq{p} \unzipWith{\concat} k, s
+         \seq{p} \clauseWith{\concat} k, s
          \orElse
-         \seqRange{\seq{p_1} \unzipWith{\concat} k_1}
-                  {\seq{p_j} \unzipWith{\concat} k_j}
+         \seqRange{\seq{p_1} \clauseWith{\concat} k_1}
+                  {\seq{p_j} \clauseWith{\concat} k_j}
       }
       {
-         \pattRecord{\seq{\bind{x}{p}}} \unzipWith{\cons} k, s
+         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s
          \orElse
-         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \unzipWith{\cons} k_1}
-                  {\pattRecord{\seq{\bind{x}{p_j}}} \unzipWith{\cons} k_j}
+         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k_1}
+                  {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k_j}
       }
       %
       \and
@@ -51,10 +51,10 @@
          right={$\ctrsF(D) = c \cons \set{\seq{c}}$}
       ]
       {
-         \pi \unzipWith{\concat} k, s
+         \pi \clauseWith{\concat} k, s
          \orElse
-         \seqRange{\pi_1 \unzipWith{\concat} k_1}
-                  {\pi_j \unzipWith{\concat} k_j}
+         \seqRange{\pi_1 \clauseWith{\concat} k_1}
+                  {\pi_j \clauseWith{\concat} k_j}
          \\
          k'_i =
          (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s})
@@ -62,13 +62,13 @@
          (\forall i \numleq \length{\seq{c}})
       }
       {
-         \pattConstr{c}{\pi} \unzipWith{\cons} k, s
+         \pattConstr{c}{\pi} \clauseWith{\cons} k, s
          \orElse
-         (\seqRange{\pattConstr{c}{\pi_1} \unzipWith{\cons} k_1}
-                   {\pattConstr{c}{\pi_j} \unzipWith{\cons} k_j})
+         (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k_1}
+                   {\pattConstr{c}{\pi_j} \clauseWith{\cons} k_j})
          \concat
          (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
-         \unzipWith{\cons} k'_i
+         \clauseWith{\cons} k'_i
          \mid i \numleq \length{\seq{c}})
       }
    \end{smathpar}}
