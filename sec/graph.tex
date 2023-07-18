@@ -1,7 +1,6 @@
 \section{Dependence graph formulation}
 \label{sec:graph}
-We start by introducing dependency graphs, and some standard graph-theoretic notions,
-alongside the notation we use to denote them, then we 
+We start by introducing dependency graphs, and some standard graph-theoretic notions.
 \subsection{Dependence graphs}
 
 $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{addresses} $\alpha, \beta
@@ -12,8 +11,8 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
    For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 \begin{definition}[Complement]
-   For a set $X$ and $Y \subseteq X$, we write $Y^c \subseteq X$ to denote the \textit{complement} 
-   of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.  
+   For a set $X$ and $Y \subseteq X$, we write $Y^c \subseteq X$ to denote the \textit{complement}
+   of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.
 \end{definition}
 \begin{definition}[Induced subgraph]
    For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
@@ -23,7 +22,7 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \begin{definition}[Path]
    For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $P_G(v, v')$, to mean that there is a
    \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
-   or that $(v, v') \in E$. 
+   or that $(v, v') \in E$.
 \end{definition}
 
 \begin{definition}
@@ -67,7 +66,7 @@ We characterize slicing with 2 functions/relations, parameterized by the graph $
    \item $\bwdSliceR{G} \;:\; \powerset{S(G)} \to \powerset{T(G)}$
    \item $\fwdSliceR{G} \;:\; \powerset{T(G)} \to \powerset{S(G)}$
 \end{itemize}
-We use $\bwdSliceR{G}$ to denote the backwards slicing relation. Intuitively, the relation 
+We use $\bwdSliceR{G}$ to denote the backwards slicing relation. Intuitively, the relation
 $\bwdSliceR{G}$, when given a set of outputs of interest computes the subgraph of the computation that
 contains only the nodes necessary for the computation of those outputs. More formally:
 \begin{definition}[Backwards Slicing (Graph)]
@@ -88,22 +87,22 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
 \begin{lemma}[De Morgan dual of Forward Slice]
       For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
       of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
-      result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain 
+      result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain
       a forward slice with respect to $V_{in}$:
       $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{lemma}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
-Informally, we start with our subgraph, then we only consider it's neighbourhood. If we can add a new node from 
+Informally, we start with our subgraph, then we only consider it's neighbourhood. If we can add a new node from
 it's neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
-We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. 
+We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood.
 This lets us grow the slice without considering each node in the graph $\length{V}$ times.
 
 \begin{definition}[Forward Slicing (Efficient Version)]
    TODO
 \end{definition}
 % A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
-% check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not, 
+% check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not,
 % leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
 \subsection{Core language (dependence graph formulation)}
 
