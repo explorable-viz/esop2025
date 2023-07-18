@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$(\pi, s), s' \orElse \mu$}
+   {\small \flushleft \shadebox{$k, s \orElse \mu$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\orElse$-done}}
@@ -56,7 +56,7 @@
          \seqRange{\pi_1 \unzipWith{\concat} k_1}
                   {\pi_j \unzipWith{\concat} k_j}
          \\
-         k_i =
+         k'_i =
          (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s})
          \quad
          (\forall i \numleq \length{\seq{c}})
@@ -68,7 +68,7 @@
                    {\pattConstr{c}{\pi_j} \unzipWith{\cons} k_j})
          \concat
          (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
-         \unzipWith{\cons} k_i
+         \unzipWith{\cons} k'_i
          \mid i \numleq \length{\seq{c}})
       }
    \end{smathpar}}
