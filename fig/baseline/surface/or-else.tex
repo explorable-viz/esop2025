@@ -52,10 +52,14 @@
       {
          (\clause{\pi \concat \pi'}{s}), s'
          \orElse
+         \seqRange{(\clause{\pi_1 \concat \pi'_1}{s_1})}
+                  {(\clause{\pi_j \concat \pi'_j}{s_j})}
       }
       {
          (\clause{\pattConstr{c}{\pi} \cons \pi'}{s}), s'
          \orElse
+         \seqRange{(\clause{\pattConstr{c}{\pi_1} \cons \pi'_1}{s_1})}
+                  {(\clause{\pattConstr{c}{\pi_j} \cons \pi'_j}{s_j})}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
