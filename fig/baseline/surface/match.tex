@@ -89,8 +89,9 @@
       }
       {
          \exConstr{c}{\seq{v}} \cons \seq{v}',
-         (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
-                   {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+         \seq{\pattConstr{c}{\pi}}
+         \unzip
+         \seq{(\pi', k)}
          \match
          \gamma, s
       }
