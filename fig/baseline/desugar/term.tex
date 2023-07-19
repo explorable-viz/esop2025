@@ -265,11 +265,12 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-constr}},
-         right={$\forall i \numleq j.\datatype{c_i} = D$}
+         lab={\ruleName{$\desugar$-clauses-constr}}
       ]
       {
          ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c) \desugar \kappa_c
+         \\
+         \datatype{c} = D
          \quad
          (\forall c \in \set{\seq{c}})
       }
