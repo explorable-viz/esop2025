@@ -241,7 +241,7 @@
          \seq{k} \desugar \kappa
       }
       {
-         \seq{\pattVar{x}} \clauseWith{\cons} \seq{k}
+         \seq{\pattVar{x} \clauseWith{\cons} k}
          \desugar
          \elimVar{x}{\kappa}
       }
@@ -274,9 +274,7 @@
          (\forall c \in \set{\seq{c}})
       }
       {
-         \seq{\pattConstr{c}{\pi}}
-         \clauseWith{\cons}
-         \seq{k}
+         \seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}
          \desugar
          \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \set{\seq{c}}}
       }
