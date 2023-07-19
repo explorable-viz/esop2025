@@ -85,18 +85,18 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
 \end{definition}
 
 \begin{lemma}[De Morgan dual of Forward Slice]
-      For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
-      of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
-      result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain
-      a forward slice with respect to $V_{in}$:
-      $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
+   For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
+   of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
+   result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain
+   a forward slice with respect to $V_{in}$:
+   $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{lemma}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
-Informally, we start with our subgraph, then we only consider it's neighbourhood. If we can add a new node from
-it's neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
-We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood.
-This lets us grow the slice without considering each node in the graph $\length{V}$ times.
+Informally, we start with our subgraph, then we only consider its neighbourhood. If we can add a new node from
+its neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
+We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
+us grow the slice without considering each node in the graph $\length{V}$ times.
 
 \begin{definition}[Forward Slicing (Efficient Version)]
    TODO
@@ -110,11 +110,6 @@ This lets us grow the slice without considering each node in the graph $\length{
 \input{fig/graph/core/eval}
 \input{fig/graph/core/match}
 
-%\subsection{Desugaring (dependence graph formulation)}
-%
-%\input{fig/graph/desugar/term}
-%\input{fig/graph/desugar/clauses}
-%
 \subsection{Galois slicing over dependence graphs}
 
 \input{fig/graph/slicing}
