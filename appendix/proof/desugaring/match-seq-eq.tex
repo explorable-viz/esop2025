@@ -429,10 +429,10 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
          ]
          {
             (\pi_i \clauseWith{\concat} k_i \mid c_i = c') \desugar \kappa_{c'}
+            \\
+            \datatype{c'} = D
             \quad
             (\forall c' \in \set{\seq{c}})
-            \\
-            \forall c' \in \set{\seq{c}}.\datatype{c'} = D
          }
          {
             \seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}
@@ -464,7 +464,7 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
    \notag
    \\
    &
-   ((\pi_i \concat \pi_i', k_i) \mid c_i = c) \desugar \kappa_{c}
+   (\pi_i \clauseWith{\concat} k_i \mid c_i = c) \desugar \kappa_{c}
    &
    \text{(\localref{constr-inversion})}
    \notag
