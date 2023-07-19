@@ -50,7 +50,7 @@
          \seq{v}, \seq{k} \match \gamma, s
       }
       {
-         v \cons \seq{v}, \seq{x} \clauseWith{\cons} \seq{k}
+         v \cons \seq{v}, \seq{x \clauseWith{\cons} k}
          \match
          \set{\bind{x}{v}} \disjunion \gamma, s
       }
@@ -89,9 +89,7 @@
       }
       {
          \exConstr{c}{\seq{v}} \cons \seq{v}',
-         \seq{\pattConstr{c}{\pi}}
-         \clauseWith{\cons}
-         \seq{k}
+         \seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}
          \match
          \gamma, s
       }
