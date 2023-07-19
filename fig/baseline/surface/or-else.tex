@@ -53,13 +53,12 @@
       {
          \pi \clauseWith{\concat} k, s
          \orElse
-         \seqRange{\pi_1 \clauseWith{\concat} k_1}
-                  {\pi_j \clauseWith{\concat} k_j}
+         \seq{\pi \clauseWith{\concat} k}
          \\
-         k'_i =
-         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s})
-         \quad
-         (\forall i \numleq \length{\seq{c}})
+         \seq{k}' =
+         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s}
+         \mid
+         i \numleq \length{\seq{c}})
       }
       {
          \pattConstr{c}{\pi} \clauseWith{\cons} k, s
