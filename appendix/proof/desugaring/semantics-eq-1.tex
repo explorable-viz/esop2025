@@ -595,6 +595,52 @@ By induction on derivation of $\evalSugS$.
    }
    &
    \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+         {
+            s \desugar e
+            \\
+            \exListComp{s'}{\seq{q}} \desugar e'
+            \\
+            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+         }
+         {
+            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma', e \evalS \cFalse
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \cFalse, \sigma \match \emptyset, \exNil
+   &
+   \text{$\match$}
+   \notag
+   \\
+   &
+   \gamma', \seqEmpty \closeDefs \seqEmpty
+   &
+   \text{$\closeDefs$}
+   \notag
+   \\
+   &
+   \gamma', \exNil \evalS \exNil
+   &
+   \text{$\evalS$}
+   \notag
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
