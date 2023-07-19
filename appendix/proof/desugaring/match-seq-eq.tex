@@ -425,18 +425,17 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            left={\ruleName{$\desugar$-clauses-constr}},
-            right={$\forall i \numleq j.\datatype{c_i} = D$}
+            left={\ruleName{$\desugar$-clauses-constr}}
          ]
          {
-            ((\pi_i \concat \pi_i', k_i) \mid c_i = c') \desugar \kappa_{c'}
-            \\
+            (\pi_i \clauseWith{\concat} k_i \mid c_i = c') \desugar \kappa_{c'}
+            \quad
             (\forall c' \in \set{\seq{c}})
+            \\
+            \forall c' \in \set{\seq{c}}.\datatype{c'} = D
          }
          {
-            \seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi_1', k_1)}
-                     {(\pattConstr{c_j}{\pi_j} \cons \pi_j', k_j)}
-            \\
+            \seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}
             \desugar
             \elimConstr{\elimBind{c'}{\kappa_{c'}} \mid c' \in \set{\seq{c}}}
             \Lowlight{\;= \kappa}
