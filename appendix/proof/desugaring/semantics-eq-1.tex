@@ -494,11 +494,13 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   v', \sigma \match \gamma^\ddagger
+   v', \sigma \match \gamma^\ddagger, e^\dag
    \textit{ with }
    \gamma^\dag \desugar \gamma^\ddagger
+   \opAnd 
+   s^\dag \desugar e^\dag
    \quad
-   (\exists \gamma^\ddagger)
+   (\exists \gamma^\ddagger, e^\dag)
    &
    \text{\lemref{match-eq}}
    \notag
@@ -511,6 +513,48 @@ By induction on derivation of $\evalSugS$.
    (\exists \gamma')
    &
    \text{$\evalS$}
+   \notag
+   \\
+   &
+   \gamma', \seqEmpty \closeDefs \seqEmpty
+   &
+   \text{$\closeDefs$}
+   \notag
+   \\
+   &
+   \gamma' \concat \seqEmpty \concat \gamma^\ddagger, e^\dag \evalS u^\dag
+   \textit{ with }
+   u \desugar u^\dag
+   \quad
+   (\exists u^\dag)
+   &
+   \text{(IH)}
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3.3in,
+         ]
+         {
+            \gamma, (e, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
+            \\
+            \gamma', \seqEmpty \closeDefs \seqEmpty
+            \\
+            v', \sigma \match \gamma^\ddagger, e^\dag
+            \\
+            \gamma' \concat \seqEmpty \concat \gamma^\ddagger, e^\dag \evalSugS u^\dag
+         }
+         {
+            \gamma, \exApp{e}{e'}
+            \evalSugS
+            u^\dag
+         }
+      \end{smathpar}
+   }
+   &
    \notag
    \\
    \intertext{\crossrule}
