@@ -713,11 +713,55 @@ By induction on derivation of $\evalSugS$.
    \gamma', e \evalS \cTrue
    &
    \text{(IH)}
+   \notag
    \\
    &
    \cTrue, \sigma \match \emptyset, e'
    &
+   \text{$\match$}
    \notag
    \\
+   &
+   \gamma', e' \evalS v'
+   \textit{ with }
+   v \desugar v'
+   \quad
+   (\exists v')
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \gamma, \seqEmpty \closeDefs \emptyset
+   &
+   \text{$\closeDefs$}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3.3in,
+         ]
+         {
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
+            \\
+            \gamma', \seqEmpty \closeDefs \emptyset
+            \\
+            \cTrue, \sigma \match \emptyset, e'
+            \\
+            \gamma' \concat \emptyset \concat \emptyset, e' \evalSugS v'
+         }
+         {
+            \gamma', \exApp{\exFun{\sigma}}{\cTrue}
+            \evalSugS
+            v'
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}
