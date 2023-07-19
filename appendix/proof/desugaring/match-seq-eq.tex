@@ -207,13 +207,13 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
             left={\ruleName{$\match$-var}}
           ]
           {
-             \seq{u}', (\seqRange{(\pi_1, k_1)}{(\pi_j, k_j)})
+             \seq{u}', \seq{k}
              \match \gamma^\dagger, s
           }
           {
              \Lowlight{\seq{u} =\;}
-             u \cons \seq{u}', (\seqRange{(\pattVar{x} \cons \pi_1, k_1)}
-                                         {(\pattVar{x} \cons \pi_j, k_j)})
+             u \cons \seq{u}',
+             \seqRange{(\pattVar{x} \clauseWith{\cons} k_1)}{(\pattVar{x} \clauseWith{\cons} k_j)}
              \match
              \set{\bind{x}{v}} \disjunion \gamma^\dagger\Lowlight{\;= \gamma}, s
           }
@@ -229,10 +229,10 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
             left={\ruleName{$\desugar$-clauses-var}}
          ]
          {
-            \seqRange{(\pi_1, k_1)}{(\pi_j, k_j)} \desugar \kappa'
+            \seq{k} \desugar \kappa'
          }
          {
-            \seqRange{(\pattVar{x} \cons \pi_1, k_1)}{(\pattVar{x} \cons \pi_j, k_j)}
+            \seqRange{(\pattVar{x} \clauseWith{\cons} k_1)}{(\pattVar{x} \clauseWith{\cons} k_j)}
             \desugar
             (\elimVar{x}{\kappa'})\Lowlight{\,= \kappa}
          }
