@@ -641,6 +641,32 @@ By induction on derivation of $\evalSugS$.
    \text{$\evalS$}
    \notag
    \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3.3in,
+         ]
+         {
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
+            \\
+            \gamma', \seqEmpty \closeDefs \seqEmpty
+            \\
+            \cFalse, \sigma \match \emptyset, \exNil
+            \\
+            \gamma' \concat \seqEmpty \concat \seqEmpty, \exNil \evalSugS \exNil
+         }
+         {
+            \gamma', \exApp{\exFun{\sigma}}{\cFalse}
+            \evalSugS
+            \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
