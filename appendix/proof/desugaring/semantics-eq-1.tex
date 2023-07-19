@@ -686,6 +686,33 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+         {
+            s \desugar e
+            \\
+            \exListComp{s'}{\seq{q}} \desugar e'
+            \\
+            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+         }
+         {
+            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \gamma', e \evalS \cTrue
+   &
+   \text{(IH)}
    \\
 \end{flalign}
 \end{proof}
