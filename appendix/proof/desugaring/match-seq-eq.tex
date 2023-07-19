@@ -322,12 +322,11 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
             left={\ruleName{$\desugar$-clauses-record}}
          ]
          {
-            \seqRange{(\seq{p_1} \concat \pi_1, k_1)}{(\seq{p_j} \concat \pi_j, k_j)} \desugar \kappa'
+            (\seqRange{\seq{p_1}}{\seq{p_j}}) \clauseWith{\concat} \seq{k} \desugar \kappa'
          }
          {
-            \seqRange{(\pattRecord{\seq{\bind{x}{p_1}}} \cons \pi_1, k_1)}
-                     {(\pattRecord{\seq{\bind{x}{p_j}}} \cons \pi_j, k_j)}
-            \\
+            (\seqRange{\pattRecord{\seq{\bind{x}{p_1}}}}{\pattRecord{\seq{\bind{x}{p_j}}}})
+            \clauseWith{\cons} \seq{k}
             \desugar
             (\elimRecord{\seq{x}}{\kappa'})
             \Lowlight{\;= \kappa}
