@@ -406,14 +406,13 @@ $\match$ derivation. We omit the proof of the $\impliedby$ direction of part (1)
          ]
          {
             \seq{u}^\dagger \concat \seq{u}',
-            ((\pi_i \concat \pi'_i, k_i) \mid c_i = c)
+            (\pi_i \clauseWith{\concat} k_i \mid c_i = c)
             \match \gamma, s
          }
          {
             \Lowlight{\seq{u} =\;}
             \exConstr{c}{\seq{u}^\dagger} \cons \seq{u}',
-            (\seqRange{(\pattConstr{c_1}{\pi_1} \cons \pi'_1, k_1)}
-                      {(\pattConstr{c_j}{\pi_j} \cons \pi'_j, k_j)})
+            \seq{(\pattConstr{c}{\pi} \clauseWith{\cons} k)}
             \match
             \gamma, s
          }
