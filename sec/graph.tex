@@ -49,8 +49,8 @@ We will see later how the definition of a neighbourhood can be used to define a 
 \begin{definition}[Sources and Sinks]
    For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
    \begin{itemize}
-      \item $S(G) \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
-      \item $T(G) \eqdef S(G^{-1})$
+      \item $\sources(G) \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
+      \item $\sinks(G) \eqdef \sources(G^{-1})$
    \end{itemize}
 \end{definition}
 
@@ -63,14 +63,14 @@ We will see later how the definition of a neighbourhood can be used to define a 
 \end{definition}
 We characterize slicing with 2 functions, parameterized by the graph $G$, of the following types:
 \begin{itemize}
-   \item $\bwdSliceR{G} \;:\; \powerset{S(G)} \to \powerset{T(G)}$
-   \item $\fwdSliceR{G} \;:\; \powerset{T(G)} \to \powerset{S(G)}$
+   \item $\bwdSliceR{G} \;:\; \powerset{\sources(G)} \to \powerset{\sinks(G)}$
+   \item $\fwdSliceR{G} \;:\; \powerset{\sinks(G)} \to \powerset{\sources(G)}$
 \end{itemize}
 Intuitively, the backwards slicing relation $\bwdSliceR{G}$, when given a set of outputs of interest computes
 the subgraph of the computation that contains only the nodes necessary for the computation of those outputs.
 More formally:
 \begin{definition}[Backwards Slicing]
-   For dependence graph $G = (V,E)$ and set of sinks $V_{out} \subseteq \powerset{S(G)}$, define the
+   For dependence graph $G = (V,E)$ and set of sinks $V_{out} \subseteq \powerset{\sources(G)}$, define the
    \emph{backward slice} $\bwdSliceS_{G}(V_{out})$ with respect to $V_{out}$ to be the set of sources $V' =
    \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \in E \mid v,v' \in V'}$
 \end{definition}
@@ -81,13 +81,13 @@ internal and output nodes that the input nodes are sufficient to compute. Formal
 \begin{definition}[Forwards Slicing]
    For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subseteq V$, we write $G[V_{in}]\fwdSliceR{G} G'$ to mean that
    $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
-   $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
+   $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd \sinks(G'') \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
 \end{definition}
 
 \begin{lemma}[De Morgan dual of Forward Slice]
-   For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
-   of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
-   result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain
+   For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq \sinks(G)$, we consider the complement
+   of $V_{in}$ w.r.t $\sinks(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
+   result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $\sources(G)$, we obtain
    a forward slice with respect to $V_{in}$:
    $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
 \end{lemma}
