@@ -72,7 +72,7 @@ We characterize slicing with 2 functions, parameterized by the graph $G$, of the
 Intuitively, the backward slicing function $\bwdSliceR{G}$, for a set of outputs of interest, computes just
 the inputs needed for those outputs. More formally:
 
-\begin{definition}[Backward Slicing]
+\begin{definition}[Backward slice]
    For dependence graph $G$ and set of sources $V \subseteq \powerset{\sources{G}}$, define the
    \emph{backward slice} $\bwdSliceR{G}(V)$ with respect to $V$ to be the set of sinks $\set{v
    \in \sinks{G} \mid \exists v' \in V.\;\pathIn{G}(v', v)}$.
@@ -80,9 +80,9 @@ the inputs needed for those outputs. More formally:
 
 For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes just the output nodes
 for which those inputs are sufficient. Formally:
-\begin{definition}[Forward Slicing]
+\begin{definition}[Forward slice]
    For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define $\fwdSliceR{G}(V)$ to
-   be the set of sources $\set{v \in \sources{G} \mid \bwdSliceR{G}(\set{v}) \subseteq V$.
+   be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v}) \subseteq V}$.
 \end{definition}
 
 \begin{definition}[Forward Slicing algorithm]
