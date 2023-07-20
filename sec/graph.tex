@@ -78,19 +78,21 @@ needed for those outputs. More formally:
 
 \begin{definition}[Backward slice]
    For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
-   ${\bwdSliceR{G}}(V)$ with respect to $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
+   ${\bwdSliceR{G}}(V)$ of $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
    V.\;\pathIn{G}(v', v)}$.
 \end{definition}
 
 For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes the set of outputs for
 which those inputs are sufficient. Formally:
 \begin{definition}[Forward slice]
-   For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define ${\fwdSliceR{G}}(V)$ to be the set of sources
-   $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v}) \subseteq V}$.
+   For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
+   ${\fwdSliceR{G}}(V)$ of $V$ to be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v})
+   \subseteq V}$.
 \end{definition}
 
 \begin{lemma}[Adjointness of ${\fwdSliceR{G}}$ and $\bwdSliceR{G}$]
-   \item $U \subseteq {\fwdSliceR{G}}(V) \iff {\bwdSliceR{G}}(U) \subseteq V$
+   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\fwdSliceR{G}}(V)
+   \iff {\bwdSliceR{G}}(U) \subseteq V$.
 \end{lemma}
 
 \begin{definition}[Forward slicing algorithm]
@@ -98,7 +100,7 @@ which those inputs are sufficient. Formally:
 \end{definition}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-   For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\fwdSliceR{G} G'$. Then $\sources{G'} = {\fwdSliceR{G}}(V)$.
+   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\fwdSliceR{G} G'$. Then $\sources{G'} = {\fwdSliceR{G}}(V)$.
 \end{theorem}
 
 \begin{theorem}[De Morgan dual of forward slice]
