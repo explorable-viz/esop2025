@@ -74,7 +74,7 @@ the inputs needed for those outputs. More formally:
 
 \begin{definition}[Backward Slicing]
    For dependence graph $G$ and set of sources $V \subseteq \powerset{\sources{G}}$, define the
-   \emph{backward slice} $\bwdSliceS_{G}(V)$ with respect to $V$ to be the set of sinks $\set{v
+   \emph{backward slice} $\bwdSliceR{G}(V)$ with respect to $V$ to be the set of sinks $\set{v
    \in \sinks{G} \mid \exists v' \in V.\;\pathIn{G}(v', v)}$.
 \end{definition}
 
@@ -82,8 +82,7 @@ For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ co
 for which those inputs are sufficient. Formally:
 \begin{definition}[Forward Slicing]
    For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define
-   $G[V_{in}]\fwdSliceR{G} G'$ to mean that $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G'
-   = (V', E')$ where we  define $V'$ as: $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
+   $\fwdSliceR{G}(V)$ to be the set of sources $\set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
    \sinks{G''} \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
 \end{definition}
 
@@ -108,7 +107,7 @@ its neighbourhood to the current slice, then we add the new nodes neighbours to 
 We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
 us grow the slice without considering each node in the graph $\length{V}$ times.
 
-\begin{definition}[Forward Slicing (Efficient Version)]
+\begin{definition}[Forward Slicing algorithm (efficient version)]
    TODO
 \end{definition}
 % A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
