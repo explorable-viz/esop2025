@@ -540,5 +540,24 @@ By induction on derivation of $\evalSugS$
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
+            \\
+            \cFalse, \sigma \match \envEmpty, \exNil
+            \\
+            \gamma', \exNil \evalS \exNil
+         }
+         {
+            \gamma', \exApp{\exFun{\sigma}}{\cFalse} \evalS \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
 \end{flalign}
 \end{proof}
