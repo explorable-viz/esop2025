@@ -63,6 +63,8 @@ We will see later how the definition of a neighbourhood can be used to define a 
    $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
 \end{definition}
 
+\subsection{Galois slicing over dependence graphs}
+
 We characterize slicing with 2 functions, parameterized by the graph $G$, of the following types:
 \begin{itemize}
    \item $\bwdSliceR{G} \;:\; \powerset{\sources{G}} \to \powerset{\sinks{G}}$
@@ -85,14 +87,14 @@ for which those inputs are sufficient. Formally:
    be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v}) \subseteq V}$.
 \end{definition}
 
-\begin{definition}[Forward Slicing algorithm]
+\begin{definition}[Forward slicing algorithm]
    For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define
    $G[V_{in}]\fwdSliceR{G} G'$ to mean that $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G'
    = (V', E')$ where we  define $V'$ as: $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
    \sinks{G''} \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
 \end{definition}
 
-\begin{lemma}[De Morgan dual of Forward Slice]
+\begin{lemma}[De Morgan dual of forward slice]
    For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq \sinks{G}$, we consider the complement
    of $V_{in}$ w.r.t $\sinks{G}$, then if we backwards slice in $G^{-1}$, and take the complement of the
    result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $\sources{G}$, we obtain
@@ -106,18 +108,18 @@ its neighbourhood to the current slice, then we add the new nodes neighbours to 
 We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
 us grow the slice without considering each node in the graph $\length{V}$ times.
 
-\begin{definition}[Forward Slicing algorithm (efficient version)]
+\begin{definition}[Forward slicing algorithm (efficient version)]
    TODO
 \end{definition}
 % A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
 % check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not,
 % leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
+
+\input{fig/graph/slicing}
+
+\clearpage
 \subsection{Core language (dependence graph formulation)}
 
 \input{fig/graph/core/syntax}
 \input{fig/graph/core/eval}
 \input{fig/graph/core/match}
-
-\subsection{Galois slicing over dependence graphs}
-
-\input{fig/graph/slicing}
