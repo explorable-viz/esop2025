@@ -95,7 +95,7 @@ for which those inputs are sufficient. Formally:
 \end{definition}
 
 \begin{lemma}[De Morgan dual of forward slice]
-   $\fwdSliceR{G}(V_{in}) = \bwdSliceR{G^{-1}}(V_{in}^c)^{c}$
+   ${\fwdSliceR{G}}(V) = ({\bwdSliceR{G^{-1}}}(V^c))^{c}$
 \end{lemma}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
@@ -107,9 +107,6 @@ us grow the slice without considering each node in the graph $\length{V}$ times.
 \begin{definition}[Forward slicing algorithm (efficient version)]
    TODO
 \end{definition}
-% A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
-% check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not,
-% leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
 
 \input{fig/graph/slicing}
 
