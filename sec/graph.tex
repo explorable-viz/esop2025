@@ -72,7 +72,7 @@ We characterize slicing with 2 functions, parameterized by the graph $G$, of the
 Intuitively, the backward slicing function $\bwdSliceR{G}$, for a set of outputs of interest, computes just
 the inputs needed for those outputs. More formally:
 
-\begin{definition}[Backwards Slicing]
+\begin{definition}[Backward Slicing]
    For dependence graph $G$ and set of sources $V \subseteq \powerset{\sources{G}}$, define the
    \emph{backward slice} $\bwdSliceS_{G}(V)$ with respect to $V$ to be the set of sinks $\set{v
    \in \sinks{G} \mid \exists v' \in V.\;\pathIn{G}(v', v)}$.
@@ -80,8 +80,15 @@ the inputs needed for those outputs. More formally:
 
 For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes just the output nodes
 for which those inputs are sufficient. Formally:
-\begin{definition}[Forwards Slicing]
-   For dependence graph $G$ and set of slinks $V \subseteq \powerset{\sinks{G}}$, define
+\begin{definition}[Forward Slicing]
+   For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define
+   $G[V_{in}]\fwdSliceR{G} G'$ to mean that $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G'
+   = (V', E')$ where we  define $V'$ as: $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
+   \sinks{G''} \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
+\end{definition}
+
+\begin{definition}[Forward Slicing algorithm]
+   For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define
    $G[V_{in}]\fwdSliceR{G} G'$ to mean that $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G'
    = (V', E')$ where we  define $V'$ as: $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
    \sinks{G''} \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
