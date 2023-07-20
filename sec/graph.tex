@@ -69,9 +69,8 @@ We characterize slicing with 2 functions, parameterized by the graph $G$, of the
    \item $\fwdSliceR{G} \;:\; \powerset{\sinks{G}} \to \powerset{\sources{G}}$
 \end{itemize}
 
-Intuitively, the backwards slicing relation $\bwdSliceR{G}$, when given a set of outputs of interest computes
-the subgraph of the computation that contains only the nodes necessary for the computation of those outputs.
-More formally:
+Intuitively, the backward slicing function $\bwdSliceR{G}$, for a set of outputs of interest, computes just
+the inputs needed for those outputs. More formally:
 
 \begin{definition}[Backwards Slicing]
    For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sources{G}}$, define the
@@ -79,9 +78,8 @@ More formally:
    \in \sinks{G} \mid \exists v' \in V.\;\pathIn{G}(v', v)}$.
 \end{definition}
 
-We analogously use $\fwdSliceR{G}$ to denote the forward slicing relation. In contrast to backwards
-slicing, we provide the forward slicing relation with a set of input nodes, and compute the set of
-internal and output nodes that the input nodes are sufficient to compute. Formally:
+For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes just the output nodes
+for which those inputs are sufficient. Formally:
 \begin{definition}[Forwards Slicing]
    For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subseteq V$, we write $G[V_{in}]\fwdSliceR{G} G'$ to mean that
    $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
