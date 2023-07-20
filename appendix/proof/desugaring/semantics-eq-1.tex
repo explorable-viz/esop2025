@@ -539,7 +539,7 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', (e, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
             \\
             \gamma', \seqEmpty \closeDefs \emptyset
             \\
@@ -548,7 +548,7 @@ By induction on derivation of $\evalSugS$.
             \gamma' \concat \emptyset \concat \gamma^\ddagger, e^\dag \evalSugS u^\dag
          }
          {
-            \gamma', \exApp{e}{e'}
+            \gamma', \exApp{\exFun{\sigma}}{e}
             \evalSugS
             u^\dag
          }
