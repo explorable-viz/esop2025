@@ -443,5 +443,24 @@ By induction on derivation of $\evalSugS$
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma', (e, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
+            \\
+            v', \sigma \match \gamma^\ddagger, e^\dag
+            \\
+            \gamma' \concat \gamma^\ddagger, e^\dag \evalS u^\dag
+         }
+         {
+            \gamma', \exApp{e}{e'} \evalS u^\dag
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
 \end{flalign}
 \end{proof}
