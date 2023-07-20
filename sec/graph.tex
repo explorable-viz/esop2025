@@ -81,9 +81,8 @@ the inputs needed for those outputs. More formally:
 For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes just the output nodes
 for which those inputs are sufficient. Formally:
 \begin{definition}[Forward Slicing]
-   For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define
-   $\fwdSliceR{G}(V)$ to be the set of sources $\set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd
-   \sinks{G''} \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
+   For dependence graph $G$ and set of sinks $V \subseteq \powerset{\sinks{G}}$, define $\fwdSliceR{G}(V)$ to
+   be the set of sources $\set{v \in \sources{G} \mid \bwdSliceR{G}(\set{v}) \subseteq V$.
 \end{definition}
 
 \begin{definition}[Forward Slicing algorithm]
