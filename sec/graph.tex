@@ -95,11 +95,7 @@ for which those inputs are sufficient. Formally:
 \end{definition}
 
 \begin{lemma}[De Morgan dual of forward slice]
-   For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq \sinks{G}$, we consider the complement
-   of $V_{in}$ w.r.t $\sinks{G}$, then if we backwards slice in $G^{-1}$, and take the complement of the
-   result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $\sources{G}$, we obtain
-   a forward slice with respect to $V_{in}$:
-   $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
+   $\fwdSliceR{G}(V_{in}) = \bwdSliceR{G^{-1}}(V_{in}^c)^{c}$
 \end{lemma}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
