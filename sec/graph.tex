@@ -57,18 +57,22 @@ We will see later how the definition of a neighbourhood can be used to define a 
 \begin{definition}[Subgraph]
    We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \end{definition}
+
 \begin{definition}[Subgraph Extension]
    For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
    $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
 \end{definition}
+
 We characterize slicing with 2 functions, parameterized by the graph $G$, of the following types:
 \begin{itemize}
    \item $\bwdSliceR{G} \;:\; \powerset{\sources{G}} \to \powerset{\sinks{G}}$
    \item $\fwdSliceR{G} \;:\; \powerset{\sinks{G}} \to \powerset{\sources{G}}$
 \end{itemize}
+
 Intuitively, the backwards slicing relation $\bwdSliceR{G}$, when given a set of outputs of interest computes
 the subgraph of the computation that contains only the nodes necessary for the computation of those outputs.
 More formally:
+
 \begin{definition}[Backwards Slicing]
    For dependence graph $G = (V,E)$ and set of sinks $V_{out} \subseteq \powerset{\sources{G}}$, define the
    \emph{backward slice} $\bwdSliceS_{G}(V_{out})$ with respect to $V_{out}$ to be the set of sources $\set{v
