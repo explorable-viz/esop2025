@@ -70,7 +70,7 @@ Intuitively, the backwards slicing relation $\bwdSliceR{G}$, when given a set of
 the subgraph of the computation that contains only the nodes necessary for the computation of those outputs.
 More formally:
 \begin{definition}[Backwards Slicing (Graph)]
-   For a dependence graph $G = (V,E)$, and a set of output nodes $V_{out} \subseteq V$, we write $V_{out}, G \bwdSliceS G'$ to mean
+   For a dependence graph $G = (V,E)$, and a set of output nodes $V_{out} \subseteq \powerset{S(G)}$, we write $V_{out}, G \bwdSliceS G'$ to mean
    that $G'$ is the slice of $G$ with respect to $V_{out}$, defined as
    $G' = (V', E')$ where $V' = \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \in E \mid v,v' \in V'}$
 \end{definition}
