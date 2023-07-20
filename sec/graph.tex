@@ -20,7 +20,7 @@ $G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{ad
 \end{definition}
 
 \begin{definition}[Path]
-   For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $P_G(v, v')$, to mean that there is a
+   For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $\pathIn{G}(v, v')$, to mean that there is a
    \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
    or that $(v, v') \in E$.
 \end{definition}
@@ -49,48 +49,63 @@ We will see later how the definition of a neighbourhood can be used to define a 
 \begin{definition}[Sources and Sinks]
    For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
    \begin{itemize}
-      \item $S(G) \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
-      \item $T(G) \eqdef S(G^{-1})$
+      \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
+      \item $\sinks{G} \eqdef \sources{G^{-1}}$
    \end{itemize}
 \end{definition}
 
 \begin{definition}[Subgraph]
    We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \end{definition}
+
 \begin{definition}[Subgraph Extension]
    For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
    $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
 \end{definition}
-We characterize slicing with 2 functions/relations, parameterized by the graph $G$, of the following types:
+
+\subsection{Galois slicing over dependence graphs}
+
+Fix a dependence graph $G$.
+
+We characterize slicing over $G$ with 2 functions of the following types:
 \begin{itemize}
-   \item $\bwdSliceR{G} \;:\; \powerset{S(G)} \to \powerset{T(G)}$
-   \item $\fwdSliceR{G} \;:\; \powerset{T(G)} \to \powerset{S(G)}$
+   \item $\bwdSliceR{G} \;:\; \powerset{\sources{G}} \to \powerset{\sinks{G}}$
+   \item $\fwdSliceR{G} \;:\; \powerset{\sinks{G}} \to \powerset{\sources{G}}$
 \end{itemize}
-We use $\bwdSliceR{G}$ to denote the backwards slicing relation. Intuitively, the relation
-$\bwdSliceR{G}$, when given a set of outputs of interest computes the subgraph of the computation that
-contains only the nodes necessary for the computation of those outputs. More formally:
-\begin{definition}[Backwards Slicing (Graph)]
-   For a dependence graph $G = (V,E)$, and a set of output nodes $V_{out} \subseteq V$, we write $V_{out}, G \bwdSliceS G'$ to mean
-   that $G'$ is the slice of $G$ with respect to $V_{out}$, defined as
-   $G' = (V', E')$ where $V' = \set{v \in V \mid \exists v' \in V_{out}.\;P_G(v', v)}$ and $E' = \set{(v,v') \in E \mid v,v' \in V'}$
+
+For a set of outputs of interest, the backward slicing function $\bwdSliceR{G}$ computes just the inputs
+needed for those outputs. More formally:
+
+\begin{definition}[Backward slice]
+   For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
+   ${\bwdSliceR{G}}(V)$ of $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
+   V.\;\pathIn{G}(v', v)}$.
 \end{definition}
 
-We analogously use $\fwdSliceR{G}$ to denote the forward slicing relation. In contrast to backwards
-slicing, we provide the forward slicing relation with a set of input nodes, and compute the set of
-internal and output nodes that the input nodes are sufficient to compute. Formally:
-\begin{definition}[Forwards Slicing (Graph)]
-   For a dependence graph $G = (V,E)$, and a set of input nodes $V_{in} \subseteq V$, we write $G[V_{in}]\fwdSliceR{G} G'$ to mean that
-   $G'$ is the slice of $G$ with respect to $V_{in}$, defined as $G' = (V', E')$ where we  define $V'$ as:
-   $V' = \set{v \in V \mid  G[\set{v}]\bwdSliceR{G} G'' \opAnd T(G'') \subseteq V_{in}}$ and $E' = \set{(v,v')  \in E \mid v,v' \in V'}$.
+For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes the set of outputs for
+which those inputs are sufficient. Formally:
+\begin{definition}[Forward slice]
+   For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
+   ${\fwdSliceR{G}}(V)$ of $V$ to be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v})
+   \subseteq V}$.
 \end{definition}
 
-\begin{lemma}[De Morgan dual of Forward Slice]
-   For a dependence graph $G = (V,E)$ and a given set of inputs, $V_{in} \subseteq T(G)$, we consider the complement
-   of $V_{in}$ w.r.t $T(G)$, then if we backwards slice in $G^{-1}$, and take the complement of the
-   result $\bwdSliceR{G^{-1}}(V_{in}^c)$ w.r.t $S(G)$, we obtain
-   a forward slice with respect to $V_{in}$:
-   $$\fwdSliceR{G}(V_{in}) = (\bwdSliceR{G^{-1}}(V_{in}^c))^{c}$$
+\begin{lemma}[Adjointness of ${\fwdSliceR{G}}$ and $\bwdSliceR{G}$]
+   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\fwdSliceR{G}}(V)
+   \iff {\bwdSliceR{G}}(U) \subseteq V$.
 \end{lemma}
+
+\begin{definition}[Forward slicing algorithm]
+   \figref{graph:slicing} defines the forward slicing relation $\fwdSliceR{G}$.
+\end{definition}
+
+\begin{theorem}[Correctness of forward slicing algorithm]
+   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\fwdSliceR{G} G'$. Then $\sources{G'} = {\fwdSliceR{G}}(V)$.
+\end{theorem}
+
+\begin{theorem}[De Morgan dual of forward slice]
+   ${\fwdSliceR{G}}(V) = ({\bwdSliceR{G^{-1}}}(V^c))^{c}$
+\end{theorem}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
 Informally, we start with our subgraph, then we only consider its neighbourhood. If we can add a new node from
@@ -98,18 +113,15 @@ its neighbourhood to the current slice, then we add the new nodes neighbours to 
 We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
 us grow the slice without considering each node in the graph $\length{V}$ times.
 
-\begin{definition}[Forward Slicing (Efficient Version)]
+\begin{definition}[Forward slicing algorithm (efficient version)]
    TODO
 \end{definition}
-% A sketch of the efficient algorithm, start with the input set, for every node in the neighbourhood of the set
-% check if all of it's predecessors are in the active set, and if they are, add it to the active set, if not,
-% leave it in the pending set. if no new nodes from the pending set can be added, end and return the active set
+
+\input{fig/graph/slicing}
+
+\clearpage
 \subsection{Core language (dependence graph formulation)}
 
 \input{fig/graph/core/syntax}
 \input{fig/graph/core/eval}
 \input{fig/graph/core/match}
-
-\subsection{Galois slicing over dependence graphs}
-
-\input{fig/graph/slicing}
