@@ -648,5 +648,40 @@ By induction on derivation of $\evalSugS$
    \text{inversion}
    \notag
    \\
+   &
+   \gamma, s \evalSugS \cTrue
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \gamma, \exListComp{s'}{\seq{q}} \evalS v
+   \textit{ with }
+   v \desugar v'
+   (\exists v)
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-true}}
+         ]
+         {
+            \gamma, s \evalSugS \cTrue
+            \\
+            \gamma, \exListComp{s'}{\seq{q}} \evalSugS v
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cdot \seq{q}} \evalSugS v
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
 \end{flalign}
 \end{proof}
