@@ -381,5 +381,67 @@ By induction on derivation of $\evalSugS$
    }
    &
    \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma', e \evalS v' 
+         }
+         {
+            \gamma', \exApp{\cCons}{(e, \exNil)} \evalS \exApp{\cCons}{(v', \exNil)}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            s \desugar e
+         }
+         {
+            \exListComp{s}{\seqEmpty} \desugar \exApp{\cCons}{(e, \exNil)}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma, s \evalSugS v
+   \textit{ with }
+   v \desugar v'
+   \quad
+   (\exists v)
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma, s \evalSugS v
+         }
+         {
+            \gamma, \exApp{\cCons}{(s, \exNil)} \evalSugS \gamma, \exApp{\cCons}{(v, \exNil)}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{flalign}
 \end{proof}
