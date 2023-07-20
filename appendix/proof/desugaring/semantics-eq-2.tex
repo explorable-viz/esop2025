@@ -387,7 +387,9 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*
+         \inferrule*[
+            lab={\ruleName{$\evalS$-Cons}}
+         ]
          {
             \gamma', e \evalS v' 
          }
@@ -402,7 +404,9 @@ By induction on derivation of $\evalSugS$
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*
+         \inferrule*[
+            lab={\ruleName{$\desugar$-listcomp-done}}
+         ]
          {
             s \desugar e
          }
@@ -446,7 +450,9 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*
+         \inferrule*[
+            lab={\ruleName{$\evalS$-listcomp-decl}}
+         ]
          {
             \gamma', (\exFun{\sigma}, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
             \\
@@ -462,5 +468,77 @@ By induction on derivation of $\evalSugS$
    &
    \notag
    \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\desugar$-app}},
+            width=3.3in,
+         ]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         }
+         {
+            (\exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}) \desugar \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \gamma, s \evalSugS u'
+   \textit{ with }
+   u' \desugar v'
+   \quad
+   (\exists u')
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   u', (\clause{p}{\exListComp{s'}{\seq{q}}}) \match \gamma^\dag, s^\dag
+   \textit{ with }
+   \gamma^\dag \desugar \gamma^\ddagger
+   \opAnd
+   s^\dag \desugar e^\dag
+   \quad
+   (\exists \gamma^\dag, s^\dag)
+   &
+   \text{\lemref{match-eq}}
+   \notag
+   \\
+   &
+   \gamma \concat \gamma^\dag, s^\dag \evalSugS v^\dag
+   \textit{ with }
+   v^\dag \desugar u^\dag
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \gamma, s \evalSugS u'
+            \\
+            u', (\clause{p}{\exListComp{s'}{\seq{q}}}) \match \gamma^\dag, s^\dag
+            \\
+            (\gamma \cdot \gamma^\dag), s^\dag \evalS v^\dag
+         }
+         {
+            \gamma, \exListComp{s'}{\qualDeclaration{p}{s} \cdot \seq{q}} \evalS v^\dag
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{flalign}
 \end{proof}
