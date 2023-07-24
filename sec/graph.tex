@@ -18,8 +18,9 @@ $G$ ranges over \emph{dependence graphs} $(V, E)$ with vertices $\alpha, \beta$.
 \end{definition}
 
 \begin{definition}[Reachable]
-   For any $G = (V,E)$ and pair of distinct vertices $\alpha, \beta \in V$, write $\pathIn{G}(\alpha,
-   \beta)$, to mean that $\exists \seq{v} \in V^+.\;\forall i < \length{\seq{v}}.\;(v_i,v_{i+1}) \in E$.
+   For any $G = (V,E)$ and pair of vertices $\alpha, \beta \in V$, write $\pathIn{G}(\alpha, \beta)$, to mean
+   there exists $\seq{\alpha}$ with $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where
+   $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
 
 \begin{definition}
