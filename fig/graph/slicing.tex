@@ -1,77 +1,77 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$V, G' \bwdSliceR{G} G^\twoPrime$}\hfill
+   {\small \flushleft \shadebox{$V, G' \consumesAlgR{G} G^\twoPrime$}\hfill
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\bwdSliceS$-done}}
+         lab={\ruleName{$\consumesAlgS$-done}}
       ]
       {
          \strut
       }
       {
-         \varnothing, G' \bwdSliceR{G} G'
+         \varnothing, G' \consumesAlgR{G} G'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdSliceS$-skip}},
+         lab={\ruleName{$\consumesAlgS$-skip}},
          right={$\alpha \in \V(G')$}
       ]
       {
-         V, G' \bwdSliceR{G} G^\twoPrime
+         V, G' \consumesAlgR{G} G^\twoPrime
       }
       {
-         \set{\alpha} \cup V, G' \bwdSliceR{G} G^\twoPrime
+         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdSliceS$-step}},
+         lab={\ruleName{$\consumesAlgS$-step}},
          right={$\alpha \notin \V(G')$}
       ]
       {
-         \V(\inN{G}(\alpha)), G' \disjunion \inN{G}(\alpha) \bwdSliceR{G} G^\dagger
+         \V(\inN{G}(\alpha)), G' \disjunion \inN{G}(\alpha) \consumesAlgR{G} G^\dagger
          \\
-         V, G^\dagger \bwdSliceR{G} G^\twoPrime
+         V, G^\dagger \consumesAlgR{G} G^\twoPrime
       }
       {
-         \set{\alpha} \cup V, G' \bwdSliceR{G} G^\twoPrime
+         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
       }
       %
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$G' \fwdSliceR{G} G^\twoPrime$}\hfill
+   {\small \flushleft \shadebox{$G' \producesAlgR{G} G^\twoPrime$}\hfill
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdSliceS$-done}},
+         lab={\ruleName{$\producesAlgS$-done}},
          right={$\nexists \alpha \in N(V).\; \outN{G}(\alpha) \subseteq V(G')$}
       ]
       {
          \strut
       }
       {
-         G' \fwdSliceR{G} G'
+         G' \producesAlgR{G} G'
       }
       % %
       % \and
       % %
       % \inferrule*[
-      %    lab={\ruleName{$\fwdSliceS$-skip}},
+      %    lab={\ruleName{$\producesAlgS$-skip}},
       %    right={$\alpha \in V(G')$}
       % ]
       % {
-      %    V, G' \fwdSliceR{G} G''
+      %    V, G' \producesAlgR{G} G''
       % }
       % {
-      %    \set{\alpha} \cup V, G' \fwdSliceR{G} G''
+      %    \set{\alpha} \cup V, G' \producesAlgR{G} G''
       % }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdSliceS$-next}},
+         lab={\ruleName{$\producesAlgS$-next}},
          right={$\alpha \notin V(G')$}
       ]
       {
@@ -79,10 +79,10 @@
          \\
          \outN{G}(\alpha) \subseteq V
          \\
-         G' \disjunion \set{\alpha} \fwdSliceR{G} G''
+         G' \disjunion \set{\alpha} \producesAlgR{G} G''
       }
       {
-         G' \fwdSliceR{G} G''
+         G' \producesAlgR{G} G''
       }
    \end{smathpar}}
    \caption{Backwards and Forwards slicing (graph formulation)}

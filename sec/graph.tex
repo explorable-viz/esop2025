@@ -78,24 +78,24 @@ of outputs that can be produced using only those inputs.
 \begin{definition}[Backward slice]
    For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
    $\producesF{G}(V)$ of $V$ to be the set of sources $\set{\alpha \in \sources{G} \mid
-   {\bwdSliceR{G}}(\set{\alpha}) \subseteq V}$.
+   \consumesF{G}(\set{\alpha}) \subseteq V}$.
 \end{definition}
 
-\begin{lemma}[Adjointness of ${\fwdSliceR{G}}$ and $\bwdSliceR{G}$]
-   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\fwdSliceR{G}}(V)
-   \iff {\bwdSliceR{G}}(U) \subseteq V$.
+\begin{lemma}[Adjointness of ${\producesAlgR{G}}$ and $\consumesAlgR{G}$]
+   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\producesAlgR{G}}(V)
+   \iff {\consumesAlgR{G}}(U) \subseteq V$.
 \end{lemma}
 
 \begin{definition}[Forward slicing algorithm]
-   \figref{graph:slicing} defines the forward slicing relation $\fwdSliceR{G}$.
+   \figref{graph:slicing} defines the forward slicing relation $\producesAlgR{G}$.
 \end{definition}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\fwdSliceR{G} G'$. Then $\sources{G'} = {\fwdSliceR{G}}(V)$.
+   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\producesAlgR{G} G'$. Then $\sources{G'} = {\producesAlgR{G}}(V)$.
 \end{theorem}
 
 \begin{theorem}[De Morgan dual of forward slice]
-   ${\fwdSliceR{G}}(V) = ({\bwdSliceR{G^{-1}}}(V^c))^{c}$
+   ${\producesAlgR{G}}(V) = ({\consumesAlgR{G^{-1}}}(V^c))^{c}$
 \end{theorem}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
@@ -103,10 +103,6 @@ Informally, we start with our subgraph, then we only consider its neighbourhood.
 its neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
 We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
 us grow the slice without considering each node in the graph $\length{V}$ times.
-
-\begin{definition}[Forward slicing algorithm (efficient version)]
-   TODO
-\end{definition}
 
 \input{fig/graph/slicing}
 
