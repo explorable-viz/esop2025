@@ -18,7 +18,7 @@ $G$ ranges over \emph{dependence graphs} $(V, E)$ with vertices $\alpha, \beta$.
 \end{definition}
 
 \begin{definition}[Reachable]
-   For any $G = (V,E)$ and pair of vertices $\alpha, \beta \in V$, write $\pathIn{G}(\alpha, \beta)$, to mean
+   For any $G = (V,E)$ and pair of vertices $\alpha, \beta \in V$, write $\reachable{G}(\alpha, \beta)$, to mean
    there exists $\seq{\alpha}$ with $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where
    $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
@@ -77,7 +77,7 @@ needed for those outputs. More formally:
 \begin{definition}[Backward slice]
    For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
    ${\bwdSliceR{G}}(V)$ of $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
-   V.\;\pathIn{G}(v', v)}$.
+   V.\;\reachable{G}(v', v)}$.
 \end{definition}
 
 For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes the set of outputs for
