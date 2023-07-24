@@ -14,13 +14,13 @@ $G$ ranges over \emph{dependence graphs} $(V, E)$ with vertices $\alpha, \beta$.
 \end{definition}
 \begin{definition}[Induced subgraph]
    For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
-   by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+   by $V'$, that is $G[V'] \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
 
 \begin{definition}[Path]
-   For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $\pathIn{G}(v, v')$, to mean that there is a
-   \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
-   or that $(v, v') \in E$.
+   For any $G = (V,E)$ and pair of vertices $\alpha, \beta \in V$, write $\pathIn{G}(\alpha, \beta)$, to
+   mean that there is a \textit{path} from $\alpha$ to $\alpha$ in $G$, meaning $\exists \seq{v} \in
+   V^*.\; (v_n,v_{n+1}) \in E$ with $v_0 = \alpha$ and $v_n = \beta$.
 \end{definition}
 
 \begin{definition}
