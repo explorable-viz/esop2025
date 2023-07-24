@@ -28,21 +28,21 @@ fix $G = (V, E)$.
    Define the \emph{in neighbours} and \emph{out neighbours} of $G$ as the following functions of type $V \to
    \powerset V$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) = \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
-      \item $\outN{G} = \inN{G^{-1}}$
+      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
+      \item $\outN{G} \eqdef \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
 We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
 \begin{definition}[Neighbourhoods]
    For any $V' \subseteq V$, define:
    \begin{itemize}
-      \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
-      \item $\outN{G}(V') = \inN{G^{-1}}(V')$
+      \item $\inN{G}(V') \eqdef \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
+      \item $\outN{G}(V') \eqdef \inN{G^{-1}}(V')$
    \end{itemize}
 \end{definition}
 
 \begin{definition}[Sources and Sinks]
-   For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
+   Define the \emph{sources} and \emph{sinks} of $G$ as:
    \begin{itemize}
       \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
       \item $\sinks{G} \eqdef \sources{G^{-1}}$
@@ -50,12 +50,11 @@ We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set o
 \end{definition}
 
 \begin{definition}[Subgraph]
-   We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
+   Write $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \end{definition}
 
 \begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
-   $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
+   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$.
 \end{definition}
 
 \subsection{Galois slicing over dependence graphs}
