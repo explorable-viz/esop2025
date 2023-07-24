@@ -95,11 +95,15 @@ of outputs that can be produced using only those inputs.
 \end{definition}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\producesAlgR{G} G'$. Then $\sources{G'} = {\producesAlgR{G}}(V)$.
+   Suppose $V \subseteq \powerset{\sinks{G}}$.
+   \begin{enumerate}
+      \item $\induced{G}{V} \producesAlgR{G} \producesF{G}(V)$.
+      \item If $\induced{G}{V} \producesAlgR{G} G'$ then $\sources{G'} = \producesF{G}(V)$.
+   \end{enumerate}
 \end{theorem}
 
 \begin{theorem}[De Morgan dual of forward slice]
-   ${\producesAlgR{G}}(V) = ({\consumesAlgR{G^{-1}}}(V^c))^{c}$
+   $\producesF{G}(V) = (\consumesF{G^{-1}}(V^c))^{c}$
 \end{theorem}
 
 We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
