@@ -14,19 +14,14 @@ fix $G = (V, E)$.
    of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.
 \end{definition}
 \begin{definition}[Induced subgraph]
-   For any $V' \subseteq V$, write $G[V']$ for the subgraph of $G$ induced by $V'$, that is $G[V'] \eqdef (V',
-   E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
+   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
 
 \begin{definition}[Reachable]
    For any pair of vertices $\alpha, \beta \in V$, write $\reachable{G}(\alpha, \beta)$, to mean there exists
    $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where $\seq{\beta}
    \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
-\end{definition}
-
-\begin{definition}
-   For any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha},
-   E \cup (V' \times \set{\alpha}))$.
 \end{definition}
 
 \begin{definition}[Neighbours]
