@@ -3,28 +3,30 @@
 We start by introducing dependence graphs and some standard graph-theoretic notions.
 \subsection{Dependence graphs}
 
-$G$ ranges over \emph{dependence graphs} $(V, E)$ with vertices $\alpha, \beta$.
+$G$ ranges over \emph{dependence graphs} $(V, E)$ with vertices $\alpha, \beta$. For the following definitions
+fix $G = (V, E)$.
 
 \begin{definition}[Opposite graph]
-   For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+   Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 \begin{definition}[Complement]
    For a set $X$ and $Y \subseteq X$, we write $Y^c \subseteq X$ to denote the \textit{complement}
    of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.
 \end{definition}
 \begin{definition}[Induced subgraph]
-   For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
-   by $V'$, that is $G[V'] \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+   For any $V' \subseteq V$, write $G[V']$ for the subgraph of $G$ induced by $V'$, that is $G[V'] \eqdef (V',
+   E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
 
 \begin{definition}[Reachable]
-   For any $G = (V,E)$ and pair of vertices $\alpha, \beta \in V$, write $\reachable{G}(\alpha, \beta)$, to mean
-   there exists $\seq{\alpha}$ with $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where
-   $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
+   For any pair of vertices $\alpha, \beta \in V$, write $\reachable{G}(\alpha, \beta)$, to mean there exists
+   $\seq{\alpha}$ with $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where $\seq{\beta}
+   \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
 
 \begin{definition}
-   For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
+   For any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha},
+   E \cup (V' \times \set{\alpha}))$.
 \end{definition}
 
 \begin{definition}[Neighbours]
