@@ -59,27 +59,26 @@ We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set o
 
 \subsection{Galois slicing over dependence graphs}
 
-We characterize slicing over $G$ with 2 functions of the following types:
+We define two slicing functions over $G$ of the following types:
 \begin{itemize}
-   \item $\bwdSliceR{G} \;:\; \powerset{\sources{G}} \to \powerset{\sinks{G}}$
-   \item $\fwdSliceR{G} \;:\; \powerset{\sinks{G}} \to \powerset{\sources{G}}$
+   \item $\consumesF{G}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$
+   \item $\producesF{G}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$
 \end{itemize}
 
-For a set of outputs of interest, the backward slicing function $\bwdSliceR{G}$ computes just the inputs
-needed for those outputs. More formally:
+For a set of outputs (sources), the backward-slicing function $\consumesF{G}$ computes just the inputs needed
+for those outputs. For a set of inputs (sinks), the forward-slicing function $\producesF{G}$ computes the set
+of outputs that can be produced using only those inputs.
 
-\begin{definition}[Backward slice]
+\begin{definition}[Forward slice]
    For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
-   ${\bwdSliceR{G}}(V)$ of $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
-   V.\;\reachable{G}(v', v)}$.
+   $\consumesF{G}(V)$ to be the set of sinks $\set{\alpha \in \sinks{G} \mid \exists \beta \in
+   V.\;\reachable{G}(\beta, \alpha)}$.
 \end{definition}
 
-For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes the set of outputs for
-which those inputs are sufficient. Formally:
-\begin{definition}[Forward slice]
+\begin{definition}[Backward slice]
    For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
-   ${\fwdSliceR{G}}(V)$ of $V$ to be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v})
-   \subseteq V}$.
+   ${\fwdSliceR{G}}(V)$ of $V$ to be the set of sources $\set{\alpha \in \sources{G} \mid
+   {\bwdSliceR{G}}(\set{\alpha}) \subseteq V}$.
 \end{definition}
 
 \begin{lemma}[Adjointness of ${\fwdSliceR{G}}$ and $\bwdSliceR{G}$]
