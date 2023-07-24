@@ -25,7 +25,8 @@ fix $G = (V, E)$.
 \end{definition}
 
 \begin{definition}[Neighbours]
-   For any $G = (V,E)$ define the \emph{in neighbours} and \emph{out neighbours} as the following functions of type $V \to \powerset V$:
+   Define the \emph{in neighbours} and \emph{out neighbours} of $G$ as the following functions of type $V \to
+   \powerset V$:
    \begin{itemize}
       \item $\inN{G}(\alpha) = \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
       \item $\outN{G} = \inN{G^{-1}}$
@@ -33,13 +34,12 @@ fix $G = (V, E)$.
 \end{definition}
 We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
 \begin{definition}[Neighbourhoods]
-   For a graph $G = (V,E)$ and a set of nodes $V' \subseteq V$, we write $\inN{G}(V')$ and $\outN{G}{V'}$ to mean the following:
+   For any $V' \subseteq V$, define:
    \begin{itemize}
       \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
       \item $\outN{G}(V') = \inN{G^{-1}}(V')$
    \end{itemize}
 \end{definition}
-We will see later how the definition of a neighbourhood can be used to define a more efficient forward slicing algorithm.
 
 \begin{definition}[Sources and Sinks]
    For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
