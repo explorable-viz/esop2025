@@ -63,14 +63,14 @@ E)$.
 \begin{definition}[Neighbours]
    Define the following functions of type $V \to \powerset V$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$ \hfill (in neighbours)
+      \item $\inN{G}(\alpha) \eqdef \set{\beta \in V \mid (\beta, \alpha) \in E}$ \hfill (in neighbours)
       \item $\outN{G} \eqdef \inN{G^{-1}}$ \hfill (out neighbours)
    \end{itemize}
 \end{definition}
 
 \begin{definition}[Induced subgraph]
-   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
-   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+   For any $V' \subseteq V$, define $\induced{G}{V'}$ to be the \emph{subgraph of $G$ induced by $V'$}, namely
+   $(V', \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
 
 \begin{definition}[Reachable]
@@ -92,7 +92,7 @@ E)$.
 \begin{definition}[Sources and sinks]
    Define:
    \begin{itemize}
-      \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$ \hfill (sources)
+      \item $\sources{G} \eqdef \set{\alpha \in V \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
