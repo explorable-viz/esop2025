@@ -126,7 +126,7 @@ graphs with the same extension will induce the same Galois connection.
    \item Suppose $\hat{G} = (\hat{V}, \hat{E})$.
    \begin{enumerate}
       \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{\hat{G}}$ \hfill (backward slicing)
-      \item \figref{graph:slicing:forward} defines the relation $\producesAlgR{\hat{G}}$ \hfill (forward slicing)
+      \item \figref{graph:slicing:forward} defines the relation $\fwdAlg{\hat{G}}$ \hfill (forward slicing)
    \end{enumerate}
 \end{definition}
 
@@ -134,7 +134,7 @@ graphs with the same extension will induce the same Galois connection.
    \item
    \begin{enumerate}
    \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\hat{G}}(V) = V' \iff \exists G.\;V, \emptyset \consumesAlgR{\hat{G}} G$ with $\sinks{G} = V'$.
-   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff \exists V^\dagger, G.\;\emptyset, \emptyset, V \fwdVertices{\hat{G}} V^\dagger, G$ with $V^\dagger \cap \sources{\hat{G}} = V'$.
+   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff V \fwdVertices{\hat{G}} V'$.
    \end{enumerate}
 \end{theorem}
 
