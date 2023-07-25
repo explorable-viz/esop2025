@@ -125,7 +125,7 @@ graphs with the same extension will induce the same Galois connection.
 \begin{definition}[Slicing algorithms]
    \item Suppose $\hat{G} = (\hat{V}, \hat{E})$.
    \begin{enumerate}
-      \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{\hat{G}}$ \hfill (backward slicing)
+      \item \figref{graph:slicing:backward} defines the relation $\bwdAlg{\hat{G}}$ \hfill (backward slicing)
       \item \figref{graph:slicing:forward} defines the relation $\fwdAlg{\hat{G}}$ \hfill (forward slicing)
    \end{enumerate}
 \end{definition}
@@ -133,8 +133,8 @@ graphs with the same extension will induce the same Galois connection.
 \begin{theorem}[Correctness of slicing algorithms]
    \item
    \begin{enumerate}
-   \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\hat{G}}(V) = V' \iff \exists G.\;V, \emptyset \consumesAlgR{\hat{G}} G$ with $\sinks{G} = V'$.
-   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff V \fwdVertices{\hat{G}} V'$.
+   \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\hat{G}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
    \end{enumerate}
 \end{theorem}
 
