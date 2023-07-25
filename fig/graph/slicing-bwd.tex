@@ -1,42 +1,42 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$V, G' \consumesAlgR{G} G^\twoPrime$}\hfill
+   {\small \flushleft \shadebox{$V, G' \bwdVertices{\hat{G}} G^\twoPrime$}\hfill
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-done}}
+         lab={\ruleName{$\bwdVertices{}$-done}}
       ]
       {
          \strut
       }
       {
-         \varnothing, G' \consumesAlgR{G} G'
+         \varnothing, G' \bwdVertices{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-skip}},
+         lab={\ruleName{$\bwdVertices{}$-skip}},
          right={$\alpha \in \V(G')$}
       ]
       {
-         V, G' \consumesAlgR{G} G^\twoPrime
+         V, G' \bwdVertices{\hat{G}} G^\twoPrime
       }
       {
-         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
+         \set{\alpha} \cup V, G' \bwdVertices{\hat{G}} G^\twoPrime
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-step}},
+         lab={\ruleName{$\bwdVertices{}$-step}},
          right={$\alpha \notin \V(G')$}
       ]
       {
-         \V(\inN{G}(\alpha)), G' \disjunion \inN{G}(\alpha) \consumesAlgR{G} G^\dagger
+         \V(\inN{G}(\alpha)), G' \disjunion \inN{G}(\alpha) \bwdVertices{\hat{G}} G^\dagger
          \\
-         V, G^\dagger \consumesAlgR{G} G^\twoPrime
+         V, G^\dagger \bwdVertices{\hat{G}} G^\twoPrime
       }
       {
-         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
+         \set{\alpha} \cup V, G' \bwdVertices{\hat{G}} G^\twoPrime
       }
       %
       \and
@@ -49,7 +49,7 @@
          lab={\ruleName{$\bwdAlg{}$}}
       ]
       {
-         V, \emptyset \consumesAlgR{\hat{G}} G
+         V, \emptyset \bwdVertices{\hat{G}} G
       }
       {
          V \bwdAlg{\hat{G}} \sinks{G}
