@@ -569,7 +569,15 @@ By induction on derivation of $\evalSugS$.
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
             \inferrule*{
-               \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalS \exClosure{?}{?}{?}
+               \inferrule*
+               {
+                  \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{}{}{}})
+               }
+               {
+                  \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{?}{?}{?}
+               }
+               \\
+               \gamma, s \evalSugS v
             }
             {
                \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
