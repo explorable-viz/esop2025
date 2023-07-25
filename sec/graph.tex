@@ -119,21 +119,22 @@ E)$.
 \subsection{Galois slicing over dependence graphs}
 
 Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connection $\consumesF{\extension{G}}
-\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. Note that distinct graphs with the same extension will induce the same Galois connection.
+\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. Note that distinct
+graphs with the same extension will induce the same Galois connection.
 
 \begin{definition}[Slicing algorithms]
-   \item
+   \item Suppose $\hat{G} = (\hat{V}, \hat{E})$.
    \begin{enumerate}
-      \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{G}$ \hfill (backward slicing)
-      \item \figref{graph:slicing:forward} defines the relation $\producesAlgR{G}$ \hfill (forward slicing)
+      \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{\hat{G}}$ \hfill (backward slicing)
+      \item \figref{graph:slicing:forward} defines the relation $\producesAlgR{\hat{G}}$ \hfill (forward slicing)
    \end{enumerate}
 \end{definition}
 
 \begin{theorem}[Correctness of slicing algorithms]
    \item
    \begin{enumerate}
-   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $\consumesF{G}(V) = V' \iff \exists G'.\;V, \emptyset \consumesAlgR{G} G'$ with $\sinks{G'} = V'$.
-   \item Suppose $V \subseteq \powerset{\sinks{G}}$. Then $\producesF{G}(V) = V' \iff \exists G'.\;\induced{G}{V} \producesAlgR{G} G'$ with $\sources{G'} = V'$.
+   \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\hat{G}}(V) = V' \iff \exists G.\;V, \emptyset \consumesAlgR{\hat{G}} G$ with $\sinks{G} = V'$.
+   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff \exists G.\;\induced{\hat{G}}{V} \producesAlgR{\hat{G}} G$ with $\sources{G} = V'$.
    \end{enumerate}
 \end{theorem}
 

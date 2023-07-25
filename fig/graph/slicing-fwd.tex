@@ -1,47 +1,48 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$V, G, E \fwdEdges{\mathbf{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$V, G, E \fwdEdges{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
          \strut
       }
       {
-         V, G, \emptyset \fwdEdges{\mathbf{G}} V, G
+         V, G, \emptyset \fwdEdges{\hat{G}} V, G
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-skip}}]
       {
-         \alpha \cons V, G, E \fwdEdges{\mathbf{G}} V', G'
+         \alpha \cons V, G, E \fwdEdges{\hat{G}} V', G'
       }
       {
-         \alpha \cons V, G, (\alpha, \beta) \cons E \fwdEdges{\mathbf{G}} V', G'
+         \alpha \cons V, G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
       }
       %
       \and
       %
       \inferrule*
       {
-         \outN{G}(\alpha) \cons \beta \subset \outN{\mathbf{G}}(\alpha)
+         \outN{G}(\alpha) \cons \beta \subset \outN{\hat{G}}(\alpha)
          \\
-         V, G \cup (\set{\alpha}, \set{(\alpha, \beta)}), E \fwdEdges{\mathbf{G}} V', G'
+         V, G \cup (\set{\alpha}, \set{(\alpha, \beta)}), E \fwdEdges{\hat{G}} V', G'
       }
       {
-         V, G, (\alpha, \beta) \cons E \fwdEdges{\mathbf{G}} V', G'
+         V, G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
       }
    \end{smathpar}
    \\[3mm]
-   {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\mathbf{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdVertex{}$}}]
       {
-         \alpha \cons V, G, \set{(\beta, \alpha) \mid \beta \in \inN{\mathbf{G}}(\alpha)}
-         \fwdEdges{\mathbf{G}} V', G'
+         \alpha \cons V, G, \set{(\beta, \alpha) \mid \beta \in \inN{\hat{G}}(\alpha)}
+         \fwdEdges{\hat{G}} V', G'
       }
       {
-         V, G, \alpha \fwdVertex{\mathbf{G}} V', G'
+         V, G, \alpha \fwdVertex{\hat{G}} V', G'
       }
    \end{smathpar}
    \caption{Forward slicing algorithm}
+   \label{fig:graph:slicing:forward}
 \end{figure}
