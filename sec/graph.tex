@@ -58,17 +58,6 @@ E)$.
    Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
-\begin{definition}[Induced subgraph]
-   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
-   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
-\end{definition}
-
-\begin{definition}[Reachable]
-   For any pair of vertices $\alpha, \beta \in V$, write $\reachable{G}(\alpha, \beta)$, to mean there exists
-   $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1}) \in E$ where $\seq{\beta}
-   \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
-\end{definition}
-
 \begin{definition}[Neighbours]
    Define the \emph{in neighbours} and \emph{out neighbours} of $G$ as the following functions of type $V \to
    \powerset V$:
@@ -78,15 +67,26 @@ E)$.
    \end{itemize}
 \end{definition}
 
-We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
-
-\begin{definition}[Neighbourhoods]
-   For any $V' \subseteq V$, define:
-   \begin{itemize}
-      \item $\inN{G}(V') \eqdef \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
-      \item $\outN{G}(V') \eqdef \inN{G^{-1}}(V')$
-   \end{itemize}
+\begin{definition}[Induced subgraph]
+   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
+   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
+
+\begin{definition}[Reachable]
+   Define the \emph{reachability} relation $\reachable{G} \subseteq V^2$ that has $\reachable{G}(\alpha,
+   \beta)$ iff there exists $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1})
+   \in E$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
+\end{definition}
+
+%We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
+%
+%\begin{definition}[Neighbourhoods]
+%   For any $V' \subseteq V$, define:
+%   \begin{itemize}
+%      \item $\inN{G}(V') \eqdef \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
+%      \item $\outN{G}(V') \eqdef \inN{G^{-1}}(V')$
+%   \end{itemize}
+%\end{definition}
 
 \begin{definition}[Sources and Sinks]
    Define the \emph{sources} and \emph{sinks} of $G$ as:
@@ -94,6 +94,10 @@ We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set o
       \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
       \item $\sinks{G} \eqdef \sources{G^{-1}}$
    \end{itemize}
+\end{definition}
+
+\begin{definition}[Extension]
+   Define the \emph{extension} of $G$ as the relation $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
 \begin{definition}[Subgraph]
