@@ -1,121 +1,153 @@
-\section{Dependence graph formulation}
-\label{sec:graph}
-We start by introducing dependency graphs, and some standard graph-theoretic notions.
-\subsection{Dependence graphs}
+\section{Graphical Galois slicing}
 
-$G$ ranges over \emph{dependency graphs} $(V, E)$ where $V$ is a set of \emph{addresses} $\alpha, \beta
-\in \Addr$ which serve as vertices.  Addresses include a distinguished address $\addrNull$ called the
-\emph{null} address.
+\subsection{Preliminaries}
 
-\begin{definition}[Opposite graph]
-   For any $G = (V, E)$ define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
-\end{definition}
 \begin{definition}[Complement]
-   For a set $X$ and $Y \subseteq X$, we write $Y^c \subseteq X$ to denote the \textit{complement}
-   of $Y$ in $X$. Note that the type of $\param^{c}$ depends on the contextual graph.
-\end{definition}
-\begin{definition}[Induced subgraph]
-   For any $G = (V,E)$, and vertices $V' \subseteq V$, we write $G[V']$ to be the subgraph of $G$ induced
-   by $V'$, that is $G[V'] = (V', E')$ where $E' = \set{(s,t) \in E \mid s,t \in V'}$.
+   For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement} of $Y$
+   with respect to $X$.
 \end{definition}
 
-\begin{definition}[Path]
-   For a graph $G = (V,E)$ and a pair of vertices $v, v' \in V$, we write $\pathIn{G}(v, v')$, to mean that there is a
-   \textit{path} from $v$ to $v'$ in $G$, meaning either $\exists \seq{v} \in V.\; (v_i,v_{i+1}) \in E \opAnd (v, v_1) \in E \opAnd (v_n, v') \in E$,
-   or that $(v, v') \in E$.
-\end{definition}
+\subsection{Galois connections for a relation}
+
+The following Galois connection $\consumesF{D} \adjoint \producesF{D}: \powerset{X} \to \powerset{Y}$
+generalises the usual image/preimage Galois connection for a function $f: X \to Y$ to a relation $D \subseteq
+Y \times X$. (We flip the direction of the relation compared to $f$ so we can read $D$ as \emph{depends on}.)
 
 \begin{definition}
-   For any $G = (V, E)$, any $V' \subseteq V$ and any $\alpha \notin V$, define $\mkAddr{G}{V'}{\alpha} = (V \cup \set{\alpha}, E \cup (V' \times \set{\alpha}))$.
+   \item
+   \begin{enumerate}
+      \item $\consumesF{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'.\;Dyx}$ \hfill (consumes)
+      \item $\producesF{D}(X') \eqdef \set{y \in Y \mid \forall x \in X.\;Dyx \implies x \in X'}$ \hfill (produces)
+   \end{enumerate}
+\end{definition}
+
+\begin{definition}[De Morgan dual]
+   Suppose $\mathcal{A}, \mathcal{B}$ are Boolean algebras.
+   \begin{enumerate}
+      \item For any $f: \mathcal{A} \to \mathcal{B}$, define $\dual{f}: \mathcal{A} \to \mathcal{B}$ to be $\neg_{\mathcal{B}} \after f \after \neg_{\mathcal{A}}$.
+      \item For any $f \adjoint g: \mathcal{A} \to \mathcal{B}$, define $\dual{(f \adjoint g)}: \mathcal{B} \to \mathcal{B}$ to be $\dual{g} \adjoint \dual{f}$.
+   \end{enumerate}
+\end{definition}
+
+\begin{definition} Define:
+   \begin{enumerate}
+      \item $\consumesDualF{D} := \dual{(\consumesF{D})}$ \hfill (produced by)
+      \item $\producesDualF{D} := \dual{(\producesF{D})}$ \hfill (consumed by)
+   \end{enumerate}
+\end{definition}
+
+\begin{lemma}[Relationship between dual and adjoint]
+   $\consumesF{D} \adjoint \producesF{D} = \producesDualF{D^{-1}} \adjoint \consumesDualF{D^{-1}}$
+\end{lemma}
+
+\begin{definition}[Related inputs and related outputs]
+   Define
+   \begin{enumerate}
+      \item $\relatedOutputsF{D} \eqdef \consumesF{DD^{-1}} = \consumesF{D}\consumesF{D^{-1}} = \consumesF{D}\producesDualF{D}$ \hfill (co-consumes)
+      \item $\relatedInputsF{D} \eqdef \consumesF{D^{-1}D} = \consumesF{D^{-1}}\consumesF{D} = \producesDualF{D}\consumesF{D}$ \hfill (co-produces)
+   \end{enumerate}
+\end{definition}
+
+\subsection{Dependence graphs}
+
+We now introduce \emph{dependence graphs} $G = (V, E)$ with vertices $\alpha, \beta \in V$ and edges $(\alpha,
+\beta) \in E$ along with some standard graph-theoretic notions. For the following definitions fix $G = (V,
+E)$.
+
+\begin{definition}[Opposite graph]
+   Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
 \begin{definition}[Neighbours]
-   For any $G = (V,E)$ define the \emph{in neighbours} and \emph{out neighbours} as the following functions of type $V \to \powerset V$:
+   Define the \emph{in neighbours} and \emph{out neighbours} of $G$ as the following functions of type $V \to
+   \powerset V$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) = \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
-      \item $\outN{G} = \inN{G^{-1}}$
+      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
+      \item $\outN{G} \eqdef \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
-We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
-\begin{definition}[Neighbourhoods]
-   For a graph $G = (V,E)$ and a set of nodes $V' \subseteq V$, we write $\inN{G}(V')$ and $\outN{G}{V'}$ to mean the following:
-   \begin{itemize}
-      \item $\inN{G}(V') = \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
-      \item $\outN{G}(V') = \inN{G^{-1}}(V')$
-   \end{itemize}
+
+\begin{definition}[Induced subgraph]
+   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
+   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
 \end{definition}
-We will see later how the definition of a neighbourhood can be used to define a more efficient forward slicing algorithm.
+
+\begin{definition}[Reachable]
+   Define the \emph{reachability} relation $\reachable{G} \subseteq V^2$ that has $\reachable{G}(\alpha,
+   \beta)$ iff there exists $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1})
+   \in E$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
+\end{definition}
+
+%We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
+%
+%\begin{definition}[Neighbourhoods]
+%   For any $V' \subseteq V$, define:
+%   \begin{itemize}
+%      \item $\inN{G}(V') \eqdef \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
+%      \item $\outN{G}(V') \eqdef \inN{G^{-1}}(V')$
+%   \end{itemize}
+%\end{definition}
 
 \begin{definition}[Sources and Sinks]
-   For a graph $G = (V,E)$, we define the \emph{sources}, and the \emph{sinks} as the respective sets:
+   Define the \emph{sources} and \emph{sinks} of $G$ as:
    \begin{itemize}
       \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
       \item $\sinks{G} \eqdef \sources{G^{-1}}$
    \end{itemize}
 \end{definition}
 
+\begin{definition}[Extension]
+   Define the \emph{extension} of $G$ as the relation $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
+\end{definition}
+
 \begin{definition}[Subgraph]
-   We use $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
+   Write $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
 \end{definition}
 
 \begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G = (V,E)$ and $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} = G''$ where
-   $G''$ is the induced subgraph $G[V' \cup V^{\dag}]$.
+   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$.
 \end{definition}
 
 \subsection{Galois slicing over dependence graphs}
 
-Fix a dependence graph $G$.
-
-We characterize slicing over $G$ with 2 functions of the following types:
+We define two slicing functions over $G$ of the following types:
 \begin{itemize}
-   \item $\bwdSliceR{G} \;:\; \powerset{\sources{G}} \to \powerset{\sinks{G}}$
-   \item $\fwdSliceR{G} \;:\; \powerset{\sinks{G}} \to \powerset{\sources{G}}$
+   \item $\consumesF{G}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$
+   \item $\producesF{G}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$
 \end{itemize}
 
-For a set of outputs of interest, the backward slicing function $\bwdSliceR{G}$ computes just the inputs
-needed for those outputs. More formally:
+For a set of outputs (sources), the backward-slicing function $\consumesF{G}$ computes just the inputs needed
+for those outputs. For a set of inputs (sinks), the forward-slicing function $\producesF{G}$ computes the set
+of outputs that can be produced using only those inputs.
+
+\begin{definition}[Forward slice]
+   For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
+   $\consumesF{G}(V)$ to be the set of sinks $\set{\alpha \in \sinks{G} \mid \exists \beta \in
+   V.\;\reachable{G}(\beta, \alpha)}$.
+\end{definition}
 
 \begin{definition}[Backward slice]
-   For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
-   ${\bwdSliceR{G}}(V)$ of $V$ to be the set of sinks $\set{v \in \sinks{G} \mid \exists v' \in
-   V.\;\pathIn{G}(v', v)}$.
-\end{definition}
-
-For a set of inputs of interest, the forward slicing function $\fwdSliceR{G}$ computes the set of outputs for
-which those inputs are sufficient. Formally:
-\begin{definition}[Forward slice]
    For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
-   ${\fwdSliceR{G}}(V)$ of $V$ to be the set of sources $\set{v \in \sources{G} \mid {\bwdSliceR{G}}(\set{v})
-   \subseteq V}$.
+   $\producesF{G}(V)$ of $V$ to be the set of sources $\set{\alpha \in \sources{G} \mid
+   \consumesF{G}(\set{\alpha}) \subseteq V}$.
 \end{definition}
 
-\begin{lemma}[Adjointness of ${\fwdSliceR{G}}$ and $\bwdSliceR{G}$]
-   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\fwdSliceR{G}}(V)
-   \iff {\bwdSliceR{G}}(U) \subseteq V$.
+\begin{lemma}[Adjointness of ${\producesAlgR{G}}$ and $\consumesAlgR{G}$]
+   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\producesAlgR{G}}(V)
+   \iff {\consumesAlgR{G}}(U) \subseteq V$.
 \end{lemma}
 
+\begin{definition}[Backward slicing algorithm]
+   \figref{graph:slicing:backward} defines the backward slicing relation $\producesAlgR{G}$.
+\end{definition}
+
 \begin{definition}[Forward slicing algorithm]
-   \figref{graph:slicing} defines the forward slicing relation $\fwdSliceR{G}$.
+   \figref{graph:slicing:forward} defines the forward slicing relation $\producesAlgR{G}$.
 \end{definition}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-   \item For any $V \subseteq \powerset{\sinks{G}}$, suppose $G[V]\fwdSliceR{G} G'$. Then $\sources{G'} = {\fwdSliceR{G}}(V)$.
+For any $V \subseteq \powerset{\sinks{G}}$, we have $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
 \end{theorem}
-
-\begin{theorem}[De Morgan dual of forward slice]
-   ${\fwdSliceR{G}}(V) = ({\bwdSliceR{G^{-1}}}(V^c))^{c}$
-\end{theorem}
-
-We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
-Informally, we start with our subgraph, then we only consider its neighbourhood. If we can add a new node from
-its neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
-We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
-us grow the slice without considering each node in the graph $\length{V}$ times.
-
-\begin{definition}[Forward slicing algorithm (efficient version)]
-   TODO
-\end{definition}
 
 \input{fig/graph/slicing}
 

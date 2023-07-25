@@ -3,7 +3,11 @@
 
 \newcommand*{\clauseWith}[1]{\mathbin{\vert{#1}\vert}}
 
+% some basics
 \renewcommand{\emptyset}{\varnothing}
+\newcommand*{\adjoint}{\dashv}
+\newcommand*{\compl}[1]{#1^{c}}
+\newcommand*{\dual}[1]{#1^{\circ}}
 
 % utils
 \newcommand*{\ldblbrace}{\{\mskip-6mu\{}
@@ -204,13 +208,15 @@
 \newcommand*{\annStr}[2]{\exStr{#1}_{\hspace{-0.2mm}#2}}
 
 % graphs
+\newcommand*{\induced}[2]{#1[#2]}
 \newcommand*{\inN}[1]{\opName{in}_{#1}}
 \newcommand*{\outN}[1]{\opName{out}_{#1}}
 \newcommand*{\E}{\opName{E}}
 \newcommand*{\V}{\opName{V}}
+\newcommand*{\extension}[1]{\opName{ext}(#1)}
+\newcommand*{\reachable}[1]{R_{#1}}
 \newcommand*{\sinks}[1]{T(#1)}
 \newcommand*{\sources}[1]{S(#1)}
-\newcommand*{\pathIn}[1]{P_{#1}}
 
 % clauses
 \newcommand*{\clause}[2]{{#1}\equal{#2}}
@@ -305,15 +311,20 @@
 
 % desugaring
 \newcommand*{\desugar}{\twoheadrightarrow}
-\newcommand*{\elimF}{\opName{elim}}
 \newcommand*{\orElse}{\rightharpoonup}
-\newcommand*{\orElseF}{\opName{orElse}}
-\newcommand*{\unlessF}{\opName{unless}}
+
 % slicing
-\newcommand*{\bwdSliceS}{\nearrow}
-\newcommand*{\bwdSliceR}[1]{\bwdSliceS_{#1}}
-\newcommand*{\fwdSliceS}{\searrow}
-\newcommand*{\fwdSliceR}[1]{\fwdSliceS_{#1}}
+\newcommand*{\consumesAlgS}{\nearrow}
+\newcommand*{\consumesAlgR}[1]{\consumesAlgS_{#1}}
+\newcommand*{\producesAlgS}{\searrow}
+\newcommand*{\producesAlgR}[1]{\producesAlgS_{#1}}
+\newcommand*{\consumesF}[1]{\scalebox{0.8}{$\vartriangleleft$}_{#1}}
+\newcommand*{\consumesDualF}[1]{\scalebox{0.8}{$\blacktriangleleft$}_{#1}}
+\newcommand*{\producesF}[1]{\scalebox{0.8}{$\vartriangleright$}_{#1}}
+\newcommand*{\producesDualF}[1]{\scalebox{0.8}{$\blacktriangleright$}_{#1}}
+\newcommand*{\relatedOutputsF}[1]{\scalebox{0.8}{$\vartriangleleft\blacktriangleright$}_{#1}}
+\newcommand*{\relatedInputsF}[1]{\scalebox{0.8}{$\blacktriangleright\vartriangleleft$}_{#1}}
+
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
    \hfil\raise0.42ex\hbox{$\scriptscriptstyle+$}\hfil\cr}}}
