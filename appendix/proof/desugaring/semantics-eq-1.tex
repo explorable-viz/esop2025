@@ -563,21 +563,37 @@ By induction on derivation of $\evalSugS$.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp-gen}}
+            lab={\ruleName{$\evalSugS$-list-comp-gen}},
+            right={bottom}
          ]
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
-            \inferrule*{
-               \inferrule*
+            \inferrule*[right={middle}]
+            {
+               \inferrule*[right={top}]
                {
-                  \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{}{}{}})
+                  \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma^\dag}{\seqEmpty}{\mu'}}), \varConcatMap \evalSugS \exClosure{\gamma^\dag}{\seqEmpty}{\mu'}
+                  \\
+                  \gamma, \exFun{\mu} \evalSugS \exClosure{\gamma}{\seqEmpty}{\mu}
+                  \\
+                  \gamma^\dag, \seqEmpty \closeDefs \envEmpty
+                  \\
+                  \exClosure{\gamma}{\seqEmpty}{\mu}, \mu' \match \gamma^{??}, s^\dag
+                  \\
+                  \gamma^\dag \concat \gamma^{??}, s^\dag \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
                }
                {
-                  \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{?}{?}{?}
+                  \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
                }
                \\
                \gamma, s \evalSugS v
+               \\
+               \gamma^\ddagger, \seqEmpty \closeDefs \envEmpty
+               \\
+               v, \mu^\dag \match \gamma^?, s'
+               \\
+               \gamma \concat \gamma^?, s' \evalSugS u
             }
             {
                \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
