@@ -1,5 +1,4 @@
 \begin{figure}
-   \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$V, G' \consumesAlgR{G} G^\twoPrime$}\hfill
       \begin{smathpar}
       \inferrule*[
@@ -45,40 +44,4 @@
    \end{smathpar}}
    \caption{Backward slicing}
    \label{fig:graph:slicing:backward}
-   \end{subfigure}
-   \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$G' \producesAlgR{G} G^\twoPrime$}\hfill
-   \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\producesAlgS$-done}},
-         right={$\nexists \alpha \in N(V).\; \outN{G}(\alpha) \subseteq V(G')$}
-      ]
-      {
-         \strut
-      }
-      {
-         G' \producesAlgR{G} G'
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\producesAlgS$-next}},
-         right={$\alpha \notin V(G')$}
-      ]
-      {
-         \alpha \in \inN{G}(G')
-         \\
-         \outN{G}(\alpha) \subseteq V
-         \\
-         G' \disjunion \set{\alpha} \producesAlgR{G} G''
-      }
-      {
-         G' \producesAlgR{G} G''
-      }
-   \end{smathpar}}
-   \caption{Forward slicing}
-   \label{fig:graph:slicing:forward}
-   \end{subfigure}
-   \caption{Slicing algorithms}
 \end{figure}
