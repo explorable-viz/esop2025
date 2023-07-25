@@ -128,11 +128,11 @@ Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connect
 \end{definition}
 
 \begin{theorem}[Correctness of backward slicing algorithm]
-   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $V, \emptyset \consumesAlgR{G} G'$ iff $\sinks{G'} = \consumesF{G}(V)$.
+   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $\consumesF{G}(V) = V'$ iff $\exists G'.\;V, \emptyset \consumesAlgR{G} G'$ with $\sinks{G'} = V'$.
 \end{theorem}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-   \item Suppose $V \subseteq \powerset{\sinks{G}}$. Then $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
+   \item Suppose $V \subseteq \powerset{\sinks{G}}$. Then $\producesF{G}(V) = V'$ iff $\exists G'.\;\induced{G}{V} \producesAlgR{G} G'$ with $\sources{G'} = V'$.
 \end{theorem}
 
 \input{fig/graph/slicing}
