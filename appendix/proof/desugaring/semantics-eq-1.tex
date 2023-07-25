@@ -568,7 +568,12 @@ By induction on derivation of $\evalSugS$.
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
-            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+            \inferrule*{
+               \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalS \exClosure{?}{?}{?}
+            }
+            {
+               \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+            }
          }
          {
             \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
@@ -628,6 +633,14 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \\
+   &
+   \qedLocal
+   \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v 
+   \textit{ with }
+   u \desugar v
+   &
+   \text{(IH)}
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
