@@ -1,6 +1,16 @@
 \begin{figure}
    {\small \flushleft \shadebox{$V, G, E \fwdEdges{\mathbf{G}} V, G'$}\hfill}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
+      {
+         \strut
+      }
+      {
+         V, G, \emptyset \fwdEdges{\mathbf{G}} V, G
+      }
+      %
+      \and
+      %
       \inferrule*
       {
       }
@@ -11,7 +21,7 @@
    \\[3mm]
    {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\mathbf{G}} V, G'$}\hfill}
    \begin{smathpar}
-      \inferrule*
+      \inferrule*[lab={\ruleName{$\fwdVertex{}$}}]
       {
          V \cons \alpha, G, \set{(\beta, \alpha) \mid \beta \in \inN{\mathbf{G}}(\alpha)}
          \fwdEdges{\mathbf{G}} V', G'
