@@ -59,11 +59,10 @@ E)$.
 \end{definition}
 
 \begin{definition}[Neighbours]
-   Define the \emph{in neighbours} and \emph{out neighbours} of $G$ as the following functions of type $V \to
-   \powerset V$:
+   Define the following functions of type $V \to \powerset V$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$
-      \item $\outN{G} \eqdef \inN{G^{-1}}$
+      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$ \hfill (in neighbours)
+      \item $\outN{G} \eqdef \inN{G^{-1}}$ \hfill (out neighbours)
    \end{itemize}
 \end{definition}
 
@@ -88,16 +87,16 @@ E)$.
 %   \end{itemize}
 %\end{definition}
 
-\begin{definition}[Sources and Sinks]
-   Define the \emph{sources} and \emph{sinks} of $G$ as:
+\begin{definition}[Sources and sinks]
+   Define:
    \begin{itemize}
-      \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$
-      \item $\sinks{G} \eqdef \sources{G^{-1}}$
+      \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$ \hfill (sources)
+      \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
 
 \begin{definition}[Extension]
-   Define the \emph{extension} of $G$ as $\extension{G} \eqdef \reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
+   Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
 \begin{definition}[Subgraph]
@@ -105,32 +104,20 @@ E)$.
 \end{definition}
 
 \begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$.
+   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$.\todo{Problematic}
 \end{definition}
 
 \subsection{Galois slicing over dependence graphs}
 
 We define two slicing functions over $G$ of the following types:
 \begin{itemize}
-   \item $\consumesF{G}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$
-   \item $\producesF{G}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$
+   \item $\consumesF{G}: \powerset{\sources{G}} \to \powerset{\sinks{G}} \eqdef \consumesF{\extension{G}}$
+   \item $\producesF{G}: \powerset{\sinks{G}} \to \powerset{\sources{G}} \eqdef \producesF{\extension{G}}$
 \end{itemize}
 
 For a set of outputs (sources), the backward-slicing function $\consumesF{G}$ computes just the inputs needed
 for those outputs. For a set of inputs (sinks), the forward-slicing function $\producesF{G}$ computes the set
 of outputs that can be produced using only those inputs.
-
-\begin{definition}[Forward slice]
-   For any set of sources $V \subseteq \powerset{\sources{G}}$, define the \emph{backward slice}
-   $\consumesF{G}(V)$ to be the set of sinks $\set{\alpha \in \sinks{G} \mid \exists \beta \in
-   V.\;\reachable{G}(\beta, \alpha)}$.
-\end{definition}
-
-\begin{definition}[Backward slice]
-   For any set of sinks $V \subseteq \powerset{\sinks{G}}$, define the \emph{forward slice}
-   $\producesF{G}(V)$ of $V$ to be the set of sources $\set{\alpha \in \sources{G} \mid
-   \consumesF{G}(\set{\alpha}) \subseteq V}$.
-\end{definition}
 
 \begin{lemma}[Adjointness of ${\producesAlgR{G}}$ and $\consumesAlgR{G}$]
    \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\producesAlgR{G}}(V)
