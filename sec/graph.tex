@@ -68,6 +68,16 @@ E)$.
    \end{itemize}
 \end{definition}
 
+\begin{definition}[Empty graph, subgraph, union]
+   \item
+   \begin{enumerate}
+      \item Write $\emptyset$ to denote the empty graph $(\emptyset, \emptyset)$.
+      \item Write $G' \subseteq G$ to mean that $G' = (V', E')$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
+      \item Write $G \cup G'$ for the (non-disjoint) union ($V \cup V'$, $E \cup E'$) of $G$ and $G' = (V',
+      E')$.
+   \end{enumerate}
+\end{definition}
+
 \begin{definition}[Induced subgraph]
    For any $V' \subseteq V$, define $\induced{G}{V'}$ to be the \emph{subgraph of $G$ induced by $V'$}, namely
    $(V', \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
@@ -101,19 +111,9 @@ E)$.
    Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
-\begin{definition}[Empty graph, subgraph, union]
-   \item
-   \begin{enumerate}
-      \item Write $\emptyset$ to denote the empty graph $(\emptyset, \emptyset)$.
-      \item Write $G' \subseteq G$ to mean that $G' = (V', E')$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
-      \item Write $G \cup G'$ for the (non-disjoint) union ($V \cup V'$, $E \cup E'$) of $G$ and $G' = (V',
-      E')$.
-   \end{enumerate}
-\end{definition}
-
-\begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
-\end{definition}
+%\begin{definition}[Subgraph Extension]
+%   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
+%\end{definition}
 
 \subsection{Galois slicing over dependence graphs}
 
