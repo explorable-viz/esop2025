@@ -18,10 +18,10 @@
          right={$\alpha \in \V(G')$}
       ]
       {
-         V, G' \bwdVertices{\hat{G}} G^\twoPrime
+         G, V \bwdVertices{\hat{G}} G'
       }
       {
-         \set{\alpha} \cup V, G' \bwdVertices{\hat{G}} G^\twoPrime
+         G, \set{\alpha} \cup V \bwdVertices{\hat{G}} G'
       }
       %
       \and
@@ -31,12 +31,14 @@
          right={$\alpha \notin \V(G')$}
       ]
       {
-         G \disjunion \inN{G}(\alpha), \V(\inN{G}(\alpha)) \bwdVertices{\hat{G}} G_1
+         G \disjunion \inN{G}(\alpha), \inN{G}(\alpha) \disjunion V
+         \bwdVertices{\hat{G}}
+         G_1
          \\
-         V, G_1 \bwdVertices{\hat{G}} G'
+         G_1, V \bwdVertices{\hat{G}} G'
       }
       {
-         G, \set{\alpha} \cup V  \bwdVertices{\hat{G}} G'
+         G, \alpha \cons V  \bwdVertices{\hat{G}} G'
       }
       %
       \and
