@@ -1,18 +1,43 @@
-\section{Dependence graph formulation}
-\label{sec:graph}
-We start by introducing \emph{dependence graphs} $G = (V, E)$ with vertices $\alpha, \beta \in V$ and edges
-$(\alpha, \beta) \in E$ and some standard graph-theoretic notions. For the following definitions fix $G = (V,
-E)$.
+\section{Graphical Galois slicing}
 
-\subsection{Dependence graphs}
+\subsection{Preliminaries}
 
-\begin{definition}[Opposite graph]
-   Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
-\end{definition}
 \begin{definition}[Complement]
    For any set $X$ and any $Y \subseteq X$, write $Y^c \subseteq X$ to denote the \textit{complement} of $Y$
    with respect to $X$.
 \end{definition}
+
+\subsection{Galois connections for a relation}
+
+The following Galois connection $\consumesF{R} \adjoint \producesF{R}: \powerset{X} \to \powerset{Y}$ generalises the usual image/preimage Galois connection for a function $f: X \to Y$ to a relation $R \subseteq X \times Y$:
+
+\begin{definition}
+   \item
+   \begin{enumerate}
+      \item $\consumesF{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.\;Rxy}$.
+      \item $\producesF{R}(Y') \eqdef \set{x \in X \mid \forall y \in Y'.\;Rxy}$.
+   \end{enumerate}
+\end{definition}
+
+\begin{definition}[De Morgan dual]
+   Suppose $\mathcal{A}, \mathcal{B}$ are Boolean algebras. For any $f: \mathcal{A} \to \mathcal{B}$, define
+   $\dual{f}: \mathcal{A} \to \mathcal{B}$ to be $\neg_{\mathcal{B}} \after f \after \neg_{\mathcal{A}}$.
+\end{definition}
+
+\begin{theorem}[De Morgan dual of forward slice]
+   $\producesF{G}(V) = (\consumesF{G^{-1}}(V^c))^{c}$
+\end{theorem}
+
+\subsection{Dependence graphs}
+
+We now introduce \emph{dependence graphs} $G = (V, E)$ with vertices $\alpha, \beta \in V$ and edges $(\alpha,
+\beta) \in E$ along with some standard graph-theoretic notions. For the following definitions fix $G = (V,
+E)$.
+
+\begin{definition}[Opposite graph]
+   Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+\end{definition}
+
 \begin{definition}[Induced subgraph]
    For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
    $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
@@ -32,7 +57,9 @@ E)$.
       \item $\outN{G} \eqdef \inN{G^{-1}}$
    \end{itemize}
 \end{definition}
+
 We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
+
 \begin{definition}[Neighbourhoods]
    For any $V' \subseteq V$, define:
    \begin{itemize}
@@ -97,16 +124,6 @@ of outputs that can be produced using only those inputs.
 \begin{theorem}[Correctness of forward slicing algorithm]
 For any $V \subseteq \powerset{\sinks{G}}$, we have $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
 \end{theorem}
-
-\begin{theorem}[De Morgan dual of forward slice]
-   $\producesF{G}(V) = (\consumesF{G^{-1}}(V^c))^{c}$
-\end{theorem}
-
-We use the notion of the neighbourhood of a subgraph to formulate a more efficient version of forward slicing.
-Informally, we start with our subgraph, then we only consider its neighbourhood. If we can add a new node from
-its neighbourhood to the current slice, then we add the new nodes neighbours to our current neighbourhood set.
-We halt the algorithm only when we cannot add any new nodes from the current slices neighbourhood. This lets
-us grow the slice without considering each node in the graph $\length{V}$ times.
 
 \input{fig/graph/slicing}
 
