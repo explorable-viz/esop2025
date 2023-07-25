@@ -57,6 +57,29 @@
          V, G, \alpha \fwdVertex{\hat{G}} V', G'
       }
    \end{smathpar}
+   \\[3mm]
+   {\small \flushleft \shadebox{$V, G, V' \fwdVertices{\hat{G}} V, G'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdVertices{}$-done}}]
+      {
+         \strut
+      }
+      {
+         V, G, \emptyset \fwdVertices{\hat{G}} V, G
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\fwdVertices{}$-next}}]
+      {
+         V, G, \alpha \fwdVertex{\hat{G}} V_1, G_1
+         \\
+         V_1, G_1, V' \fwdVertices{\hat{G}} V', G'
+      }
+      {
+         V, G, \alpha \cons V' \fwdVertices{\hat{G}} V, G
+      }
+   \end{smathpar}
    \caption{Forward slicing algorithm}
    \label{fig:graph:slicing:forward}
 \end{figure}
