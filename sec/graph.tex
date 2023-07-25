@@ -104,25 +104,15 @@ E)$.
 \end{definition}
 
 \begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$.\todo{Problematic}
+   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
 \end{definition}
 
 \subsection{Galois slicing over dependence graphs}
 
-We define two slicing functions over $G$ of the following types:
-\begin{itemize}
-   \item $\consumesF{G}: \powerset{\sources{G}} \to \powerset{\sinks{G}} \eqdef \consumesF{\extension{G}}$
-   \item $\producesF{G}: \powerset{\sinks{G}} \to \powerset{\sources{G}} \eqdef \producesF{\extension{G}}$
-\end{itemize}
-
-For a set of outputs (sources), the backward-slicing function $\consumesF{G}$ computes just the inputs needed
-for those outputs. For a set of inputs (sinks), the forward-slicing function $\producesF{G}$ computes the set
-of outputs that can be produced using only those inputs.
-
-\begin{lemma}[Adjointness of ${\producesAlgR{G}}$ and $\consumesAlgR{G}$]
-   \item Suppose $U \subseteq \sources{G}$ and $V \subseteq \sinks{G}$. Then $U \subseteq {\producesAlgR{G}}(V)
-   \iff {\consumesAlgR{G}}(U) \subseteq V$.
-\end{lemma}
+Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connection $\consumesF{\extension{G}}
+\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. For a set of outputs
+(sources), $\consumesF{G}$ computes just the inputs needed for those outputs. For a set of inputs (sinks),
+$\producesF{G}$ computes the set of outputs that can be produced using only those inputs.
 
 \begin{definition}[Backward slicing algorithm]
    \figref{graph:slicing:backward} defines the backward slicing relation $\producesAlgR{G}$.
