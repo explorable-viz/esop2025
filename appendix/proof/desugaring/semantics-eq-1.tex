@@ -576,6 +576,58 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \\
+            \mu \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+         }
+   \end{smathpar}
+   }
+   &
+   \locallabel{desugaring:listcomp}
+   \text{inversion}
+   \\
+   &
+   s \desugar e
+   \opAnd
+   \exFun{\mu} \desugar \exFun{\sigma}
+   &
+   \locallabel{desugarings}
+   \text{(\localref{desugaring:listcomp})}
+   \\
+   &
+   \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
+   &
+   \text{(\localref{desugarings})}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab=\ruleName{$\desugar$-app}]
+         {
+            s \desugar e
+            \\
+            \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
+         }
+         {
+            \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
