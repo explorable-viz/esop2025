@@ -11,6 +11,16 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-skip}}]
+      {
+         \alpha \cons V, G, E \fwdEdges{\mathbf{G}} V', G'
+      }
+      {
+         \alpha \cons V, G, (\alpha, \beta) \cons E \fwdEdges{\mathbf{G}} V', G'
+      }
+      %
+      \and
+      %
       \inferrule*
       {
       }
@@ -23,7 +33,7 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdVertex{}$}}]
       {
-         V \cons \alpha, G, \set{(\beta, \alpha) \mid \beta \in \inN{\mathbf{G}}(\alpha)}
+         \alpha \cons V, G, \set{(\beta, \alpha) \mid \beta \in \inN{\mathbf{G}}(\alpha)}
          \fwdEdges{\mathbf{G}} V', G'
       }
       {
