@@ -21,6 +21,9 @@ Y \times X$. (We flip the direction of the relation compared to $f$ so we can re
    \end{enumerate}
 \end{definition}
 
+\noindent For a set of outputs, $\consumesF{D}$ collections just the inputs needed for those outputs. For a
+set of inputs, $\producesF{G}$ collects just the outputs that can be produced using only those inputs.
+
 \begin{definition}[De Morgan dual]
    Suppose $\mathcal{A}, \mathcal{B}$ are Boolean algebras.
    \begin{enumerate}
@@ -110,20 +113,22 @@ E)$.
 \subsection{Galois slicing over dependence graphs}
 
 Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connection $\consumesF{\extension{G}}
-\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. For a set of outputs
-(sources), $\consumesF{G}$ computes just the inputs needed for those outputs. For a set of inputs (sinks),
-$\producesF{G}$ computes the set of outputs that can be produced using only those inputs.
+\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. Note that distinct graphs may have the same extension and thus induce the same Galois connection.
 
-\begin{definition}[Backward slicing algorithm]
-   \figref{graph:slicing:backward} defines the backward slicing relation $\producesAlgR{G}$.
-\end{definition}
-
-\begin{definition}[Forward slicing algorithm]
-   \figref{graph:slicing:forward} defines the forward slicing relation $\producesAlgR{G}$.
+\begin{definition}[Slicing algorithms]
+   \item
+   \begin{enumerate}
+      \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{G}$ \hfill (backward slicing)
+      \item \figref{graph:slicing:forward} defines the relation $\producesAlgR{G}$ \hfill (forward slicing)
+   \end{enumerate}
 \end{definition}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
-For any $V \subseteq \powerset{\sinks{G}}$, we have $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
+   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
+\end{theorem}
+
+\begin{theorem}[Correctness of forward slicing algorithm]
+   \item Suppose $V \subseteq \powerset{\sinks{G}}$. Then $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
 \end{theorem}
 
 \input{fig/graph/slicing}
