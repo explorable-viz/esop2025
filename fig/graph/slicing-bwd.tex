@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, V \bwdVertices{\hat{G}} G'$}\hfill
+   {\small \flushleft \shadebox{$G, V \bwdVertices{\hat{G}} G'$}\hfill \textit{where} $V = \sinks{G}$
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\bwdVertices{}$-done}}
@@ -31,7 +31,7 @@
          right={$\alpha \notin \V(G)$}
       ]
       {
-         G \disjunion \outN{\hat{G}}(\alpha), \outN{\hat{G}}(\alpha) \disjunion V
+         (\set{\alpha}, \set{\alpha} \times \outN{\hat{G}}) \disjunion G, \outN{\hat{G}}(\alpha) \disjunion V
          \bwdVertices{\hat{G}}
          G_1
          \\
@@ -51,7 +51,7 @@
          lab={\ruleName{$\bwdAlg{}$}}
       ]
       {
-         \emptyset, V \bwdVertices{\hat{G}} G
+         (V, \emptyset), V \bwdVertices{\hat{G}} G
       }
       {
          V \bwdAlg{\hat{G}} \sinks{G}
