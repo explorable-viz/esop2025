@@ -560,44 +560,63 @@ By induction on derivation of $\evalSugS$.
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}   
+         \inferrule*
+         {
+            \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma_2}{\seqEmpty}{\mu'}}), \varConcatMap \evalSugS \exClosure{\gamma_2}{\seqEmpty}{\mu'}
+            \\
+            \gamma, \exFun{\mu} \evalSugS \exClosure{\gamma}{\seqEmpty}{\mu}
+            \\
+            \gamma_2, \seqEmpty \closeDefs \envEmpty
+            \\
+            \exClosure{\gamma}{\seqEmpty}{\mu}, \mu' \match \gamma_3, s^\dag
+            \\
+            \gamma^\dag \concat \gamma_3, s^\dag \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
+         }
+         {
+            \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
+         }
+      \end{smathpar}
+   }
+   &
+   \locallabel{subderivation:1}
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[center]
+         {
+            \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
+            \\
+            \gamma, s \evalSugS v
+            \\
+            \gamma^\ddagger, \seqEmpty \closeDefs \envEmpty
+            \\
+            v, \mu^\dag \match \gamma_4, s'
+            \\
+            \gamma^\ddagger \concat \gamma_4, s' \evalSugS u
+         }
+         {
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+         }
+      \end{smathpar}
+   }
+   &
+   \text{(\localref{subderivation:1})}
+   \locallabel{subderivation:2}
+   \\
+   &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalSugS$-list-comp-gen}},
-            right={bottom}
+            flushleft
          ]
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
-            \inferrule*[right={middle}]
-            {
-               \inferrule*[right={top}]
-               {
-                  \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma^\dag}{\seqEmpty}{\mu'}}), \varConcatMap \evalSugS \exClosure{\gamma^\dag}{\seqEmpty}{\mu'}
-                  \\
-                  \gamma, \exFun{\mu} \evalSugS \exClosure{\gamma}{\seqEmpty}{\mu}
-                  \\
-                  \gamma^\dag, \seqEmpty \closeDefs \envEmpty
-                  \\
-                  \exClosure{\gamma}{\seqEmpty}{\mu}, \mu' \match \gamma^{??}, s^\dag
-                  \\
-                  \gamma^\dag \concat \gamma^{??}, s^\dag \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
-               }
-               {
-                  \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma^\ddagger}{\seqEmpty}{\mu^\dag}
-               }
-               \\
-               \gamma, s \evalSugS v
-               \\
-               \gamma^\ddagger, \seqEmpty \closeDefs \envEmpty
-               \\
-               v, \mu^\dag \match \gamma^?, s'
-               \\
-               \gamma \concat \gamma^?, s' \evalSugS u
-            }
-            {
-               \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
-            }
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
          }
          {
             \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
@@ -605,6 +624,7 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \text{(\localref{subderivation:2})}
    \notag
    \\
    &
@@ -641,6 +661,7 @@ By induction on derivation of $\evalSugS$.
    \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
    &
    \text{(\localref{desugarings})}
+   \notag
    \\
    &
    \derivation{\derivationWidth}{
@@ -657,6 +678,7 @@ By induction on derivation of $\evalSugS$.
       \end{smathpar}
    }
    &
+   \notag
    \\
    &
    \qedLocal
@@ -665,6 +687,7 @@ By induction on derivation of $\evalSugS$.
    u \desugar v
    &
    \text{(IH)}
+   \notag
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
