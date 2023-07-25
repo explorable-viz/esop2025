@@ -9,13 +9,15 @@
 
 \subsection{Galois connections for a relation}
 
-The following Galois connection $\consumesF{R} \adjoint \producesF{R}: \powerset{X} \to \powerset{Y}$ generalises the usual image/preimage Galois connection for a function $f: X \to Y$ to a relation $R \subseteq X \times Y$:
+The following Galois connection $\consumesF{D} \adjoint \producesF{D}: \powerset{X} \to \powerset{Y}$
+generalises the usual image/preimage Galois connection for a function $f: X \to Y$ to a relation $D \subseteq
+Y \times X$. (We flip the direction of the relation compared to $f$ so we can read $D$ as \emph{depends on}.)
 
 \begin{definition}
    \item
    \begin{enumerate}
-      \item $\consumesF{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.\;Rxy}$.
-      \item $\producesF{R}(Y') \eqdef \set{x \in X \mid \forall y \in Y'.\;Rxy}$.
+      \item $\consumesF{R}(Y') \eqdef \set{x \in X \mid \exists y \in Y'.\;Dyx}$.
+      \item $\producesF{R}(X') \eqdef \set{y \in Y \mid \forall x \in X.\;Dyx \implies x \in X'}$.
    \end{enumerate}
 \end{definition}
 
