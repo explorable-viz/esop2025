@@ -21,7 +21,7 @@
       %
       \and
       %
-      \inferrule*
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
          \outN{G}(\alpha) \cons \beta \subset \outN{\hat{G}}(\alpha)
          \\
@@ -29,6 +29,20 @@
       }
       {
          V, G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-vertex}}]
+      {
+         V, G, \alpha
+         \fwdVertex{\hat{G}}
+         V_1, G_1
+         \\
+         V_1, G_1, E \fwdEdges{\hat{G}} V', G'
+      }
+      {
+         V, G \disjunion \set{\alpha \mapsto \outN{G}(\alpha) \cons \beta}, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
       }
    \end{smathpar}
    \\[3mm]
