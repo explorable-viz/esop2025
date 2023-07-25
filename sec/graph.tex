@@ -102,8 +102,12 @@ E)$.
    Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
-\begin{definition}[Subgraph]
-   Write $G' \subseteq G$ to mean that $G'$ is a subgraph of $G$.
+\begin{definition}[Empty graph, subgraph]
+   \item
+   \begin{enumerate}
+      \item Write $\emptyset$ to denote the empty graph $(\emptyset, \emptyset)$.
+      \item Write $G' \subseteq G$ to mean that $G' = (V', E')$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
+   \end{enumerate}
 \end{definition}
 
 \begin{definition}[Subgraph Extension]
@@ -124,7 +128,7 @@ Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connect
 \end{definition}
 
 \begin{theorem}[Correctness of backward slicing algorithm]
-   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $\induced{G}{V} \producesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
+   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $V, \emptyset \consumesAlgR{G} G'$ iff $\sources{G'} = \producesF{G}(V)$.
 \end{theorem}
 
 \begin{theorem}[Correctness of forward slicing algorithm]
