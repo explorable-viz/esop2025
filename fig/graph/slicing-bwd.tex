@@ -43,17 +43,18 @@
       %
    \end{smathpar}}
    \\[3mm]
-   {\small \flushleft \shadebox{$V \bwdAlg{G} V'$}\hfill
+   {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\bwdAlg{}$}}
       ]
       {
-         \strut
+         V, \emptyset \consumesAlgR{\hat{G}} G
       }
       {
-         \varnothing, G' \consumesAlgR{G} G'
+         V \bwdAlg{\hat{G}} \sinks{G}
       }
+      \end{smathpar}
    }
    \caption{Backward slicing}
    \label{fig:graph:slicing:backward}
