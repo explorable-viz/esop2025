@@ -15,7 +15,22 @@
       %
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-skip}},
-         right={$\beta \in \V(G)$}
+         right={$\beta \in V$}
+      ]
+      {
+         (V, (\alpha, \beta) \cons E), E'
+         \bwdEdges{\hat{G}}
+         G
+      }
+      {
+         (V, E), (\alpha, \beta) \cons E'  \bwdVertices{\hat{G}} G
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\bwdEdges{}$-step}},
+         right={$\beta \notin V$}
       ]
       {
          (\beta \cons V, (\alpha, \beta) \cons E), (\set{\beta} \times \outN{\hat{G}}(\beta)) \disjunion E'
@@ -25,26 +40,6 @@
       {
          (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
       }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\bwdEdges{}$-step}},
-         right={$\beta \notin \V(G)$}
-      ]
-      {
-         (\set{\alpha}, \set{\alpha} \times \outN{\hat{G}}) \disjunion G, \outN{\hat{G}}(\alpha) \disjunion V
-         \bwdVertices{\hat{G}}
-         G_1
-         \\
-         G_1, V \bwdVertices{\hat{G}} G'
-      }
-      {
-         G, \alpha \cons V  \bwdVertices{\hat{G}} G'
-      }
-      %
-      \and
-      %
    \end{smathpar}}
    \\[3mm]
    {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
