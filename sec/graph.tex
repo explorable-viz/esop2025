@@ -117,12 +117,6 @@ E)$.
 
 \subsection{Galois slicing over dependence graphs}
 
-\begin{definition}
-Define $\consumesF{G} \adjoint \producesF{G} \eqdef \consumesF{\extension{G}}
-\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$.
-\end{definition}
-\noindent Extensionally equivalent but otherwise distinct graphs will induce the same Galois connection.
-
 \begin{definition}[Slicing algorithms]
    \item Suppose $\hat{G}$ a graph.
    \begin{enumerate}
@@ -134,8 +128,8 @@ Define $\consumesF{G} \adjoint \producesF{G} \eqdef \consumesF{\extension{G}}
 \begin{theorem}[Correctness of slicing algorithms]
    \item
    \begin{enumerate}
-   \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\hat{G}}(V) = V' \iff V \bwdAlg{\hat{G}} V'$.
-   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\hat{G}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq \powerset{\sources{\hat{G}}}$. Then $\consumesF{\extension{\hat{G}}}(V) = V' \iff V \bwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq \powerset{\sinks{\hat{G}}}$. Then $\producesF{\extension{\hat{G}}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
    \end{enumerate}
 \end{theorem}
 
