@@ -1,34 +1,36 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, V \bwdVertices{\hat{G}} G'$}\hfill
+   {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\bwdVertices{}$-done}}
+         lab={\ruleName{$\bwdEdges{}$-done}}
       ]
       {
          \strut
       }
       {
-         G, \emptyset \bwdVertices{\hat{G}} G
+         G, \emptyset \bwdEdges{\hat{G}} G
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdVertices{}$-skip}},
-         right={$\alpha \in \V(G)$}
+         lab={\ruleName{$\bwdEdges{}$-skip}},
+         right={$\beta \in \V(G)$}
       ]
       {
-         V, G \bwdVertices{\hat{G}} G'
+         (\beta \cons V, (\alpha, \beta) \cons E), (\set{\beta} \times \outN{\hat{G}}(\beta)) \disjunion E'
+         \bwdEdges{\hat{G}}
+         G
       }
       {
-         \alpha \cons V, G \bwdVertices{\hat{G}} G'
+         (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdVertices{}$-step}},
-         right={$\alpha \notin \V(G)$}
+         lab={\ruleName{$\bwdEdges{}$-step}},
+         right={$\beta \notin \V(G)$}
       ]
       {
          (\set{\alpha}, \set{\alpha} \times \outN{\hat{G}}) \disjunion G, \outN{\hat{G}}(\alpha) \disjunion V
