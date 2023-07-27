@@ -85,10 +85,12 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
       {
-         \emptyset, (\emptyset, \emptyset), V \fwdVertices{\hat{G}} V', G'
+         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         \fwdEdges{\hat{G}}
+         G
       }
       {
-         V \fwdAlg{\hat{G}} V' \cap \sources{\hat{G}}
+         V \fwdAlg{\hat{G}} \sources{\hat{G}}
       }
    \end{smathpar}
    \caption{Forward slicing algorithm}
