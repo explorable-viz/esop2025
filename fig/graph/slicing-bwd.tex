@@ -1,4 +1,5 @@
 \begin{figure}
+   \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
       \begin{smathpar}
       \inferrule*[
@@ -59,4 +60,71 @@
    }
    \caption{Backward slicing algorithm}
    \label{fig:graph:slicing:backward}
+   \end{subfigure}
+   \begin{subfigure}{\textwidth}
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
+      {
+         \strut
+      }
+      {
+         G, \emptyset \fwdEdges{\hat{G}} G
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
+      {
+         (\set{\alpha} \cup V, (\alpha, \beta) \cons E), \alpha \fwdVertex{\hat{G}} G'
+         \\
+         G', E' \fwdEdges{\hat{G}} G^\twoPrime
+      }
+      {
+         (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
+      }
+   \end{smathpar}
+   \\[3mm]
+   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\fwdVertex{}$-add}},
+         right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
+      ]
+      {
+         \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
+      }
+      {
+         G, \alpha \fwdVertex{\hat{G}} G'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\fwdVertex{}$-pending}},
+         right={$\outN{G}(\alpha) \subset \outN{\hat{G}}(\alpha)$}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \alpha \fwdVertex{\hat{G}} G
+      }
+   \end{smathpar}
+   \\[3mm]
+   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      {
+         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         \fwdEdges{\hat{G}}
+         G
+      }
+      {
+         V \fwdAlg{\hat{G}} \sources{\hat{G}}
+      }
+   \end{smathpar}
+   \caption{Forward slicing algorithm}
+   \label{fig:graph:slicing:forward}
+   \end{subfigure}
 \end{figure}
