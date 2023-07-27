@@ -1,6 +1,6 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
+      {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
          \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\bwdAlg{}$}}
@@ -16,7 +16,7 @@
          \end{smathpar}
       }
       \vspace{1mm}
-      {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
+      {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\dom{E} \subseteq \sinks{G}$}
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-done}}
@@ -63,7 +63,7 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill}
+   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sinks{\hat{G}}$ and $V' \subseteq \sources{\hat{G}}$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
       {
@@ -75,7 +75,7 @@
          V \fwdAlg{\hat{G}} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
@@ -97,7 +97,7 @@
          (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
+   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-edges}},
