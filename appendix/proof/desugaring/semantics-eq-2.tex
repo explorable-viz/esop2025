@@ -606,6 +606,44 @@ By induction on derivation of $\evalSugS$
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \Lowlight{\gamma'=\;} \gamma'_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}) \evalS {\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}
+            \\
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+            \\
+            \gamma'_2, \seqEmpty \closeDefs \envEmpty
+            \\
+            \exClosure{\gamma'}{\seqEmpty}{\sigma}, \sigma' \match \gamma'_3, e^\dag
+            \\
+            \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\dag}{\seqEmpty}{\sigma^\dag}
+         }
+         {
+            \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma^\dag}{\seqEmpty}{\sigma^\dag}
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         {
+            \strut
+         }
+         {
+            \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
