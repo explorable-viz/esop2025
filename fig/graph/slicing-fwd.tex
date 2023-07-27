@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
@@ -22,7 +22,7 @@
       }
    \end{smathpar}
    \\[3mm]
-   {\small \flushleft \shadebox{$G, E \fwdEdge{\hat{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$G, E \fwdEdge{\hat{G}} G'$}\hfill}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdEdge{}$-skip-vertex}},
@@ -51,7 +51,7 @@
       }
    \end{smathpar}
    \\[3mm]
-   {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\hat{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-add}},
@@ -75,29 +75,6 @@
       }
       {
          G, \alpha \fwdVertex{\hat{G}} G
-      }
-   \end{smathpar}
-   \\[3mm]
-   {\small \flushleft \shadebox{$V, G, V' \fwdVertices{\hat{G}} V, G'$}\hfill}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdVertices{}$-done}}]
-      {
-         \strut
-      }
-      {
-         V, G, \emptyset \fwdVertices{\hat{G}} V, G
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\fwdVertices{}$-next}}]
-      {
-         V, G, \alpha \fwdVertex{\hat{G}} V_1, G_1
-         \\
-         V_1, G_1, V' \fwdVertices{\hat{G}} V^\twoPrime, G'
-      }
-      {
-         V, G, \alpha \cons V' \fwdVertices{\hat{G}} V^\twoPrime, G'
       }
    \end{smathpar}
    \\[3mm]
