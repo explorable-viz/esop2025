@@ -24,7 +24,7 @@
    \\[3mm]
    {\small \flushleft \shadebox{$G, E \fwdEdge{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
+      \inferrule*[lab={\ruleName{$\fwdEdge{}$-edge}}]
       {
          \outN{G}(\alpha) \cons \beta \subset \outN{\hat{G}}(\alpha)
          \\
@@ -36,16 +36,17 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-vertex}}]
+      \inferrule*[
+         lab={\ruleName{$\fwdEdge{}$-vertex}},
+         right={$\alpha \notin \V(G)$}
+      ]
       {
-         V, G, \alpha
+         G \cup (\set{\alpha}, \set{(\alpha, \beta)}), \alpha
          \fwdVertex{\hat{G}}
-         V_1, G_1
-         \\
-         V_1, G_1, E \fwdEdges{\hat{G}} V', G'
+         G'
       }
       {
-         V, G \disjunion \set{\alpha \mapsto \outN{G}(\alpha) \cons \beta}, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
+         G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} G'
       }
    \end{smathpar}
    \\[3mm]
