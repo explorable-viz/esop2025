@@ -506,7 +506,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', \exApp{\lambda}{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+   \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
    \textit{ with }
    \gamma \desugar \gamma'
    \quad
@@ -770,7 +770,9 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma} 
+            \\
+            \gamma', e \evalS \cFalse
             \\
             \gamma', \seqEmpty \closeDefs \envEmpty
             \\
@@ -779,7 +781,7 @@ By induction on derivation of $\evalSugS$.
             \gamma' \concat \envEmpty \concat \envEmpty, \exNil \evalSugS \exNil
          }
          {
-            \gamma', \exApp{\exFun{\sigma}}{\cFalse}
+            \gamma', \exApp{\exFun{\sigma}}{e}
             \evalSugS
             \exNil
          }
@@ -866,7 +868,9 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+            \\
+            \gamma', e \evalS \cTrue
             \\
             \gamma', \seqEmpty \closeDefs \envEmpty
             \\
