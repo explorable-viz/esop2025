@@ -658,9 +658,17 @@ By induction on derivation of $\evalSugS$.
    \text{(\localref{desugaring:listcomp})}
    \\
    &
+   \Lowlight{\gamma =\;}\gamma_1\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2}{\seqEmpty}{\mu'}})
+   \desugar
+   \gamma_1'\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2'}{\seqEmpty}{\sigma'}})\Lowlight{\;=\gamma'}
+   &
+   \text{(\localref{desugarings}, \localref{desug:env})}
+   \notag
+   \\
+   &
+   \qedLocal
    \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
    &
-   \text{(\localref{desugarings})}
    \notag
    \\
    &
