@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$V, G, E \fwdEdges{\hat{G}} V, G'$}\hfill}
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
@@ -11,16 +11,19 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-skip}}]
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
-         \alpha \cons V, G, E \fwdEdges{\hat{G}} V', G'
+         G, (\alpha, \beta) \fwdEdge{\hat{G}} G'
+         \\
+         G', E \fwdEdges{\hat{G}} G^\twoPrime
       }
       {
-         \alpha \cons V, G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} V', G'
+         G, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} G^\twoPrime
       }
-      %
-      \and
-      %
+   \end{smathpar}
+   \\[3mm]
+   {\small \flushleft \shadebox{$G, E \fwdEdge{\hat{G}} V, G'$}\hfill}
+   \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
          \outN{G}(\alpha) \cons \beta \subset \outN{\hat{G}}(\alpha)
