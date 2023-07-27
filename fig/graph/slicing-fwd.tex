@@ -52,7 +52,7 @@
    {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$}},
+         lab={\ruleName{$\fwdVertex{}$-add}},
          right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
       ]
       {
@@ -60,6 +60,19 @@
       }
       {
          G, \alpha \fwdVertex{\hat{G}} G'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\fwdVertex{}$-pending}},
+         right={$\outN{G}(\alpha) \subset \outN{\hat{G}}(\alpha)$}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \alpha \fwdVertex{\hat{G}} G
       }
    \end{smathpar}
    \\[3mm]
