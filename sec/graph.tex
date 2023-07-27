@@ -14,28 +14,31 @@ generalises the usual image/preimage Galois connection for a function $f: X \to 
 Y \times X$. (We flip the direction of the relation compared to $f$ so we can read $D$ as \emph{depends on}.)
 
 \begin{definition}
-   \item
+   Define the following two functions:
    \begin{enumerate}
       \item $\consumesF{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'.\;D(y,x)}$ \hfill (consumes)
-      \item $\producesF{D}(X') \eqdef \set{y \in Y \mid \forall x \in X.\;D(y,x) \implies x \in X'}$ \hfill (produces)
+      \item $\producesF{D}(X') \eqdef \set{y \in Y \mid \forall x \in \compl{X'}.\;\neg D(y,x)}$ \hfill (produces)
    \end{enumerate}
 \end{definition}
 
-\noindent For a set of outputs, $\consumesF{D}$ collects just the inputs needed for those outputs. For a
-set of inputs, $\producesF{G}$ collects just the outputs that can be produced using only those inputs.
+\begin{lemma}[Galois connection]
+   $\consumesF{D}(Y') \subseteq X' \iff Y' \subseteq \producesF{D}(X')$
+\end{lemma}
+
+\noindent $\consumesF{D}$ collects just the inputs consumed by a set of outputs; $\producesF{D}$ collects just the outputs produced by a set of inputs.
 
 \begin{definition}[De Morgan dual]
    Suppose $\mathcal{A}, \mathcal{B}$ are Boolean algebras.
    \begin{enumerate}
       \item For any $f: \mathcal{A} \to \mathcal{B}$, define $\dual{f}: \mathcal{A} \to \mathcal{B}$ to be $\neg_{\mathcal{B}} \after f \after \neg_{\mathcal{A}}$.
-      \item For any $f \adjoint g: \mathcal{A} \to \mathcal{B}$, define $\dual{(f \adjoint g)}: \mathcal{B} \to \mathcal{B}$ to be $\dual{g} \adjoint \dual{f}$.
+      \item For any $f \adjoint g: \mathcal{A} \to \mathcal{B}$, define $\dual{(f \adjoint g)}: \mathcal{B} \to \mathcal{A}$ to be $\dual{g} \adjoint \dual{f}$.
    \end{enumerate}
 \end{definition}
 
-\begin{definition} Define:
+\begin{definition} Define $\producesDualF{D} \adjoint \consumesDualF{D}: \powerset{Y} \to \powerset{X}$ as follows:
    \begin{enumerate}
-      \item $\consumesDualF{D} := \dual{(\consumesF{D})}$ \hfill (produced by)
-      \item $\producesDualF{D} := \dual{(\producesF{D})}$ \hfill (consumed by)
+      \item $\consumesDualF{D} \eqdef \dual{(\consumesF{D})}$ \hfill (produced by)
+      \item $\producesDualF{D} \eqdef \dual{(\producesF{D})}$ \hfill (consumed by)
    \end{enumerate}
 \end{definition}
 
@@ -43,41 +46,48 @@ set of inputs, $\producesF{G}$ collects just the outputs that can be produced us
    $\consumesF{D} \adjoint \producesF{D} = \producesDualF{D^{-1}} \adjoint \consumesDualF{D^{-1}}$
 \end{lemma}
 
-\begin{definition}[Related inputs and related outputs]
+\begin{definition}[Cooperating inputs and competing outputs]
    Define
    \begin{enumerate}
-      \item $\relatedOutputsF{D} \eqdef \consumesF{DD^{-1}} = \consumesF{D}\consumesF{D^{-1}} = \consumesF{D}\producesDualF{D}$ \hfill (co-consumes)
-      \item $\relatedInputsF{D} \eqdef \consumesF{D^{-1}D} = \consumesF{D^{-1}}\consumesF{D} = \producesDualF{D}\consumesF{D}$ \hfill (co-produces)
+      \item $\relatedOutputsF{D} \eqdef \consumesF{DD^{-1}} = \consumesF{D}\consumesF{D^{-1}} = \consumesF{D}\producesDualF{D}$ \hfill (competes with)
+      \item $\relatedInputsF{D} \eqdef \consumesF{D^{-1}D} = \consumesF{D^{-1}}\consumesF{D} = \producesDualF{D}\consumesF{D}$ \hfill (cooperates with)
    \end{enumerate}
 \end{definition}
 
 \subsection{Dependence graphs}
 
 We now introduce \emph{dependence graphs} $G = (V, E)$ with vertices $\alpha, \beta \in V$ and edges $(\alpha,
-\beta) \in E$ along with some standard graph-theoretic notions. For the following definitions fix $G = (V,
-E)$.
+\beta) \in E$ along with some standard graph-theoretic notions. For the following definitions fix a dependence graph $G$.
 
 \begin{definition}[Opposite graph]
-   Define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+   If $G = (V,E)$, define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
 \begin{definition}[Neighbours]
-   Define the following functions of type $V \to \powerset V$:
+   Define the following functions of type $\V(G) \to \powerset{\V(G)}$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) \eqdef \set{\alpha' \in V \mid (\alpha', \alpha) \in E}$ \hfill (in neighbours)
+      \item $\inN{G}(\alpha) \eqdef \set{\beta \in \V(G) \mid (\beta, \alpha) \in \E(G)}$ \hfill (in neighbours)
       \item $\outN{G} \eqdef \inN{G^{-1}}$ \hfill (out neighbours)
    \end{itemize}
 \end{definition}
 
-\begin{definition}[Induced subgraph]
-   For any $V' \subseteq V$, write $\induced{G}{V'}$ for the subgraph of $G$ induced by $V'$, that is
-   $\induced{G}{V'} \eqdef (V', E')$ where $E' = \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+\begin{definition}[Empty graph, subgraph, union]
+   If $G = (V, E)$ and $G' = (V', E')$ define:
+   \begin{enumerate}
+      \item $G' \subseteq G$ to mean $G'$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
+      \item $G \cup G'$ to mean the (non-disjoint) union ($V \cup V'$, $E \cup E'$) of $G$ and $G'$.
+   \end{enumerate}
 \end{definition}
 
+%\begin{definition}[Induced subgraph]
+%   For any $V' \subseteq V$, define $\induced{G}{V'}$ to be the \emph{subgraph of $G$ induced by $V'$}, namely
+%   $(V', \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
+%\end{definition}
+%
 \begin{definition}[Reachable]
-   Define the \emph{reachability} relation $\reachable{G} \subseteq V^2$ that has $\reachable{G}(\alpha,
+   Define the \emph{reachable-from} relation $\reachable{G} \subseteq \V(G)^2$ that has $\reachable{G}(\alpha,
    \beta)$ iff there exists $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1})
-   \in E$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
+   \in \E(G)$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
 
 %We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
@@ -93,7 +103,7 @@ E)$.
 \begin{definition}[Sources and sinks]
    Define:
    \begin{itemize}
-      \item $\sources{G} \eqdef \set{v \in V \mid \inN{G}(v) = \emptyset}$ \hfill (sources)
+      \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
@@ -102,36 +112,25 @@ E)$.
    Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
-\begin{definition}[Empty graph, subgraph]
-   \item
-   \begin{enumerate}
-      \item Write $\emptyset$ to denote the empty graph $(\emptyset, \emptyset)$.
-      \item Write $G' \subseteq G$ to mean that $G' = (V', E')$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
-   \end{enumerate}
-\end{definition}
-
-\begin{definition}[Subgraph Extension]
-   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
-\end{definition}
+%\begin{definition}[Subgraph Extension]
+%   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
+%\end{definition}
 
 \subsection{Galois slicing over dependence graphs}
 
-Write $\consumesF{G} \adjoint \producesF{G}$ as shorthand for the Galois connection $\consumesF{\extension{G}}
-\adjoint \producesF{\extension{G}}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$. Note that distinct graphs with the same extension will induce the same Galois connection.
-
 \begin{definition}[Slicing algorithms]
-   \item
+   \item Suppose $\hat{G}$ a graph.
    \begin{enumerate}
-      \item \figref{graph:slicing:backward} defines the relation $\consumesAlgR{G}$ \hfill (backward slicing)
-      \item \figref{graph:slicing:forward} defines the relation $\producesAlgR{G}$ \hfill (forward slicing)
+      \item \figref{graph:slicing:backward} defines the relation $\bwdAlg{\hat{G}}$ \hfill (backward slicing).
+      \item \figref{graph:slicing:forward} defines the relation $\fwdAlg{\hat{G}}$ \hfill (forward slicing).
    \end{enumerate}
 \end{definition}
 
 \begin{theorem}[Correctness of slicing algorithms]
    \item
    \begin{enumerate}
-   \item Suppose $V \subseteq \powerset{\sources{G}}$. Then $\consumesF{G}(V) = V' \iff \exists G'.\;V, \emptyset \consumesAlgR{G} G'$ with $\sinks{G'} = V'$.
-   \item Suppose $V \subseteq \powerset{\sinks{G}}$. Then $\producesF{G}(V) = V' \iff \exists G'.\;\induced{G}{V} \producesAlgR{G} G'$ with $\sources{G'} = V'$.
+   \item Suppose $V \subseteq \sources{\hat{G}}$. Then $\consumesF{\extension{\hat{G}}}(V) = V' \iff V \bwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq \sinks{\hat{G}}$. Then $\producesF{\extension{\hat{G}}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
    \end{enumerate}
 \end{theorem}
 

@@ -1,82 +1,130 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V, G' \consumesAlgR{G} G^\twoPrime$}\hfill
+   {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-done}}
+         lab={\ruleName{$\bwdEdges{}$-done}}
       ]
       {
          \strut
       }
       {
-         \varnothing, G' \consumesAlgR{G} G'
+         G, \emptyset \bwdEdges{\hat{G}} G
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-skip}},
-         right={$\alpha \in \V(G')$}
+         lab={\ruleName{$\bwdEdges{}$-skip}},
+         right={$\beta \in V$}
       ]
       {
-         V, G' \consumesAlgR{G} G^\twoPrime
+         (V, (\alpha, \beta) \cons E), E'
+         \bwdEdges{\hat{G}}
+         G
       }
       {
-         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
+         (V, E), (\alpha, \beta) \cons E'  \bwdEdges{\hat{G}} G
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\consumesAlgS$-step}},
-         right={$\alpha \notin \V(G')$}
+         lab={\ruleName{$\bwdEdges{}$-step}},
+         right={$\beta \notin V$}
       ]
       {
-         \V(\inN{G}(\alpha)), G' \disjunion \inN{G}(\alpha) \consumesAlgR{G} G^\dagger
-         \\
-         V, G^\dagger \consumesAlgR{G} G^\twoPrime
+         (\beta \cons V, (\alpha, \beta) \cons E), (\set{\beta} \times \outN{\hat{G}}(\beta)) \disjunion E'
+         \bwdEdges{\hat{G}}
+         G
       }
       {
-         \set{\alpha} \cup V, G' \consumesAlgR{G} G^\twoPrime
+         (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
       }
-      %
-      \and
-      %
    \end{smathpar}}
+%   \\[3mm]
+   {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
+      \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\bwdAlg{}$}}
+      ]
+      {
+         (V, \emptyset), \bigcup\set{\set{\alpha} \times \outN{\hat{G}}(\alpha) \mid \alpha \in V}
+         \bwdEdges{\hat{G}}
+         G
+      }
+      {
+         V \bwdAlg{\hat{G}} \sinks{G}
+      }
+      \end{smathpar}
+   }
    \caption{Backward slicing}
    \label{fig:graph:slicing:backward}
    \end{subfigure}
+   \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$G' \producesAlgR{G} G^\twoPrime$}\hfill
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
    \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\producesAlgS$-done}},
-         right={$\nexists \alpha \in N(V).\; \outN{G}(\alpha) \subseteq V(G')$}
-      ]
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
          \strut
       }
       {
-         G' \producesAlgR{G} G'
+         G, \emptyset \fwdEdges{\hat{G}} G
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
+      {
+         (\set{\alpha} \cup V, (\alpha, \beta) \cons E), \alpha \fwdVertex{\hat{G}} G'
+         \\
+         G', E' \fwdEdges{\hat{G}} G^\twoPrime
+      }
+      {
+         (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
+      }
+   \end{smathpar}
+%   \\[3mm]
+   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\fwdVertex{}$-edges}},
+         right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
+      ]
+      {
+         G, \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
+      }
+      {
+         G, \alpha \fwdVertex{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\producesAlgS$-next}},
-         right={$\alpha \notin V(G')$}
+         lab={\ruleName{$\fwdVertex{}$-pending}},
+         right={$\outN{G}(\alpha) \subset \outN{\hat{G}}(\alpha)$}
       ]
       {
-         \alpha \in \inN{G}(G')
-         \\
-         \outN{G}(\alpha) \subseteq V
-         \\
-         G' \disjunion \set{\alpha} \producesAlgR{G} G''
+         \strut
       }
       {
-         G' \producesAlgR{G} G''
+         G, \alpha \fwdVertex{\hat{G}} G
       }
-   \end{smathpar}}
+   \end{smathpar}
+%   \\[3mm]
+   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      {
+         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         \fwdEdges{\hat{G}}
+         G
+      }
+      {
+         V \fwdAlg{\hat{G}} \sources{G}
+      }
+   \end{smathpar}
    \caption{Forward slicing}
    \label{fig:graph:slicing:forward}
    \end{subfigure}
