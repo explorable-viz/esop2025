@@ -680,6 +680,24 @@ By induction on derivation of $\evalSugS$
    &
    \text{(IH)}
    \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*
+         [lab={\ruleName{$\evalSugS$-listcomp-gen}}]
+         {
+            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \\
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS u
+         }
+      \end{smathpar}
+   }
+   &
+   \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
