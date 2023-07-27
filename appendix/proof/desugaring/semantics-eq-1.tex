@@ -516,13 +516,13 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', \seqEmpty \closeDefs \emptyset
+   \gamma', \seqEmpty \closeDefs \envEmpty
    &
    \text{$\closeDefs$}
    \notag
    \\
    &
-   \gamma' \concat \emptyset \concat \gamma^\ddagger, e^\dag \evalS u^\dag
+   \gamma' \concat \envEmpty \concat \gamma^\ddagger, e^\dag \evalS u^\dag
    \textit{ with }
    u \desugar u^\dag
    \quad
@@ -541,11 +541,11 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
             \\
-            \gamma', \seqEmpty \closeDefs \emptyset
+            \gamma', \seqEmpty \closeDefs \envEmpty
             \\
             v', \sigma \match \gamma^\ddagger, e^\dag
             \\
-            \gamma' \concat \emptyset \concat \gamma^\ddagger, e^\dag \evalSugS u^\dag
+            \gamma' \concat \envEmpty \concat \gamma^\ddagger, e^\dag \evalSugS u^\dag
          }
          {
             \gamma', \exApp{\exFun{\sigma}}{e}
@@ -744,13 +744,13 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \cFalse, \sigma \match \emptyset, \exNil
+   \cFalse, \sigma \match \envEmpty, \exNil
    &
    \text{$\match$}
    \notag
    \\
    &
-   \gamma', \seqEmpty \closeDefs \emptyset
+   \gamma', \seqEmpty \closeDefs \envEmpty
    &
    \text{$\closeDefs$}
    \notag
@@ -772,11 +772,11 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
             \\
-            \gamma', \seqEmpty \closeDefs \emptyset
+            \gamma', \seqEmpty \closeDefs \envEmpty
             \\
-            \cFalse, \sigma \match \emptyset, \exNil
+            \cFalse, \sigma \match \envEmpty, \exNil
             \\
-            \gamma' \concat \emptyset \concat \emptyset, \exNil \evalSugS \exNil
+            \gamma' \concat \envEmpty \concat \envEmpty, \exNil \evalSugS \exNil
          }
          {
             \gamma', \exApp{\exFun{\sigma}}{\cFalse}
@@ -836,7 +836,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \cTrue, \sigma \match \emptyset, e'
+   \cTrue, \sigma \match \envEmpty, e'
    &
    \text{$\match$}
    \notag
@@ -852,7 +852,7 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma, \seqEmpty \closeDefs \emptyset
+   \gamma, \seqEmpty \closeDefs \envEmpty
    &
    \text{$\closeDefs$}
    \notag
@@ -868,11 +868,11 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
             \\
-            \gamma', \seqEmpty \closeDefs \emptyset
+            \gamma', \seqEmpty \closeDefs \envEmpty
             \\
-            \cTrue, \sigma \match \emptyset, e'
+            \cTrue, \sigma \match \envEmpty, e'
             \\
-            \gamma' \concat \emptyset \concat \emptyset, e' \evalSugS v'
+            \gamma' \concat \envEmpty \concat \envEmpty, e' \evalSugS v'
          }
          {
             \gamma', \exApp{\exFun{\sigma}}{\cTrue}
