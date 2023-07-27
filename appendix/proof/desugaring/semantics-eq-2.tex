@@ -608,8 +608,9 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*{
-            \inferrule*
+         \inferrule*[right=\ruleName{$\evalS$-app}]
+         {
+            \inferrule*[right={\ruleName{$\evalS$-app}}]
             {
                \Lowlight{\gamma'=\;} \gamma'_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}) \evalS {\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}
                \\
