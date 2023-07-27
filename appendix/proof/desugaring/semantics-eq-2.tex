@@ -669,6 +669,14 @@ By induction on derivation of $\evalSugS$
    \notag
    \\
    &
+   \Lowlight{\gamma =\;}\gamma_1\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2}{\seqEmpty}{\mu'}})
+   \desugar
+   \gamma_1'\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2'}{\seqEmpty}{\sigma'}})\Lowlight{\;=\gamma'}
+   &
+   \text{(\localref{desug:env})}
+   \notag
+   \\
+   &
    \qedLocal
    \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
    \textit{ with }
