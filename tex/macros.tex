@@ -213,7 +213,7 @@
 \newcommand*{\outN}[1]{\opName{out}_{#1}}
 \newcommand*{\E}{\opName{E}}
 \newcommand*{\V}{\opName{V}}
-\newcommand*{\extension}[1]{\opName{ext}(#1)}
+\newcommand*{\extension}[1]{\opName{ext}_{#1}}
 \newcommand*{\reachable}[1]{R_{#1}}
 \newcommand*{\sinks}[1]{T(#1)}
 \newcommand*{\sources}[1]{S(#1)}
@@ -314,16 +314,26 @@
 \newcommand*{\orElse}{\rightharpoonup}
 
 % slicing
+\newcommand*{\bwdS}{\scalebox{0.8}{$\vartriangleleft$}}
+\newcommand*{\bwdDualS}{\scalebox{0.8}{$\blacktriangleleft$}}
+\newcommand*{\fwdS}{\scalebox{0.8}{$\vartriangleright$}}
+\newcommand*{\fwdDualS}{\scalebox{0.8}{$\blacktriangleright$}}
 \newcommand*{\consumesAlgS}{\mathrel{\opName{bwd}}}
 \newcommand*{\consumesAlgR}[1]{\consumesAlgS_{#1}}
-\newcommand*{\producesAlgS}{\mathrel{\opName{fwd}}}
-\newcommand*{\producesAlgR}[1]{\producesAlgS_{#1}}
-\newcommand*{\consumesF}[1]{\scalebox{0.8}{$\vartriangleleft$}_{#1}}
-\newcommand*{\consumesDualF}[1]{\scalebox{0.8}{$\blacktriangleleft$}_{#1}}
-\newcommand*{\producesF}[1]{\scalebox{0.8}{$\vartriangleright$}_{#1}}
-\newcommand*{\producesDualF}[1]{\scalebox{0.8}{$\blacktriangleright$}_{#1}}
-\newcommand*{\relatedOutputsF}[1]{\scalebox{0.8}{$\vartriangleleft\blacktriangleright$}_{#1}}
-\newcommand*{\relatedInputsF}[1]{\scalebox{0.8}{$\blacktriangleright\vartriangleleft$}_{#1}}
+\newcommand*{\bwdEdges}[1]{\mathrel{{\bwdS}\opName{edges}_{#1}}}
+\newcommand*{\bwdVertices}[1]{\mathrel{{\bwdS}\opName{vertices}_{#1}}}
+\newcommand*{\bwdAlg}[1]{\mathrel{{\bwdS}\opName{alg}_{#1}}}
+\newcommand*{\fwdEdge}[1]{\mathrel{{\fwdS}\opName{edge}_{#1}}}
+\newcommand*{\fwdEdges}[1]{\mathrel{{\fwdS}\opName{edges}_{#1}}}
+\newcommand*{\fwdVertex}[1]{\mathrel{{\fwdS}\opName{vertex}_{#1}}}
+\newcommand*{\fwdVertices}[1]{\mathrel{{\fwdS}\opName{vertices}_{#1}}}
+\newcommand*{\fwdAlg}[1]{\mathrel{{\fwdS}\opName{alg}_{#1}}}
+\newcommand*{\consumesF}[1]{\bwdS_{#1}}
+\newcommand*{\consumesDualF}[1]{\bwdDualS_{#1}}
+\newcommand*{\producesF}[1]{\fwdS_{#1}}
+\newcommand*{\producesDualF}[1]{\fwdDualS_{#1}}
+\newcommand*{\relatedOutputsF}[1]{{\bwdS}{\fwdDualS}_{#1}}
+\newcommand*{\relatedInputsF}[1]{{\fwdDualS}{\bwdS}_{#1}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
