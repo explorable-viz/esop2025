@@ -562,7 +562,9 @@ By induction on derivation of $\evalSugS$.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}   
-         \inferrule*
+         \inferrule*[
+            right={\ruleName{$\evalS$-app}}
+         ]
          {
             \Lowlight{\gamma =\;} \gamma_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma_2}{\seqEmpty}{\mu'}}), \varConcatMap \evalSugS \exClosure{\gamma_2}{\seqEmpty}{\mu'}
             \\
@@ -585,7 +587,7 @@ By induction on derivation of $\evalSugS$.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[center]
+         \inferrule*[center, right={\ruleName{$\evalS$-app}}]
          {
             \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma^\dag}{\seqEmpty}{\mu^\dag}
             \\
@@ -650,9 +652,7 @@ By induction on derivation of $\evalSugS$.
    \text{inversion}
    \\
    &
-   s \desugar e
-   \opAnd
-   \exFun{\mu} \desugar \exFun{\sigma}
+   \Lowlight{\exFun{\mu} =\;} \exClosure{\gamma}{\seqEmpty}{\mu} \desugar \exClosure{\gamma'}{\seqEmpty}{\sigma} \Lowlight{\;=\exFun{\sigma}}
    &
    \locallabel{desugarings}
    \text{(\localref{desugaring:listcomp})}
