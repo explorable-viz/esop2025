@@ -1,4 +1,67 @@
 \begin{figure}
+   \begin{subfigure}{\textwidth}
+   {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
+      \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\bwdEdges{}$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         G, \emptyset \bwdEdges{\hat{G}} G
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\bwdEdges{}$-skip}},
+         right={$\beta \in V$}
+      ]
+      {
+         (V, (\alpha, \beta) \cons E), E'
+         \bwdEdges{\hat{G}}
+         G
+      }
+      {
+         (V, E), (\alpha, \beta) \cons E'  \bwdEdges{\hat{G}} G
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\bwdEdges{}$-step}},
+         right={$\beta \notin V$}
+      ]
+      {
+         (\beta \cons V, (\alpha, \beta) \cons E), (\set{\beta} \times \outN{\hat{G}}(\beta)) \disjunion E'
+         \bwdEdges{\hat{G}}
+         G
+      }
+      {
+         (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
+      }
+   \end{smathpar}}
+   \\[3mm]
+   {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
+      \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\bwdAlg{}$}}
+      ]
+      {
+         (V, \emptyset), \bigcup\set{\set{\alpha} \times \outN{\hat{G}}(\alpha) \mid \alpha \in V}
+         \bwdEdges{\hat{G}}
+         G
+      }
+      {
+         V \bwdAlg{\hat{G}} \sinks{G}
+      }
+      \end{smathpar}
+   }
+   \caption{Backward slicing algorithm}
+   \label{fig:graph:slicing:backward}
+   \end{subfigure}
+   \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
@@ -25,7 +88,7 @@
    {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-add}},
+         lab={\ruleName{$\fwdVertex{}$-edges}},
          right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
       ]
       {
@@ -63,4 +126,5 @@
    \end{smathpar}
    \caption{Forward slicing algorithm}
    \label{fig:graph:slicing:forward}
+   \end{subfigure}
 \end{figure}
