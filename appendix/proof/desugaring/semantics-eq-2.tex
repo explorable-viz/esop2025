@@ -405,7 +405,7 @@ By induction on derivation of $\evalSugS$
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-listcomp-done}}
+            lab={\ruleName{$\desugar$-list-comp-done}}
          ]
          {
             s \desugar e
@@ -451,7 +451,7 @@ By induction on derivation of $\evalSugS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalS$-listcomp-decl}}
+            lab={\ruleName{$\evalS$-list-comp-decl}}
          ]
          {
             \gamma', (\exFun{\sigma}, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
@@ -472,7 +472,7 @@ By induction on derivation of $\evalSugS$
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-app}},
+            lab={\ruleName{$\desugar$-list-comp-decl}},
             width=3.3in,
          ]
          {
@@ -640,6 +640,7 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
+   \notag
    \\
    &
    \derivation{\derivationWidth}{
@@ -691,7 +692,7 @@ By induction on derivation of $\evalSugS$
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*
-         [lab={\ruleName{$\evalSugS$-listcomp-gen}}]
+         [lab={\ruleName{$\evalSugS$-list-comp-gen}}]
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
