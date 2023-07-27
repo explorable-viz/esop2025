@@ -51,13 +51,15 @@
    \\[3mm]
    {\small \flushleft \shadebox{$V, G, \alpha \fwdVertex{\hat{G}} V, G'$}\hfill}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdVertex{}$}}]
+      \inferrule*[
+         lab={\ruleName{$\fwdVertex{}$}},
+         right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
+      ]
       {
-         \alpha \cons V, G, \inN{\hat{G}}(\alpha) \times \set{\alpha}
-         \fwdEdges{\hat{G}} V', G'
+         \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
       }
       {
-         V, G, \alpha \fwdVertex{\hat{G}} V', G'
+         G, \alpha \fwdVertex{\hat{G}} G'
       }
    \end{smathpar}
    \\[3mm]
