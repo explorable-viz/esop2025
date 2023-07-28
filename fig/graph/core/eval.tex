@@ -62,14 +62,14 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
       {
-         G_1, \gamma, \seq{e}, V \evalSugS G_2, \seq{v}
+         (V, E), \gamma, \seq{e}, V' \evalSugS G, \seq{v}
          \\
-         \alpha' \notin \V(G)
+         \alpha' \notin V
       }
       {
-         G_1, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
+         (V, E), \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V'
          \evalSugS
-         \mkAddr{G_2}{V \cup \set{\alpha}}{\alpha'},
+         \alpha' \cons V, (\set{\alpha'} \times V) \disjunion E,
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
