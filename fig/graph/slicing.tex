@@ -1,6 +1,22 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill
+      {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
+         \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\bwdAlg{}$}}
+         ]
+         {
+            (V, \emptyset), \bigcup\set{\set{\alpha} \times \outN{\hat{G}}(\alpha) \mid \alpha \in V}
+            \bwdEdges{\hat{G}}
+            G
+         }
+         {
+            V \bwdAlg{\hat{G}} \sinks{G}
+         }
+         \end{smathpar}
+      }
+      \vspace{1mm}
+      {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\dom{E} \subseteq \sinks{G}$}
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-done}}
@@ -42,28 +58,24 @@
          (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
       }
    \end{smathpar}}
-%   \\[3mm]
-   {\small \flushleft \shadebox{$V \bwdAlg{\hat{G}} V'$}\hfill
-      \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\bwdAlg{}$}}
-      ]
-      {
-         (V, \emptyset), \bigcup\set{\set{\alpha} \times \outN{\hat{G}}(\alpha) \mid \alpha \in V}
-         \bwdEdges{\hat{G}}
-         G
-      }
-      {
-         V \bwdAlg{\hat{G}} \sinks{G}
-      }
-      \end{smathpar}
-   }
    \caption{Backward slicing}
    \label{fig:graph:slicing:backward}
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill}
+   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sinks{\hat{G}}$ and $V' \subseteq \sources{\hat{G}}$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      {
+         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         \fwdEdges{\hat{G}}
+         G
+      }
+      {
+         V \fwdAlg{\hat{G}} \sources{G}
+      }
+   \end{smathpar}\vspace{1mm}
+   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
@@ -84,9 +96,8 @@
       {
          (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
       }
-   \end{smathpar}
-%   \\[3mm]
-   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill}
+   \end{smathpar}\vspace{1mm}
+   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-edges}},
@@ -110,19 +121,6 @@
       }
       {
          G, \alpha \fwdVertex{\hat{G}} G
-      }
-   \end{smathpar}
-%   \\[3mm]
-   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill}
-   \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
-      {
-         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
-         \fwdEdges{\hat{G}}
-         G
-      }
-      {
-         V \fwdAlg{\hat{G}} \sources{G}
       }
    \end{smathpar}
    \caption{Forward slicing}
