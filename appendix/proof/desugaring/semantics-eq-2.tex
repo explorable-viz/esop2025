@@ -433,14 +433,12 @@ By induction on derivation of $\evalSugS$
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalS$-cons}}
-         ]
+         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
          {
-            \gamma, s \evalSugS v
+            \gamma, s \evalSugR{S} v
          }
          {
-            \gamma, \exApp{\cCons}{(s, \exNil)} \evalSugS \gamma, \exApp{\cCons}{(v, \exNil)}
+            \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{v, \exNil}
          }
       \end{smathpar}
    }
