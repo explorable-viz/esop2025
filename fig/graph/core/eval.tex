@@ -102,14 +102,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
-         \\
-         \alpha' \notin \V(G)
+         G, \gamma, \seq{e}, V \evalSugS (V', E), \seq{v}
       }
       {
          G, \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalSugS
-         \mkAddr{G'}{V}{\alpha'},
+         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
          \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
