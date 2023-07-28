@@ -52,9 +52,9 @@
          \strut
       }
       {
-         (V, E), \gamma, \annStr{s}{\alpha}, V'
+         G, \gamma, \annStr{s}{\alpha}, V
          \evalSugS
-         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
+         G \disjunion \set{\alpha' \mapsto V},
          \annStr{s}{\alpha'}
       }
       %
@@ -62,12 +62,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS (V', E), \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
       }
       {
          G, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalSugS
-         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
+         G' \disjunion \set{\alpha' \mapsto V},
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
@@ -87,14 +87,14 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-dict}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{\annStr{s}{\beta}}
+         G, \gamma, \seq{e}, V \evalSugS G_1, \seq{\annStr{s}{\beta}}
          \\
-         G', \gamma, \seq{e}', V \evalSugS (V', E), \seq{v}
+         G_1, \gamma, \seq{e}', V \evalSugS G', \seq{v}
       }
       {
          G, \gamma, \annDict{\seq{\bind{e}{e}}'}{\alpha},         V
          \evalSugS
-         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
+         G' \disjunion \set{\alpha' \mapsto V},
          \annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
       }
       %
@@ -102,12 +102,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS (V', E), \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
       }
       {
          G, \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalSugS
-         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
+         G' \disjunion \set{\alpha' \mapsto V},
          \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
