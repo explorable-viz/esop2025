@@ -151,14 +151,14 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS G_1, \seq{v}
          \\
-         \interpret{f}(G', \seq{v}) = (G^\twoPrime, u)
+         \interpret{f}(G_1, \seq{v}) = (G', u)
       }
       {
          G, \gamma, \exForeignApp{f}{\seq{e}}, V
          \evalSugS
-         G^\twoPrime, u
+         G', u
       }
       %
       \and
@@ -167,14 +167,14 @@
          lab={\ruleName{$\evalSugS$-let}}
       ]
       {
-         G, \gamma, e, V \evalSugS G', v
+         G, \gamma, e, V \evalSugS G_1, v
          \\
-         G', \gamma \cons (\bind{x}{v}), e', V \evalSugS G^\twoPrime, v'
+         G_1, \gamma \cons (\bind{x}{v}), e', V \evalSugS G', v'
       }
       {
          G, \gamma, \exLet{x}{e}{e'}, V
          \evalSugS
-         G^\twoPrime, v'
+         G', v'
       }
       %
       \and
