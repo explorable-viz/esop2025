@@ -667,16 +667,34 @@ By induction on derivation of $\evalSugS$
    \notag
    \\
    &
-   \Lowlight{\exFun{\mu}=\;} \exClosure{\gamma}{\seqEmpty}{\mu} \desugar \exClosure{\gamma'}{\seqEmpty}{\sigma} \Lowlight{\;= \exFun{\sigma}}
+   \inferrule*[
+      right={\ruleName{$\desugar$-app}}
+   ]
+   {
+      \inferrule*[
+         right={\ruleName{$\desugar$-app}}
+      ]
+      {
+         \inferrule*[right={\ruleName{$\desugar$-lambda}}]
+         {
+            \mu \desugar \sigma
+         }
+         {
+            \exFun{\mu} \desugar \exFun{\sigma}
+         }
+         \\
+         \varConcatMap \desugar \varConcatMap
+      }
+      {
+         \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
+      }
+      \\
+      s \desugar e
+   }
+   {
+      \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+   }
    &
-   \notag
-   \\
-   &
-   \Lowlight{\gamma =\;}\gamma_1\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2}{\seqEmpty}{\mu'}})
-   \desugar
-   \gamma_1'\cdot(\bind{\varConcatMap}{\exClosure{\gamma_2'}{\seqEmpty}{\sigma'}})\Lowlight{\;=\gamma'}
-   &
-   \text{(\localref{desug:env})}
    \notag
    \\
    &
@@ -688,6 +706,7 @@ By induction on derivation of $\evalSugS$
    (\exists u)
    &
    \text{(IH)}
+   \notag
    \\
    &
    \qedLocal
@@ -706,6 +725,7 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
+   \notag
    \\
    \intertext{\crossrule}
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
