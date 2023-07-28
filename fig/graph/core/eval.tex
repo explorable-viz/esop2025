@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, \gamma, \seq{e}, V \evalSugS G', \seq{v}$}%
+   {\small \flushleft \shadebox{$G, \gamma, \seq{e}, V \evalSugS G', \seq{v}$}\hfill\textit{where $V \subseteq \V(G)$ and $G \subseteq G'$}%
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalSugS$-seq}}
@@ -16,7 +16,7 @@
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$G, \gamma, e, V \evalSugS G', v$}%
+   {\small \flushleft \shadebox{$G, \gamma, e, V \evalSugS G', v$}\hfill\textit{where $V \subseteq \V(G)$ and $G \subseteq G'$}%
    \begin{smathpar}
       \inferrule*[
       lab={\ruleName{$\evalSugS$-var}}
@@ -37,9 +37,9 @@
          \strut
       }
       {
-         G, \gamma, \annInt{n}{\alpha}, V
+         (V, E), \gamma, \annInt{n}{\alpha}, V'
          \evalSugS
-         \mkAddr{G}{V \cup \set{\alpha}}{\alpha'},
+         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
          \annInt{n}{\alpha'}
       }
       %
@@ -52,9 +52,9 @@
          \strut
       }
       {
-         G, \gamma, \annStr{s}{\alpha}, V
+         (V, E), \gamma, \annStr{s}{\alpha}, V'
          \evalSugS
-         \mkAddr{G}{V \cup \set{\alpha}}{\alpha'},
+         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
          \annStr{s}{\alpha'}
       }
       %
@@ -62,12 +62,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS (V', E), \seq{v}
       }
       {
          G, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalSugS
-         \mkAddr{G'}{V \cup \set{\alpha}}{\alpha'},
+         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
@@ -89,12 +89,12 @@
       {
          G, \gamma, \seq{e}, V \evalSugS G', \seq{\annStr{s}{\beta}}
          \\
-         G', \gamma, \seq{e}', V \evalSugS G^\twoPrime, \seq{v}
+         G', \gamma, \seq{e}', V \evalSugS (V', E), \seq{v}
       }
       {
          G, \gamma, \annDict{\seq{\bind{e}{e}}'}{\alpha},         V
          \evalSugS
-         \mkAddr{G^\twoPrime}{V \cup \set{\alpha}}{\alpha'},
+         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
          \annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
       }
       %
@@ -102,13 +102,13 @@
       %
       \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS (V', E), \seq{v}
       }
       {
-         G, \gamma, \exConstr{c}{\seq{e}}, V
+         G, \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalSugS
-         \mkAddr{G'}{V}{\alpha},
-         \annConstr{c}{\seq{v}}{\alpha}
+         (\alpha' \cons V', (\set{\alpha'} \times V) \disjunion E),
+         \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
       \and
@@ -131,18 +131,18 @@
          width=3.3in,
       ]
       {
-         G, \gamma, (e, e'), V \evalS G', (\annClosure{\gamma_1}{\rho}{\sigma}{V_1}, v)
+         G, \gamma, (e, e'), V \evalS G_1, (\annClosure{\gamma_1}{\rho}{\sigma}{V_1}, v)
          \\
          \gamma_1, \rho, V_1 \closeDefs \gamma_2
          \\
          v, \sigma \match \gamma_3, e, V_2
          \\
-         G', \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalSugS G^\twoPrime, u
+         G_1, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalSugS G', u
       }
       {
          G, \gamma, \exApp{e}{e'}, V
          \evalSugS
-         G^\twoPrime, u
+         G', u
       }
       %
       \and
@@ -151,14 +151,14 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         G, \gamma, \seq{e}, V \evalSugS G', \seq{v}
+         G, \gamma, \seq{e}, V \evalSugS G_1, \seq{v}
          \\
-         \interpret{f}(G', \seq{v}) = (G^\twoPrime, u)
+         \interpret{f}(G_1, \seq{v}) = (G', u)
       }
       {
          G, \gamma, \exForeignApp{f}{\seq{e}}, V
          \evalSugS
-         G^\twoPrime, u
+         G', u
       }
       %
       \and
@@ -167,14 +167,14 @@
          lab={\ruleName{$\evalSugS$-let}}
       ]
       {
-         G, \gamma, e, V \evalSugS G', v
+         G, \gamma, e, V \evalSugS G_1, v
          \\
-         G', \gamma \cons (\bind{x}{v}), e', V \evalSugS G^\twoPrime, v'
+         G_1, \gamma \cons (\bind{x}{v}), e', V \evalSugS G', v'
       }
       {
          G, \gamma, \exLet{x}{e}{e'}, V
          \evalSugS
-         G^\twoPrime, v'
+         G', v'
       }
       %
       \and
@@ -195,7 +195,7 @@
    \end{smathpar}}
    \\[2mm]
    {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs \gamma'$}
-    \hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
+    \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
    \begin{smathpar}
       \inferrule*[]
       {
