@@ -39,7 +39,7 @@
       {
          (V, E), \gamma, \annInt{n}{\alpha}, V'
          \evalSugS
-         \alpha' \cons V, (\set{\alpha'} \times V) \disjunion E,
+         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
          \annInt{n}{\alpha'}
       }
       %
@@ -54,7 +54,7 @@
       {
          (V, E), \gamma, \annStr{s}{\alpha}, V'
          \evalSugS
-         \alpha' \cons V, (\set{\alpha'} \times V) \disjunion E,
+         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
          \annStr{s}{\alpha'}
       }
       %
@@ -63,13 +63,11 @@
       \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
       {
          (V, E), \gamma, \seq{e}, V' \evalSugS G, \seq{v}
-         \\
-         \alpha' \notin V
       }
       {
          (V, E), \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V'
          \evalSugS
-         \alpha' \cons V, (\set{\alpha'} \times V) \disjunion E,
+         (\alpha' \cons V, (\set{\alpha'} \times V) \disjunion E),
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
