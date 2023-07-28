@@ -452,6 +452,151 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\evalS$-app}}]
+         {
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
+            \\
+            \cFalse, \sigma \match \envEmpty, \exNil
+            \\
+            \gamma', \exNil \evalS \exNil
+         }
+         {
+            \gamma', \exApp{\exFun{\sigma}}{\cFalse} \evalS \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+         {
+            s \desugar e
+            \\
+            \exListComp{s'}{\seq{q}} \desugar e'
+            \\
+            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+         }
+         {
+            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma, s \evalSugS \cFalse
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-guard-false}}]
+         {
+            \gamma, s \evalSugS \cFalse
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cdot \seq{q}} \evalSugS \exNil
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalS$-app}}
+         ]
+         {
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
+            \\
+            \cTrue, \sigma \match \envEmpty, e'
+            \\
+            \gamma', e' \evalS v'
+         }
+         {
+            \gamma', \exApp{\exFun{\sigma}}{\cTrue} \evalS v'
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+         {
+            s \desugar e
+            \\
+            \exListComp{s'}{\seq{q}} \desugar e'
+            \\
+            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+         }
+         {
+            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
+   \notag
+   \\
+   &
+   \gamma, s \evalSugS \cTrue
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \gamma, \exListComp{s'}{\seq{q}} \evalS v
+   \textit{ with }
+   v \desugar v'
+   (\exists v)
+   &
+   \text{(IH)}
+   \notag
+   \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-true}}
+         ]
+         {
+            \gamma, s \evalSugS \cTrue
+            \\
+            \gamma, \exListComp{s'}{\seq{q}} \evalSugS v
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cdot \seq{q}} \evalSugS v
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   \intertext{\crossrule}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   &
+   \caseDerivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalS$-list-comp-decl}}
          ]
@@ -524,7 +669,9 @@ By induction on derivation of $\evalSugS$
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-decl}}
+         ]
          {
             \gamma, s \evalSugS u'
             \\
@@ -534,71 +681,6 @@ By induction on derivation of $\evalSugS$
          }
          {
             \gamma, \exListComp{s'}{\qualDeclaration{p}{s} \cdot \seq{q}} \evalS v^\dag
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalS$-app}}]
-         {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
-            \\
-            \cFalse, \sigma \match \envEmpty, \exNil
-            \\
-            \gamma', \exNil \evalS \exNil
-         }
-         {
-            \gamma', \exApp{\exFun{\sigma}}{\cFalse} \evalS \exNil
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
-         {
-            s \desugar e
-            \\
-            \exListComp{s'}{\seq{q}} \desugar e'
-            \\
-            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
-         }
-         {
-            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exFun{\sigma}}{e}
-         }
-      \end{smathpar}
-   }
-   &
-   \text{inversion}
-   \notag
-   \\
-   &
-   \gamma, s \evalSugS \cFalse
-   &
-   \text{(IH)}
-   \notag
-   \\
-   &
-   \qedLocal
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-guard-false}}]
-         {
-            \gamma, s \evalSugS \cFalse
-         }
-         {
-            \gamma, \exListComp{s'}{\qualGuard{s} \cdot \seq{q}} \evalSugS \exNil
          }
       \end{smathpar}
    }
@@ -721,86 +803,6 @@ By induction on derivation of $\evalSugS$
          }
          {
             \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS u
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   &
-   \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalS$-app}}
-         ]
-         {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
-            \\
-            \cTrue, \sigma \match \envEmpty, e'
-            \\
-            \gamma', e' \evalS v'
-         }
-         {
-            \gamma', \exApp{\exFun{\sigma}}{\cTrue} \evalS v'
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
-         {
-            s \desugar e
-            \\
-            \exListComp{s'}{\seq{q}} \desugar e'
-            \\
-            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
-         }
-         {
-            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exFun{\sigma}}{e}
-         }
-      \end{smathpar}
-   }
-   &
-   \text{inversion}
-   \notag
-   \\
-   &
-   \gamma, s \evalSugS \cTrue
-   &
-   \text{(IH)}
-   \notag
-   \\
-   &
-   \gamma, \exListComp{s'}{\seq{q}} \evalS v
-   \textit{ with }
-   v \desugar v'
-   (\exists v)
-   &
-   \text{(IH)}
-   \notag
-   \\
-   &
-   \qedLocal
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp-guard-true}}
-         ]
-         {
-            \gamma, s \evalSugS \cTrue
-            \\
-            \gamma, \exListComp{s'}{\seq{q}} \evalSugS v
-         }
-         {
-            \gamma, \exListComp{s'}{\qualGuard{s} \cdot \seq{q}} \evalSugS v
          }
       \end{smathpar}
    }
