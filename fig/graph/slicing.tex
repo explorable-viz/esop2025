@@ -32,30 +32,30 @@
       %
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-skip}},
-         right={$\beta \in V$}
+         right={$\beta \in \V(G)$}
       ]
       {
-         (V, (\alpha, \beta) \cons E), E'
+         G \cup \set{\alpha \mapsto \set{\beta}}, E'
          \bwdEdges{\hat{G}}
-         G
+         G'
       }
       {
-         (V, E), (\alpha, \beta) \cons E'  \bwdEdges{\hat{G}} G
+         G, (\alpha, \beta) \cons E'  \bwdEdges{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-step}},
-         right={$\beta \notin V$}
+         right={$\beta \notin \V(G)$}
       ]
       {
-         (\beta \cons V, (\alpha, \beta) \cons E), \E(\domrestrict{\hat{G}}{\beta}) \disjunion E'
+         G \cup \set{\alpha \mapsto \set{\beta}}, \E(\domrestrict{\hat{G}}{\beta}) \disjunion E'
          \bwdEdges{\hat{G}}
-         G
+         G'
       }
       {
-         (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
+         G, (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G'
       }
    \end{smathpar}}
    \caption{Backward slicing}
