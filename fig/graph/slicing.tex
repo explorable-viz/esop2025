@@ -67,9 +67,11 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
       {
-         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         (V, \emptyset),
+         (\emptyset, \emptyset),
+         \bigcup\set{\E(\domrestrict{\hat{G}^{-1}}{\alpha}) \mid \alpha \in V}
          \fwdEdges{\hat{G}}
-         G
+         G, H
       }
       {
          V \fwdAlg{\hat{G}} \sources{G}
@@ -104,7 +106,7 @@
          lab={\ruleName{$\fwdVertex{}$-grow}}
       ]
       {
-         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \domrestrict{\hat{G}^{-1}}{\alpha}
+         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \E(\domrestrict{\hat{G}^{-1}}{\alpha})
          \fwdEdges{\hat{G}}
          G', H'
       }
