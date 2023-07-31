@@ -97,17 +97,18 @@
          (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-grow}},
-         right={$H' = \domrestrict{\hat{G}}{\set{\alpha}}$}
+         lab={\ruleName{$\fwdVertex{}$-grow}}
       ]
       {
-         G \disjunion H', H, \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
+         G \disjunion \domrestrict{\hat{G}}{\set{\alpha}}, H, \inN{\hat{G}} \times \set{\alpha}
+         \fwdEdges{\hat{G}}
+         G'
       }
       {
-         G, H \disjunion H', \alpha \fwdVertex{\hat{G}} G'
+         G, H \disjunion \domrestrict{\hat{G}}{\set{\alpha}}, \alpha \fwdVertex{\hat{G}} G'
       }
       %
       \and
