@@ -75,26 +75,27 @@
          V \fwdAlg{\hat{G}} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \fwdEdges{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
          \strut
       }
       {
-         G, \emptyset \fwdEdges{\hat{G}} G
+         G, H, \emptyset \fwdEdges{\hat{G}} G, H
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
-         (\set{\alpha} \cup V, (\alpha, \beta) \cons E), \alpha \fwdVertex{\hat{G}} G'
+         G, H \cup \set{\alpha \mapsto \set{\beta}}, \alpha
+         \fwdVertex{\hat{G}} G_1, H_1
          \\
-         G', E' \fwdEdges{\hat{G}} G^\twoPrime
+         G_1, H_1 \fwdEdges{\hat{G}} G', H'
       }
       {
-         (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
+         G, H, (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G', H'
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
