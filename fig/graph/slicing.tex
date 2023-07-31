@@ -97,18 +97,18 @@
          (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-grow}}
       ]
       {
-         G \disjunion \domrestrict{\hat{G}}{\set{\alpha}}, H, \domrestrict{\hat{G}^{-1}}{\set{\alpha}}
+         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \domrestrict{\hat{G}^{-1}}{\alpha}
          \fwdEdges{\hat{G}}
-         G'
+         G', H'
       }
       {
-         G, H \disjunion \domrestrict{\hat{G}}{\set{\alpha}}, \alpha \fwdVertex{\hat{G}} G'
+         G, H \disjunion \domrestrict{\hat{G}}{\alpha}, \alpha \fwdVertex{\hat{G}} G', H'
       }
       %
       \and
@@ -121,7 +121,7 @@
          \strut
       }
       {
-         G, \alpha \fwdVertex{\hat{G}} G
+         G, H, \alpha \fwdVertex{\hat{G}} G, H
       }
    \end{smathpar}
    \caption{Forward slicing}
