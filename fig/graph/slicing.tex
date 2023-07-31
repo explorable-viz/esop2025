@@ -100,11 +100,11 @@
    {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-edges}},
-         right={$H' = \set{\alpha \mapsto \hat{G}(\alpha)}$}
+         lab={\ruleName{$\fwdVertex{}$-grow}},
+         right={$H' = \domrestrict{\hat{G}}{\set{\alpha}}$}
       ]
       {
-         G \disjunion H', \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
+         G \disjunion H', H, \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
       }
       {
          G, H \disjunion H', \alpha \fwdVertex{\hat{G}} G'
@@ -113,8 +113,8 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-pending}},
-         right={$\outN{G}(\alpha) \subset \outN{\hat{G}}(\alpha)$}
+         lab={\ruleName{$\fwdVertex{}$-wait}},
+         right={$G(\alpha) \subset \hat{G}(\alpha)$}
       ]
       {
          \strut
