@@ -6,7 +6,7 @@
             lab={\ruleName{$\bwdAlg{}$}}
          ]
          {
-            (V, \emptyset), \bigcup\set{\set{\alpha} \times \outN{\hat{G}}(\alpha) \mid \alpha \in V}
+            (V, \emptyset), \E(\domrestrict{\hat{G}}{V})
             \bwdEdges{\hat{G}}
             G
          }
@@ -32,30 +32,30 @@
       %
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-skip}},
-         right={$\beta \in V$}
+         right={$\beta \in \V(G)$}
       ]
       {
-         (V, (\alpha, \beta) \cons E), E'
+         G \cup \set{\alpha \mapsto \set{\beta}}, E
          \bwdEdges{\hat{G}}
-         G
+         G'
       }
       {
-         (V, E), (\alpha, \beta) \cons E'  \bwdEdges{\hat{G}} G
+         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\bwdEdges{}$-step}},
-         right={$\beta \notin V$}
+         right={$\beta \notin \V(G)$}
       ]
       {
-         (\beta \cons V, (\alpha, \beta) \cons E), (\set{\beta} \times \outN{\hat{G}}(\beta)) \disjunion E'
+         G \cup \set{\alpha \mapsto \set{\beta}}, \E(\domrestrict{\hat{G}}{\beta}) \disjunion E
          \bwdEdges{\hat{G}}
-         G
+         G'
       }
       {
-         (V, E), (\alpha, \beta) \cons E' \bwdEdges{\hat{G}} G
+         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
       }
    \end{smathpar}}
    \caption{Backward slicing}
@@ -67,60 +67,64 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
       {
-         (V, \emptyset), \bigcup\set{\inN{\hat{G}} \times \set{\alpha} \mid \alpha \in V}
+         (V, \emptyset),
+         (\emptyset, \emptyset),
+         \E(\domrestrict{\hat{G}^{-1}}{V})
          \fwdEdges{\hat{G}}
-         G
+         G, H
       }
       {
          V \fwdAlg{\hat{G}} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, E \fwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \fwdEdges{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
       {
          \strut
       }
       {
-         G, \emptyset \fwdEdges{\hat{G}} G
+         G, H, \emptyset \fwdEdges{\hat{G}} G, H
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
-         (\set{\alpha} \cup V, (\alpha, \beta) \cons E), \alpha \fwdVertex{\hat{G}} G'
+         G, H \cup \set{\alpha \mapsto \set{\beta}}, \alpha
+         \fwdVertex{\hat{G}} G_1, H_1
          \\
-         G', E' \fwdEdges{\hat{G}} G^\twoPrime
+         G_1, H_1, E \fwdEdges{\hat{G}} G', H'
       }
       {
-         (V, E), (\alpha, \beta) \cons E' \fwdEdges{\hat{G}} G^\twoPrime
+         G, H, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} G', H'
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, \alpha \fwdVertex{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-edges}},
-         right={$\outN{G}(\alpha) = \outN{\hat{G}}(\alpha)$}
+         lab={\ruleName{$\fwdVertex{}$-grow}}
       ]
       {
-         G, \inN{\hat{G}} \times \set{\alpha} \fwdEdges{\hat{G}} G'
+         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \E(\domrestrict{\hat{G}^{-1}}{\alpha})
+         \fwdEdges{\hat{G}}
+         G', H'
       }
       {
-         G, \alpha \fwdVertex{\hat{G}} G'
+         G, H \disjunion \domrestrict{\hat{G}}{\alpha}, \alpha \fwdVertex{\hat{G}} G', H'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-pending}},
-         right={$\outN{G}(\alpha) \subset \outN{\hat{G}}(\alpha)$}
+         lab={\ruleName{$\fwdVertex{}$-wait}},
+         right={$H(\alpha) \subset \hat{G}(\alpha)$}
       ]
       {
          \strut
       }
       {
-         G, \alpha \fwdVertex{\hat{G}} G
+         G, H, \alpha \fwdVertex{\hat{G}} G, H
       }
    \end{smathpar}
    \caption{Forward slicing}
