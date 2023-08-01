@@ -9,6 +9,10 @@ values only in the case of closures, which contain surface expressions other sur
 that directly evaluating a surface program $s$ and desugaring the resulting value is equivalent to desugaring
 $s$ to a core program and then evaluating, justifying our presentation of the surface semantics.
 
+\begin{lemma}[Determinism]
+   If $\gamma, s \evalS v$ and $\gamma, s, \evalS v'$ then $v = v'$.
+\end{lemma}
+
 \subsubsection{Mutual recursion}
 
 \figref{baseline:surface:eval} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
