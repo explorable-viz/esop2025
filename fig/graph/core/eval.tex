@@ -2,15 +2,16 @@
    {\small \flushleft \shadebox{$G, \gamma, \seq{e}, V \evalS G', \seq{v}$}\hfill\textit{where $V \subseteq \V(G)$ and $G \subseteq G'$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalS$-seq}}
+         lab={\ruleName{$\evalS$-seq}},
+         right={$\length{\seq{e}} = n$}
       ]
       {
          G_{i - 1}, \gamma, e_i, V \evalS G_i, v_i
          \quad
-         (\forall i \numleq \length{\seq{e}})
+         (\forall i \numleq n)
       }
       {
-         G_0, \gamma, \seq{e}, V \evalS G_{\length{\seq{e}}}, \seq{v}
+         G_0, \gamma, \seq{e}, V \evalS G_{n}, \seq{v}
       }
       %
       \and
