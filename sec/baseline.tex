@@ -3,15 +3,19 @@
 
 \subsection{Surface Language}
 
-To allow the user to execute surface programs directly, we formalise the evaluation of surface terms and
-corresponding notion of surface value. Surface values differ from core values only in the case of closures,
-which contain surface expressions other surface values. Later we prove that directly evaluating a surface
-program $s$ and desugaring the resulting value is equivalent to desugaring $s$ to a
-core program and then evaluating, justifying our presentation of the surface semantics in the debugger.
+To allow the user to execute surface programs directly we formalise the evaluation of surface terms in
+\figref{baseline:surface:eval} and the corresponding notion of surface value. Surface values differ from core
+values only in the case of closures, which contain surface expressions other surface values. Later we prove
+that directly evaluating a surface program $s$ and desugaring the resulting value is equivalent to desugaring
+$s$ to a core program and then evaluating, justifying our presentation of the surface semantics.
+
+\begin{lemma}[Determinism]
+   If $\gamma, s \evalS v$ and $\gamma, s \evalS v'$ then $v = v'$.
+\end{lemma}
 
 \subsubsection{Mutual recursion}
 
-\figref{close-defs-surface} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
+\figref{baseline:surface:eval} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
 closures associated with a block of mutually recursive functions $g = \seq{\bind{x}{\mu}}$. (Read $x$ as the
 function name and $\mu$ as the defining clauses of the function.)
 
@@ -56,7 +60,7 @@ curried functions. The following notation is useful for processing piecewise fun
 \clearpage
 \subsection{Core Language}
 
-\subsubsection{Continuations and Eliminators}
+\subsubsection{Continuations and eliminators}
 
 A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like
 structures into which surface-language pattern-matching constructs are desugared. An eliminator $\sigma$ is
@@ -72,6 +76,10 @@ said to be \textit{partial} if it is not defined for every element of its domain
 \input{fig/baseline/desugar/term}
 
 \figref{baseline:desugar} defines the desugaring relation $\desugar$, which we extend pointwise to sequences.
+
+\begin{lemma}[Determinism of desugaring]
+   If $s \desugar e$ and $s \desugar e'$ then $e = e'$.
+\end{lemma}
 
 \subsubsection{Equivalence of Semantics}
 
