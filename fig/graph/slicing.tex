@@ -103,15 +103,16 @@
    {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-grow}}
+         lab={\ruleName{$\fwdVertex{}$-grow}},
+         right={$H' = \singleton{\alpha}{\hat{G}(\alpha)}$}
       ]
       {
-         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \inE{\hat{G}}(\alpha)
+         G \disjunion H', H, \inE{\hat{G}}(\alpha)
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion \domrestrict{\hat{G}}{\alpha}, \alpha \fwdVertex{\hat{G}} G', H'
+         G, H \disjunion H', \alpha \fwdVertex{\hat{G}} G', H'
       }
       %
       \and
