@@ -67,14 +67,26 @@ dependence graph $G$.
 \begin{definition}[Neighbours]
    Define the following functions of type $\V(G) \to \powerset{\V(G)}$:
    \begin{itemize}
-      \item $\inN{G}(\alpha) \eqdef \set{\beta \in \V(G) \mid (\beta, \alpha) \in \E(G)}$ \hfill (in neighbours)
-      \item $\outN{G} \eqdef \inN{G^{-1}}$ \hfill (out neighbours)
+      \item $\outN{G}(\alpha) \eqdef \set{\beta \in \V(G) \mid (\alpha, \beta) \in \E(G)}$ \hfill (out neighbours)
+      \item $\inN{G} \eqdef \outN{G^{-1}}$ \hfill (in neighbours)
    \end{itemize}
 \end{definition}
 
-\noindent Since $\outN{G}$ and $G$ unique determine each other, we sometimes conflate them. For example we may
-write $G \disjunion \set{\alpha \mapsto U}$ to denote the graph $G'$ which has $\outN{G'}(\alpha) = U$ and
-$\outN{G'}(\beta) = \outN{G}(\beta)$ for any $\beta \in V$ with $\beta \neq \alpha$.
+\begin{definition}[Edges]
+   Define the following functions of type $\V(G) \to \powerset{\E(G)}$:
+   \begin{itemize}
+      \item $\outE{G}(\alpha) \eqdef \set{\alpha} \times \outN{G}(\alpha)$
+      \item $\inE{G}(\alpha) \eqdef \outN{G^{-1}}(\alpha)$
+   \end{itemize}
+\end{definition}
+
+\noindent Both notations extend to sets of vertices in the obvious way.
+
+Because the following graph has a single source, we refer to it as a \emph{singleton} graph.
+
+\begin{definition}[Singleton graph]
+   Define $\singleton{\alpha}{V} \eqdef (\alpha \cons V, \set{\alpha} \times V)$.
+\end{definition}
 
 \begin{definition}[Subgraph, union]
    If $G = (V, E)$ and $G' = (V', E')$ define:
@@ -94,16 +106,6 @@ $\outN{G'}(\beta) = \outN{G}(\beta)$ for any $\beta \in V$ with $\beta \neq \alp
    \beta)$ iff there exists $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1})
    \in \E(G)$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
-
-%We extend the idea of neighbours of a node to \textit{neighbourhoods} of a set of vertices in the graph.
-%
-%\begin{definition}[Neighbourhoods]
-%   For any $V' \subseteq V$, define:
-%   \begin{itemize}
-%      \item $\inN{G}(V') \eqdef \set{\alpha \in V \mid \exists \beta \in V'.\; \alpha \in \inN{G}(\beta) \opAnd \alpha \notin V'}$
-%      \item $\outN{G}(V') \eqdef \inN{G^{-1}}(V')$
-%   \end{itemize}
-%\end{definition}
 
 \begin{definition}[Sources and sinks]
    Define:

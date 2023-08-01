@@ -6,7 +6,7 @@
             lab={\ruleName{$\bwdAlg{}$}}
          ]
          {
-            (V, \emptyset), \E(\domrestrict{\hat{G}}{V})
+            (V, \emptyset), \outE{\hat{G}}(V)
             \bwdEdges{\hat{G}}
             G
          }
@@ -35,7 +35,7 @@
          right={$\beta \in \V(G)$}
       ]
       {
-         G \cup \set{\alpha \mapsto \set{\beta}}, E
+         G \cup \singleton{\alpha}{\set{\beta}}, E
          \bwdEdges{\hat{G}}
          G'
       }
@@ -50,7 +50,7 @@
          right={$\beta \notin \V(G)$}
       ]
       {
-         G \cup \set{\alpha \mapsto \set{\beta}}, \E(\domrestrict{\hat{G}}{\beta}) \disjunion E
+         G \cup \singleton{\alpha}{\set{\beta}}, \outE{\hat{G}}(\beta) \disjunion E
          \bwdEdges{\hat{G}}
          G'
       }
@@ -69,7 +69,7 @@
       {
          (V, \emptyset),
          (\emptyset, \emptyset),
-         \E(\domrestrict{\hat{G}^{-1}}{V})
+         \inE{\hat{G}}(V)
          \fwdEdges{\hat{G}}
          G, H
       }
@@ -103,15 +103,16 @@
    {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-grow}}
+         lab={\ruleName{$\fwdVertex{}$-grow}},
+         right={$H' = \singleton{\alpha}{\hat{G}(\alpha)}$}
       ]
       {
-         G \disjunion \domrestrict{\hat{G}}{\alpha}, H, \E(\domrestrict{\hat{G}^{-1}}{\alpha})
+         G \disjunion H', H, \inE{\hat{G}}(\alpha)
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion \domrestrict{\hat{G}}{\alpha}, \alpha \fwdVertex{\hat{G}} G', H'
+         G, H \disjunion H', \alpha \fwdVertex{\hat{G}} G', H'
       }
       %
       \and
