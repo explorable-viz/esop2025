@@ -39,7 +39,7 @@
       {
          G, \gamma, \annInt{n}{\alpha}, V
          \evalSugS
-         G \disjunion \set{\alpha' \mapsto V},
+         G \disjunion \set{\alpha' \mapsto \alpha \cons V},
          \annInt{n}{\alpha'}
       }
       %
@@ -54,7 +54,7 @@
       {
          G, \gamma, \annStr{s}{\alpha}, V
          \evalSugS
-         G \disjunion \set{\alpha' \mapsto V},
+         G \disjunion \set{\alpha' \mapsto \alpha \cons V},
          \annStr{s}{\alpha'}
       }
       %
@@ -67,7 +67,7 @@
       {
          G, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalSugS
-         G' \disjunion \set{\alpha' \mapsto V},
+         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
@@ -94,7 +94,7 @@
       {
          G, \gamma, \annDict{\seq{\bind{e}{e}}'}{\alpha}, V
          \evalSugS
-         G' \disjunion \set{\alpha' \mapsto V},
+         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
          \annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
       }
       %
@@ -107,7 +107,7 @@
       {
          G, \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalSugS
-         G' \disjunion \set{\alpha' \mapsto V},
+         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
          \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
