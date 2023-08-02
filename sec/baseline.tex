@@ -10,14 +10,19 @@ that directly evaluating a surface program $s$ and desugaring the resulting valu
 $s$ to a core program and then evaluating, justifying our presentation of the surface semantics.
 
 \begin{lemma}[Determinism]
+   \label{lem:baseline:surface:eval:determinism}
    If $\gamma, s \evalS v$ and $\gamma, s \evalS v'$ then $v = v'$.
 \end{lemma}
 
 \subsubsection{Mutual recursion}
 
-\figref{baseline:surface:eval} defines the relation $\closeDefs$, called \emph{close defs}, which creates the
-closures associated with a block of mutually recursive functions $g = \seq{\bind{x}{\mu}}$. (Read $x$ as the
-function name and $\mu$ as the defining clauses of the function.)
+The following relation determines the closures associated with a block of mutually recursive functions $g =
+\seq{\bind{x}{\mu}}$. (Read $x$ as the function name and $\mu$ as the defining clauses of the function.)
+
+\begin{definition}[Close defs]
+   \label{def:baseline:surface:close-defs}
+   \figref{baseline:surface:eval} defines the \emph{close defs} relation $\closeDefs$.
+\end{definition}
 
 \subsubsection{Piecewise function definitions}
 
@@ -60,6 +65,11 @@ curried functions. The following notation is useful for processing piecewise fun
 \clearpage
 \subsection{Core Language}
 
+\begin{definition}[Close defs]
+   \label{def:baseline:core:close-defs}
+   \figref{baseline:core:eval} defines the \emph{close defs} relation $\closeDefs$.
+\end{definition}
+
 \subsubsection{Continuations and eliminators}
 
 A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like
@@ -78,6 +88,7 @@ said to be \textit{partial} if it is not defined for every element of its domain
 \figref{baseline:desugar} defines the desugaring relation $\desugar$, which we extend pointwise to sequences.
 
 \begin{lemma}[Determinism of desugaring]
+   \label{lem:baseline:desugar:determinism}
    If $s \desugar e$ and $s \desugar e'$ then $e = e'$.
 \end{lemma}
 
@@ -95,24 +106,13 @@ relations.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-   See \apprefTwo{semantics-eq-1}{semantics-eq-2}.
+   See \appref{semantics-eq}.
 \end{proof}
 
 \thmref{semantics-eq} relies on the auxiliary lemmas for
 environment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq}) and recursive definitions
 (\lemref{closedefs-eq}).
 
-% \begin{theorem}
-%    \label{thm:list-comp-eq}
-%    Suppose $\seq{q},s \desugar e$ and $\gamma \desugar \gamma'$.
-%    \begin{enumerate}
-%       \item $\gamma, \seq{q}, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
-%       \item If $\gamma, \seq{q}, s \evalSugS v$ and $\gamma', e \evalSugS v'$ then $v \desugar v'$.
-%    \end{enumerate}
-% \end{theorem}
-% \begin{proof}
-%    For (1) see \appref{list-comp-eq-1}. For (2) see \appref{list-comp-eq-2}.
-% \end{proof}
 \begin{lemma}
    \label{lem:varlookup}
    ($\gamma \desugar \gamma'$ and $v \desugar v'$) iff $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.

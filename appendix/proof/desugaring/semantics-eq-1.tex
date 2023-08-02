@@ -59,6 +59,8 @@ By induction on derivation of $\evalSugS$.
    \\
    &
    \gamma_1\cons{\bind{x}{v}} \desugar \gamma_2\cons\bind{x}{v'}
+   \quad
+   (\exists v')
    &
    (\localref{desug:env})
    \notag
@@ -125,7 +127,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists \seq{v}')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -173,7 +175,9 @@ By induction on derivation of $\evalSugS$.
             width=3in,
          ]
          {
-            \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
+            \gamma, s \evalSugS \exClosure{\gamma_1}{g}{\mu}
+            \\
+            \gamma, s' \evalSugR v
             \\
             \gamma_1, g \closeDefs \gamma_2
             \\
@@ -212,23 +216,25 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma', e \evalSugS \exClosure{\gamma'_1}{\rho}{\sigma}
    \textit{ with }
-   \gamma_1 \desugar \gamma_2
+   \gamma_1 \desugar \gamma_1'
    \opAnd
    g \desugar \rho
    \opAnd
    \mu \desugar \sigma
    \quad
-   (\exists \gamma_1,\rho,\sigma)
+   (\exists \gamma_1',\rho,\sigma)
    &
-   \text{(IH), $\desugar$-closure}
+   \text{IH, $\desugar$-closure}
    \notag
    \\
    &
    \gamma', e' \evalSugS v'
    \textit{ with }
    v \desugar v'
+   \quad
+   (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -263,8 +269,10 @@ By induction on derivation of $\evalSugS$.
    \gamma'_1 \concat \gamma'_2 \concat \gamma'_3, e^{\dag} \evalSugS u
    \textit{ with }
    v^{\dag} \desugar u
+   \quad
+   (\exists u)
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -340,7 +348,7 @@ By induction on derivation of $\evalSugS$.
    \textit{ with }
    \gamma^{\dag} \desugar \gamma^{\ddagger}
    \quad
-   (\exists \gamma')
+   (\exists \gamma^\ddagger)
    &
    \text{\lemref{closedefs-eq}}
    \notag
@@ -348,7 +356,7 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
    &
-   \text{(\localref{desug:env})}
+   \text{\lemref{varlookup}, (\localref{desug:env})}
    \notag
    \\
    &
@@ -358,7 +366,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -415,13 +423,13 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalS v' 
+   \gamma', e \evalS v
    \textit{ with }
    u \desugar v
    \quad
    (\exists v)
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -485,25 +493,25 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma', e \evalS \cFalse
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
    \cFalse, \sigma \match \envEmpty, \exNil
    &
-   \text{$\match$}
+   \text{\ruleName{$\match$-constr}}
    \notag
    \\
    &
-   \gamma', \seqEmpty \closeDefs \envEmpty
+   \gamma', \envEmpty \closeDefs \envEmpty
    &
-   \text{$\closeDefs$}
+   \text{\defref{baseline:core:close-defs}}
    \notag
    \\
    &
    \gamma', \exNil \evalS \exNil
    &
-   \text{$\evalS$}
+   \text{\ruleName{$\evalS$-constr}}
    \notag
    \\
    &
@@ -515,11 +523,11 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma} 
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
             \\
             \gamma', e \evalS \cFalse
             \\
-            \gamma', \seqEmpty \closeDefs \envEmpty
+            \gamma', \envEmpty \closeDefs \envEmpty
             \\
             \cFalse, \sigma \match \envEmpty, \exNil
             \\
@@ -579,13 +587,13 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma', e \evalS \cTrue
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
    \cTrue, \sigma \match \envEmpty, e'
    &
-   \text{$\match$}
+   \text{\ruleName{$\match$-constr}}
    \notag
    \\
    &
@@ -595,13 +603,13 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
-   \gamma, \seqEmpty \closeDefs \envEmpty
+   \gamma, \envEmpty \closeDefs \envEmpty
    &
-   \text{$\closeDefs$}
+   \text{\defref{baseline:core:close-defs}}
    \notag
    \\
    &
@@ -613,11 +621,11 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
             \\
             \gamma', e \evalS \cTrue
             \\
-            \gamma', \seqEmpty \closeDefs \envEmpty
+            \gamma', \envEmpty \closeDefs \envEmpty
             \\
             \cTrue, \sigma \match \envEmpty, e'
             \\
@@ -644,9 +652,9 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma, s \evalSugR{S'} u'
             \\
-            u', (\clause{p}{\exListComp{s'}{\seq{q}}})\match \gamma^\dag, s^\dag
+            u', (\clause{p}{\exListComp{s'}{\seq{q}}}) \match \gamma^\dag, s^\dag
             \\
-            (\gamma \cons \gamma^\dag), s^\dag \evalSugR{\seq{Q},S} u
+            \gamma \concat \gamma^\dag, s^\dag \evalSugR{\seq{Q},S} u
          }
          {
             \gamma, \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
@@ -677,20 +685,20 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalS v' 
+   \gamma', e \evalS v'
    \textit{ with }
    u' \desugar v'
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
    v', \sigma \match \gamma^\ddagger, e^\dag
    \textit{ with }
    \gamma^\dag \desugar \gamma^\ddagger
-   \opAnd 
+   \opAnd
    s^\dag \desugar e^\dag
    \quad
    (\exists \gamma^\ddagger, e^\dag)
@@ -702,10 +710,8 @@ By induction on derivation of $\evalSugS$.
    \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
    \textit{ with }
    \gamma \desugar \gamma'
-   \quad
-   (\exists \gamma')
    &
-   \text{$\evalS$}
+   \text{\ruleName{$\evalS$-lambda}}
    \notag
    \\
    &
@@ -721,7 +727,8 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists u^\dag)
    &
-   \text{(IH)}
+   \text{IH}
+   \notag
    \\
    &
    \qedLocal
@@ -765,7 +772,7 @@ By induction on derivation of $\evalSugS$.
             \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
          }
          {
-            \gamma, \exListComp{s}{\qualGenerator{p}{s'} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
+            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}} \evalSugR{\trQualGen{p}{S'}\cons\seq{Q}, S} u
          }
       \end{smathpar}
    }
@@ -795,16 +802,24 @@ By induction on derivation of $\evalSugS$.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab=\ruleName{$\desugar$-app}]
+         \inferrule*[left=\ruleName{$\desugar$-app}]
          {
             \inferrule*[
-               right={\ruleName{$\desugar$-app}}
+               left={\ruleName{$\desugar$-app}}
             ]
             {
-               \varConcatMap \desugar \varConcatMap
+               \inferrule*[
+%                  left={\ruleName{$\desugar$-var}}
+               ]
+               {
+                  \strut
+               }
+               {
+                  \varConcatMap \desugar \varConcatMap
+               }
                \\
                \inferrule*[
-                  right={\ruleName{$\desugar$-lambda}}
+                  left={\ruleName{$\desugar$-lambda}}
                ]
                {
                   \mu \desugar \sigma
@@ -818,7 +833,7 @@ By induction on derivation of $\evalSugS$.
             }
             \\
             s \desugar e
-         }   
+         }
          {
             \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
          }
@@ -829,11 +844,11 @@ By induction on derivation of $\evalSugS$.
    \\
    &
    \qedLocal
-   \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v 
+   \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
    \textit{ with }
    u \desugar v
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
 \end{flalign}

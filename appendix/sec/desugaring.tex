@@ -12,14 +12,21 @@
 \proofContext{match-seq-eq}
 \input{appendix/proof/desugaring/match-seq-eq}
 
-\subsection{\thmref{semantics-eq} ($\implies$)}
-\label{app:semantics-eq-1}
+\subsection{\thmref{semantics-eq}}
+\label{app:proofs:semantics-eq}
+
+Given that desugaring and the surface semantics are deterministic (\lemrefTwo{baseline:surface:eval:determinism}{baseline:desugar:determinism}), it is sufficient (but less verbose) to prove:
+\begin{enumerate}
+   \item If $\gamma, s \evalS v$ then $\exists v'.\;\gamma', e \evalS v'$ with $v \desugar v'$.
+   \item If $\gamma', e \evalS v'$ then $\exists v.\;\gamma, s \evalS v$.
+\end{enumerate}
+
+\subsubsection{\thmref{semantics-eq} part (1)}
 \setcounter{equation}{0}
 \proofContext{semantics-eq}
 \input{appendix/proof/desugaring/semantics-eq-1}
 
-\subsection{\thmref{semantics-eq} ($\impliedby$)}
-\label{app:semantics-eq-2}
+\subsubsection{\thmref{semantics-eq} part (1)}
 \setcounter{equation}{0}
 \proofContext{semantics-eq-2}
 \input{appendix/proof/desugaring/semantics-eq-2}
