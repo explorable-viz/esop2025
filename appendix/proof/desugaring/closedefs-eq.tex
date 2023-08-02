@@ -5,13 +5,13 @@
       \gamma_1 \desugar \gamma_2
       &
       \text{suppose}
-      \locallabel{gamma-desugar}
+      \notag
       \\
       &
       \seq{\mu} \desugar \seq{\sigma}
       &
       \text{suppose}
-      \locallabel{g-desugar}
+      \notag
       \\
       &
       \derivation{\derivationWidth}{
@@ -33,7 +33,7 @@
       }
       &
       \text{suppose}
-      \locallabel{closed-surface}
+      \notag
       \\
       &
       \derivation{\derivationWidth}{
@@ -60,6 +60,7 @@
       \notag
       \\
       &
+      \qedLocal
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*
@@ -75,7 +76,7 @@
                {
                   \gamma_1 \desugar \gamma_2
                   \\
-                  g \desugar \rho
+                  \seq{\mu} \desugar \seq{\sigma}
                   \\
                   \mu_i \desugar \sigma_i
                }
@@ -85,67 +86,6 @@
             }
             {
                \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v}}'}
-            }
-         \end{smathpar}
-      }
-      &
-      \notag
-      \\
-      &
-      g = \set{\seq{\bind{x}{\mu}}} \text{ with } \seq{\mu} \desugar \seq{\sigma} \quad (\exists \seq{\mu})
-      &
-      \text{(\localref{g-desugar})}
-      \locallabel{g-exists}
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            [
-               left={\ruleName{$\closeDefs$-surface}}
-            ]
-            {
-               g = \seq{\bind{x}{\mu}}
-               \\
-               v_i = \exClosure{\gamma_1}{g}{\mu_i}
-               \quad
-               (\forall i \le \length{\seq{x}})
-            }
-            {
-               \gamma_1, g \closeDefs \set{\seq{\bind{x}{v}}}
-            }
-         \end{smathpar}
-      }
-      &
-      \text{(\localref{g-exists})}
-      \notag
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            [
-               left={\ruleName{$\desugar$-env}}
-            ]
-            {
-               \inferrule*
-               [
-                  left={\ruleName{$\desugar$-closure}},
-                  right={$\forall i. \numleq \length{\seq{x}}$}
-               ]
-               {
-                  \gamma_1 \desugar \gamma_2
-                  \\
-                  g \desugar \rho
-                  \\
-                  \mu_i \desugar \sigma_i
-               }
-               {
-                  v_i = \exClosure{\gamma_1}{g}{\mu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
-               }
-            }
-            {
-               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v'}}}
             }
          \end{smathpar}
       }
