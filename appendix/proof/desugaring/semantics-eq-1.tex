@@ -26,23 +26,6 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-var}}
-         ]
-         {
-            \strut
-         }
-         {
-            \Lowlight{\gamma =\;} {\gamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
             lab={\ruleName{$\desugar$-var}}
          ]
          {
@@ -54,11 +37,30 @@ Induction on $\desugar$ derivation.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            \Lowlight{\gamma =\;} {\gamma_1} \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+         }
+      \end{smathpar}
+   }
+   &
    \text{inversion}
    \notag
    \\
    &
-   \gamma_1\cons{\bind{x}{v}} \desugar \gamma_2\cons\bind{x}{v'}
+   \gamma_1\cons(\bind{x}{v}) \desugar \gamma_2\cons(\bind{x}{v'})
+   \textit{ with }
+   v \desugar v'
    \quad
    (\exists \gamma_2, v')
    &
