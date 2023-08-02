@@ -16,22 +16,26 @@
 \label{app:proofs:semantics-eq}
 
 It is sufficient (but less verbose) to prove the following:
-\begin{enumerate}
-   \item If $\gamma, s \evalS v$ then $\exists v'.\;\gamma', e \evalS v'$ with $v \desugar v'$.
-   \item If $\gamma', e \evalS v'$ then $\exists v.\;\gamma, s \evalS v$.
-\end{enumerate}
+\begin{theorem}
+   \label{thm:app:proofs:semantics-eq}
+   Suppose $s \desugar e$ and $\gamma \desugar \gamma'$.
+   \begin{enumerate}
+      \item If $\gamma, s \evalS v$ then $\exists v'.\;\gamma', e \evalS v'$ with $v \desugar v'$.
+      \item If $\gamma', e \evalS v'$ then $\exists v.\;\gamma, s \evalS v$.
+   \end{enumerate}
+\end{theorem}
 
 \noindent Technically $v \desugar v'$ in part (2) follows easily from part (1) and the determinism of
 desugaring and the surface semantics
-(\lemrefTwo{baseline:surface:eval:determinism}{baseline:desugar:determinism}). However for the sake of the
-proof, the stronger induction hypothesis is more convenient.
+(\lemrefTwo{baseline:surface:eval:determinism}{baseline:desugar:determinism}); however the stronger induction
+hypothesis is more convenient for the proof.
 
-\subsubsection{\thmref{semantics-eq} part (1)}
+\subsubsection{\thmref{app:proofs:semantics-eq} part (1)}
 \setcounter{equation}{0}
 \proofContext{semantics-eq}
 \input{appendix/proof/desugaring/semantics-eq-1}
 
-\subsubsection{\thmref{semantics-eq} part (1)}
+\subsubsection{\thmref{app:proofs:semantics-eq} part (1)}
 \setcounter{equation}{0}
 \proofContext{semantics-eq-2}
 \input{appendix/proof/desugaring/semantics-eq-2}
