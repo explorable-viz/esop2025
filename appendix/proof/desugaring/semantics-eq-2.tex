@@ -610,7 +610,9 @@ Induction on $\desugar$ derivation.
             lab={\ruleName{$\evalS$-list-comp-decl}}
          ]
          {
-            \gamma', (\exFun{\sigma}, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+            \\
+            \gamma', e' \evalS v'
             \\
             v', \sigma \match \gamma^\ddagger, e^\dag
             \\
@@ -622,6 +624,7 @@ Induction on $\desugar$ derivation.
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
    \\
    &
