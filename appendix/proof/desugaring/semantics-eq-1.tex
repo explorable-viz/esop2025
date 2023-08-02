@@ -59,6 +59,8 @@ By induction on derivation of $\evalSugS$.
    \\
    &
    \gamma_1\cons{\bind{x}{v}} \desugar \gamma_2\cons\bind{x}{v'}
+   \quad
+   (\exists v')
    &
    (\localref{desug:env})
    \notag
@@ -125,7 +127,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists \seq{v}')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -220,7 +222,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists \gamma_1,\rho,\sigma)
    &
-   \text{(IH), $\desugar$-closure}
+   \text{IH, $\desugar$-closure}
    \notag
    \\
    &
@@ -228,7 +230,7 @@ By induction on derivation of $\evalSugS$.
    \textit{ with }
    v \desugar v'
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -264,7 +266,7 @@ By induction on derivation of $\evalSugS$.
    \textit{ with }
    v^{\dag} \desugar u
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -358,7 +360,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -415,13 +417,13 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalS v' 
+   \gamma', e \evalS v'
    \textit{ with }
    u \desugar v
    \quad
    (\exists v)
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -485,7 +487,7 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma', e \evalS \cFalse
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -515,7 +517,7 @@ By induction on derivation of $\evalSugS$.
             width=3.3in,
          ]
          {
-            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma} 
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
             \\
             \gamma', e \evalS \cFalse
             \\
@@ -579,7 +581,7 @@ By induction on derivation of $\evalSugS$.
    &
    \gamma', e \evalS \cTrue
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -595,7 +597,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
@@ -677,20 +679,20 @@ By induction on derivation of $\evalSugS$.
    \notag
    \\
    &
-   \gamma', e \evalS v' 
+   \gamma', e \evalS v'
    \textit{ with }
    u' \desugar v'
    \quad
    (\exists v')
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
    &
    v', \sigma \match \gamma^\ddagger, e^\dag
    \textit{ with }
    \gamma^\dag \desugar \gamma^\ddagger
-   \opAnd 
+   \opAnd
    s^\dag \desugar e^\dag
    \quad
    (\exists \gamma^\ddagger, e^\dag)
@@ -721,7 +723,7 @@ By induction on derivation of $\evalSugS$.
    \quad
    (\exists u^\dag)
    &
-   \text{(IH)}
+   \text{IH}
    \\
    &
    \qedLocal
@@ -818,7 +820,7 @@ By induction on derivation of $\evalSugS$.
             }
             \\
             s \desugar e
-         }   
+         }
          {
             \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
          }
@@ -829,11 +831,11 @@ By induction on derivation of $\evalSugS$.
    \\
    &
    \qedLocal
-   \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v 
+   \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
    \textit{ with }
    u \desugar v
    &
-   \text{(IH)}
+   \text{IH}
    \notag
    \\
 \end{flalign}
