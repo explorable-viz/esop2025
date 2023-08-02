@@ -1,4 +1,4 @@
-Induction on $\desugar$ derivation.
+Case analysis on surface $\evalS$ derivation and induction on $\desugar$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
@@ -701,6 +701,27 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \\
+            \mu \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab=\ruleName{$\evalS$-app},
             width={3in}
@@ -718,27 +739,6 @@ Induction on $\desugar$ derivation.
          }
          {
             \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
-         {
-            s \desugar e
-            \\
-            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
-            \\
-            \mu \desugar \sigma
-         }
-         {
-            \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
          }
       \end{smathpar}
    }
