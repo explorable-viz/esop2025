@@ -13,18 +13,11 @@
       \text{suppose}
       \locallabel{g-desugar}
       \\
-      \intertext{\crossrule}
-      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      &
-      \subcaseName{$\closeDefs$-then-$\desugar$}
-      &
-      \notag
-      \\
       &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefs$-surface}}
+%               left={\ruleName{$\closeDefs$-surface}}
             ]
             {
                g = \seq{\bind{x}{\mu}}
@@ -43,16 +36,10 @@
       \locallabel{closed-surface}
       \\
       &
-      \rho = \set{\seq{\bind{x}{\sigma}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\sigma})
-      &
-      \text{(\localref{g-desugar})}
-      \locallabel{rho-exists}
-      \\
-      &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefs$-core}}
+%               left={\ruleName{$\closeDefs$-core}}
             ]
             {
                \rho = \set{\seq{\bind{x}{\sigma}}}
@@ -64,13 +51,19 @@
             {
                \gamma_2, \rho
                \closeDefs
-               \set{\seq{\bind{x}{v'}}}
+               \set{\seq{\bind{x}{v}}'}
             }
          \end{smathpar}
       }
       &
-      \text{(\localref{rho-exists})}
+      \text{suppose}
       \notag
+      \\
+      &
+      \seq{\mu} \desugar \seq{\sigma}
+      &
+      \text{(\localref{g-desugar})}
+      \locallabel{rho-exists}
       \\
       &
       \derivation{\derivationWidth}{
@@ -90,10 +83,10 @@
                   \\
                   g \desugar \rho
                   \\
-                  \upmu_i \desugar \sigma_i
+                  \mu_i \desugar \sigma_i
                }
                {
-                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
+                  v_i = \exClosure{\gamma_1}{g}{\mu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
                }
             }
             {
@@ -101,11 +94,6 @@
             }
          \end{smathpar}
       }
-      &
-      \notag
-      \\
-      &
-      \subcaseName{$\desugar$-then-$\closeDefs$}
       &
       \notag
       \\
@@ -134,7 +122,7 @@
       \locallabel{close-rho}
       \\
       &
-      g = \set{\seq{\bind{x}{\upmu}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\upmu})
+      g = \set{\seq{\bind{x}{\mu}}} \text{ with } \seq{\mu} \desugar \seq{\sigma} \quad (\exists \seq{\mu})
       &
       \text{(\localref{g-desugar})}
       \locallabel{g-exists}
@@ -180,10 +168,10 @@
                   \\
                   g \desugar \rho
                   \\
-                  \upmu_i \desugar \sigma_i
+                  \mu_i \desugar \sigma_i
                }
                {
-                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
+                  v_i = \exClosure{\gamma_1}{g}{\mu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
                }
             }
             {
