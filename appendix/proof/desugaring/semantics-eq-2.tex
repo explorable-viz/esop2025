@@ -744,14 +744,16 @@ Induction on $\desugar$ derivation.
    \\
    &
    \inferrule*[
-      right={\ruleName{$\desugar$-app}}
+      left={\ruleName{$\desugar$-app}}
    ]
    {
       \inferrule*[
-         right={\ruleName{$\desugar$-app}}
+         left={\ruleName{$\desugar$-app}}
       ]
       {
-         \inferrule*
+         \inferrule*[
+%            right={\ruleName{$\desugar$-var}}
+         ]
          {
             \strut
          }
@@ -759,7 +761,7 @@ Induction on $\desugar$ derivation.
             \varConcatMap \desugar \varConcatMap
          }
          \\
-         \inferrule*[right={\ruleName{$\desugar$-lambda}}]
+         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
          {
             \mu \desugar \sigma
          }
@@ -808,6 +810,5 @@ Induction on $\desugar$ derivation.
    }
    &
    \notag
-   \\
 \end{flalign}
 \end{proof}
