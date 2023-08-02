@@ -91,13 +91,13 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-constr}}
+            lab={\ruleName{$\desugar$-constr}}
          ]
          {
-            \gamma, \seq{s} \evalSugS \seq{v}
+            \seq{s} \desugar \seq{e}
          }
          {
-            \gamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
+            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
          }
       \end{smathpar}
    }
@@ -108,13 +108,13 @@ Induction on $\desugar$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-constr}}
+            lab={\ruleName{$\evalSugS$-constr}}
          ]
          {
-            \seq{s} \desugar \seq{e}
+            \gamma, \seq{s} \evalSugS \seq{v}
          }
          {
-            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
+            \gamma, \exConstr{c}{\seq{s}} \evalSugS \exConstr{c}{\seq{v}}
          }
       \end{smathpar}
    }
