@@ -173,6 +173,25 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
+            lab={\ruleName{$\desugar$-app}}
+         ]
+         {
+            s \desugar e
+            \\
+            s' \desugar e'
+         }
+         {
+            \Lowlight{s_0 =\;} \exApp{s}{s'} \desugar \exApp{e}{e'} \Lowlight{\;= e_0}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
             lab={\ruleName{$\evalSugS$-app}},
             width=3.3in,
          ]
@@ -189,25 +208,6 @@ Induction on $\desugar$ derivation.
             \gamma', \exApp{e}{e'}
             \evalSugS
             u
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\desugar$-app}}
-         ]
-         {
-            s \desugar e
-            \\
-            s' \desugar e'
-         }
-         {
-            \Lowlight{s_0 =\;} \exApp{s}{s'} \desugar \exApp{e}{e'} \Lowlight{\;= e_0}
          }
       \end{smathpar}
    }
