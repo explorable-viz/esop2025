@@ -805,7 +805,15 @@ By induction on derivation of $\evalSugS$.
                left={\ruleName{$\desugar$-app}}
             ]
             {
-               \varConcatMap \desugar \varConcatMap
+               \inferrule*[
+%                  left={\ruleName{$\desugar$-var}}
+               ]
+               {
+                  \strut
+               }
+               {
+                  \varConcatMap \desugar \varConcatMap
+               }
                \\
                \inferrule*[
                   left={\ruleName{$\desugar$-lambda}}
