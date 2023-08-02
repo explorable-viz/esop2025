@@ -698,15 +698,15 @@ Induction on $\desugar$ derivation.
                \\
                \exClosure{\gamma'}{\envEmpty}{\sigma}, \sigma' \match \gamma'_3, e^\dag
                \\
-               \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\ddagger}{\seqEmpty}{\sigma^\dag}
+               \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\ddagger}{\envEmpty}{\sigma^\dag}
             }
             {
-               \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma^\ddagger}{\seqEmpty}{\sigma^\dag}
+               \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma^\ddagger}{\envEmpty}{\sigma^\dag}
             }
             \\
             \gamma', e \evalS u
             \\
-            \gamma^\ddagger, \seqEmpty \closeDefs \envEmpty
+            \gamma^\ddagger, \envEmpty \closeDefs \envEmpty
             \\
             u, \sigma^\dag \match \gamma'_4, e'
             \\
