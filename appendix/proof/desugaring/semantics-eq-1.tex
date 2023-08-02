@@ -309,25 +309,6 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-let-rec}}
-         ]
-         {
-            \gamma, \seq{\bind{x}{\mu}} \closeDefs \gamma^{\dag}
-            \\
-            \gamma \concat \gamma^{\dag}, s \evalSugS v
-         }
-         {
-            \gamma, \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s} \evalSugS v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
          {
             \seq{\mu} \desugar \seq{\sigma}
@@ -338,6 +319,25 @@ Induction on $\desugar$ derivation.
             \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
             \desugar
             \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-let-rec}}
+         ]
+         {
+            \gamma, \seq{\bind{x}{\mu}} \closeDefs \gamma^{\dag}
+            \\
+            \gamma \concat \gamma^{\dag}, s \evalSugS v
+         }
+         {
+            \gamma, \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s} \evalSugS v
          }
       \end{smathpar}
    }
@@ -394,12 +394,14 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
          {
-            \gamma, s \evalSugR{S} u
+            s \desugar e
          }
          {
-            \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
+            \exListComp{s}{\seqEmpty}
+            \desugar
+            \exConstr{\cCons}{e, \exNil}
          }
       \end{smathpar}
    }
@@ -409,14 +411,12 @@ Induction on $\desugar$ derivation.
    &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
+         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-done}}]
          {
-            s \desugar e
+            \gamma, s \evalSugR{S} u
          }
          {
-            \exListComp{s}{\seqEmpty}
-            \desugar
-            \exConstr{\cCons}{e, \exNil}
+            \gamma, \exListComp{s}{\seqEmpty} \evalSugR{\seqEmpty, S} \exConstr{\cCons}{u, \exNil}
          }
       \end{smathpar}
    }
@@ -457,22 +457,6 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
-         ]
-         {
-            \gamma, s \evalSugR{S} \cFalse
-         }
-         {
-            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfFalse{S}{q}} \exNil
-         }
-      \end{smathpar}
-   }
-   &
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
          {
             s \desugar e
@@ -485,6 +469,22 @@ Induction on $\desugar$ derivation.
             \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
             \desugar
             \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
+         ]
+         {
+            \gamma, s \evalSugR{S} \cFalse
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfFalse{S}{q}} \exNil
          }
       \end{smathpar}
    }
@@ -549,25 +549,6 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
-         ]
-         {
-            \gamma, \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} v
-            \\
-            \gamma, s \evalSugR{S} \cTrue
-         }
-         {
-            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
          {
             s \desugar e
@@ -584,6 +565,26 @@ Induction on $\desugar$ derivation.
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-true}},
+         ]
+         {
+            \gamma, \exListComp{s'}{\seq{q}} \evalSugR{\seq{Q},S} v
+            \\
+            \gamma, s \evalSugR{S} \cTrue
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGuard{s} \cons \seq{q}} \evalSugR{\trQualIfTrue{S} \cons \seq{Q}, S} v
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
    \notag
    \\
    &
@@ -648,6 +649,25 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalSugS$-list-comp-decl}}
          ]
@@ -660,25 +680,6 @@ Induction on $\desugar$ derivation.
          }
          {
             \gamma, \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}} \evalSugR{\trQualDecl{p}{S'} \cons \seq{Q}, S} u
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
-         {
-            s \desugar e
-            \\
-            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
-         }
-         {
-            \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exFun{\sigma}}{e}
          }
       \end{smathpar}
    }
@@ -709,7 +710,7 @@ Induction on $\desugar$ derivation.
    \notag
    \\
    &
-   \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+   \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
    \textit{ with }
    \gamma \desugar \gamma'
    &
@@ -717,9 +718,9 @@ Induction on $\desugar$ derivation.
    \notag
    \\
    &
-   \gamma', \seqEmpty \closeDefs \envEmpty
+   \gamma', \envEmpty \closeDefs \envEmpty
    &
-   \text{$\closeDefs$}
+   \text{\defref{baseline:surface:close-defs}}
    \notag
    \\
    &
@@ -741,9 +742,9 @@ Induction on $\desugar$ derivation.
             width=3.3in,
          ]
          {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
+            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\envEmpty}{\sigma}, v')
             \\
-            \gamma', \seqEmpty \closeDefs \envEmpty
+            \gamma', \envEmpty \closeDefs \envEmpty
             \\
             v', \sigma \match \gamma^\ddagger, e^\dag
             \\
@@ -764,6 +765,27 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \\
+            \mu \desugar \sigma
+         }
+         {
+            \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalSugS$-list-comp-gen}},
             flushleft
@@ -779,27 +801,8 @@ Induction on $\desugar$ derivation.
       \end{smathpar}
    }
    &
+   \text{inversion}
    \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
-         {
-            s \desugar e
-            \\
-            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
-            \\
-            \mu \desugar \sigma
-         }
-         {
-            \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
-         }
-   \end{smathpar}
-   }
-   &
    \\
    &
    \derivation{\derivationWidth}{
