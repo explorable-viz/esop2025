@@ -309,6 +309,25 @@ Induction on $\desugar$ derivation.
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
+         {
+            \seq{\mu} \desugar \seq{\sigma}
+            \\
+            s \desugar e
+         }
+         {
+            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
+            \desugar
+            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
@@ -325,26 +344,7 @@ Induction on $\desugar$ derivation.
       \end{smathpar}
    }
    &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
-         {
-            \seq{\mu} \desugar \seq{\sigma}
-            \\
-            s \desugar e
-         }
-         {
-            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
-            \desugar
-            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
-         }
-      \end{smathpar}
-   }
-   &
-   \text{$\desugar$-let-rec}
+   \text{inversion}
    \notag
    \\
    &
@@ -360,7 +360,7 @@ Induction on $\desugar$ derivation.
    &
    \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
    &
-   (\localref{desug:env})
+   \text{(\localref{desug:env}), \ruleName{$\desugar$-env}}
    \notag
    \\
    &
