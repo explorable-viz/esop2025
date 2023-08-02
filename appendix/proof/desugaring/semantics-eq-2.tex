@@ -769,24 +769,41 @@ Induction on $\desugar$ derivation.
    \notag
    \\
    &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\evalSugS$-app}}
+         ]
+         {
+            \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma_1'}{g}{\mu'}
+            \\
+            \gamma, s \evalSugS
+            \\
+            \gamma_1', g \closeDefs \gamma_2'
+            \\
+            , \mu' \match \gamma_3', s'
+            \\
+            \gamma_1' \concat \gamma_2' \concat \gamma_3', s' \evalSugS u
+         }
+         {
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-%            left={\ruleName{$\evalSugS$-list-comp-gen}}
+            left={\ruleName{$\evalSugS$-list-comp-gen}}
          ]
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
-            \inferrule*[
-               left={\ruleName{$\evalSugS$-app}}
-            ]
-            {
-               \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS
-            }
-            {
-               \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
-            }
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
          }
          {
             \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS u
