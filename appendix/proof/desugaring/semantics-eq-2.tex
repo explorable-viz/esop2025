@@ -688,29 +688,29 @@ Induction on $\desugar$ derivation.
       \begin{smathpar}
          \inferrule*[right=\ruleName{$\evalS$-app}]
          {
-            \inferrule*[right={\ruleName{$\evalS$-app}}]
-            {
-               \Lowlight{\gamma'=\;} \gamma'_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}) \evalS {\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}
-               \\
-               \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
-               \\
-               \gamma'_2, \envEmpty \closeDefs \envEmpty
-               \\
-               \exClosure{\gamma'}{\envEmpty}{\sigma}, \sigma' \match \gamma'_3, e^\dag
-               \\
-               \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\ddagger}{\envEmpty}{\sigma^\dag}
-            }
-            {
-               \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma^\ddagger}{\envEmpty}{\sigma^\dag}
-            }
+%            \inferrule*[right={\ruleName{$\evalS$-app}}]
+%            {
+%               \Lowlight{\gamma'=\;} \gamma'_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}) \evalS {\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}
+%               \\
+%               \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
+%               \\
+%               \gamma'_2, \envEmpty \closeDefs \envEmpty
+%               \\
+%               \exClosure{\gamma'}{\envEmpty}{\sigma}, \sigma' \match \gamma'_3, e^\dag
+%               \\
+%               \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\ddagger}{\envEmpty}{\sigma^\dag}
+%            }
+%            {
+               \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma_1}{\rho}{\sigma^\dag}
+%            }
             \\
             \gamma', e \evalS u
             \\
-            \gamma^\ddagger, \envEmpty \closeDefs \envEmpty
+            \gamma_1, \rho \closeDefs \gamma_2
             \\
-            u, \sigma^\dag \match \gamma'_4, e'
+            u, \sigma^\dag \match \gamma_3, e'
             \\
-            \gamma^\ddagger \concat \gamma'_4, e' \evalS v
+            \gamma_1 \concat \gamma_2 \concat \gamma_3, e' \evalS v
          }
          {
             \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
