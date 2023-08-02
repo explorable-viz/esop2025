@@ -593,7 +593,7 @@ By induction on derivation of $\evalSugS$.
    &
    \cTrue, \sigma \match \envEmpty, e'
    &
-   \text{$\match$}
+   \text{\ruleName{$\match$-constr}}
    \notag
    \\
    &
@@ -652,7 +652,7 @@ By induction on derivation of $\evalSugS$.
          {
             \gamma, s \evalSugR{S'} u'
             \\
-            u', (\clause{p}{\exListComp{s'}{\seq{q}}})\match \gamma^\dag, s^\dag
+            u', (\clause{p}{\exListComp{s'}{\seq{q}}}) \match \gamma^\dag, s^\dag
             \\
             \gamma \concat \gamma^\dag, s^\dag \evalSugR{\seq{Q},S} u
          }
