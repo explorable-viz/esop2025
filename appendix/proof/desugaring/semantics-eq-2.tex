@@ -776,7 +776,6 @@ Induction on $\desugar$ derivation.
    \notag
    \\
    &
-   \qedLocal
    \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma_1'}{g}{\mu'}
    \textit{ with }
    \gamma_1' \desugar \gamma_1, g \desugar \rho, \mu' \desugar \sigma'
@@ -787,9 +786,15 @@ Induction on $\desugar$ derivation.
    \notag
    \\
    &
-   \gamma_1' \concat \gamma_2' \concat \gamma_3', s' \evalSugS u
+   \gamma, s \evalSugS u^\dagger
+   &
+   \text{IH}
+   \notag
+   \\
+   &
+   \gamma_1' \concat \gamma_2' \concat \gamma_3', s' \evalSugS v^\dagger
    \textit{ with }
-   u \desugar v
+   v^\dagger \desugar v
    &
    \text{IH}
    \notag
@@ -804,7 +809,7 @@ Induction on $\desugar$ derivation.
          {
             \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma_1'}{g}{\mu'}
             \\
-            \gamma, s \evalSugS
+            \gamma, s \evalSugS u^\dagger
             \\
             \gamma_1', g \closeDefs \gamma_2'
             \\
@@ -830,10 +835,10 @@ Induction on $\desugar$ derivation.
          {
             (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
             \\
-            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS v^\dagger
          }
          {
-            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS u
+            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS v^\dagger
          }
       \end{smathpar}
    }
