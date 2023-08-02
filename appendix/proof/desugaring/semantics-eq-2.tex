@@ -748,35 +748,25 @@ Induction on $\desugar$ derivation.
    ]
    {
       \inferrule*[
-         left={\ruleName{$\desugar$-app}}
+%         right={\ruleName{$\desugar$-var}}
       ]
       {
-         \inferrule*[
-%            right={\ruleName{$\desugar$-var}}
-         ]
-         {
-            \strut
-         }
-         {
-            \varConcatMap \desugar \varConcatMap
-         }
-         \\
-         \inferrule*[left={\ruleName{$\desugar$-lambda}}]
-         {
-            \mu \desugar \sigma
-         }
-         {
-            \exFun{\mu} \desugar \exFun{\sigma}
-         }
+         \strut
       }
       {
-         \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
+         \varConcatMap \desugar \varConcatMap
       }
       \\
-      s \desugar e
+      \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+      {
+         \mu \desugar \sigma
+      }
+      {
+         \exFun{\mu} \desugar \exFun{\sigma}
+      }
    }
    {
-      \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+      \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
    }
    &
    \notag
