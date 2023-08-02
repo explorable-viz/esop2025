@@ -587,6 +587,26 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
+            lab={\ruleName{$\desugar$-list-comp-decl}},
+            width=3.3in,
+         ]
+         {
+            s \desugar e
+            \\
+            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         }
+         {
+            (\exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}) \desugar \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
             lab={\ruleName{$\evalS$-list-comp-decl}}
          ]
          {
@@ -598,26 +618,6 @@ Induction on $\desugar$ derivation.
          }
          {
             \gamma', \exApp{e}{e'} \evalS u^\dag
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\desugar$-list-comp-decl}},
-            width=3.3in,
-         ]
-         {
-            s \desugar e
-            \\
-            (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
-         }
-         {
-            (\exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}) \desugar \exApp{\exFun{\sigma}}{e}
          }
       \end{smathpar}
    }
