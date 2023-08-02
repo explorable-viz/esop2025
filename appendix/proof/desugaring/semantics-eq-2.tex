@@ -397,13 +397,13 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalS$-Cons}}
+            lab={\ruleName{$\desugar$-list-comp-done}}
          ]
          {
-            \gamma', e \evalS v'
+            s \desugar e
          }
          {
-            \gamma', \exApp{\cCons}{(e, \exNil)} \evalS \exApp{\cCons}{(v', \exNil)}
+            \exListComp{s}{\seqEmpty} \desugar \exApp{\cCons}{(e, \exNil)}
          }
       \end{smathpar}
    }
@@ -414,13 +414,13 @@ Induction on $\desugar$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-list-comp-done}}
+            lab={\ruleName{$\evalS$-Cons}}
          ]
          {
-            s \desugar e
+            \gamma', e \evalS v'
          }
          {
-            \exListComp{s}{\seqEmpty} \desugar \exApp{\cCons}{(e, \exNil)}
+            \gamma', \exApp{\cCons}{(e, \exNil)} \evalS \exApp{\cCons}{(v', \exNil)}
          }
       \end{smathpar}
    }
