@@ -1,4 +1,4 @@
-By induction on derivation of $\evalSugS$
+Case analysis on surface $\evalS$ derivation and induction on $\desugar$ derivation.
 \begin{proof}
 \small
 \begin{flalign}
@@ -15,7 +15,7 @@ By induction on derivation of $\evalSugS$
    \locallabel{desug:env}
    \\
    &
-   \gamma', e \evalSugS v'_0
+   \gamma', e_0 \evalSugS v'_0
    &
    \text{suppose}
    \locallabel{eval:core}
@@ -24,23 +24,6 @@ By induction on derivation of $\evalSugS$
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
    \caseDerivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\evalSugS$-var}}
-         ]
-         {
-            \strut
-         }
-         {
-            \Lowlight{\gamma' =\;}\gamma_2 \cdot (\bind{x}{v'}), x \evalSugS v'
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\desugar$-var}}
@@ -54,13 +37,33 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-var}}
+         ]
+         {
+            \strut
+         }
+         {
+            \Lowlight{\gamma' =\;}\gamma_2 \cdot (\bind{x}{v'}), x \evalSugS v'
+         }
+      \end{smathpar}
+   }
+   &
    \text{inversion}
    \notag
    \\
    &
-   \gamma = \gamma_1 \cons (\bind{x}{v}) \desugar \gamma_2 \cons (\bind{x}{v})
+   \gamma = \gamma_1 \cons (\bind{x}{v}) \desugar \gamma_2 \cons (\bind{x}{v'})
+   \textit{ with }v \desugar v'
+   \quad
+   (\exists \gamma_1, v)
    &
-   \text{(\localref{desug:env}), \lemref{varlookup}}
+   \text{(\localref{desug:env}), inversion \ruleName{$\desugar$-env}}
    \notag
    \\
    &
@@ -87,13 +90,13 @@ By induction on derivation of $\evalSugS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-constr}}
+            lab={\ruleName{$\desugar$-constr}}
          ]
          {
-            \gamma', \seq{e} \evalSugS \seq{v}'
+            \seq{s} \desugar \seq{e}
          }
          {
-            \gamma', \exConstr{c}{\seq{e}} \evalSugS \exConstr{c}{\seq{v}'}
+            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
          }
       \end{smathpar}
    }
@@ -104,13 +107,13 @@ By induction on derivation of $\evalSugS$
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-constr}}
+            lab={\ruleName{$\evalSugS$-constr}}
          ]
          {
-            \seq{s} \desugar \seq{e}
+            \gamma', \seq{e} \evalSugS \seq{v}'
          }
          {
-            \exConstr{c}{\seq{s}} \desugar \exConstr{c}{\seq{e}}
+            \gamma', \exConstr{c}{\seq{e}} \evalSugS \exConstr{c}{\seq{v}'}
          }
       \end{smathpar}
    }
@@ -170,11 +173,32 @@ By induction on derivation of $\evalSugS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
+            lab={\ruleName{$\desugar$-app}}
+         ]
+         {
+            s \desugar e
+            \\
+            s' \desugar e'
+         }
+         {
+            \Lowlight{s_0 =\;} \exApp{s}{s'} \desugar \exApp{e}{e'} \Lowlight{\;= e_0}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
             lab={\ruleName{$\evalSugS$-app}},
             width=3.3in,
          ]
          {
-            \gamma, (e, e') \evalS (\exClosure{\gamma'_1}{\rho}{\sigma}, v')
+            \gamma, e \evalS \exClosure{\gamma'_1}{\rho}{\sigma}
+            \\
+            \gamma, e' \evalS v'
             \\
             \gamma'_1, \rho \closeDefs \gamma'_2
             \\
@@ -186,25 +210,6 @@ By induction on derivation of $\evalSugS$
             \gamma', \exApp{e}{e'}
             \evalSugS
             u
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{$\desugar$-app}}
-         ]
-         {
-            s \desugar e
-            \\
-            s' \desugar e'
-         }
-         {
-            \Lowlight{s_0 =\;} \exApp{s}{s'} \desugar \exApp{e}{e'} \Lowlight{\;= e_0}
          }
       \end{smathpar}
    }
@@ -223,7 +228,7 @@ By induction on derivation of $\evalSugS$
    \quad
    (\exists \gamma_1, g, \mu)
    &
-   \text{IH, $\desugar$-closure}
+   \text{IH, \ruleName{$\desugar$-closure}}
    \notag
    \\
    &
@@ -259,13 +264,15 @@ By induction on derivation of $\evalSugS$
    &
    \gamma_1\concat\gamma_2\concat\gamma_3 \desugar \gamma'_1\concat\gamma'_2\concat\gamma'_3
    &
-   \text{\lemref{varlookup}}
+   \text{\ruleName{$\desugar$-env}}
    \notag
    \\
    &
    \gamma_1 \concat \gamma_2 \concat \gamma_3, s^{\dag} \evalSugS v^{\dag}
    \textit{ with }
    v^{\dag} \desugar u
+   \quad
+   (\exists v^\dag)
    &
    \text{IH}
    \notag
@@ -279,7 +286,9 @@ By induction on derivation of $\evalSugS$
             width=3in,
          ]
          {
-            \gamma, (s, s') \evalSugR{(S,S')} (\exClosure{\gamma_1}{g}{\mu}, v)
+            \gamma, s \evalSugR{(S,S')} \exClosure{\gamma_1}{g}{\mu}
+            \\
+            \gamma, s' \evalSugR{(S,S')} v
             \\
             \gamma_1, g \closeDefs \gamma_2
             \\
@@ -300,6 +309,25 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
+         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
+         {
+            \seq{\mu} \desugar \seq{\sigma}
+            \\
+            s \desugar e
+         }
+         {
+            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
+            \desugar
+            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalSugS$-let-rec}}
          ]
@@ -316,26 +344,7 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
-         {
-            \seq{\mu} \desugar \seq{\sigma}
-            \\
-            s \desugar e
-         }
-         {
-            \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
-            \desugar
-            \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
-         }
-      \end{smathpar}
-   }
-   &
-   \text{$\desugar$-let-rec}
+   \text{inversion}
    \notag
    \\
    &
@@ -351,7 +360,7 @@ By induction on derivation of $\evalSugS$
    &
    \gamma \concat \gamma^{\dag} \desugar \gamma' \concat \gamma^{\ddagger}
    &
-   (\localref{desug:env})
+   \text{(\localref{desug:env}), \ruleName{$\desugar$-env}}
    \notag
    \\
    &
@@ -388,13 +397,13 @@ By induction on derivation of $\evalSugS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalS$-Cons}}
+            lab={\ruleName{$\desugar$-list-comp-done}}
          ]
          {
-            \gamma', e \evalS v'
+            s \desugar e
          }
          {
-            \gamma', \exApp{\cCons}{(e, \exNil)} \evalS \exApp{\cCons}{(v', \exNil)}
+            \exListComp{s}{\seqEmpty} \desugar \exApp{\cCons}{(e, \exNil)}
          }
       \end{smathpar}
    }
@@ -405,13 +414,13 @@ By induction on derivation of $\evalSugS$
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-list-comp-done}}
+            lab={\ruleName{$\evalS$-Cons}}
          ]
          {
-            s \desugar e
+            \gamma', e \evalS v'
          }
          {
-            \exListComp{s}{\seqEmpty} \desugar \exApp{\cCons}{(e, \exNil)}
+            \gamma', \exApp{\cCons}{(e, \exNil)} \evalS \exApp{\cCons}{(v', \exNil)}
          }
       \end{smathpar}
    }
@@ -450,9 +459,40 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalS$-app}}]
+         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
          {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cFalse)
+            s \desugar e
+            \\
+            \exListComp{s'}{\seq{q}} \desugar e'
+            \\
+            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
+         }
+         {
+            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
+            \desugar
+            \exApp{\exFun{\sigma}}{e}
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
+   \\
+   &
+   \textbfit{Subcase}
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalS$-app}},
+            width={3in}
+         ]
+         {
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
+            \\
+            \gamma', e \evalS \cFalse
             \\
             \cFalse, \sigma \match \envEmpty, \exNil
             \\
@@ -464,41 +504,22 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
-         {
-            s \desugar e
-            \\
-            \exListComp{s'}{\seq{q}} \desugar e'
-            \\
-            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
-         }
-         {
-            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exFun{\sigma}}{e}
-         }
-      \end{smathpar}
-   }
-   &
    \text{inversion}
    \notag
    \\
    &
    \gamma, s \evalSugS \cFalse
    &
-   \text{IH}
+   \text{IH, invert \ruleName{$\desugar$-constr}}
    \notag
    \\
    &
    \qedLocal
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\evalSugS$-list-comp-guard-false}}]
+         \inferrule*[
+            lab={\ruleName{$\evalSugS$-list-comp-guard-false}}
+         ]
          {
             \gamma, s \evalSugS \cFalse
          }
@@ -510,16 +531,21 @@ By induction on derivation of $\evalSugS$
    &
    \notag
    \\
-   \intertext{\crossrule}
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    &
-   \caseDerivation{\derivationWidth}{
+   \textbfit{Subcase}
+   &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
             lab={\ruleName{$\evalS$-app}}
          ]
          {
-            \gamma', (\exFun{\sigma}, e) \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, \cTrue)
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\envEmpty}{\sigma}
+            \\
+            \gamma', e \evalS \cTrue
             \\
             \cTrue, \sigma \match \envEmpty, e'
             \\
@@ -531,40 +557,20 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
-         {
-            s \desugar e
-            \\
-            \exListComp{s'}{\seq{q}} \desugar e'
-            \\
-            \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
-         }
-         {
-            \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
-            \desugar
-            \exApp{\exFun{\sigma}}{e}
-         }
-      \end{smathpar}
-   }
-   &
    \text{inversion}
    \notag
    \\
    &
    \gamma, s \evalSugS \cTrue
    &
-   \text{IH}
+   \text{IH, invert \ruleName{$\desugar$-constr}}
    \notag
    \\
    &
    \gamma, \exListComp{s'}{\seq{q}} \evalS v
    \textit{ with }
    v \desugar v'
+   \quad
    (\exists v)
    &
    \text{IH}
@@ -596,27 +602,6 @@ By induction on derivation of $\evalSugS$
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalS$-list-comp-decl}}
-         ]
-         {
-            \gamma', (\exFun{\sigma}, e') \evalS (\exClosure{\gamma'}{\seqEmpty}{\sigma}, v')
-            \\
-            v', \sigma \match \gamma^\ddagger, e^\dag
-            \\
-            \gamma' \concat \gamma^\ddagger, e^\dag \evalS u^\dag
-         }
-         {
-            \gamma', \exApp{e}{e'} \evalS u^\dag
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
-         \inferrule*[
             lab={\ruleName{$\desugar$-list-comp-decl}},
             width=3.3in,
          ]
@@ -631,6 +616,30 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\evalS$-list-comp-decl}}
+         ]
+         {
+            \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
+            \\
+            \gamma', e' \evalS v'
+            \\
+            v', \sigma \match \gamma^\ddagger, e^\dag
+            \\
+            \gamma' \concat \gamma^\ddagger, e^\dag \evalS u^\dag
+         }
+         {
+            \gamma', \exApp{e}{e'} \evalS u^\dag
+         }
+      \end{smathpar}
+   }
+   &
+   \text{inversion}
    \notag
    \\
    &
@@ -659,6 +668,8 @@ By induction on derivation of $\evalSugS$
    \gamma \concat \gamma^\dag, s^\dag \evalSugS v^\dag
    \textit{ with }
    v^\dag \desugar u^\dag
+   \quad
+   (\exists v^\dag)
    &
    \text{IH}
    \notag
@@ -690,43 +701,6 @@ By induction on derivation of $\evalSugS$
    &
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*[right=\ruleName{$\evalS$-app}]
-         {
-            \inferrule*[right={\ruleName{$\evalS$-app}}]
-            {
-               \Lowlight{\gamma'=\;} \gamma'_1 \cdot (\bind{\varConcatMap}{\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}) \evalS {\exClosure{\gamma'_2}{\seqEmpty}{\sigma'}}
-               \\
-               \gamma', \exFun{\sigma} \evalS \exClosure{\gamma'}{\seqEmpty}{\sigma}
-               \\
-               \gamma'_2, \seqEmpty \closeDefs \envEmpty
-               \\
-               \exClosure{\gamma'}{\seqEmpty}{\sigma}, \sigma' \match \gamma'_3, e^\dag
-               \\
-               \gamma' \concat \gamma'_3, e^\dag \evalS \exClosure{\gamma^\ddagger}{\seqEmpty}{\sigma^\dag}
-            }
-            {
-               \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma^\ddagger}{\seqEmpty}{\sigma^\dag}
-            }
-            \\
-            \gamma', e \evalS u
-            \\
-            \gamma^\ddagger, \seqEmpty \closeDefs \envEmpty
-            \\
-            u, \sigma^\dag \match \gamma'_4, e'
-            \\
-            \gamma^\ddagger \concat \gamma'_4, e' \evalS v
-         }
-         {
-            \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
-         }
-      \end{smathpar}
-   }
-   &
-   \notag
-   \\
-   &
-   \derivation{\derivationWidth}{
-      \begin{smathpar}
          \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
          {
             s \desugar e
@@ -743,69 +717,150 @@ By induction on derivation of $\evalSugS$
       \end{smathpar}
    }
    &
+   \notag
+   \\
+   &
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            lab=\ruleName{$\evalS$-app},
+            width={3in}
+         ]
+         {
+            \gamma', \exApp{\varConcatMap}{\exFun{\sigma}} \evalS \exClosure{\gamma_1}{\rho}{\sigma'}
+            \\
+            \gamma', e \evalS u
+            \\
+            \gamma_1, \rho \closeDefs \gamma_2
+            \\
+            u, \sigma' \match \gamma_3, e'
+            \\
+            \gamma_1 \concat \gamma_2 \concat \gamma_3, e' \evalS v
+         }
+         {
+            \gamma', \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e} \evalS v
+         }
+      \end{smathpar}
+   }
+   &
    \text{inversion}
    \notag
    \\
    &
    \inferrule*[
-      right={\ruleName{$\desugar$-app}}
+      left={\ruleName{$\desugar$-app}}
    ]
    {
       \inferrule*[
-         right={\ruleName{$\desugar$-app}}
+%         right={\ruleName{$\desugar$-var}}
       ]
       {
-         \inferrule*[right={\ruleName{$\desugar$-lambda}}]
-         {
-            \mu \desugar \sigma
-         }
-         {
-            \exFun{\mu} \desugar \exFun{\sigma}
-         }
-         \\
-         \varConcatMap \desugar \varConcatMap
+         \strut
       }
       {
-         \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
+         \varConcatMap \desugar \varConcatMap
       }
       \\
-      s \desugar e
+      \inferrule*[left={\ruleName{$\desugar$-lambda}}]
+      {
+         \mu \desugar \sigma
+      }
+      {
+         \exFun{\mu} \desugar \exFun{\sigma}
+      }
    }
    {
-      \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \desugar \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
+      \exApp{\varConcatMap}{\exFun{\mu}} \desugar \exApp{\varConcatMap}{\exFun{\sigma}}
    }
    &
    \notag
    \\
    &
-   \qedLocal
-   \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+   \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma_1'}{g}{\mu'}
    \textit{ with }
-   u \desugar v
+   \gamma_1' \desugar \gamma_1, g \desugar \rho, \mu' \desugar \sigma'
    \quad
-   (\exists u)
+   (\exists \gamma_1')
+   &
+   \text{IH, \ruleName{$\desugar$-closure}}
+   \notag
+   \\
+   &
+   \gamma, s \evalSugS u^\dagger
+   \textit{ with }
+   u^\dagger \desugar u
    &
    \text{IH}
    \notag
    \\
    &
-   \qedLocal
+   \gamma_1', g \closeDefs \gamma_2'
+   \textit{ with }
+   \gamma_2' \desugar \gamma_2
+   &
+   \text{\lemref{closedefs-eq}}
+   \notag
+   \\
+   &
+   u^\dagger, \mu' \match \gamma_3', s'
+   \textit{ with }
+   \gamma_3' \desugar \gamma_3\textit{ and }s' \desugar e'
+   &
+   \text{\lemref{match-seq-eq}}
+   \notag
+   \\
+   &
+   \gamma_1' \concat \gamma_2' \concat \gamma_3', s' \evalSugS v^\dagger
+   \textit{ with }
+   v^\dagger \desugar v
+   &
+   \text{IH}
+   \notag
+   \\
+   &
    \derivation{\derivationWidth}{
       \begin{smathpar}
-         \inferrule*
-         [lab={\ruleName{$\evalSugS$-list-comp-gen}}]
+         \inferrule*[
+            left={\ruleName{$\evalSugS$-app}},
+            width={3in}
+         ]
          {
-            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \gamma, \exApp{\varConcatMap}{\exFun{\mu}} \evalSugS \exClosure{\gamma_1'}{g}{\mu'}
             \\
-            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS u
+            \gamma, s \evalSugS u^\dagger
+            \\
+            \gamma_1', g \closeDefs \gamma_2'
+            \\
+            u^\dagger, \mu' \match \gamma_3', s'
+            \\
+            \gamma_1' \concat \gamma_2' \concat \gamma_3', s' \evalSugS v^\dagger
          }
          {
-            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS u
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS v^\dagger
          }
       \end{smathpar}
    }
    &
    \notag
    \\
+   &
+   \qedLocal
+   \derivation{\derivationWidth}{
+      \begin{smathpar}
+         \inferrule*[
+            left={\ruleName{$\evalSugS$-list-comp-gen}}
+         ]
+         {
+            (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+            \\
+            \gamma, \exApp{\exApp{\varConcatMap}{\exFun{\mu}}}{s} \evalSugS v^\dagger
+         }
+         {
+            \gamma, \exListComp{s'}{\qualGenerator{p}{s} \cdot \seq{q}} \evalSugS v^\dagger
+         }
+      \end{smathpar}
+   }
+   &
+   \notag
 \end{flalign}
 \end{proof}

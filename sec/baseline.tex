@@ -100,26 +100,17 @@ relations.
 \begin{theorem}
    \label{thm:semantics-eq}
    Suppose $s \desugar e$ and $\gamma \desugar \gamma'$.
-\begin{enumerate}
-   \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
-   \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalSugS v'$ then $v \desugar v'$.
-\end{enumerate}
+   \begin{enumerate}
+      \item $\gamma, s\,\evalSugS$ iff $\gamma', e\,\evalSugS$.
+      \item If $\gamma, s \evalSugS v$ and $\gamma',e \evalSugS v'$ then $v \desugar v'$.
+   \end{enumerate}
 \end{theorem}
 \begin{proof}
-   See \appref{semantics-eq}.
+   See \appref{proofs:semantics-eq}.
 \end{proof}
 
-\thmref{semantics-eq} relies on the auxiliary lemmas for
-environment extension (\lemref{varlookup}), pattern-matching (\lemref{match-eq}) and recursive definitions
-(\lemref{closedefs-eq}).
-
-\begin{lemma}
-   \label{lem:varlookup}
-   ($\gamma \desugar \gamma'$ and $v \desugar v'$) iff $\gamma \cons (\bind{x}{v}) \desugar \gamma' \cons (\bind{x}{v'})$.
-\end{lemma}
-\begin{proof}
-   Immediate from definition of environment desugaring.
-\end{proof}
+\thmref{semantics-eq} relies on auxiliary lemmas for pattern-matching (\lemref{match-eq}) and recursive
+definitions (\lemref{closedefs-eq}).
 
 \begin{lemma}
    \label{lem:match-eq}
