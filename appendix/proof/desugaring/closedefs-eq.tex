@@ -5,26 +5,19 @@
       \gamma_1 \desugar \gamma_2
       &
       \text{suppose}
-      \locallabel{gamma-desugar}
+      \notag
       \\
       &
-      g \desugar \rho
+      \seq{\mu} \desugar \seq{\sigma}
       &
       \text{suppose}
-      \locallabel{g-desugar}
-      \\
-      \intertext{\crossrule}
-      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      &
-      \subcaseName{$\closeDefs$-then-$\desugar$}
-      &
       \notag
       \\
       &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefs$-surface}}
+%               left={\ruleName{$\closeDefs$-surface}}
             ]
             {
                g = \seq{\bind{x}{\mu}}
@@ -40,19 +33,13 @@
       }
       &
       \text{suppose}
-      \locallabel{closed-surface}
-      \\
-      &
-      \rho = \set{\seq{\bind{x}{\sigma}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\sigma})
-      &
-      \text{(\localref{g-desugar})}
-      \locallabel{rho-exists}
+      \notag
       \\
       &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
-               left={\ruleName{$\closeDefs$-core}}
+%               left={\ruleName{$\closeDefs$-core}}
             ]
             {
                \rho = \set{\seq{\bind{x}{\sigma}}}
@@ -64,105 +51,16 @@
             {
                \gamma_2, \rho
                \closeDefs
-               \set{\seq{\bind{x}{v'}}}
-            }
-         \end{smathpar}
-      }
-      &
-      \text{(\localref{rho-exists})}
-      \notag
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            [
-               left={\ruleName{$\desugar$-env}}
-            ]
-            {
-               \inferrule*
-               [
-                  left={\ruleName{$\desugar$-closure}},
-                  right={$\forall i. \numleq \length{\seq{x}}$}
-               ]
-               {
-                  \gamma_1 \desugar \gamma_2
-                  \\
-                  g \desugar \rho
-                  \\
-                  \upmu_i \desugar \sigma_i
-               }
-               {
-                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
-               }
-            }
-            {
-               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v'}}}
-            }
-         \end{smathpar}
-      }
-      &
-      \notag
-      \\
-      &
-      \subcaseName{$\desugar$-then-$\closeDefs$}
-      &
-      \notag
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*[
-               left={\ruleName{$\closeDefs$-core}}
-            ]
-            {
-               \rho = \set{\seq{\bind{x}{\sigma}}}
-               \\
-               v'_i = \exClosure{\gamma_2}{\rho}{\sigma_i}
-               \quad
-               (\forall i \numleq \length{\seq{x}})
-            }
-            {
-               \gamma_2, \rho
-               \closeDefs
-               \set{\seq{\bind{x}{v'}}}
+               \set{\seq{\bind{x}{v}}'}
             }
          \end{smathpar}
       }
       &
       \text{suppose}
-      \locallabel{close-rho}
-      \\
-      &
-      g = \set{\seq{\bind{x}{\upmu}}} \text{ with } \seq{\upmu} \desugar \seq{\sigma} \quad (\exists \seq{\upmu})
-      &
-      \text{(\localref{g-desugar})}
-      \locallabel{g-exists}
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            [
-               left={\ruleName{$\closeDefs$-surface}}
-            ]
-            {
-               g = \seq{\bind{x}{\mu}}
-               \\
-               v_i = \exClosure{\gamma_1}{g}{\mu_i}
-               \quad
-               (\forall i \le \length{\seq{x}})
-            }
-            {
-               \gamma_1, g \closeDefs \set{\seq{\bind{x}{v}}}
-            }
-         \end{smathpar}
-      }
-      &
-      \text{(\localref{g-exists})}
       \notag
       \\
       &
+      \qedLocal
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*
@@ -178,16 +76,16 @@
                {
                   \gamma_1 \desugar \gamma_2
                   \\
-                  g \desugar \rho
+                  \seq{\mu} \desugar \seq{\sigma}
                   \\
-                  \upmu_i \desugar \sigma_i
+                  \mu_i \desugar \sigma_i
                }
                {
-                  v_i = \exClosure{\gamma_1}{g}{\upmu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
+                  v_i = \exClosure{\gamma_1}{g}{\mu_i} \desugar \exClosure{\gamma_2}{\rho}{\sigma_i}
                }
             }
             {
-               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v'}}}
+               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v}}'}
             }
          \end{smathpar}
       }
