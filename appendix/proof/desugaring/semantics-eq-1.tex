@@ -173,22 +173,15 @@ Induction on $\desugar$ derivation.
    \caseDerivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\evalSugS$-app}},
-            width=3in,
+            lab={\ruleName{$\desugar$-app}}
          ]
          {
-            \gamma, s \evalSugS \exClosure{\gamma_1}{g}{\mu}
+            s \desugar e
             \\
-            \gamma, s' \evalSugR v
-            \\
-            \gamma_1, g \closeDefs \gamma_2
-            \\
-            v, \mu \match \gamma_3, s^\dag
-            \\
-            \gamma_1 \concat \gamma_2 \concat \gamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
+            s' \desugar e'
          }
          {
-            \gamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
+            \exApp{s}{s'} \desugar \exApp{e}{e'}
          }
       \end{smathpar}
    }
@@ -199,15 +192,22 @@ Induction on $\desugar$ derivation.
    \derivation{\derivationWidth}{
       \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\desugar$-app}}
+            lab={\ruleName{$\evalSugS$-app}},
+            width=3in,
          ]
          {
-            s \desugar e
+            \gamma, s \evalSugS \exClosure{\gamma_1}{g}{\mu}
             \\
-            s' \desugar e'
+            \gamma, s' \evalSugS v
+            \\
+            \gamma_1, g \closeDefs \gamma_2
+            \\
+            v, \mu \match \gamma_3, s^\dag
+            \\
+            \gamma_1 \concat \gamma_2 \concat \gamma_3, s^\dag \evalSugR{S^\dag} v^{\dag}
          }
          {
-            \exApp{s}{s'} \desugar \exApp{e}{e'}
+            \gamma, \exApp{s}{s'} \evalSugR{\trApp{S}{S'}{p}{S^{\dag}}} v^{\dag}
          }
       \end{smathpar}
    }
