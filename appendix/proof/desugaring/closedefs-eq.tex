@@ -8,7 +8,7 @@
       \locallabel{gamma-desugar}
       \\
       &
-      g \desugar \rho
+      \seq{\mu} \desugar \seq{\sigma}
       &
       \text{suppose}
       \locallabel{g-desugar}
@@ -60,12 +60,6 @@
       \notag
       \\
       &
-      \seq{\mu} \desugar \seq{\sigma}
-      &
-      \text{(\localref{g-desugar})}
-      \locallabel{rho-exists}
-      \\
-      &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*
@@ -90,36 +84,12 @@
                }
             }
             {
-               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v'}}}
+               \set{\seq{\bind{\exVar{x}}{v}}} \desugar \set{\seq{\bind{\exVar{x}}{v}}'}
             }
          \end{smathpar}
       }
       &
       \notag
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*[
-               left={\ruleName{$\closeDefs$-core}}
-            ]
-            {
-               \rho = \set{\seq{\bind{x}{\sigma}}}
-               \\
-               v'_i = \exClosure{\gamma_2}{\rho}{\sigma_i}
-               \quad
-               (\forall i \numleq \length{\seq{x}})
-            }
-            {
-               \gamma_2, \rho
-               \closeDefs
-               \set{\seq{\bind{x}{v'}}}
-            }
-         \end{smathpar}
-      }
-      &
-      \text{suppose}
-      \locallabel{close-rho}
       \\
       &
       g = \set{\seq{\bind{x}{\mu}}} \text{ with } \seq{\mu} \desugar \seq{\sigma} \quad (\exists \seq{\mu})
