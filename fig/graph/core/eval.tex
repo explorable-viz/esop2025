@@ -121,8 +121,8 @@
       {
          G, \gamma, \exFun{\sigma}, V
          \evalS
-         G,
-         \annClosure{\gamma}{\seqEmpty}{\sigma}{V}
+         G \disjunion \set{\alpha \mapsto V},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
       }
       %
       \and
@@ -132,15 +132,15 @@
          width=3.3in,
       ]
       {
-         G, \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{V_1}
+         G, \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
          \\
          G_1, \gamma, e', V \evalS G_2, v
          \\
-         \gamma_1, \rho, V_1 \closeDefs \gamma_2
+         G_2, \gamma_1, \rho, \set{\alpha} \closeDefs G_3, \gamma_2
          \\
          v, \sigma \match \gamma_3, e, V_2
          \\
-         G_2, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalS G', u
+         G_3, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalS G', u
       }
       {
          G, \gamma, \exApp{e}{e'}, V
@@ -186,9 +186,9 @@
          lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
-         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs \gamma'
+         G, \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G_1, \gamma'
          \\
-         G, \gamma \concat \gamma', e, V \evalS G', v
+         G_1, \gamma \concat \gamma', e, V \evalS G', v
       }
       {
          G, \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
@@ -197,20 +197,21 @@
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs \gamma'$}
+   {\small \flushleft \shadebox{$G, \gamma, \rho, V \closeDefs G', \gamma'$}
     \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[right={$\length{\seq{x}} = n$}]
       {
          \rho = \set{\seq{\bind{x}{\sigma}}}
          \\
-         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{V'}
+         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{\alpha_i}
          \quad
-         (\forall i \numleq \length{\seq{x}})
+         (\forall i \numleq n)
       }
       {
-         \gamma, \rho, V
+         G, \gamma, \rho, V
          \closeDefs
+         G \disjunion \set{\alpha_i \mapsto V \mid i \numleq n},
          \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
