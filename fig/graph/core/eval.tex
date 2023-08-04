@@ -200,18 +200,18 @@
    {\small \flushleft \shadebox{$G, \gamma, \rho, V \closeDefs G', \gamma'$}
     \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[right={$\length{\seq{x}} = n$}]
       {
          \rho = \set{\seq{\bind{x}{\sigma}}}
          \\
-         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{V'}
+         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{\alpha_i}
          \quad
-         (\forall i \numleq \length{\seq{x}})
+         (\forall i \numleq n)
       }
       {
-         \gamma, \rho, V
+         G_0, \gamma, \rho, V
          \closeDefs
-         \set{\seq{\bind{x}{v}}}
+         G_n, \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
    }
