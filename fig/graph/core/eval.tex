@@ -136,11 +136,11 @@
          \\
          G_1, \gamma, e', V \evalS G_2, v
          \\
-         \gamma_1, \rho, V_1 \closeDefs \gamma_2
+         G_2, \gamma_1, \rho, V_1 \closeDefs G_3, \gamma_2
          \\
          v, \sigma \match \gamma_3, e, V_2
          \\
-         G_2, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalS G', u
+         G_3, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, V_1 \cup V_2 \evalS G', u
       }
       {
          G, \gamma, \exApp{e}{e'}, V
@@ -186,9 +186,9 @@
          lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
-         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs \gamma'
+         G, \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G_1, \gamma'
          \\
-         G, \gamma \concat \gamma', e, V \evalS G', v
+         G_1, \gamma \concat \gamma', e, V \evalS G', v
       }
       {
          G, \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
