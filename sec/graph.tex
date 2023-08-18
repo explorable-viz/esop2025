@@ -56,9 +56,8 @@ Y \times X$. (We flip the direction of the relation compared to $f$ so we can re
 
 \subsection{Dependence graphs}
 
-We now introduce \emph{dependence graphs} $G, H = (V, E)$ with vertices $\alpha, \beta \in V$ and edges
-$(\alpha, \beta) \in E$ along with some standard graph-theoretic notions. For the following definitions fix a
-dependence graph $G$.
+We now define some standard graph-theoretic notions for a $G = (V, E)$ with vertices $\alpha, \beta \in V$ and
+edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
 
 \begin{definition}[Opposite graph]
    If $G = (V,E)$, define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
@@ -82,12 +81,6 @@ dependence graph $G$.
 
 \noindent Both notations extend to sets of vertices in the obvious way.
 
-Because the following graph has a single source, we refer to it as a \emph{singleton} graph.
-
-\begin{definition}[Singleton graph]
-   Define $\singleton{\alpha}{V} \eqdef (\alpha \cons V, \set{\alpha} \times V)$.
-\end{definition}
-
 \begin{definition}[Subgraph, union]
    If $G = (V, E)$ and $G' = (V', E')$ define:
    \begin{enumerate}
@@ -96,11 +89,6 @@ Because the following graph has a single source, we refer to it as a \emph{singl
    \end{enumerate}
 \end{definition}
 
-%\begin{definition}[Induced subgraph]
-%   For any $V' \subseteq V$, define $\induced{G}{V'}$ to be the \emph{subgraph of $G$ induced by $V'$}, namely
-%   $(V', \set{(\alpha,\beta) \in E \mid \alpha, \beta \in V'}$.
-%\end{definition}
-%
 \begin{definition}[Reachable]
    Define the \emph{reachable-from} relation $\reachable{G} \subseteq \V(G)^2$ that has $\reachable{G}(\alpha,
    \beta)$ iff there exists $\seq{\alpha}$ such that $\forall i < \length{\seq{\beta}}.\;(\beta_i,\beta_{i+1})
@@ -119,11 +107,11 @@ Because the following graph has a single source, we refer to it as a \emph{singl
    Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
 \end{definition}
 
-%\begin{definition}[Subgraph Extension]
-%   For any $G' = (V',E') \subseteq G$ and any $V^{\dag} \subseteq V$, define $G' \disjunion V^{\dag} \eqdef \induced{G}{V' \cup V^{\dag}}$. \todo{Problematic as only vertices of $G'$ are relevant}
-%\end{definition}
-
 \subsection{Galois slicing over dependence graphs}
+
+$H$ ranges over maps from vertices to sets of vertices. For constructing and deconstructing graphs, it is
+useful to conflate a singleton $H = \singleton{\alpha}{V}$ with the star graph $(\alpha \cons V, \set{\alpha}
+\times V)$.
 
 \begin{definition}[Slicing algorithms]
    \item Suppose $\hat{G}$ a graph.

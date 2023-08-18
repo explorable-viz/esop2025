@@ -6,8 +6,8 @@
             lab={\ruleName{$\bwdAlg{}$}}
          ]
          {
-            (V, \emptyset), \outE{\hat{G}}(V)
-            \bwdEdges{\hat{G}}
+            (\emptyset, \emptyset), V
+            \bwdVertices{\hat{G}}
             G
          }
          {
@@ -16,46 +16,46 @@
          \end{smathpar}
       }
       \vspace{1mm}
-      {\small \flushleft \shadebox{$G, E \bwdEdges{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\dom{E} \subseteq \sinks{G}$}
+      {\small \flushleft \shadebox{$G, V \bwdVertices{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\bwdEdges{}$-done}}
+         lab={\ruleName{$\bwdVertices{}$-done}}
       ]
       {
          \strut
       }
       {
-         G, \emptyset \bwdEdges{\hat{G}} G
+         G, \emptyset \bwdVertices{\hat{G}} G
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdEdges{}$-skip}},
-         right={$\beta \in \V(G)$}
+         lab={\ruleName{$\bwdVertices{}$-skip}},
+         right={$\alpha \in \V(G)$}
       ]
       {
-         G \cup \singleton{\alpha}{\set{\beta}}, E
-         \bwdEdges{\hat{G}}
+         G, V
+         \bwdVertices{\hat{G}}
          G'
       }
       {
-         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
+         G, \alpha \cons V \bwdVertices{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\bwdEdges{}$-step}},
-         right={$\beta \notin \V(G)$}
+         lab={\ruleName{$\bwdVertices{}$-extend}},
+         right={$H = \set{\alpha \mapsto V'}$}
       ]
       {
-         G \cup \singleton{\alpha}{\set{\beta}}, \outE{\hat{G}}(\beta) \disjunion E
-         \bwdEdges{\hat{G}}
+         G \disjunion H, V' \disjunion V
+         \bwdVertices{\hat{G} \disjunion H}
          G'
       }
       {
-         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
+         G, \alpha \cons V \bwdVertices{\hat{G} \disjunion H} G'
       }
    \end{smathpar}}
    \caption{Backward slicing}
@@ -68,7 +68,7 @@
       \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
       {
          (V, \emptyset),
-         (\emptyset, \emptyset),
+         \emptyset,
          \inE{\hat{G}}(V)
          \fwdEdges{\hat{G}}
          G, H
@@ -91,7 +91,7 @@
       %
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
-         G, H \cup \set{\alpha \mapsto \set{\beta}}, \alpha
+         G, H \cup \set{(\alpha, \beta)}, \alpha
          \fwdVertex{\hat{G}} G_1, H_1
          \\
          G_1, H_1, E \fwdEdges{\hat{G}} G', H'
@@ -103,8 +103,8 @@
    {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-grow}},
-         right={$H' = \singleton{\alpha}{\hat{G}(\alpha)}$}
+         lab={\ruleName{$\fwdVertex{}$-extend}},
+         right={$H' = \singleton{\alpha}{\outN{\hat{G}}(\alpha)}$}
       ]
       {
          G \disjunion H', H, \inE{\hat{G}}(\alpha)
@@ -119,7 +119,7 @@
       %
       \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-wait}},
-         right={$H(\alpha) \subset \hat{G}(\alpha)$}
+         right={$H(\alpha) \subset \outN{\hat{G}}(\alpha)$}
       ]
       {
          \strut
