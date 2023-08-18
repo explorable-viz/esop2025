@@ -32,30 +32,30 @@
       %
       \inferrule*[
          lab={\ruleName{$\bwdVertices{}$-skip}},
-         right={$\beta \in \V(G)$}
+         right={$\alpha \in \V(G)$}
       ]
       {
-         G \cup \singleton{\alpha}{\set{\beta}}, E
-         \bwdEdges{\hat{G}}
+         G, V
+         \bwdVertices{\hat{G}}
          G'
       }
       {
-         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
+         G, \alpha \cons V \bwdVertices{\hat{G}} G'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\bwdVertices{}$-extend}},
-         right={$\beta \notin \V(G)$}
+         right={$H = \set{\alpha \mapsto V'}$}
       ]
       {
-         G \cup \singleton{\alpha}{\set{\beta}}, \outE{\hat{G}}(\beta) \disjunion E
-         \bwdEdges{\hat{G}}
+         G \disjunion H, V' \disjunion V
+         \bwdVertices{\hat{G} \disjunion H}
          G'
       }
       {
-         G, (\alpha, \beta) \cons E \bwdEdges{\hat{G}} G'
+         G, \alpha \cons V \bwdVertices{\hat{G} \disjunion H} G'
       }
    \end{smathpar}}
    \caption{Backward slicing}
