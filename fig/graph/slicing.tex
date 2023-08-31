@@ -89,43 +89,36 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
-      {
-         G, H \cup \set{(\alpha, \beta)}, \alpha
-         \fwdVertex{\hat{G}} G_1, H_1
-         \\
-         G_1, H_1, E \fwdEdges{\hat{G}} G', H'
-      }
-      {
-         G, H, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} G', H'
-      }
-   \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
-   \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-extend}},
-         right={$H' = \singleton{\alpha}{\outN{\hat{G}}(\alpha)}$}
+         lab={\ruleName{$\fwdEdges{}$-extend}},
+         right={$\beta \cons V = \outN{\hat{G}}(\alpha)$}
       ]
       {
-         G \disjunion H', H, \inE{\hat{G}}(\alpha)
+         G \disjunion \set{\alpha \mapsto \beta \cons V}, H, E
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion H', \alpha \fwdVertex{\hat{G}} G', H'
+         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-wait}},
-         right={$H(\alpha) \subset \outN{\hat{G}}(\alpha)$}
+         lab={\ruleName{$\fwdEdges{}$-pending}},
+         right={$\beta \cons V \subset \outN{\hat{G}}(\alpha)$}
       ]
       {
-         \strut
+         G, H \disjunion \set{\alpha \mapsto \beta \cons V}, E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
       {
-         G, H, \alpha \fwdVertex{\hat{G}} G, H
+         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
    \end{smathpar}
    \caption{Forward slicing}
