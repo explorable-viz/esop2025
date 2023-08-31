@@ -106,14 +106,19 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
+      \inferrule*[
+         lab={\ruleName{$\fwdEdges{}$-pending}},
+         right={$\beta \cons V \subset \outN{\hat{G}}(\alpha)$}
+      ]
       {
-         G, H \cup \set{(\alpha, \beta)}, E, \alpha
-         \fwdVertex{\hat{G}}
+         G, H \disjunion \set{\alpha \mapsto \beta \cons V}, E
+         \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H, (\alpha, \beta) \cons E \fwdEdges{\hat{G}} G', H'
+         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$G, H, E, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
