@@ -119,21 +119,6 @@
    {\small \flushleft \shadebox{$G, H, E, \alpha \fwdVertex{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\alpha \in \sources{G}$}}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-extend}},
-         right={$H' = \singleton{\alpha}{\outN{\hat{G}}(\alpha)}$}
-      ]
-      {
-         G \disjunion H', H, \inE{\hat{G}}(\alpha) \cup E
-         \fwdEdges{\hat{G}}
-         G', H'
-      }
-      {
-         G, H \disjunion H', E, \alpha \fwdVertex{\hat{G}} G', H'
-      }
-      %
-      \and
-      %
-      \inferrule*[
          lab={\ruleName{$\fwdVertex{}$-pending}},
          right={$H(\alpha) \subset \outN{\hat{G}}(\alpha)$}
       ]
