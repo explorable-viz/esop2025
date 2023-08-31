@@ -89,6 +89,23 @@
       %
       \and
       %
+      \inferrule*[
+         lab={\ruleName{$\fwdEdges{}$-extend}},
+         right={$\beta \cons V = \outN{\hat{G}}(\alpha)$}
+      ]
+      {
+         G \disjunion \set{\alpha \mapsto \beta \cons V}, H, E
+         \fwdEdges{\hat{G}}
+         G', H'
+      }
+      {
+         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\fwdEdges{}$-edge}}]
       {
          G, H \cup \set{(\alpha, \beta)}, E, \alpha
