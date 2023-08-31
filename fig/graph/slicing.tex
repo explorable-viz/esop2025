@@ -118,14 +118,16 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdVertex{}$-wait}},
+         lab={\ruleName{$\fwdVertex{}$-pending}},
          right={$H(\alpha) \subset \outN{\hat{G}}(\alpha)$}
       ]
       {
-         \strut
+         G, H, E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
       {
-         G, H, \alpha \fwdVertex{\hat{G}} G, H
+         G, H, \alpha \fwdVertex{\hat{G}} G', H'
       }
    \end{smathpar}
    \caption{Forward slicing}
