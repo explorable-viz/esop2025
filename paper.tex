@@ -1,0 +1,55 @@
+\documentclass[preprint,draft,acmsmall,screen]{acmart}
+
+\settopmatter{printacmref=false}
+
+\acmJournal{PACMPL}
+\acmVolume{1}
+\acmNumber{POPL}
+\acmArticle{1}
+\acmYear{2021}
+\acmMonth{1}
+\acmDOI{}
+\startPage{1}
+\setcopyright{none}
+
+\input{tex/packages}
+\input{tex/layout-tweaks}
+\input{tex-common/macros}
+\input{tex/listings}
+\lstset{language=Fluid}
+\input{tex/macros}
+
+\bibliographystyle{ACM-Reference-Format}
+\citestyle{acmauthoryear}
+\setcitestyle{nosort}
+
+\begin{document}
+
+\title{Graphical Galois slicing}
+\input{tex/authors}
+\maketitle
+\input{sec/preliminaries}
+\input{sec/core}
+\clearpage
+\pagebreak
+\input{sec/graph}
+\clearpage
+\input{sec/related-work}
+\clearpage
+\pagebreak
+
+\ifappendices
+   \clearpage
+   \appendix
+   \input{appendix/sec/surface}
+   \input{appendix/sec/desugaring}
+   \input{appendix/sec/desugaring-proofs}
+   \clearpage
+   \input{appendix/sec/typing}
+   \input{appendix/sec/dict-primitives}
+\fi
+
+\clearpage
+\bibliography{tex-common/bib}
+
+\end{document}
