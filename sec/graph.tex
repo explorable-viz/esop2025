@@ -7,6 +7,26 @@
    with respect to $X$.
 \end{definition}
 
+\subsection{Relative complement and material implication}
+
+\begin{definition}[Relative complement]
+   For any $a, b  \in \mathcal{A}$ define $a \diff b = a \meet \compl b$.
+\end{definition}
+
+\begin{definition}[Material implication]
+   For any $a, b  \in \mathcal{A}$ define $a \impl b = \compl a \join b$.
+\end{definition}
+
+% could strengthen these to "generalised" Boolean algebras.
+\begin{lemma}
+   Fix $a \in \mathcal{A}$. Then:
+   \begin{itemize}
+      \item $(\param \diff a) \adjoint (\param \join a): \mathcal{A} \to \mathcal{A}$
+      \item $(a \meet \param) \adjoint (a \impl \param): \mathcal{A} \to \mathcal{A}$
+      \item $\dual{((\param \diff a) \adjoint (\param \join a))} = (\compl a \meet \param) \adjoint (\compl a \impl \param)$
+   \end{itemize}
+\end{lemma}
+
 \subsection{Galois connections for a relation}
 
 The following Galois connection $\consumesF{D} \adjoint \producesF{D}: \powerset{X} \to \powerset{Y}$
