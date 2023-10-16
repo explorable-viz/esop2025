@@ -199,22 +199,23 @@
 
 % annotated terms
 \newcommand*{\annot}[2]{#1_{#2}}
-\newcommand*{\annApp}[3]{(\exApp{#1}{#2})_{#3}}
-\newcommand*{\annClosure}[4]{\exClosure{#1}{#2}{#3}_{#4}}
-\newcommand*{\annClosureNew}[5]{\exClosureNew{#1}{#2}{#3}{#4}_{#5}}
+\newcommand*{\annApp}[3]{\annot{(\exApp{#1}{#2})}{#3}}
+\newcommand*{\annClosure}[4]{\annot{\exClosure{#1}{#2}{#3}}{#4}}
+\newcommand*{\annClosureNew}[5]{\annot{\exClosureNew{#1}{#2}{#3}{#4}}{#5}}
 \newcommand*{\annConstr}[3]{\annot{\exConstr{#1}{#2}}{#3}}
-\newcommand*{\annLet}[4]{(\exLet{#1}{#2}{#3})_{#4}}
+\newcommand*{\annForeignApp}[3]{\annot{\exForeignApp{#1}{#2}}{#3}}
+\newcommand*{\annLet}[4]{\annot{(\exLet{#1}{#2}{#3})}{#4}}
 \newcommand*{\annList}[3]{\annot{\kw{[}}{#3}\;#1 \ #2}
 \newcommand*{\annListComp}[3]{\kw{[}\,{#1}\;\sym{$\vert$}\;{#2}\annot{\kw{]}}{#3}}
 \newcommand*{\annListCompNew}[2]{\kw{[}{#1}\annot{\kw{]}}{#2}}
 \newcommand*{\annListEnd}[1]{\annot{\kw{]}}{#1}}
 \newcommand*{\annListNext}[3]{\annot{\comma}{#3}\;#1 \ #2}
-\newcommand*{\annDict}[2]{\exDict{#1}_{#2}}
-\newcommand*{\annFun}[2]{(\exFun{#1})_{#2}}
-\newcommand*{\annInt}[2]{\exInt{#1}_{#2}}
+\newcommand*{\annDict}[2]{\annot{\exDict{#1}}{#2}}
+\newcommand*{\annFun}[2]{\annot{(\exFun{#1})}{#2}}
+\newcommand*{\annInt}[2]{\annot{\exInt{#1}}{#2}}
 \newcommand*{\annMatrix}[5]{\matrixLBrack{#1}\;\sym{$\vert$}\;\exPair{#2}{#3}\;\kw{in}\;{#4}\matrixRBrack_{#5}}
 \newcommand*{\annOp}[3]{\kw{op}(#1, #2)_{#3}}
-\newcommand*{\annRec}[2]{\exRec{#1}_{#2}}
+\newcommand*{\annRec}[2]{\annot{\exRec{#1}}{#2}}
 \newcommand*{\annStr}[2]{\exStr{#1}_{\hspace{-0.2mm}#2}}
 
 % graphs
