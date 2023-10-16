@@ -6,12 +6,15 @@
       v
       &
       \\
-      \annApp{\exFun{\sigma}}{v}{\alpha}
+      \annApp{\annFun{\sigma}{\beta}}{v}{\alpha}
       & \geval
       \appSubst{\gamma}{e}
       &
       \text{if }v, \sigma \match \gamma, e
       \\
+      \annLet{x}{v}{e}{\alpha}
+      & \geval
+      \appSubst{(\bind{x}{v})}{e}
    \end{salign}
    \caption{Core language: small-step reduction relation}
    \label{fig:graph:core:eval}
