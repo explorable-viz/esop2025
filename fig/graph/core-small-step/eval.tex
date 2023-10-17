@@ -73,13 +73,13 @@
       \\
       \annApp{\annFun{\sigma}{\beta}}{v}{\alpha}
       & \geval
-      \appSubst{\gamma}{e}
+      e
       &
       \text{if }v, \sigma \match \gamma, e
       \\
-      \annLet{x}{v}{e}{\alpha}
+      \annot{(\exLet{x}{\alpha}{e})}{\beta}
       & \geval
-      \appSubst{(\bind{x}{v})}{e}
+      \subst{e}{\alpha}{x}
       \\
       \annForeignApp{f}{\seq{v}}{\alpha}
       & \geval
