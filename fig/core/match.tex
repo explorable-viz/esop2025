@@ -1,24 +1,24 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, e$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma$}\hfill
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\match$-done}}
        ]
        {
-          \strut
+          e' = \opName{alloc}(e)
        }
        {
-          \seqEmpty, e \match \envEmpty, e
+          \seqEmpty, e \match e'
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\match$-var}}]
        {
-          \seq{v}, \kappa \match \gamma, e
+          \seq{v}, \kappa \match e
        }
        {
-          v \cons \seq{v}, \elimVar{x}{\kappa} \match \set{\bind{x}{v}} \disjunion \gamma, e
+          \alpha \cons \seq{v}, \elimVar{x}{\kappa} \match \subst{e}{\alpha}{x}
        }
        \\
        \inferrule*[
@@ -48,5 +48,5 @@
           \gamma, e
        }
     \end{smathpar}}
- \caption{Core semantics: matching}
+ \caption{Graph semantics: pattern-matching}
  \end{figure}
