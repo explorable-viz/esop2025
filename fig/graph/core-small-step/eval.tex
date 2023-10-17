@@ -75,15 +75,17 @@
       & \geval
       e
       &
-      \text{if }v, \sigma \match e
+      \textit{if }v, \sigma \match e
       \\
       \annot{(\exLet{x}{\alpha}{e})}{\beta}
       & \geval
       \subst{e}{\alpha}{x}
       \\
-      \annForeignApp{f}{\seq{v}}{\alpha}
+      \annot{\exForeignApp{f}{\seq{v}}}{\alpha}
       & \geval
-      \interpret{f}(\seq{v})
+      v
+      &
+      \textit{if }\smash{\interpret{f}(\seq{v}) = v}
    \end{salign}
    \\
    \begin{smathpar}
