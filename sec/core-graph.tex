@@ -8,4 +8,13 @@ Notes:
 \item If ``reduct'' (source of hyperedge) means new graph created on right by the rule, then both projection and \kw{let} rules result in an empty reduct (hyperedge with an empty source). No path can connect to such a hyperedge, so backward slicing will never reach such a redex. For forward slicing to be adjoint to that behaviour, redexes with empty reducts need to be ``costless'', i.e.~always included by forward slicing.
 \end{enumerate}
 
+\subsection{Foreign functions}
+
+Foreign functions must be defined precisely for inputs that are appropriately truncated. For example, a binary operator $*$ with annihilator $0$ must define rules such as:
+
+\begin{salign}
+\annot{\exInt{0}}{\alpha} * \beta &\geval \annot{\exInt{0}}{\alpha'} \\
+\annot{\exInt{n}}{\alpha} * \annot{\exInt{n}}{\beta} &\geval \annot{(\exInt{n \mathbin{\hat{*}} m})}{\alpha'} \\
+\end{salign}
+
 \input{fig/graph/core-small-step/eval}
