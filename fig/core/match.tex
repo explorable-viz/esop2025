@@ -1,5 +1,5 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match e$}\hfill
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\match$-done}}
@@ -27,13 +27,13 @@
        {
          \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
          \\
-         \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+         \seq{u} \concat \seq{v}', \kappa \match  e
        }
        {
           \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
           \elimRecord{\seq{y}}{\kappa}
           \match
-          \gamma, e
+          e
        }
        %
        \and
