@@ -1,4 +1,44 @@
 \begin{figure}
+   \begin{tabularx}{\textwidth}{rL{3cm}L{3.6cm}}
+      &\textit{Evaluation context}&
+      \lowlight{$\EvalCxt\;A$}
+      \\
+      $C ::=$
+      &
+      $\exConstr{c}{D}$
+      &
+      constructor argument
+      \\
+      &
+      $\exApp{C}{e}$
+      &
+      function
+      \\
+      &
+      $\exApp{(\exFun{\sigma})}{C}$
+      &
+      function argument
+      \\
+      &
+      $\exForeignApp{f}{D}$
+      &
+      foreign argument
+      \\[2mm]
+      &\textit{Arguments context}&
+      \lowlight{$\ArgsCxt\;\seq{A}$}
+      \\
+      $D ::=$
+      &
+      $C \cons \seq{e}$
+      &
+      head
+      \\
+      &
+      $v \cons D$
+      &
+      tail
+      \\
+   \end{tabularx}
    {\small \flushleft \shadebox{$r \geval r'$}}%
    \begin{salign}
       \annRecProj{\annRec{(\bind{x}{v}) \cons \seq{\bind{y}{u}}}{\beta}}{x}{\alpha}
