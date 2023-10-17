@@ -1,6 +1,6 @@
 \begin{figure}
-   \begin{tabularx}{\textwidth}{rL{3cm}L{3.6cm}}
-      &\textit{Evaluation context}&
+   \begin{tabularx}{\textwidth}{rL{2.5cm}L{3.6cm}}
+      &\textit{Eval context}&
       \lowlight{$\EvalCxt\;A$}
       \\
       $C ::=$
@@ -23,8 +23,13 @@
       $\exForeignApp{f}{D}$
       &
       foreign argument
+      \\
+      &
+      $\exRec{F}$
+      &
+      record field
       \\[2mm]
-      &\textit{Arguments context}&
+      &\textit{Args context}&
       \lowlight{$\ArgsCxt\;\seq{A}$}
       \\
       $D ::=$
@@ -37,6 +42,20 @@
       $v \cons D$
       &
       tail
+      \\[2mm]
+      &\textit{Fields context}&
+      \lowlight{$\FieldsCxt\;(\seq{\bind{x}{A}})$}
+      \\
+      $F ::=$
+      &
+      $(\bind{x}{C}) \cons \seq{\bind{x}{e}}$
+      &
+      first
+      \\
+      &
+      $(\bind{x}{v}) \cons F$
+      &
+      rest
       \\
    \end{tabularx}
    {\small \flushleft \shadebox{$r \geval r'$}}%
