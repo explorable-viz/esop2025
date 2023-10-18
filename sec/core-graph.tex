@@ -5,7 +5,12 @@
 Notes:
 \begin{enumerate}
 \item No support for recursion yet.
-\item If ``reduct'' (source of hyperedge) means new graph created on right by the rule, then both projection and \kw{let} rules result in an empty reduct (hyperedge with an empty source). No path can connect to such a hyperedge, so backward slicing will never reach such a redex. For forward slicing to be adjoint to that behaviour, redexes with empty reducts need to be ``costless'', i.e.~always included by forward slicing.
+\item If ``reduct'' (source of hyperedge) means new graph created on right by the rule, then both projection
+and \kw{let} rules result in an empty reduct (hyperedge with an empty source). No path can connect to such a
+hyperedge, so backward slicing will never reach such a redex. For forward slicing to be adjoint to that
+behaviour, redexes with empty reducts need to be ``costless'', i.e.~always included by forward slicing. Ok,
+but if two of our three rules always introduce hyperedges with an empty source, then the reduction graph is a
+rather degenerate kind of dependence graph, since the application rule is the only one that establishes real dependencies.
 \end{enumerate}
 
 \subsection{Foreign functions}
