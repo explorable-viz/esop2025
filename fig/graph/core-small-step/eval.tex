@@ -116,7 +116,7 @@
       \\
       \CEK{\gamma}{\exApp{e}{e'}}{C}
       & \geval
-      \CEK{\gamma}{e}{C \after (\exApp{\evalCxtEmpty}{e'})}
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{\evalCxtEmpty}{e'}}}
       \\
       \CEK{\gamma}{\UnitVal}{\evalCxtPlug{C}{\exApp{\exClosureTwo{\gamma'}{\sigma}}{v}}}
       & \geval
@@ -124,9 +124,9 @@
       &
       \textit{if }v, \sigma \match \gamma^\twoPrime, e
       \\
-      \CEK{\gamma}{\UnitVal}{\evalCxtPlug{(C \after (\exApp{\evalCxtEmpty}{e}))}{\exClosureTwo{\gamma'}{\sigma}}}
+      \CEK{\gamma}{\UnitVal}{\evalCxtPlug{(\evalCxtPlug{C}{\exApp{\evalCxtEmpty}{e}})}{\exClosureTwo{\gamma'}{\sigma}}}
       & \geval
-      \CEK{\gamma}{e}{C \after (\exApp{\exClosureTwo{\gamma'}{\sigma}}{\evalCxtEmpty})}
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{\exClosureTwo{\gamma'}{\sigma}}{\evalCxtEmpty}}}
    \end{salign}
    \caption{Small-step reduction relation (CEK-style)}
 \end{figure}
