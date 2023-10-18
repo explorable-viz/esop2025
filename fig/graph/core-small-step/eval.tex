@@ -95,7 +95,7 @@
          e \geval e'
       }
       {
-         \cxtPlug{C}{e} \geval \cxtPlug{C}{e'}
+         \evalCxtPlug{C}{e} \geval \evalCxtPlug{C}{e'}
       }
    \end{smathpar}
    \caption{Small-step reduction relation}
@@ -106,7 +106,17 @@
    \begin{salign}
       \CEK{\gamma}{\exFun{\sigma}}{C}
       & \geval
-      \CEK{\gamma}{\UnitVal}{\cxtPlug{C}{\exClosureTwo{\epsilon}{\sigma}}}
+      \CEK{\gamma}{\UnitVal}{\evalCxtPlug{C}{\exClosureTwo{\gamma}{\sigma}}}
+      \\
+      \CEK{\gamma}{\exApp{e}{e'}}{C}
+      & \geval
+      \CEK{\gamma}{e}{C \after (\exApp{\evalCxtEmpty}{e'})}
+      \\
+      \CEK{\gamma}{\UnitVal}{\evalCxtPlug{C}{\exApp{\exClosureTwo{\gamma_1}{\sigma}}{v}}}
+      & \geval
+      \CEK{\gamma_1 \concat \gamma_2}{e}{C}
+      &
+      \textit{if }v, \sigma \match \gamma_2, e
    \end{salign}
    \caption{Small-step reduction relation (CEK-style)}
 \end{figure}
