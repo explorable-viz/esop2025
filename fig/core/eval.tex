@@ -1,212 +1,153 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\gamma, \seq{e} \evalSugS \seq{v}$}%
+   \small
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.5cm}L{3.6cm}}
+         &\textit{Eval context}&
+         \lowlight{$\EvalCxt\;A$}
+         \\
+         $C ::=$
+         &
+         $\exConstr{c}{D}$
+         &
+         constructor arg
+         \\
+         &
+         $\exApp{C}{e}$
+         &
+         function
+         \\
+         &
+         $\exApp{(\exFun{\sigma})}{C}$
+         &
+         function arg
+         \\
+         &
+         $\exForeignApp{f}{D}$
+         &
+         foreign arg
+         \\
+         &
+         $\exRec{F}$
+         &
+         record field
+         \\
+         &
+         $\exRecProj{C}{x}$
+         &
+         record projection
+      \end{tabularx}
+   \end{minipage}%
+   \begin{minipage}[t]{0.48\textwidth}
+      \begin{tabularx}{\textwidth}{rL{2.5cm}L{3.6cm}}
+         &\textit{Args context}&
+         \lowlight{$\ArgsCxt\;\seq{A}$}
+         \\
+         $D ::=$
+         &
+         $C \cons \seq{e}$
+         &
+         head
+         \\
+         &
+         $v \cons D$
+         &
+         tail
+         \\[2mm]
+         &\textit{Fields context}&
+         \lowlight{$\FieldsCxt\;(\seq{\bind{x}{A}})$}
+         \\
+         $F ::=$
+         &
+         $(\bind{x}{C}) \cons \seq{\bind{x}{e}}$
+         &
+         first
+         \\
+         &
+         $(\bind{x}{v}) \cons F$
+         &
+         rest
+         \\[3mm]
+      \end{tabularx}
+   \end{minipage}
+   \\[3mm]
+   {\small \flushleft \shadebox{$e \geval e'$}}%
+   \begin{salign}
+      \annRecProj{\annRec{(\bind{x}{\alpha}) \cons \seq{\bind{y}{\alpha}}}{\beta}}{x}{\beta'}
+      & \geval
+      \alpha
+      &
+      \\
+      \annApp{\annFun{\sigma}{\beta}}{v}{\alpha}
+      & \geval
+      e
+      &
+      \textit{if }v, \sigma \match e
+      \\
+      \annot{(\exLet{x}{\alpha}{e})}{\beta}
+      & \geval
+      \subst{e}{\alpha}{x}
+%      \\
+%      \annot{\exForeignApp{f}{\seq{v}}}{\alpha}
+%      & \geval
+%      v
+%      &
+%      \textit{if }\smash{\interpret{f}(\seq{v}) = v}
+   \end{salign}
+   \\
    \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-seq}}
-      ]
+      \inferrule*
       {
-         \gamma, e_i \evalSugS v_i
-         \quad
-         (\forall i \numleq \length{\seq{e}})
+         e \geval e'
       }
       {
-         \gamma, \seq{e} \evalSugS \seq{v}
-      }
-   \end{smathpar}}
-   {\small \flushleft \shadebox{$\gamma, e \evalSugS v$}%
-   \begin{smathpar}
-      \inferrule*[
-      lab={\ruleName{$\evalSugS$-var}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma \cons (\bind{x}{v}), \exVar{x} \evalSugS v
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-int}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma, \exInt{n}
-         \evalSugS
-         \exInt{n}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-str}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma, \exStr{z}
-         \evalSugS
-         \exStr{z}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
-      {
-         \gamma, \seq{e} \evalSugS \seq{v}
-      }
-      {
-         \gamma, \exRec{\seq{\bind{x}{e}}}
-         \evalSugS
-         \exRec{\seq{\bind{x}{v}}}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-project}}
-      ]
-      {
-         \gamma, e \evalSugS \exRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}
-      }
-      {
-         \gamma, \exRecProj{e}{y} \evalSugS u
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalSugS$-dict}}]
-      {
-         \gamma, \seq{e} \evalSugS \seq{\exStr{z}}
-         \\
-         \gamma, \seq{e}' \evalSugS \seq{v}
-      }
-      {
-         \gamma,
-         \exDict{\seq{\bind{e}{e}}'}
-         \evalSugS
-         \exDict{\seq{\bind{s}{v}}}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
-      {
-         \gamma, \seq{e} \evalSugS \seq{v}
-      }
-      {
-         \gamma, \exConstr{c}{\seq{e}}
-         \evalSugS
-         \exConstr{c}{\seq{v}}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalSugS$-lambda}}]
-      {
-         \strut
-      }
-      {
-         \gamma, \exFun{\sigma}
-         \evalSugS
-         \exClosure{\gamma}{\envEmpty}{\sigma}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-app}},
-         width=3.3in,
-      ]
-      {
-         \gamma, e \evalS \exClosure{\gamma_1}{\rho}{\sigma}
-         \\
-         \gamma, e' \evalS v
-         \\
-         \gamma_1, \rho \closeDefs \gamma_2
-         \\
-         v, \sigma \match \gamma_3, e^\dag
-         \\
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\dag \evalSugS u
-      }
-      {
-         \gamma, \exApp{e}{e'}
-         \evalSugS
-         u
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalS$-foreign}}
-      ]
-      {
-         \gamma, \seq{e} \evalSugS \seq{v}
-         \\
-         \interpret{f}(\seq{v}) = u
-      }
-      {
-         \gamma, \exForeignApp{f}{\seq{e}}
-         \evalSugS
-         u
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-let}}
-      ]
-      {
-         \gamma, e \evalSugS v
-         \\
-         \gamma \cons (\bind{x}{v}), e' \evalSugS v', E'
-      }
-      {
-         \gamma, \exLet{x}{e}{e'}
-         \evalSugS
-         v'
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-let-rec}}
-      ]
-      {
-         \gamma, \set{\seq{\bind{x}{\sigma}}} \closeDefs \gamma'
-         \\
-         \gamma \concat \gamma', e \evalSugS v
-      }
-      {
-         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}
-         \evalSugS
-         v
-      }
-   \end{smathpar}}
-   \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \rho \closeDefs \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
-   \begin{smathpar}
-      \inferrule*[
-%         lab={\ruleName{$\closeDefs$-core}}
-      ]
-      {
-         \rho = \set{\seq{\bind{x}{\sigma}}}
-         \\
-         v_i = \exClosure{\gamma}{\rho}{\sigma_i}
-         \quad
-         (\forall i \numleq \length{\seq{x}})
-      }
-      {
-         \gamma, \rho
-         \closeDefs
-         \set{\seq{\bind{x}{v}}}
+         \evalCxtPlug{C}{e} \geval \evalCxtPlug{C}{e'}
       }
    \end{smathpar}
-   }
-   \caption{Core language: evaluation}
-   \label{fig:core:eval}
+   \caption{Small-step reduction relation}
+   \label{fig:graph:core:eval}
+\end{figure}
+
+\begin{figure}
+   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
+   \begin{salign}
+      \CEK{\gamma}{\exVar{x}}{C}
+      & \geval
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{v}}
+      &
+      \textit{if }\bind{x}{v} \in \gamma
+      \\
+      \CEK{\gamma}{\exFun{\sigma}}{C}
+      & \geval
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exClosure{\gamma}{\emptyset}{\sigma}}}
+      \\
+      \CEK{\gamma}{\exApp{e}{e'}}{C}
+      & \geval
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{\evalCxtEmpty}{e'}}}
+      \\
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exApp{\exClosure{\gamma_1}{\rho}{\sigma}}{v}}}
+      & \geval
+      \CEK{\gamma_1 \concat \gamma_2 \concat \gamma_3}{e}{C}
+      &
+      \textit{if }\gamma_1, \rho \closeDefs \gamma_2\textit{ and }v, \sigma \match \gamma_3, e
+      \\
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exApp{v}{e}}}
+      & \geval
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{v}{\evalCxtEmpty}}}
+      \\
+      \CEK{\gamma}{\exLet{x}{e}{e'}}{C}
+      & \geval
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exLet{x}{\evalCxtEmpty}{e'}}}
+      \\
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exLet{x}{v}{e}}}
+      & \geval
+      \CEK{\gamma \cons (\bind{x}{v})}{e}{C}
+   \end{salign}
+   \\[3mm]
+   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
+   \begin{salign}
+      \gamma, \rho
+      &\closeDefs
+      \set{\bind{x}{\exClosure{\gamma}{\rho}{\rho(x)}} \mid x \in \dom{\rho}}
+   \end{salign}
+   \caption{Small-step reduction relation (CEK-style)}
 \end{figure}
