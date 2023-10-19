@@ -108,6 +108,7 @@
 \end{figure}
 
 \begin{figure}
+   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
    \begin{salign}
       \CEK{\gamma}{\exVar{x}}{C}
       & \geval
@@ -132,6 +133,13 @@
       \CEK{\gamma}{\UnitVal}{\evalCxtPlug{C}{\exApp{\exClosureTwo{\gamma'}{\sigma}}{e}}}
       & \geval
       \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{\exClosureTwo{\gamma'}{\sigma}}{\evalCxtEmpty}}}
+   \end{salign}
+   \\[3mm]
+   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
+   \begin{salign}
+      \gamma, \rho
+      &\closeDefs
+      \set{\bind{x}{\exClosure{\gamma}{\rho}{\rho(x)}} \mid x \in \dom{\rho}}
    \end{salign}
    \caption{Small-step reduction relation (CEK-style)}
 \end{figure}
