@@ -133,6 +133,14 @@
       \CEK{\gamma}{\UnitVal}{\evalCxtPlug{C}{\exApp{v}{e}}}
       & \geval
       \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{v}{\evalCxtEmpty}}}
+      \\
+      \CEK{\gamma}{\exLet{x}{e}{e'}}{C}
+      & \geval
+      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exLet{x}{\evalCxtEmpty}{e'}}}
+      \\
+      \CEK{\gamma}{\exLet{x}{v}{e}}{C}
+      & \geval
+      \CEK{\gamma \cons (\bind{x}{v})}{e}{C}
    \end{salign}
    \\[3mm]
    \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
