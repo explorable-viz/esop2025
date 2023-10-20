@@ -149,6 +149,14 @@
       v, \exForeignApp{f}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
       & \geval
       \gamma, e, \exForeignApp{f}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
+      \\
+      v, \exRecord{\seq{\bind{x}{v}} \cons \seqEmpty_{\gamma}}
+      & \geval
+      \smash{\exForeignApp{\interpret{f}}{v \cons \seq{v}}, C}
+      \\
+      v, \exForeignApp{f}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
+      & \geval
+      \gamma, e, \exForeignApp{f}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
    \end{salign}
    \\[3mm]
    \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
