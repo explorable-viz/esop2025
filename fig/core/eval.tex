@@ -12,37 +12,37 @@
          empty
          \\
          &
-         $\exConstr{c}{E}$
+         $\exConstr{c}{C}$
          &
          constructor args
          \\
          &
-         $\exApp{E}{e_{\gamma}}$
+         $\exApp{C}{e_{\gamma}}$
          &
          function
          \\
          &
-         $\exApp{v}{E}$
+         $\exApp{v}{C}$
          &
          function arg
          \\
          &
-         $\exForeignApp{f}{E}$
+         $\exForeignApp{f}{C}$
          &
          foreign args
          \\
          &
-         $\exRec{E}$
+         $\exRec{C}$
          &
          record fields
          \\
          &
-         $\exRecProj{E}{x}$
+         $\exRecProj{C}{x}$
          &
          record projection
          \\
          &
-         $\exLet{x}{E}{e_{\gamma}}$
+         $\exLet{x}{C}{e_{\gamma}}$
          &
          let
       \end{tabularx}
@@ -54,7 +54,7 @@
          \\
          $D ::=$
          &
-         $E \cons \seq{e}_{\gamma}$
+         $C \cons \seq{e}_{\gamma}$
          &
          head
          \\
@@ -68,7 +68,7 @@
          \\
          $F ::=$
          &
-         $(\bind{x}{E}) \cons (\seq{\bind{x}{e}})_{\gamma}$
+         $(\bind{x}{C}) \cons (\seq{\bind{x}{e}})_{\gamma}$
          &
          first
          \\
@@ -133,19 +133,15 @@
       v, \exLet{x}{C}{e_{\gamma}}
       & \geval
       \gamma \cons (\bind{x}{v}), e, C
-      \\[2mm]
-      v, \seq{v} \cons C \cons \seqEmpty_{\gamma}
+      \\
+      v, \exConstr{c}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
       & \geval
-      \seq{v} \cons v, C
+      \exConstr{c}{v \cons \seq{v}}, C
       \\
       v, \seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}
       & \geval
       \gamma, e, \seq{v} \cons v \cons C \cons \seq{e}_{\gamma}
       \\[2mm]
-      \seq{v}, \exConstr{c}{E}
-      & \geval
-      \exConstr{c}{\seq{v}}, E
-      \\
       \seq{v}, \exForeignApp{f}{E}
       & \geval
       \exForeignApp{\interpret{f}}{\seq{v}}, E
