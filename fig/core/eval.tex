@@ -104,9 +104,9 @@
       & \geval
       \exInt{n}, C
       \\
-      \gamma, \exConstr{c}{e \cons \seq{e}}, E
+      \gamma, \exConstr{c}{e \cons \seq{e}}, C
       & \geval
-      \gamma, e, \exConstr{c}{E \cons \seq{e}}
+      \gamma, e, \exConstr{c}{C \cons \seq{e}}
       \\
       \gamma, \exApp{e}{e'}, C
       & \geval
@@ -136,7 +136,7 @@
       \\
       v, \exConstr{c}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
       & \geval
-      \exConstr{c}{v \cons \seq{v}}, C
+      \exConstr{c}{\seq{v} \cons v}, C
       \\
       v, \exConstr{c}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
       & \geval
@@ -144,7 +144,7 @@
       \\
       v, \exForeignApp{f}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
       & \geval
-      \smash{\exForeignApp{\interpret{f}}{v \cons \seq{v}}, C}
+      \smash{\exForeignApp{\interpret{f}}{\seq{v} \cons v}, C}
       \\
       v, \exForeignApp{f}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
       & \geval
