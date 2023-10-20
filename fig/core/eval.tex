@@ -12,37 +12,37 @@
          empty
          \\
          &
-         $\exConstr{c}{D}$
+         $\exConstr{c}{E}$
          &
          constructor args
          \\
          &
-         $\exApp{C}{e_{\gamma}}$
+         $\exApp{E}{e_{\gamma}}$
          &
          function
          \\
          &
-         $\exApp{v}{C}$
+         $\exApp{v}{E}$
          &
          function arg
          \\
          &
-         $\exForeignApp{f}{D}$
+         $\exForeignApp{f}{E}$
          &
          foreign args
          \\
          &
-         $\exRec{F}$
+         $\exRec{E}$
          &
          record fields
          \\
          &
-         $\exRecProj{C}{x}$
+         $\exRecProj{E}{x}$
          &
          record projection
          \\
          &
-         $\exLet{x}{C}{e_{\gamma}}$
+         $\exLet{x}{E}{e_{\gamma}}$
          &
          let
       \end{tabularx}
@@ -54,7 +54,7 @@
          \\
          $D ::=$
          &
-         $C \cons \seq{e}_{\gamma}$
+         $E \cons \seq{e}_{\gamma}$
          &
          head
          \\
@@ -68,7 +68,7 @@
          \\
          $F ::=$
          &
-         $(\bind{x}{C}) \cons (\seq{\bind{x}{e}})_{\gamma}$
+         $(\bind{x}{E}) \cons (\seq{\bind{x}{e}})_{\gamma}$
          &
          first
          \\
@@ -86,19 +86,19 @@
 \begin{figure}
 %   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
    \begin{salign}
-      \gamma, \exVar{x}, C
+      \gamma, \exVar{x}, E
       & \geval
-      v, C
+      v, E
       &
       \textit{if }\bind{x}{v} \in \gamma
       \\
-      \gamma, c, C
+      \gamma, c, E
       & \geval
-      c, C
+      c, E
       \\
-      \gamma, \exConstr{c}{e \cons \seq{e}}, C
+      \gamma, \exConstr{c}{e \cons \seq{e}}, E
       & \geval
-      \gamma, e, \exConstr{c}{C \cons \seq{e}}
+      \gamma, e, \exConstr{c}{E \cons \seq{e}}
       \\
       \gamma, \exFun{\sigma}, C
       & \geval
@@ -111,6 +111,10 @@
       \gamma, \exApp{e}{e'}, C
       & \geval
       \gamma, e, \exApp{C}{{e'}_{\gamma}}
+      \\
+      \gamma, \exForeignApp{f}{e \cons \seq{e}}, C
+      & \geval
+      \gamma, e, \exForeignApp{f}{C \cons \seq{e}}
       \\
       \gamma, \exLet{x}{e}{e'}, C
       & \geval
@@ -137,6 +141,14 @@
       v, \seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}
       & \geval
       \gamma, e, \seq{v} \cons v \cons C \cons \seq{e}_{\gamma}
+      \\[2mm]
+      \seq{v}, \exConstr{c}{E}
+      & \geval
+      \exConstr{c}{\seq{v}}, E
+      \\
+      \seq{v}, \exForeignApp{f}{E}
+      & \geval
+      \exForeignApp{\interpret{f}}{\seq{v}}, E
    \end{salign}
    \\[3mm]
    \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
