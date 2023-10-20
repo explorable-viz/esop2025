@@ -108,7 +108,7 @@
 \end{figure}
 
 \begin{figure}
-   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
+%   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
    \begin{salign}
       \CEK{\gamma}{\exVar{x}}{C}
       & \geval
@@ -119,6 +119,10 @@
       \CEK{\gamma}{\exFun{\sigma}}{C}
       & \geval
       \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exClosure{\gamma}{\emptyset}{\sigma}}}
+      \\
+      \CEK{\gamma}{\exInt{n}}{C}
+      & \geval
+      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exInt{n}}}
       \\
       \CEK{\gamma}{\exApp{e}{e'}}{C}
       & \geval
@@ -143,7 +147,7 @@
       \CEK{\gamma \cons (\bind{x}{v})}{e}{C}
    \end{salign}
    \\[3mm]
-   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
+   \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
    \begin{salign}
       \gamma, \rho
       &\closeDefs
