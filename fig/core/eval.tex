@@ -12,7 +12,7 @@
          constructor arg
          \\
          &
-         $\exApp{C}{e}$
+         $\exApp{C}{e_{\gamma}}$
          &
          function
          \\
@@ -44,7 +44,7 @@
          \\
          $D ::=$
          &
-         $C \cons \seq{e}$
+         $C \cons \seq{e}_{\gamma}$
          &
          head
          \\
@@ -58,7 +58,7 @@
          \\
          $F ::=$
          &
-         $(\bind{x}{C}) \cons \seq{\bind{x}{e}}$
+         $(\bind{x}{C}) \cons (\seq{\bind{x}{e}})_{\gamma}$
          &
          first
          \\
@@ -69,41 +69,7 @@
          \\[3mm]
       \end{tabularx}
    \end{minipage}
-   \\[3mm]
-   {\small \flushleft \shadebox{$e \geval e'$}}%
-   \begin{salign}
-      \annRecProj{\annRec{(\bind{x}{\alpha}) \cons \seq{\bind{y}{\alpha}}}{\beta}}{x}{\beta'}
-      & \geval
-      \alpha
-      &
-      \\
-      \annApp{\annFun{\sigma}{\beta}}{v}{\alpha}
-      & \geval
-      e
-      &
-      \textit{if }v, \sigma \match e
-      \\
-      \annot{(\exLet{x}{\alpha}{e})}{\beta}
-      & \geval
-      \subst{e}{\alpha}{x}
-%      \\
-%      \annot{\exForeignApp{f}{\seq{v}}}{\alpha}
-%      & \geval
-%      v
-%      &
-%      \textit{if }\smash{\interpret{f}(\seq{v}) = v}
-   \end{salign}
-   \\
-   \begin{smathpar}
-      \inferrule*
-      {
-         e \geval e'
-      }
-      {
-         \evalCxtPlug{C}{e} \geval \evalCxtPlug{C}{e'}
-      }
-   \end{smathpar}
-   \caption{Small-step reduction relation}
+   \caption{Inverted evaluation contexts}
    \label{fig:graph:core:eval}
 \end{figure}
 
@@ -126,7 +92,7 @@
       \\
       \CEK{\gamma}{\exApp{e}{e'}}{C}
       & \geval
-      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{\evalCxtEmpty}{e'}}}
+      \CEK{\gamma}{e}{\exApp{C}{e'}}
       \\
       \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exApp{\exClosure{\gamma_1}{\rho}{\sigma}}{v}}}
       & \geval
