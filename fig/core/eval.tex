@@ -92,6 +92,14 @@
       &
       \textit{if }\bind{x}{v} \in \gamma
       \\
+      \gamma, c, C
+      & \geval
+      c, C
+      \\
+      \gamma, \exConstr{c}{e \cons \seq{e}}, C
+      & \geval
+      \gamma, e, \exConstr{c}{C \cons \seq{e}}
+      \\
       \gamma, \exFun{\sigma}, C
       & \geval
       \exClosure{\gamma}{\emptyset}{\sigma}, C
@@ -121,6 +129,14 @@
       v, \exLet{x}{C}{e_{\gamma}}
       & \geval
       \gamma \cons (\bind{x}{v}), e, C
+      \\[2mm]
+      v, \seq{v} \cons C \cons \seqEmpty_{\gamma}
+      & \geval
+      \seq{v} \cons v, C
+      \\
+      v, \seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}
+      & \geval
+      \gamma, e, \seq{v} \cons v \cons C \cons \seq{e}_{\gamma}
    \end{salign}
    \\[3mm]
    \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
