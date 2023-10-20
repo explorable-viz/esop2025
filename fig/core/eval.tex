@@ -14,7 +14,7 @@
          &
          $\exConstr{c}{D}$
          &
-         constructor arg
+         constructor args
          \\
          &
          $\exApp{C}{e_{\gamma}}$
@@ -29,12 +29,12 @@
          &
          $\exForeignApp{f}{D}$
          &
-         foreign arg
+         foreign args
          \\
          &
          $\exRec{F}$
          &
-         record field
+         record fields
          \\
          &
          $\exRecProj{C}{x}$
@@ -92,6 +92,14 @@
       &
       \textit{if }\bind{x}{v} \in \gamma
       \\
+      \gamma, c, C
+      & \geval
+      c, C
+      \\
+      \gamma, \exRecord{}, C
+      & \geval
+      \exRecord{}, C
+      \\
       \gamma, \exFun{\sigma}, C
       & \geval
       \exClosure{\gamma}{\emptyset}{\sigma}, C
@@ -100,9 +108,17 @@
       & \geval
       \exInt{n}, C
       \\
+      \gamma, \exConstr{c}{e \cons \seq{e}}, C
+      & \geval
+      \gamma, e, \exConstr{c}{C \cons \seq{e}}
+      \\
       \gamma, \exApp{e}{e'}, C
       & \geval
       \gamma, e, \exApp{C}{{e'}_{\gamma}}
+      \\
+      \gamma, \exForeignApp{f}{e \cons \seq{e}}, C
+      & \geval
+      \gamma, e, \exForeignApp{f}{C \cons \seq{e}}
       \\
       \gamma, \exLet{x}{e}{e'}, C
       & \geval
@@ -121,6 +137,30 @@
       v, \exLet{x}{C}{e_{\gamma}}
       & \geval
       \gamma \cons (\bind{x}{v}), e, C
+      \\
+      v, \exConstr{c}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
+      & \geval
+      \exConstr{c}{\seq{v} \cons v}, C
+      \\
+      v, \exConstr{c}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
+      & \geval
+      \gamma, e, \exConstr{c}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
+      \\
+      v, \exForeignApp{f}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
+      & \geval
+      \smash{\exForeignApp{\interpret{f}}{\seq{v} \cons v}, C}
+      \\
+      v, \exForeignApp{f}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
+      & \geval
+      \gamma, e, \exForeignApp{f}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
+      \\
+      \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons \seqEmpty_{\gamma}}}
+      & \geval
+      \smash{\exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v})}, C}
+      \\
+      \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons ((\bind{y}{e}) \cons (\seq{\bind{y}{e}}))_{\gamma}}}
+      & \geval
+      \smash{\gamma, e, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v}) \cons (\bind{y}{C}) \cons (\seq{\bind{y}{e}})_{\gamma}}}
    \end{salign}
    \\[3mm]
    \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
