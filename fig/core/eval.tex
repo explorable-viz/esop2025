@@ -86,19 +86,15 @@
 \begin{figure}
 %   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
    \begin{salign}
-      \gamma, \exVar{x}, E
+      \gamma, \exVar{x}, C
       & \geval
-      v, E
+      v, C
       &
       \textit{if }\bind{x}{v} \in \gamma
       \\
-      \gamma, c, E
+      \gamma, c, C
       & \geval
-      c, E
-      \\
-      \gamma, \exConstr{c}{e \cons \seq{e}}, E
-      & \geval
-      \gamma, e, \exConstr{c}{E \cons \seq{e}}
+      c, C
       \\
       \gamma, \exFun{\sigma}, C
       & \geval
@@ -107,6 +103,10 @@
       \gamma, \exInt{n}, C
       & \geval
       \exInt{n}, C
+      \\
+      \gamma, \exConstr{c}{e \cons \seq{e}}, E
+      & \geval
+      \gamma, e, \exConstr{c}{E \cons \seq{e}}
       \\
       \gamma, \exApp{e}{e'}, C
       & \geval
@@ -138,7 +138,7 @@
       & \geval
       \exConstr{c}{v \cons \seq{v}}, C
       \\
-      v, \seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}
+      v, \exConstr{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
       & \geval
       \gamma, e, \seq{v} \cons v \cons C \cons \seq{e}_{\gamma}
       \\[2mm]
