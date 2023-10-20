@@ -94,13 +94,9 @@
       & \geval
       \gamma, e, \exApp{C}{e'}
       \\
-      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exApp{v}{e}}}
+      \gamma, \exLet{x}{e}{e'}, C
       & \geval
-      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exApp{v}{\evalCxtEmpty}}}
-      \\
-      \CEK{\gamma}{\exLet{x}{e}{e'}}{C}
-      & \geval
-      \CEK{\gamma}{e}{\evalCxtPlug{C}{\exLet{x}{\evalCxtEmpty}{e'}}}
+      \gamma, e, \exLet{x}{C}{e'}
       \\
       \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exLet{x}{v}{e}}}
       & \geval
@@ -111,6 +107,10 @@
       \CEK{\gamma_1 \concat \gamma_2 \concat \gamma_3}{e}{C}
       &
       \textit{if }\gamma_1, \rho \closeDefs \gamma_2\textit{ and }v, \sigma \match \gamma_3, e
+      \\
+      v, \exApp{C}{e_{\gamma}}
+      & \geval
+      \gamma, e, \exApp{v}{C}
    \end{salign}
    \\
    \begin{smathpar}
