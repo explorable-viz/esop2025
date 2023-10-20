@@ -17,7 +17,7 @@
          function
          \\
          &
-         $\exApp{(\exFun{\sigma})}{C}$
+         $\exApp{v}{C}$
          &
          function arg
          \\
@@ -35,6 +35,11 @@
          $\exRecProj{C}{x}$
          &
          record projection
+         \\
+         &
+         $\exLet{x}{C}{e_{\gamma}}$
+         &
+         let
       \end{tabularx}
    \end{minipage}%
    \begin{minipage}[t]{0.48\textwidth}
@@ -96,11 +101,7 @@
       \\
       \gamma, \exLet{x}{e}{e'}, C
       & \geval
-      \gamma, e, \exLet{x}{C}{e'}
-      \\
-      \CEK{\gamma}{\noTerm}{\evalCxtPlug{C}{\exLet{x}{v}{e}}}
-      & \geval
-      \CEK{\gamma \cons (\bind{x}{v})}{e}{C}
+      \gamma, e, \exLet{x}{C}{{e'}_{\gamma}}
       \\[2mm]
       v, \exApp{\exClosure{\gamma_1}{\rho}{\sigma}}{C}
       & \geval
@@ -111,6 +112,10 @@
       v, \exApp{C}{e_{\gamma}}
       & \geval
       \gamma, e, \exApp{v}{C}
+      \\
+      v, \exLet{x}{C}{e_{\gamma}}
+      & \geval
+      \gamma \cons (\bind{x}{v}), e, C
    \end{salign}
    \\
    \begin{smathpar}
