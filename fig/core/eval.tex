@@ -150,6 +150,10 @@
       & \geval
       \gamma, e, \exForeignApp{f}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
       \\
+      \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons \seqEmpty_{\gamma}}}
+      & \geval
+      \smash{\exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v})}, C}
+      \\
       \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons ((\bind{y}{e}) \cons (\seq{\bind{y}{e}}))_{\gamma}}}
       & \geval
       \smash{\gamma, e, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v}) \cons (\bind{y}{C}) \cons (\seq{\bind{y}{e}})_{\gamma}}}
