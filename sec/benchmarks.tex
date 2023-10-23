@@ -31,8 +31,29 @@ shows the timing data from a group of our more expensive benchmarks, measured 10
 and a trace, and the time taken to run a backwards slicing query respectively. The \textbf{Graph-Eval}
 and \textbf{Graph-Bwd} columns measure the time taken for the same operations but with the graphical backend.
 
-We can clearly see the a pattern emerging relating the two pairs of columns. Evaluating the program to 
-a graph takes anywhere between 1.5 and 2 times as long as evaluating to a trace, but slicing queries 
-run in less than 10 milliseconds. This is clearly within the reference guideline of 0.1 seconds for
-a system to feel instantaneously interactive. 
+Evaluating the program to a graph takes anywhere between 1.5 and 2 times as long as 
+evaluating to a trace, but slicing queries run in less than 10 milliseconds. In
+these - relatively- expensive computations, there is a concrete  performance 
+benefit as soon as two or more slicing queries are made. For large systems with complex 
+internal dependency structures, this is a clear benefit as it is very unlikely the
+user of, for example, a large climate model will only be interested in a single slicing
+criterion. Furthermore, simulations of the kind described often take a very long time
+to run anyway, and so we consider the reduced performance of evaluation to be a 
+worthwhile trade off.
 \input{fig/performance/expensive-bwd.tex}
+
+\subsection{Inefficient Forward Slicing}
+We have already discussed that in the graphical setting, there is no theoretical need to
+define a forward slicing procedure. Forward slicing is uniquely determined by 
+the definition of backward slicing, since the two operators form a Galois connection.
+Despite this we have formulated a more efficient forward slicing procedure. This is because
+in practical cases the definition of forward slicing as the De Morgan dual of backwards 
+slicing on the opposite graph can suffer from bad performance.
+\small
+\input{fig/performance/expensive-fwd.tex}
+
+In Table \ref{expensive-fwd}, we would like to focus on the discrepancy between
+\textbf{Graph-Fwd} and \textbf{Graph-FwdAsDeMorgan}. The efficient forward slicing
+procedure is generally quicker than the trace based approach, but the 
+version of forward slicing implemented as the De Morgan dual of backward slicing
+demonstrates inferior performance. 
