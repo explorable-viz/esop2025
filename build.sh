@@ -1,10 +1,15 @@
 #!/bin/bash
 set -e
 
+PYTHONSCRIPT="../fluid/plot_bench.py"
+
 PDFLATEX="pdflatex -file-line-error -halt-on-error"
 TARGET=${1:-main}
 echo Building target \"$TARGET\".
 
+cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
+
+python3 $PYTHONSCRIPT -t expensive -b all -d fig/performance/expensive-all.png 
 $PDFLATEX $TARGET
 bibtex $TARGET
 $PDFLATEX $TARGET
