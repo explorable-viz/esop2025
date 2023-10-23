@@ -1,1 +1,25 @@
 \section{Benchmarks}
+The practical motivation for representing dependency structures as a graph, informally, 
+is that computing a slice is much more performant in the graphical setting.
+As we have established, backwards slicing is equivalent to computing the set of 
+reachable nodes from a given selection, a procedure which runs in linear time with 
+respect to the size of the reachable set. As a result, we shall see that performance 
+of slicing is improved by several orders of magnitude. We shall see that 
+construction of the graph does however introduce a fairly significant performance
+overhead in contrast to constructing a sequential trace, however this cost vanishes when 
+one computes multiple slicing queries over a single computation.
+
+When designing interactive applications, the time taken to respond to user input is
+crucial. Nielsen (1994) suggests the following guidelines:
+\begin{itemize}
+    \item \textbf{0.1 seconds} or less feels instantaneous to the user
+    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels 
+    interrupted
+    \item \textbf{10.0 seconds} is the limit for keeping the users attention. Anything longer
+    than this and the user will shift their focus to other tasks 
+\end{itemize}
+
+We shall see that our graphical implementation pushes slicing queries into the bracket of
+instantaneous user feedback. In terms of designing interactive systems, we argue that the
+increased cost in constructing the dependency graph is well worth it, given that it 
+facilitates such a stark increase in performance of slicing queries.
