@@ -9,7 +9,7 @@ echo Building target \"$TARGET\".
 
 cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
 
-python3 $PYTHONSCRIPT -t expensive -b all -d fig/performance/expensive-all.png 
+python3 $PYTHONSCRIPT -t expensive -b bwd -d fig/performance/expensive-bwd
 $PDFLATEX $TARGET
 bibtex $TARGET
 $PDFLATEX $TARGET

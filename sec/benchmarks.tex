@@ -23,3 +23,16 @@ We shall see that our graphical implementation pushes slicing queries into the b
 instantaneous user feedback. In terms of designing interactive systems, we argue that the
 increased cost in constructing the dependency graph is well worth it, given that it 
 facilitates such a stark increase in performance of slicing queries.
+
+\subsection{Evaluation and Backward Slicing}
+We first consider the relative performance of evaluation, and backward slicing. Table \ref{expensive-bwd} 
+shows the timing data from a group of our more expensive benchmarks, measured 100s of microseconds.
+\textbf{Trace-Eval} and \textbf{Trace-Bwd} measure the time taken to evaluate the program to a value
+and a trace, and the time taken to run a backwards slicing query respectively. The \textbf{Graph-Eval}
+and \textbf{Graph-Bwd} columns measure the time taken for the same operations but with the graphical backend.
+
+We can clearly see the a pattern emerging relating the two pairs of columns. Evaluating the program to 
+a graph takes anywhere between 1.5 and 2 times as long as evaluating to a trace, but slicing queries 
+run in less than 10 milliseconds. This is clearly within the reference guideline of 0.1 seconds for
+a system to feel instantaneously interactive. 
+\input{fig/performance/expensive-bwd.tex}
