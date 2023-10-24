@@ -24,22 +24,34 @@ instantaneous user feedback. In terms of designing interactive systems, we argue
 increased cost in constructing the dependency graph is well worth it, given that it 
 facilitates such a stark increase in performance of slicing queries.
 
-\subsection{Evaluation and Backward Slicing}
-We first consider the relative performance of evaluation, and backward slicing. Table \ref{expensive-bwd} 
-shows the timing data from a group of our more expensive benchmarks, measured 100s of microseconds.
-\textbf{Trace-Eval} and \textbf{Trace-Bwd} measure the time taken to evaluate the program to a value
-and a trace, and the time taken to run a backwards slicing query respectively. The \textbf{Graph-Eval}
-and \textbf{Graph-Bwd} columns measure the time taken for the same operations but with the graphical backend.
+\subsection{Evaluation}
+In both the trace-based and graphical approaches, we construct an auxiliary data 
+structure during evaluation. Constructing a trace of an execution is a cheaper
+computation than the construction of the graph. This is reflected in our 
+by the timing information in Table \ref{expensive-bwd}. On most testcases, we
+observe that evaluating the program and constructing a graph ranges between 1.5
+and 2 times slower than evaluating and constructing a trace. This slowdown is 
+a combination of the large number of set operations that need to be performed when
+constructing the graph, and the information we need to compute to determine, for 
+example, neighbours of a node in the graph. 
 
-Evaluating the program to a graph takes anywhere between 1.5 and 2 times as long as 
-evaluating to a trace, but slicing queries run in less than 10 milliseconds. In
-these - relatively- expensive computations, there is a concrete  performance 
-benefit as soon as two or more slicing queries are made. For large systems with complex 
-internal dependency structures, this is a clear benefit as it is very unlikely the
-user of, for example, a large climate model will only be interested in a single slicing
-criterion. Furthermore, simulations of the kind described often take a very long time
-to run anyway, and so we consider the reduced performance of evaluation to be a 
-worthwhile trade off.
+
+\subsection{Backward Slicing}
+Despite the increased overhead in constructing the dynamic dependence graph for
+a given execution, we see a dramatic reduction in the time it takes to perform
+backward slicing on a graph. In the examples presented in Table \ref{expensive-bwd}
+we observe backward slicing takes much less than 0.1 seconds, putting the system
+firmly in the instantaneous bracket under Nielsens guidelines.
+For large systems with complex and opaque data dependency structures, this is
+a clear benefit as we can see that after performing two backward slicing
+queries, the overall time taken is less in the graphical setting. It is also
+unlikely that users will want to run a computation and then only be interested
+in a single slicing query. 
+
+Finally, from a usability perspective, it is more important to have the interactive
+component of the system be highly performant. Developers often have to contend
+with evaluation or computation time anyway, and we prefer the cost be 
+incurred up front, rather than repeatedly.
 \input{fig/performance/expensive-bwd.tex}
 
 \subsection{Inefficient Forward Slicing}
@@ -49,11 +61,13 @@ the definition of backward slicing, since the two operators form a Galois connec
 Despite this we have formulated a more efficient forward slicing procedure. This is because
 in practical cases the definition of forward slicing as the De Morgan dual of backwards 
 slicing on the opposite graph can suffer from bad performance.
-\small
-\input{fig/performance/expensive-fwd.tex}
+{\small
+\input{fig/performance/expensive-fwd.tex}}
 
 In Table \ref{expensive-fwd}, we would like to focus on the discrepancy between
 \textbf{Graph-Fwd} and \textbf{Graph-FwdAsDeMorgan}. The efficient forward slicing
 procedure is generally quicker than the trace based approach, but the 
 version of forward slicing implemented as the De Morgan dual of backward slicing
 demonstrates inferior performance. 
+
+\input{fig/performance/bench_descripts.tex}
