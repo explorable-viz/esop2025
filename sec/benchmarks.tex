@@ -1,39 +1,41 @@
 \section{Benchmarks}
-The practical motivation for representing dependency structures as a graph, informally, 
+\label{sec:benchmarks}
+
+The practical motivation for representing dependency structures as a graph, informally,
 is that computing a slice is much more performant in the graphical setting.
-As we have established, backwards slicing is equivalent to computing the set of 
-reachable nodes from a given selection, a procedure which runs in linear time with 
-respect to the size of the reachable set. As a result, we shall see that performance 
-of slicing is improved by several orders of magnitude. We shall see that 
+As we have established, backwards slicing is equivalent to computing the set of
+reachable nodes from a given selection, a procedure which runs in linear time with
+respect to the size of the reachable set. As a result, we shall see that performance
+of slicing is improved by several orders of magnitude. We shall see that
 construction of the graph does however introduce a fairly significant performance
-overhead in contrast to constructing a sequential trace, however this cost vanishes when 
+overhead in contrast to constructing a sequential trace, however this cost vanishes when
 one computes multiple slicing queries over a single computation.
 
 When designing interactive applications, the time taken to respond to user input is
 crucial. Nielsen (1994) suggests the following guidelines:
 \begin{itemize}
     \item \textbf{0.1 seconds} or less feels instantaneous to the user
-    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels 
+    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels
     interrupted
     \item \textbf{10.0 seconds} is the limit for keeping the users attention. Anything longer
-    than this and the user will shift their focus to other tasks 
+    than this and the user will shift their focus to other tasks
 \end{itemize}
 
 We shall see that our graphical implementation pushes slicing queries into the bracket of
 instantaneous user feedback. In terms of designing interactive systems, we argue that the
-increased cost in constructing the dependency graph is well worth it, given that it 
+increased cost in constructing the dependency graph is well worth it, given that it
 facilitates such a stark increase in performance of slicing queries.
 
 \subsection{Evaluation}
-In both the trace-based and graphical approaches, we construct an auxiliary data 
+In both the trace-based and graphical approaches, we construct an auxiliary data
 structure during evaluation. Constructing a trace of an execution is a cheaper
-computation than the construction of the graph. This is reflected in our 
+computation than the construction of the graph. This is reflected in our
 by the timing information in Table \ref{expensive-bwd}. On most testcases, we
 observe that evaluating the program and constructing a graph ranges between 1.5
-and 2 times slower than evaluating and constructing a trace. This slowdown is 
+and 2 times slower than evaluating and constructing a trace. This slowdown is
 a combination of the large number of set operations that need to be performed when
-constructing the graph, and the information we need to compute to determine, for 
-example, neighbours of a node in the graph. 
+constructing the graph, and the information we need to compute to determine, for
+example, neighbours of a node in the graph.
 
 
 \subsection{Backward Slicing}
@@ -46,16 +48,16 @@ For large systems with complex and opaque data dependency structures, this is
 a clear benefit as we can see that after performing two backward slicing
 queries, the overall time taken is less in the graphical setting. It is also
 unlikely that users will want to run a computation and then only be interested
-in a single slicing query. 
+in a single slicing query.
 
 Finally, from a usability perspective, it is more important to have the interactive
 component of the system be highly performant. Developers often have to contend
-with evaluation or computation time anyway, and we prefer the cost be 
+with evaluation or computation time anyway, and we prefer the cost be
 incurred up front, rather than repeatedly.
 \input{fig/performance/expensive-bwd.tex}
 
 \subsection{Inefficient Forward Slicing}
-As we mentioned earlier in \ref{graphs}, we can theoretically get by without
+As we mentioned earlier in \ref{sec:graph}, we can theoretically get by without
 providing an explicit definition of forward slicing. Instead, we can derive the
 forward slicing procedure in terms of backwards using the De Morgan dual on the
 opposite graph. 
