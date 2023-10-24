@@ -4,11 +4,12 @@ set -e
 PYTHONSCRIPT="../fluid/plot_bench.py"
 PDFLATEX="pdflatex -file-line-error -halt-on-error"
 TARGET=${1:-main}
+PYENV=venv
 
 echo Building target \"$TARGET\".
 
-python3 -m venv build-env
-source build-env/bin/activate
+python3 -m venv $PYENV
+source $PYENV/bin/activate
    echo Setting up Python environment.
    pip install -q --disable-pip-version-check -r requirements.txt
 
