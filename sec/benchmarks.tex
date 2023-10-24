@@ -55,19 +55,18 @@ incurred up front, rather than repeatedly.
 \input{fig/performance/expensive-bwd.tex}
 
 \subsection{Inefficient Forward Slicing}
-We have already discussed that in the graphical setting, there is no theoretical need to
-define a forward slicing procedure. Forward slicing is uniquely determined by 
-the definition of backward slicing, since the two operators form a Galois connection.
-Despite this we have formulated a more efficient forward slicing procedure. This is because
-in practical cases the definition of forward slicing as the De Morgan dual of backwards 
-slicing on the opposite graph can suffer from bad performance.
-{\small
-\input{fig/performance/expensive-fwd.tex}}
+As we mentioned earlier in \ref{graphs}, we can theoretically get by without
+providing an explicit definition of forward slicing. Instead, we can derive the
+forward slicing procedure in terms of backwards using the De Morgan dual on the
+opposite graph. 
 
-In Table \ref{expensive-fwd}, we would like to focus on the discrepancy between
-\textbf{Graph-Fwd} and \textbf{Graph-FwdAsDeMorgan}. The efficient forward slicing
-procedure is generally quicker than the trace based approach, but the 
-version of forward slicing implemented as the De Morgan dual of backward slicing
-demonstrates inferior performance. 
+In practise however we see a significant reduction in performance when performing
+forward slicing in this manner. For some extreme examples, consider the right-most
+column of Table \ref{expensive-fwd}. We see that in the pictured test cases,
+performance of forward slicing as the De Morgan dual of backwards is particulary poor.
+{\small\input{fig/performance/expensive-fwd.tex}}
+
+One explanation for this discrepancy is expensive set operations needed to perform
+the complementation of a selection, which in a very large graph can be expensive. 
 
 \input{fig/performance/bench_descripts.tex}
