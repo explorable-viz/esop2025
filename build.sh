@@ -9,12 +9,11 @@ echo Building target \"$TARGET\".
 
 python3 -m venv build-env
 source build-env/bin/activate
-   pip install numpy
-   pip install pandas
-   pip install matplotlib
-   pip install argparse
-   pip freeze > requirements.txt
+   echo Setting up Python environment.
+   pip install -q --disable-pip-version-check -r requirements.txt
 
+   rm -rf Benchmarks
+   mkdir Benchmarks
    cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
 
    python3 $PYTHONSCRIPT -t expensive -b bwd -d fig/performance/expensive-bwd
