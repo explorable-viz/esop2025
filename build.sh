@@ -10,7 +10,7 @@ echo Building target \"$TARGET\".
 
 python3 -m venv $PYENV
 source $PYENV/bin/activate
-   echo Setting up Python environment.
+   echo "Setting up Python environment."
    pip install -q --disable-pip-version-check -r requirements.txt
 
    rm -rf Benchmarks
