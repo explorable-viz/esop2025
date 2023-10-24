@@ -1,3 +1,25 @@
 \begin{abstract}
-    Todo
+   Galois connections have been shown to offer an appealing ``resource interpretation'' for bidirectional
+   dynamic program slicing, where the upper adjoint (forward slicing), for a given set of input resources,
+   determines all the outputs that can be computed using only those inputs, and the lower adjoint (backward
+   slicing) determines the input resources demanded by a set of outputs. \citeauthor{perera22} in particular
+   showed how this perspective could be combined with a De Morgan dual [...]. However, existing
+   implementations of this technique rely on a sequential execution record, or \emph{trace}, along which to
+   compute the analysis, making the approach impractical for highly interactive applications.
+
+   In this paper we present a new implementation technique for Galois slicing based on dependence graphs.
+
+   [Mostly done] Performance of old approach sucks because of overly sequential traces. New graphical approach avoids this problem by only recording dependence graph.
+[Basic setup in place but some proofs required.] Backward slicing in that setting is easy, but what about forward? Turns out to be equivalent to the De Morgan dual of backward slicing on the opposite graph, so there is always a (reasonably) efficient adjoint procedure.
+[Implemented but correctness proof required.] But this derived algorithm is still somewhat inefficient (bounded by size of execution rather than size of slice), so we give an efficient direct algorithm.
+[TODO but we know how this works] Given
+, we can (with some finessing) formulate the “linked outputs” from POPL paper as backward slicing over
+. This perspective also gives a “linked inputs” operator over
+. Nice example (maybe Bayesian Model Averaging) to show how this is useful.
+[TODO] If dependence graph is enriched with appropriate information from program, we can extract various kinds of intensional information, e.g. “expression provenance” explaining how a primitive value was computed. (Maybe one such application is enough to motivate intensional aspect of graph.)
+
+   Finally, if we are prepared to we only care about extensional behaviour of slicing (I/O
+   relations) then internal nodes in the graph are actually irrelevant (Galois connection is invariant under
+   transforms that elide internal nodes but preserve connectivity). We can use this to selectively trade
+   intensional information for additional performance improvements.
 \end{abstract}
