@@ -1,11 +1,13 @@
 \begin{abstract}
-   Galois connections offer an appealing ``resource interpretation'' for bidirectional dynamic program
-   slicing, where the upper adjoint (forward slicing), for a given set of input resources, determines all the
-   outputs that can be computed using only those inputs, and the lower adjoint (backward slicing) determines
-   the input resources demanded by a set of outputs. \citeauthor{perera22} in particular showed how this
-   perspective could be combined with a De Morgan dual [...]. However, existing implementations of this
-   technique rely on a sequential execution record, or \emph{trace}, along which to compute the analysis,
-   making the approach impractical for interactive applications where response time is at a premium.
+   Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
+   program slicing, characterising how sets of input and output resources are related by notions of demand and
+   sufficiency. The upper adjoint (forward slicing), for a given set of input resources, determines all the
+   outputs for which those inputs are sufficient; the lower adjoint (backward slicing) determines the specific
+   input resources demanded by a set of outputs. \citeauthor{perera22} showed how such a Galois connection
+   could be composed with its own De Morgan dual to calculate \emph{related outputs}, namely outputs which
+   compete for inputs with other outputs. However, existing implementations of this technique rely on a
+   sequential execution record, or \emph{trace}, to compute the bidirectional analysis, making the approach
+   impractical for interactive applications where response time is at a premium.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
    graphs. While dynamic dependence graphs have a long tradition in the world of program slicing,
