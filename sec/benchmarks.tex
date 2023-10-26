@@ -26,16 +26,28 @@ instantaneous user feedback. In terms of designing interactive systems, we argue
 increased cost in constructing the dependency graph is well worth it, given that it
 facilitates such a stark increase in performance of slicing queries.
 
+\subsection{Methodology}
+We describe here the specifics of each individual benchmark, before moving on to
+a discussion of the results. For performance measurements of the trace-based
+approach, we summarize evaluation time, and the times taken for forward and 
+backward slicing, as \textbf{Trace-Eval},\textbf{Trace-Fwd}, and \textbf{Trace-Bwd}.
+
+For benchmarking the graphical system, we must be careful to define the individual
+performance tests. For a given test-case, we first run - and time - evaluating
+to a graph in \textbf{Graph-Eval}. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
+where $\mathcal{B}$ denotes a distinguished set of output vertices, and $\mathcal{A}$
+a distinguished set of inputs. We can then define the individual benchmarks in
+terms of the operators we defined in \ref{sec:graphs}. Since the operators we
+defined in the prior section have multiple equivalent definitions, we take care
+to delineate between the operator, and the implementation of that operator we are testing.
+
+
 \subsection{Evaluation}
 In both the trace-based and graphical approaches, we construct an auxiliary data
-structure during evaluation. Constructing a trace of an execution is a cheaper
-computation than the construction of the graph. This is reflected in our
-by the timing information in Table \ref{expensive-bwd}. On most testcases, we
-observe that evaluating the program and constructing a graph ranges between 1.5
-and 2 times slower than evaluating and constructing a trace. This slowdown is
-a combination of the large number of set operations that need to be performed when
-constructing the graph, and the information we need to compute to determine, for
-example, neighbours of a node in the graph.
+structure during evaluation. We observe that evaluating the program and constructing
+a graph does incur an increased cost. In our experiments, the mean time taken to
+evaluate in the graphical setting is approximately double that of the trace-based
+backend. 
 
 
 \subsection{Backward Slicing}

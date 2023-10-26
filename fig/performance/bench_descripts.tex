@@ -1,19 +1,17 @@
 \begin{table}
+\small
+\caption{Graph Benchmark Classification, $S$ denotes a specific selection, $\mathcal{A},\mathcal{B}$ denote the entire input or output set}
 \label{benchmark-descriptions}
-\begin{tabular}{ll}
+\begin{tabular}{llc}
    \toprule
-Bench Name & Description \\
+Bench Name & Description & Operator \\
 \midrule
-Trace-Eval & evaluate a program using the trace semantics \\
-Trace-Bwd & perform backward slicing for a fixed ouput selection over a trace \\
-Trace-Fwd & perform forward slicing, same procedure as Eval \\
-Graph-Eval & evaluate a program and construct it's dynamic dependence graph \\
-Graph-Bwd & perform backward slicing on a dynamic dependence graph \\ 
-Graph-Fwd & perform forward slicing on a dynamic depdendence graph \\
-Graph-BwdDual  & perform forward slicing on the opposite of the DDG \\
-Graph-BwdAll & Run backwards slicing after selecting the entirety of the output \\
-Graph-FwdDual & run backwards slicing on the opposite of the DDG \\
-Graph-FwdAsDeMorgan & backward slice on complement selection on opposite DDG \\
+Graph-Bwd & perform backward slicing on a dynamic dependence graph & $\consumesF{G}(S)$ \\ 
+Graph-Fwd & perform forward slicing on a dynamic depdendence graph & $\producesF{G}(S)$\\
+Graph-BwdDual  & perform forward slicing on the opposite of the DDG & $\consumesDualF{G}(S) = \producesF{G^{-1}}(S)$\\
+Graph-BwdAll & Run backwards slicing after selecting the entirety of the output & $\consumesF{G}(\mathcal{A})$\\
+Graph-FwdDual & run backwards slicing on the opposite of the DDG & $\producesDualF{G}(S) = \consumesF{G^{-1}}(S)$\\
+Graph-FwdAsDeMorgan & backward slice on complement selection on opposite DDG & \\
 \bottomrule
 \end{tabular}
 \end{table}
