@@ -13,6 +13,8 @@ def decompose_benchmarks():
     benchspeedup = speedups(benchmarks)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
     print(benchspeedup.to_string())
     print(benchspeedup.mean())
+    print(benchspeedup.std(ddof=0))
+    print(benchspeedup.skew())
     # for test_set in [slicing, graphics, desugar, misc]:
     #     spedup = speedups(test_set)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
     #     print(spedup)
