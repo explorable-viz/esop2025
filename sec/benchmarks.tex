@@ -90,3 +90,22 @@ performance of forward slicing as the De Morgan dual of backwards is particulary
 One explanation for this discrepancy is expensive set operations needed to perform
 the complementation of a selection, which in a very large graph can be expensive. 
 
+\subsection{Discussion}
+We can see that whilst the graphical slicing paradigm can improve the performance
+of program slicing dramatically, the increase in performance is varied. Larger
+examples, such as the Dynamic Time Warping example, experience approximately an
+eighttimes performance increase in both forward and backward slicing, whereas
+our convolution examples demonstrate speed increases on the order of 100s.
+
+One reason for this disparity is the inherent data-parallelism of certain
+computations. A single iteration of a convolution creates very "local" dependency
+structure. A cell in the top left of the output matrix only depends on a small
+section of the input image. We therefore expect that the graph produced
+in evaluation has lots of inputs which do not cooperate.
+
+In contrast, the Dynamic Time Warping algorithms output matching 
+requires traversing the entire cost matrix computed in evaluation, and a cell in
+the cost matrix relies on the computation of it's left, upward, and diagonal
+neighbors. The implication of this is that the data depdendency through the
+the computation is in a sense more sequential than that of, for example
+convolution.
