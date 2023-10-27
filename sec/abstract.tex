@@ -1,36 +1,38 @@
 \begin{abstract}
    Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
-   program slicing, providing an elegant characterisation of the relationship between input and output
-   resources in terms of demand and sufficiency. The upper adjoint (forward slicing) picks out all the outputs
-   for which a given set of inputs are sufficient, whereas the lower adjoint (backward slicing) picks out the
-   specific inputs demanded by a set of outputs. \citeauthor{perera22} showed how the De Morgan dual of these
-   operators can be used to pick out \emph{related outputs}, namely all other outputs whose demand overlaps
-   with a given set of outputs. However Galois slicing implementations to date have relied on a sequential
-   execution record, or \emph{trace}, to compute the bidirectional analysis, making the approach unable to
-   exploit the independence information that makes slicing useful in the first place and rendering it too slow
-   for interactive applications.
+   program slicing, characterising fine-grained input and output relationships in terms of demand and
+   sufficiency. The upper adjoint (forward slicing) is a \emph{sufficiency} operator, picking out all the
+   outputs which can be computed using only a particular input set, whereas the lower adjoint (backward
+   slicing) is a \emph{demand} operator, picks out the specific inputs needed to compute a particular output
+   set. \citeauthor{perera22} showed how the De Morgan dual of the upper adjoint can be used to pick out
+   \emph{related outputs}, namely the outputs that ``compete'' with a given set of outputs in the sense of
+   demanding overlapping inputs. However Galois slicing implementations to date have relied on a sequential
+   execution record, or \emph{trace}, to compute the two analyses, making the approach unable to exploit the
+   very independence that makes slicing useful in the first place and rendering it too slow for interactive
+   applications.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
-   graphs (DDGs). The approach decomposes the slicing procedure into steps: evaluating a program to a DDG, and
-   then running forwards and backwards slicing algorithms over the graph. While DDGs have long been used for
-   program slicing, in the Galois connection setting a number of other interesting properties arise. Backward
-   slicing is the usual reachability analysis, but extensionally forward slicing is simply the De Morgan dual
-   of backward slicing on the opposite graph, leading to an easy implementation of the upper adjoint in terms
-   of the lower. Since this naive implementation can be inefficient (in the worst case taking time
-   proportional to the size of the graph), we also give a direct implementation of forward slicing over a DDG
-   and show that it too is on average much faster than the trace-based approach.
+   graphs (DDGs), an approach used in the program slicing literature for analysing imperative programs. We
+   decompose the slicing procedure into two steps: evaluating a program to a DDG, and then running forwards or
+   backwards slicing over the graph. We show that, empirically, the overhead of producing a DDG is comparable
+   to that of producing a trace, but that the slicing algorithms run on average much faster than their
+   trace-based counterparts, which is the important component for interactive applications. Moreover, in the
+   Galois connection setting a number of other interesting properties arise. Backward slicing is the usual
+   reachability analysis, but extensionally forward slicing is simply the De Morgan dual of backward slicing
+   on the opposite graph, leading to an easy implementation of the upper adjoint in terms of the lower. Since
+   this naive implementation in the worst case takes time proportional to the size of the graph, we also give
+   a direct implementation of forward slicing over a DDG and show that it too is on average much faster than
+   the trace-based approach.
 
-   Our slicing algorithms are neutral with respect to any intensional information associated with the DDG,
-   presenting further opportunities for performance improvements. In particular, the Galois connections are
-   invariant under any graph transformation that preserves the ``I/O relation'' of the DDG; so for example any
-   transformation that elides internal nodes but preserve connectivity will produce an extensionally
-   equivalent (but faster) analysis. We conjecture that this might be used to selectively trade intensional
-   information for additional performance improvements.
+   Our slicing algorithms are neutral with respect to any intensional information associated with the DDG, in
+   the sense that the resulting Galois connection is determined only by the ``I/O relation'' of the graph,
+   rather than any internal paths. So for example the classical Y-$\Delta$ transform that elides internal
+   nodes but preserve connectivity will produce an extensionally equivalent (but faster) analysis. Although we
+   leave applications of this observation to future work, we conjecture that this can be used to selectively
+   trade intensional information for additional performance improvements.
 
    [TODO but we know how this works] Given , we can (with
    some finessing) formulate the “linked outputs” from POPL paper as backward slicing over . This perspective
    also gives a “linked inputs” operator over . Nice example (maybe Bayesian Model Averaging) to show how this
-   is useful. [TODO] If dependence graph is enriched with appropriate information from program, we can extract
-   various kinds of intensional information, e.g. “expression provenance” explaining how a primitive value was
-   computed. (Maybe one such application is enough to motivate intensional aspect of graph.)
+   is useful.
 \end{abstract}
