@@ -92,12 +92,19 @@ the complementation of a selection, which in a very large graph can be expensive
 
 \subsection{Discussion}
 We can see that whilst the graphical slicing paradigm can improve the performance
-of program slicing dramatically, the increase in performance is varied. Larger
-examples, such as the Dynamic Time Warping example, experience approximately an
+of program slicing dramatically, the increase in performance is varied. It 
+initially appeared that speedup in slicing time was inherently tied to the
+size of the dynamic dependence graph and equivalent trace, but this is not true.
+
+Instead the computational speedup is more closely tied to the structural 
+properties of the program of interest, and it's resultant dependence graph
+We have tested on several non-toy programs, and we note that there is a 
+high variance in speedup of both forward and backward slicing time. We see that
+some examples - such as Dynamic Time Warping - experience approximately an
 eighttimes performance increase in both forward and backward slicing, whereas
 our convolution examples demonstrate speed increases on the order of 100s.
 
-One reason for this disparity is the inherent data-parallelism of certain
+The reason for this disparity is the inherent data-parallelism of certain
 computations. A single iteration of a convolution creates very "local" dependency
 structure. A cell in the top left of the output matrix only depends on a small
 section of the input image. We therefore expect that the graph produced

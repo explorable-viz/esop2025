@@ -9,12 +9,16 @@ def decompose_benchmarks():
     desugar = benchmarks.filter(like='desugar', axis='index')
     misc = benchmarks.drop(pd.concat([slicing, graphics, desugar]).index, inplace=False)
     print("All Benchmarks: ")
-    print (benchmarks[['Trace-Eval', 'Graph-Eval']].to_string())
-    benchspeedup = speedups(benchmarks)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
+    print (slicing[['Trace-Eval', 'Graph-Eval']].to_string())
+    benchspeedup = speedups(slicing)[['Graph-Nodes','Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
+    bigbenches = benchspeedup[benchspeedup['Graph-Nodes'] < 1000]
     print(benchspeedup.to_string())
     print(benchspeedup.mean())
     print(benchspeedup.std(ddof=0))
     print(benchspeedup.skew())
+
+    bigbenches.plot(x='Graph-Nodes', y='Fwd-Speedup', logy=True,style='o')
+    plt.show()
     # for test_set in [slicing, graphics, desugar, misc]:
     #     spedup = speedups(test_set)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
     #     print(spedup)
