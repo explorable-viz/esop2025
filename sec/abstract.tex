@@ -1,30 +1,28 @@
 \begin{abstract}
    Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
-   program slicing, characterising how sets of input and output resources are related by notions of demand and
-   sufficiency. The upper adjoint (forward slicing), for a given set of input resources, determines all the
-   outputs for which those inputs are sufficient; the lower adjoint (backward slicing) determines the specific
-   input resources demanded by a set of outputs. \citeauthor{perera22} showed how such a Galois connection
-   could be composed with its own De Morgan dual to calculate \emph{related outputs}, namely outputs which
-   compete for inputs with other outputs. However, existing implementations of this technique rely on a
-   sequential execution record, or \emph{trace}, to compute the bidirectional analysis, making the approach
-   impractical for interactive applications where response time is at a premium.
+   program slicing, providing an elegant characterisation of the relationship between input and output
+   resources in terms of demand and sufficiency. The upper adjoint (forward slicing) picks out all the outputs
+   for which a given set of inputs are sufficient; the lower adjoint (backward slicing) picks out the specific
+   inputs demanded by a set of outputs. \citeauthor{perera22} showed how such a Galois connection could be
+   composed with its own De Morgan dual to calculate \emph{related outputs}, namely outputs which compete for
+   inputs with other outputs. However implementations of this technique to date have relied on a sequential
+   execution record, or \emph{trace}, to compute the bidirectional analysis, making the approach impractical
+   for interactive applications where response time is at a premium.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
-   graphs. While dynamic dependence graphs have a long tradition in the world of program slicing,
+   graphs (DDGs). While DDGs have long been used for program slicing outside of the Galois connection setting,
+   we show that. Backward slicing as an easy reachability analysis in the graphical setting, but we show that
+   a number of other interesting properties arise. Extensionally, forward slicing over a DDG is simply the De
+   Morgan dual of backward slicing on the opposite graph, leading to an easy (although inefficient)
+   implementation of the adjoint analysis. We also give a more direct implementation of forward slicing over a
+   DDG and show that it too is on average much faster than the trace-based approach.
 
-   [Mostly done] New graphical approach avoids this problem by only recording dependence graph.
-
-[Basic setup
-in place but some proofs required.] Backward slicing in that setting is easy, but what about forward? Turns
-out to be equivalent to the De Morgan dual of backward slicing on the opposite graph, so there is always a
-(reasonably) efficient adjoint procedure. [Implemented but correctness proof required.] But this derived
-algorithm is still somewhat inefficient (bounded by size of execution rather than size of slice), so we give
-an efficient direct algorithm. [TODO but we know how this works] Given , we can (with some finessing)
-formulate the “linked outputs” from POPL paper as backward slicing over . This perspective also gives a
-“linked inputs” operator over . Nice example (maybe Bayesian Model Averaging) to show how this is useful.
-[TODO] If dependence graph is enriched with appropriate information from program, we can extract various kinds
-of intensional information, e.g. “expression provenance” explaining how a primitive value was computed. (Maybe
-one such application is enough to motivate intensional aspect of graph.)
+   [TODO but we know how this works] Given , we can (with
+   some finessing) formulate the “linked outputs” from POPL paper as backward slicing over . This perspective
+   also gives a “linked inputs” operator over . Nice example (maybe Bayesian Model Averaging) to show how this
+   is useful. [TODO] If dependence graph is enriched with appropriate information from program, we can extract
+   various kinds of intensional information, e.g. “expression provenance” explaining how a primitive value was
+   computed. (Maybe one such application is enough to motivate intensional aspect of graph.)
 
    Finally, if we are prepared to we only care about extensional behaviour of slicing (I/O
    relations) then internal nodes in the graph are actually irrelevant (Galois connection is invariant under
