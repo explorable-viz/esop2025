@@ -41,6 +41,13 @@ terms of the operators we defined in \ref{sec:graphs}. Since the operators we
 defined in the prior section have multiple equivalent definitions, we take care
 to delineate between the operator, and the implementation of that operator we are testing.
 
+\textbf{Graph-Bwd} refers to running the backward slicing procedure over a fixed
+selection. We use this to compute a relevant input selection as we have described.
+The input selection we compute during \textbf{Graph-Bwd} is the selection we then
+feed into the forward slicing procedure which we time as part of \textbf{Graph-Fwd}.
+This is also where we validate round-tripping, albeit this is not relevant to the 
+discussion of performance.
+
 
 \subsection{Evaluation}
 In both the trace-based and graphical approaches, we construct an auxiliary data
@@ -83,4 +90,3 @@ performance of forward slicing as the De Morgan dual of backwards is particulary
 One explanation for this discrepancy is expensive set operations needed to perform
 the complementation of a selection, which in a very large graph can be expensive. 
 
-\input{fig/performance/bench_descripts.tex}
