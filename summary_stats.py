@@ -17,7 +17,7 @@ def decompose_benchmarks():
     print(benchspeedup.std(ddof=0))
     print(benchspeedup.skew())
 
-    bigbenches.plot(x='Graph-Nodes', y='Fwd-Speedup', logy=True,style='o')
+    bigbenches.plot(x='Graph-Nodes', y='Eval-Speedup',style='o')
     plt.show()
     # for test_set in [slicing, graphics, desugar, misc]:
     #     spedup = speedups(test_set)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
