@@ -1,5 +1,5 @@
-\section{Benchmarks}
-\label{sec:benchmarks}
+\section{Evaluation}
+\label{sec:evaluation}
 
 The practical motivation for representing dependency structures as a graph, informally,
 is that computing a slice is much more performant in the graphical setting.
@@ -26,12 +26,58 @@ instantaneous user feedback. In terms of designing interactive systems, we argue
 increased cost in constructing the dependency graph is well worth it, given that it
 facilitates such a stark increase in performance of slicing queries.
 
-\subsection{Methodology}
+\subsection{Implementation}
+We implement our approach in a language we call Fluid. Fluid comes with both an
+implementation of the trace, and graphical approach. Both implementations are
+factored through a Galois Connection abstraction. One important subtlety to bear
+in mind is that a given evaluation induces a family of Galois connections between
+inputs and outputs of a computation.
+
+In the trace-based approach, this connection is intimately tied to the structure
+of the programs AST. The trace itself is a recapitulation of the exact structure
+of the program. Practically, this means that following information through the
+Galois connection is effectively the same as evaluating the program in either
+direction. 
+
+\begin{figure}[h]
+\begin{lstlisting}[language=Purescript]
+newtype GaloisConnection a b = GC { fwd :: a -> b, bwd :: b -> a }
+
+deMorgan :: forall a b. BooleanLattice a => BooleanLattice b => Endo (a -> b)
+deMorgan = (neg >>> _) >>> (_ >>> neg)
+
+dual :: forall a b. BooleanLattice a => BooleanLattice b => GaloisConnection a b -> GaloisConnection b a
+dual (GC { fwd, bwd }) = GC { fwd: deMorgan bwd, bwd: deMorgan fwd }
+\end{lstlisting}
+\caption{Galois connection abstraction}
+\label{fig:galois-abstraction}
+\end{figure}
+
+In \figref{galois-abstraction}, we see how the introduction of the direct
+abstraction allows us to define De Morgan duals in a simple manner, simply
+by flipping the position of the pair of functions, and composing them with
+negation. The graphical approach also provides another group of equivalent ways
+to implement these operators, namely the usage of the opposite graph.
+\figref{bwd-fwd-op} demonstrates one of the two equivalent methods for defining
+the De Morgan Dual using the opposite graph.
+
+\begin{figure}
+\lstinputlisting[language=Purescript,mathescape]{listings/bwd-fwd-duals.purs}
+\caption{Duals on the opposite graph}
+\label{fig:bwd-fwd-op}
+\end{figure}
+
+\begin{figure}[h]
+\lstinputlisting[language=Purescript,mathescape]{listings/galois-trace.purs}
+\caption{Implementation of Galois Connection via tracing}
+\end{figure}
+
+\subsection{Testing Methodology}
 We describe here the specifics of each individual benchmark, before moving on to
 a discussion of the results. For performance measurements of the trace-based
 approach, we summarize evaluation time, and the times taken for forward and 
 backward slicing, as \textbf{Trace-Eval},\textbf{Trace-Fwd}, and \textbf{Trace-Bwd}.
-
+    
 For benchmarking the graphical system, we must be careful to define the individual
 performance tests. For a given test-case, we first run - and time - evaluating
 to a graph in \textbf{Graph-Eval}. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
@@ -49,7 +95,7 @@ This is also where we validate round-tripping, albeit this is not relevant to th
 discussion of performance.
 
 
-\subsection{Evaluation}
+\subsection{Program Evaluation}
 In both the trace-based and graphical approaches, we construct an auxiliary data
 structure during evaluation. We observe that evaluating the program and constructing
 a graph does incur an increased cost. In our experiments, the mean time taken to
