@@ -1,5 +1,8 @@
-\section{Benchmarks}
-\label{sec:benchmarks}
+\section{Evaluation}
+\label{sec:evaluation}
+\textbf{TODO:} Need to replace the tables with slightly more up to date information
+and give citation for the Nielsen work, since it's from a book.
+
 
 The practical motivation for representing dependency structures as a graph, informally,
 is that computing a slice is much more performant in the graphical setting.
@@ -26,16 +29,89 @@ instantaneous user feedback. In terms of designing interactive systems, we argue
 increased cost in constructing the dependency graph is well worth it, given that it
 facilitates such a stark increase in performance of slicing queries.
 
-\subsection{Evaluation}
+\subsection{Implementation}
+We implement our approach in a language we call Fluid. Fluid comes with both an
+implementation of the trace, and graphical approach. Both implementations are
+factored through a Galois Connection abstraction. One important subtlety to bear
+in mind is that a given evaluation induces a family of Galois connections between
+inputs and outputs of a computation.
+
+In the trace-based approach, this connection is intimately tied to the structure
+of the programs AST. The trace itself is a recapitulation of the exact structure
+of the program. Practically, this means that following information through the
+Galois connection is effectively the same as evaluating the program in either
+direction. 
+
+\begin{figure}[h]
+\begin{lstlisting}[language=Purescript]
+newtype GaloisConnection a b = GC { fwd :: a -> b, bwd :: b -> a }
+
+deMorgan :: forall a b. BooleanLattice a => BooleanLattice b => Endo (a -> b)
+deMorgan = (neg >>> _) >>> (_ >>> neg)
+
+dual :: forall a b. BooleanLattice a => BooleanLattice b => GaloisConnection a b -> GaloisConnection b a
+dual (GC { fwd, bwd }) = GC { fwd: deMorgan bwd, bwd: deMorgan fwd }
+\end{lstlisting}
+\caption{Galois connection abstraction}
+\label{fig:galois-abstraction}
+\end{figure}
+
+In \figref{galois-abstraction}, we see how the introduction of the direct
+abstraction allows us to define De Morgan duals in a simple manner, simply
+by flipping the position of the pair of functions, and composing them with
+negation. The graphical approach also provides another group of equivalent ways
+to implement these operators, namely the usage of the opposite graph.
+\figref{bwd-fwd-op} demonstrates one of the two equivalent methods for defining
+the De Morgan Dual using the opposite graph. We can also provide a definition
+which uses the \textit{deMorgan} function defined in \figref{galois-abstraction}
+
+\begin{figure}
+\lstinputlisting[language=Purescript,mathescape]{listings/bwd-fwd-duals.purs}
+\caption{Duals on the opposite graph}
+\label{fig:bwd-fwd-op}
+\end{figure}
+
+\begin{figure}[h]
+\lstinputlisting[language=Purescript,mathescape]{listings/galois-trace.purs}
+\caption{Implementation of Galois Connection via tracing}
+\end{figure}
+
+\textbf{TODO:} include listing which demonstrates graphical GC, and how we can
+define the De Morgan Dual using the deMorgan function. Blocking on the 
+factoring of a few things through the GaloisConnection abstraction
+
+\subsection{Testing Methodology}
+We describe here the specifics of each individual benchmark, before moving on to
+a discussion of the results. For performance measurements of the trace-based
+approach, we summarize evaluation time, and the times taken for forward and 
+backward slicing, as \textbf{Trace-Eval},\textbf{Trace-Fwd}, and \textbf{Trace-Bwd}.
+    
+For benchmarking the graphical system, we must be careful to define the individual
+performance tests. For a given test-case, we first run - and time - evaluating
+to a graph in \textbf{Graph-Eval}. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
+where $\mathcal{B}$ denotes a distinguished set of output vertices, and $\mathcal{A}$
+a distinguished set of inputs. We can then define the individual benchmarks in
+terms of the operators we defined in \ref{sec:graphs}. Since the operators we
+defined in the prior section have multiple equivalent definitions, we take care
+to delineate between the operator, and the implementation of that operator we are testing.
+
+\textbf{Graph-Bwd} refers to running the backward slicing procedure over a fixed
+selection. We use this to compute a relevant input selection as we have described.
+The input selection we compute during \textbf{Graph-Bwd} is the selection we then
+feed into the forward slicing procedure which we time as part of \textbf{Graph-Fwd}.
+This is also where we validate round-tripping, albeit this is not relevant to the 
+discussion of performance.
+
+\textbf{TODO:} Further discuss the various implementations. May need to wait for
+Minh to finish his work in section 4 first, so we can discuss the various 
+operators, and which parts of the code we 
+
+\subsection{Program Evaluation}
 In both the trace-based and graphical approaches, we construct an auxiliary data
-structure during evaluation. Constructing a trace of an execution is a cheaper
-computation than the construction of the graph. This is reflected in our
-by the timing information in Table \ref{expensive-bwd}. On most testcases, we
-observe that evaluating the program and constructing a graph ranges between 1.5
-and 2 times slower than evaluating and constructing a trace. This slowdown is
-a combination of the large number of set operations that need to be performed when
-constructing the graph, and the information we need to compute to determine, for
-example, neighbours of a node in the graph.
+structure during evaluation. We observe that evaluating the program and constructing
+a graph does incur an increased cost. In our experiments, the mean time taken to
+evaluate in the graphical setting is approximately double that of the trace-based
+backend. 
 
 
 \subsection{Backward Slicing}
@@ -57,19 +133,46 @@ incurred up front, rather than repeatedly.
 \input{fig/performance/expensive-bwd.tex}
 
 \subsection{Inefficient Forward Slicing}
-We have already discussed that in the graphical setting, there is no theoretical need to
-define a forward slicing procedure. Forward slicing is uniquely determined by
-the definition of backward slicing, since the two operators form a Galois connection.
-Despite this we have formulated a more efficient forward slicing procedure. This is because
-in practical cases the definition of forward slicing as the De Morgan dual of backwards
-slicing on the opposite graph can suffer from bad performance.
-{\small
-\input{fig/performance/expensive-fwd.tex}}
+As we mentioned earlier in \ref{sec:graph}, we can theoretically get by without
+providing an explicit definition of forward slicing. Instead, we can derive the
+forward slicing procedure in terms of backwards using the De Morgan dual on the
+opposite graph. 
 
-In Table \ref{expensive-fwd}, we would like to focus on the discrepancy between
-\textbf{Graph-Fwd} and \textbf{Graph-FwdAsDeMorgan}. The efficient forward slicing
-procedure is generally quicker than the trace based approach, but the
-version of forward slicing implemented as the De Morgan dual of backward slicing
-demonstrates inferior performance.
+In practise however we see a significant reduction in performance when performing
+forward slicing in this manner. For some extreme examples, consider the right-most
+column of Table \ref{expensive-fwd}. We see that in the pictured test cases,
+performance of forward slicing as the De Morgan dual of backwards is particulary poor.
+{\small\input{fig/performance/expensive-fwd.tex}}
 
-\input{fig/performance/bench_descripts.tex}
+One explanation for this discrepancy is expensive set operations needed to perform
+the complementation of a selection, which in a very large graph can be expensive. 
+
+\subsection{Discussion}
+We can see that whilst the graphical slicing paradigm can improve the performance
+of program slicing dramatically, the increase in performance is varied. It 
+initially appeared that speedup in slicing time was inherently tied to the
+size of the dynamic dependence graph and equivalent trace, but this is not true.
+
+Instead the computational speedup is more closely tied to the structural 
+properties of the program of interest, and it's resultant dependence graph
+We have tested on several non-toy programs, and we note that there is a 
+high variance in speedup of both forward and backward slicing time. We see that
+some examples - such as Dynamic Time Warping - experience approximately an
+eighttimes performance increase in both forward and backward slicing, whereas
+our convolution examples demonstrate speed increases on the order of 100s.
+
+The reason for this disparity is the inherent data-parallelism of certain
+computations. A single iteration of a convolution creates very "local" dependency
+structure. A cell in the top left of the output matrix only depends on a small
+section of the input image. We therefore expect that the graph produced
+in evaluation has lots of inputs which do not cooperate.
+
+In contrast, the Dynamic Time Warping algorithms output matching 
+requires traversing the entire cost matrix computed in evaluation, and a cell in
+the cost matrix relies on the computation of it's left, upward, and diagonal
+neighbors. The implication of this is that the data depdendency through the
+the computation is in a sense more sequential than that of, for example
+convolution.
+
+\textbf{TODO:} I don't think anything I've said here is necessarily wrong,
+but definitely needs further elucidation of the key points, and several rewrites.
