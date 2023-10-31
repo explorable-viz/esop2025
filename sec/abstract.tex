@@ -1,15 +1,11 @@
 \begin{abstract}
    Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
    program slicing, characterising fine-grained input-output relationships in terms of demand and sufficiency.
-   The upper adjoint (forward slicing) is a \emph{sufficiency} operator, picking out all the outputs which can
-   be computed using only a particular set of inputs, whereas the lower adjoint (backward slicing) is a
-   \emph{demand} operator, picks out the specific inputs needed to compute a particular set of outputs.
-   \citeauthor{perera22} showed how the De Morgan dual of the upper adjoint can be used to pick out
+   \citeauthor{perera22} showed how the De Morgan dual of a program slicing algorithm can be used to pick out
    \emph{related outputs}, namely the outputs that ``compete'' with a given set of outputs in the sense of
-   demanding some of the same inputs. However Galois slicing implementations to date have relied on a
-   sequential execution record, or \emph{trace}, to compute the two analyses, making the approach unable to
-   exploit the very independence that makes slicing useful in the first place and rendering it too slow for
-   interactive applications.
+   demanding some of the same inputs. However implementations of this ``Galois slicing'' approach to date have
+   relied on a sequential execution record, or \emph{trace}, to compute the analyses, leaving it too
+   slow for interactive applications.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
    graphs (DDGs), an approach used in the program slicing literature for analysing imperative programs. We
