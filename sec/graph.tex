@@ -77,11 +77,15 @@ Y \times X$. (We flip the direction of the relation compared to $f$ so we can re
 
 \subsection{Dependence graphs}
 
-We now define some standard graph-theoretic notions for a $G = (V, E)$ with vertices $\alpha, \beta \in V$ and
-edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
+We define a dependence graph as $G = (V, E, X, Y)$ which, as well as the standard graph-theoretic notions of vertices $\alpha, \beta \in V$ and edges $(\alpha, \beta) \in E$, has input and output vertex sets~$X, Y$.
+
+The inputs $X$ of a dependence graph coincide with the graph's sinks because they have no dependents themselves. However, the outputs $Y$  do not coincide with the usual notion of sources. In particular, a dependence graph may produce output vertices that are not sources due to them being depended on by other vertices; conversely, a graph may have  ``redundant'' vertices as sources that are not considered outputs e.g. when constructing intermediate vertices that are neither subsequently used nor returned.
+
+For the following definitions, fix a graph $G$:
+
 
 \begin{definition}[Opposite graph]
-   If $G = (V,E)$, define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+   If $G = (V,E, X, Y)$, define $G^{-1} \eqdef (V, E^{-1}, Y, X)$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
 \begin{definition}[Neighbours]
@@ -103,10 +107,10 @@ edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
 \noindent Both notations extend to sets of vertices in the obvious way.
 
 \begin{definition}[Subgraph, union]
-   If $G = (V, E)$ and $G' = (V', E')$ define:
+   If $G = (V, E, X, Y)$ and $G' = (V', E', X', Y')$ define:
    \begin{enumerate}
-      \item $G' \subseteq G$ to mean $G'$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
-      \item $G \cup G'$ to mean the (non-disjoint) union ($V \cup V'$, $E \cup E'$) of $G$ and $G'$.
+      \item $G' \subseteq G$ to mean $G'$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$, $E' \subseteq E$, $X' \subseteq X$, and $Y' \subseteq Y$.
+      \item $G \cup G'$ to mean the (non-disjoint) \emph{union} ($V \cup V'$, $E \cup E'$, $X \cup X'$, $Y \cup Y'$) of $G$ and $G'$.
    \end{enumerate}
 \end{definition}
 
@@ -116,16 +120,16 @@ edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
    \in \E(G)$ where $\seq{\beta} \eqdef \alpha \cons \seq{\alpha} \cons \beta$.
 \end{definition}
 
-\begin{definition}[Sources and sinks]
-   Define:
-   \begin{itemize}
-      \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
-      \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
-   \end{itemize}
-\end{definition}
+% \begin{definition}[Sources and sinks]
+%    Define:
+%    \begin{itemize}
+%       \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
+%       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
+%    \end{itemize}
+% \end{definition}
 
 \begin{definition}[Extension]
-   Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
+   Define the \emph{extension} $\extension{G}$ of $G = (V, E, X, Y)$ to be $\reachable{G}$ restricted to~$X \times Y$.
 \end{definition}
 
 \subsection{Galois slicing over dependence graphs}
@@ -135,7 +139,7 @@ useful to conflate a singleton $H = \singleton{\alpha}{V}$ with the star graph $
 \times V)$.
 
 \begin{definition}[Slicing algorithms]
-   \item Suppose $\hat{G}$ a graph.
+   \item Suppose $\hat{G} $ a graph.
    \begin{enumerate}
       \item \figref{graph:slicing:backward} defines the relation $\bwdAlg{\hat{G}}$. \hfill (backward slicing)
       \item \figref{graph:slicing:forward} defines the relation $\fwdAlg{\hat{G}}$. \hfill (forward slicing)
@@ -143,10 +147,10 @@ useful to conflate a singleton $H = \singleton{\alpha}{V}$ with the star graph $
 \end{definition}
 
 \begin{theorem}[Correctness of slicing algorithms]
-   \item
+   \item Suppose $\hat{G}$ a graph with inputs and outputs $X, Y$.
    \begin{enumerate}
-   \item Suppose $V \subseteq \sources{\hat{G}}$. Then $\consumesF{\extension{\hat{G}}}(V) = V' \iff V \bwdAlg{\hat{G}} V'$.
-   \item Suppose $V \subseteq \sinks{\hat{G}}$. Then $\producesF{\extension{\hat{G}}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq Y$. Then $\consumesF{\extension{\hat{G}}}(V) = V' \iff V \bwdAlg{\hat{G}} V'$.
+   \item Suppose $V \subseteq X$. Then $\producesF{\extension{\hat{G}}}(V) = V' \iff V \fwdAlg{\hat{G}} V'$.
    \end{enumerate}
 \end{theorem}
 
