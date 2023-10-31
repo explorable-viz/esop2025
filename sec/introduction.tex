@@ -1,14 +1,15 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Galois connections between Boolean algebras offer an appealing mathematical foundation for bidirectional
-dynamic program slicing, providing an elegant way of characterising input-output relationships in terms of
-demand and sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which characterises forward
-slicing, is a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a
-particular set of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand}
-operator, picking out the specific inputs needed to compute a particular set of outputs. \citet{perera22}
-showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related outputs}, namely the
-outputs that ``compete'' with a given set of outputs in the sense of demanding some of the same inputs.
+Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
+program slicing, providing an elegant way of characterising input-output relationships in terms of demand and
+sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which characterises forward slicing, is
+a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a particular set
+of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out
+the specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to
+Boolean lattices, and showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
+outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some
+of the same inputs.
 
 However, Galois slicing implementations to date have relied on a sequential execution record, or \emph{trace},
 to compute the two analyses, making the approach unable to exploit the very independence that makes slicing
@@ -16,7 +17,7 @@ useful in the first place and rendering it too slow for interactive applications
 
 \subsection{Contributions}
 
-\secref{preliminaries} establishes some preliminaries. Then the specific contributions of the paper are as
+\secref{preliminaries} establishes some preliminaries. The specific contributions of the paper are then as
 follows:
 \begin{itemize}
 \item \secref{core} defines the core calculus that is the basis of our implementation and gives an operational
@@ -24,8 +25,10 @@ semantics that equips every result with a DDG suitable for slicing.
 \item \secref{graph} introduces the mathmatical setting of ``Galois connections for a relation'', formalises
 DDGs as one possible implementation of such a relation, and defines adjoint forwards and backwards slicing
 operators over DDGs.
-\item \secref{benchmarks} contrasts the graph-based approach with a trace-based implementation, comparing both the overhead of building a trace vs.~building a DDG, and also slicing over traces vs.~graphs.
+\item \secref{evaluation} contrasts the graph-based approach with a trace-based implementation, comparing the
+overhead of building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical
+approach.
 \end{itemize}
 
-\noindent We discuss related work in more detail in \secref{related-work} and wrap up in \secref{conclusion}
-with a discussion on limitations and future work.
+\noindent \secref{related-work} discusses related work in more detail \secref{conclusion} concludes with a
+discussion on limitations and future work.
