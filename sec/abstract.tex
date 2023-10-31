@@ -1,23 +1,23 @@
 \begin{abstract}
    Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
    program slicing, characterising fine-grained input-output relationships in terms of demand and sufficiency.
-   \citeauthor{perera22} showed how the De Morgan dual of a program slicing algorithm can be used to pick out
-   \emph{competing outputs}, namely the other outputs that are related to some outputs of interest in the
-   sense of demanding some of the same inputs. However implementations to date of this ``Galois slicing''
-   approach have been too slow for interactive applications because they have relied on rewinding or replaying
+   \citeauthor{perera22} showed how the De Morgan dual of such an analysis can be used to pick out
+   \emph{competing outputs}, namely other outputs that are related to some outputs of interest in the
+   sense of demanding some of the same inputs. However implementations to date of these ``Galois slicing''
+   approaches have been too slow for interactive use because they have relied on rewinding or replaying
    the entire computation using a sequential execution record, or \emph{trace}.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
-   graphs, an approach used in the past for analysing imperative programs. We decompose the analysis into two
-   steps: an operational semantics that evaluates a program to a dependence graph, and then a pair of adjoint
-   operators for forwards and backwards slicing over the graph. The overhead of producing a dependence graph
-   is comparable to that of producing a trace, but the slicing algorithms run on average much faster than
-   their trace-based counterparts, making them suitable for interactive use. We also show that, extensionally,
-   forward slicing over a dependence graph is the De Morgan dual of backward slicing over the opposite graph,
-   leading to an easy implementation of the upper adjoint in terms of the lower. Even this naive
-   implementation is on average faster than the trace-based approach, but we also give a even faster direct
-   implementation. The slicing algorithms are language-agnostic, and the mathematical setup is simpler too:
-   the Galois connections are determined solely by the reachability relation $R$ between the inputs and
+   graphs, an approach used in the past for analysing imperative programs. We proceed by decomposing the
+   analysis into two steps: an operational semantics that evaluates a program to a dependence graph, and then
+   a pair of adjoint operators for forwards and backwards slicing over the graph. The overhead of producing a
+   dependence graph is comparable to that of producing a trace, but the slicing algorithms run on average much
+   faster than their trace-based counterparts, making them suitable for interactive use. We also show that,
+   extensionally, forward slicing over a dependence graph is the De Morgan dual of backward slicing over the
+   opposite graph, leading to an easy implementation of the upper adjoint in terms of the lower. Even this
+   naive implementation is on average faster than the trace-based approach, but we also give an even faster
+   direct implementation. The slicing algorithms are language-agnostic, and the mathematical setup is simpler
+   too: the Galois connections are determined solely by the reachability relation $R$ between the inputs and
    outputs of the graph. The competing outputs operator from earlier work is given by the Galois connection
    for $R \relcomp R^{-1}$, and a new \emph{cooperating inputs} operator is given by $R^{-1} \relcomp R$. We
    show how this new operator also has useful data visualisation applications.
