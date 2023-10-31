@@ -1,0 +1,74 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, \kappa', V$}\hfill
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\match$-seq-empty}}
+       ]
+       {
+          \strut
+       }
+       {
+          \seqEmpty, \kappa \match \varnothing, \kappa, \varnothing
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\match$-seq-non-empty}}
+       ]
+       {
+          v, \sigma \match \gamma, \kappa, V
+          \\
+          \seq{u}, \kappa \match \gamma', \kappa', V'
+       }
+       {
+          v \cons \seq{u},
+          \sigma
+          \match
+          \gamma \disjunion \gamma',
+          \kappa',
+          V \cup V'
+       }
+    \end{smathpar}}
+
+    {\small \flushleft \shadebox{$v, \sigma \match \gamma, \kappa, V$}
+    \begin{smathpar}
+       \inferrule*[lab={\ruleName{$\match$-var}}]
+       {
+          \strut
+       }
+       {
+          v, \elimVar{x}{\kappa} \match \set{\bind{x}{v}}, \kappa, \varnothing
+       }
+       %
+       \and
+       %
+       \inferrule*[
+          lab={\ruleName{$\match$-record}}
+       ]
+       {
+          \seq{u}, \kappa \match \gamma, \kappa', V
+          \\
+          \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+       }
+       {
+          \annRec{\seq{\bind{x}{v}}}{\alpha},
+          \elimRecord{\seq{y}}{\kappa}
+          \match
+          \gamma, \kappa', V \cup \set{\alpha}
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\match$-constr}}]
+       {
+          \seq{v}, \kappa \match \gamma, \kappa', V
+       }
+       {
+          \annConstr{c}{\seq{v}}{\alpha}, (\elimBind{c}{\kappa}) \cons \sigma
+          \match
+          \gamma, \kappa', V \cup \set{\alpha}
+       }
+    \end{smathpar}}
+ \caption{Graph semantics: pattern-matching}
+ \end{figure}
