@@ -79,21 +79,6 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalSugS$-dict}}]
-      {
-         \gamma, \seq{e} \evalSugS \seq{\exStr{z}}
-         \\
-         \gamma, \seq{e}' \evalSugS \seq{v}
-      }
-      {
-         \gamma,
-         \exDict{\seq{\bind{e}{e}}'}
-         \evalSugS
-         \exDict{\seq{\bind{s}{v}}}
-      }
-      %
-      \and
-      %
       \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
       {
          \gamma, \seq{e} \evalSugS \seq{v}
@@ -189,23 +174,11 @@
    \end{smathpar}}
    \\[2mm]
    {\small \flushleft \shadebox{$\gamma, \rho \closeDefs \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
-   \begin{smathpar}
-      \inferrule*[
-%         lab={\ruleName{$\closeDefs$-core}}
-      ]
-      {
-         \rho = \set{\seq{\bind{x}{\sigma}}}
-         \\
-         v_i = \exClosure{\gamma}{\rho}{\sigma_i}
-         \quad
-         (\forall i \numleq \length{\seq{x}})
-      }
-      {
-         \gamma, \rho
-         \closeDefs
-         \set{\seq{\bind{x}{v}}}
-      }
-   \end{smathpar}
+   \begin{salign}
+      \gamma, \rho
+      &\closeDefs
+      \set{\bind{x}{\exClosure{\gamma}{\rho}{\rho(x)}} \mid x \in \dom{\rho}}
+   \end{salign}
    }
    \caption{Core language: evaluation}
    \label{fig:core:eval}
