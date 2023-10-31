@@ -3,22 +3,22 @@
    program slicing, characterising fine-grained input-output relationships in terms of demand and sufficiency.
    \citeauthor{perera22} showed how the De Morgan dual of a program slicing algorithm can be used to pick out
    \emph{related outputs}, namely the outputs that ``compete'' with a given set of outputs in the sense of
-   demanding some of the same inputs. However implementations of this ``Galois slicing'' approach to date have
-   relied on a sequential execution record, or \emph{trace}, to compute the analyses, leaving it too
-   slow for interactive applications.
+   demanding some of the same inputs. However implementations to date of this ``Galois slicing'' approach have
+   been too slow for interactive applications because they have relied on rewinding or replaying the entire
+   computation using a sequential execution record, or \emph{trace}.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
    graphs (DDGs), an approach used in the program slicing literature for analysing imperative programs. We
-   decompose the slicing procedure into two steps: evaluating a program to a DDG, and then running forwards or
-   backwards slicing over the graph. We show that, empirically, the overhead of producing a DDG is comparable
-   to that of producing a trace, but that the slicing algorithms run on average much faster than their
-   trace-based counterparts, which is the important component for interactive applications. Moreover, in the
-   Galois connection setting a number of other interesting properties arise. Backward slicing is the usual
-   reachability analysis, but extensionally forward slicing is simply the De Morgan dual of backward slicing
-   on the opposite graph, leading to an easy implementation of the upper adjoint in terms of the lower. Since
-   this naive implementation in the worst case takes time proportional to the size of the graph, we also give
-   a direct implementation of forward slicing over a DDG and show that it too is on average much faster than
-   the trace-based approach.
+   decompose Galois slicing procedure into two parts: an operational semantics that evaluates a program to a
+   DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over the graph. We show
+   that although the overhead of producing a DDG is comparable to that of producing a trace, the slicing
+   algorithms run on average much faster than their trace-based counterparts, making them suitable for
+   interactive use. Moreover, in the Galois connection setting a number of other interesting properties arise.
+   Backward slicing is the usual reachability analysis, but extensionally forward slicing is simply the De
+   Morgan dual of backward slicing on the opposite graph, leading to an easy implementation of the upper
+   adjoint in terms of the lower. Since this naive implementation in the worst case takes time proportional to
+   the size of the graph, we also give a direct implementation of forward slicing over a DDG and show that it
+   too is on average much faster than the trace-based approach.
 
    Our slicing algorithms are neutral with respect to any intensional information associated with the DDG, in
    the sense that the resulting Galois connection is determined only by the ``I/O relation'' of the graph,
