@@ -39,7 +39,13 @@ approach, but we also give a direct implementation of forward slicing and show t
 
 The two-phase approach of a graph-building semantics and then implementing the analyses over the graph also
 significantly reduces the implementation burden on the developer, since the slicing algorithms are
-language-agnostic and thus only need to be implemented once.
+language-agnostic and thus only need to be implemented once. Finally, the mathematical setup is simpler in
+this new setting, because the Galois connections are determined solely by the reachability relation $R$
+between the inputs and outputs of the graph. This allow the ``competing outputs'' problem addressed in
+\citet{perera22} to be understood as the Galois connection for $R \relcomp R^{-1}$. This perspective suggests
+another Galois connection for ``cooperating inputs'' given by $R^{-1} \relcomp R$; we show how this can be
+used to relate elements of a time series to elements of another time series when both time series are being
+consumed by a Dynamic Time Warping algorithm.
 
 \todo{To be continued}
 
