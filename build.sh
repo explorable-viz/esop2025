@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PYTHONSCRIPT="../fluid/plot_bench.py"
+PLOTTER="../fluid/plot_bench.py"
 PDFLATEX="pdflatex -file-line-error -halt-on-error"
 TARGET=${1:-main}
 PYENV=venv
@@ -18,8 +18,8 @@ source $PYENV/bin/activate
    mkdir Benchmarks
    cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
 
-   python3 $PYTHONSCRIPT -t expensive -b bwd -d fig/performance/expensive-bwd > /dev/null
-   python3 $PYTHONSCRIPT -t expensive -b fwd -d fig/performance/expensive-fwd > /dev/null
+   python3 $PLOTTER -t expensive -b bwd -d fig/performance/expensive-bwd > /dev/null
+   python3 $PLOTTER -t expensive -b fwd -d fig/performance/expensive-fwd > /dev/null
 deactivate
 
 $PDFLATEX $TARGET

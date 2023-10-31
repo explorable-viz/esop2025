@@ -1,0 +1,17 @@
+\begin{table}
+\small
+\caption{Graph Benchmark Classification, $S$ denotes a specific selection, $\mathcal{A},\mathcal{B}$ denote the entire input or output set}
+\label{benchmark-descriptions}
+\begin{tabular}{llc}
+   \toprule
+Bench Name & Description & Operator \\
+\midrule
+Graph-Bwd & perform backward slicing on a dynamic dependence graph & $\consumesF{G}(S)$ \\ 
+Graph-Fwd & perform forward slicing on a dynamic depdendence graph & $\producesF{G}(S)$\\
+Graph-BwdDual  & perform forward slicing on the opposite of the DDG & $\consumesDualF{G}(S) = \producesF{G^{-1}}(S)$\\
+Graph-BwdAll & Run backwards slicing after selecting the entirety of the output & $\consumesF{G}(\mathcal{A})$\\
+Graph-FwdDual & run backwards slicing on the opposite of the DDG & $\producesDualF{G}(S) = \consumesF{G^{-1}}(S)$\\
+Graph-FwdAsDeMorgan & backward slice on complement selection on opposite DDG & \\
+\bottomrule
+\end{tabular}
+\end{table}
