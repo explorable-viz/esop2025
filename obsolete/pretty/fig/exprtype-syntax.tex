@@ -1,0 +1,87 @@
+
+\begin{figure}
+    {\small
+    \begin{minipage}[t]{0.48\textwidth}
+    \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+       &\textbfit{Expression term}&
+       \lowlight{$\ExprType$}
+       \\
+       $r::=$
+       &
+       $\etypeS$
+       &
+       simple expression
+       \\
+       &
+       $\etypeE$
+       &
+       expression
+       \\
+       \end{tabularx}
+       \end{minipage}
+    }
+    \caption{Syntax of expression terms}
+ \end{figure}
+
+ \begin{figure}
+    \begin{salign}
+        \exprType{\param} &: \Expr \rightarrow \ExprType
+        \\
+        \exprType  (\exInt{n})  &= \etypeS
+        \\
+        \exprType (x)   &= \etypeS
+        \\
+        \exprType   (\{\seq{(x:s)}\})  &= \etypeS
+        \\
+        \exprType  (\exBinaryApp{s}{\oplus}{s'}) &= \etypeE
+        \\
+        \exprType  (\exIfThenElse{s}{s_1}{s_2}) &= \etypeS
+        \\
+        \exprType   (\exRecProj{s}{x}) &= \etypeS
+        \\
+        \exprType  (\exApp{s}{s'}) &= \etypeE
+        \\
+        \exprType   (\exLetRecPiecewise{g}{s}) &= \etypeE
+        \\
+        \exprType   (\exMatch{s}{\seq{\clauseUncurried{p}{s}}'}) &= \etypeS
+        \\
+        \exprType   ({\lambda\mu}) &= \etypeS
+        \\
+        \exprType  ({\exList{s}{l}}) &= \etypeS
+        \\
+        \exprType  ({\exListComp{s}{\seq{q}}}) &= \etypeS
+        \\
+        \exprType  ({\exListEnum{s}{s'}}) &= \etypeS
+    \end{salign}
+    \caption{Expr to ExprType Function}
+ \end{figure}
+
+\begin{figure}
+   {\small
+   \begin{minipage}[t]{0.48\textwidth}
+   \begin{tabularx}{\textwidth}{rL{2.8cm}L{3cm}}
+      &\textbfit{Pattern Constructor Terms}&
+      \lowlight{$\PattConstrType$}
+      \\
+      $t::=$
+      &
+      $\ptypePair$
+      &
+      pair
+      \\
+      &
+      $\ptypeList$
+      &
+      list
+      \\
+      &
+      $\ptypeOther$
+      &
+      other
+      \end{tabularx}
+      \end{minipage}
+   }
+   \caption{Syntax of expression terms}
+\end{figure}
+ \clearpage
+
