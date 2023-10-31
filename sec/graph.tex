@@ -77,7 +77,7 @@ Y \times X$. (We flip the direction of the relation compared to $f$ so we can re
 
 \subsection{Dependence graphs}
 
-We define a dependence graph $G : X \to Y$ as $G = (V, E, X, Y)$, which in addition to the standard graph-theoretic notions of vertices $\alpha, \beta \in V$ and edges $(\alpha, \beta) \in E$, has a domain and codomain $X, Y \subseteq V$. For the following definitions, fix a graph $G$.
+We define a dependence graph $G : X \to Y$ as $G = (V, E, X, Y)$ which, in addition to the standard graph-theoretic notions of vertices $\alpha, \beta \in V$ and edges $(\alpha, \beta) \in E$, has a domain and codomain $X, Y$. For the following definitions, fix a graph $G$.
 
 \begin{definition}[Opposite graph]
    If $G = (V,E, X, Y)$, define $G^{-1} \eqdef (V, E^{-1}, Y, X)$ where $\param^{-1}$ denotes relational inverse.
@@ -102,10 +102,10 @@ We define a dependence graph $G : X \to Y$ as $G = (V, E, X, Y)$, which in addit
 \noindent Both notations extend to sets of vertices in the obvious way.
 
 \begin{definition}[Subgraph, union]
-   If $G = (V, E)$ and $G' = (V', E')$ define:
+   If $G = (V, E, X, Y)$ and $G' = (V', E', X', Y')$ define:
    \begin{enumerate}
-      \item $G' \subseteq G$ to mean $G'$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$ and $E \subseteq E'$.
-      \item $G \cup G'$ to mean the (non-disjoint) union ($V \cup V'$, $E \cup E'$) of $G$ and $G'$.
+      \item $G' \subseteq G$ to mean $G'$ is a \emph{subgraph} of $G$, i.e.~$V' \subseteq V$, $E' \subseteq E$, $X' \subseteq X$, and $Y' \subseteq Y$.
+      \item $G \cup G'$ to mean the (non-disjoint) \emph{union} ($V \cup V'$, $E \cup E'$, $X \cup X'$, $Y \cup Y'$) of $G$ and $G'$.
    \end{enumerate}
 \end{definition}
 
@@ -122,6 +122,8 @@ We define a dependence graph $G : X \to Y$ as $G = (V, E, X, Y)$, which in addit
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
+
+\noindent It is important to note that the domain and codomain of a dependence graph do not coincide with the usual notion of sinks and sources. In particular, a dependence graph may have (produce) outputs that are not sources due to being depended on by other; conversely, a graph may have  ``redundant'' vertices as sources that are not outputs e.g. when constructing intermediate vertices that are neither subsequently used nor returned.
 
 \begin{definition}[Extension]
    Define the \emph{extension} $\extension{G}$ of $G$ to be $\reachable{G}$ restricted to $\sources{G} \times \sinks{G}$.
