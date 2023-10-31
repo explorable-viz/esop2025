@@ -31,14 +31,11 @@ In this paper we present a new implementation technique for Galois slicing based
 evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
 the graph. We show that although the overhead of producing a DDG is comparable to that of producing a trace,
 the slicing algorithms run on average much faster than their trace-based counterparts, making them suitable
-for interactive applcations like brushing and linking.
-
-Moreover, in the setting of Galois connections between Boolean algebras, a number of other interesting
-properties of dependence graphs arise. Backward slicing is the usual reachability analysis over the graph, but
-in turns out that forward slicing is simply the De Morgan dual of backward slicing on the opposite graph,
-leading to an easy implementation of the upper adjoint in terms of the lower. This naive implementation in the
-worst case takes time proportional to the size of the graph, we also give a direct implementation of forward
-slicing over a DDG and show that it too is on average much faster than the trace-based approach.
+for interactive applcations like brushing and linking. Moreover, although bckward slicing is the usual
+reachability analysis over the graph, in turns out that forward slicing over a dependence graph is,
+extensionally, the De Morgan dual of backward slicing on the opposite graph, leading to an easy implementation
+of the upper adjoint in terms of the lower. This naive implementation is still faster than the trace-based
+approach, but we also give a direct implementation of forward slicing and show that it performs even better.
 
 \todo{To be continued}
 
@@ -49,9 +46,9 @@ follows:
 \begin{itemize}
 \item \secref{core} defines the core calculus that is the basis of our implementation and gives an operational
 semantics that equips every result with a DDG suitable for slicing.
-\item \secref{graph} introduces the mathmatical setting of ``Galois connections for a relation'', formalises
-DDGs as one possible implementation of such a relation, and defines adjoint forwards and backwards slicing
-operators over DDGs.
+\item \secref{graph} introduces the idea of a Galois connection for a relation, formalises DDGs as one
+possible ``implementation'' of such a relation, and defines adjoint forwards and backwards slicing operators
+over a DDG which implement the corresponding a Galois connection.
 \item \secref{evaluation} contrasts the graph-based approach with a trace-based implementation, comparing the
 overhead of building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical
 approach.
