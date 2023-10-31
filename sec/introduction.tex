@@ -1,2 +1,64 @@
 \section{Introduction}
 \label{sec:introduction}
+
+Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
+program slicing, providing an elegant way of characterising input-output relationships in terms of demand and
+sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which characterises forward slicing, is
+a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a particular set
+of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out
+the specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to
+a setting where slices have complements and the slices of a particular program or value form a Boolean
+lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
+outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some
+of the same inputs, and proposed this as a framework for understanding the ``brushing and linking'' feature
+commonly used in data visualisation.
+
+However, an implementation of Galois slicing, in particular the backwards analysis, efficient enough to
+support this kind of interactive application has proved elusive. To compute the two analyses, implementations
+to date have relied on a sequential execution record taking the form of a big-step or small-step trace. The
+forward analysis uses the trace to ``replay'' the computation, propagating information about resource
+availability from inputs to outputs; the backwards analysis uses the trace to ``rewind'' the computation,
+propagating information about demand from outputs to inputs. This overly sequential approach makes the
+approach unable to exploit the very independence that makes slicing useful in the first place, and moreover
+the backwards analysis needs to make frequent use of a lattice join operation to combine slicing information
+computed along different branches of the computation. Joining closure slices in particular becomes expensive
+because of the contained environments (which in turn contain closures), and these shortcomings make the
+approach prohibitively slow for interactive use.
+
+In this paper we present a new implementation technique for Galois slicing based on dynamic dependence graphs
+(DDGs), an approach used in the program slicing literature for analysing imperative programs
+\cite{ferrante87}. Our approach decomposes Galois slicing into two components: an operational semantics that
+evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
+the graph. We show that although the overhead of producing a DDG is comparable to that of producing a trace,
+the slicing algorithms run on average much faster than their trace-based counterparts, making them suitable
+for interactive applcations like brushing and linking. Moreover, although bckward slicing is the usual
+reachability analysis over the graph, in turns out that forward slicing over a dependence graph is,
+extensionally, the De Morgan dual of backward slicing on the opposite graph, leading to an easy implementation
+of the upper adjoint in terms of the lower. This naive implementation is still faster than the trace-based
+approach, but we also give a direct implementation of forward slicing and show that it performs even better.
+
+Decomposing the problem into a graph-building semantics and a pair of analyses over the graph also
+significantly reduces the implementation burden on the developer, since the slicing algorithms are
+language-agnostic and thus only need to be implemented once. The mathematical setup is also simpler in this
+new setting, because the Galois connections are determined solely by the reachability relation $R$ between the
+inputs and outputs of the graph. This allow the ``competing outputs'' problem formulated in \citet{perera22}
+to be understood as the Galois connection for $R \relcomp {R^{-1}}$, which in turn suggests another Galois
+connection for ``cooperating inputs'' given by $R^{-1} \relcomp R$. We show how this new operator also has potentially interesting data science applications.
+
+\subsection{Contributions}
+
+\secref{preliminaries} establishes some preliminaries. The specific contributions of the paper are then as
+follows:
+\begin{itemize}
+\item \secref{core} defines the core calculus that is the basis of our implementation and gives an operational
+semantics that equips every result with a DDG suitable for slicing.
+\item \secref{graph} introduces the idea of a Galois connection for a relation, formalises DDGs as one
+possible ``implementation'' of such a relation, and defines adjoint forwards and backwards slicing operators
+over a DDG which implement the corresponding a Galois connection.
+\item \secref{evaluation} contrasts the graph-based approach with a trace-based implementation, comparing the
+overhead of building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical
+approach.
+\end{itemize}
+
+\noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
+a discussion on limitations and future work.

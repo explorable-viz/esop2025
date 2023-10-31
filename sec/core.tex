@@ -8,27 +8,8 @@ objects which can serve as a plausible desugaring target for surface-language pa
 
 \input{fig/core/syntax}
 \input{fig/core/match}
-
-\figref{graph:core:eval} defines a small-step reduction relation.
-
-Notes:
-\begin{enumerate}
-\item No support for recursion yet.
-\item If ``reduct'' (source of hyperedge) means new graph created on right by the rule, then both projection
-and \kw{let} rules result in an empty reduct (hyperedge with an empty source). No path can connect to such a
-hyperedge, so backward slicing will never reach such a redex. For forward slicing to be adjoint to that
-behaviour, redexes with empty reducts need to be ``costless'', i.e.~always included by forward slicing. Ok,
-but if two of our three rules always introduce hyperedges with an empty source, then the reduction graph is a
-rather degenerate kind of dependence graph, since the application rule is the only one that establishes real dependencies.
-\end{enumerate}
-
-\subsection{Foreign functions}
-
-Foreign functions add rules into the reduction system, with appropriately truncated redexes to characterise their consumption of inputs. For example, a binary operator $*$ with annihilator $0$ can be defined by:
-
-\begin{salign}
-\annot{\exInt{0}}{\alpha} * \beta &\geval \annot{\exInt{0}}{\alpha'} \\
-\annot{\exInt{n}}{\alpha} * \annot{\exInt{n}}{\beta} &\geval \annot{(\exInt{n \mathbin{\hat{*}} m})}{\alpha'} & \textit{if }n \neq 0 \\
-\end{salign}
-
+\input{fig/graph/match}
 \input{fig/core/eval}
+\input{fig/graph/eval}
+
+\figref{core:eval} defines a big-step evaluation relation.
