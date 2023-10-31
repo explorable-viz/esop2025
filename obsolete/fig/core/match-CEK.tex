@@ -1,24 +1,24 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, e$}\hfill
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match e$}\hfill
     \begin{smathpar}
        \inferrule*[
           lab={\ruleName{$\match$-done}}
        ]
        {
-          \strut
+          e' = \opName{alloc}(e)
        }
        {
-          \seqEmpty, e \match \envEmpty, e
+          \seqEmpty, e \match e'
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\match$-var}}]
        {
-          \seq{v}, \kappa \match \gamma, e
+          \seq{v}, \kappa \match e
        }
        {
-          v \cons \seq{v}, \elimVar{x}{\kappa} \match \set{\bind{x}{v}} \disjunion \gamma, e
+          \alpha \cons \seq{v}, \elimVar{x}{\kappa} \match \subst{e}{\alpha}{x}
        }
        \\
        \inferrule*[
@@ -27,26 +27,27 @@
        {
          \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
          \\
-         \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+         \seq{u} \concat \seq{v}', \kappa \match  e
        }
        {
           \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
           \elimRecord{\seq{y}}{\kappa}
           \match
-          \gamma, e
+          e
        }
        %
        \and
        %
        \inferrule*[lab={\ruleName{$\match$-constr}}]
        {
-          \seq{v} \concat \seq{v}', \kappa \match \gamma, e
+          \seq{v} \concat \seq{v}', \kappa \match e
        }
        {
-          \exConstr{c}{\seq{v}} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
+          \exConstr{c}{\seq{v}} \cons \seq{v}',
+          (\elimBind{c}{\kappa}) \cons \set{\seq{\bind{c}{\kappa}}}
           \match
-          \gamma, e
+          e
        }
     \end{smathpar}}
- \caption{Core semantics: matching}
+ \caption{Pattern-matching}
  \end{figure}
