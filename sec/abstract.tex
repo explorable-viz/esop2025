@@ -2,10 +2,10 @@
    Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
    program slicing, characterising fine-grained input-output relationships in terms of demand and sufficiency.
    \citeauthor{perera22} showed how the De Morgan dual of a program slicing algorithm can be used to pick out
-   \emph{related outputs}, namely the outputs that ``compete'' with a given set of outputs in the sense of
-   demanding some of the same inputs. However implementations to date of this ``Galois slicing'' approach have
-   been too slow for interactive applications because they have relied on rewinding or replaying the entire
-   computation using a sequential execution record, or \emph{trace}.
+   \emph{competing outputs}, namely the other outputs that are related to a chosen set of outputs in the sense
+   of demanding some of the same inputs. However implementations to date of this ``Galois slicing'' approach
+   have been too slow for interactive applications because they have relied on rewinding or replaying the
+   entire computation using a sequential execution record, or \emph{trace}.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
    graphs, an approach used in the program slicing literature for analysing imperative programs. Our approach
@@ -16,13 +16,12 @@
    for interactive use. We also show that, extensionally, forward slicing over a dependence graph is simply
    the De Morgan dual of backward slicing over the opposite graph, leading to an easy implementation of the
    upper adjoint in terms of the lower. Even this naive implementation is on average faster than the
-   trace-based approach, but we also give a direct implementation of forward slicing over a graph and show
-   that it performs better still. The two-phase approach (graph-building semantics + analyses over the graph)
-   also significantly reduces the implementation burden on the language developer since the slicing algorithms
-   are language-agnostic and thus only need to be implemented once.
+   trace-based approach, but we also give a direct implementation of forward slicing over a graph which is
+   faster still. The two-phase approach also significantly reduces the implementation burden on the language
+   developer since the slicing algorithms are language-agnostic and thus only need to be implemented once.
 
-   [TODO but we know how this works] Given , we can (with
-   some finessing) formulate the “linked outputs” from POPL paper as backward slicing over . This perspective
-   also gives a “linked inputs” operator over . Nice example (maybe Bayesian Model Averaging) to show how this
-   is useful.
+   The mathematical setup is simpler too: the Galois connections are determined solely by the reachability
+   relation $R$ between the inputs and outputs of the graph, and the ``competing outputs'' problem can be
+   understood as the Galois connection for $R \relcomp R^{-1}$. This perspective suggests another Galois connection for
+   ``cooperating inputs'' given by $R^{-1} \relcomp R$; we show how this can be used to relate elements of a time series to elements of another time series when both time series are being consumed by a Dynamic Time Warping algorithm.
 \end{abstract}
