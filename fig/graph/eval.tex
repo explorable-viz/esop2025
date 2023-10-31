@@ -46,21 +46,6 @@
       %
       \and
       %
-      \inferrule*[
-         lab={\ruleName{$\evalS$-str}}
-      ]
-      {
-         \strut
-      }
-      {
-         G, \gamma, \annStr{s}{\alpha}, V
-         \evalS
-         G \disjunion \set{\alpha' \mapsto \alpha \cons V},
-         \annStr{s}{\alpha'}
-      }
-      %
-      \and
-      %
       \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
          G, \gamma, \seq{e}, V \evalS G', \seq{v}
@@ -82,21 +67,6 @@
       }
       {
          G, \gamma, \exRecProj{e}{y}, V \evalS G', u
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalS$-dict}}]
-      {
-         G, \gamma, \seq{e}, V \evalS G_1, \seq{\annStr{s}{\beta}}
-         \\
-         G_1, \gamma, \seq{e}', V \evalS G', \seq{v}
-      }
-      {
-         G, \gamma, \annDict{\seq{\bind{e}{e}}'}{\alpha}, V
-         \evalS
-         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
-         \annDict{\seq{\bind{s}{(\beta, v)}}}{\alpha'},
       }
       %
       \and
@@ -216,5 +186,5 @@
       }
    \end{smathpar}
    }
-   \caption{Core semantics (dependence graph): evaluation}
+   \caption{Graph semantics: evaluation}
 \end{figure}
