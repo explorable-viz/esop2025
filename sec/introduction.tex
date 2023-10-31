@@ -36,16 +36,9 @@ for interactive applcations like brushing and linking.
 Moreover, in the setting of Galois connections between Boolean algebras, a number of other interesting
 properties of dependence graphs arise. Backward slicing is the usual reachability analysis over the graph, but
 in turns out that forward slicing is simply the De Morgan dual of backward slicing on the opposite graph,
-leading to an easy implementation of the upper adjoint in terms of the lower. Since this naive implementation
-in the worst case takes time proportional to the size of the graph, we also give a direct implementation of
-forward slicing over a DDG and show that it too is on average much faster than the trace-based approach.
-
-Our slicing algorithms are neutral with respect to any intensional information associated with the DDG, in the
-sense that the resulting Galois connection is determined only by the ``I/O relation'' of the graph, rather
-than any internal paths. So transformations that elide internal nodes but preserve connectivity, such as the
-classical Y-$\Delta$ transform, will produce an extensionally equivalent (but faster) analysis. Although we
-leave applications of this observation to future work, we conjecture that it can be used to selectively trade
-intensional information for additional performance improvements.
+leading to an easy implementation of the upper adjoint in terms of the lower. This naive implementation in the
+worst case takes time proportional to the size of the graph, we also give a direct implementation of forward
+slicing over a DDG and show that it too is on average much faster than the trace-based approach.
 
 \todo{To be continued}
 
@@ -64,5 +57,5 @@ overhead of building a trace vs.~a DDG, slicing over both, and the relative ease
 approach.
 \end{itemize}
 
-\noindent \secref{related-work} discusses related work in more detail \secref{conclusion} concludes with a
-discussion on limitations and future work.
+\noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
+a discussion on limitations and future work.

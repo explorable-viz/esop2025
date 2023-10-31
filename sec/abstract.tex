@@ -13,11 +13,13 @@
    dependence graph, and a pair of adjoint operators for forwards and backwards slicing over the graph. We
    show that although the overhead of producing a dependence graph is comparable to that of producing a trace,
    the slicing algorithms run on average much faster than their trace-based counterparts, making them suitable
-   for interactive use. We also show that, extensionally, forward slicing over a graph is simply the De Morgan
-   dual of backward slicing over the opposite graph, leading to an easy implementation of the upper adjoint in
-   terms of the lower. Even this naive implementation is on average faster than the trace-based approach, but
-   we also give a direct implementation of forward slicing over a graph and show that it performs better
-   still. We also compare the graphical approach qualitatively, and conclude that the two-phase approach (graph-building semantics + analyses over the graph) is also much simpler to implement.
+   for interactive use. We also show that, extensionally, forward slicing over a dependence graph is simply
+   the De Morgan dual of backward slicing over the opposite graph, leading to an easy implementation of the
+   upper adjoint in terms of the lower. Even this naive implementation is on average faster than the
+   trace-based approach, but we also give a direct implementation of forward slicing over a graph and show
+   that it performs better still. The two-phase approach (graph-building semantics + analyses over the graph)
+   also significantly reduces the implementation burden on the language developer since the slicing algorithms
+   are language-agnostic and thus only need to be implemented once.
 
    [TODO but we know how this works] Given , we can (with
    some finessing) formulate the “linked outputs” from POPL paper as backward slicing over . This perspective
