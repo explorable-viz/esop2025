@@ -1,9 +1,25 @@
 #!/bin/bash
 set -e
 
+PLOTTER="../fluid/plot_bench.py"
 PDFLATEX="pdflatex -file-line-error -halt-on-error"
 TARGET=${1:-main}
+PYENV=venv
+
 echo Building target \"$TARGET\".
+
+python3 -m venv $PYENV
+source $PYENV/bin/activate
+   echo "Setting up Python environment."
+   pip install -q --disable-pip-version-check -r requirements.txt
+
+   rm -rf Benchmarks
+   mkdir Benchmarks
+   cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
+
+   python3 $PLOTTER -t expensive -b bwd -d fig/performance/expensive-bwd
+   python3 $PLOTTER -t expensive -b fwd -d fig/performance/expensive-fwd
+deactivate
 
 $PDFLATEX $TARGET
 bibtex $TARGET

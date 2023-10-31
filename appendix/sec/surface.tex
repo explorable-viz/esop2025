@@ -1,13 +1,13 @@
 \section{Surface Language}
 
 To allow the user to execute surface programs directly we formalise the evaluation of surface terms in
-\figref{baseline:surface:eval} and the corresponding notion of surface value. Surface values differ from core
+\figref{surface:eval} and the corresponding notion of surface value. Surface values differ from core
 values only in the case of closures, which contain surface expressions other surface values. Later we prove
 that directly evaluating a surface program $s$ and desugaring the resulting value is equivalent to desugaring
 $s$ to a core program and then evaluating, justifying our presentation of the surface semantics.
 
 \begin{lemma}[Determinism]
-   \label{lem:baseline:surface:eval:determinism}
+   \label{lem:surface:eval:determinism}
    If $\gamma, s \evalS v$ and $\gamma, s \evalS v'$ then $v = v'$.
 \end{lemma}
 
@@ -17,8 +17,8 @@ The following relation determines the closures associated with a block of mutual
 \seq{\bind{x}{\mu}}$. (Read $x$ as the function name and $\mu$ as the defining clauses of the function.)
 
 \begin{definition}[Close defs]
-   \label{def:baseline:surface:close-defs}
-   \figref{baseline:surface:eval} defines the \emph{close defs} relation $\closeDefs$.
+   \label{def:surface:close-defs}
+   \figref{surface:eval} defines the \emph{close defs} relation $\closeDefs$.
 \end{definition}
 
 \subsubsection{Piecewise function definitions}
