@@ -7,13 +7,25 @@ sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which cha
 a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a particular set
 of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out
 the specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to
-Boolean lattices, and showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
+a setting where slices have complements and the slices of a particular program or value form a Boolean
+lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
 outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some
-of the same inputs.
+of the same inputs, and proposed this as a framework for understanding the ``brushing and linking'' feature
+commonly used in data visualisation.
 
-However, Galois slicing implementations to date have relied on a sequential execution record, or \emph{trace},
-to compute the two analyses, making the approach unable to exploit the very independence that makes slicing
-useful in the first place and rendering it too slow for interactive applications.
+However, an implementation of Galois slicing, in particular the backwards analysis, efficient enough to
+support this kind of interactive application has proved elusive. To compute the two analyses, implementations
+to date have relied on a sequential execution record taking the form of a big-step or small-step trace. The
+forward analysis uses the trace to ``replay'' the computation, propagating information about resource
+availability from inputs to outputs; the backwards analysis uses the trace to ``rewind'' the computation,
+propagating information about demand from outputs to inputs. This overly sequential approach makes the
+approach unable to exploit the very independence that makes slicing useful in the first place, and moreover
+the backwards analysis needs to make frequent use of a lattice join operation to combine slicing information
+computed along different branches of the computation. Joining closure slices in particular becomes expensive
+because of the contained environments (which in turn contain closures), and these shortcomings make the
+approach prohibitively slow for interactive use.
+
+\todo{To be continued}
 
 \subsection{Contributions}
 
