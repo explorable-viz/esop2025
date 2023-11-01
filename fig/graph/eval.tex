@@ -169,15 +169,13 @@
    \begin{smathpar}
       \inferrule*[right={$\length{\seq{x}} = n$}]
       {
-         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
-         \quad
-         (\forall i \numleq n)
+         \strut
       }
       {
          \gamma, \rho, V
          \closeDefs
          \set{\alpha_i \mapsto V \mid i \numleq n},
-         \set{\seq{\bind{x}{v}}}
+         \set{\annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i} \mid i \numleq n}
       }
    \end{smathpar}
    }
