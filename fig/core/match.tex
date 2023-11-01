@@ -27,9 +27,9 @@
          lab={\ruleName{$\match$-record}}
       ]
       {
-         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+         \exRec{\seq{\bind{y}{v}}^\twoPrime} \subseteq \exRec{\seq{\bind{x}{v}}}
          \\
-         \seq{u} \concat \seq{v}', \kappa
+         \seq{v}^\twoPrime \concat \seq{v}', \kappa
          \match
          \seq{w} \concat \seq{w}', \gamma, e
       }
@@ -44,7 +44,9 @@
       %
       \inferrule*[lab={\ruleName{$\match$-constr}}]
       {
-         \seq{v} \concat \seq{v}', \kappa \match \gamma, e
+         \seq{v} \concat \seq{v}', \kappa
+         \match
+         \seq{w} \concat \seq{w}', \gamma, e
       }
       {
          \annot{\exConstr{c}{\seq{v}}}{\alpha} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
