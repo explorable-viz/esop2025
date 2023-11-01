@@ -1,23 +1,20 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$G, \gamma, \seq{e}, V \evalS G', \seq{v}$}\hfill\textit{where $V \subseteq \V(G)$ and $G \subseteq G'$}%
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS G, \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalS$-seq}},
-         right={$\length{\seq{e}} = n$}
+         lab={\ruleName{$\evalS$-seq}}
       ]
       {
-         G_{i - 1}, \gamma, e_i, V \evalS G_i, v_i
-         \quad
-         (\forall i \numleq n)
+         \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
       }
       {
-         G_0, \gamma, \seq{e}, V \evalS G_{n}, \seq{v}
+         \gamma, \seq{e}, V \evalS \textstyle{\biguplus}\seq{G}, \seq{v}
       }
       %
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$G, \gamma, e, V \evalS G', v$}\hfill\textit{where $V \subseteq \V(G)$ and $G \subseteq G'$}%
+   {\small \flushleft \shadebox{$\gamma, e, V \evalS G, v$}%
    \begin{smathpar}
       \inferrule*[
       lab={\ruleName{$\evalS$-var}}
@@ -26,7 +23,7 @@
          \strut
       }
       {
-         G, \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS G, v
+         \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS \emptyset, v
       }
       %
       \and
