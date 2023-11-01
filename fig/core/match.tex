@@ -34,7 +34,7 @@
          \seq{w} \concat \seq{w}', \gamma, e
       }
       {
-         \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}',
+         \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}^\twoPrime,
          \elimRecord{\seq{y}}{\kappa}
          \match
          \annot{\exRec{\seq{\bind{y}{w}}}}{\alpha} \cons \seq{w}', \gamma, e
@@ -51,8 +51,8 @@
       {
          \annot{\exConstr{c}{\seq{v}}}{\alpha} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
          \match
-         \gamma, e
+         \annot{\exConstr{c}{\seq{w}}}{\alpha} \cons \seq{w}', \gamma, e
       }
    \end{smathpar}}
-\caption{Core semantics: pattern-matching \todo{Unify with figure below}}
+\caption{Core semantics: pattern-matching}
 \end{figure}
