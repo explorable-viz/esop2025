@@ -167,15 +167,19 @@
    {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs G, \gamma'$}
     \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
    \begin{smathpar}
-      \inferrule*[right={$\length{\seq{x}} = n$}]
+      \inferrule*[]
       {
-         \strut
+         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
+         \\
+         G_i = \set{\bind{\alpha_i}{V}}
+         \quad
+         (\forall i \numleq \length{\seq{x}})
       }
       {
          \gamma, \rho, V
          \closeDefs
-         \set{\alpha_i \mapsto V \mid i \numleq n},
-         \set{\annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i} \mid i \numleq n}
+         \textstyle{\bigdisjunion}\seq{G},
+         \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
    }
