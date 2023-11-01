@@ -8,7 +8,7 @@
          \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
       }
       {
-         \gamma, \seq{e}, V \evalS \textstyle{\biguplus}\seq{G}, \seq{v}
+         \gamma, \seq{e}, V \evalS \textstyle{\bigdisjunion}\seq{G}, \seq{v}
       }
       %
       \and
@@ -86,9 +86,9 @@
          \strut
       }
       {
-         G, \gamma, \exFun{\sigma}, V
+         \gamma, \exFun{\sigma}, V
          \evalS
-         G \disjunion \set{\alpha \mapsto V},
+         \set{\bind{\alpha}{V}},
          \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
       }
       %
@@ -99,20 +99,20 @@
          width=3.3in,
       ]
       {
-         G, \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
+         \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
          \\
-         G_1, \gamma, e', V \evalS G_2, v
+         \gamma, e', V \evalS G_2, v
          \\
-         G_2, \gamma_1, \rho, \set{\alpha} \closeDefs G_3, \gamma_2
+         \gamma_1, \rho, \set{\alpha} \closeDefs G_3, \gamma_2
          \\
          v, \sigma \match w, \gamma_3, e
          \\
-         G_3, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, \alpha \cons \V(w) \evalS G', u
+         G_3, \gamma_1 \concat \gamma_2 \concat \gamma_3, e, \alpha \cons \V(w) \evalS G_4, u
       }
       {
-         G, \gamma, \exApp{e}{e'}, V
+         \gamma, \exApp{e}{e'}, V
          \evalS
-         G', u
+         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, v'
       }
       %
       \and
