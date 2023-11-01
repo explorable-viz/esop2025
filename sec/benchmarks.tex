@@ -1,6 +1,7 @@
 \section{Evaluation}
 \label{sec:evaluation}
-All benchmarks were run on a Dell Latitude 5411, with an Intel Core i7-10850H at
+Our approach is implemented as a language called \OurLang. \OurLang compiles to
+Javascript. All benchmarks were run on a Dell Latitude 5411, with an Intel Core i7-10850H at
 2.70GHz and 16Gb of RAM. We ran our benchmarks on Google Chome 118.0.5993.117,
 running Javascript V8 11.8.172.16.
 
@@ -10,6 +11,28 @@ We assess the benefits of our solution in three aspects:
     \item RQ2: How much does slicing performance improve in the graphical approach?
     \item RQ3: How do the equivalent slicing implementations compare to each other?
 \end{itemize}
+
+We have a selection of 67 benchmarks, ranging from toy programs to more complex
+algorithms from computer science literature. Since we have written our own
+language, we needed to construct our own benchmarks.
+
+\subsection{Overhead}
+
+In both the trace-based and graphical approaches, we construct an auxiliary data
+structure during evaluation. In the trace-based approach, we construct what is
+in essence a simplified version of the AST of the program, only representing
+things such as the branch of a pattern match or conditional expression which
+was taken. 
+
+In contrast, the graphical evaluation approach works by annotating values with
+vertices, and building sets of neighbors. We collect the sets of vertices and
+edges produced at the end of evaluation, and only then construct the actual
+representation of the graphs. 
+
+\subsection{Performance}
+
+
+\subsection{Old}
 
 The practical motivation for representing dependency structures as a graph, informally,
 is that computing a slice is much more performant in the graphical setting.
@@ -112,14 +135,6 @@ discussion of performance.
 \textbf{TODO:} Further discuss the various implementations. May need to wait for
 Minh to finish his work in section 4 first, so we can discuss the various 
 operators, and which parts of the code we 
-
-\subsection{Program Evaluation}
-In both the trace-based and graphical approaches, we construct an auxiliary data
-structure during evaluation. We observe that evaluating the program and constructing
-a graph does incur an increased cost. In our experiments, the mean time taken to
-evaluate in the graphical setting is approximately double that of the trace-based
-backend. 
-
 
 \subsection{Backward Slicing}
 Despite the increased overhead in constructing the dynamic dependence graph for
