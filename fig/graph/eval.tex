@@ -37,7 +37,7 @@
       {
          \gamma, \annInt{n}{\alpha}, V
          \evalS
-         \set{\alpha' \mapsto \alpha \cons V},
+         \set{\bind{\alpha'}{\alpha \cons V}},
          \annInt{n}{\alpha'}
       }
       %
@@ -45,12 +45,12 @@
       %
       \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
-         G, \gamma, \seq{e}, V \evalS G', \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
       }
       {
-         G, \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
+         \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalS
-         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
@@ -60,22 +60,22 @@
          lab={\ruleName{$\evalS$-project}}
       ]
       {
-         G, \gamma, e, V \evalS G', \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
+         \gamma, e, V \evalS G, \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
       }
       {
-         G, \gamma, \exRecProj{e}{y}, V \evalS G', u
+         \gamma, \exRecProj{e}{y}, V \evalS G, u
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\evalS$-constr}}]
       {
-         G, \gamma, \seq{e}, V \evalS G', \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
       }
       {
-         G, \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
+         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalS
-         G' \disjunion \set{\alpha' \mapsto \alpha \cons V},
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
          \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
