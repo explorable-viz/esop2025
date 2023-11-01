@@ -169,16 +169,14 @@
    \begin{smathpar}
       \inferrule*[right={$\length{\seq{x}} = n$}]
       {
-         \rho = \set{\seq{\bind{x}{\sigma}}}
-         \\
-         v_i = \annClosure{\gamma}{\rho}{\sigma_i}{\alpha_i}
+         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
          \quad
          (\forall i \numleq n)
       }
       {
-         G, \gamma, \rho, V
+         \gamma, \rho, V
          \closeDefs
-         G \disjunion \set{\alpha_i \mapsto V \mid i \numleq n},
+         \set{\alpha_i \mapsto V \mid i \numleq n},
          \set{\seq{\bind{x}{v}}}
       }
    \end{smathpar}
