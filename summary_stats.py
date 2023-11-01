@@ -9,22 +9,18 @@ def decompose_benchmarks():
     desugar = benchmarks.filter(like='desugar', axis='index')
     misc = benchmarks.drop(pd.concat([slicing, graphics, desugar]).index, inplace=False)
     print("All Benchmarks: ")
-    print (slicing[['Trace-Eval', 'Graph-Eval']].to_string())
-    benchspeedup = speedups(slicing)[['Graph-Nodes','Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
-    bigbenches = benchspeedup[benchspeedup['Graph-Nodes'] < 1000]
-    print(benchspeedup.to_string())
-    print(benchspeedup.mean())
-    print(benchspeedup.std(ddof=0))
-    print(benchspeedup.skew())
-
-    bigbenches.plot(x='Graph-Nodes', y='Eval-Speedup',style='o')
-    plt.show()
-    # for test_set in [slicing, graphics, desugar, misc]:
-    #     spedup = speedups(test_set)[['Eval-Speedup', 'Bwd-Speedup', 'Fwd-Speedup']]
-    #     print(spedup)
+    eval_ratios = eval_speedup(benchmarks)
+    print(eval_ratios.to_string())
+    print(eval_ratios.mean())
     #     print(spedup.mean())
 
-
+def eval_speedup(df):
+    df['Eval-Speedup'] = df['Trace-Eval'] / df['Graph-Eval']
+    out = df[['Trace-Eval', 'Graph-Eval', 'Eval-Speedup']]
+    tex_file = open('fig/performance/eval-speedup.tex', 'w')
+    tex_file.write(out.to_latex(float_format="%.2f", caption = "Slicing test-case evaluation times and average speedup"))
+    tex_file.close()
+    return out
 
 def speedups(df):
     df['Eval-Speedup'] = df['Trace-Eval'] / df['Graph-Eval']

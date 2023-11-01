@@ -27,10 +27,17 @@ was taken.
 
 In contrast, the graphical evaluation approach works by annotating values with
 vertices, and building sets of neighbors. We collect the sets of vertices and
-edges produced at the end of evaluation, and only then construct the actual
-representation of the graphs. 
+edges produced at the end of evaluation, and only afterward construct the actual
+representation of the graph. 
 
-\subsection{Performance}
+We can see in Table \ref{table:eval-speedups} that across our test-cases, trace
+based evaluation takes about $54\%$ of the time that graph evaluation takes. We
+believe that this is an acceptable level of performance loss, given the gains we 
+make in slicing performance, which we discuss next. 
+
+{\tiny\input{fig/performance/eval-speedup.tex}}
+
+\subsection{Slicing Performance}
 
 
 \subsection{Old}
