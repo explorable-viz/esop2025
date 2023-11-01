@@ -1,52 +1,53 @@
 \begin{figure}
-    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \seq{w}, \gamma, e$}\hfill
-    \begin{smathpar}
-       \inferrule*[
-          lab={\ruleName{$\match$-done}}
-       ]
-       {
-          \strut
-       }
-       {
-          \seqEmpty, e \match \seqEmpty, \envEmpty, e
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\match$-var}}]
-       {
-          \seq{v}, \kappa \match \gamma, e
-       }
-       {
-          v \cons \seq{v}, \elimVar{x}{\kappa} \match \set{\bind{x}{v}} \disjunion \gamma, e
-       }
-       \\
-       \inferrule*[
-          lab={\ruleName{$\match$-record}}
-       ]
-       {
-         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
-         \\
-         \seq{u} \concat \seq{v}', \kappa \match \gamma, e
-       }
-       {
-          \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
-          \elimRecord{\seq{y}}{\kappa}
-          \match
-          \gamma, e
-       }
-       %
-       \and
-       %
-       \inferrule*[lab={\ruleName{$\match$-constr}}]
-       {
-          \seq{v} \concat \seq{v}', \kappa \match \gamma, e
-       }
-       {
-          \exConstr{c}{\seq{v}} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
-          \match
-          \gamma, e
-       }
-    \end{smathpar}}
- \caption{Core semantics: pattern-matching \todo{Unify with figure below}}
- \end{figure}
+   {\small \flushleft \shadebox{$\seq{v}, \kappa \match \seq{w}, \gamma, e$}\hfill
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\match$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         \seqEmpty, e \match \seqEmpty, \envEmpty, e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\match$-var}}]
+      {
+         \seq{v}, \kappa \match \seq{w}, \gamma, e
+      }
+      {
+         v \cons \seq{v}, \elimVar{x}{\kappa}
+         \match \exVar{x} \cons \seq{w}, \set{\bind{x}{v}} \disjunion \gamma, e
+      }
+      \\
+      \inferrule*[
+         lab={\ruleName{$\match$-record}}
+      ]
+      {
+      \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+      \\
+      \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+      }
+      {
+         \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
+         \elimRecord{\seq{y}}{\kappa}
+         \match
+         \gamma, e
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\match$-constr}}]
+      {
+         \seq{v} \concat \seq{v}', \kappa \match \gamma, e
+      }
+      {
+         \exConstr{c}{\seq{v}} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
+         \match
+         \gamma, e
+      }
+   \end{smathpar}}
+\caption{Core semantics: pattern-matching \todo{Unify with figure below}}
+\end{figure}
