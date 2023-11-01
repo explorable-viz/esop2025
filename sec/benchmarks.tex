@@ -14,8 +14,9 @@ We assess the benefits of our solution in three aspects:
 
 We have a selection of 67 benchmarks, ranging from toy programs to more complex
 algorithms from computer science literature. Since we have written our own
-language, we needed to construct our own benchmarks.
-
+language, we needed to construct our own benchmarks. All times presented in this
+section are measured in milliseconds. We present the full suite of benchmarks in 
+Table \ref{table:all-benches}.
 \subsection{Overhead}
 
 In both the trace-based and graphical approaches, we construct an auxiliary data
@@ -58,57 +59,6 @@ We shall see that our graphical implementation pushes slicing queries into the b
 instantaneous user feedback. In terms of designing interactive systems, we argue that the
 increased cost in constructing the dependency graph is well worth it, given that it
 facilitates such a stark increase in performance of slicing queries.
-
-\subsection{Implementation}
-We implement our approach in a language we call Fluid. Fluid comes with both an
-implementation of the trace, and graphical approach. Both implementations are
-factored through a Galois Connection abstraction. One important subtlety to bear
-in mind is that a given evaluation induces a family of Galois connections between
-inputs and outputs of a computation.
-
-In the trace-based approach, this connection is intimately tied to the structure
-of the programs AST. The trace itself is a recapitulation of the exact structure
-of the program. Practically, this means that following information through the
-Galois connection is effectively the same as evaluating the program in either
-direction. 
-
-\begin{figure}[h]
-\begin{lstlisting}[language=Purescript]
-newtype GaloisConnection a b = GC { fwd :: a -> b, bwd :: b -> a }
-
-deMorgan :: forall a b. BooleanLattice a => BooleanLattice b => Endo (a -> b)
-deMorgan = (neg >>> _) >>> (_ >>> neg)
-
-dual :: forall a b. BooleanLattice a => BooleanLattice b => GaloisConnection a b -> GaloisConnection b a
-dual (GC { fwd, bwd }) = GC { fwd: deMorgan bwd, bwd: deMorgan fwd }
-\end{lstlisting}
-\caption{Galois connection abstraction}
-\label{fig:galois-abstraction}
-\end{figure}
-
-In \figref{galois-abstraction}, we see how the introduction of the direct
-abstraction allows us to define De Morgan duals in a simple manner, simply
-by flipping the position of the pair of functions, and composing them with
-negation. The graphical approach also provides another group of equivalent ways
-to implement these operators, namely the usage of the opposite graph.
-\figref{bwd-fwd-op} demonstrates one of the two equivalent methods for defining
-the De Morgan Dual using the opposite graph. We can also provide a definition
-which uses the \textit{deMorgan} function defined in \figref{galois-abstraction}
-
-\begin{figure}
-\lstinputlisting[language=Purescript,mathescape]{listings/bwd-fwd-duals.purs}
-\caption{Duals on the opposite graph}
-\label{fig:bwd-fwd-op}
-\end{figure}
-
-\begin{figure}[h]
-\lstinputlisting[language=Purescript,mathescape]{listings/galois-trace.purs}
-\caption{Implementation of Galois Connection via tracing}
-\end{figure}
-
-\textbf{TODO:} include listing which demonstrates graphical GC, and how we can
-define the De Morgan Dual using the deMorgan function. Blocking on the 
-factoring of a few things through the GaloisConnection abstraction
 
 \subsection{Testing Methodology}
 We describe here the specifics of each individual benchmark, before moving on to
@@ -198,3 +148,6 @@ convolution.
 
 \textbf{TODO:} I don't think anything I've said here is necessarily wrong,
 but definitely needs further elucidation of the key points, and several rewrites.
+
+{\tiny
+\input{fig/performance/all-benches.tex}}
