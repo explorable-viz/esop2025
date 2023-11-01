@@ -1,113 +1,95 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\gamma, \seq{e} \evalSugS \seq{v}$}%
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS G, \seq{v}$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-seq}}
+         lab={\ruleName{$\evalS$-seq}}
       ]
       {
-         \gamma, e_i \evalSugS v_i
-         \quad
-         (\forall i \numleq \length{\seq{e}})
+         \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
       }
       {
-         \gamma, \seq{e} \evalSugS \seq{v}
+         \gamma, \seq{e}, V \evalS \textstyle{\bigdisjunion}\seq{G}, \seq{v}
       }
+      %
+      \and
+      %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$\gamma, e \evalSugS v$}%
+   {\small \flushleft \shadebox{$\gamma, e, V \evalS G, v$}%
    \begin{smathpar}
       \inferrule*[
-      lab={\ruleName{$\evalSugS$-var}}
+      lab={\ruleName{$\evalS$-var}}
       ]
       {
          \strut
       }
       {
-         \gamma \cons (\bind{x}{v}), \exVar{x} \evalSugS v
+         \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS \emptyset, v
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-int}}
+         lab={\ruleName{$\evalS$-int}}
       ]
       {
          \strut
       }
       {
-         \gamma, \exInt{n}
-         \evalSugS
-         \exInt{n}
+         \gamma, \annInt{n}{\alpha}, V
+         \evalS
+         \set{\bind{\alpha'}{\alpha \cons V}},
+         \annInt{n}{\alpha'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalSugS$-record}}]
+      \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
-         \gamma, \seq{e} \evalSugS \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
       }
       {
-         \gamma, \exRec{\seq{\bind{x}{e}}}
-         \evalSugS
-         \exRec{\seq{\bind{x}{v}}}
+         \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
+         \evalS
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-project}}
+         lab={\ruleName{$\evalS$-project}}
       ]
       {
-         \gamma, e \evalSugS \exRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}
+         \gamma, e, V \evalS G, \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
       }
       {
-         \gamma, \exRecProj{e}{y} \evalSugS u
+         \gamma, \exRecProj{e}{y}, V \evalS G, u
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalSugS$-constr}}]
+      \inferrule*[lab={\ruleName{$\evalS$-constr}}]
       {
-         \gamma, \seq{e} \evalSugS \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}
-         \evalSugS
-         \exConstr{c}{\seq{v}}
+         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
+         \evalS
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalSugS$-lambda}}]
+      \inferrule*[lab={\ruleName{$\evalS$-lambda}}]
       {
          \strut
       }
       {
-         \gamma, \exFun{\sigma}
-         \evalSugS
-         \exClosure{\gamma}{\envEmpty}{\sigma}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalSugS$-app}},
-         width=3.3in,
-      ]
-      {
-         \gamma, e \evalS \exClosure{\gamma_1}{\rho}{\sigma}
-         \\
-         \gamma, e' \evalS v
-         \\
-         \gamma_1, \rho \closeDefs \gamma_2
-         \\
-         v, \sigma \match \gamma_3, e^\dag
-         \\
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\dag \evalSugS u
-      }
-      {
-         \gamma, \exApp{e}{e'}
-         \evalSugS
-         u
+         \gamma, \exFun{\sigma}, V
+         \evalS
+         \set{\bind{\alpha}{V}},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
       }
       %
       \and
@@ -116,56 +98,91 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         \gamma, \seq{e} \evalSugS \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
          \\
-         \interpret{f}(\seq{v}) = u
+         \interpret{f}(\seq{v}) = (G', u)
       }
       {
-         \gamma, \exForeignApp{f}{\seq{e}}
-         \evalSugS
-         u
+         \gamma, \exForeignApp{f}{\seq{e}}, V
+         \evalS
+         G \disjunion G', u
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-let}}
+         lab={\ruleName{$\evalS$-app}},
+         width=4in,
       ]
       {
-         \gamma, e \evalSugS v
+         \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
          \\
-         \gamma \cons (\bind{x}{v}), e' \evalSugS v'
+         \gamma, e', V \evalS G_2, v
+         \\
+         \gamma_1, \rho, \set{\alpha} \closeDefs G_3, \gamma_2
+         \\
+         v, \sigma \match w, \gamma_3, e
+         \\
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e, \alpha \cons \V(w) \evalS G_4, u
       }
       {
-         \gamma, \exLet{x}{e}{e'}
-         \evalSugS
-         v'
+         \gamma, \exApp{e}{e'}, V
+         \evalS
+         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, v'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalSugS$-let-rec}}
+         lab={\ruleName{$\evalS$-let}}
       ]
       {
-         \gamma, \set{\seq{\bind{x}{\sigma}}} \closeDefs \gamma'
+         \gamma, e, V \evalS G, v
          \\
-         \gamma \concat \gamma', e \evalSugS v
+         \gamma \cons (\bind{x}{v}), e', V \evalS G', v'
       }
       {
-         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}
-         \evalSugS
-         v
+         \gamma, \exLet{x}{e}{e'}, V
+         \evalS
+         G \disjunion G', v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-let-rec}}
+      ]
+      {
+         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G, \gamma'
+         \\
+         \gamma \concat \gamma', e, V \evalS G', v
+      }
+      {
+         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
+         \evalS
+         G \disjunion G', v
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \rho \closeDefs \gamma'$}\hfill\textit{ with }$\dom{\rho} = \dom{\gamma}$%
-   \begin{salign}
-      \gamma, \rho
-      &\closeDefs
-      \set{\bind{x}{\exClosure{\gamma}{\rho}{\rho(x)}} \mid x \in \dom{\rho}}
-   \end{salign}
+   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs G, \gamma'$}
+    \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
+         \\
+         G_i = \set{\bind{\alpha_i}{V}}
+         \quad
+         (\forall i \numleq \length{\seq{x}})
+      }
+      {
+         \gamma, \rho, V
+         \closeDefs
+         \textstyle{\bigdisjunion}\seq{G},
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
    }
-   \caption{Operational semantics: evaluation}
+   \caption{Graph semantics: evaluation}
    \label{fig:core:eval}
 \end{figure}
