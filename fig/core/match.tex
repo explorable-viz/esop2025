@@ -19,22 +19,25 @@
       }
       {
          v \cons \seq{v}, \elimVar{x}{\kappa}
-         \match \exVar{x} \cons \seq{w}, \set{\bind{x}{v}} \disjunion \gamma, e
+         \match
+         \exVar{x} \cons \seq{w}, \set{\bind{x}{v}} \disjunion \gamma, e
       }
       \\
       \inferrule*[
          lab={\ruleName{$\match$-record}}
       ]
       {
-      \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
-      \\
-      \seq{u} \concat \seq{v}', \kappa \match \gamma, e
+         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+         \\
+         \seq{u} \concat \seq{v}', \kappa
+         \match
+         \seq{w} \concat \seq{w}', \gamma, e
       }
       {
-         \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
+         \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}',
          \elimRecord{\seq{y}}{\kappa}
          \match
-         \gamma, e
+         \annot{\exRec{\seq{\bind{y}{w}}}}{\alpha} \cons \seq{w}', \gamma, e
       }
       %
       \and
