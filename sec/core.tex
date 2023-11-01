@@ -27,10 +27,21 @@ $\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
 $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_i}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \length{\seq{A}}$. Although saturated calls are technically part of the languageœ, user programs by convention use the first-class representation.
 
+\subsection{Graphical syntax}
+
+\begin{definition}[Vertices of a term]
+\label{def:core:vertices}
+Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in $e$.
+\end{definition}
+
+\noindent \defref{core:vertices} extends to eliminators and values; with $\V(\sigma)$ and $\V(v)$ also
+including any vertices appearing inside expressions embedded in $\sigma$ or $v$.
+
 \subsection{Continuations and eliminators}
 
-A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like
-objects which can serve as a plausible desugaring target for surface-language pattern-matching constructs. An eliminator $\sigma$ is \textit{partial} if it is not defined for every element of its domain.
+A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like objects
+which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
+(\citet{peytonjones2021} present a similar idea in a technical report.)
 
 \input{fig/core/syntax}
 \input{fig/core/match}
