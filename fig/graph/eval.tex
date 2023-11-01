@@ -121,14 +121,14 @@
          lab={\ruleName{$\evalS$-foreign}}
       ]
       {
-         G, \gamma, \seq{e}, V \evalS G_1, \seq{v}
+         \gamma, \seq{e}, V \evalS G, \seq{v}
          \\
-         \interpret{f}(G_1, \seq{v}) = (G', u)
+         \interpret{f}(\seq{v}) = (G', u)
       }
       {
-         G, \gamma, \exForeignApp{f}{\seq{e}}, V
+         \gamma, \exForeignApp{f}{\seq{e}}, V
          \evalS
-         G', u
+         G \disjunion G', u
       }
       %
       \and
@@ -137,14 +137,14 @@
          lab={\ruleName{$\evalS$-let}}
       ]
       {
-         G, \gamma, e, V \evalS G_1, v
+         \gamma, e, V \evalS G, v
          \\
-         G_1, \gamma \cons (\bind{x}{v}), e', V \evalS G', v'
+         \gamma \cons (\bind{x}{v}), e', V \evalS G', v'
       }
       {
-         G, \gamma, \exLet{x}{e}{e'}, V
+         \gamma, \exLet{x}{e}{e'}, V
          \evalS
-         G', v'
+         G \disjunion G', v'
       }
       %
       \and
@@ -153,14 +153,14 @@
          lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
-         G, \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G_1, \gamma'
+         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G, \gamma'
          \\
-         G_1, \gamma \concat \gamma', e, V \evalS G', v
+         \gamma \concat \gamma', e, V \evalS G', v
       }
       {
-         G, \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
+         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
          \evalS
-         G', v
+         G \disjunion G', v
       }
    \end{smathpar}}
    \\[2mm]
