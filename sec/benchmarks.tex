@@ -17,6 +17,7 @@ algorithms from computer science literature. Since we have written our own
 language, we needed to construct our own benchmarks. All times presented in this
 section are measured in milliseconds. We present the full suite of benchmarks in 
 Table \ref{table:all-benches}.
+\todo{Need to further describe the range of benchmarks, and what they represent}
 \subsection{Overhead}
 
 In both the trace-based and graphical approaches, we construct an auxiliary data
@@ -27,11 +28,67 @@ was taken.
 
 In contrast, the graphical evaluation approach works by annotating values with
 vertices, and building sets of neighbors. We collect the sets of vertices and
-edges produced at the end of evaluation, and only then construct the actual
-representation of the graphs. 
+edges produced at the end of evaluation, and only afterward construct the actual
+representation of the graph. 
 
-\subsection{Performance}
+We can see in Table \ref{table:eval-speedups} that across our test-cases, trace
+based evaluation takes about $54\%$ of the time that graph evaluation takes. We
+believe that this is an acceptable level of performance loss, given the gains we 
+make in slicing performance, which we discuss next. 
+\todo{I need to move/reformat the table because it currently takes up a whole page}
+{\tiny\input{fig/performance/eval-speedup.tex}}
 
+\subsection{Slicing Performance}
+The main benefit of representing the program's dependence structure on a graph
+is the improvements to the speed of program slicing. We have already established
+in Section \ref{sec:graph} that slicing in the graphical setting is much simplified
+algorithmically. Since we are targeting interactive systems, we therefore feel
+the gain in slicing speed is worth the loss of performance in evaluation.
+
+Our metric for the improvement to slicing speed is based on a well-known set of
+criteria proposed in \cite{Nielsen93}, which we paraphrase here:
+
+\begin{itemize}
+    \item \textbf{0.1 seconds} or less feels instantaneous to the user
+    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels
+    interrupted
+    \item \textbf{10.0 seconds} is the limit for keeping the users attention. Anything longer
+    than this and the user will shift their focus to other tasks
+\end{itemize}
+
+As we report results in measurements of milliseconds, then slicing benchmark results
+of 100 or less constitute near-instantaneous interaction with the system. 
+
+In Table \ref{table:slicing-speedups}, we see that in general we do reach
+the performance guideline specified by Nielsen. Even in our worst cases - the
+benchmarks prefixed with \textit{graphics/} - we do not ever tip over the one
+second mark. The performance on those cases is still worse than other benchmarks
+but still within an acceptable range. 
+
+One important point of discussion is the range in slicing speedups we observe.
+For example, in the cases prefixed \textit{slicing/convolution} we implement
+some classic convolutional filters from computer vision literature, an edge 
+detection filter, and an embossing filter. We see that these cases produce the
+most impressive speedup numbers, with forward slicing speeding up by between
+160 and 380 times, and backward slicing speeding up between 100 and 120 times.
+
+Contrast this with the benchmark case \textit{slicing/dtw/compute-dtw}, the
+example we presented earlier in the paper. This is one of the largest programs
+we have tested, and we see that the speedup in both forward and backward slicing
+is approximately a factor of eight.
+
+We believe that the disparity in performance improvements is due to an inherent
+data-parallelism of certain examples. In an image convolution, there are a large
+number of cells in an output image which do not share any cells of the input.
+
+Contrast this with the Dynamic Time Warp algorithm, which is inherently more
+sequential. We therefore propose that our method is more suited to the efficient
+program slicing of algorithms - or steps of algorithms - which exhibit a high
+degree of data-independence. 
+\todo{sure if this should come before or 
+after the bit where we discuss the competing implementations we need.}
+
+{\tiny\input{fig/performance/slicing-speedup.tex}}
 
 \subsection{Old}
 
@@ -44,16 +101,6 @@ of slicing is improved by several orders of magnitude. We shall see that
 construction of the graph does however introduce a fairly significant performance
 overhead in contrast to constructing a sequential trace, however this cost vanishes when
 one computes multiple slicing queries over a single computation.
-
-When designing interactive applications, the time taken to respond to user input is
-crucial. Nielsen (1994) suggests the following guidelines:
-\begin{itemize}
-    \item \textbf{0.1 seconds} or less feels instantaneous to the user
-    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels
-    interrupted
-    \item \textbf{10.0 seconds} is the limit for keeping the users attention. Anything longer
-    than this and the user will shift their focus to other tasks
-\end{itemize}
 
 We shall see that our graphical implementation pushes slicing queries into the bracket of
 instantaneous user feedback. In terms of designing interactive systems, we argue that the
