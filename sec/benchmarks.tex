@@ -97,9 +97,14 @@ implement equivalent operators. As part of our testing, we compared equivalent
 implementations.
 
 First, we considered implementing forward slicing as the De Morgan dual of backward
-slicing on the opposite graph. This is identified in our benchmarks as \textbf{Naive-Fwd}.
-We also implemented the more direct algorithm described in \secref{graph}.
-
+slicing on the opposite graph. This is identified in our benchmarks as \NaiveFwd.
+We also implemented the more direct algorithm described in \secref{graph}, which
+is what we marked as \GraphFwd. We also implement twin implementations of the 
+duals of slicing. One (pair of) implementations, that of complementing, running the slicing
+operation, then complementing again, is denoted as \GraphBwdCmp, and \GraphFwdCmp,
+for backward and forward slicing respectively. The implementations using the
+opposite slicing procedure on the opposite graph are denoted as \GraphBwdOp,
+and \GraphFwdOp.
 \subsection{Old}
 
 The practical motivation for representing dependency structures as a graph, informally,
@@ -121,21 +126,21 @@ facilitates such a stark increase in performance of slicing queries.
 We describe here the specifics of each individual benchmark, before moving on to
 a discussion of the results. For performance measurements of the trace-based
 approach, we summarize evaluation time, and the times taken for forward and 
-backward slicing, as \textbf{Trace-Eval},\textbf{Trace-Fwd}, and \textbf{Trace-Bwd}.
+backward slicing, as \TraceEval,\TraceFwd, and \TraceBwd.
     
 For benchmarking the graphical system, we must be careful to define the individual
 performance tests. For a given test-case, we first run - and time - evaluating
-to a graph in \textbf{Graph-Eval}. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
+to a graph in \GraphEval. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
 where $\mathcal{B}$ denotes a distinguished set of output vertices, and $\mathcal{A}$
 a distinguished set of inputs. We can then define the individual benchmarks in
 terms of the operators we defined in \ref{sec:graph}. Since the operators we
 defined in the prior section have multiple equivalent definitions, we take care
 to delineate between the operator, and the implementation of that operator we are testing.
 
-\textbf{Graph-Bwd} refers to running the backward slicing procedure over a fixed
+\GraphBwd refers to running the backward slicing procedure over a fixed
 selection. We use this to compute a relevant input selection as we have described.
-The input selection we compute during \textbf{Graph-Bwd} is the selection we then
-feed into the forward slicing procedure which we time as part of \textbf{Graph-Fwd}.
+The input selection we compute during \GraphBwd  is the selection we then
+feed into the forward slicing procedure which we time as part of \GraphFwd.
 This is also where we validate round-tripping, albeit this is not relevant to the 
 discussion of performance.
 
