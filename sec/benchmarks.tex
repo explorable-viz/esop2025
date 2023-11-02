@@ -57,10 +57,39 @@ criteria proposed in \cite{Nielsen93}, which we paraphrase here:
 \end{itemize}
 
 As we report results in measurements of milliseconds, then slicing benchmark results
-of 100 or less constitute near-instantaneous interaction with the system. We routinely
-hit this number, as seen in Table X
-\todo{Include table for slicing numbers, not sure if this should come before or 
+of 100 or less constitute near-instantaneous interaction with the system. 
+
+In Table \ref{table:slicing-speedups}, we see that in general we do reach
+the performance guideline specified by Nielsen. Even in our worst cases - the
+benchmarks prefixed with \textit{graphics/} - we do not ever tip over the one
+second mark. The performance on those cases is still worse than other benchmarks
+but still within an acceptable range. 
+
+One important point of discussion is the range in slicing speedups we observe.
+For example, in the cases prefixed \textit{slicing/convolution} we implement
+some classic convolutional filters from computer vision literature, an edge 
+detection filter, and an embossing filter. We see that these cases produce the
+most impressive speedup numbers, with forward slicing speeding up by between
+160 and 380 times, and backward slicing speeding up between 100 and 120 times.
+
+Contrast this with the benchmark case \textit{slicing/dtw/compute-dtw}, the
+example we presented earlier in the paper. This is one of the largest programs
+we have tested, and we see that the speedup in both forward and backward slicing
+is approximately a factor of eight.
+
+We believe that the disparity in performance improvements is due to an inherent
+data-parallelism of certain examples. In an image convolution, there are a large
+number of cells in an output image which do not share any cells of the input.
+
+Contrast this with the Dynamic Time Warp algorithm, which is inherently more
+sequential. We therefore propose that our method is more suited to the efficient
+program slicing of algorithms - or steps of algorithms - which exhibit a high
+degree of data-independence. 
+\todo{sure if this should come before or 
 after the bit where we discuss the competing implementations we need.}
+
+{\tiny\input{fig/performance/slicing-speedup.tex}}
+
 \subsection{Old}
 
 The practical motivation for representing dependency structures as a graph, informally,

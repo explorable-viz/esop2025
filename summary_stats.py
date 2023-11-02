@@ -12,15 +12,25 @@ def decompose_benchmarks():
     eval_ratios = eval_speedup(benchmarks)
     print(eval_ratios.to_string())
     print(eval_ratios.mean())
+    slicing_times(benchmarks)
     #     print(spedup.mean())
 
 def eval_speedup(df):
     df['Eval-Speedup'] = df['Trace-Eval'] / df['Graph-Eval']
     out = df[['Trace-Eval', 'Graph-Eval', 'Eval-Speedup']]
     tex_file = open('fig/performance/eval-speedup.tex', 'w')
-    tex_file.write(out.to_latex(float_format="%.2f", caption = "Slicing test-case evaluation times and average speedup", label='table:eval-speedups'))
+    tex_file.write(out.to_latex(float_format="%.2f", caption = "Slicing test-case evaluation times and average speedup", label='table:eval-speedups', longtable=True))
     tex_file.close()
     return out
+
+def slicing_times(df):
+    df['Bwd-Speedup'] = df['Trace-Bwd'] / df['Graph-Bwd']
+    df['Fwd-Speedup'] = df['Trace-Fwd'] / df['Graph-Fwd']
+    out = df[['Trace-Fwd','Graph-Fwd','Fwd-Speedup','Trace-Bwd','Graph-Bwd','Bwd-Speedup']]
+    tex_file = open('fig/performance/slicing-speedup.tex', 'w')
+    tex_file.write(out.to_latex(float_format="%.2f", caption="Slicing times and average speedups", label='table:slicing-speedups', longtable=True))
+    return out
+
 
 def speedups(df):
     df['Eval-Speedup'] = df['Trace-Eval'] / df['Graph-Eval']
