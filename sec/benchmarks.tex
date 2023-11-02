@@ -5,45 +5,31 @@ Javascript. All benchmarks were run on a Dell Latitude 5411, with an Intel Core 
 2.70GHz and 16Gb of RAM. We ran our benchmarks on Google Chome 118.0.5993.117,
 running Javascript V8 11.8.172.16.
 
-We assess the benefits of our solution in three aspects:
+We assess the benefits of our solution by nswering the following three research questions:
+%in three aspects:
 \begin{itemize}
-    \item RQ1: How much overhead does the construction of the graph introduce?
-    \item RQ2: How much does slicing performance improve in the graphical approach?
+    \item RQ1: How much does slicing performance improve in the graphical approach?
+    \item RQ2: How much overhead does the construction of the graph introduce?
     \item RQ3: How do the equivalent slicing implementations compare to each other?
 \end{itemize}
 
+\subsection{Benchmarks} \label{sec:benchmarks}
 We have a selection of 67 benchmarks, ranging from toy programs to more complex
-algorithms from computer science literature. Since we have written our own
-language, we needed to construct our own benchmarks. All times presented in this
+algorithms from computer science literature, \todo{which we manually translated to Fluid?}.
+%Since we have written our own language, we needed to construct our own benchmarks.
+All the times presented in this
 section are measured in milliseconds. We present the full suite of benchmarks in 
 Table \ref{table:all-benches}.
 \todo{Need to further describe the range of benchmarks, and what they represent}
-\subsection{Overhead}
 
-In both the trace-based and graphical approaches, we construct an auxiliary data
-structure during evaluation. In the trace-based approach, we construct what is
-in essence a simplified version of the AST of the program, only representing
-things such as the branch of a pattern match or conditional expression which
-was taken. 
-
-In contrast, the graphical evaluation approach works by annotating values with
-vertices, and building sets of neighbors. We collect the sets of vertices and
-edges produced at the end of evaluation, and only afterward construct the actual
-representation of the graph. 
-
-We can see in Table \ref{table:eval-speedups} that across our test-cases, trace
-based evaluation takes about $54\%$ of the time that graph evaluation takes. We
-believe that this is an acceptable level of performance loss, given the gains we 
-make in slicing performance, which we discuss next. 
-\todo{I need to move/reformat the table because it currently takes up a whole page}
-{\tiny\input{fig/performance/eval-speedup.tex}}
-
-\subsection{Slicing Performance}
+\subsection{RQ1: How much does slicing performance improve in the graphical approach?}
+%\subsection{Slicing Performance}
 The main benefit of representing the program's dependence structure on a graph
 is the improvements to the speed of program slicing. We have already established
 in Section \ref{sec:graph} that slicing in the graphical setting is much simplified
 algorithmically. Since we are targeting interactive systems, we therefore feel
 the gain in slicing speed is worth the loss of performance in evaluation.
+\todo{performance in evaluation?}
 
 Our metric for the improvement to slicing speed is based on a well-known set of
 criteria proposed in \cite{Nielsen93}, which we paraphrase here:
@@ -66,6 +52,7 @@ second mark. The performance on those cases is still worse than other benchmarks
 but still within an acceptable range. 
 
 One important point of discussion is the range in slicing speedups we observe.
+\todo{This description of some of the benchmarks needs to go to sec~\ref{sec:benchmarks}.}
 For example, in the cases prefixed \textit{slicing/convolution} we implement
 some classic convolutional filters from computer vision literature, an edge 
 detection filter, and an embossing filter. We see that these cases produce the
@@ -90,7 +77,29 @@ after the bit where we discuss the competing implementations we need.}
 
 {\tiny\input{fig/performance/slicing-speedup.tex}}
 
-\subsection{Equivalent Implementations}
+\subsection{RQ2: How much overhead does the construction of the graph introduce?}
+%\subsection{Overhead}
+
+In both the trace-based and graphical approaches, we construct an auxiliary data
+structure during evaluation. In the trace-based approach, we construct what is
+in essence a simplified version of the AST of the program, only representing
+things such as the branch of a pattern match or conditional expression which
+was taken. 
+
+In contrast, the graphical evaluation approach works by annotating values with
+vertices, and building sets of neighbors. We collect the sets of vertices and
+edges produced at the end of evaluation, and only afterward construct the actual
+representation of the graph. 
+
+We can see in Table \ref{table:eval-speedups} that across our test-cases, trace
+based evaluation takes about $54\%$ of the time that graph evaluation takes. We
+believe that this is an acceptable level of performance loss, given the gains we 
+make in slicing performance, which we discuss next. 
+\todo{I need to move/reformat the table because it currently takes up a whole page}
+{\tiny\input{fig/performance/eval-speedup.tex}}
+
+\subsection{RQ3: How do the equivalent slicing implementations compare to each other?}
+%\subsection{Equivalent Implementations}
 As we have discussed earlier, if one is careful about the definition of inputs
 and outputs on a given Dynamic Dependence Graph, then we have multiple ways to
 implement equivalent operators. As part of our testing, we compared equivalent
