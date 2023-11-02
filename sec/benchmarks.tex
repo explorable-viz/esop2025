@@ -102,9 +102,15 @@ We also implemented the more direct algorithm described in \secref{graph}, which
 is what we marked as \GraphFwd. We also implement twin implementations of the 
 duals of slicing. One (pair of) implementations, that of complementing, running the slicing
 operation, then complementing again, is denoted as \GraphBwdCmp, and \GraphFwdCmp,
-for backward and forward slicing respectively. The implementations using the
-opposite slicing procedure on the opposite graph are denoted as \GraphBwdOp,
-and \GraphFwdOp.
+for the duals ofbackward and forward slicing respectively. The implementations
+using the opposite slicing procedure on the opposite graph are denoted as 
+\GraphBwdOp, and \GraphFwdOp. 
+
+In our implementation, the operation for taking a graph's opposite is much
+cheaper than that of complementation. This is reflected in our performance
+results where we see that the implementation using the opposite graph is much
+quicker generally than the implementation using complements. Results for these
+comparisons are contained in 
 \subsection{Old}
 
 The practical motivation for representing dependency structures as a graph, informally,
