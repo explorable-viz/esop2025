@@ -90,6 +90,16 @@ after the bit where we discuss the competing implementations we need.}
 
 {\tiny\input{fig/performance/slicing-speedup.tex}}
 
+\subsection{Equivalent Implementations}
+As we have discussed earlier, if one is careful about the definition of inputs
+and outputs on a given Dynamic Dependence Graph, then we have multiple ways to
+implement equivalent operators. As part of our testing, we compared equivalent
+implementations.
+
+First, we considered implementing forward slicing as the De Morgan dual of backward
+slicing on the opposite graph. This is identified in our benchmarks as \textbf{Naive-Fwd}.
+We also implemented the more direct algorithm described in \secref{graph}.
+
 \subsection{Old}
 
 The practical motivation for representing dependency structures as a graph, informally,
