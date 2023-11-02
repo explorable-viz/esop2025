@@ -113,83 +113,10 @@ quicker generally than the implementation using complements. Results for these
 comparisons are contained in \tableref{equivalent-impls}.
 
 {\tiny\input{fig/performance/equivalent-impls}}
-\subsection{Old}
-
-The practical motivation for representing dependency structures as a graph, informally,
-is that computing a slice is much more performant in the graphical setting.
-As we have established, backwards slicing is equivalent to computing the set of
-reachable nodes from a given selection, a procedure which runs in linear time with
-respect to the size of the reachable set. As a result, we shall see that performance
-of slicing is improved by several orders of magnitude. We shall see that
-construction of the graph does however introduce a fairly significant performance
-overhead in contrast to constructing a sequential trace, however this cost vanishes when
-one computes multiple slicing queries over a single computation.
-
-We shall see that our graphical implementation pushes slicing queries into the bracket of
-instantaneous user feedback. In terms of designing interactive systems, we argue that the
-increased cost in constructing the dependency graph is well worth it, given that it
-facilitates such a stark increase in performance of slicing queries.
-
-\subsection{Testing Methodology}
-We describe here the specifics of each individual benchmark, before moving on to
-a discussion of the results. For performance measurements of the trace-based
-approach, we summarize evaluation time, and the times taken for forward and 
-backward slicing, as \TraceEval,\TraceFwd, and \TraceBwd.
-    
-For benchmarking the graphical system, we must be careful to define the individual
-performance tests. For a given test-case, we first run - and time - evaluating
-to a graph in \GraphEval. This fixes the dependence graph $G:\mathcal{A} \to \mathcal{B}$,
-where $\mathcal{B}$ denotes a distinguished set of output vertices, and $\mathcal{A}$
-a distinguished set of inputs. We can then define the individual benchmarks in
-terms of the operators we defined in \ref{sec:graph}. Since the operators we
-defined in the prior section have multiple equivalent definitions, we take care
-to delineate between the operator, and the implementation of that operator we are testing.
-
-\GraphBwd refers to running the backward slicing procedure over a fixed
-selection. We use this to compute a relevant input selection as we have described.
-The input selection we compute during \GraphBwd  is the selection we then
-feed into the forward slicing procedure which we time as part of \GraphFwd.
-This is also where we validate round-tripping, albeit this is not relevant to the 
-discussion of performance.
-
-\textbf{TODO:} Further discuss the various implementations. May need to wait for
-Minh to finish his work in section 4 first, so we can discuss the various 
-operators, and which parts of the code we 
-
-\subsection{Backward Slicing}
-Despite the increased overhead in constructing the dynamic dependence graph for
-a given execution, we see a dramatic reduction in the time it takes to perform
-backward slicing on a graph. In the examples presented in Table \ref{expensive-bwd}
-we observe backward slicing takes much less than 0.1 seconds, putting the system
-firmly in the instantaneous bracket under Nielsens guidelines.
-For large systems with complex and opaque data dependency structures, this is
-a clear benefit as we can see that after performing two backward slicing
-queries, the overall time taken is less in the graphical setting. It is also
-unlikely that users will want to run a computation and then only be interested
-in a single slicing query.
-
-Finally, from a usability perspective, it is more important to have the interactive
-component of the system be highly performant. Developers often have to contend
-with evaluation or computation time anyway, and we prefer the cost be
-incurred up front, rather than repeatedly.
-\input{fig/performance/expensive-bwd.tex}
-
-\subsection{Inefficient Forward Slicing}
-As we mentioned earlier in \ref{sec:graph}, we can theoretically get by without
-providing an explicit definition of forward slicing. Instead, we can derive the
-forward slicing procedure in terms of backwards using the De Morgan dual on the
-opposite graph. 
-
-In practise however we see a significant reduction in performance when performing
-forward slicing in this manner. For some extreme examples, consider the right-most
-column of Table \ref{expensive-fwd}. We see that in the pictured test cases,
-performance of forward slicing as the De Morgan dual of backwards is particulary poor.
-{\small\input{fig/performance/expensive-fwd.tex}}
-
-One explanation for this discrepancy is expensive set operations needed to perform
-the complementation of a selection, which in a very large graph can be expensive. 
 
 \subsection{Discussion}
+\todo{I think we still want to include some finishing discussion, but unsure if
+this is appropriate. Could be a conclusion?}
 We can see that whilst the graphical slicing paradigm can improve the performance
 of program slicing dramatically, the increase in performance is varied. It 
 initially appeared that speedup in slicing time was inherently tied to the
@@ -215,9 +142,5 @@ the cost matrix relies on the computation of it's left, upward, and diagonal
 neighbors. The implication of this is that the data depdendency through the
 the computation is in a sense more sequential than that of, for example
 convolution.
-
-\textbf{TODO:} I don't think anything I've said here is necessarily wrong,
-but definitely needs further elucidation of the key points, and several rewrites.
-
-{\tiny
+{\tiny\todo{Need to move this to appendix}
 \input{fig/performance/all-benches.tex}}
