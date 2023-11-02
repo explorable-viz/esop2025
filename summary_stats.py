@@ -25,7 +25,7 @@ def eval_speedup(df):
     return out
 
 def equiv_implementations(df):
-    out = df[['G-BwdFlCmp', 'G-BwdDlFwdOp', 'G-FwdDlCmp', 'G-FwdDlBwdOp']]
+    out = df[['G-BwdDlCmp', 'G-BwdDlFwdOp', 'G-FwdDlCmp', 'G-FwdDlBwdOp']]
     tex_file = open('fig/performance/equivalent-impls.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption = "Equivalent implementations of the De Morgan dual", label='table:equivalent-impls', longtable=True))
     tex_file.close()
