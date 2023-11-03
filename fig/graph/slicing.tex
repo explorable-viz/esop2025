@@ -108,15 +108,17 @@
       %
       \inferrule*[
          lab={\ruleName{$\fwdEdges{}$-pending}},
-         right={$\beta \cons V \subset \outN{\hat{G}}(\alpha)$}
+         right={$\hat{H}(\alpha) \subset \hat{G}(\alpha)$}
       ]
       {
-         G, H \disjunion \set{\bind{\alpha}{\beta \cons V}}, E
+         \hat{H} = H \cup \set{\bind{\alpha}{\set{\beta}}}
+         \\
+         G, \hat{H}, E
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion \set{\bind{\alpha}{V}}, (\alpha, \beta) \cons E
+         G, H, (\alpha, \beta) \cons E
          \fwdEdges{\hat{G}}
          G', H'
       }
