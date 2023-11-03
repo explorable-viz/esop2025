@@ -47,7 +47,7 @@
       %
       \inferrule*[
          lab={\ruleName{$\bwdVertices{}$-extend}},
-         right={$H = \set{\alpha \mapsto V'}$}
+         right={$H = \set{\bind{\alpha}{V'}}$}
       ]
       {
          G \disjunion H, V' \disjunion V
@@ -94,12 +94,12 @@
          right={$\beta \cons V = \outN{\hat{G}}(\alpha)$}
       ]
       {
-         G \disjunion \set{\alpha \mapsto \beta \cons V}, H, \inE{\hat{G}}(\alpha) \cup E
+         G \disjunion \set{\bind{\alpha}{\beta \cons V}}, H, \inE{\hat{G}}(\alpha) \cup E
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         G, H \disjunion \set{\bind{\alpha}{V}}, (\alpha, \beta) \cons E
          \fwdEdges{\hat{G}}
          G', H'
       }
@@ -111,12 +111,12 @@
          right={$\beta \cons V \subset \outN{\hat{G}}(\alpha)$}
       ]
       {
-         G, H \disjunion \set{\alpha \mapsto \beta \cons V}, E
+         G, H \disjunion \set{\bind{\alpha}{\beta \cons V}}, E
          \fwdEdges{\hat{G}}
          G', H'
       }
       {
-         G, H \disjunion \set{\alpha \mapsto V}, (\alpha, \beta) \cons E
+         G, H \disjunion \set{\bind{\alpha}{V}}, (\alpha, \beta) \cons E
          \fwdEdges{\hat{G}}
          G', H'
       }
