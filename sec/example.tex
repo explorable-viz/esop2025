@@ -1,29 +1,26 @@
 \section{Motivating Example}
 
-We present an overview of \OurLang via a motivating example from data science.
-Modern climate models such as CITE consist of a large number of interacting modules.
-An important yet difficult task for engineers and scientists who work with or on
-these models is interpreting the complex interactions between the various modules.
+We present an overview of \OurLang.
+Modern climate models such as \todo{cite} consist of a large number of interacting modules.
+When a data scientist is investigating a new domain, they often begin by analysing
+data in an exploratory fashion. This data may be arranged as a collection of records
+like in a relational database. Investigating relationships between these complex
+datasets can be difficult.
 
-A common task performed in such models is the aggregation of data that may be
-spatially or temporally distributed. For this section, we restrict our focus
-to the aggregation of two time-series. The problem involves taking two disparate
-time-indexed series of data, and combining them together into a single unified
-series. Most methods involve computing a matching of the points in series A
-to the points in series B, and then applying an aggregation operation on the
-matched pairs of points to compute the aggregate series.
-
-This is complicated by the fact that the 2 series may not be of the same
-length, may not necessarily be scaled in the same way, and the possibility that
-the operations we perform to fuse points from one series to another can be itself
-a non-trivial operation.
-
-Methods are still proposed for this problem today, but we shall illustrate our
-approach using the classic solution of Dynamic Time Warping, introduced in
-\cite{Vintsyuk1968}. This algorithm is generic in the distance function
-used to estimate the cost of matching two points from the pair of series.
+Let us consider the following example: our hypothetical data scientist is 
+investigating water-usage in European countries. Each nation has associated with
+it a collection of cities and a measure of the total farmland in that nation.
+The user may provide a function for computing the total water consumption of a
+nation. We picture this
+in \figref{water-query}.
 
 \begin{figure}[h]
-\lstinputlisting[language=Fluid,mathescape]{listings/compute-dtw-top-level.fld}
-\caption{Entry point to the dynamic time warping program}
+\tiny
+\lstinputlisting[language=Fluid,mathescape]{fig/example/water-query.fld}
+\caption{Example Water Usage Query}
+\label{fig:water-query}
 \end{figure}
+
+With the Galois slicing technique, we can follow a selection on the output of
+the program - in this case the integer 570 - back in to the inputs of the program.
+We denote a selected by enclosing it in special delimiters like ((so)).
