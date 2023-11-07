@@ -1,0 +1,36 @@
+\section{Motivating Example}
+
+We present an overview of \OurLang.
+Modern climate models such as \todo{cite} consist of a large number of interacting modules.
+When a data scientist is investigating a new domain, they often begin by analysing
+data in an exploratory fashion. This data may be arranged as a collection of records
+like in a relational database. Investigating relationships between these complex
+datasets can be difficult.
+
+Let us consider the following example: our hypothetical data scientist is 
+investigating water-usage in European countries. Each nation has associated with
+it a collection of cities and a measure of the total farmland in that nation.
+The user may provide a function for computing the total water consumption of a
+nation. We picture this
+in \figref{water-query}.
+
+\begin{figure}[h]
+\tiny
+\lstinputlisting[language=Fluid,mathescape]{fig/example/water-query.fld}
+\caption{Example Water Usage Query}
+\label{fig:water-query}
+\end{figure}
+
+With the Galois slicing technique, we can follow a selection on the output of
+the program - in this case the integer 570 - back in to the inputs of the program.
+We denote a selected by enclosing it in special delimiters like ((so)). In this
+case, by selecting the sole output of the computation, our system discovers the
+records - and the appropriate fields - that were used to compute that output.
+We picture that in \figref{water-selection}.
+
+\begin{figure}[h]
+\tiny
+\lstinputlisting[language=Fluid,mathescape]{fig/example/water-selection.fld}
+\caption{Showcase of computed backward selection.}
+\label{fig:water-selection}
+\end{figure}
