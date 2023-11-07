@@ -1,173 +1,188 @@
 \begin{figure}
-   \small
-   \begin{minipage}[t]{0.48\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.5cm}L{3.6cm}}
-         &\textit{Eval context}&
-         \lowlight{$\EvalCxt\;A$}
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS G, \seq{v}$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalS$-seq}}
+      ]
+      {
+         \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
+      }
+      {
+         \gamma, \seq{e}, V \evalS \textstyle{\bigdisjunion}\seq{G}, \seq{v}
+      }
+      %
+      \and
+      %
+   \end{smathpar}}
+   {\small \flushleft \shadebox{$\gamma, e, V \evalS G, v$}%
+   \begin{smathpar}
+      \inferrule*[
+      lab={\ruleName{$\evalS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS \emptyset, v
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, \annInt{n}{\alpha}, V
+         \evalS
+         \set{\bind{\alpha'}{\alpha \cons V}},
+         \annInt{n}{\alpha'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalS$-record}}]
+      {
+         \gamma, \seq{e}, V \evalS G, \seq{v}
+      }
+      {
+         \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
+         \evalS
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         \annRec{\seq{\bind{x}{v}}}{\alpha'}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-project}}
+      ]
+      {
+         \gamma, e, V \evalS G, \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
+      }
+      {
+         \gamma, \exRecProj{e}{y}, V \evalS G, u
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalS$-constr}}]
+      {
+         \gamma, \seq{e}, V \evalS G, \seq{v}
+      }
+      {
+         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
+         \evalS
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         \annConstr{c}{\seq{v}}{\alpha'}
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalS$-lambda}}]
+      {
+         \strut
+      }
+      {
+         \gamma, \exFun{\sigma}, V
+         \evalS
+         \set{\bind{\alpha}{V}},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign}}
+      ]
+      {
+         \gamma, \seq{e}, V \evalS G, \seq{v}
          \\
-         $C ::=$
-         &
-         $\evalCxtEmpty$
-         &
-         empty
+         \interpret{f}(\seq{v}) = (G', u)
+      }
+      {
+         \gamma, \exForeignApp{f}{\seq{e}}, V
+         \evalS
+         G \disjunion G', u
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-app}},
+         width=4in,
+      ]
+      {
+         \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
          \\
-         &
-         $\exConstr{c}{D}$
-         &
-         constructor args
+         \gamma, e', V \evalS G_2, v
          \\
-         &
-         $\exApp{C}{e_{\gamma}}$
-         &
-         function
+         \gamma_1, \rho, \set{\alpha} \closeDefs G_3, \gamma_2
          \\
-         &
-         $\exApp{v}{C}$
-         &
-         function arg
+         v, \sigma \match w, \gamma_3, e
          \\
-         &
-         $\exForeignApp{f}{D}$
-         &
-         foreign args
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e, \alpha \cons \V(w) \evalS G_4, u
+      }
+      {
+         \gamma, \exApp{e}{e'}, V
+         \evalS
+         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-let}}
+      ]
+      {
+         \gamma, e, V \evalS G, v
          \\
-         &
-         $\exRec{F}$
-         &
-         record fields
+         \gamma \cons (\bind{x}{v}), e', V \evalS G', v'
+      }
+      {
+         \gamma, \exLet{x}{e}{e'}, V
+         \evalS
+         G \disjunion G', v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-let-rec}}
+      ]
+      {
+         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs G, \gamma'
          \\
-         &
-         $\exRecProj{C}{x}$
-         &
-         record projection
+         \gamma \concat \gamma', e, V \evalS G', v
+      }
+      {
+         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
+         \evalS
+         G \disjunion G', v
+      }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs G, \gamma'$}
+    \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
          \\
-         &
-         $\exLet{x}{C}{e_{\gamma}}$
-         &
-         let
-      \end{tabularx}
-   \end{minipage}%
-   \begin{minipage}[t]{0.48\textwidth}
-      \begin{tabularx}{\textwidth}{rL{2.5cm}L{3.6cm}}
-         &\textit{Args context}&
-         \lowlight{$\ArgsCxt\;\seq{A}$}
-         \\
-         $D ::=$
-         &
-         $C \cons \seq{e}_{\gamma}$
-         &
-         head
-         \\
-         &
-         $v \cons D$
-         &
-         tail
-         \\[2mm]
-         &\textit{Fields context}&
-         \lowlight{$\FieldsCxt\;(\seq{\bind{x}{A}})$}
-         \\
-         $F ::=$
-         &
-         $(\bind{x}{C}) \cons (\seq{\bind{x}{e}})_{\gamma}$
-         &
-         first
-         \\
-         &
-         $(\bind{x}{v}) \cons F$
-         &
-         rest
-         \\[11mm]
-      \end{tabularx}
-   \end{minipage}
-   \caption{Inverted evaluation contexts}
-   \label{fig:graph:core:eval}
-\end{figure}
-
-\begin{figure}
-%   \flushleft{\small\shadebox{$\CEK{\gamma}{e}{C} \geval \CEK{\gamma}{e}{C}$}}
-   \begin{salign}
-      \gamma, \exVar{x}, C
-      & \geval
-      v, C
-      &
-      \textit{if }\bind{x}{v} \in \gamma
-      \\
-      \gamma, c, C
-      & \geval
-      c, C
-      \\
-      \gamma, \exRecord{}, C
-      & \geval
-      \exRecord{}, C
-      \\
-      \gamma, \exFun{\sigma}, C
-      & \geval
-      \exClosure{\gamma}{\emptyset}{\sigma}, C
-      \\
-      \gamma, \exInt{n}, C
-      & \geval
-      \exInt{n}, C
-      \\
-      \gamma, \exConstr{c}{e \cons \seq{e}}, C
-      & \geval
-      \gamma, e, \exConstr{c}{C \cons \seq{e}}
-      \\
-      \gamma, \exApp{e}{e'}, C
-      & \geval
-      \gamma, e, \exApp{C}{{e'}_{\gamma}}
-      \\
-      \gamma, \exForeignApp{f}{e \cons \seq{e}}, C
-      & \geval
-      \gamma, e, \exForeignApp{f}{C \cons \seq{e}}
-      \\
-      \gamma, \exLet{x}{e}{e'}, C
-      & \geval
-      \gamma, e, \exLet{x}{C}{{e'}_{\gamma}}
-      \\[2mm]
-      v, \exApp{\exClosure{\gamma_1}{\rho}{\sigma}}{C}
-      & \geval
-      \gamma_1 \concat \gamma_2 \concat \gamma_3, e, C
-      &
-      \textit{if }\gamma_1, \rho \closeDefs \gamma_2\textit{ and }v, \sigma \match \gamma_3, e
-      \\
-      v, \exApp{C}{e_{\gamma}}
-      & \geval
-      \gamma, e, \exApp{v}{C}
-      \\
-      v, \exLet{x}{C}{e_{\gamma}}
-      & \geval
-      \gamma \cons (\bind{x}{v}), e, C
-      \\
-      v, \exConstr{c}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
-      & \geval
-      \exConstr{c}{\seq{v} \cons v}, C
-      \\
-      v, \exConstr{c}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
-      & \geval
-      \gamma, e, \exConstr{c}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
-      \\
-      v, \exForeignApp{f}{\seq{v} \cons C \cons \seqEmpty_{\gamma}}
-      & \geval
-      \smash{\exForeignApp{\interpret{f}}{\seq{v} \cons v}, C}
-      \\
-      v, \exForeignApp{f}{\seq{v} \cons C \cons (e \cons \seq{e})_{\gamma}}
-      & \geval
-      \gamma, e, \exForeignApp{f}{\seq{v} \cons v \cons C \cons \seq{e}_{\gamma}}
-      \\
-      \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons \seqEmpty_{\gamma}}}
-      & \geval
-      \smash{\exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v})}, C}
-      \\
-      \smash{v, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{C}) \cons ((\bind{y}{e}) \cons (\seq{\bind{y}{e}}))_{\gamma}}}
-      & \geval
-      \smash{\gamma, e, \exRecord{(\seq{\bind{x}{v}}) \cons (\bind{x}{v}) \cons (\bind{y}{C}) \cons (\seq{\bind{y}{e}})_{\gamma}}}
-   \end{salign}
-   \\[3mm]
-   \flushleft{\small\shadebox{$\gamma, \rho \geval \gamma'$}}
-   \begin{salign}
-      \gamma, \rho
-      &\closeDefs
-      \set{\bind{x}{\exClosure{\gamma}{\rho}{\rho(x)}} \mid x \in \dom{\rho}}
-   \end{salign}
-   \caption{Small-step reduction relation (CEK-style)}
+         G_i = \set{\bind{\alpha_i}{V}}
+         \quad
+         (\forall i \numleq \length{\seq{x}})
+      }
+      {
+         \gamma, \rho, V
+         \closeDefs
+         \textstyle{\bigdisjunion}\seq{G},
+         \set{\seq{\bind{x}{v}}}
+      }
+   \end{smathpar}
+   }
+   \caption{Graph semantics: evaluation}
+   \label{fig:core:eval}
 \end{figure}

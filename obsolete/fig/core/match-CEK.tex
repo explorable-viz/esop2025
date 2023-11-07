@@ -1,0 +1,53 @@
+\begin{figure}
+    {\small \flushleft \shadebox{$\seq{v}, \kappa \match e$}\hfill
+    \begin{smathpar}
+       \inferrule*[
+          lab={\ruleName{$\match$-done}}
+       ]
+       {
+          e' = \opName{alloc}(e)
+       }
+       {
+          \seqEmpty, e \match e'
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\match$-var}}]
+       {
+          \seq{v}, \kappa \match e
+       }
+       {
+          \alpha \cons \seq{v}, \elimVar{x}{\kappa} \match \subst{e}{\alpha}{x}
+       }
+       \\
+       \inferrule*[
+          lab={\ruleName{$\match$-record}}
+       ]
+       {
+         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+         \\
+         \seq{u} \concat \seq{v}', \kappa \match  e
+       }
+       {
+          \exRec{\seq{\bind{x}{v}}} \cons \seq{v}',
+          \elimRecord{\seq{y}}{\kappa}
+          \match
+          e
+       }
+       %
+       \and
+       %
+       \inferrule*[lab={\ruleName{$\match$-constr}}]
+       {
+          \seq{v} \concat \seq{v}', \kappa \match e
+       }
+       {
+          \exConstr{c}{\seq{v}} \cons \seq{v}',
+          (\elimBind{c}{\kappa}) \cons \set{\seq{\bind{c}{\kappa}}}
+          \match
+          e
+       }
+    \end{smathpar}}
+ \caption{Pattern-matching}
+ \end{figure}

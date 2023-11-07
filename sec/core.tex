@@ -1,34 +1,53 @@
-\section{Core language}
+\section{Core calculus}
 \label{sec:core}
 
-\subsection{Continuations and eliminators}
+\subsection{Preliminaries}
+\label{sec:preliminaries}
 
-A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like
-objects which can serve as a plausible desugaring target for surface-language pattern-matching constructs. An eliminator $\sigma$ is \textit{partial} if it is not defined for every element of its domain.
+\begin{definition}[Finite map notation]
+   Write $\set{\seq{\bind{k}{v}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{v_1}}{\bind{k_n}{v_n}}$
+   where $\seqRange{k_1}{k_n}$ are pairwise unique.
+\end{definition}
 
-\input{fig/core/syntax}
-\input{fig/core/match}
+\begin{definition}[Disjoint union of maps]
+   For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
+\end{definition}
 
-\figref{graph:core:eval} defines a small-step reduction relation.
+\input{fig/basic-elements}
 
-Notes:
-\begin{enumerate}
-\item No support for recursion yet.
-\item If ``reduct'' (source of hyperedge) means new graph created on right by the rule, then both projection
-and \kw{let} rules result in an empty reduct (hyperedge with an empty source). No path can connect to such a
-hyperedge, so backward slicing will never reach such a redex. For forward slicing to be adjoint to that
-behaviour, redexes with empty reducts need to be ``costless'', i.e.~always included by forward slicing. Ok,
-but if two of our three rules always introduce hyperedges with an empty source, then the reduction graph is a
-rather degenerate kind of dependence graph, since the application rule is the only one that establishes real dependencies.
-\end{enumerate}
+For any constructor $c$ we write $\datatype{c}$ to mean the type signature $\tyForeign{\seq{A}}{D}$ of $c$.
 
 \subsection{Foreign functions}
 
-Foreign functions add rules into the reduction system, with appropriately truncated redexes to characterise their consumption of inputs. For example, a binary operator $*$ with annihilator $0$ can be defined by:
+The language is parameterised by a finite map $\Phi: \Var \to \Type^+ \times \Type$ from variables to foreign
+function signatures $(\seq{A}, B)$. By convention $f$ and $\oplus$ ranges over $\dom{\Phi}$. Foreign functions
+\emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}}
+= \length{\seq{A}}$. First-class foreign functions are provided via a top-level environment which maps every
+$\bind{f}{(\seq{A}, B)} \in \Phi$ to the closure
+$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_i}{\exForeignApp{f}{\seq{x}}}}}}$
+where $\length{\seq{x}} = \length{\seq{A}}$. Although saturated calls are technically part of the languageœ, user programs by convention use the first-class representation.
 
-\begin{salign}
-\annot{\exInt{0}}{\alpha} * \beta &\geval \annot{\exInt{0}}{\alpha'} \\
-\annot{\exInt{n}}{\alpha} * \annot{\exInt{n}}{\beta} &\geval \annot{(\exInt{n \mathbin{\hat{*}} m})}{\alpha'} & \textit{if }n \neq 0 \\
-\end{salign}
+\subsection{Graphical syntax}
 
+\begin{definition}[Vertices of a term]
+\label{def:core:vertices}
+Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in $e$.
+\end{definition}
+
+\noindent \defref{core:vertices} extends to eliminators, values and patterns, with $\V(\sigma)$ and $\V(v)$
+also including any vertices appearing inside expressions embedded in $\sigma$ or $v$.
+
+\subsection{Continuations and eliminators}
+
+A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like objects
+which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
+(\citet{peytonjones2021} present a similar idea in a technical report.)
+
+\input{fig/core/syntax}
+\input{fig/core/match}
 \input{fig/core/eval}
+
+\subsection{Graph evaluation}
+
+\figref{core:eval} defines a big-step evaluation relation that evaluates a program to value plus a dependence
+graph $G$.
