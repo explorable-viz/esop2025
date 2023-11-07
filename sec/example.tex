@@ -23,4 +23,14 @@ in \figref{water-query}.
 
 With the Galois slicing technique, we can follow a selection on the output of
 the program - in this case the integer 570 - back in to the inputs of the program.
-We denote a selected by enclosing it in special delimiters like ((so)).
+We denote a selected by enclosing it in special delimiters like ((so)). In this
+case, by selecting the sole output of the computation, our system discovers the
+records - and the appropriate fields - that were used to compute that output.
+We picture that in \figref{water-selection}.
+
+\begin{figure}[h]
+\tiny
+\lstinputlisting[language=Fluid,mathescape]{fig/example/water-selection.fld}
+\caption{Showcase of computed backward selection.}
+\label{fig:water-selection}
+\end{figure}
