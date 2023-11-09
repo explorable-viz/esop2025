@@ -8,39 +8,15 @@ like in a relational database. Investigating relationships between these complex
 datasets can be difficult.
 
 Let us consider the following example: our hypothetical data scientist is 
-investigating water-usage in European countries. Each nation has associated with
-it a collection of cities and a measure of the total farmland in that nation.
-The user may provide a function for computing the total water consumption of a
-nation. We picture this
-in \figref{water-query}.
+investigating international water-usage in across nations. Each nation is
+represented as a record, with fields for the name of the country,
+measures of various water consumption statistics \todo{change this},
+alongside their population in millions, and the continent they reside in.
 
-\begin{figure}[h]
-\tiny
-\lstinputlisting[language=Fluid,mathescape]{fig/example/water-query.fld}
-\caption{Example Water Usage Query}
-\label{fig:water-query}
-\end{figure}
-
-With the Galois slicing technique, we can follow a selection on the output of
-the program - in this case the integer 570 - back in to the inputs of the program.
-We use a $\codeSel{yellow box}$ to denote a selection,
-when one selection is contained within another, we will use a $\codeSel{\codeSelTwo{green box} inside}$ of
-the enclosing yellow box. \todo{Replace these with only a single listing, containing both input and output}
-In this case, by selecting the sole (textual) output of the computation, our system discovers the
-records - and the appropriate fields - that were used to compute that output.
-We picture that in \figref{water-selection}.
-
-\begin{figure}[h]
-\tiny
-\lstinputlisting[language=Fluid,mathescape]{fig/example/water-selection.fld}
-\caption{Showcase of computed backward selection.}
-\label{fig:water-selection}
-\end{figure}
-
-However, the above is not the interesting to the user. If they have access to the
-source code and enough knowledge to interpret that selection, they would maybe
-be able to determine this relationship by themself. Let us consider instead the
-common the task of \textit{brushing and linking} \cite{becker87} views of a
+Imagine the users model has produced some charts out of this data. Unfortunately
+it's difficult to relate visual elements from one chart to another, or back to
+the original dataset. In databases and visualization, this is the common task 
+of \textit{brushing and linking} \cite{becker87} views of a
 dataset. Here, the goal is to connect relevant parts of two structured program
 outputs, mediated by their using the same dataset. For example, in \figref{linked-outputs}
 we produce both a bar- and bubblechart from the same input dataset. Selecting
@@ -48,10 +24,9 @@ a bar on the left highlights the bubbles on the right which are sourced from
 the same record. \todo{Need to replace image with a more refined example}
 
 \begin{figure}
-\centering
-{\includegraphics[scale=0.5]{fig/example/linked-outputs-1.png}}
-\caption{Linking of a pair of structured outputs mediated via the same dataset.}
-\label{fig:linked-outputs}
+   {centering\includegraphics[scale=0.5]{fig/example/linked-outputs-1.png}}
+   \label{fig:linked-outputs}
+   \caption{Example linked outputs}
 \end{figure}
 
 In existing software packages, this is possible but usually done on a bespoke
@@ -60,3 +35,12 @@ concerns. This functionality usually doesn't come equipped with the ability to
 directly inspect the underlying data either, limiting the interpretability of
 such structured views.
 
+A related yet distinct task is in interpreting multiple datasets which have had
+a relationship induced via some mediating computation. We consider a similar
+example to the ones pictured previously. The user has access to some datasets
+which co-operate to produce a bubble chart, pictured in \todo{add the figure and ref}.
+Here, by placing a selection on one of the input tables, our system - via analysing
+the use of data in the output chart - is able to identify the records in the second
+dataset that are relevant to the selected records in the first dataset. Aiding
+our intepretation is the fact that selection information is also visualized
+in the bubblechart.
