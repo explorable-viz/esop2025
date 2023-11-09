@@ -1,4 +1,7 @@
-let country$\_$water c$\_$name countries$\_$list cities = let city$\_$water = sum [city.water|country $\leftarrow$ countries$\_$list, c$\_$name == country.name, city $\leftarrow$ cities, country$\_$city $\leftarrow$ country.cities, city.name == country$\_$city];
+let country$\_$water c$\_$name countries$\_$list cities = let city$\_$water = sum [city.water|country $\leftarrow$ countries$\_$list
+                                                                                            , c$\_$name == country.name
+                                                                                            , city $\leftarrow$ cities
+                                                                                            , elem city.name country.cities];
                                                      farm$\_$water = sum $\codeSel{[country.farms * \codeSelTwo{3}|country <- countries\_list, country.name == c\_name]}$ in
                                                  city$\_$water + farm$\_$water in
 let all$\_$countries = [{name : $\codeSel{"Germany"}$, cities : ["Berlin", "Hamburg", "Munich"], farms : $\codeSel{100}$}
