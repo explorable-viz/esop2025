@@ -2,11 +2,20 @@
 \label{sec:related-work}
 
 \subsection{Program slicing}
+Whilst static and dynamic program slicing is a well studied topic, it has not
+been studied much in the context of functional programming languages. The use
+of Galois connections to slice programs has been studied before, in \citet{perera22}
+the authors use traces to perform backwards slicing of outputs to inputs in
+their language, however their work suffers from performance problems and a
+difficult to interpret slicing algorithm. Our work builds upon theirs, improving
+slicing performance, and simplifying the treatment of Galois connections. Our
+method also allows for simple characterization of other interesting queries, such
+as the linked-outputs example we describe in \secref{example}
 \subsection{Graph Evaluation}
 Whilst ours is the first work to apply graph evaluation techniques to slicing
 functional programs, we are not the first to apply graph evaluation techniques
 in general. The compilation of a functional program to a graph has been used
-to implement incremental compilation of programs in \citet{acar02},\citet{acar06b}.
+to implement incremental compilation of programs in \citet{acar02, acar06b}.
 In contrast to their work, which focusses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive
 data exploration systems. Their work is implemented as a library for Standard ML
@@ -16,7 +25,7 @@ Term graph rewriting systems, introduced by \citet{barendregt87} have been well
 studied in the implementation of functional languages. In \citet{vanEekelen97},
 the graph rewriting semantics of the language Clean are studied in detail, as
 opposed to using an extension of the lambda calculus. As with Acar et al,
-the work here is aimed purely at the efficient implementation of pure functional
+the goal of their work is the efficient implementation of pure functional
 programming languages. The scope of our work is narrower. 
 \begin{itemize}
    \item \citet{field98}
