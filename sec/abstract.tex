@@ -1,27 +1,24 @@
 \begin{abstract}
-   Scientific claims are routinely justified and explained using charts and figures -- visual summaries
-   computed by programs. Understanding how these structured outputs relate to the data used to produce them is
-   a challenge facing scientists, policymakers, and lay readers trying to make sense of such claims. Recent
-   work has proposed using techniques from dynamic program slicing and data provenance to create interactive
-   outputs which are automatically linked to the underlying data, allowing a reader to explore the
-   relationship to the data by interacting directly with various parts of the chart. Galois connections have
-   provided useful round-tripping properties for charactering the relationship between inputs and outputs, but
-   however implementations to date of these ``Galois slicing'' approaches have been too slow for the intended
-   interactive use cases because they have relied on rewinding or replaying the entire computation using a
-   sequential execution record, or \emph{trace}.
-
-   % Galois connections between Boolean algebras offer an appealing formal framework for bidirectional dynamic
-   % program slicing, characterising fine-grained input-output relationships in terms of demand and sufficiency.
-   % \citeauthor{perera22} showed how the De Morgan dual of such an analysis can be used to pick out
-   % \emph{competing outputs}, namely other outputs that are related to some outputs of interest in the
-   % sense of demanding some of the same inputs.
+   Scientific claims are routinely justified and explained using charts and figures --- visual summaries
+   computed using data analyses and visualisation libraries. Understanding how these visual outputs relate to
+   the data they purport to be about is a challenge facing anyone trying to make sense of such claims. Recent
+   work has shown how techniques from dynamic program slicing can be used to create outputs which are
+   bidirectionally linked to the underlying data, allowing a reader to explore the fine-grained relationships
+   between the data and the visualisation by interacting directly with the output. Galois connections have
+   proved to be an effective formal foundation for these approaches, characterising the relationship between
+   inputs and outputs in terms of sufficiency and demand; most recently \citeauthor{perera22} showed how the
+   De Morgan dual of such an analysis can be used to identify outputs that are related in the sense of
+   demanding some of the same inputs. However, implementations of these ``Galois slicing'' approaches to data
+   have relied on a sequential execution record, or \emph{trace} to wind the computation forwards and
+   backwards to implement the analyses. This reliance on forwards and backward re-execution has meant that the
+   analyses are too slow for the intended interactive use cases.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
-   graphs, an approach used in the past for analysing imperative programs. We proceed by decomposing the
-   analysis into two steps: an operational semantics that evaluates a program to a dependence graph, and then
-   a pair of adjoint operators for forwards and backwards slicing over the graph. The overhead of producing a
-   dependence graph is comparable to that of producing a trace, but the slicing algorithms run on average much
-   faster than their trace-based counterparts, making them suitable for interactive use. We also show that,
+   graphs which decomposes the analysis into two steps: an operational semantics that evaluates a program to a
+   dependence graph, and then a pair of adjoint operators for forwards and backwards slicing over the graph.
+   We show that the one-off overhead of producing the dependence graph is comparable to that of producing a
+   trace, but that the slicing algorithms which support the interactive scenarios run on average much faster
+   than their trace-based counterparts, making them fit for the intended purpose. We also show that,
    extensionally, forward slicing over a dependence graph is the De Morgan dual of backward slicing over the
    opposite graph, leading to an easy implementation of the upper adjoint in terms of the lower. Even this
    naive implementation is on average faster than the trace-based approach, but we also give an even faster
