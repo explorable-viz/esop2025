@@ -10,3 +10,16 @@ transformations that elide internal nodes but preserve I/O connectivity, such as
 transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. Although we leave
 applications of this observation to future work, we conjecture that it might be used to selectively trade
 intensional information for additional performance improvements.
+
+The fact that our work is neutral with respect to intensional information in the dependence graph suggests
+the question of what information the internal nodes represent. The choice of dependency relation 
+we represent in the graph is the same as that of \citet{perera22}, where selections are pushed through
+evaluation according to whether the selected part of a value was consumed during evaluation, either via
+pattern matching or the specific implementation provided for a primitive. Any information that could be
+associated with internal nodes or subgraphs will be determined by the choice of dependency relation, and so
+a promising future direction is to formally consider the choice of dependency relation and the information
+it allows us to compute about internal nodes in the graph. For example,  \citet{cheney11b} considers
+the use of dependency analysis to compute \textit{provenance} information about elements of a program, such as
+it's derivation. Applying this concept to the dependence graph would provide an interesting perspective on
+what the internal nodes mean, and whether one can apply meaning at the fine grained level of graph nodes,
+or if provenance information in the graph can only be considered at a coarser level.  
