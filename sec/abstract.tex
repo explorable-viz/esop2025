@@ -1,17 +1,16 @@
 \begin{abstract}
-   Scientific claims are routinely justified and explained using visual summaries --- charts and figures ---
-   computed using data analysis and visualisation libraries. Understanding how these visual outputs relate to
-   the data they purport to be about is a challenge facing anyone trying to evaluate or understand such a
-   claim. Recent work has used techniques from dynamic program slicing to link visualisations and other
-   outputs automatically to the underlying data, allowing a reader to explore the fine-grained bidirectional
-   relationships between data and visualisation by interacting directly with the output. Galois connections
-   have proved to be an effective formal foundation for these approaches, characterising the relationship
-   between outputs and inputs in terms of demand and sufficiency; most recently \citeauthor{perera22} extended
-   this ``Galois slicing'' approach to allow a user to explore how outputs are related in the sense of
-   demanding overlapping inputs. However, implementations of these approaches to date have relied on a
-   sequential execution record, or \emph{trace}, to wind the computation forwards and backwards. This reliance
-   on forwards and backward re-execution has meant that the analyses are too slow for the intended interactive
-   use cases.
+   Scientific claims are routinely justified and explained using visual summaries computed by data analysis
+   and visualisation code. Evaluating or understanding such claims means understanding how the charts and
+   figures relate to the data they purport to be about, and can be difficult and time-consuming even for an
+   expert. Recent work has shown how a dynamic program slicing technique called \emph{Galois slicing} can be
+   used to link visualisations and other outputs automatically to data, so that a reader can explore
+   fine-grained input-output relationships by interacting directly with computed artefacts; Galois connections
+   provide a precise characterisation of the relationship in terms of demand and sufficiency. Most recently
+   \citeauthor{perera22} showed how this framework can be extended to support the exploration of output-output
+   relationships, i.e.~outputs that are indirectly related in virtue of demanding some of the same inputs.
+   However, implementations of this approach to date have relied on forwards and backward re-execution via a
+   sequential execution record, or \emph{trace}, making the analyses too slow to support the intended use
+   cases.
 
    In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
    graphs which decomposes the analysis into two steps: an operational semantics that evaluates a program to a
