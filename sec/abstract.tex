@@ -3,7 +3,7 @@
    and visualisation code. Fact-checking or understanding such claims requires understanding how the charts
    and figures relate to the data they purport to be about, and can be difficult and time-consuming even for
    an expert. Recent work has shown how a dynamic program slicing technique called \emph{Galois slicing} can
-   be used to link visualisations and other outputs automatically to data, so a reader can explore
+   be used to transparently link visualisations and other outputs to data, so a reader can explore
    fine-grained input-output relationships by interacting directly with computed artefacts. Galois connections
    provide a precise characterisation of these relationships in terms of demand and sufficiency. Most recently
    \citeauthor{perera22} extended this framework to support the exploration of output-output relationships,
@@ -18,10 +18,10 @@
    trace, but that the slicing operators run on average much faster than their trace-based counterparts on the
    interactive scenarios. As well as being faster, the graphical approach is also simpler; for example forward
    slicing over a dependence graph is simply the De Morgan dual of backward slicing over the opposite graph,
-   leading to a naive implementation which although slower than our direct implementation of forward slicing,
-   is still faster than the trace-based approach. Moreover, the slicing algorithms are language-agnostic and
-   the Galois connections are determined solely by the reachability relation $R$ between the inputs and
-   outputs of the graph. We are able to recover the ``related outputs'' operator of \citeauthor{perera22} via
-   the Galois connection for $R \relcomp R^{-1}$, and to derive a new \emph{related inputs} operator from the
-   Galois connection for $R^{-1} \relcomp R$ which also has novel data visualisation applications.
+   leading to a naive implementation which although slower than our direct forward slicing algorithm is still
+   faster than the trace-based approach. Moreover, our slicing algorithms are language-agnostic and the Galois
+   connections are determined solely by the reachability relation $R$ between the inputs and outputs of the
+   graph. We are able to recover the ``related outputs'' operator of \citeauthor{perera22} via the Galois
+   connection for $R \relcomp R^{-1}$ and also to derive a new \emph{related inputs} operator from the Galois
+   connection for $R^{-1} \relcomp R$ with its own novel data visualisation applications.
 \end{abstract}
