@@ -1,20 +1,24 @@
 \section{Related work}
 \label{sec:related-work}
 
-\subsection{Program slicing}
-Whilst static and dynamic program slicing is a well studied topic, it has not
-been studied much in the context of functional programming languages. The use
-of Galois connections to slice programs has been studied before, in \citet{perera22}
-the authors use traces to perform backwards slicing of outputs to inputs in
-their language, however their work suffers from performance problems and a
-difficult to interpret slicing algorithm. Our work builds upon theirs, improving
-slicing performance, and simplifying the treatment of Galois connections. Our
-method also allows for simple characterization of other interesting queries, such
-as the linked-outputs example we describe in \secref{example}. For a generic
-perspective, \citet{field98} consider dynamic program slicing in the context of
-term rewriting systems. Their work has relevance to the desugaring step in our
-language, but otherwise is more generic than ours, since they focus on general
-properties of term rewrite systems.
+\subsection{Dynamic Program slicing}
+Static and dynamic program slicing are not well-studied in context of functional 
+programming languages. Galois slicing has been studied before for functional languages.
+In \citet{perera22} the authors use an execution trace to perform slicing of functional programs.
+However their work suffers from performance problems. Further, their slicing algorithms
+can be difficult to interpret. Our work builds upon theirs, improving
+slicing performance, and simplifies the treatment of Galois connections. Our
+method also allows for us to describe other interesting queries, such
+as the linked-inputs example we describe in \secref{example}.
+
+For a generic perspective, \citet{field98} considers dynamic dependence tracking in
+term-rewriting systems. Their approach allows them to perform graphical program
+slicing on a subset of Pascal, but differs from ours in that they explicitly
+represent reduction steps in their dependence graphs. This is in contrast to our
+work, since we do not represent this sort of information in the graph, and our
+language is defined with a big-step operational semantics. \todo{This could need
+rewriting}. 
+
 \subsection{Graph Evaluation}
 Whilst ours is the first work to apply graph evaluation techniques to slicing
 functional programs, we are not the first to apply graph evaluation techniques
@@ -30,4 +34,4 @@ studied in the implementation of functional languages. In \citet{vanEekelen97},
 the graph rewriting semantics of the language Clean are studied in detail, as
 opposed to using an extension of the lambda calculus. As with Acar et al,
 the goal of their work is the efficient implementation of pure functional
-programming languages. The scope of our work is narrower. 
+programming languages. 
