@@ -10,8 +10,15 @@ In functional languages there has been recent work, that of \citet{perera22} whi
 that one can formally model the relationship between structured inputs and structured outputs
 using a Galois connection. This idea of Galois slicing not only allowed them to compute 
 fine-grained program slices of structured outputs, but also allowed them to build a formal 
-model of the task of \textit{brushing and linking} \citet{becker87} multiple structured visualizations
+model of the task of \textit{brushing and linking} \citep{becker87} multiple structured visualizations
 of the same dataset, see \figref{linked-outputs}. 
+
+\begin{figure}
+   {\centering\includegraphics[scale=0.5]{fig/example/vis-linking.png}}
+   \caption{Example of linked outputs from \citet{perera22}}
+   \label{fig:linked-outputs}
+\end{figure}
+
 
 However, this work has some severe limitations, which we seek to address with our own work.
 Firstly, whilst their work is aimed at interactive visualization of datasets, there is a
@@ -30,22 +37,37 @@ structured outputs together naturally raises the question of using the Galois sl
 to try and link together multiple structured inputs which may \textit{co-operate} to produce
 a particular output. The referenced work does not make it clear how one would approach this.
 
+Our work, which aims to combine the dynamic dependence graph approach with the notion of Galois
+connections has allowed us to give a simple description of the \textit{linked-inputs}
+query described above, as a composition of two traversals of the same program graph.
 
+In contrast to prior work which used traces the slicing procedures, and their duals, are 
+much easier to describe in the graphical setting. Backwards slicing -  as we shall discuss
+in \secref{graph} - is effectively just a breadth-first search of a graph. Forward slicing
+is not much more complicated. We shall also see how the graphical setting simplifies the De Morgan duals,
+allowing us to construct the linked-inputs procedure via the composition of simple procedures
+over the graph.
 
-\begin{figure}
-   {\centering\includegraphics[scale=0.5]{fig/example/vis-linking.png}}
-   \caption{Example of linked outputs from \citet{perera22}}
-   \label{fig:linked-outputs}
-\end{figure}
+The benefit of this simplicity is that our slicing procedures are now far more efficient,
+making interactive program slicing a tangible goal. Backwards slicing for example now takes
+time linear in the size of the computed slice. The time complexity of forward slicing does not
+admit such an easy description, but is empirically faster in most examples we have tested.
 
-In prior approaches to slicing 
+\figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
+as a listing of the code used to produce it. Within the source listing, \textit{countries}
+and \textit{cities} are variables which represent the two tables used to produce the chart.
+The process of linking together inputs is sketched thusly: first the user selects the input data
+they know they are interested in. Then \OurLang applies the forward slicing procedure on that
+input selection, to select elements of the bubble chart the input data was used to compute.
+Then we use the De Morgan dual of the backward slicing procedure to find the input 
+data in the second table which had a hand in creating the selected output. 
 
-A related task is in interpreting the connection between multiple datasets
-which cooperate in some computation. \figref{linked-inputs-1} shows a visualization
-of a bubble chart, collating information from two tables, one containing information
-on nations, one containing information on cities (potentially) within those nations.
-The right hand side of the figure contains the source code used to produce this figure,
-with the variables \textit{countries} and \textit{cities} representing the two tables.
+We now suppose the user wishes to expand the data they are interested in looking it.
+By updating the selection information on the input, say expanding our selection of
+interest to include the record containing information on the UK, we can see in 
+that we also need to select the records with information on London, Birmingham and
+Manchester in order to compute the position and dimensions of the second bubble.
+
 
 \begin{figure}
    \begin{minipage}{0.45\textwidth}
