@@ -53,22 +53,6 @@ making interactive program slicing a tangible goal. Backwards slicing for exampl
 time linear in the size of the computed slice. The time complexity of forward slicing does not
 admit such an easy description, but is empirically faster in most examples we have tested.
 
-\figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
-as a listing of the code used to produce it. Within the source listing, \textit{countries}
-and \textit{cities} are variables which represent the two tables used to produce the chart.
-The process of linking together inputs is sketched thusly: first the user selects the input data
-they know they are interested in. Then \OurLang applies the forward slicing procedure on that
-input selection, to select elements of the bubble chart the input data was used to compute.
-Then we use the De Morgan dual of the backward slicing procedure to find the input 
-data in the second table which had a hand in creating the selected output. 
-
-We now suppose the user wishes to expand the data they are interested in looking it.
-By updating the selection information on the input, say expanding our selection of
-interest to include the record containing information on the UK, we can see in 
-that we also need to select the records with information on London, Birmingham and
-Manchester in order to compute the position and dimensions of the second bubble.
-
-
 \begin{figure}
    \begin{minipage}{0.45\textwidth}
       {\includegraphics[scale=0.2]{fig/example/linked-inputs-1.png}}
@@ -82,11 +66,23 @@ Manchester in order to compute the position and dimensions of the second bubble.
    \label{fig:linked-inputs-1}
 \end{figure}
 
-In \figref{linked-inputs-1}, we have made a selection on relevant information in the
-table labelled \textit{countries}. The selection on this table induces a Galois connection
-through to the output chart, selecting the relevant bubble. The selection on the bubble
-induces another Galois connection from the chart to the second input, the table of
-cities, in this case it identifies cities that are associated with the selected countries.
-One interesting quirk of the dependency relation we compute is that we do not compute a
-dependency on the field of a city record named country, only the data from the city
-record that was used to compute the bubble.
+\figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
+as a listing of the code used to produce it. Within the source listing, \textit{countries}
+and \textit{cities} are variables which represent the two tables used to produce the chart.
+The process of linking together inputs is sketched thusly: first the user selects the input data
+they know they are interested in. Then \OurLang applies the forward slicing procedure on that
+input selection, to select elements of the bubble chart the input data was used to compute.
+Then we use the De Morgan dual of the backward slicing procedure to find the input 
+data in the second table which had a hand in creating the selected output. 
+
+We now suppose the user wishes to expand the data they are interested in looking it.
+By updating the selection information on the input, say expanding our selection of
+interest to include the record containing information on the UK, we can see in \figref{linked-inputs-2}
+that we also need to select the records with information on London, Birmingham and
+Manchester in order to compute the position and dimensions of the second bubble.
+
+\begin{figure}
+   {\includegraphics[scale=0.5\textwidth]{fig/example/linked-inputs-2.png}}
+   \label{fig:linked-inputs-2}
+   \caption{Linked inputs example with expanded selection}
+\end{figure}
