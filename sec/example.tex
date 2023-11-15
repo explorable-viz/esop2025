@@ -24,9 +24,9 @@ a bar on the left highlights the bubbles on the right which are sourced from
 the same record. \todo{Need to replace image with a more refined example}
 
 \begin{figure}
-   {\centering\includegraphics[scale=0.5]{fig/example/linked-outputs-1.png}}
+   {\centering\includegraphics[scale=0.5]{fig/example/data-linking-merged.png}}
    \label{fig:linked-outputs}
-   \caption{Example linked outputs}
+   \caption{Example of linked outputs from \citet{perera22}}
    \label{fig:linked-outputs}
 \end{figure}
 
@@ -38,7 +38,7 @@ such structured views.
 
 A related task is in interpreting the connection between multiple datasets
 which cooperate in some computation. \figref{linked-inputs-1} shows a visualization
-of a bubble chart, collating information from two tables, one containing information 
+of a bubble chart, collating information from two tables, one containing information
 on nations, one containing information on cities (potentially) within those nations.
 The right hand side of the figure contains the source code used to produce this figure,
 with the variables \textit{countries} and \textit{cities} representing the two tables.
@@ -59,8 +59,8 @@ with the variables \textit{countries} and \textit{cities} representing the two t
 In \figref{linked-inputs-1}, we have made a selection on relevant information in the
 table labelled \textit{countries}. The selection on this table induces a Galois connection
 through to the output chart, selecting the relevant bubble. The selection on the bubble
-induces another Galois connection from the chart to the second input, the table of 
+induces another Galois connection from the chart to the second input, the table of
 cities, in this case it identifies cities that are associated with the selected countries.
 One interesting quirk of the dependency relation we compute is that we do not compute a
-dependency on the field of a city record named country, only the data from the city 
-record that was used to compute the bubble. 
+dependency on the field of a city record named country, only the data from the city
+record that was used to compute the bubble.
