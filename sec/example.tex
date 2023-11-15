@@ -1,27 +1,36 @@
 \section{Motivating Example}
 \label{sec:example}
 We present an overview of \OurLang.
-Modern climate models such as \todo{cite} consist of a large number of interacting modules.
-When a data scientist is investigating a new domain, they often begin by analysing
-data in an exploratory fashion. This data may be arranged as a collection of records
-like in a relational database. Investigating relationships between these complex
-datasets can be difficult.
 
-Let us consider the following example: our hypothetical data scientist is
-investigating international water-usage across nations. In \figref{linked-outputs}, each nation is
-represented as a record, with fields for the name of the country,
-measures of various water consumption statistics \todo{change this},
-alongside their population in millions, and the continent they reside in.
+Dynamic program slicing in imperative languages has a rich history in the usage of
+dependence graphs to track information flow through a program, representing control
+flow statements and branches explicitly, as originally described in \citet{agrawal90}.
 
-Imagine the users model has produced some charts out of this data. Unfortunately
-it's difficult to relate visual elements from one chart to another, or back to
-the original dataset. In databases and visualization, this is the common task
-of \textit{brushing and linking} \cite{becker87} views of a
-dataset. Here, the goal is to connect relevant parts of two structured program
-outputs, mediated by their using the same dataset. For example, in \figref{linked-outputs}
-we produce both a bar- and bubblechart from the same input dataset. Selecting
-a bar on the left highlights the bubbles on the right which are sourced from
-the same record. \todo{Need to replace image with a more refined example}
+In functional languages there has been recent work, that of \citet{perera22} which showed
+that one can formally model the relationship between structured inputs and structured outputs
+using a Galois connection. This idea of Galois slicing not only allowed them to compute 
+fine-grained program slices of structured outputs, but also allowed them to build a formal 
+model of the task of \textit{brushing and linking} \citet{becker87} multiple structured visualizations
+of the same dataset, see \figref{linked-outputs}. 
+
+However, this work has some severe limitations, which we seek to address with our own work.
+Firstly, whilst their work is aimed at interactive visualization of datasets, there is a
+significant performance overhead when interacting with visualizations. Since they compute
+their Galois connections via re-evaluating a program in the case of forwards slicing,
+changing a selection on an input value takes the same amount of time as computing it
+in the first place. To go in the backwards direction - selecting a structured output and
+finding the inputs used to produce it - they must construct a trace at the same time as
+evaluating the program, and then use this to propagate selection information backwards
+through a fixed evaluation. For a system focussing on interactivity, this is a clear negative.
+
+The second major issue with this prior work is that by factoring everything through evaluation
+or backwards traversal of an execution trace, interpreting their slicing algorithms is
+very difficult, and is inherently tied to their language. In particular, the idea of linking
+structured outputs together naturally raises the question of using the Galois slicing framework
+to try and link together multiple structured inputs which may \textit{co-operate} to produce
+a particular output. The referenced work does not make it clear how one would approach this.
+
+
 
 \begin{figure}
    {\centering\includegraphics[scale=0.5]{fig/example/vis-linking.png}}
@@ -29,11 +38,7 @@ the same record. \todo{Need to replace image with a more refined example}
    \label{fig:linked-outputs}
 \end{figure}
 
-In existing software packages, this is possible but usually done on a bespoke
-basis, and may require significant programmer effort. These are not the only
-concerns. This functionality usually doesn't come equipped with the ability to
-directly inspect the underlying data either, limiting the interpretability of
-such structured views.
+In prior approaches to slicing 
 
 A related task is in interpreting the connection between multiple datasets
 which cooperate in some computation. \figref{linked-inputs-1} shows a visualization
@@ -43,11 +48,11 @@ The right hand side of the figure contains the source code used to produce this 
 with the variables \textit{countries} and \textit{cities} representing the two tables.
 
 \begin{figure}
-   \begin{minipage}{0.4\textwidth}
+   \begin{minipage}{0.45\textwidth}
       {\includegraphics[scale=0.2]{fig/example/linked-inputs-1.png}}
    \end{minipage}
    \vspace{2mm}
-   \begin{minipage}{0.6\textwidth}
+   \begin{minipage}{0.55\textwidth}
       \tiny
       \lstinputlisting[language=Fluid]{fig/example/linked-input-water.fld}
    \end{minipage}
