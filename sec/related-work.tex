@@ -11,27 +11,28 @@ slicing performance, and simplifies the treatment of Galois connections. Our
 method also allows for us to describe other interesting queries, such
 as the linked-inputs example we describe in \secref{example}.
 
-For a generic perspective, \citet{field98} considers dynamic dependence tracking in
-term-rewriting systems. Their approach allows them to perform graphical program
-slicing on a subset of Pascal, but differs from ours in that they explicitly
-represent reduction steps in their dependence graphs. This is in contrast to our
-work, since we do not represent this sort of information in the graph, and our
-language is defined with a big-step operational semantics. \todo{This could need
-rewriting}. 
-
+For a more generic perspective on program slicing, \citet{field98} considers dynamic
+dependence tracking in term-rewriting systems. Their approach allows them to perform
+graphical program slicing on a subset of Pascal, but differs from our work in that they
+explicitly represent reduction steps in their dependence graphs. In contrast
+we do not represent this sort of information in the graph, and our
+language is defined with a big-step operational semantics.
 \subsection{Graph Evaluation}
-Whilst ours is the first work to apply graph evaluation techniques to slicing
-functional programs, we are not the first to apply graph evaluation techniques
-in general. The compilation of a functional program to a graph has been used
+Whilst ours is the first work to apply graph evaluation techniques for slicing
+functional programs, it is not the first to apply graph evaluation techniques
+in general. For example, the compilation of a functional program to a graph has been used
 to implement incremental compilation of programs in \citet{acar02, acar06b}.
 In contrast to their work, which focusses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive
-data exploration systems. Their work is implemented as a library for Standard ML
+data exploration systems. Additionally their work is implemented as a library for Standard ML
 whilst we have implemented a language with this functionality built in. 
 
-Term graph rewriting systems, introduced by \citet{barendregt87} have been well
-studied in the implementation of functional languages. In \citet{vanEekelen97},
-the graph rewriting semantics of the language Clean are studied in detail, as
-opposed to using an extension of the lambda calculus. As with Acar et al,
-the goal of their work is the efficient implementation of pure functional
-programming languages. 
+The work of Acar is not the first to treat functional programs as graphs.
+As opposed to a standard operational semantics, one can represent the semantics
+as a term graph rewrite system. These systems, introduced by \citet{barendregt87}
+allow for the representation of every aspect of a functional languages semantics
+to be represented in a graph. For example, in \citet{vanEekelen97}, the graph rewriting 
+semantics of the language Clean are studied in detail, as opposed to using an extension
+of the lambda calculus. As with Acar et al, the goal of their work is the efficient
+implementation of a functional programming language in general, contrasted with our aim
+of principled program slicing. 
