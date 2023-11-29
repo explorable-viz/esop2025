@@ -8,15 +8,21 @@ flow statements and branches explicitly, as originally described in \citet{agraw
 
 In functional languages there has been recent work, that of \citet{perera22} which showed
 that one can formally model the relationship between structured inputs and structured outputs
-using a Galois connection. This idea of Galois slicing not only allowed them to compute 
-fine-grained program slices of structured outputs, but also allowed them to build a formal 
+using a Galois connection. This idea of Galois slicing not only allowed them to compute
+fine-grained program slices of structured outputs, but also allowed them to build a formal
 model of the task of \textit{brushing and linking} \citep{becker87} multiple structured visualizations
-of the same dataset, see \figref{linked-outputs}. 
+of the same dataset, see \figref{linked-outputs}.
 
 \begin{figure}
-   {\centering\includegraphics[scale=0.5]{fig/example/vis-linking.png}}
-   \caption{Example of linked outputs from \citet{perera22}}
-   \label{fig:linked-outputs}
+%   \begin{subfigure}{\textwidth}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}}
+   \label{fig:linked-outputs-1}
+%   \end{subfigure}
+%   \begin{subfigure}{\textwidth}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-2.png}}
+   \label{fig:linked-outputs-2}
+%   \end{subfigure}
+   \caption{Examples of linked outputs, adapted from~\citet{perera22}}
 \end{figure}
 
 
@@ -41,7 +47,7 @@ Our work, which aims to combine the dynamic dependence graph approach with the n
 connections has allowed us to give a simple description of the \textit{linked-inputs}
 query described above, as a composition of two traversals of the same program graph.
 
-In contrast to prior work which used traces the slicing procedures, and their duals, are 
+In contrast to prior work which used traces the slicing procedures, and their duals, are
 much easier to describe in the graphical setting. Backwards slicing -  as we shall discuss
 in \secref{graph} - is effectively just a breadth-first search of a graph. Forward slicing
 is not much more complicated. We shall also see how the graphical setting simplifies the De Morgan duals,
@@ -72,8 +78,8 @@ and \textit{cities} are variables which represent the two tables used to produce
 The process of linking together inputs is sketched thusly: first the user selects the input data
 they know they are interested in. Then \OurLang applies the forward slicing procedure on that
 input selection, to select elements of the bubble chart the input data was used to compute.
-Then we use the De Morgan dual of the backward slicing procedure to find the input 
-data in the second table which had a hand in creating the selected output. 
+Then we use the De Morgan dual of the backward slicing procedure to find the input
+data in the second table which had a hand in creating the selected output.
 
 We now suppose the user wishes to expand the data they are interested in looking it.
 By updating the selection information on the input, say expanding our selection of
