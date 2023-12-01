@@ -56,16 +56,19 @@ time linear in the size of the computed slice. The time complexity of forward sl
 admit such an easy description, but is empirically faster in most examples we have tested.
 
 \begin{figure}
-   \begin{minipage}{0.45\textwidth}
-      {\includegraphics[scale=0.2]{fig/example/linked-inputs-1.png}}
-   \end{minipage}
-   \vspace{2mm}
-   \begin{minipage}{0.55\textwidth}
-      \tiny
-      \lstinputlisting[language=Fluid]{fig/example/linked-input-water.fld}
-   \end{minipage}
+   {\includegraphics[width=0.8\textwidth]{fig/example/new-linked-inputs.png}}
    \caption{Example Linked Inputs}
    \label{fig:linked-inputs-1}
+\end{figure}
+
+
+\begin{figure}
+   {
+      \centering
+      \tiny
+      \lstinputlisting[language=Fluid]{fig/example/linked-input-water.fld}
+   }
+   \caption{Program source for computing water consumption}
 \end{figure}
 
 \figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
@@ -77,14 +80,3 @@ input selection, to select elements of the bubble chart the input data was used 
 Then we use the De Morgan dual of the backward slicing procedure to find the input
 data in the second table which had a hand in creating the selected output.
 
-We now suppose the user wishes to expand the data they are interested in looking it.
-By updating the selection information on the input, say expanding our selection of
-interest to include the record containing information on the UK, we can see in \figref{linked-inputs-2}
-that we also need to select the records with information on London, Birmingham and
-Manchester in order to compute the position and dimensions of the second bubble.
-
-\begin{figure}
-   {\includegraphics[scale=0.3]{fig/example/linked-inputs-2.png}}
-   \label{fig:linked-inputs-2}
-   \caption{Linked inputs example with expanded selection}
-\end{figure}
