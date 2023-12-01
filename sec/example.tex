@@ -59,6 +59,14 @@ admit such an easy description, but is empirically faster in most examples we ha
    \label{fig:linked-inputs-1}
 \end{figure}
 
+
+\begin{figure}
+   {
+      \tiny
+      \lstinputlisting[language=Fluid]{fig/example/linked-input-water.fld}
+   }
+\end{figure}
+
 \figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
 as a listing of the code used to produce it. Within the source listing, \textit{countries}
 and \textit{cities} are variables which represent the two tables used to produce the chart.
@@ -68,14 +76,3 @@ input selection, to select elements of the bubble chart the input data was used 
 Then we use the De Morgan dual of the backward slicing procedure to find the input 
 data in the second table which had a hand in creating the selected output. 
 
-We now suppose the user wishes to expand the data they are interested in looking it.
-By updating the selection information on the input, say expanding our selection of
-interest to include the record containing information on the UK, we can see in \figref{linked-inputs-2}
-that we also need to select the records with information on London, Birmingham and
-Manchester in order to compute the position and dimensions of the second bubble.
-
-\begin{figure}
-   {\includegraphics[scale=0.3]{fig/example/linked-inputs-2.png}}
-   \label{fig:linked-inputs-2}
-   \caption{Linked inputs example with expanded selection}
-\end{figure}
