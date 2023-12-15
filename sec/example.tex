@@ -45,9 +45,11 @@ dependence graphs to track information flow through a program, representing cont
 flow statements and branches explicitly, as originally described in \citet{agrawal90}.
 
 \begin{figure}
-   {\centering\includegraphics[scale=0.5]{fig/example/vis-linking.png}}
-   \caption{Example of linked outputs from \citet{perera22}}
-   \label{fig:linked-outputs}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}}
+   \label{fig:linked-outputs-1}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-2.png}}
+   \label{fig:linked-outputs-2}
+   \caption{Examples of linked outputs, adapted from~\citet{perera22}}
 \end{figure}
 
 
@@ -72,7 +74,7 @@ Our work, which aims to combine the dynamic dependence graph approach with the n
 connections has allowed us to give a simple description of the \textit{linked-inputs}
 query described above, as a composition of two traversals of the same program graph.
 
-In contrast to prior work which used traces the slicing procedures, and their duals, are 
+In contrast to prior work which used traces the slicing procedures, and their duals, are
 much easier to describe in the graphical setting. Backwards slicing -  as we shall discuss
 in \secref{graph} - is effectively just a breadth-first search of a graph. Forward slicing
 is not much more complicated. We shall also see how the graphical setting simplifies the De Morgan duals,
@@ -104,6 +106,6 @@ and \textit{cities} are variables which represent the two tables used to produce
 The process of linking together inputs is sketched thusly: first the user selects the input data
 they know they are interested in. Then \OurLang applies the forward slicing procedure on that
 input selection, to select elements of the bubble chart the input data was used to compute.
-Then we use the De Morgan dual of the backward slicing procedure to find the input 
-data in the second table which had a hand in creating the selected output. 
+Then we use the De Morgan dual of the backward slicing procedure to find the input
+data in the second table which had a hand in creating the selected output.
 
