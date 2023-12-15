@@ -1,6 +1,16 @@
 \section{Motivating Example}
 \label{sec:example}
 We present an overview of \OurLang.
+\begin{figure}
+   \begin{enumerate}
+      \item Introduce the context first: need to cover notion of program slicing, aspects of data visualization, and problems of previous approach
+      \item To lead into the example itself, we need to introduce a hypothetical climate/economics data scientist, who wishes to perform some exploratory data analysis on data related to renewable electricity generation capacity. We can use the example from POPL22 for this. This ties in with the discussion of brushing and linking and is how we can introduce the application itself
+      \item Then, we can progress the narrative slightly, and imagine the scientist has been provided with another data source. In our example, this new data source contains information on non-renewable energy usage, as well as the CO2 intensity of the given countries power systems. In our current iteration of the example. We plot the proportion of energy from renewable sources against the overall CO2 intensity of a nation (in the year 2015 for the moment, but this needs to be changed), with the radius of a bubble being gdp. We see no relation between GDP and the other 2 statistics necessarily, and also do not see a strong correlation between the proportion of power from renewable sources and the CO2 intensity (if we sum things up in total). The fact that these correlations don't exist could be surprising, and may be useful to demonstrate the idea.
+   \end{enumerate}
+   \caption{Plan of section}      
+\end{figure}
+
+Imagine you are a 
 
 Dynamic program slicing in imperative languages has a rich history in the usage of
 dependence graphs to track information flow through a program, representing control
@@ -54,19 +64,33 @@ time linear in the size of the computed slice. The time complexity of forward sl
 admit such an easy description, but is empirically faster in most examples we have tested.
 
 \begin{figure}
-   {\includegraphics[width=0.8\textwidth]{fig/example/new-linked-inputs.png}}
-   \caption{Example Linked Inputs}
-   \label{fig:linked-inputs-1}
+   \centering
+   \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth]{fig/example/non-renewables-to-renewables.png}
+      \label{fig:linked-inputs-1}
+   \end{subfigure}
+   \vfill
+   \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth]{fig/example/renewable-to-non-renewable.png}
+      \label{fig:linked-inputs-2}
+   \end{subfigure}
+   \caption{Linking inputs in both directions}
 \end{figure}
 
 
 \begin{figure}
    {
       \centering
-      \tiny
-      \lstinputlisting[language=Fluid]{fig/example/linked-input-water.fld}
+      \begin{subfigure}{0.5\textwidth}
+         \tiny
+         \lstinputlisting[language=Fluid]{fig/example/energy-query.fld}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}{0.5\textwidth}
+         \includegraphics[width=\textwidth]{fig/example/energychart.png}
+      \end{subfigure}
    }
-   \caption{Program source for computing water consumption}
+   \caption{Program source for computing energy capacity bubblechart}
 \end{figure}
 
 \figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
