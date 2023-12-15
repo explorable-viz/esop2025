@@ -5,37 +5,41 @@ We present an overview of \OurLang.
 \begin{figure}
    {
       \centering
-      \begin{subfigure}{0.5\textwidth}
+      \begin{subfigure}{0.49\textwidth}
          \tiny
          \lstinputlisting[language=Fluid]{fig/example/energy-query.fld}
+         \caption{Source file}
          \label{fig:energy-query-1}
       \end{subfigure}
       \hfill
-      \begin{subfigure}{0.5\textwidth}
+      \begin{subfigure}{0.49\textwidth}
          \includegraphics[width=\textwidth]{fig/example/energychart.png}
+         \caption{Chart of carbon intensity of a
+         nation against the proportion of its energy generation from renewable resources. The
+         radius of a bubble represents the nations GDP per capita.}
          \label{fig:energy-query-2}
       \end{subfigure}
    }
-   \caption{Program source for computing energy capacity bubblechart}
+   \caption{Renewable energy economic data}
    \label{fig:energy-query}
 \end{figure}
 Imagine you are an environmental data scientist, studying the relationship between
 a nations economy and its environmental impact. \figref{energy-query} shows a program,
-written in \OurLang, and its output. The bubblechart charts the carbon intensity of a
-nation against the proportion of its energy generation from renewable resources. The
-radius of a bubble represents the nations GDP per capita. The source file makes reference
+written in \OurLang, and its output, a bubblechart. The source file - \figref{energy-query-1} makes reference
 to two variables, \textit{renewables} and \textit{non\_renewables}, which are defined
 in two separate tables of data. Identifying the data from the two disparate
 datasets that contribute to the structure of each bubble in the chart is non-trivial,
 especially since each table is arranged differently.
 
 Since the input data comes from two sources, we can lift a technique from
-data visualization called \textit{brushing and linking}\citep{becker87}, in which
+data visualization called \textit{brushing and linking} \citep{becker87}, in which
 a selection made in one of the views of the data is propagated to the others.
 Historically, this technique is implemented in an ad-hoc manner, for a given
-visualization and the data it consumes. Recent work from \citet{perera22} suggests
-a formal grounding on which this task can be performed. In their work, a family of
-Galois connections can be constructed between inputs and outputs, allowing them to
+visualization and the data it consumes. 
+
+Recent work from \citet{perera22} provides a formal setting in which this task
+can be expressed. In their work, a family of Galois connections can be constructed 
+between inputs and outputs, allowing them to
 identify the parts of a structured input which contribute to a structured output in
 a fine-grained manner. Their work also allowed them to link multiple output views
 of the same data together, as in \figref{linked-outputs-1}.
