@@ -36,8 +36,12 @@ For this reason, \OurLang aims to aid in the task of interpreting related input 
 building a fine-grained dependency analysis into the language itself, without requiring any
 additional effort from the programmer. 
 
-The user would like to be able to select the visual elements of the chart, and
-be presented with exactly the data that was used to compute that visual element.
+In this setting, it's helpful for the user to be able to select a portion of the input data
+from one source, and be presented with the parts of the other source which it co-operates with.
+This is achieved with a pair of composable operators, which we refer to as \textit{demands},
+and \textit{demanded by}. We say that some data $y$ \textit{demands} some other data $x$
+if $x$ was used during the computation of $y$, and conversely that $x$ is \textit{demanded by}
+$y$ if parts of $y$ need parts of $x$ to be computed.  
 
 Since the input data comes from two sources, we can lift a technique from
 data visualization called \textit{brushing and linking} \citep{becker87}, in which
