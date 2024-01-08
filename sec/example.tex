@@ -21,13 +21,20 @@ We present an overview of \OurLang.
    \caption{Program contrasting renewable energy capacity with efficiency of usage, and accompanying program source code}
    \label{fig:energy-query}
 \end{figure}
-Imagine you are an environmental data scientist, studying the relationship between
-a nations economy and its environmental impact. \figref{energy-query} shows a program,
-written in \OurLang, and its output, a bubblechart. The source file - \figref{energy-query-1} -
-makes reference to two variables, \textit{renewables} and \textit{non\_renewables}, which are defined
-in two separate tables of data. Identifying the data from the two disparate
-datasets that contribute to the structure of each bubble in the chart is non-trivial,
-especially since each table is arranged differently.
+Imagine you are an environmental data scientist, studying renewable energy usage across the world.
+\figref{energy-query} shows a program which reads in from 2 tables of data, and uses them
+to produce the chart seen in \ref{fig:energy-query-2}.  This program computes the annual energy
+production capacity of a nation, finds the proportion of this which comes from renewable resources
+and then compares that with the efficiency of its usage over the year 2018.
+
+Integrating multiple data sources for 
+analysis and visualization is one of the most common tasks in modern data science, 
+but it is non-trivial. The relationships between data in the two tables of the example
+may not be obvious to a user who doesn't have access to the source program. 
+
+For this reason, \OurLang aims to aid in the task of interpreting related input data by
+building a fine-grained dependency analysis into the language itself, without requiring any
+additional effort from the programmer. 
 
 The user would like to be able to select the visual elements of the chart, and
 be presented with exactly the data that was used to compute that visual element.
