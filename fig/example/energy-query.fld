@@ -1,26 +1,24 @@
-let energies countries year =
-    let joined_country c_name =
-        let filtered = filter (check_country year c_name) renewables;
-        let totalRens = sum (map (fun x = x.output) filtered);
-        let non_ren_x =
-            head (filter (check_country year c_name) non_renewables);
-        let totalNonRens = sumNonRenewables non_ren_x
-        in {
-                name: c_name,
-                totalCap: totalRens + totalNonRens,
-                non_renewables: totalNonRens,
-                carbonInt: non_ren_x.carbonInt,
-                gdpPerCap: non_ren_x.gdpPerCap
-            }
-    in map joined_country countries
-in BubbleChart {
-    caption: "Carbon intensity against proportion of energy from renewables",
+let energy year c_name =
+    let filteredRen = filter (check_c year c_name) rens;
+    let rensOut = sum (map (fun x = x.output) filteredRen);
+    let rensCap = sum (map (fun x = x.capacity) filteredRen);
+    let non_ren_x = head (filter (check_c year c_name) non_rens);
+    let totalNonRens = sumNonrens non_ren_x
+    in {
+            name: c_name,
+            totalCap: rensCap + totalNonRens,
+            non_rens: totalNonRens,
+            renCapFactor: rensOut / rensCap
+        }
+in ScatterPlot {
+    caption: "Efficiency of renewables against proportion of cap",
     data: [{
-                x: country.non_renewables / country.totalCap,
-                y: country.carbonInt,
-                z: country.gdpPerCap,
+                x: country.non_rens / country.totalCap,
+                y: country.renCapFactor,
                 c: country.name
-           }|country <- energies ["Brazil", "China", "Egypt", "Germany", "USA"] 2018],
-    xlabel: "Renewables/TotalEnergyCap",
-    ylabel: "CarbonInt"
+           }| country <- map (energy 2018) 
+                             ["BRA", "CHN", "DEU", "FRA", "EGY"
+                             , "IND", "JPN", "MEX", "NGA", "USA"]],
+    xlabel: "rens/TotalEnergyCap",
+    ylabel: "Clean Capacity Factor"
 }
