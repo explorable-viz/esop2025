@@ -35,7 +35,7 @@ and then compares that with the efficiency of its usage over the year 2018. The 
 is written in \OurLang, a standard functional programming language with records.
 
 The two tables
-used for this example are arranged differently, in the table named \textit{non_rens}, energy
+used for this example are arranged differently, in the table named \textit{non\_rens}, energy
 capacity and output figures are fields of each record, whereas in \textit{rens}, each type
 of energy output is given its own row. If the user was presented with only the chart and the
 data tables, certain aspects of the visualization wouldn't be apparent. As an example, it
@@ -45,7 +45,7 @@ though it is a non-renewable energy resource.
 \begin{figure}
    {
       \centering
-      \begin{subfigure}
+      \begin{subfigure}{\textwidth}
          \includegraphics[width=\textwidth]{fig/example/related-input-placeholder.png}
       \end{subfigure}
    }
@@ -64,6 +64,13 @@ This is achieved with a pair of composable operators, which we refer to as \text
 and \textit{demanded by}. We say that some data $y$ \textit{demands} some other data $x$
 if $x$ was used during the computation of $y$, and conversely that $x$ is \textit{demanded by}
 $y$ if parts of $y$ need parts of $x$ to be computed.  
+
+It turns out that if we consider the inputs $x$ and outputs $y$ as part of some Boolean algebra,
+then \textit{demands} and \textit{demanded by} are conjugate in the following sense:
+$x \wedge demands(y) = 0 \iff demandedBy(x) \wedge y = 0$.
+
+In natural language, if $x$ is disjoint from the input data needed by $y$, then 
+the output that uses $x$ is disjoint from $y$. 
 
 Since the input data comes from two sources, we can lift a technique from
 data visualization called \textit{brushing and linking} \citep{becker87}, in which
