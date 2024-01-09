@@ -21,20 +21,26 @@ We present an overview of \OurLang.
    \caption{Program contrasting renewable energy capacity with efficiency of usage, and accompanying program source code}
    \label{fig:energy-query}
 \end{figure}
-Imagine you are an environmental data scientist, studying renewable energy usage across the world.
+Integrating multiple data sources for 
+analysis and visualization is one of the most common tasks in modern data science, 
+but it is non-trivial. The relationships between data that has been pulled from multiple
+sources may not be immediately visible, even with access to the program source code. This
+can be further compounded if the data sources have different shapes or layouts. 
+
+As an example, imagine you are an environmental data scientist, studying renewable energy usage across the world.
 \figref{energy-query} shows a program which reads in from 2 tables of data, and uses them
 to produce the chart seen in \ref{fig:energy-query-2}.  This program computes the annual energy
 production capacity of a nation, finds the proportion of this which comes from renewable resources
-and then compares that with the efficiency of its usage over the year 2018.
+and then compares that with the efficiency of its usage over the year 2018. The program in \ref{fig:energy-query-1}
+is written in \OurLang, a standard functional programming language with records.
 
-Integrating multiple data sources for 
-analysis and visualization is one of the most common tasks in modern data science, 
-but it is non-trivial. The relationships between data in the two tables of the example
-may not be obvious to a user who doesn't have access to the source program. 
-
-For this reason, \OurLang aims to aid in the task of interpreting related input data by
-building a fine-grained dependency analysis into the language itself, without requiring any
-additional effort from the programmer. 
+The two tables
+used for this example are arranged differently, in the table named \textit{non_rens}, energy
+capacity and output figures are fields of each record, whereas in \textit{rens}, each type
+of energy output is given its own row. If the user was presented with only the chart and the
+data tables, certain aspects of the visualization wouldn't be apparent. As an example, it
+wouldn't be apparent to the user that nuclear power is considered part of clean energy, even
+though it is a non-renewable energy resource. 
 
 In this setting, it's helpful for the user to be able to select a portion of the input data
 from one source, and be presented with the parts of the other source which it co-operates with.
