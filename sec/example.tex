@@ -67,10 +67,15 @@ $y$ if parts of $y$ need parts of $x$ to be computed.
 
 It turns out that if we consider the inputs $x$ and outputs $y$ as part of some Boolean algebra,
 then \textit{demands} and \textit{demanded by} are conjugate in the following sense:
-$x \wedge demands(y) = 0 \iff demandedBy(x) \wedge y = 0$.
+$x \wedge demands(y) = \bot \iff demandedBy(x) \wedge y = \bot$.
 
 In natural language, if $x$ is disjoint from the input data needed by $y$, then 
-the output that uses $x$ is disjoint from $y$. 
+the output that uses $x$ is disjoint from $y$.
+
+With these operators, we can define the analysis used to relate input data which co-operates
+across two sources, by composing the two. We find outputs that demand $x$, then find out what
+other inputs they demand. One could write \textit{rel(x) = demands(demandedBy(x))}. In \figref{linked-outputs-main}
+we see a visual example of this, relating inputs from each of the two tables to the other. 
 
 Since the input data comes from two sources, we can lift a technique from
 data visualization called \textit{brushing and linking} \citep{becker87}, in which
