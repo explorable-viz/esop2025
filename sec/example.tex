@@ -40,10 +40,26 @@ capacity and output figures are fields of each record, whereas in \textit{rens},
 of energy output is given its own row. If the user was presented with only the chart and the
 data tables, certain aspects of the visualization wouldn't be apparent. As an example, it
 wouldn't be apparent to the user that nuclear power is considered part of clean energy, even
-though it is a non-renewable energy resource. 
+though it is a non-renewable energy resource.
 
-In this setting, it's helpful for the user to be able to select a portion of the input data
-from one source, and be presented with the parts of the other source which it co-operates with.
+\begin{figure}
+   {
+      \centering
+      \begin{subfigure}
+         \includegraphics[width=\textwidth]{fig/example/related-input-placeholder.png}
+      \end{subfigure}
+   }
+   \caption{Placeholder related inputs example}
+   \label{fig:related-inputs-no-arrows}
+\end{figure}
+
+In \figref{related-inputs-no-arrows}, we have highlighted the relevant parts of both tables
+which contribute to the position of the circle in the plot related to China. This highlighting
+shows which pieces of data co-operate to produce the position of the circle, and we shall now
+examine how we can determine this data is related, without any additional programmer effort. 
+
+The analysis works by allowing the user to select the relevant parts of one input,
+and to present them with parts of the other source which it co-operates with.
 This is achieved with a pair of composable operators, which we refer to as \textit{demands},
 and \textit{demanded by}. We say that some data $y$ \textit{demands} some other data $x$
 if $x$ was used during the computation of $y$, and conversely that $x$ is \textit{demanded by}
