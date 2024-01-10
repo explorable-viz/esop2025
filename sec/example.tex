@@ -102,6 +102,16 @@ a common dataset. This historically has been implemented in an ad-hoc manner, fo
 collection of visualizations and the data it consumes. Our pair of operators can 
 intuitively express this, by inverting their composition, $rel_{out}(y) = demandedBy(demands(y))$.
 
+\begin{figure}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
+   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-2.png}\label{fig:linked-outputs-2}}
+   \caption{Examples of linked outputs, adapted from~\citet{perera22}}
+   \label{fig:linked-outputs-main}
+\end{figure}
+
+Looking at \figref{linked-outputs-main}, the labels on the arrows are swapped, reflecting the
+inverted composition of the two functions. We are not the first to attempt to solve this
+problem in a functional programming language, for example consider the work of \citet{perera22}
 \subsubsection{Old text}
 
 Recent work from \citet{perera22} provides a formal setting in which this task
@@ -138,12 +148,7 @@ only interested in some small part of the execution.
 By establishing an appropriate Galois connection on the nodes of a programs dynamic
 dependence graph, it is possible to leverage the performance benefits of these graphs
 whilst still retaining the nice formal properties of the Galois slicing method.
-\begin{figure}
-   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
-   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-2.png}\label{fig:linked-outputs-2}}
-   \caption{Examples of linked outputs, adapted from~\citet{perera22}}
-   \label{fig:linked-outputs-main}
-\end{figure}
+
 
 
 However, this work has some severe limitations, which we seek to address with our own work.
