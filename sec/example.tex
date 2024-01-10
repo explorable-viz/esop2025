@@ -94,12 +94,15 @@ selected. If the visualization was a bubble chart, there could be three or four 
 bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
 a mechanism for the user to easily determine which attributes of a visual element have been
 highlighted as selected. \todo{Decide what we are going to do here, and do it}
+
+The problem we have described are in some sense dual to another problem in data
+visualization, the concept of \textit{brushing and linking} \citep{becker87}. 
+This is the problem of identifying elements from multiple charts computed from
+a common dataset. This historically has been implemented in an ad-hoc manner, for a given
+collection of visualizations and the data it consumes. Our pair of operators can 
+intuitively express this, by inverting their composition, $rel_{out}(y) = demandedBy(demands(y))$.
+
 \subsubsection{Old text}
-Since the input data comes from two sources, we can lift a technique from
-data visualization called \textit{brushing and linking} \citep{becker87}, in which
-a selection made in one of the views of the data is propagated to the others.
-Historically, this technique is implemented in an ad-hoc manner, for a given
-visualization and the data it consumes. 
 
 Recent work from \citet{perera22} provides a formal setting in which this task
 can be expressed. In their work, a family of Galois connections can be constructed 
