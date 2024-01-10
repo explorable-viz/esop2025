@@ -1,24 +1,24 @@
 let energy year c_name =
-    let filteredRen = filter (check_c year c_name) renewables;
-    let totalRensOut = sum (map (fun x = x.output) filteredRen);
-    let totalRensCap = sum (map (fun x = x.capacity) filteredRen);
-    let non_ren = head (filter (check_c year c_name) non_renewables);
-    let totalNonRens = sumNonRenewables non_ren
+    let filteredRen = filter (check_c year c_name) rens;
+    let rensOut = sum (map (fun x = x.output) filteredRen);
+    let rensCap = sum (map (fun x = x.capacity) filteredRen);
+    let non_ren_x = head (filter (check_c year c_name) non_rens);
+    let totalNonRens = sumNonrens non_ren_x
     in {
             name: c_name,
-            totalCap: totalRensCap + totalNonRens,
-            non_renewables: totalNonRens,
-            renCapFactor: totalRensOut / totalRensCap
+            totalCap: rensCap + totalNonRens,
+            non_rens: totalNonRens,
+            renCapFactor: rensOut / rensCap
         }
 in ScatterPlot {
-    caption: "Renewable efficiency against proportion of use",
+    caption: "Efficiency of renewables against proportion of cap",
     data: [{
-                x: country.non_renewables / country.totalCap,
+                x: country.non_rens / country.totalCap,
                 y: country.renCapFactor,
                 c: country.name
-           }| country <- map (energy 2018)
-                ["BRA", "CHN", "DEU", "FRA", "EGY"
-                , "IND", "JPN", "MEX", "NGA", "USA"]],
-    xlabel: "Renewables/TotalEnergyCap",
+           }| country <- map (energy 2018) 
+                             ["BRA", "CHN", "DEU", "FRA", "EGY"
+                             , "IND", "JPN", "MEX", "NGA", "USA"]],
+    xlabel: "rens/TotalEnergyCap",
     ylabel: "Clean Capacity Factor"
 }
