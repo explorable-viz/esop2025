@@ -40,23 +40,22 @@ of energy output is given its own row. If the user was presented with only the c
 data tables, certain aspects of the visualization wouldn't be apparent. As an example, it
 wouldn't be apparent to the user that nuclear power is considered part of clean energy, even
 though it is a non-renewable energy resource.
-\todo{Provide the view of the charts for this paragraph, and reference them}
+
 \begin{figure}
-   {
-      \centering
-      \begin{subfigure}{\textwidth}
-         \includegraphics[width=\textwidth]{fig/example/related-input-placeholder.png}
-      \end{subfigure}
-   }
-   \caption{Placeholder related inputs example}
-   \label{fig:related-inputs-no-arrows}
+   \centering
+   \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth]{fig/example/non-renewables-to-renewables.png}
+      \label{fig:linked-inputs-1}
+   \end{subfigure}
+   \caption{Linking inputs in both directions}
+   \label{fig:related-inputs-main}
 \end{figure}
 
-In \figref{related-inputs-no-arrows}, we have highlighted the relevant parts of both tables
+In \figref{related-inputs-main}, we have highlighted the relevant parts of both tables
 which contribute to the position of the circle in the plot related to China. This highlighting
 shows which pieces of data co-operate to produce the position of the circle, and we shall now
 examine how we can determine this data is related, without any additional programmer effort. 
-\todo{Replace this figure reference}
+
 We see similar problems throughout the sciences. In the study of health and medicine, we see
 numerous examples of aggregate studies or meta-analyses, such as in \citet{NAKAMURA201929}. 
 In statistics, we see techniques like model averaging for combining statistical models,
@@ -180,16 +179,6 @@ The benefit of this simplicity is that our slicing procedures are now far more e
 making interactive program slicing a tangible goal. Backwards slicing for example now takes
 time linear in the size of the computed slice. The time complexity of forward slicing does not
 admit such an easy description, but is empirically faster in most examples we have tested.
-
-\begin{figure}
-   \centering
-   \begin{subfigure}{\textwidth}
-      \includegraphics[width=\textwidth]{fig/example/non-renewables-to-renewables.png}
-      \label{fig:linked-inputs-1}
-   \end{subfigure}
-   \caption{Linking inputs in both directions}
-   \label{fig:linked-inputs-main}
-\end{figure}
 
 \figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
 as a listing of the code used to produce it. Within the source listing, \textit{countries}
