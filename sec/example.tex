@@ -58,10 +58,17 @@ a clean energy resource, but is also considered non-renewable.
    \label{fig:related-inputs-main}
 \end{figure}
 
-In \figref{related-inputs-main}, we have highlighted the relevant parts of both tables
-which contribute to the position of the circle in the plot related to China. This highlighting
-shows which pieces of data co-operate to produce the position of the circle, and we shall now
-examine how we can determine this data is related, without any additional programmer effort. 
+In \figref{related-inputs-main}, we give an example of the types of interaction we seek
+to support. First, the user interacts with the table pictured on the left
+of the figure, selecting a cell of interest from the table, such as the capacity for
+electricity generation of coal. We then calculate, through a \textit{demanded by} relation,
+what element of the output figure uses the data in the selected cell. In this example,
+we highlight the element by filling in the appropriate circle in the plot. Then, the
+rest of the information used to compute that circle is followed backwards through the
+program, using the conjugate of the \textit{demanded by} relation, which we call the
+\textit{demands} relation. In the figure, the selection that this relation computes is
+represented on the right hand side, showing us the data in the opposing table which
+co-operated with the initial selection, to produce the circle in the chart.
 
 We see similar problems throughout the sciences. In the study of health and medicine, we see
 numerous examples of aggregate studies or meta-analyses, such as in \citet{NAKAMURA201929}. 
