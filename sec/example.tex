@@ -110,8 +110,8 @@ The problem we have described are in some sense dual to another problem in data
 visualization, the concept of \textit{brushing and linking} \citep{becker87}. 
 This is the problem of identifying elements from multiple charts computed from
 a common dataset. This historically has been implemented in an ad-hoc manner, for a given
-collection of visualizations and the data it consumes. Our pair of operators can 
-intuitively express this, by inverting their composition, $rel_{out}(y) = demandedBy(demands(y))$.
+collection of visualizations and the data it consumes. An example of this interaction
+is given in \figref{linked-outputs-main}. 
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
@@ -120,9 +120,17 @@ intuitively express this, by inverting their composition, $rel_{out}(y) = demand
    \label{fig:linked-outputs-main}
 \end{figure}
 
-Looking at \figref{linked-outputs-main}, the labels on the arrows are swapped, reflecting the
-inverted composition of the two functions. We are not the first to attempt to solve this
-problem in a functional programming language, for example consider the work of \citet{perera22}
+In the figure, the ordering of the two operations is inverted, since our operators
+can express the problem of brushing and linking by inverting their composition:
+$rel_{out}(y) = demandedBy(demands(y))$.
+
+We are not the first to tackle this problem in a functional programming language.
+The recent work of \citet{perera22} demonstrates a method to solve this problem by
+constructing a family of Galois connections between the inputs and outputs of a given program.
+
+
+Our pair of operators can 
+intuitively express this, by inverting their composition, 
 \subsubsection{Old text}
 
 Recent work from \citet{perera22} provides a formal setting in which this task
