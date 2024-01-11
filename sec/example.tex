@@ -127,7 +127,14 @@ $rel_{out}(y) = demandedBy(demands(y))$.
 We are not the first to tackle this problem in a functional programming language.
 The recent work of \citet{perera22} demonstrates a method to solve this problem by
 constructing a family of Galois connections between the inputs and outputs of a given program.
+In their work, a related outputs analysis makes use of a backwards slicing function, 
+equivalent to our \textit{demands} operation, and the De Morgan Dual of their 
+forwards slicing function. It is not necessarily surprising that our work
+can replicate their analysis.
 
+It is well known that if you have a pair of conjugate functions,
+then one of them will form a Galois connection with the dual of the other,
+for example see \citet{MOLLER2006221}.
 
 Our pair of operators can 
 intuitively express this, by inverting their composition, 
