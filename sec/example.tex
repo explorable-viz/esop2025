@@ -21,12 +21,14 @@
    \label{fig:energy-query}
 \end{figure}
 Modern data visualization and analysis often makes use of combining data from multiple disparate
-sources in order to produce charts, or draw analytic confusions. Despite this ubiquity, this 
-task is non-trivial. The relationships between data that has been pulled from multiple
-sources may not be immediately visible, even with access to the program source code. This
+sources in order to produce charts, or draw analytic conclusions. Despite it's ubiquity, the 
+task of interpreting the combined data is non-trivial, even in fairly simple scenarios.
+When the combined data has been used to produce visualizations, it is not
+obvious how the data has been used. Visual elements in charts are abstractions of the underlying
+data, and can be difficult to interpret, even with access to the program source code. This
 can be further compounded if the data sources have different shapes or layouts. 
 
-As an example, imagine you are an environmental data scientist, studying renewable energy usage across the world.
+As an example,
 \figref{energy-query} shows a program which reads in from 2 tables of data, and uses them
 to produce the chart seen in \ref{fig:energy-query-2}.  This program computes the annual energy
 production capacity of a nation, finds the proportion of this which comes from renewable resources
@@ -37,9 +39,9 @@ The two tables
 used for this example are arranged differently, in the table named \textit{non\_rens}, energy
 capacity and output figures are fields of each record, whereas in \textit{rens}, each type
 of energy output is given its own row. If the user was presented with only the chart and the
-data tables, certain aspects of the visualization wouldn't be apparent. As an example, it
-wouldn't be apparent to the user that nuclear power is considered part of clean energy, even
-though it is a non-renewable energy resource.
+data tables, certain aspects of the visualization wouldn't be apparent. Without careful inspection
+by the reader, it may not be apparent that nuclear energy is, in this program, considered
+a clean energy resource, but is also considered non-renewable.
 
 \begin{figure}
    \centering
@@ -56,10 +58,18 @@ though it is a non-renewable energy resource.
    \label{fig:related-inputs-main}
 \end{figure}
 
-In \figref{related-inputs-main}, we have highlighted the relevant parts of both tables
-which contribute to the position of the circle in the plot related to China. This highlighting
-shows which pieces of data co-operate to produce the position of the circle, and we shall now
-examine how we can determine this data is related, without any additional programmer effort. 
+In \figref{related-inputs-main}, we give an example of the types of interaction we seek
+to support. First, the user interacts with the table pictured on the left
+of the figure, selecting a cell of interest from the table, such as the capacity for
+electricity generation of coal. We then calculate, through a \textit{demanded by} relation,
+what element of the output figure uses the data in the selected cell. In this example,
+we highlight the element by filling in the appropriate circle in the plot. Then, the
+rest of the information used to compute that circle is followed backwards through the
+program, using the conjugate of the \textit{demanded by} relation, which we call the
+\textit{demands} relation. In the figure, the selection that this relation computes is
+represented on the right hand side, showing us the data in the opposing table which
+co-operated with the initial selection, to produce the circle in the chart.
+\todo{Need to incorporate this with the discussion of conjugacy later on in the section}
 
 We see similar problems throughout the sciences. In the study of health and medicine, we see
 numerous examples of aggregate studies or meta-analyses, such as in \citet{NAKAMURA201929}. 
@@ -100,8 +110,8 @@ The problem we have described are in some sense dual to another problem in data
 visualization, the concept of \textit{brushing and linking} \citep{becker87}. 
 This is the problem of identifying elements from multiple charts computed from
 a common dataset. This historically has been implemented in an ad-hoc manner, for a given
-collection of visualizations and the data it consumes. Our pair of operators can 
-intuitively express this, by inverting their composition, $rel_{out}(y) = demandedBy(demands(y))$.
+collection of visualizations and the data it consumes. An example of this interaction
+is given in \figref{linked-outputs-main}. 
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
@@ -110,86 +120,30 @@ intuitively express this, by inverting their composition, $rel_{out}(y) = demand
    \label{fig:linked-outputs-main}
 \end{figure}
 
-Looking at \figref{linked-outputs-main}, the labels on the arrows are swapped, reflecting the
-inverted composition of the two functions. We are not the first to attempt to solve this
-problem in a functional programming language, for example consider the work of \citet{perera22}
-\subsubsection{Old text}
+In the figure, the ordering of the two operations is inverted, since our operators
+can express the problem of brushing and linking by inverting their composition:
+$rel_{out}(y) = demandedBy(demands(y))$.
 
-Recent work from \citet{perera22} provides a formal setting in which this task
-can be expressed. In their work, a family of Galois connections can be constructed 
-between inputs and outputs, allowing them to
-identify the parts of a structured input which contribute to a structured output in
-a fine-grained manner. Their work also allowed them to link multiple output views
-of the same data together, as in \figref{linked-outputs-main}, by composing one Galois
-connection with the De Morgan dual of another. Their algorithms for computing this
-data dependency information are directly tied to evaluation.
+We are not the first to tackle this problem in a functional programming language.
+The recent work of \citet{perera22} demonstrates a method to solve this problem by
+constructing a family of Galois connections between the inputs and outputs of a given program.
+In their work, a related outputs analysis makes use of a backwards slicing function, 
+equivalent to our \textit{demands} operation, and the De Morgan Dual of their 
+forwards slicing function, which is equivalent to our \textit{demanded by} function.
+It is not necessarily surprising that our work can replicate their analysis, for the following reason.
 
-Whilst their work provides a formal basis for these visualizations it is limited.
-Firstly, their work suffers from poor performance. In \citet{nielsen93}, the author
-provides a selection of guidelines for interactive systems. Nielsens guidelines
-estimate that an interaction time of 1 second is about the limit before a users
-train of thought is interrupted, and the threshold of 0.1 seconds causes an interaction
-to feel instantaneous. Performance data we have collected from \citet{perera22} suggests
-that their interaction time very rarely reaches the 0.1 second threshold, and is
-generally closer to the 1 second mark. We consider these numbers in more detail in
-\secref{evaluation}. For a system to feel truly interactive, we feel that this
-performance problem is unacceptable. Our solution to the performance problem
-takes an idea from dynamic program slicing. 
+It is well known that if you have a pair of conjugate functions,
+then one of them will form a Galois connection with the dual of the other,
+for example see \citet{MOLLER2006221}. This means that we can recapture the same,
+whilst the Galois connection approach cannot easily capture the idea of related inputs.
 
-Dynamic program slicing in imperative languages has a rich history in the usage of
-dependence graphs to track information flow through a program, representing control
-flow statements and branches explicitly, as originally described in \citet{agrawal90}.
-These graphs naturally represent independent strands of program execution via independent
-paths through the graph. The prior approach constructs an execution trace during evaluation,
-which is used to propagate selection information back to the input, effectively evaluating
-the program in reverse. This is the source of the performance problem, since a
-program slice must effectively run the entire program again, even if the user is
-only interested in some small part of the execution.
+One other important aspect where our work differs from this prior approach is in performance.
+Our system works by realizing the dependency relations computed by our operations as a dynamic
+dependence graph \citet{agrawal90}, computed during program evaluation. Then, as we shall
+see later, we can characterize the procedures of computing related inputs or outputs as 
+searching this graph and its opposite. This means only traversing relevant portions of
+the computation, in stark contrast to the Galois slicing approach, which requires 
+rewinding and replaying an entire program execution every time.
 
-By establishing an appropriate Galois connection on the nodes of a programs dynamic
-dependence graph, it is possible to leverage the performance benefits of these graphs
-whilst still retaining the nice formal properties of the Galois slicing method.
-
-
-
-However, this work has some severe limitations, which we seek to address with our own work.
-Firstly, whilst their work is aimed at interactive visualization of datasets, there is a
-significant performance overhead when interacting with visualizations. Since they compute
-their Galois connections via re-evaluating a program in the case of forwards slicing,
-changing a selection on an input value takes the same amount of time as computing it
-in the first place. To go in the backwards direction - selecting a structured output and
-finding the inputs used to produce it - they must construct a trace at the same time as
-evaluating the program, and then use this to propagate selection information backwards
-through a fixed evaluation. For a system focussing on interactivity, this is a clear negative.
-
-The second major issue with this prior work is that by factoring everything through evaluation
-or backwards traversal of an execution trace, interpreting their slicing algorithms is
-very difficult, and is inherently tied to their language. In particular, the idea of linking
-structured outputs together naturally raises the question of using the Galois slicing framework
-to try and link together multiple structured inputs which may \textit{co-operate} to produce
-a particular output. The referenced work does not make it clear how one would approach this.
-
-Our work, which aims to combine the dynamic dependence graph approach with the notion of Galois
-connections has allowed us to give a simple description of the \textit{linked-inputs}
-query described above, as a composition of two traversals of the same program graph.
-
-In contrast to prior work which used traces the slicing procedures, and their duals, are
-much easier to describe in the graphical setting. Backwards slicing -  as we shall discuss
-in \secref{graph} - is effectively just a breadth-first search of a graph. Forward slicing
-is not much more complicated. We shall also see how the graphical setting simplifies the De Morgan duals,
-allowing us to construct the linked-inputs procedure via the composition of simple procedures
-over the graph.
-
-The benefit of this simplicity is that our slicing procedures are now far more efficient,
-making interactive program slicing a tangible goal. Backwards slicing for example now takes
-time linear in the size of the computed slice. The time complexity of forward slicing does not
-admit such an easy description, but is empirically faster in most examples we have tested.
-
-\figref{linked-inputs-1} shows a bubble chart aggregating data from two tables, as well
-as a listing of the code used to produce it. Within the source listing, \textit{countries}
-and \textit{cities} are variables which represent the two tables used to produce the chart.
-The process of linking together inputs is sketched thusly: first the user selects the input data
-they know they are interested in. Then \OurLang applies the forward slicing procedure on that
-input selection, to select elements of the bubble chart the input data was used to compute.
-Then we use the De Morgan dual of the backward slicing procedure to find the input
-data in the second table which had a hand in creating the selected output.
+Since our focus is on making the interactions with visualizations both easy to interpret,
+and easy to use, the performance improvements are highly valuable.
