@@ -1,7 +1,7 @@
 let energy year c_name =
     let filteredRen = filter (check_c year c_name) rens;
-    let rensOut = sum (map (fun x = x.output) filteredRen);
-    let rensCap = sum (map (fun x = x.capacity) filteredRen);
+    let rensOut = sum (map (fun x $\rightarrow$ x.output) filteredRen);
+    let rensCap = sum (map (fun x $\rightarrow$ x.capacity) filteredRen);
     let non_ren_x = head (filter (check_c year c_name) non_rens);
     let totalNonRens = sumNonrens non_ren_x
     in {
