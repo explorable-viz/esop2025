@@ -49,18 +49,30 @@ The source code still doesn't paint the whole picture however, we still don't kn
 which country each circle reprents. 
 
 \todo{Discussion on these needs work, but I think I can do another pass on the next 2 paragraphs without much input?}
-Our work takes the next step in improving the readability of such an example. We
-wish to provide the user of a data analysis system with the ability to track how
-data is propagated through the analysis and how it interacts with other data without
-placing extra burden on the scientist or analyst who has constructed the original visualization.
-The user may be interested in only a specific portion of the data that was used -
-such as that from a single country - or they may be trying to get a general sense
-of what the analysis is showing. In either case, the user will want to begin by 
-identifying some input data of interest and selecting it. Once some input data is
-selected, the user should be presented with some visual feedback, demonstrating
-which parts of the output make use of the input data of interest. For ease of use,
-the user would like to be able to select the input data of choice with something
-as simple as a mouse-click.
+Our work takes the next step in improving the readability of such an example.
+For now, we imagine that inputs always take the form of a table of data, and
+outputs the form of a chart.
+
+A user who is interested in improving their understanding of this sort of program
+would likely begin by identifying some input data of interest. Either they are
+only interested in this small portion of the input data, or are looking to build
+their understanding by slowly increasing the amount of data they consider. 
+In either case, once the user has identified the input data of interest, they will
+want to proceed by selecting it. Making a selection should be possible through a
+simple interaction with some view of the table, like a mouse-click.
+Once a selection has been made, the elements of the chart which use the selected
+parts of the input should be updated to make this relationship obvious to the user.
+
+Once the outputs which make use of the selected input have been found, we consider
+those outputs to now be selected. The user has been presented with a view of the
+output that makes use of the original input data of interest. The next step in
+comprehension is to identify the other input data that contributes to the output
+which has been selected. In general it is likely that the input data related to
+our initial selection will be distributed across the various input tables,
+including the one in which the initial selection was made. For ease of use, we
+must make the initial selection visually distinct from any other input data that
+is found to be related. In our examples, we can see how the initially selected
+value has a darker background than the rest.
 
 \begin{figure}
    \centering
