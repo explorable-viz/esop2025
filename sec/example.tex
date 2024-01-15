@@ -77,6 +77,7 @@ a clean energy resource, but is also considered non-renewable.
    \label{fig:related-inputs-main}
 \end{figure}
 
+\todo{I already have some idea on how to replace this stuff, so might be worth ignoring until I've done another pass}
 In \figref{related-inputs-main}, we give an example of the types of interaction we seek
 to support. First, the user interacts with the table pictured on the left
 of the figure, selecting a cell of interest from the table, such as the capacity for
@@ -110,6 +111,7 @@ across two sources, by composing the two. We find outputs that demand $x$, then 
 other inputs they demand. One could write \textit{rel(x) = demands(demandedBy(x))}. In \figref{linked-inputs-main}
 we see a visual example of this, relating inputs from each of the two tables to the other.
 
+\todo{Needs a good amount of refining, but I think the core points here are fine}
 Providing the user with useful visual feedback is the core of our work. In our example,
 we could choose to simply fill in the circle or circles that demand the users initial input
 selection. This presents an issue however, since the circle is a 2-dimensional data point.
@@ -119,6 +121,7 @@ bubble, making the interpretation of a visual selection even more difficult. To 
 a mechanism for the user to easily determine which attributes of a visual element have been
 highlighted as selected. \todo{Decide what we are going to do here, and do it}
 
+\todo{Needs narrative work, but maybe improving stuff upstream will help this part work better without much tweaking?}
 The problem we have described are in some sense dual to another problem in data
 visualization, the concept of \textit{brushing and linking} \citep{becker87}. 
 This is the problem of identifying elements from multiple charts computed from
@@ -137,6 +140,7 @@ In the figure, the ordering of the two operations is inverted, since our operato
 can express the problem of brushing and linking by inverting their composition:
 $rel_{out}(y) = demandedBy(demands(y))$.
 
+\todo{Until I have made the introduction of Tarski's notion of conjugate work nicely, this part cannot flow well.}
 We are not the first to tackle this problem in a functional programming language.
 The recent work of \citet{perera22} demonstrates a method to solve this problem by
 constructing a family of Galois connections between the inputs and outputs of a given program.
