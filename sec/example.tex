@@ -20,13 +20,19 @@
    \caption{Program contrasting renewable energy capacity with efficiency of usage, and accompanying program source code}
    \label{fig:energy-query}
 \end{figure}
-Modern data visualization and analysis often makes use of combining data from multiple disparate
-sources in order to produce charts, or draw analytic conclusions. Despite it's ubiquity, the 
-task of interpreting the combined data is non-trivial, even in fairly simple scenarios.
-When the combined data has been used to produce visualizations, it is not
-obvious how the data has been used. Visual elements in charts are abstractions of the underlying
-data, and can be difficult to interpret, even with access to the program source code. This
-can be further compounded if the data sources have different shapes or layouts. 
+One of the most ubiquitous yet challenging tasks in science is understanding the relationships
+between the input and output variables of a problem. Communicating the results of a simulation
+or the conclusion of some analysis can be made difficult by the inherent complexity of the problem
+but also by the method in which it is communicated. When results are presented as charts
+and figures, information pertaining to how the data was used to produce the charts
+can be lost, as these visualizations present an abstracted view of the data.
+These can be difficult to interpret, even for an expert with access to source code,
+and instructions on recreating the results. This difficulty is further compounded
+when the data is collated from multiple disparate sources, a widespread phenomenon
+throughout the sciences. For example, in health research, meta-analyses such 
+as \citet{NAKAMURA201929} are common, in statistics there are techniques like Bayesian model averaging
+\citet{virdee_kaiser_ek_shuckburgh_kazlauskaite_2023}, and in computer science, join operations are 
+employed in relational databases in software systems worldwide. \citet{selinger79}
 
 As an example,
 \figref{energy-query} shows a program which reads in from 2 tables of data, and uses them
@@ -71,10 +77,6 @@ represented on the right hand side, showing us the data in the opposing table wh
 co-operated with the initial selection, to produce the circle in the chart.
 \todo{Need to incorporate this with the discussion of conjugacy later on in the section}
 
-Related problems arise throughout the sciences. In health and medicine, meta-analyses such 
-as \citet{NAKAMURA201929} are common, in statistics, we see techniques like Bayesian model averaging
-\citet{virdee_kaiser_ek_shuckburgh_kazlauskaite_2023}, and in computer science, join operations are 
-employed in relational databases in software systems worldwide. \citet{selinger79}
 
 The analysis works by allowing the user to select the relevant parts of one input,
 and to present them with parts of the other source which it co-operates with.
