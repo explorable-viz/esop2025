@@ -49,18 +49,18 @@ The source code still doesn't paint the whole picture however, we still don't kn
 which country each circle reprents. 
 
 \todo{Discussion on these needs work, but I think I can do another pass on the next 2 paragraphs without much input?}
-This program computes the annual energy
-production capacity of a nation, finds the proportion of this which comes from renewable resources
-and then compares that with the efficiency of its usage over the year 2018. The program in \ref{fig:energy-query-1}
-is written in \OurLang, a standard functional programming language with records.
-
-The two tables
-used for this example are arranged differently, in the table named \textit{non\_rens}, energy
-capacity and output figures are fields of each record, whereas in \textit{rens}, each type
-of energy output is given its own row. If the user was presented with only the chart and the
-data tables, certain aspects of the visualization wouldn't be apparent. Without careful inspection
-by the reader, it may not be apparent that nuclear energy is, in this program, considered
-a clean energy resource, but is also considered non-renewable.
+Our work takes the next step in improving the readability of such an example. We
+wish to provide the user of a data analysis system with the ability to track how
+data is propagated through the analysis and how it interacts with other data without
+placing extra burden on the scientist or analyst who has constructed the original visualization.
+The user may be interested in only a specific portion of the data that was used -
+such as that from a single country - or they may be trying to get a general sense
+of what the analysis is showing. In either case, the user will want to begin by 
+identifying some input data of interest and selecting it. Once some input data is
+selected, the user should be presented with some visual feedback, demonstrating
+which parts of the output make use of the input data of interest. For ease of use,
+the user would like to be able to select the input data of choice with something
+as simple as a mouse-click.
 
 \begin{figure}
    \centering
