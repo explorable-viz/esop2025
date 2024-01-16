@@ -142,7 +142,19 @@ we take this data, and apply the \textit{demanded by} function. In this example,
 we find the points in the line chart on the right hand side which make use of
 the input values selected by the application of \textit{demands}. 
 
-\todo{Okay, do this after re-introducing the prior work}
+Historically, solutions to the problem of brushing and linking have been ad-hoc
+and relied on significant programmer effort in order to find the correct relation
+between outputs. Adding a new visualization would potentially require this
+feature to be reimplemented or modified. In contrast, we can achieve the same
+functionality without forcing the programmer to manually implement the linking.
+
+As it happens, we are not the first to solve the problem of brushing and linking
+in a functional programming language. Prior work from \citet{perera22} has
+provided a solution through the user of Galois connections. The fact that our
+work can recapture some of their results, whilst including a large amount of
+extra functionality is not surprising, as we shall begin to make clear.
+
+\todo{Okay, sort of reintroduced prior work. Can now include this stuff}
 
 When considered as functions from sets of outputs to sets of inputs (resp:
 sets of inputs to sets of outputs), then they satisify the property known as
@@ -154,24 +166,9 @@ $$
 It is unsurprising that these two functions satisfy this property. Intuitively,
 if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
 then it is trivial that the set of outputs that $A$ is demanded by does not
-contain any elements of $B$. What is perhaps more surprising is how this property
-allows us to 
+contain any elements of $B$. \todo{Finish this off}
 
-\todo{Needs a good amount of refining, but I think the core points here are fine}
-Providing the user with useful visual feedback is the core of our work. In our example,
-we could choose to simply fill in the circle or circles that demand the users initial input
-selection. This presents an issue however, since the circle is a 2-dimensional data point.
-If the circle is simply filled in it would be natural to ask which of the two dimensions has been
-selected. If the visualization was a bubble chart, there could be three or four dimensions to each
-bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
-a mechanism for the user to easily determine which attributes of a visual element have been
-highlighted as selected. \todo{Decide what we are going to do here, and do it}
-
-In the figure, the ordering of the two operations is inverted, since our operators
-can express the problem of brushing and linking by inverting their composition:
-$rel_{out}(y) = demandedBy(demands(y))$.
-
-\todo{Until I have made the introduction of Tarski's notion of conjugate work nicely, this part cannot flow well.}
+\todo{Most of this is going to go, since we have now touched on many of the points earlier in the section}
 We are not the first to tackle this problem in a functional programming language.
 The recent work of \citet{perera22} demonstrates a method to solve this problem by
 constructing a family of Galois connections between the inputs and outputs of a given program.
@@ -195,3 +192,15 @@ rewinding and replaying an entire program execution every time.
 
 Since our focus is on making the interactions with visualizations both easy to interpret,
 and easy to use, the performance improvements are highly valuable.
+
+
+\todo{This is useful but needs to be considered more, esp with the new "focussing" we can do}
+Providing the user with useful visual feedback is the core of our work. In our example,
+we could choose to simply fill in the circle or circles that demand the users initial input
+selection. This presents an issue however, since the circle is a 2-dimensional data point.
+If the circle is simply filled in it would be natural to ask which of the two dimensions has been
+selected. If the visualization was a bubble chart, there could be three or four dimensions to each
+bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
+a mechanism for the user to easily determine which attributes of a visual element have been
+highlighted as selected. \todo{Decide what we are going to do here, and do it}
+
