@@ -79,7 +79,7 @@ gray. In \figref{related-inputs-main} these are labelled 3a and 3b.
    \label{fig:related-inputs-main}
 \end{figure}
 
-\todo{Currently this portion is WIP, since I wanted to include discussion on graphs earlier(?)}
+\todo{Currently this portion is WIP, since I wanted to include discussion on graphs earlier}
 Now that we have seen an example of the sorts of interaction our language supports,
 we shall discuss the constituent parts which allow us to achieve it. A core goal
 of this work is to allow for these interactive visualizations without placing an
@@ -109,17 +109,20 @@ that the highlighted circle \textit{demands}, by finding its set of reachable
 nodes, and intersecting those with $\mathcal{A}$. These nodes are those which
 correspond to the cells of the tables which we have highlighted in gray.
 
-It turns out that if we consider the inputs $x$ and outputs $y$ as part of some Boolean algebra,
-then \textit{demands} and \textit{demanded by} are conjugate in the following sense:
-$x \wedge demands(y) = \bot \iff demandedBy(x) \wedge y = \bot$.
+\todo{Trying  to boil down the essence of these parts, so we can use them to lead into the prior work}
+If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
+then we see that the previously described interaction is simply their composition.
+When considered as functions from sets of outputs to sets of inputs (resp:
+sets of inputs to sets of outputs), then they satisify the property known as
+conjugacy, in the sense of \citet{jonssontarski51}:
+$$
+   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
+$$
 
-In natural language, if $x$ is disjoint from the input data needed by $y$, then 
-the output that uses $x$ is disjoint from $y$.
-
-With these operators, we can define the analysis used to relate input data which co-operates
-across two sources, by composing the two. We find outputs that demand $x$, then find out what
-other inputs they demand. One could write \textit{rel(x) = demands(demandedBy(x))}. In \figref{linked-inputs-main}
-we see a visual example of this, relating inputs from each of the two tables to the other.
+It is unsurprising that these two functions satisfy this property. Intuitively,
+if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
+then it is trivial that the set of outputs that $A$ is demanded by does not
+contain any elements of $B$.
 
 \todo{Needs a good amount of refining, but I think the core points here are fine}
 Providing the user with useful visual feedback is the core of our work. In our example,
