@@ -88,9 +88,9 @@ in the analysis described above as part of program evaluation.
 When a \OurLang program is evaluated, it does not only produce an output value
 but also constructs a dependency graph $G$, similar to \citet{agrawal90}. In such a
 graph, parts of structured values that arise in the program's execution are given
-ids, and assigned to nodes. A directed edge exists from a node $n$ to a node $n'$
-if, during execution, the value assigned to $n'$ was constructed by consuming part
-of the value assigned to $n$, in a manner made precise later in the paper.
+ids which serve as the nodes. A directed edge exists from a node $\alpha$ to a node $\alpha'$
+if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
+of the value assigned to $\alpha$, in a manner made precise later in the paper.
 
 Once the graph $G$ has been constructed, we can begin to interact with it. Fix 
 the set of nodes associated with inputs to be $\mathcal{A}$, and outputs to be
@@ -109,7 +109,7 @@ correspond to the cells of the tables which we have highlighted in gray.
 The idea of multiple inputs working together to produce some visual output is not
 a unique problem. In fact, it is in a sense dual to a well known problem
 in data visualisation. In data visualisation, it is common for the same collection
-of input data to be reused across multiple different charts, perhaps co-operating
+of input data to be reused across multiple charts, perhaps co-operating
 with other input data. Multiple outputs making use of common input suggests the
 problem of identifying elements in multiple charts which share their input data.
 In the visualisation community the problem of selecting an element in a chart
