@@ -32,19 +32,21 @@ when the data is collated from multiple sourcesm such as in medical meta-analyse
 \citep{virdee_kaiser_ek_shuckburgh_kazlauskaite_2023}, and database joins \citep{selinger79}.
 
 As an example of this comprehension challenge, consider the scatter plot in \figref{energy-query-2}.
-The axis labels tell us that the x-axis represents the proportion of energy capacity made up by
-renewable sources, and the y-axis represents the "capacity factor" of clean energy sources.
+The labelled axes are suggestive of what is being represented by each axis.
+We might surmise that x-axis represents the ratio of renewables to total energy capacity,
+and the y-axis represents the "capacity factor" of clean energy sources.
 Alongside the caption, these provide us with a limited picture of what the chart represents.
 But what does each circle in the plot represent, and how are their coordinates calculated? 
-Without inspecting the program source in \figref{energy-query-1} we wouldn't see that
-each circle represents a country. The source file also tells us how the axes were calculated, 
-with the x-axis summing renewable electricity capacity, and dividing it by the
+
+
+Questions like this can often be answered by inspecting a programs source code.
+For the example of the scatterplot, the source code in \figref{energy-query-1}
+revealts to us how the axes were calculated, with the x-axis 
+computed by summing renewable electricity capacity, and dividing it by the
 sum of the total electrity capacity. We can also see that the "capacity factor" on the y-axis
 represents the total generated power of clean resources, sum of each resources energy capacity.
 We can also see that the data used is from the year 2018 and -- a more subtle point --
 that nuclear power may be considered a clean energy source, despite being non-renewable.
-The source code still doesn't paint the whole picture however, we still don't know
-which country each circle reprents. 
 
 Our work takes the next step in improving the readability of such an example.
 A user who is interested in improving their understanding of this sort of program
