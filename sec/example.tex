@@ -108,9 +108,9 @@ the highlighted circle in the output chart. We then find all of the other inputs
 that the highlighted circle \textit{demands}, by finding its set of reachable
 nodes, and intersecting those with $\mathcal{A}$. These nodes are those which
 correspond to the cells of the tables which we have highlighted in gray.
-
-The idea of multiple inputs working together to produce some visual output does
-not exist in a vacuum. In fact, it is in a sense dual to a well known problem
+\todo{Paragraph introducing brushing and linking}
+The idea of multiple inputs working together to produce some visual output is not
+a unique problem. In fact, it is in a sense dual to a well known problem
 in data visualization. In data visualization, it is common for the same collection
 of input data to be re-used across multiple different charts, perhaps co-operating
 with other input data. Multiple outputs making use of common input suggests the
@@ -127,7 +127,7 @@ In the visualization community, this problem is known as \textit{brushing and li
    \caption{Examples of linked outputs, adapted from~\citet{perera22}}
    \label{fig:linked-outputs-main}
 \end{figure}
-
+\todo{Intuition on how it works as functions}
 If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
 then we can see that computing the set of related inputs is equivalent to their
 composition. It turns out that we can also solve the problem of brushing and linking
@@ -140,7 +140,7 @@ data in the original table which is used to compute the height of the bar. Then
 we take this data, and apply the \textit{demanded by} function. In this example,
 we find the points in the line chart on the right hand side which make use of
 the input values selected by the application of \textit{demands}. 
-
+\todo{Historical context + introduction to the prior work}
 Historically, solutions to the problem of brushing and linking have been ad-hoc
 and relied on significant programmer effort in order to find the correct relation
 between outputs. Adding a new visualization would potentially require this
@@ -153,7 +153,8 @@ provided a solution through the user of Galois connections. The fact that our
 work can recapture some of their results, whilst including a large amount of
 extra functionality is not surprising, as we shall begin to make clear.
 
-\todo{Okay, sort of reintroduced prior work. Can now include this stuff}
+\todo{Now that we have reintroduced the core ideas and prior work, can include this stuff. Discussion on 
+conjugates being equivalent to adjoints needs revision}
 
 When considered as functions from sets of outputs to sets of inputs (resp:
 sets of inputs to sets of outputs), then they satisify the property known as
