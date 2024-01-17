@@ -79,16 +79,16 @@ gray,  (\figref{related-inputs-main}, 3a and 3b).
 \todo{I wanted to include discussion on graphs earlier}
 Now that we have seen an example of the sorts of interaction our language supports,
 we shall discuss the constituent parts which allow us to achieve it. A core goal
-of this work is to allow for these interactive visualizations without placing an
-increased overhead on the visualizations creator. We have therefore incorporated
+of this work is to allow for these interactive visualisations without placing an
+increased overhead on the visualisations creator. We have therefore incorporated
 the features needed to create these directly in a language, which we call \OurLang.
 \OurLang is a functional programming language with records and datatypes, which bakes
 in the analysis described above as part of program evaluation.
 
 When a \OurLang program is evaluated, it does not only produce an output value
 but also constructs a dependency graph $G$, similar to \citet{agrawal90}. In such a
-graph, parts of structured values that arise in the programs execution are given
-id's, and assigned to nodes. A directed edge exists from a node $n$ to a node $n'$
+graph, parts of structured values that arise in the program's execution are given
+ids, and assigned to nodes. A directed edge exists from a node $n$ to a node $n'$
 if, during execution, the value assigned to $n'$ was constructed by consuming part
 of the value assigned to $n$, in a manner made precise later in the paper.
 
@@ -98,7 +98,7 @@ $\mathcal{B}$. We say that an output $b \in \mathcal{B}$ \textit{demands} an
 input $a \in \mathcal{A}$ if there exists a path in $G$ from $b$ to $a$. We
 can also say that $a$ is \textit{demanded by} $b$, if there is a path from $a$
 to $b$ in the opposite graph, $G^{-1}$. Each of these is easily implemented by
-simply finding the reachable nodes of a value in the appropriate graph.
+simply finding the nodes reachable from a given start node in the appropriate graph.
 
 In our example, the initial selected cell in the table is \textit{demanded by}
 the highlighted circle in the output chart. We then find all of the other inputs
@@ -108,14 +108,12 @@ correspond to the cells of the tables which we have highlighted in gray.
 \todo{Paragraph introducing brushing and linking}
 The idea of multiple inputs working together to produce some visual output is not
 a unique problem. In fact, it is in a sense dual to a well known problem
-in data visualization. In data visualization, it is common for the same collection
+in data visualisation. In data visualisation, it is common for the same collection
 of input data to be reused across multiple different charts, perhaps co-operating
 with other input data. Multiple outputs making use of common input suggests the
 problem of identifying elements in multiple charts which share their input data.
-Analagous to our previous interaction, we would like to be able to select some
-visual element of a chart, highlight the input data used to compute it, and
-also present the user with elements from any other charts that use the same data.
-In the visualization community, this problem is known as \textit{brushing and linking}
+In the visualisation community the problem of selecting an element in a chart
+and highlighting elements in other charts that use the same data is known as \textit{brushing and linking}
 \citet{becker87}.
 
 \begin{figure}
@@ -140,7 +138,7 @@ the input values selected by the application of \textit{demands}.
 \todo{Historical context + introduction to the prior work}
 Historically, solutions to the problem of brushing and linking have been ad-hoc
 and relied on significant programmer effort in order to find the correct relation
-between outputs. Adding a new visualization would potentially require this
+between outputs. Adding a new visualisation would potentially require this
 feature to be reimplemented or modified. In contrast, we can achieve the same
 functionality without forcing the programmer to manually implement the linking.
 
@@ -155,7 +153,7 @@ conjugates being equivalent to adjoints needs revision}
 
 When considered as functions from sets of outputs to sets of inputs (resp:
 sets of inputs to sets of outputs), then they satisify the property known as
-conjugacy, in the sense of \citet{jonssontarski51}:
+\textit{conjugacy}, in the sense of \citet{jonssontarski51}:
 $$
    A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
 $$
@@ -180,14 +178,14 @@ for example see \citet{MOLLER2006221}. This means that we can recapture the same
 whilst the Galois connection approach cannot easily capture the idea of related inputs.
 
 One other important aspect where our work differs from this prior approach is in performance.
-Our system works by realizing the dependency relations computed by our operations as a dynamic
+Our system works by realising the dependency relations computed by our operations as a dynamic
 dependence graph \citet{agrawal90}, computed during program evaluation. Then, as we shall
-see later, we can characterize the procedures of computing related inputs or outputs as 
+see later, we can characterise the procedures of computing related inputs or outputs as 
 searching this graph and its opposite. This means only traversing relevant portions of
 the computation, in stark contrast to the Galois slicing approach, which requires 
 rewinding and replaying an entire program execution every time.
 
-Since our focus is on making the interactions with visualizations both easy to interpret,
+Since our focus is on making the interactions with visualisations both easy to interpret,
 and easy to use, the performance improvements are highly valuable.
 
 
@@ -196,7 +194,7 @@ Providing the user with useful visual feedback is the core of our work. In our e
 we could choose to simply fill in the circle or circles that demand the users initial input
 selection. This presents an issue however, since the circle is a 2-dimensional data point.
 If the circle is simply filled in it would be natural to ask which of the two dimensions has been
-selected. If the visualization was a bubble chart, there could be three or four dimensions to each
+selected. If the visualisation was a bubble chart, there could be three or four dimensions to each
 bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
 a mechanism for the user to easily determine which attributes of a visual element have been
 highlighted as selected. \todo{Decide what we are going to do here, and do it}
