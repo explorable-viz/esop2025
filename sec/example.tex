@@ -82,18 +82,18 @@ self-explanatory.
 \end{figure}
 
 \todo{I wanted to include discussion on graphs earlier}
-Now that we have seen an example of the sorts of interaction our language supports,
-we shall discuss the constituent parts which allow us to achieve it. A core goal
-of this work is to allow for these interactive visualisations without placing an
-increased overhead on the visualisations creator. We have therefore incorporated
-the features needed to create these directly in a language, which we call \OurLang.
-\OurLang is a functional programming language with records and datatypes, which bakes
-in the analysis described above as part of program evaluation.
 
+We would like these interactive queries to be provided automatically, rather
+than implemented by the author of the visualisation on an ad-hoc basis.
+Moreover we wish to provide some form of correctness and minimality guarantees
+regarding query results.
+These requirements suggested a solution built around dynamic program analysis,
+specifically a dynamic dependence graph approach similar to \citet{agrawal90}
 When a \OurLang program is evaluated, it does not only produce an output value
-but also constructs a dependency graph $G$, similar to \citet{agrawal90}. In such a
-graph, parts of structured values that arise in the program's execution are given
-ids which serve as the nodes. A directed edge exists from a node $\alpha$ to a node $\alpha'$
+but also constructs a dependency graph $G = (V,E)$
+
+In our graphs, parts of structured values that arise in the program's execution are given
+ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is included
 if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
 of the value assigned to $\alpha$, in a manner made precise later in the paper.
 
