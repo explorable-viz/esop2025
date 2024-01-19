@@ -1,25 +1,6 @@
 \section{Transparent, Self-Explanatory Charts and Figures}
 \label{sec:example}
 
-\begin{figure}
-   {
-      \centering
-      \begin{subfigure}{0.51\textwidth}
-         \includegraphics[width=\textwidth]{fig/example/energychart.png}
-         \caption{Example Scatterplot}
-         \label{fig:energy-query-2}
-      \end{subfigure}
-      \hfill
-      \begin{subfigure}{0.44\textwidth}
-         \tiny
-         \lstinputlisting[language=Fluid]{fig/example/energy-query.fld}
-         \caption{Scatterplot source code}
-         \label{fig:energy-query-1}
-      \end{subfigure}
-   }
-   \caption{Program contrasting renewable energy capacity with efficiency of usage, and accompanying program source code}
-   \label{fig:energy-query}
-\end{figure}
 One of the most ubiquitous yet challenging tasks in science is understanding the relationships
 between the input and output variables of a problem. Communicating the results of a simulation
 or the conclusion of some analysis can be made difficult by the inherent complexity of the problem
@@ -31,17 +12,29 @@ when the data is collated from multiple sourcesm such as in medical meta-analyse
 \citep{NAKAMURA201929}, statistical aggregation techniques like Bayesian model averaging
 \citep{virdee_kaiser_ek_shuckburgh_kazlauskaite_2023}, and database joins \citep{selinger79}.
 
-As an example of this comprehension challenge, consider the scatter plot in \figref{energy-query-2}.
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{fig/example/linked-inputs-squared-off.png}
+   \caption{An example of a related inputs query, finding the inputs that are related to Chinese bio energy capacity in 2018.}
+   \label{fig:related-inputs-main}
+\end{figure}
+
+
+As an example of this comprehension challenge, consider the scatter plot in \figref{related-inputs-main}.
 The labelled axes are suggestive of what is being represented by each axis.
 We might surmise that x-axis represents the ratio of renewables to total energy capacity,
 and the y-axis represents the "capacity factor" of clean energy sources.
 Alongside the caption, these provide us with a limited picture of what the chart represents.
 But what does each circle in the plot represent, and how are their coordinates calculated? 
 
-
+\begin{wrapfigure}{R}{0.46\textwidth}
+   {\tiny\lstinputlisting[language=Fluid, linewidth=0.46\textwidth,numbers=none,frame=single]{fig/example/energy-query.fld}}
+   \caption{Program contrasting renewable energy capacity with efficiency of usage}
+   \label{fig:energy-query}
+\end{wrapfigure}
 Questions like this can often be answered by inspecting a programs source code.
-For the example of the scatterplot, the source code in \figref{energy-query-1}
-revealts to us how the axes were calculated, with the x-axis 
+For the example of the scatterplot, the source code in \figref{energy-query}
+reveals to us how the axes were calculated, with the x-axis 
 computed by summing renewable electricity capacity, and dividing it by the
 sum of the total electrity capacity. We can also see that the "capacity factor" on the y-axis
 represents the total generated power from clean resources, divided by the sum
@@ -83,13 +76,6 @@ Whilst this exemplar "related inputs" query doesn't go the whole way to explain
 the relationship between inputs and outputs intensionally, it does move us
 substantially closer to the visualisation alone being transparent, and entirely
 self-explanatory.   
-
-\begin{figure}
-   \centering
-   \includegraphics[width=\textwidth]{fig/example/linked-inputs-squared-off.png}
-   \caption{An example of a related inputs query, finding the inputs that are related to Chinese bio energy capacity in 2018.}
-   \label{fig:related-inputs-main}
-\end{figure}
 
 \todo{I wanted to include discussion on graphs earlier}
 
