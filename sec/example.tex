@@ -176,32 +176,21 @@ $$
 It is unsurprising that these two functions satisfy this property. Intuitively,
 if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
 then it is trivial that the set of outputs that $A$ is demanded by does not
-contain any elements of $B$. \todo{Finish this off}
+contain any elements of $B$. This is equivalent to saying that the intersection
+of the outputs that $A$ is demanded by with the set of outputs under consideration
+$B$ is empty. \todo{This sentence needs to parse more niceley} 
 
-\todo{Most of this is going to go, since we have now touched on many of the points earlier in the section}
-We are not the first to tackle this problem in a functional programming language.
-The recent work of \citet{perera22} demonstrates a method to solve this problem by
-constructing a family of Galois connections between the inputs and outputs of a given program.
-In their work, a related outputs analysis makes use of a backwards slicing function, 
-equivalent to our \textit{demands} operation, and the De Morgan Dual of their 
+This property of conjugacy is what allows us to capture the functionality of the work
+of Perara. In their work, a related outputs analysis makes use of a backwards slicing
+function, equivalent to our \textit{demands} operation, and the De Morgan Dual of their 
 forwards slicing function, which is equivalent to our \textit{demanded by} function.
-It is not necessarily surprising that our work can replicate their analysis, for the following reason.
 
 It is well known that if you have a pair of conjugate functions,
 then one of them will form a Galois connection with the dual of the other,
-for example see \citet{MOLLER2006221}. This means that we can recapture the same,
-whilst the Galois connection approach cannot easily capture the idea of related inputs.
+for example see \citet{MOLLER2006221}. This correspondence is what allows us to
+recapture their results. However, it is not so easy to adapt the Galois connection
+approach to include related inputs queries. 
 
-One other important aspect where our work differs from this prior approach is in performance.
-Our system works by realising the dependency relations computed by our operations as a dynamic
-dependence graph \citet{agrawal90}, computed during program evaluation. Then, as we shall
-see later, we can characterise the procedures of computing related inputs or outputs as 
-searching this graph and its opposite. This means only traversing relevant portions of
-the computation, in stark contrast to the Galois slicing approach, which requires 
-rewinding and replaying an entire program execution every time.
-
-Since our focus is on making the interactions with visualisations both easy to interpret,
-and easy to use, the performance improvements are highly valuable.
 
 
 \todo{This is useful but needs to be considered more, esp with the new "focussing" we can do}
