@@ -9,9 +9,9 @@
 \end{definition}
 
 \begin{definition}[Image and Preimage]
-   For a relation $R \subseteq X \times Y$, and a subset $X' \subset X$, we write
-   $R[X']$ to denote the image of $X'$ under $R$. For a subset $Y' \subseteq Y$
-   we write $\preim{R}[Y']$ to denote the preimage of $Y'$ under $R$.
+   For a relation $D \subseteq X \times Y$, and a subset $X' \subset X$, we write
+   $D[X']$ to denote the image of $X'$ under $D$. For a subset $Y' \subseteq Y$
+   we write $\preim{D}[Y']$ to denote the preimage of $Y'$ under $D$.
 \end{definition}
 
 \begin{definition}[Conjugate Functions]
@@ -40,8 +40,22 @@ ranging over all possible values $a \in \mathcal{A}$, and computing their
 meet with $b$.
 
 It is not hard to see that the image and preimage functions of a relation
-$R$ are conjugate and furthermore that the image function of a relation $R$ is
-conjugate to the image function of the converse relation written $R^{-1}$.
+$D$ are conjugate and furthermore that the image function of a relation $D$ is
+conjugate to the image function of the converse relation written $D^{-1}$.
 \todo{The above is a sort of abuse of notation. It makes sense that we
 could write the relational converse with the same notation as the preimage
 of a relation, but I wonder if it could get confusing for the reader?}
+
+\subsection{Efficient Computation of Demand}
+\todo{Some of this may be moved to \secref{core}, since it concerns dependence
+graphs. I think right now the question is open as to whether we want to include this
+here or there, or decompose it into the relevant halves}
+
+\begin{definition}[Reachability]
+   For a graph $G=(V,E)$, the \textit{reachability relation} $R$ is the transitive
+   closure of $E$
+\end{definition}
+
+\begin{definition}{Demands and Demanded By}
+   For a programs dependence graph $G = (V,E)$, and dependency relation $D$, we
+\end{definition}
