@@ -22,3 +22,22 @@
       f(a) \wedge b = \bot \iff a \wedge g(b) = \bot 
    $$
 \end{definition}
+
+The notion of conjugate functions is due to \citet{jonssontarski51}. The authors
+of that paper provide the following alternate definition of conjugacy:
+
+\begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
+   Given a function $f: \mathcal{A} \to \mathcal {B}$, there can exist only one
+   conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
+   calculate it using the following:
+   $$
+      g(b) = \bigwedge_{f(a) \wedge b = \bot} \compl{a} \quad \text{for any $b \in \mathcal{B}$}
+   $$
+\end{definition}
+
+In general, \defref{construct-conjugate} is inefficient, since it requires 
+ranging over all possible values $a \in \mathcal{A}$, and computing their
+meet with $b$.
+
+It is straightforward to see that the image and preimage functions of a relation
+$R$ are conjugate.
