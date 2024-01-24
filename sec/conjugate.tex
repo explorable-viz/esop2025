@@ -58,7 +58,7 @@ graphs. I think right now the question is open as to whether we want to include 
 here or there, or decompose it into the relevant halves}
 
 We have already discussed how we realize the dependency relation described in
-\secref{core}. For the rest of the section, 
+\secref{core}. For the rest of the section, we use sets of nodes.
 
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the transitive
@@ -66,5 +66,6 @@ We have already discussed how we realize the dependency relation described in
 \end{definition}
 
 \begin{definition}[Demands]
-   For a dependence graph $G = (V,E)$, 
+   For a dependence graph $G = (V,E)$, a set of inputs $X'$ and a subset of outputs,
+   $Y \subseteq Y'$, we write $\demandR(Y) = \bigwedge_{R_G[X] \wedge Y \neq \bot} \! X \quad (X \subseteq X')$ to mean the set of inputs that $Y$ demands.
 \end{definition}
