@@ -1,30 +1,6 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
-program slicing, providing an elegant way of characterising input-output relationships in terms of demand and
-sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which characterises forward slicing, is
-a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a particular set
-of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out
-the specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to
-a setting where slices have complements and the slices of a particular program or value form a Boolean
-lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
-outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some
-of the same inputs, and proposed this as a framework for understanding the ``brushing and linking'' feature
-commonly used in data visualisation.
-
-However, an implementation of Galois slicing, in particular the backwards analysis, efficient enough to
-support this kind of interactive application has proved elusive. To compute the two analyses, implementations
-to date have relied on a sequential execution record taking the form of a big-step or small-step trace. The
-forward analysis uses the trace to ``replay'' the computation, propagating information about resource
-availability from inputs to outputs; the backwards analysis uses the trace to ``rewind'' the computation,
-propagating information about demand from outputs to inputs. This overly sequential approach makes the
-approach unable to exploit the very independence that makes slicing useful in the first place, and moreover
-the backwards analysis needs to make frequent use of a lattice join operation to combine slicing information
-computed along different branches of the computation. Joining closure slices in particular becomes expensive
-because of the contained environments (which in turn contain closures), and these shortcomings make the
-approach prohibitively slow for interactive use.
-
 In this paper we present a new implementation technique for Galois slicing based on dynamic dependence graphs
 (DDGs), an approach used in the program slicing literature for analysing imperative programs
 \cite{ferrante87}. Our approach decomposes Galois slicing into two components: an operational semantics that
