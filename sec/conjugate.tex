@@ -65,12 +65,23 @@ We have already discussed how we realize the dependency relation described in
    closure of $E$
 \end{definition}
 
-\begin{definition}[Demands]
+\begin{definition}[Demands]\label{def:demand}
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y) = \bigwedge_{R_G[X] \wedge Y \neq \bot} \! X \quad (X \subseteq X')$ to mean the set of inputs that $Y$ demands.
+   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y) = \bigwedge_{R_G[X] \wedge Y \neq \bot} \! X \quad (X \subseteq X')$
+   to mean the set of inputs that $Y$ demands. We can also write this as
+   $\demandR(Y) = \bigvee_{R_G[X] \subseteq Y} \! \compl{X}$
 \end{definition}
 
-\begin{definition}{Demanded By}
+Intuitively, if we have a set of outputs $Y$, to find the set of inputs it demands, we
+want to find the smallest set of inputs $X$ for which every member has at least one
+output that demands it. Equivalently, we can take the union of the complements of the sets
+for which their image under $R_G$ is contained in $Y$. We shall return to this
+relationship later.
+
+\begin{definition}{Demanded By}\label{def:demanded-by}
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X) = \bigwedge_{R_G[Y] \wedge X \neq \bot} \! Y \quad (Y \subseteq Y')$ to mean the set of outputs that $X$ is demanded by.
 \end{definition}
+
+It is unsurprising that \defref{demanded-by} is so similar to \defref{demand}, since
+we obtain one by taking the relational converse of the other.
