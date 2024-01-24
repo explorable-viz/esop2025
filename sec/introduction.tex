@@ -3,12 +3,27 @@
 
 A ubiquitous problem in data-driven decision making --- from setting national policy to deciding what
 groceries to buy --- is interpreting the charts, figures and text presented to us by scientists and
-journalists. When data is summarised into charts and text, crucial information about how those summaries were
-constructed --- and from what data --- is lost. If we understand the domain well and have access to the source
-code and data sets, we may be able to reconstruct some of this lost information, although that will usually
-take a significant investment of time. More commonly we have to take things on trust. These difficulties are
+journalists. When data is summarised into opaque charts and text, crucial information about how those
+summaries were constructed, and from what data, is lost. If we understand the domain well and have access to
+the source code and data sets, we may be able to reconstruct some of this lost information, although that will
+usually take a significant investment of time. More commonly we take things on trust. These difficulties are
 further compounded when the output presents information collated from multiple sources, such medical
 meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, and database joins~\citep{selinger79}.
+
+While with traditional print media opacity in this sense is probably unavoidable, we should be able to do
+better with online digital media. In this paper, we introduce a new program analysis framework which supports
+interactive exploration of input-output relationships directly via a computed artefact, such as an online
+chart or table of data, making use of dynamic dependence graphs to allow the queries to be both fine-grained
+and bidirectional. While this idea is not entirely new (see for example \citet{psallidas18} and
+\citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
+form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
+mutual relevance which arises between two different input elements when they contribute to a common output
+element; to adapt a term from linguistics, we say such inputs are \emph{cognate} because this notion of
+relatedness corresponds to having a common ancestor in the dependence graph of the computation (or rather its
+opposite, but that distinction need not concern us yet). Using \citeauthor{jonsson51}'s concept of
+``conjugate'' operators on Boolean algebras, we formalise this notion as the image function for $R^{-1}
+\relcomp R$ where $R$ is the reachability relation for a dependence graph $G$, and give a procedure for
+computing related inputs over the graph.
 
 In this paper we present a new implementation technique for Galois slicing based on dynamic dependence graphs
 (DDGs), an approach used in the program slicing literature for analysing imperative programs
