@@ -38,7 +38,7 @@ of that paper provide the following alternate definition of conjugacy:
    conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
    calculate it using the following:
    $$
-      g(b) = \bigwedge_{f(a) \wedge b = \bot} \compl{a} \quad \text{for any $b \in \mathcal{B}$}
+      g(b) = \bigwedge_{f(a) \wedge b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
    $$
 \end{definition}
 
@@ -60,18 +60,26 @@ here or there, or decompose it into the relevant halves}
 We have already discussed how we realize the dependency relation described in
 \secref{core}. For the rest of the section, we use sets of nodes.
 
+\begin{definition}[Opposite Graph]
+   For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
+   where $\param^{-1}$ denotes the relational inverse of an edge.
+\end{definition}
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the transitive
    closure of $E$
 \end{definition}
-
+As a convention for the rest of this section, we will generally omit the $\param_G$
+from this relation, since we will not be considering more than one graph at a time,
+except for when we consider a graph and it's opposite. In those cases,
+we will abuse the notation for the preimage and image of the $R$,
+since $R_G^{-1} = R_{G^{-1}}$.
 Let us return to the notion of a related input query. 
 
-\begin{definition}{Demanded By}\label{def:demanded-by}
+\begin{definition}[Demanded By]\label{def:demanded-by}
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
    $$
-      \demandByR(X) =  \bigwedge_{R^{-1}_G[Y] \wedge X \neq \bot} \!\!\! Y = \bigvee_{R^{-1}_G[Y] \subseteq X}\!\!\!\compl{Y} \quad (Y \subseteq Y') 
+      \demandByR(X) =  \bigwedge_{R^{-1}[Y] \wedge X \neq \bot} \padArg{Y}{1.5em} = \bigvee_{R^{-1}[Y] \subseteq X} \padArg{\compl{Y}}{1em} \quad (Y \subseteq Y') 
    $$
 \end{definition}
 
@@ -79,19 +87,27 @@ Let us return to the notion of a related input query.
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
    $$
-    \demandR(Y) = \bigwedge_{R_G[X] \wedge Y \neq \bot}\!\!X = \bigvee_{R_G[X] \subseteq Y}\!\! \compl{X} \quad (X \subseteq X')
+    \demandR(Y) = \bigwedge_{R[X] \wedge Y \neq \bot} \padArg{X}{1.5em} = \bigvee_{R[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
    $$
 \end{definition}
 
 Intuitively, if we have a set of outputs $Y$, to find the set of inputs it demands, we
 want to find the smallest set of inputs $X$ for which every member has at least one
 output that demands it. Equivalently, we can take the union of the complements of the sets
-for which their image under $R_G$ is contained in $Y$. We shall return to this
+for which their image under $R$ is contained in $Y$. We shall return to this
 relationship later. We can similarly define demanded by:
 
 It is unsurprising that \defref{demanded-by} is so similar to \defref{demand}, since
 we obtain one by taking the relational converse of the other.
 
 \subsection{Projections and Conjugations for Focussed Queries}
-
+\todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
+the relationships between products of inputs and products of outputs. Doing this
+in a principled manner is effectively what allows us to perform focussed queries.}
 \subsection{Relationship to Galois Connections}
+\todo{Here we need to formally explain the relationship to galois connections, and why
+this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
+demanded by. We need to include the efficient algorithm for forward slicing, and give
+a nice narrative structure that will lead into this. It may be worth explaining why
+the De morgan dual of a conjugate function creates a Galois connection, but that might
+be too much depth.}
