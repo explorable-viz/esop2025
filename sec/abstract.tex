@@ -5,12 +5,11 @@ decision-making. Fact-checking or understanding such artefacts means understandi
 underlying data, which poses a significant challenge even with access to the source code and data sets. Our
 paper introduces a new program analysis framework based on dynamic dependence graphs, which supports the
 interactive exploration of the fine-grained relationships between input data and visualisations or other
-output. We formulate a novel notion in data provenance, which we call \emph{related inputs}, a relation of
-mutual relevance or ``cognacy'' between inputs that arises when they contribute to a common feature of the
-output. We employ Jonsson and Tarski’s concept of conjugate operators on Boolean algebras to formalise this
-notion, define a ``related inputs'' operator as the image function for $R^{-1};\relComp R$, where $R$ is the
-reachability relation for the graph, , and give a procedure for computing related inputs over a dependence
-graph.
+output. We formulate a novel notion in data provenance, \emph{related inputs}, a relation of mutual relevance
+or ``cognacy'' between inputs that arises when they contribute to a common feature of the output. We use
+Jonsson and Tarski’s concept of conjugate operators on Boolean algebras to formalise this notion of ``related
+inputs'' as the (self-conjugate) image function for $R^{-1};\relComp R$, where $R$ is the reachability
+relation for a dependence graph, and give a procedure for computing related inputs over the graph.
 
 Additionally, we introduce the “related outputs” operator through the image function for the other composite $R^{−1};\relComp R$. This operator captures a cognacy relation between output features that share common inputs. We demonstrate how to integrate this with prior methods involving Galois connections and execution traces, enhancing efficiency and language agnosticism. This approach requires a single procedure as opposed to separate forward and backward analyses.
 
