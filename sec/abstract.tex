@@ -1,18 +1,26 @@
 \begin{abstract}
 
-Charts, figures, and texts derived from data play an important role in policy-making and everyday
+Charts, figures, and text derived from data play an important role in policy-making and everyday
 decision-making. Fact-checking or understanding such artefacts means understanding how they relate to the
-underlying data, which poses a significant challenge even with access to the source code and data sets. Our
-paper introduces a new program analysis framework based on dynamic dependence graphs, which supports the
+underlying data, which poses a significant challenge, even for an expert user with access to the source code
+and data sets. To help address this problem, we introduce a new program analysis framework which supports the
 interactive exploration of the fine-grained relationships between input data and visualisations or other
-output. We formulate a novel notion in data provenance, \emph{related inputs}, a relation of mutual relevance
-or ``cognacy'' between inputs that arises when they contribute to a common feature of the output. We use
-Jonsson and Tarski’s concept of conjugate operators on Boolean algebras to formalise this notion of ``related
-inputs'' as the (self-conjugate) image function for $R^{-1};\relComp R$, where $R$ is the reachability
-relation for a dependence graph, and give a procedure for computing related inputs over the graph.
+output directly from the artefact itself, making use of dynamic dependence graphs. We formulate a novel notion
+in data provenance which we call \emph{related inputs}, a relation of mutual relevance or ``cognacy'' which
+arises between inputs which contribute to a common feature of the output. We use \citeauthor{jonsson51}'s
+concept of conjugate operators on Boolean algebras to formalise this notion as the image function for $R^{-1}
+\relcomp R$, where $R$ is the reachability relation for a dependence graph, and give a procedure for computing
+related inputs over the graph. We present several examples which show how visual outputs can be automatically
+enriched with support for related inputs queries, and also how projection operators, which also admit
+conjugates, can be used to factor out contributions by particular inputs or the demand associated with
+particular outputs, providing contextualised, more informative queries.
 
-Additionally, we introduce the “related outputs” operator through the image function for the other composite $R^{−1};\relComp R$. This operator captures a cognacy relation between output features that share common inputs. We demonstrate how to integrate this with prior methods involving Galois connections and execution traces, enhancing efficiency and language agnosticism. This approach requires a single procedure as opposed to separate forward and backward analyses.
+We also show how the image function for the other composite $R^{-1} \relcomp R$ gives rise to a "related
+outputs" operator, capturing a dual cognacy relation between output features that compete for common input
+data. Composing this operator with appropriate projections recovers a prior approach to the dual problem based
+on Galois connections and execution traces, which was used to formalise a popular feature in data
+visualisation called brushing and linking. As well as generalising and extending the prior work, the graphical
+approach presented is in this paper faster, and the key procedures are language-agnostic and can be
+implemented with a single procedure rather than requiring separate forward and backwards analyses.
 
-Our graphical methodology is not only more rapid in addressing similar problems but is also language-agnostic, broadening its applicability. We showcase various examples where visual outputs are automatically enhanced with interactions supporting “related inputs” queries. Furthermore, we explore the use of projection operators to isolate contributions from specific inputs or demands from particular outputs. This offers a more contextualized and informative query process.
-
-Overall, our framework represents a significant advancement in understanding the intricate relationship between data and its derived visual or textual representations, providing a powerful tool for data analysis and decision-making.\end{abstract}
+\end{abstract}
