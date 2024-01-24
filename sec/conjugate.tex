@@ -73,8 +73,10 @@ from this relation, since we will not be considering more than one graph at a ti
 except for when we consider a graph and it's opposite. In those cases,
 we will abuse the notation for the preimage and image of the $R$,
 since $R_G^{-1} = R_{G^{-1}}$.
-Let us return to the notion of a related input query. 
-
+Let us return to the notion of a related input query. The first step is to select a
+subset of the input we are interested in, $X$. This is eqivalent to selecting a the
+corresponding subset of input nodes in the graph. We then need to find all nodes
+in the output that our selected input nodes are demanded by.
 \begin{definition}[Demanded By]\label{def:demanded-by}
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
@@ -83,19 +85,19 @@ Let us return to the notion of a related input query.
    $$
 \end{definition}
 
+Once we have found the set of output nodes $Y$ which make use of the selected input
+we need to find the rest of the inputs which the set $Y$ demands. The definition
+for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
+is unsurprising, as one can effectively be formed by taking the relational converse
+of the other \todo{this feels wrong?}
+
 \begin{definition}[Demands]\label{def:demand}
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
    $$
-    \demandR(Y) = \bigwedge_{R[X] \wedge Y \neq \bot} \padArg{X}{1.5em} = \bigvee_{R[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
+      \demandR(Y) = \bigwedge_{R[X] \wedge Y \neq \bot} \padArg{X}{1.5em} = \bigvee_{R[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
    $$
 \end{definition}
-
-Intuitively, if we have a set of outputs $Y$, to find the set of inputs it demands, we
-want to find the smallest set of inputs $X$ for which every member has at least one
-output that demands it. Equivalently, we can take the union of the complements of the sets
-for which their image under $R$ is contained in $Y$. We shall return to this
-relationship later. We can similarly define demanded by:
 
 It is unsurprising that \defref{demanded-by} is so similar to \defref{demand}, since
 we obtain one by taking the relational converse of the other.
