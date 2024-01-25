@@ -11,22 +11,22 @@ trust. These difficulties are further compounded when the output presents inform
 sources, such medical meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, and database
 joins~\citep{selinger79}.
 
-With traditional print media, opacity in this sense is probably unavoidable, but we should be able to do
-better with online digital media. In this paper, we introduce a new program analysis framework which supports
-interactive exploration of input-output relationships directly via online computed artefacts such as charts or
-tables of data. While this idea is not entirely new (see for example \citet{psallidas18} and
-\citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
-form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
-mutual relevance which arises between two different input elements when they contribute to a common output
-element; to discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an approach
-used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We formalise
-related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation for a
-dependence graph $G$, and give a procedure for computing related inputs over the graph. To borrow a term from
-linguistics, we say that inputs related in this way are \emph{cognate} because their relatedness amounts to
-having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common
-ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators on Boolean
-algebras~\cite{jonsson51}, which describes functions between Boolean algebras which can be ``flipped'' into
-functions running in the other direction and then ``self-composed'' to calculate relations of cognacy.
+With traditional print media, opacity in this sense is probably unavoidable, but for digital media we should
+be able to do better. In this paper, we introduce a new program analysis framework which supports interactive
+exploration of input-output relationships directly via online computed artefacts such as charts or tables of
+data. While this idea is not entirely new (see for example \citet{psallidas18} and \citet{perera22}), our
+framework lends itself to easier implementation than prior work and supports a novel form of provenance query
+which we call \emph{related inputs}. Related inputs characterises the relation of mutual relevance which
+arises between two different input elements when they contribute to a common output element; to discover such
+relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an approach used in the program slicing
+literature for analysing imperative programs~\cite{ferrante87}. We formalise related inputs as the image
+function for $D^{-1} \relcomp D$ where $D$ is the reachability relation for a dependence graph $G$, and give a
+procedure for computing related inputs over the graph. To borrow a term from linguistics, we say that inputs
+related in this way are \emph{cognate} because their relatedness amounts to having a common ancestor in $G$
+(or rather its opposite $G^{-1}$, but we will use cognacy to refer to common ancestry in either). The key
+mathematical idea is the concept of ``conjugate'' operators on Boolean algebras~\cite{jonsson51}, which
+describes functions between Boolean algebras which can be ``flipped'' into functions running in the other
+direction and then ``self-composed'' to calculate relations of cognacy.
 
 Our approach decomposes Galois slicing into two components: an operational semantics that
 evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
@@ -62,8 +62,9 @@ conjugate is equivalent $f$ and $\dual{g}$ being adjoint.
 \item \secref{graph} defines two procedures for computing $\demandR_{D}$ and $\demandByR_{D}$ over a DDG with
 reachability relation $D$.
 \item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
-an implementation due to \citet{perera22} based on traces and Galois connections, comparing the overhead of
-building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical approach.
+an implementation due to \citet{perera22} based on traces and Galois connections. We contrast the overhead of
+building a trace vs.~ building a DDG, computing $\demandR$ and $\demandByR$ over both, and the relative
+complexity of the two implementations.
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
