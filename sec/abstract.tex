@@ -1,27 +1,27 @@
 \begin{abstract}
-   Scientific claims are routinely justified and explained using visual summaries computed by data analysis
-   and visualisation code. Fact-checking or understanding such claims requires understanding how the charts
-   and figures relate to the data they purport to be about, and can be difficult and time-consuming even for
-   an expert. Recent work has shown how a dynamic program slicing technique called \emph{Galois slicing} can
-   be used to transparently link visualisations and other outputs to data, so a reader can explore
-   fine-grained input-output relationships by interacting directly with computed artefacts. Galois connections
-   provide a precise characterisation of these relationships in terms of demand and sufficiency. Most recently
-   \citeauthor{perera22} extended this framework to support the exploration of output-output relationships,
-   i.e.~outputs that are indirectly related in virtue of demanding some of the same inputs. However,
-   implementations of these techniques to date have relied on forwards and backward re-execution via a
-   sequential execution record, or \emph{trace}, making them too slow to be suitable for interactive use.
 
-   In this paper we present a new implementation technique for Galois slicing based on dynamic dependence
-   graphs. We decomposes the analysis into two steps: an operational semantics that evaluates a program to a
-   dependence graph, and then a pair of forwards and backwards slicing operators defined over the graph. We
-   show that the one-off overhead of producing the dependence graph is comparable to that of producing a
-   trace, but that the slicing operators run on average much faster than their trace-based counterparts on the
-   interactive scenarios. As well as being faster, the graphical approach is also simpler; for example forward
-   slicing over a dependence graph is simply the De Morgan dual of backward slicing over the opposite graph,
-   leading to a naive implementation which although slower than our direct forward slicing algorithm is still
-   faster than the trace-based approach. Moreover, our slicing algorithms are language-agnostic and the Galois
-   connections are determined solely by the reachability relation $R$ between the inputs and outputs of the
-   graph. We are able to recover the ``related outputs'' operator of \citeauthor{perera22} via the Galois
-   connection for $R \relcomp R^{-1}$ and also to derive a new \emph{related inputs} operator from the Galois
-   connection for $R^{-1} \relcomp R$ with its own novel data visualisation applications.
+Charts, figures, and text derived from data play an important role in policy formulation and everyday
+decision-making. Fact-checking or understanding such artefacts means understanding how they relate to the
+underlying data, which poses a significant challenge, even for a domain expert with access to the source code
+and data sets. To help address this problem, we introduce a new program analysis framework which supports the
+interactive exploration of the fine-grained relationships between inputs and outputs directly through the
+artefact, making use of dynamic dependence graphs. Our main contribution is a novel notion in data provenance
+which we call \emph{related inputs}, a relation of mutual relevance or ``cognacy'' which arises between inputs
+when they contribute to a common feature of the output. Using \citeauthor{jonsson51}'s concept of conjugate
+operators on Boolean algebras, we formalise this notion as the image function for $R^{-1} \relcomp R$, where
+$R$ is the reachability relation for a dependence graph, and give a procedure for computing related inputs
+over the graph.
+
+To demonstrate the approach in practice, we present a programming language called \OurLang which automatically
+enriches visual outputs with interactions supporting related inputs and similar fine-grained provenance
+queries, and show how these can aid comprehension on small but realistic examples. Projection operators, which
+also admit conjugates, can be used to factor out data contributed by particular inputs or demand associated
+with particular outputs, providing contextualised, more informative queries. We also show how the image
+function for the other composite $R \relcomp R^{-1}$ gives rise to a \emph{related outputs} operator,
+capturing a dual cognacy relation between output features whenever they compete for common input data.
+Composing this operator with appropriate projections recovers a prior approach to the problem of
+\emph{brushing and linking} in data visualisation based on Galois connections and execution traces. As well as
+generalising and extending the prior work, the graphical approach presented in this paper performs better on
+most examples and is significantly simpler to implement.
+
 \end{abstract}

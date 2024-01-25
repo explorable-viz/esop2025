@@ -1,8 +1,34 @@
 \section{Related work}
 \label{sec:related-work}
 
+\subsection{Galois slicing}
+
+Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
+program slicing, providing an elegant way of characterising input-output relationships in terms of demand and
+sufficiency \cite{perera12a,perera16d,ricciotti17}. The upper adjoint, which characterises forward slicing, is
+a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a particular set
+of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out
+the specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to
+a setting where slices have complements and the slices of a particular program or value form a Boolean
+lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{related
+outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some
+of the same inputs, and proposed this as a framework for understanding the ``brushing and linking'' feature
+commonly used in data visualisation.
+
+However, implementations of Galois slicing efficient enough to support the kind of interactive applications
+considered here have proved elusive. To compute the two analyses, implementations have relied on a sequential
+execution record, usually taking the form of a big-step or small-step trace. The forward analysis uses the
+trace to ``replay'' the computation, propagating information about resource availability from inputs to
+outputs; the backwards analysis uses the trace to ``rewind'' the computation, propagating information about
+demand from outputs to inputs. This overly sequential approach makes the approach unable to exploit the very
+independence that makes slicing useful in the first place. Moreover, the backwards analysis makes frequent use
+of lattice join ($\join$) to combine slicing information computed along different branches of the computation.
+Joining closure slices in particular becomes expensive because of the contained environments (which in turn
+contain closures), and these issues have made the approach prohibitively slow for interactive use.
+
 \subsection{Dynamic Program slicing}
-Static and dynamic program slicing are not well-studied in context of functional 
+
+Static and dynamic program slicing are not well-studied in context of functional
 programming languages. Galois slicing has been studied before for functional languages.
 In \citet{perera22} the authors use an execution trace to perform slicing of functional programs.
 However their work suffers from performance problems. Further, their slicing algorithms
@@ -25,14 +51,14 @@ to implement incremental compilation of programs in \citet{acar02, acar06b}.
 In contrast to their work, which focusses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive
 data exploration systems. Additionally their work is implemented as a library for Standard ML
-whilst we have implemented a language with this functionality built in. 
+whilst we have implemented a language with this functionality built in.
 
 The work of Acar is not the first to treat functional programs as graphs.
 As opposed to a standard operational semantics, one can represent the semantics
 as a term graph rewrite system. These systems, introduced by \citet{barendregt87}
 allow for the representation of every aspect of a functional languages semantics
-to be represented in a graph. For example, in \citet{vanEekelen97}, the graph rewriting 
+to be represented in a graph. For example, in \citet{vanEekelen97}, the graph rewriting
 semantics of the language Clean are studied in detail, as opposed to using an extension
 of the lambda calculus. As with Acar et al, the goal of their work is the efficient
 implementation of a functional programming language in general, contrasted with our aim
-of principled program slicing. 
+of principled program slicing.
