@@ -76,17 +76,24 @@ compute related-inputs and related-outputs queries.
 We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
 relation, since values like constants can be copied from the input directly through
 to the output. In these cases, the node trivially depends on itself.
-\newline
+
+\begin{definition}[Sources and sinks]
+   Define:
+   \begin{itemize}
+      \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
+      \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
+   \end{itemize}
+\end{definition}
+
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and it's opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
 since $R_G^{-1} = R_{G^{-1}}$.
 \newline
-Let us return to the notion of a related input query. The first step is to select a
-subset of the input we are interested in, $X$. This is eqivalent to selecting a the
-corresponding subset of input nodes in the graph. We then need to find all nodes
-in the output that our selected input nodes are demanded by.
+Let us return to the notion of a related input query. The first step is to select
+the input of interest, $X'$. We proceed by finding all nodes
+in the output that our selected input nodes are demanded by, formally:
 \begin{definition}[Demanded By]\label{def:demanded-by}
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
@@ -95,10 +102,10 @@ in the output that our selected input nodes are demanded by.
    $$
 \end{definition}
 Intuitively, the resultant subset of outputs is the smallest set of outputs which
-have at least one preceding element in the initially selected set. 
+have at least one preceding element in the initially selected set. We calculate
+this set by the algorithm detailed in \figref{conjugate:reaches}.
 
-
-Once we have found the set of output nodes $Y$ which make use of the selected input
+Once we have found the set of output nodes $Y'$ which make use of the selected input
 we need to find the rest of the inputs which the set $Y$ demands. The definition
 for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
 is unsurprising, as one can effectively be formed by taking the relational converse
@@ -113,10 +120,13 @@ of the other \todo{this feels wrong?}
 \end{definition}
 
 Since one definition can be recovered from the other by taking the converse of
-$R$, and swapping $X$ and $Y$, we can define an efficient procedure, \textit{reaches} that allows
-us to find either answer. This procedure takes the input (resp: output) set
-that has been initially selected, and the graph $G$ (resp: $G^{-1}$), and
-efficiently finds all nodes that are related.
+$R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
+to the opposite graph $G^{-1}$. When the algorithm finishes, it intersects
+the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
+only those nodes that are present in the original set of outputs. Taking the
+opposite graph has the effect of swapping sources and sinks, and so running
+\textit{reaches} on the opposite graph will only return nodes present in the
+set of inputs.
 
 \input{fig/conjugate/reaches}
 
