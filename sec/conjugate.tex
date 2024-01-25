@@ -73,9 +73,13 @@ compute related-inputs and related-outputs queries.
    where $\param^{-1}$ denotes the relational inverse of an edge.
 \end{definition}
 \begin{definition}[Reachability]
-   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the transitive
-   closure of $E$
+   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
+   closure} of $E$.
 \end{definition}
+We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
+relation, since values like constants can be copied from the input directly through
+to the output. In these cases, the node trivially depends on itself.
+\newline
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and it's opposite $G^{-1}$,
