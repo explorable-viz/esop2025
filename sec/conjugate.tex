@@ -2,7 +2,9 @@
 \label{sec:conjugate}
 
 \subsection{Preliminaries}
-
+For the rest of this section, when we refer to Boolean algebras, we implicitly
+refer to atomic Boolean algebras, and explicitly refer to the powerset lattice.
+Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 \begin{definition}[Complement]
    For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement}
    of $Y$ with respect to $X$.
@@ -19,7 +21,7 @@
    and $g: \mathcal{B} \to \mathcal{A}$, and elements $a \in \mathcal{A}$ and $b \in \mathcal{B}$,
    we say that $f$ and $g$ are \textit{conjugate} if the following holds:
    $$
-      f(a) \wedge b = \bot \iff a \wedge g(b) = \bot 
+      f(a) \cap b = \bot \iff a \cap g(b) = \bot 
    $$
 \end{definition}
 
@@ -38,7 +40,7 @@ of that paper provide the following alternate definition of conjugacy:
    conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
    calculate it using the following:
    $$
-      g(b) = \bigwedge_{f(a) \wedge b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
+      g(b) = \bigcap_{f(a) \cap b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
    $$
 \end{definition}
 
@@ -81,9 +83,12 @@ in the output that our selected input nodes are demanded by.
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
    $$
-      \demandByR(X) =  \bigwedge_{R^{-1}[Y] \wedge X \neq \bot} \padArg{Y}{1.5em} = \bigvee_{R^{-1}[Y] \subseteq X} \padArg{\compl{Y}}{1em} \quad (Y \subseteq Y') 
+      \demandByR(X) =  \bigcap_{R^{-1}[Y] \cap X \neq \bot} \padArg{Y}{1.5em} = \bigcup_{R^{-1}[Y] \subseteq X} \padArg{\compl{Y}}{1em} \quad (Y \subseteq Y') 
    $$
 \end{definition}
+Intuitively, the resultant subset of outputs is the smallest set of outputs which
+have at least one preceding element in the initially selected set. 
+
 
 Once we have found the set of output nodes $Y$ which make use of the selected input
 we need to find the rest of the inputs which the set $Y$ demands. The definition
@@ -95,12 +100,16 @@ of the other \todo{this feels wrong?}
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
    $$
-      \demandR(Y) = \bigwedge_{R[X] \wedge Y \neq \bot} \padArg{X}{1.5em} = \bigvee_{R[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
+      \demandR(Y) = \bigcap_{R[X] \cap Y \neq \bot} \padArg{X}{1.3em} = \bigcup_{R[X] \subseteq Y} \padArg{\compl{X}}{0.8em} \quad (X \subseteq X')
    $$
 \end{definition}
 
-It is unsurprising that \defref{demanded-by} is so similar to \defref{demand}, since
-we obtain one by taking the relational converse of the other.
+Since one definition can be recovered from the other by taking the converse of
+$R$, and swapping $X$ and $Y$, we can define an efficient procedure that allows
+us to find either answer. This procedure takes the input (resp: output) set
+that has been initially selected, and the graph $G$ (resp: $G^{-1}$), and
+efficiently finds all nodes that are related.
+\todo{Need to move the definition of the efficient procedure here}
 
 \subsection{Projections and Conjugations for Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
