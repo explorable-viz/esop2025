@@ -9,10 +9,13 @@
 \end{definition}
 
 \begin{definition}[Image and Preimage]
-   For a relation $D \subseteq X \times Y$, and a subset $X' \subset X$, we write
-   $D[X'] : \powerset{X} \to \powerset{Y}$ to denote the image of $X'$ under $D$. For a subset $Y' \subseteq Y$
-   we write $\preim{D}[Y'] : \powerset{Y} \to \powerset{X}$ to denote the preimage of $Y'$ under $D$.
+   For a relation $D \subseteq Y \times X$, and a subset $Y' \subset Y$, we write
+   $D[Y'] : \powerset{Y} \to \powerset{X}$ to denote the image of $Y'$ under $D$. For a subset $X' \subseteq X$
+   we write $\preim{D}[X'] : \powerset{X} \to \powerset{Y}$ to denote the preimage of $X'$ under $D$.
 \end{definition}
+
+We swap the usual order of $X$ and $Y$, since it allows us to read $Y \mathrel{D} X$ as
+"outputs $Y$ demand inputs $X$".
 
 For the this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
@@ -28,7 +31,7 @@ Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 \end{definition}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
-   For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq, Y' \subseteq Y$,
+   For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 \begin{proof}
@@ -84,12 +87,15 @@ to the output. In these cases, the node trivially depends on itself.
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
-
+When a dependence graph $G$ is constructed, the sources $\sources{G}$ correspond
+to the output nodes, and the sinks $\sinks{G}$ correspond to input nodes. In the
+opposite graph, this correspondence is flipped.  
+\newline
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and it's opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
-since $R_G^{-1} = R_{G^{-1}}$.
+since $R_G^{-1} = R_{G^{-1}}$. Further
 \newline
 Let us return to the notion of a related input query. The first step is to select
 the input of interest, $X'$. We proceed by finding all nodes
@@ -98,12 +104,16 @@ in the output that our selected input nodes are demanded by, formally:
    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
    $$
-      \demandByR(X) =  \bigcap_{R^{-1}[Y] \cap X \neq \bot} \padArg{Y}{1.5em} = \bigcup_{R^{-1}[Y] \subseteq X} \padArg{\compl{Y}}{1em} \quad (Y \subseteq Y') 
+      \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R^[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
    $$
 \end{definition}
 Intuitively, the resultant subset of outputs is the smallest set of outputs which
 have at least one preceding element in the initially selected set. We calculate
 this set by the algorithm detailed in \figref{conjugate:reaches}.
+
+When the algorithm finishes, it intersects
+the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
+only those nodes that are present in the overall set of outputs.
 
 Once we have found the set of output nodes $Y'$ which make use of the selected input
 we need to find the rest of the inputs which the set $Y$ demands. The definition
@@ -115,19 +125,27 @@ of the other \todo{this feels wrong?}
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
    $$
-      \demandR(Y) = \bigcap_{R[X] \cap Y \neq \bot} \padArg{X}{1.3em} = \bigcup_{R[X] \subseteq Y} \padArg{\compl{X}}{0.8em} \quad (X \subseteq X')
+      \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
    $$
 \end{definition}
 
 Since one definition can be recovered from the other by taking the converse of
 $R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
-to the opposite graph $G^{-1}$. When the algorithm finishes, it intersects
-the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
-only those nodes that are present in the original set of outputs. Taking the
+to the opposite graph $G^{-1}$. Taking the
 opposite graph has the effect of swapping sources and sinks, and so running
 \textit{reaches} on the opposite graph will only return nodes present in the
 set of inputs.
 
+Since the set of related inputs can be computed by composing $\demandR$ and $\demandByR$,
+and similarly related outputs can be found by composing them in the other way, we may write
+the following:
+\begin{definition}[Related Inputs and Outputs]
+   For $G = (V,E)$, define:
+   \begin{enumerate}
+      \item $\relInput_G \eqdef \demandR_G\cdot\demandByR_G$\hfill (related inputs)
+      \item $\relOutput_G \eqdef \demandByR_G \cdot \demandR_G$\hfill (related outputs)
+   \end{enumerate}
+\end{definition} 
 \input{fig/conjugate/reaches}
 
 \subsection{Projections and Conjugations for Focussed Queries}
