@@ -51,20 +51,22 @@ connection for ``cooperating inputs'' given by $R^{-1} \relcomp R$. We show how 
 The specific contributions of the paper are as follows:
 \begin{itemize}
 \item \secref{example} uses a realistic example to introduce the novel cognacy operator $\relInput$ (``related
-inputs'') along with its constituent operators $\demandR$ and $\demandByR$. We unpack the intuitive
-relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
-\citeauthor{jonsson51}'s notion of conjugate operators and also introduce the alternative composite
-$\relOutput$ (``related outputs'') that computes the dual cognacy relation.
+inputs'') along with its components $\demandR$ and $\demandByR$. We unpack the intuitive relationship between
+$\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of
+conjugate operators and also introduce the flipped composite $\relOutput$ (``related outputs'') that computes
+the dual cognacy relation.
 \item \secref{core} defines the core functional language underlying our implementation and gives an
 operational semantics that pairs every result with a DDG suitable for computing $\demandR$ and $\demandByR$.
-\item \secref{graph} introduces the formal idea of the conjugate pair of operators between $\powerset{X}$ for
-a relation $R \subseteq X \times Y$, formalises DDGs as one possible ``implementation'' of such a relation,
-and defines forwards and backwards operators over a DDG which implement the conjugate pair for the
-reachability relation of the graph.
-\item \secref{evaluation} contrasts the graph-based approach with a trace-based implementation, comparing the
-overhead of building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical
-approach.
+\item \secref{conjugate} introduces the formal idea of conjugate operators between Boolean algebras and show
+that for a relation $D \subseteq X \times Y$, the image and preimage functions for $D$ form a conjugate pair
+$\demandByR_{D}$ and $\demandR_{D}$ between $\powerset{X}$ and $\powerset{Y}$. We show that $f$ and $g$ are
+conjugate is equivalent $f$ and $\dual{g}$ being adjoint.
+\item \secref{graph} defines two procedures for computing $\demandR_{D}$ and $\demandByR_{D}$ over a DDG with
+reachability relation $D$.
+\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
+an implementation due to \citet{perera22} based on traces and Galois connections, comparing the overhead of
+building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical approach.
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
-a discussion on limitations and future work.
+a discussion on some limitations of the present system and how it might be developed further in the future.
