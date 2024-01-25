@@ -1,0 +1,62 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$V \reachesAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\reachesAlg{}$}}
+      ]
+      {
+         (\emptyset, \emptyset), V
+         \reachesVert{\hat{G}}
+         G
+      }
+      {
+         V \reachesAlg{\hat{G}} \sinks{G}
+      }
+      \end{smathpar}
+   }
+   \vspace{1mm}
+   {\small \flushleft \shadebox{$G, V \reachesVert{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
+   \begin{smathpar}
+   \inferrule*[
+      lab={\ruleName{$\reachesVert{}$-done}}
+   ]
+   {
+      \strut
+   }
+   {
+      G, \emptyset \reachesVert{\hat{G}} G
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\reachesVert{}$-skip}},
+      right={$\alpha \in \V(G)$}
+   ]
+   {
+      G, V
+      \reachesVert{\hat{G}}
+      G'
+   }
+   {
+      G, \alpha \cons V \reachesVert{\hat{G}} G'
+   }
+   %
+   \and
+   %
+   \inferrule*[
+      lab={\ruleName{$\reachesVert{}$-extend}},
+      right={$H = \set{\bind{\alpha}{V'}}$}
+   ]
+   {
+      G \disjunion H, V' \disjunion V
+      \reachesVert{\hat{G} \disjunion H}
+      G'
+   }
+   {
+      G, \alpha \cons V \reachesVert{\hat{G} \disjunion H} G'
+   }
+   \end{smathpar}}
+   \caption{Find Reachable nodes}
+   \label{fig:conjugate:reaches}
+\end{figure}

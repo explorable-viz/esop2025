@@ -10,27 +10,37 @@
 
 \begin{definition}[Image and Preimage]
    For a relation $D \subseteq X \times Y$, and a subset $X' \subset X$, we write
-   $D[X']$ to denote the image of $X'$ under $D$. For a subset $Y' \subseteq Y$
-   we write $\preim{D}[Y']$ to denote the preimage of $Y'$ under $D$.
+   $D[X'] : \powerset{X} \to \powerset{Y}$ to denote the image of $X'$ under $D$. For a subset $Y' \subseteq Y$
+   we write $\preim{D}[Y'] : \powerset{Y} \to \powerset{X}$ to denote the preimage of $Y'$ under $D$.
 \end{definition}
+
+For the this section, when we refer to Boolean algebras, we are
+usually referring to the powerset lattice.
+Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\mathcal{A}$, and $\mathcal{B}$, functions $f: \mathcal{A} \to \mathcal{B}$
    and $g: \mathcal{B} \to \mathcal{A}$, and elements $a \in \mathcal{A}$ and $b \in \mathcal{B}$,
    we say that $f$ and $g$ are \textit{conjugate} if the following holds:
    $$
-      f(a) \wedge b = \bot \iff a \wedge g(b) = \bot 
+      f(a) \cap b = \bot \iff a \cap g(b) = \bot 
    $$
 \end{definition}
 
-\begin{lemma}[Preimage and Image of a relation are conjugate]
+\begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq, Y' \subseteq Y$,
-   $R[\param]$ and $\preim{R}[\param]$ are conjugate.
+   $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 \begin{proof}
    Trivial.
 \end{proof}
-The notion of conjugate functions is due to \citet{jonssontarski51}. The authors
+
+For convenience throughout this section, we make use of the fact that the
+preimage of a relation $D$ is equal to the image of its converse. Thus,
+alongside \lemref{im-preim}, we make use of the fact that the image 
+of a relation is conjugate to the image of its converse.
+
+The notion of conjugate functions is due to \citet{jonsson51}. The authors
 of that paper provide the following alternate definition of conjugacy:
 
 \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
@@ -38,7 +48,7 @@ of that paper provide the following alternate definition of conjugacy:
    conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
    calculate it using the following:
    $$
-      g(b) = \bigwedge_{f(a) \wedge b = \bot} \compl{a} \quad \text{for any $b \in \mathcal{B}$}
+      g(b) = \bigcap_{f(a) \cap b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
    $$
 \end{definition}
 
@@ -46,42 +56,88 @@ In general, \defref{construct-conjugate} is inefficient, since it requires
 ranging over all possible values $a \in \mathcal{A}$, and computing their
 meet with $b$.
 
-It is not hard to see that the image and preimage functions of a relation
-$D$ are conjugate and furthermore that the image function of a relation $D$ is
-conjugate to the image function of the converse relation written $D^{-1}$.
-\todo{The above is a sort of abuse of notation. It makes sense that we
-could write the relational converse with the same notation as the preimage
-of a relation, but I wonder if it could get confusing for the reader?}
-\subsection{Efficient Computation of Demand}
+\subsection{Efficient Queries on Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
 
 We have already discussed how we realize the dependency relation described in
-\secref{core}. For the rest of the section, we use sets of nodes.
-
-\begin{definition}[Reachability]
-   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the transitive
-   closure of $E$
+\secref{core} as a graph. We shall now detail how we use this graph to efficiently
+compute related-inputs and related-outputs queries.
+\todo{Is the above paragraph any good?}
+\begin{definition}[Opposite Graph]
+   For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
+   where $\param^{-1}$ denotes the relational inverse of an edge.
 \end{definition}
+\begin{definition}[Reachability]
+   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
+   closure} of $E$.
+\end{definition}
+We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
+relation, since values like constants can be copied from the input directly through
+to the output. In these cases, the node trivially depends on itself.
+
+\begin{definition}[Sources and sinks]
+   Define:
+   \begin{itemize}
+      \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
+      \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
+   \end{itemize}
+\end{definition}
+
+For the rest of this section we generally omit the $\param_G$
+from this relation, since it is usually obvious to which graph we refer.
+When we are considering a graph $G$ and it's opposite $G^{-1}$,
+we will abuse the notation for the preimage and image of $R$,
+since $R_G^{-1} = R_{G^{-1}}$.
+\newline
+Let us return to the notion of a related input query. The first step is to select
+the input of interest, $X'$. We proceed by finding all nodes
+in the output that our selected input nodes are demanded by, formally:
+\begin{definition}[Demanded By]\label{def:demanded-by}
+   For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
+   $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
+   $$
+      \demandByR(X) =  \bigcap_{R^{-1}[Y] \cap X \neq \bot} \padArg{Y}{1.5em} = \bigcup_{R^{-1}[Y] \subseteq X} \padArg{\compl{Y}}{1em} \quad (Y \subseteq Y') 
+   $$
+\end{definition}
+Intuitively, the resultant subset of outputs is the smallest set of outputs which
+have at least one preceding element in the initially selected set. We calculate
+this set by the algorithm detailed in \figref{conjugate:reaches}.
+
+Once we have found the set of output nodes $Y'$ which make use of the selected input
+we need to find the rest of the inputs which the set $Y$ demands. The definition
+for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
+is unsurprising, as one can effectively be formed by taking the relational converse
+of the other \todo{this feels wrong?}
 
 \begin{definition}[Demands]\label{def:demand}
    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y) = \bigwedge_{R_G[X] \wedge Y \neq \bot} \! X \quad (X \subseteq X')$
-   to mean the set of inputs that $Y$ demands. We can also write this as
-   $\demandR(Y) = \bigvee_{R_G[X] \subseteq Y} \! \compl{X}$
+   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
+   $$
+      \demandR(Y) = \bigcap_{R[X] \cap Y \neq \bot} \padArg{X}{1.3em} = \bigcup_{R[X] \subseteq Y} \padArg{\compl{X}}{0.8em} \quad (X \subseteq X')
+   $$
 \end{definition}
 
-Intuitively, if we have a set of outputs $Y$, to find the set of inputs it demands, we
-want to find the smallest set of inputs $X$ for which every member has at least one
-output that demands it. Equivalently, we can take the union of the complements of the sets
-for which their image under $R_G$ is contained in $Y$. We shall return to this
-relationship later.
+Since one definition can be recovered from the other by taking the converse of
+$R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
+to the opposite graph $G^{-1}$. When the algorithm finishes, it intersects
+the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
+only those nodes that are present in the original set of outputs. Taking the
+opposite graph has the effect of swapping sources and sinks, and so running
+\textit{reaches} on the opposite graph will only return nodes present in the
+set of inputs.
 
-\begin{definition}{Demanded By}\label{def:demanded-by}
-   For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-   $X  \subseteq X \subseteq V$, write $\demandByR(X) = \bigwedge_{R_G[Y] \wedge X \neq \bot} \! Y \quad (Y \subseteq Y')$ to mean the set of outputs that $X$ is demanded by.
-\end{definition}
+\input{fig/conjugate/reaches}
 
-It is unsurprising that \defref{demanded-by} is so similar to \defref{demand}, since
-we obtain one by taking the relational converse of the other.
+\subsection{Projections and Conjugations for Focussed Queries}
+\todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
+the relationships between products of inputs and products of outputs. Doing this
+in a principled manner is effectively what allows us to perform focussed queries.}
+\subsection{Relationship to Galois Connections}
+\todo{Here we need to formally explain the relationship to galois connections, and why
+this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
+demanded by. We need to include the efficient algorithm for forward slicing, and give
+a nice narrative structure that will lead into this. It may be worth explaining why
+the De morgan dual of a conjugate function creates a Galois connection, but that might
+be too much depth.}
