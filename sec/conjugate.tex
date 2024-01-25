@@ -136,6 +136,16 @@ opposite graph has the effect of swapping sources and sinks, and so running
 \textit{reaches} on the opposite graph will only return nodes present in the
 set of inputs.
 
+Since the set of related inputs can be computed by composing $\demandR$ and $\demandByR$,
+and similarly related outputs can be found by composing them in the other way, we may write
+the following:
+\begin{definition}[Related Inputs and Outputs]
+   For $G = (V,E)$, define:
+   \begin{enumerate}
+      \item $\relInput_G \eqdef \demandR_G\cdot\demandByR_G$\hfill (related inputs)
+      \item $\relOutput_G \eqdef \demandByR_G \cdot \demandR_G$\hfill (related outputs)
+   \end{enumerate}
+\end{definition} 
 \input{fig/conjugate/reaches}
 
 \subsection{Projections and Conjugations for Focussed Queries}
