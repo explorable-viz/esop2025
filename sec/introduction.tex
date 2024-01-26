@@ -18,15 +18,24 @@ charts or tables. While this idea is not entirely new (see for example \citet{ps
 \citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
 form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
 mutual relevance which arises between two different input elements when they contribute to a common output
-element; to discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an approach
-used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We formalise
-related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation for a
-dependence graph $G$, and give a procedure for computing related inputs over the graph. Borrowing a term from
+element. To discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an execution
+record used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We
+formalise related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation
+for a dependence graph $G$, and give a procedure for computing related inputs over $G$. Borrowing a term from
 linguistics, we say that inputs related in this way are \emph{cognate} because their relatedness amounts to
 having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common
 ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51},
 functions between Boolean algebras which come in reciprocating pairs and which when ``self-composed''
 calculate relations of cognacy.
+
+In their ``reciprocating'' nature conjugate pairs resemble Galois connections; and in fact the relationship is
+very close. If $f$ and $g$ are conjugate, then $f$ and the De Morgan dual $\dual{g}$ form a Galois connection.
+This relates our approach to \citeauthor{perera22}'s work on the problem of \emph{brushing and linking} in
+data visualisation, which we recover as a special case of our framework via the image function for the other
+composite $R \relcomp R^{-1}$ which captures a dual cognacy relation between output features whenever they
+compete for common input data. Composing this operator with suitable projections at either end recovers the
+brushing and linking feature, but in a more general setting where related inputs are also readily derived. We
+provide some evidence that our graphical approach is easier to implement than one based on execution traces, as well as fast enough to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 
