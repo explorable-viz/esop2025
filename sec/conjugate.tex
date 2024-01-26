@@ -1,6 +1,10 @@
 \section{Conjugate Operators For Program Slicing}
 \label{sec:conjugate}
 
+In this section, we shall introduce some mathematical notions, explain why they
+are useful to us, and then use them to define the operations we use to compute
+related inputs and related outputs queries.
+
 \subsection{Preliminaries}
 
 \begin{definition}[Complement]
@@ -21,6 +25,19 @@ For the this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
+As a correctness condition, one would expect the functions used to determine
+\textit{demands} and \textit{demanded by} to be inverse of each other. This
+condition may be sufficient if we were considering only one input value
+and one output value at a time, however generalizing this notion to sets creates
+too strong of a condition.
+When generalized to sets, a function and its inverse implies that for a set of
+inputs to be demanded by a set of outputs, every input in the set should be used.
+This is not usually the case, sometimes a set of selected inputs contains values
+that are not used at all. Thus, the set of outputs may not demand any of them,
+and so the two functions cannot simply be each others inverses.
+Instead, we use the somewhat weaker notion of 
+\textit{conjugate functions}, due to \citet{jonsson51}.
+
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
    and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
@@ -29,6 +46,23 @@ Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
       f(X') \cap Y' = \bot \iff X' \cap g(Y') = \bot 
    $$
 \end{definition}
+
+\todo{WIP}
+A straightforward
+implication of the above is that $f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot$.
+For correctness purposes, we do not just want to know that these intersections are
+non-empty, but would like to know their contents.
+
+The subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$ precisely corresponds
+to elements with an empty image under $D$, ie $x \in X_0 \iff D[\set{x}] = \bot$.
+If we consider $X_1 = X' \setminus X_0$, then we know that $X_1 \subseteq g \after f(X')$.
+So we can now write $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+new inputs we have discovered through our related inputs query. We can safely discard
+$X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
+we can read $X_0$ as the set of inputs that are unused through the entire program.
+In a data science scenario, this is extremely useful since we often work with datasets
+that have a large amount of spurious data.
+\todo{End WIP}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
@@ -40,7 +74,7 @@ preimage of a relation $D$ is equal to the image of its converse. Thus,
 alongside \lemref{im-preim}, we make use of the fact that the image 
 of a relation is conjugate to the image of its converse.
 
-The notion of conjugate functions is due to \citet{jonsson51}. The authors
+The authors
 of that paper provide the following alternate definition of conjugacy:
 
 \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
@@ -163,19 +197,3 @@ demanded by. We need to include the efficient algorithm for forward slicing, and
 a nice narrative structure that will lead into this. It may be worth explaining why
 the De morgan dual of a conjugate function creates a Galois connection. I am not
 certain if there is a good reference for this or if we need to derive it ourselves}
-
-The fact that \textit{demands} and \textit{demanded by} are a conjugate pair is
-not necessary for the definition of \opName{reaches}, or their use in related-input
-or related-output queries. It does however shed light on a connection to another
-piece of work which aims to solve the problem of brushing and linking. 
-
-In \citet{perera22,perera12b}, the authors describe a technique they call \textit{Galois slicing}.
-In their work, they use a series of Galois connections that allow them to perform
-backwards and forwards slicing of functional programs. They compose their
-backwards slicing operator with the De Morgan Dual of their forwards operator to
-achieve a similiar effect to our related outputs queries. This is unsurprising,
-due to a fact about Galois connections and conjugate functions:
-
-\begin{lemma}[The De Morgan Dual of a Conjugate function is a Galois Connection]
-   TODO
-\end{lemma}
