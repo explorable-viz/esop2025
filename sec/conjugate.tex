@@ -44,11 +44,11 @@ The notion of conjugate functions is due to \citet{jonsson51}. The authors
 of that paper provide the following alternate definition of conjugacy:
 
 \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
-   Given a function $f: \mathcal{A} \to \mathcal {B}$, there can exist only one
-   conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
+   Given a function $f: \powerset{X} \to \powerset{Y}$, there can exist only one
+   conjugate function $g: \powerset{Y} \to \powerset{X}$. If $g$ exists we can
    calculate it using the following:
    $$
-      g(b) = \bigcap_{f(a) \cap b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
+      g(Y') = \bigcap_{f(X') \cap Y' = \bot} \padArg{\compl{X}}{1em} \quad \text{for any $X' \in \powerset{X}$}
    $$
 \end{definition}
 
@@ -56,8 +56,14 @@ In general, \defref{construct-conjugate} is inefficient, since it requires
 ranging over all possible values $a \in \mathcal{A}$, and computing their
 meet with $b$.
 
-\begin{definition}[Galois Connection]
-   
+\begin{definition}[Galois Connection For A Relation]
+   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
+   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
+   flipped, and the functions defined as:
+   \begin{itemize}
+      \item $D_{\star}(Y') \eqdef D[Y']$
+      \item $D^{\star}(X') \eqdef \neg_{\powerset{Y}} \after D^{-1}[X'] \after \neg_{\powerset{X}} = \bigcup_{D^{-1}[Y'] \subseteq X'} \padArg{Y'}{0em} \quad (Y' \subseteq Y)$
+   \end{itemize}
 \end{definition}
 
 \subsection{Efficient Queries on Graphs}
