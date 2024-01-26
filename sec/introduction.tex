@@ -28,15 +28,11 @@ ancestry in either). The key mathematical idea is the concept of ``conjugate'' o
 functions between Boolean algebras which come in reciprocating pairs and which when ``self-composed''
 calculate relations of cognacy.
 
-Our approach decomposes Galois slicing into two components: an operational semantics that
-evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
-the graph. We show that although the overhead of producing a DDG is comparable to that of producing a trace,
-the slicing algorithms run on average much faster than their trace-based counterparts, making them suitable
-for interactive applcations like brushing and linking. Moreover, although bckward slicing is the usual
-reachability analysis over the graph, in turns out that forward slicing over a dependence graph is,
-extensionally, the De Morgan dual of backward slicing on the opposite graph, leading to an easy implementation
-of the upper adjoint in terms of the lower. This naive implementation is still faster than the trace-based
-approach, but we also give a direct implementation of forward slicing and show that it performs even better.
+Moreover, although bckward slicing is the usual reachability analysis over the graph, in turns out that
+forward slicing over a dependence graph is, extensionally, the De Morgan dual of backward slicing on the
+opposite graph, leading to an easy implementation of the upper adjoint in terms of the lower. This naive
+implementation is still faster than the trace-based approach, but we also give a direct implementation of
+forward slicing and show that it performs even better.
 
 Decomposing the problem into a graph-building semantics and a pair of analyses over the graph also
 significantly reduces the implementation burden on the developer, since the slicing algorithms are
