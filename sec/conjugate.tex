@@ -107,13 +107,13 @@ since $R_G^{-1} = R_{G^{-1}}$. Further
 Let us return to the notion of a related input query. The first step is to select
 the input of interest, $X'$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, formally:
-\begin{definition}[Demanded By]\label{def:demanded-by}
-   For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-   $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
-   $$
-      \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
-   $$
-\end{definition}
+% \begin{definition}[Demanded By]\label{def:demanded-by}
+%    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
+%    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
+%    $$
+%       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
+%    $$
+% \end{definition}
 Intuitively, the resultant subset of outputs is the smallest set of outputs which
 have at least one preceding element in the initially selected set. We calculate
 this set by the algorithm detailed in \figref{conjugate:reaches}.
@@ -128,13 +128,13 @@ for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
 is unsurprising, as one can effectively be formed by taking the relational converse
 of the other \todo{this feels wrong?}
 
-\begin{definition}[Demands]\label{def:demand}
-   For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
-   $$
-      \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
-   $$
-\end{definition}
+% \begin{definition}[Demands]\label{def:demand}
+%    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
+%    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
+%    $$
+%       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
+%    $$
+% \end{definition}
 
 Since one definition can be recovered from the other by taking the converse of
 $R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
