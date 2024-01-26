@@ -15,12 +15,9 @@ let energy year c_names =
     }
 in ScatterPlot {
   caption: "Efficiency of renewables vs. proportion of cap",
-  data: [{
-      x: country.non_rens / country.totalCap,
-      y: country.renCapFactor,
-      c: country.name
-  } | country
-    $\leftarrow$ energy 2018 [ "BRA", "CHN", "DEU", "FRA", "EGY", "IND", "JPN", "MEX", "NGA", "USA" ]],
+  data: [
+    { x: country.non_rens / country.totalCap, y: country.renCapFactor, c: country.name } | country
+      $\leftarrow$ energy 2018 [ "BRA", "CHN", "DEU", "FRA", "EGY", "IND", "JPN", "MEX", "NGA", "USA" ]],
   xlabel: "rens/TotalEnergyCap",
   ylabel: "Clean Capacity Factor"
 }
