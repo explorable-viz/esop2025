@@ -32,23 +32,23 @@ calculate relations of cognacy.
 
 The specific contributions of the paper are as follows:
 \begin{itemize}
-\item \secref{example} uses a realistic example to introduce the novel cognacy operator $\relInput$ (``related
-inputs'') along with its components $\demandR$ and $\demandByR$. We unpack the intuitive relationship between
-$\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of
-conjugate operators and also introduce the flipped composite $\relOutput$ (``related outputs'') that computes
-the dual cognacy relation.
+\item \secref{example} introduces the novel cognacy operator $\relInput$ (``related inputs'') from an end-user
+perspective, along with its components $\demandR$ and $\demandByR$. Using a realistic example, we unpack the
+intuitive relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+\citeauthor{jonsson51}'s notion of conjugacy and also introduce the dual cognacy operator $\relOutput$
+(``related outputs'').
 \item \secref{core} defines the core functional language underlying our implementation and gives an
-operational semantics that pairs every result with a DDG suitable for computing $\demandR$ and $\demandByR$.
-\item \secref{conjugate} introduces the formal idea of conjugate operators between Boolean algebras and show
-that for a relation $D \subseteq X \times Y$, the image and preimage functions for $D$ form a conjugate pair
-$\demandByR_{D}$ and $\demandR_{D}$ between $\powerset{X}$ and $\powerset{Y}$. We show that $f$ and $g$ are
-conjugate is equivalent $f$ and $\dual{g}$ being adjoint.
-\item \secref{graph} defines two procedures for computing $\demandR_{D}$ and $\demandByR_{D}$ over a DDG with
-reachability relation $D$.
+operational semantics that pairs every result with a dynamic dependence graph suitable for computing
+$\demandR$ and $\demandByR$.
+\item \secref{conjugate} introduces the formal setting of conjugate operators between Boolean algebras. We
+explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
+$\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
+is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We define procedures for
+computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
 \item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
 an implementation due to \citet{perera22} based on traces and Galois connections. We contrast the overhead of
-building a trace vs.~ building a DDG, computing $\demandR$ and $\demandByR$ over both, and the relative
-complexity of the two implementations.
+building a trace vs.~building a DDG, computing $\demandR$ and $\demandByR$ over each, and the relative
+implementation burden of the two approaches.
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
