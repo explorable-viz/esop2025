@@ -25,18 +25,15 @@ For the this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
-As a correctness condition, one would expect the functions used to determine
-\textit{demands} and \textit{demanded by} to be inverse of each other. This
-condition may be sufficient if we were considering only one input value
-and one output value at a time, however generalizing this notion to sets creates
-too strong of a condition.
-When generalized to sets, a function and its inverse implies that for a set of
-inputs to be demanded by a set of outputs, every input in the set should be used.
-This is not usually the case, sometimes a set of selected inputs contains values
-that are not used at all. Thus, the set of outputs may not demand any of them,
-and so the two functions cannot simply be each others inverses.
-Instead, we use the somewhat weaker notion of 
-\textit{conjugate functions}, due to \citet{jonsson51}.
+One might expect the functions used to determine \textit{demands} and \textit{demanded by}
+to be inverses of each other. It turns out this notion is not quite correct, for
+two interlinked reasons. We do not consider individual values in the set of inputs
+or outputs, and when selecting a set of inputs, we may select an input that is
+entirely unused by the program.
+If we were to insist our operations were inverse, it would imply that for a set of
+inputs to be demanded by a set of outputs, every input in the set should be used,
+which is clearly not always the case. We instead relax the requirement from the
+two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
