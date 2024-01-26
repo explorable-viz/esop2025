@@ -79,21 +79,6 @@ compute related-inputs and related-outputs queries.
    For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
    where $\param^{-1}$ denotes the relational inverse of an edge.
 \end{definition}
-\begin{definition}[Reachability]
-   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
-   closure} of $E$.
-\end{definition}
-We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
-relation, since values like constants can be copied from the input directly through
-to the output. In these cases, the node trivially depends on itself.
-
-\begin{definition}[Demands and Demanded By]
-   For a graph $G = (V,E)$ with inputs $X \subseteq V$ and outputs $Y \subseteq V$, with reachability relation $R_G$, write the following:
-   \begin{itemize}
-      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}$
-      \item $\demandByR_G = \demandR_{G^{-1}}$
-   \end{itemize}
-\end{definition}
 
 \begin{definition}[Sources and sinks]
    Define:
@@ -102,19 +87,39 @@ to the output. In these cases, the node trivially depends on itself.
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
+
+
 When a dependence graph $G$ is constructed, the sources $\sources{G}$ correspond
 to the output nodes, and the sinks $\sinks{G}$ correspond to input nodes. In the
 opposite graph, this correspondence is flipped.  
-\newline
+
+\begin{definition}[Reachability]
+   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
+   closure} of $E$.
+\end{definition}
+We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
+relation, since values like constants can be copied from the input directly through
+to the output. In these cases, the node trivially depends on itself.
+
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and it's opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
-since $R_G^{-1} = R_{G^{-1}}$. Further
-\newline
+since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
+and \textit{demanded by} in terms of $R$.
+
+\begin{definition}[Demands and Demanded By]
+   For a graph $G = (V,E)$ with inputs $X \subseteq V$ and outputs $Y \subseteq V$, with reachability relation $R_G$, write the following:
+   \begin{itemize}
+      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$
+      \item $\demandByR_G = \demandR_{G^{-1}}$
+   \end{itemize}
+\end{definition}
+
 Let us return to the notion of a related input query. The first step is to select
-the input of interest, $X'$. We proceed by finding all nodes
-in the output that our selected input nodes are demanded by, formally:
+the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
+in the output that our selected input nodes are demanded by, $\demandByR(X')$.
+We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
 % \begin{definition}[Demanded By]\label{def:demanded-by}
 %    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
 %    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
@@ -122,20 +127,15 @@ in the output that our selected input nodes are demanded by, formally:
 %       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
 %    $$
 % \end{definition}
-Intuitively, the resultant subset of outputs is the smallest set of outputs which
-have at least one preceding element in the initially selected set. We calculate
-this set by the algorithm detailed in \figref{conjugate:reaches}.
 
-When the algorithm finishes, it intersects
-the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
-only those nodes that are present in the overall set of outputs.
 
-Once we have found the set of output nodes $Y'$ which make use of the selected input
-we need to find the rest of the inputs which the set $Y$ demands. The definition
-for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
-is unsurprising, as one can effectively be formed by taking the relational converse
-of the other \todo{this feels wrong?}
+Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
+$\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
+opposite graph. Then the result of $\demandR(\demandByR(X)) \subseteq \sinks{G}$
+is the set of all related outputs. 
 
+The procedure for computing related outputs is similar, we simply swap the order
+of operations. We succinctly define both sets as follows:
 % \begin{definition}[Demands]\label{def:demand}
 %    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
 %    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
@@ -143,17 +143,6 @@ of the other \todo{this feels wrong?}
 %       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
 %    $$
 % \end{definition}
-
-Since one definition can be recovered from the other by taking the converse of
-$R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
-to the opposite graph $G^{-1}$. Taking the
-opposite graph has the effect of swapping sources and sinks, and so running
-\textit{reaches} on the opposite graph will only return nodes present in the
-set of inputs.
-
-Since the set of related inputs can be computed by composing $\demandR$ and $\demandByR$,
-and similarly related outputs can be found by composing them in the other way, we may write
-the following:
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
