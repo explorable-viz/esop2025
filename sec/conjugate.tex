@@ -45,14 +45,17 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
 \end{definition}
 
 \todo{WIP}
-A straightforward
-implication of the above is that $f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot$.
-For correctness purposes, we do not just want to know that these intersections are
-non-empty, but would like to know their contents.
+On its own the above condition doesn't seem very strong but conjugate functions
+have  properties we find useful. First consider the contrapositive of the above:
+$f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot$. Whilst this statement
+does not directly say anything about the contents of these intersections, we can
+deduce some of their properties.
 
-The subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$ precisely corresponds
-to elements with an empty image under $D$, ie $x \in X_0 \iff D[\set{x}] = \bot$.
-If we consider $X_1 = X' \setminus X_0$, then we know that $X_1 \subseteq g \after f(X')$.
+Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
+demands functions, and that $g \after f (X')$ computes the set of inputs related
+to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
+Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
+If we consider $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$.
 So we can now write $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
 new inputs we have discovered through our related inputs query. We can safely discard
 $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
