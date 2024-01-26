@@ -87,6 +87,14 @@ We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachabili
 relation, since values like constants can be copied from the input directly through
 to the output. In these cases, the node trivially depends on itself.
 
+\begin{definition}[Demands and Demanded By]
+   For a graph $G = (V,E)$ with inputs $X \subseteq V$ and outputs $Y \subseteq V$, with reachability relation $R_G$, write the following:
+   \begin{itemize}
+      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}$
+      \item $\demandByR_G = \demandR_{G^{-1}}$
+   \end{itemize}
+\end{definition}
+
 \begin{definition}[Sources and sinks]
    Define:
    \begin{itemize}
