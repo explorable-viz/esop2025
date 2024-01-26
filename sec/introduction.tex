@@ -2,31 +2,31 @@
 \label{sec:introduction}
 
 A ubiquitous problem in data-driven decision making --- from setting national policy to deciding what
-groceries to buy --- is interpreting the charts, figures and text provided by scientists and journalists.
-These sorts of data summaries are essential to effective communication but lose crucial information about the
+groceries to buy --- is interpreting the charts, figures and text created by scientists and journalists. These
+sorts of data summaries are essential to making and supporting claims, but lose crucial information about the
 relationship to the underlying data, making them hard to fact-check or drill into. If we know the domain well
-and have access to the source code and data sets used to create the outputs, we may be able to reverse
-engineer some of these relationships, but this is unlikely to be easy. In many common situations we have
-little choice but to take things on trust. These difficulties are further compounded when the information
-presented draws on multiple data sources, such medical meta-analyses ~\citep{nakamura19}, ensemble
-models~\citep{virdee23}, and queries that span multiple database tables~\citep{selinger79}.
+and have access to the source code and data sets used to create them, we may be able to reverse engineer some
+of these relationships, but this is unlikely to be easy. In many common situations we have little choice but
+to take things on trust. These difficulties are further compounded when the information presented draws on
+multiple data sources, such medical meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, or
+queries that span multiple database tables~\citep{selinger79}.
 
 With traditional print media, opaque outputs disconnected from the underlying data are to be expected. For
 digital media, other options are open to us. In this paper, we introduce a new program analysis framework
-which supports interactive exploration of input-output relationships directly via online computed artefacts
-such as charts or tables of data. While this idea is not entirely new (see for example \citet{psallidas18} and
+which supports interactive exploration of input-output relationships directly via visual outputs such as
+charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} and
 \citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
 form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
 mutual relevance which arises between two different input elements when they contribute to a common output
 element; to discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an approach
 used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We formalise
-related inputs as the image function for $D^{-1} \relcomp D$ where $D$ is the reachability relation for a
-dependence graph $G$, and give a procedure for computing related inputs over the graph. To borrow a term from
+related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation for a
+dependence graph $G$, and give a procedure for computing related inputs over the graph. Borrowing a term from
 linguistics, we say that inputs related in this way are \emph{cognate} because their relatedness amounts to
 having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common
-ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators on Boolean
-algebras~\cite{jonsson51}, which describes functions between Boolean algebras which can be ``flipped'' into
-functions running in the other direction and then ``self-composed'' to calculate relations of cognacy.
+ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51},
+functions between Boolean algebras which come in reciprocating pairs and which when ``self-composed''
+calculate relations of cognacy.
 
 Our approach decomposes Galois slicing into two components: an operational semantics that
 evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
