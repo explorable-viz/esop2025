@@ -2,47 +2,63 @@
 \label{sec:introduction}
 
 A ubiquitous problem in data-driven decision making --- from setting national policy to deciding what
-groceries to buy --- is interpreting the charts, figures and text presented to us by scientists and
-journalists. When data is summarised into charts and text, crucial information about how those summaries were
-constructed --- and from what data --- is lost. If we understand the domain well and have access to the source
-code and data sets, we may be able to reconstruct some of this lost information, although that will usually
-take a significant investment of time. More commonly we have to take things on trust. These difficulties are
-further compounded when the output presents information collated from multiple sources, such medical
-meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, and database joins~\citep{selinger79}.
+groceries to buy --- is interpreting the charts, figures and text created by scientists and journalists. These
+sorts of data summaries are essential to making and supporting claims, but lose crucial information about the
+relationship to the underlying data, making them hard to fact-check or drill into. If we know the domain well
+and have access to the source code and data sets used to create them, we may be able to reverse engineer some
+of these relationships, but this is unlikely to be easy. In many common situations we have little choice but
+to take things on trust. These difficulties are further compounded when the information presented draws on
+multiple data sources, such medical meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, or
+queries that span multiple database tables~\citep{selinger79}.
 
-In this paper we present a new implementation technique for Galois slicing based on dynamic dependence graphs
-(DDGs), an approach used in the program slicing literature for analysing imperative programs
-\cite{ferrante87}. Our approach decomposes Galois slicing into two components: an operational semantics that
-evaluates a program to a DDG, and a pair of adjoint slicing operators for forwards and backwards slicing over
-the graph. We show that although the overhead of producing a DDG is comparable to that of producing a trace,
-the slicing algorithms run on average much faster than their trace-based counterparts, making them suitable
-for interactive applcations like brushing and linking. Moreover, although bckward slicing is the usual
-reachability analysis over the graph, in turns out that forward slicing over a dependence graph is,
-extensionally, the De Morgan dual of backward slicing on the opposite graph, leading to an easy implementation
-of the upper adjoint in terms of the lower. This naive implementation is still faster than the trace-based
-approach, but we also give a direct implementation of forward slicing and show that it performs even better.
+With traditional print media, opaque outputs disconnected from the underlying data are to be expected. For
+digital media, other options are open to us. In this paper, we introduce a new program analysis framework
+which supports interactive exploration of input-output relationships directly via visual outputs such as
+charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} and
+\citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
+form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
+mutual relevance which arises between two different input elements when they contribute to a common output
+element. To discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an execution
+record used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We
+formalise related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation
+for a dependence graph $G$, and give a procedure for computing related inputs over $G$. Borrowing a term from
+linguistics, we say that inputs related in this way are \emph{cognate} because their relatedness amounts to
+having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common
+ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51},
+functions between Boolean algebras which come in reciprocating pairs and which when ``self-composed''
+calculate relations of cognacy.
 
-Decomposing the problem into a graph-building semantics and a pair of analyses over the graph also
-significantly reduces the implementation burden on the developer, since the slicing algorithms are
-language-agnostic and thus only need to be implemented once. The mathematical setup is also simpler in this
-new setting, because the Galois connections are determined solely by the reachability relation $R$ between the
-inputs and outputs of the graph. This allow the ``competing outputs'' problem formulated in \citet{perera22}
-to be understood as the Galois connection for $R \relcomp {R^{-1}}$, which in turn suggests another Galois
-connection for ``cooperating inputs'' given by $R^{-1} \relcomp R$. We show how this new operator also has potentially interesting data science applications.
+In their ``reciprocating'' nature, conjugate pairs resemble Galois connections. In fact the relationship is
+very close: if $f$ and $g$ are conjugate, then $f$ and the De Morgan dual $\dual{g}$ form a Galois connection.
+This relates our approach to \citeauthor{perera22}'s work on the problem of \emph{brushing and linking} in
+data visualisation, which we recover as a special case of our framework. The image function for the other
+composite $R \relcomp R^{-1}$ captures a dual cognacy relation between output features whenever they compete
+for common input data; composing this operator with suitable projections at either end recovers brushing and
+linking. We provide some evidence that our graphical approach is easier to implement than one based on
+execution traces, as well as fast enough to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 
 The specific contributions of the paper are as follows:
 \begin{itemize}
-\item \secref{core} defines the core calculus that is the basis of our implementation and gives an operational
-semantics that equips every result with a DDG suitable for slicing.
-\item \secref{graph} introduces the idea of a Galois connection for a relation, formalises DDGs as one
-possible ``implementation'' of such a relation, and defines adjoint forwards and backwards slicing operators
-over a DDG which implement the corresponding a Galois connection.
-\item \secref{evaluation} contrasts the graph-based approach with a trace-based implementation, comparing the
-overhead of building a trace vs.~a DDG, slicing over both, and the relative ease of implementing the graphical
-approach.
+\item \secref{example} introduces the novel cognacy operator $\relInput$ (``related inputs'') from an end-user
+perspective, along with its components $\demandR$ and $\demandByR$. Using a realistic example, we unpack the
+intuitive relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+\citeauthor{jonsson51}'s notion of conjugacy and also introduce the dual cognacy operator $\relOutput$
+(``related outputs'').
+\item \secref{core} defines the core functional language underlying our implementation and gives an
+operational semantics that pairs every result with a dynamic dependence graph suitable for computing
+$\demandR$ and $\demandByR$.
+\item \secref{conjugate} introduces the formal setting of conjugate operators between Boolean algebras. We
+explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
+$\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
+is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We define procedures for
+computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
+\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
+an implementation due to \citet{perera22} based on traces and Galois connections. We contrast the overhead of
+building a trace vs.~building a dependence graph, computing $\demandR$ and $\demandByR$ over each, and the
+relative implementation burden of the two approaches.
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
-a discussion on limitations and future work.
+a discussion on some limitations of the present system and how it might be developed further in the future.

@@ -1,38 +1,40 @@
-\section{Transparent, Self-Explanatory Charts and Figures}
+\section{Towards Data-Transparent Research Outputs}
 \label{sec:example}
 
 \begin{figure}
    \centering
    \includegraphics[width=\textwidth]{fig/example/linked-inputs-squared-off.png}
-   \caption{An example of a related inputs query, finding the inputs that are related to Chinese bio energy capacity in 2018.}
+   \caption{Related inputs query finding inputs related to Chinese bio energy capacity in 2018}
    \label{fig:related-inputs-main}
 \end{figure}
 
-As an example of the kind of comprehension challenge we are concerned with in this paper, consider the scatter
-plot in \figref{related-inputs-main}. The axes labels are suggestive of what is being plotted on each axis: we
-might surmise that the x-axis represents the ratio of renewables to total energy capacity, and the y-axis
-represents the ``capacity factor'' of clean energy sources. Along with the caption, these provide a limited
-picture of what the chart might represent. But it remains unclear what each circle represents, what the ratios
-being plotted on each axis actually are, what energy types are being considered, and which of those might
-count as ``renewable''.
+Let us start by considering the kind of built-in transparency features we would like to support, using the
+scatter plot in \figref{related-inputs-main}. When looking at this plot, various comprehension challenges
+arise immediately, only some of which are likely to be ameliorated by any accompanying text. What exactly are
+we looking at? The axes labels suggest that the x-axis represents some kind of ratio (renewables to total
+energy capacity, perhaps), whereas the y-axis represents the ``capacity factor'' of clean energy sources.
+These give a sense of what the chart might be showing. But many questions remain, including what the
+individual circles represent, the quantities involved in the two ratios, the energy types being considered,
+which of those might count as ``renewable'', and so on. These question need not represent problems with the
+visualisation per se. Indeed, they are typical of the questions that arise in any context where a reader is
+trying to understand the relationship between a visualisation and the data being visualised.
 
-\begin{wrapfigure}{R}{0.49\textwidth}
-   {\tiny\lstinputlisting[language=Fluid, linewidth=0.46\textwidth,numbers=none]{fig/example/energy-query.fld}}
-   \caption{Source code for \figref{related-inputs-main} scatterplot}
+\begin{figure}
+   \small
+   {\lstinputlisting[language=Fluid, numbers=none]{fig/example/energy-query.fld}}
+   \caption{Source code for scatter plot in \figref{related-inputs-main}}
    \label{fig:energy-query}
-\end{wrapfigure}
+\end{figure}
 
-Questions like these can often be answered by inspecting a program's source code. For the example of the
-scatterplot, the source code in \figref{energy-query} reveals to us how the axes were calculated, with the
-x-axis computed by summing renewable electricity capacity, and dividing it by the sum of the total electrity
-capacity. We can also see that the "capacity factor" on the y-axis represents the total generated power from
-clean resources, divided by the sum of each resources energy capacity. Furthermore we can see that the data
-used is from the year 2018 and -- perhaps more subtly -- that nuclear power may be considered a clean energy
-source, despite being non-renewable.
-
-However, in many comprehension scenarios -- even involved situations such as
-reviewing a scientific paper -- the reader my lack the time, or know-how to locate
-and decipher source code.
+Questions like these can in principle be answered by inspecting the source code for the visualisation. In this
+case, the source code (\figref{energy-query}) reveals that the x-axis values were computed by summing
+renewables capacity and dividing it by total capacity, and that the ``clean capacity factor'' on the y-axis is
+a ratio between output and capacity for both renewables \emph{and} nuclear, suggesting (perhaps non-obviously)
+that nuclear power may be considered a clean energy source, despite being non-renewable. But deciphering this
+sort of information from the source code in practice is often extremely difficult. One has to find the source
+code, download it, verify that it behaves correctly, figure out which part is relevant, and then try to
+understand how the data set is being used. Even involved situations, such as reviewing a scientific paper, the
+reader may lack the time, or know-how, to go to this sort of effort.
 
 In traditional print media, the loss of transparency in this way is to be expected.
 By the time a journal article reaches a reader, the trail of information, relating
@@ -183,4 +185,3 @@ selected. If the visualisation was a bubble chart, there could be three or four 
 bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
 a mechanism for the user to easily determine which attributes of a visual element have been
 highlighted as selected. \todo{Decide what we are going to do here, and do it}
-
