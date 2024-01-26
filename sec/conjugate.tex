@@ -1,6 +1,10 @@
 \section{Conjugate Operators For Program Slicing}
 \label{sec:conjugate}
 
+In this section, we shall introduce some mathematical notions, explain why they
+are useful to us, and then use them to define the operations we use to compute
+related inputs and related outputs queries.
+
 \subsection{Preliminaries}
 
 \begin{definition}[Complement]
@@ -21,43 +25,80 @@ For the this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
+One might expect the functions used to determine \textit{demands} and \textit{demanded by}
+to be inverses of each other. It turns out this notion is not quite correct, for
+two interlinked reasons. We do not consider individual values in the set of inputs
+or outputs, and when selecting a set of inputs, we may select an input that is
+entirely unused by the program.
+If we were to insist our operations were inverse, it would imply that for a set of
+inputs to be demanded by a set of outputs, every input in the set should be used,
+which is clearly not always the case. We instead relax the requirement from the
+two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
+
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\mathcal{A}$, and $\mathcal{B}$, functions $f: \mathcal{A} \to \mathcal{B}$
-   and $g: \mathcal{B} \to \mathcal{A}$, and elements $a \in \mathcal{A}$ and $b \in \mathcal{B}$,
+   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
+   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
    we say that $f$ and $g$ are \textit{conjugate} if the following holds:
    $$
-      f(a) \cap b = \bot \iff a \cap g(b) = \bot 
+      f(X') \cap Y' = \bot \iff X' \cap g(Y') = \bot 
    $$
 \end{definition}
+
+\todo{WIP}
+On its own the above condition doesn't seem very strong but conjugate functions
+have  properties we find useful. First consider the contrapositive of the above:
+$f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot$. Whilst this statement
+does not directly say anything about the contents of these intersections, we can
+deduce some of their properties.
+
+Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
+demands functions, and that $g \after f (X')$ computes the set of inputs related
+to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
+Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
+If we consider $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$.
+So we can now write $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+new inputs we have discovered through our related inputs query. We can safely discard
+$X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
+we can read $X_0$ as the set of inputs that are unused through the entire program.
+In a data science scenario, this is extremely useful since we often work with datasets
+that have a large amount of spurious data.
+\todo{End WIP}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
-\begin{proof}
-   Trivial.
-\end{proof}
 
 For convenience throughout this section, we make use of the fact that the
 preimage of a relation $D$ is equal to the image of its converse. Thus,
 alongside \lemref{im-preim}, we make use of the fact that the image 
 of a relation is conjugate to the image of its converse.
 
-The notion of conjugate functions is due to \citet{jonsson51}. The authors
+The authors
 of that paper provide the following alternate definition of conjugacy:
 
 \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
-   Given a function $f: \mathcal{A} \to \mathcal {B}$, there can exist only one
-   conjugate function $g: \mathcal{B} \to \mathcal{A}$. If $g$ exists we can
+   Given a function $f: \powerset{X} \to \powerset{Y}$, there can exist only one
+   conjugate function $g: \powerset{Y} \to \powerset{X}$. If $g$ exists we can
    calculate it using the following:
    $$
-      g(b) = \bigcap_{f(a) \cap b = \bot} \padArg{\compl{a}}{1em} \quad \text{for any $b \in \mathcal{B}$}
+      g(Y') = \bigcap_{f(X') \cap Y' = \bot} \padArg{\compl{X}}{1em} \quad \text{for any $X' \in \powerset{X}$}
    $$
 \end{definition}
 
 In general, \defref{construct-conjugate} is inefficient, since it requires 
 ranging over all possible values $a \in \mathcal{A}$, and computing their
 meet with $b$.
+
+\begin{definition}[Galois Connection For A Relation]
+   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
+   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
+   flipped, and the functions defined as:
+   \begin{itemize}
+      \item $D_{\star}(Y') \eqdef D[Y']$
+      \item $D^{\star}(X') \eqdef \neg_{\powerset{Y}} \after D^{-1}[X'] \after \neg_{\powerset{X}} = \bigcup_{D^{-1}[Y'] \subseteq X'} \padArg{Y'}{0em} \quad (Y' \subseteq Y)$
+   \end{itemize}
+\end{definition}
 
 \subsection{Efficient Queries on Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
@@ -72,13 +113,6 @@ compute related-inputs and related-outputs queries.
    For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
    where $\param^{-1}$ denotes the relational inverse of an edge.
 \end{definition}
-\begin{definition}[Reachability]
-   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
-   closure} of $E$.
-\end{definition}
-We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
-relation, since values like constants can be copied from the input directly through
-to the output. In these cases, the node trivially depends on itself.
 
 \begin{definition}[Sources and sinks]
    Define:
@@ -87,58 +121,62 @@ to the output. In these cases, the node trivially depends on itself.
       \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
+
+
 When a dependence graph $G$ is constructed, the sources $\sources{G}$ correspond
 to the output nodes, and the sinks $\sinks{G}$ correspond to input nodes. In the
 opposite graph, this correspondence is flipped.  
-\newline
+
+\begin{definition}[Reachability]
+   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
+   closure} of $E$.
+\end{definition}
+We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
+relation, since values like constants can be copied from the input directly through
+to the output. In these cases, the node trivially depends on itself.
+
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and it's opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
-since $R_G^{-1} = R_{G^{-1}}$. Further
-\newline
+since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
+and \textit{demanded by} in terms of $R$.
+
+\begin{definition}[Demands and Demanded By]
+   For a graph $G = (V,E)$ with inputs $X \subseteq V$ and outputs $Y \subseteq V$, with reachability relation $R_G$, write the following:
+   \begin{itemize}
+      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$
+      \item $\demandByR_G = \demandR_{G^{-1}}$
+   \end{itemize}
+\end{definition}
+
 Let us return to the notion of a related input query. The first step is to select
-the input of interest, $X'$. We proceed by finding all nodes
-in the output that our selected input nodes are demanded by, formally:
-\begin{definition}[Demanded By]\label{def:demanded-by}
-   For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-   $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
-   $$
-      \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R^[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
-   $$
-\end{definition}
-Intuitively, the resultant subset of outputs is the smallest set of outputs which
-have at least one preceding element in the initially selected set. We calculate
-this set by the algorithm detailed in \figref{conjugate:reaches}.
+the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
+in the output that our selected input nodes are demanded by, $\demandByR(X')$.
+We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
+% \begin{definition}[Demanded By]\label{def:demanded-by}
+%    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
+%    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
+%    $$
+%       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
+%    $$
+% \end{definition}
 
-When the algorithm finishes, it intersects
-the nodes of the computed graph with the sinks, $T(\hat{G})$, and so returns
-only those nodes that are present in the overall set of outputs.
 
-Once we have found the set of output nodes $Y'$ which make use of the selected input
-we need to find the rest of the inputs which the set $Y$ demands. The definition
-for \textit{demands} is strikingly similar to that of \textit{demanded by}. This
-is unsurprising, as one can effectively be formed by taking the relational converse
-of the other \todo{this feels wrong?}
+Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
+$\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
+opposite graph. Then the result of $\demandR(\demandByR(X)) \subseteq \sinks{G}$
+is the set of all related outputs. 
 
-\begin{definition}[Demands]\label{def:demand}
-   For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-   $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
-   $$
-      \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
-   $$
-\end{definition}
-
-Since one definition can be recovered from the other by taking the converse of
-$R$, and swapping $X$ and $Y$, we can reuse \textit{reaches}, by applying it
-to the opposite graph $G^{-1}$. Taking the
-opposite graph has the effect of swapping sources and sinks, and so running
-\textit{reaches} on the opposite graph will only return nodes present in the
-set of inputs.
-
-Since the set of related inputs can be computed by composing $\demandR$ and $\demandByR$,
-and similarly related outputs can be found by composing them in the other way, we may write
-the following:
+The procedure for computing related outputs is similar, we simply swap the order
+of operations. We succinctly define both sets as follows:
+% \begin{definition}[Demands]\label{def:demand}
+%    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
+%    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
+%    $$
+%       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
+%    $$
+% \end{definition}
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
@@ -157,5 +195,5 @@ in a principled manner is effectively what allows us to perform focussed queries
 this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
 demanded by. We need to include the efficient algorithm for forward slicing, and give
 a nice narrative structure that will lead into this. It may be worth explaining why
-the De morgan dual of a conjugate function creates a Galois connection, but that might
-be too much depth.}
+the De morgan dual of a conjugate function creates a Galois connection. I am not
+certain if there is a good reference for this or if we need to derive it ourselves}
