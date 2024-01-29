@@ -2,18 +2,6 @@
 \label{sec:conjugate}
 
 \subsection{Preliminaries}
-
-\begin{definition}[Graph]
-   A (directed) graph $G=(V,E)$ is a set of nodes $V$, and a set of (directed) edges $E \subseteq V \times V$
-\end{definition}
-For the rest of this section, we consider graphs where the nodes represent values
-in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
-is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
-The choice of dependency relation is irrelevant at this stage, we shall return
-to this discussion point in \secref{core}. Our work diverges from traditional
-approaches to dynamic dependence graphs since we only consider one type of edge,
-as opposed to separately defining data and control-flow edges \citet{agrawal90}.
-
 \begin{definition}[Complement]
    For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement}
    of $Y$ with respect to $X$.
@@ -125,10 +113,18 @@ meet with $b$.
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
 
-We have already discussed how we realize the dependency relation described in
-\secref{core} as a graph. We shall now detail how we use this graph to efficiently
-compute related-inputs and related-outputs queries.
-\todo{Is the above paragraph any good?}
+
+\begin{definition}[Graph]
+   A (directed) graph $G=(V,E)$ is a set of nodes $V$, and a set of (directed) edges $E \subseteq V \times V$
+\end{definition}
+For the rest of this section, we consider graphs where the nodes represent values
+in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
+is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
+The choice of dependency relation is irrelevant at this stage, we shall return
+to this discussion point in \secref{core}. Our work diverges from traditional
+approaches to dynamic dependence graphs since we only consider one type of edge,
+as opposed to separately defining data and control-flow edges \citet{agrawal90}.
+
 \begin{definition}[Opposite Graph]
    For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
    where $\param^{-1}$ denotes the relational inverse of an edge.
