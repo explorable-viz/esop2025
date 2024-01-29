@@ -1,11 +1,18 @@
 \section{Conjugate Operators For Program Slicing}
 \label{sec:conjugate}
 
-In this section, we shall introduce some mathematical notions, explain why they
-are useful to us, and then use them to define the operations we use to compute
-related inputs and related outputs queries.
-
 \subsection{Preliminaries}
+
+\begin{definition}[Graph]
+   A (directed) graph $G=(V,E)$ is a set of nodes $V$, and a set of (directed) edges $E \subseteq V \times V$
+\end{definition}
+For the rest of this section, we consider graphs where the nodes represent values
+in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
+is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
+The choice of dependency relation is irrelevant at this stage, we shall return
+to this discussion point in \secref{core}. Our work diverges from traditional
+approaches to dynamic dependence graphs since we only consider one type of edge,
+as opposed to separately defining data and control-flow edges \citet{agrawal90}.
 
 \begin{definition}[Complement]
    For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement}
