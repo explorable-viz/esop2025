@@ -40,23 +40,23 @@ execution traces, as well as fast enough to support the kind of interactive scen
 \subsection{Contributions}
 
 The specific contributions of the paper are as follows:
-\begin{itemize}
-\item \secref{example} introduces the novel cognacy operator $\relInput$ (``related inputs'') from an end-user
-perspective, along with its components $\demandR$ and $\demandByR$. Using a realistic example, we unpack the
-intuitive relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+\begin{itemize}[leftmargin=*]
+\item We motivate the novel cognacy operator $\relInput$ (``related inputs'') from an end-user perspective,
+along with its components $\demandR$ and $\demandByR$ (\secref{example}). Using a realistic example, we unpack
+the intuitive relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
 \citeauthor{jonsson51}'s notion of conjugacy and also introduce the dual cognacy operator $\relOutput$
 (``related outputs'').
-\item \secref{core} defines the core functional language underlying our implementation and gives an
-operational semantics that pairs every result with a dynamic dependence graph suitable for computing
-$\demandR$ and $\demandByR$.
-\item \secref{conjugate} introduces the formal setting of conjugate operators between Boolean algebras. We
+\item We introduce the formal setting of conjugate operators between Boolean algebras (\secref{conjugate}). We
 explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
 $\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
-is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We define procedures for
+is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
 computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
-\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
-an implementation due to \citet{perera22} based on traces and Galois connections. We contrast the overhead of
-building a trace vs.~building a dependence graph, computing $\demandR$ and $\demandByR$ over each, and the
+\item We define a core functional language which is the basis of our implementation and give an operational
+semantics that pairs every result with a dynamic dependence graph suitable for computing $\demandR$ and
+$\demandByR$ (\secref{core}).
+\item We compares the performance of our implementation based on graphs and conjugates with an implementation
+due to \citet{perera22} based on traces and Galois connections (\secref{evaluation}). We contrast the overhead
+of building a trace vs.~building a dependence graph, computing $\demandR$ and $\demandByR$ over each, and the
 relative implementation burden of the two approaches.
 \end{itemize}
 
