@@ -236,43 +236,42 @@ If we are only interested in the way $A$ and $B$ are related via $C$, we are
 able to clamp down demand induced by $D$, sending it to bottom. 
 
 \subsubsection{Functions for Projections and stuff}
-Fix $A,B$ inputs, $C,D$ outputs.
-
-\begin{tikzcd}
-   C \arrow[rr, "{meet}_{bwd}"]   &  & C \times C \arrow[dd, "f_{bwd}"', shift right=2] \arrow[dd, "\opName{id}", shift left=2] \\
-                               &  &                                                                                          \\
-A \arrow[uu, "\dual{f}_{bwd}"] &  & A \times C                                                                              
-\end{tikzcd}
-
-
-\begin{align*}
+Fix $A,B, C,D$ to range over Boolean algebras.
+\newline
+\begin{salign}
    \textrm{Meet and Join} \\
-   join &: X \to X \times X \\
-   join_{bwd}(a,a') &= a \vee a' \\
-   join_{fwd}(a)    &= (a, a) \\
-   meet &: X \times X \to X \\
-   meet_{bwd}(a) &= (a, a) \\
-   meet_{fwd}(a, a') &= a \wedge a'
-\end{align*}
-\begin{align*}
+   \joinF &: X \to X \times X & \meetF &: X \times X \to X \\
+   \bwd{\joinF}(a,a') &= a \vee a' & \bwd{\meetF}(a) &= (a, a) \\
+   \fwd{\joinF}(a)    &= (a, a) & \fwd{\meetF}(a, a') &= a \wedge a'
+\end{salign}
+\begin{salign}
    \textrm{Projections/Injections} \\
-   inFst &: A \to A \times B & inSnd &: B \to A \times B \\
-   inFst_{bwd}(a, -) &= a & inSnd_{bwd}(-, b) &= b \\
-   inFst_{fwd}(a) &= (a, \top) & inSnd_{fwd}(b) &= (\top, b)\\
-   \dual{inFst} &: A \times B \to A & \dual{inSnd} &: A \times B \to B \\
-   \dual{inFst}_{bwd}(a) &= (a, \bot) & \dual{inSnd}_{bwd}(b) &= (\bot, b) \\ 
-   \dual{inFst}_{fwd}(a, -) &= a & \dual{inSnd}_{fwd}(-, b) &= b
-\end{align*}
+   \inFst &: A \to A \times B & \inSnd &: B \to A \times B \\
+   \bwd{\inFst}(a, -) &= a & \bwd{\inSnd}(-, b) &= b \\
+   \fwd{\inFst}(a) &= (a, \top) & \fwd{\inSnd}(b) &= (\top, b)\\
+   \dual{\inFst} &: A \times B \to A & \dual{\inSnd} &: A \times B \to B \\
+   \bwd{\dual{\inFst}}(a) &= (a, \bot) & \bwd{\dual{\inSnd}}(b) &= (\bot, b) \\ 
+   \fwd{\dual{\inFst}}(a, -) &= a & \fwd{\dual{\inSnd}}(-, b) &= b
+\end{salign}
 Assume $f: A \to C$, $g: A \to D$
-\begin{align*}
+\begin{salign}
    \textrm{Products} \\
    \funProd{f}{g} &: A \to C \times D \\
-   \funProd{f}{g}_{bwd}(c, d) &= f_{bwd}(c) \vee g_{bwd}(d) \\
-   \funProd{f}{g}_{fwd}(a) &= (f_{fwd}(a),g_{fwd}(a)) \\
+   \bwd{\funProd{f}{g}}(c, d) &=\bwd{ f}(c) \vee\bwd{ g}(d) \\
+   \fwd{\funProd{f}{g}}(a) &= (\fwd{f}(a)\fwd{,g}(a)) \\
    \dual{\funProd{f}{g}}&: C \times D \to A \\
-   \dual{\funProd{f}{g}}_{bwd}(a) &= (f_{bwd}(a), g_{bwd}(a)) \\
-   \dual{\funProd{f}{g}}_{fwd}(c, d) &= f_{fwd}(c) \wedge g_{fwd}(d)
-\end{align*}
+   \bwd{\dual{\funProd{f}{g}}}(a) &= (\bwd{f}(a),\bwd{ g}(a)) \\
+   \fwd{\dual{\funProd{f}{g}}}(c, d) &=\fwd{ }(c) \wedge\fwd{ g}(d)
+\end{salign}
+
+\begin{figure}
+   \begin{tikzcd}
+      C \arrow[rr, "\bwd{\meetF}"]   &  & C \times C \arrow[dd, "\bwd{f}"', shift right=2] \arrow[dd, "\opName{id}", shift left=2] \\
+                                  &  &                                                                                          \\
+   A \arrow[uu, "\dual{\fwd{f}}"] &  & A \times C                                                                              
+   \end{tikzcd}
+   \caption{Related inputs with a single output view}   
+\end{figure}
 
 \subsection{Relationship to Galois Connections}
 \todo{Here we need to formally explain the relationship to galois connections, and why
