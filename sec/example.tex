@@ -3,21 +3,21 @@
 
 \begin{figure}
    \centering
-   \includegraphics[width=\textwidth]{fig/example/linked-inputs-squared-off.png}
-   \caption{Related inputs query finding inputs related to Chinese bio energy capacity in 2018}
+   \includegraphics[width=0.75\textwidth]{fig/example/linked-inputs-with-tooltip.png}
+   \caption{``Related inputs'' query, identifying inputs related to Chinese bio energy capacity in 2018}
    \label{fig:related-inputs-main}
 \end{figure}
 
-Let us start by considering the kind of built-in transparency features we would like to support, using the
-scatter plot in \figref{related-inputs-main}. When looking at this plot, various comprehension challenges
-arise immediately, only some of which are likely to be ameliorated by any accompanying text. What exactly are
-we looking at? The axes labels suggest that the x-axis represents some kind of ratio (renewables to total
-energy capacity, perhaps), whereas the y-axis represents the ``capacity factor'' of clean energy sources.
-These give a sense of what the chart might be showing. But many questions remain, including what the
-individual circles represent, the quantities involved in the two ratios, the energy types being considered,
-which of those might count as ``renewable'', and so on. These question need not represent problems with the
-visualisation per se. Indeed, they are typical of the questions that arise in any context where a reader is
-trying to understand the relationship between a visualisation and the data being visualised.
+To see what built-in transparency might look like, consider the scatter plot in \figref{related-inputs-main}.
+Various semantic questions arise as soon as we look at this chart, some of which may be partly answered by
+accompanying text. Here the axis labels suggest that the x-axis represents some kind of ratio (renewables to
+total energy capacity, perhaps), and that the y-axis represents the ``capacity factor'' of clean energy
+sources. These give a sense of what the chart might be showing. But many unknowns remain --- what the
+individual circles represent, which specific quantities are involved in the two ratios, what energy types are
+being considered, which of those might count as ``renewable'', and so on. The fact that these questions arise
+need not represent a problem with the visualisation per se. Indeed they are typical of the questions that
+arise in any context where a reader is trying to understand the relationship between a visualisation and the
+data being visualised.
 
 \begin{figure}
    \small
@@ -29,38 +29,42 @@ trying to understand the relationship between a visualisation and the data being
 Questions like these can in principle be answered by inspecting the source code for the visualisation. In this
 case, the source code (\figref{energy-query}) reveals that the x-axis values were computed by summing
 renewables capacity and dividing it by total capacity, and that the ``clean capacity factor'' on the y-axis is
-a ratio between output and capacity for both renewables \emph{and} nuclear, suggesting (perhaps non-obviously)
-that nuclear power may be considered a clean energy source, despite being non-renewable. But deciphering this
-sort of information from the source code in practice is often extremely difficult. One has to find the source
-code, download it, verify that it behaves correctly, figure out which part is relevant, and then try to
-understand how the data set is being used. Even involved situations, such as reviewing a scientific paper, the
-reader may lack the time, or know-how, to go to this sort of effort.
+a ratio between output and capacity for both renewables \emph{and} nuclear, suggesting that nuclear power,
+despite being non-renewable, is here being considered a clean energy source. But deciphering this sort of
+information from the source code is hardly straightforward. One has to find the source code, download it,
+figure out which parts are relevant, and then try to understand how they operate on the data set to produce
+particular aspects of the visualisation --- and all of that outside of the ``comprehension context'' in which
+their question arose. Even in involved situations where the reader is prepared to invest significant amounts
+of time, such as reviewing a scientific paper, the reader may lack the time, or know-how, to go to this sort
+of effort.
 
-In traditional print media, the loss of transparency in this way is to be expected.
-By the time a journal article reaches a reader, the trail of information, relating
-data sources to charts or figures in the article has been completely lost. In a
-digital environment --  like an online paper or news article --  we should be able
-to do better, enriching the artefact with interactions that allow the user to
-query relationships between visualisations and data sources.
-Many graphics libraries already come equipped with the ability to display tooltips
-when the user has specified a visual element of interest. Whilst a tooltip provides
-a view that breaks down the values that a visual element is representing, it does
-no more than disambiguate these outputs, without shedding any light on the
-relationship to the input.
-For example, suppose the user has identified some input data of interest, such
-as the bioenergy capacity of China for the year 2018.
-To select the input, the user clicks on the appropriate cell in the table (\figref{related-inputs-main}, Step 1).
-Any selection made by the user directly clicking on a visual element is called
-a \textit{primary} selection. These are highlighted in green.
-Once a selection has been made, the elements of the chart which use the selected
-parts of the input should be highlighted to make this relationship obvious to the user (\figref{related-inputs-main}, Step 2).
-Finally the other inputs that contribute to the selected output can be highlighted.
-In general it is likely that the input
-data related to our initial selection will be distributed across varioustables,
-including the one in which the initial selection was made. To avoid confusion
-with data that the user has manually selected, we differentiate between primary
-and \textit{secondary} selections. A secondary selection is one that was computed
-by the analysis and highlighted in gray, (\figref{related-inputs-main}, 3a and 3b).
+In traditional media like hardcopy journals, this sort of opacity is par for course. By the time a journal
+article reaches a reader, the trail of information relating data sources to charts or figures in the article
+has been completely lost. Skeuomorphic formats like Portable Document Format (PDF) that emulate paper inherit
+this quality, but for truly digital formats we should be able to do better. Ideally we would like to enrich
+the artefact itself -- perhaps an online paper or news article -- with interactions that allow the user to
+query relationships between data sources and visualisations or other computed content \emph{in situ}.
+
+% Many graphics libraries already come equipped with the ability to display tooltips when the user has specified
+% a visual element of interest. Whilst a tooltip provides a view that breaks down the values that a visual
+% element is representing, it does no more than disambiguate these outputs, without shedding any light on the
+% relationship to the input.
+
+% \begin{itemize}
+%   \item[] \phantom{XXXXX}1. User selects input of interest (green)
+%   \item[] \phantom{XXXXX}2. Outputs which demand selected input are automatically selected (green)
+%   \item[] \phantom{XXXXX}3. Other inputs contributing to selected output are also highlighted (grey)
+% \end{itemize}
+
+To illustrate what this might look like, suppose the user identifies some input data of interest, perhaps the
+bioenergy capacity of China for 2018. They move their mouse over the appropriate cell in the table
+(\figref{related-inputs-main}, step 1) which is then highlighted in green. The system responds by generating
+two further selections automatically. First, any elements of the scatter plot which were computed using the
+selected inputs (\figref{related-inputs-main}, step 2) are given a similar green highlight; in this case just
+one point is highlighted, and in fact only the $y$ coordinate of that point. Then, the other inputs that
+contributed to that output feature (in other words, that were need to compute the $y$ coordinate of that point) are highlight in grey (\figref{related-inputs-main}, 3a and 3b). (We use a
+different colour to visually distinguish the \emph{answer} to the query from the inputs that initiated the
+query in the first place.)
 
 Whilst this exemplar "related inputs" query doesn't go the whole way to explain
 the relationship between inputs and outputs intensionally, it does move us
@@ -81,13 +85,12 @@ ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is in
 if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
 of the value assigned to $\alpha$, in a manner made precise later in the paper.
 
-Once the graph $G$ has been constructed, we can begin to interact with it. Fix
-the set of nodes associated with inputs to be $A$, and outputs to be
-$B$. We say that an output $b \in B$ \textit{demands} an
-input $a \in A$ if there exists a path in $G$ from $b$ to $a$. We
-can also say that $a$ is \textit{demanded by} $b$, if there is a path from $a$
-to $b$ in the opposite graph, $G^{-1}$. Each of these is easily implemented by
-simply finding the nodes reachable from a given start node in the appropriate graph.
+Once the graph $G$ has been constructed, we can begin to interact with it. Fix the set of nodes associated
+with inputs to be $A$, and outputs to be $B$. We say that an output $b \in B$ \textit{demands} an input $a \in
+A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded by} $b$ iff
+there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ whichtrivially obtained from $G$ by reversing
+the edges. Each of these operators is easily implemented by simply finding the nodes reachable from a given
+start node in the appropriate graph.
 
 In our example, the initial selected cell in the table is \textit{demanded by}
 the highlighted circle in the output chart. We then find all of the other inputs
