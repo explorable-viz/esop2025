@@ -14,29 +14,31 @@ queries that span multiple database tables~\citep{selinger79}.
 With traditional print media, this sort of ``disconnect'' between chart and figures and the underlying data is
 to be expected, but for digital media, other options are open to us. In this paper, we introduce a new program
 analysis framework which supports interactive exploration of input-output relationships directly via visual
-outputs such as charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} and
-\citet{perera22}), our framework supports a novel form of provenance query which we call \emph{related
-inputs}, as well as lending itself to easier implementation than prior work. Related inputs characterises the
-relation of mutual relevance which arises between two different input elements when they contribute to a
-common output element. Users are able to ask questions of the form ``How is this data element used, and what
-other data elements are used along with it?'' To answer such questions, we make use of \emph{dynamic
-dependence graphs} (DDGs), an execution record used in the program slicing literature for analysing imperative
-programs~\cite{ferrante87}. We formalise related inputs as the image function for $R^{-1} \relcomp R$ where
-$R$ is the reachability relation for a dependence graph $G$, and give a procedure for computing related inputs
-over $G$. Borrowing a term from linguistics, we say that inputs related in this way are \emph{cognate} because
-their relatedness amounts to having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use
-cognacy to refer to common ancestry in either). The key mathematical idea is the concept of ``conjugate''
-operators~\cite{jonsson51}, functions between Boolean algebras which come in reciprocating pairs and which
-when ``self-composed'' calculate relations of cognacy.
+outputs such as charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} for
+a discussion on the relationship between data provenance and data visualisation), our framework supports a
+novel form of provenance query which we call \emph{related inputs}, as well as lending itself to easier
+implementation than prior work. Related inputs characterises the relation of mutual relevance which arises
+between two different input elements when they contribute to a common output element. Users are able to ask
+questions of the form ``How is this data element used, and what other data elements are used along with it?''
+To answer such questions, we make use of \emph{dynamic dependence graphs} (DDGs), an execution record used in
+the program slicing literature for analysing imperative programs~\cite{ferrante87}. We formalise related
+inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation for a dependence
+graph $G$, and give a procedure for computing related inputs over $G$. Borrowing a term from linguistics, we
+say that inputs related in this way are \emph{cognate} because their relatedness amounts to having a common
+ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common ancestry in
+either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51}, functions
+between Boolean algebras which come in reciprocating pairs and which when ``self-composed'' calculate
+relations of cognacy.
 
 In their ``reciprocating'' nature, conjugate pairs resemble Galois connections. In fact the relationship is
 very close: if $f$ and $g$ are conjugate, then $f$ and the De Morgan dual $\dual{g}$ form a Galois connection.
-This relates our approach to \citeauthor{perera22}'s work on the problem of \emph{brushing and linking} in
-data visualisation, which we recover as a special case of our framework. The image function for the other
-composite $R \relcomp R^{-1}$ captures a dual cognacy relation between output features whenever they compete
-for common input data; composing this operator with suitable projections at either end recovers brushing and
-linking. We provide some evidence that our graphical approach is easier to implement than one based on
-execution traces, as well as fast enough to support the kind of interactive scenarios we have in mind.
+This relates our approach to earlier work based on Galois connections and execution traces that addressed the
+problem of \emph{brushing and linking} in data visualisation~\cite{perera22}. In our framework, the image
+function for the flipped composite $R \relcomp R^{-1}$ captures a dual cognacy relation between output
+features which compete for common input data; composing this operator with suitable projections at either end
+recovers brushing and linking. However, because the core data structure is language-agnostic, our graphical
+approach is easier to implement than one based on execution traces. We also demonstrate that it is fast enough
+to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 
