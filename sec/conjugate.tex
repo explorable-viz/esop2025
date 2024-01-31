@@ -17,6 +17,9 @@ For the rest of this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
+For convenience we make use of the fact that the preimage of a relation $D$ is
+equal to the image of its converse.
+
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
@@ -53,14 +56,17 @@ $X',Y'$, we find that the resources $X'$ is demanded by has an empty intersectio
 with $Y'$, you would expect that the resources $Y$ demands has an empty intersection
 with $X'$. Otherwise, this condition does not seem to be very strong on the surface.
 
-We also expect our operators to be monotonic in their inputs. Conjugate functions
-are not only monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
-makes sense from the perspective of resource demand. The point we have made about
-unused inputs and outputs contributes to the property that we cannot necessarily
-expect these functions to preserve top. If there are inputs that are unused,
-then running demands on the whole output will necessarily miss out all the unused inputs.
-Later, we shall see how we can overcome this limitation, and use this to discover
-more information about the relationship between inputs and outputs. 
+We also expect our operators to be monotonic in their inputs, if we increase the
+selection on the output, we expect the inputs they demand to stay the same, or grow.
+We similarly expect the same property on inputs. Conjugate functions are not only
+monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
+makes sense from the perspective of resource demand.
+
+The fact that we may have unused inputs and outputs means that despite this, we cannot
+necessarily expect these functions to preserve top. If there are inputs that are
+unused, then running demands on the whole output will necessarily miss out all the
+unused inputs. Later, we shall see how we can overcome this limitation, and use
+this to discover more information about the relationship between inputs and outputs. 
 
 \todo{I now think that this next bit could go into the sectoin on the core language,
 into the section about the discussion on projections/focussing, or the discussion of
@@ -97,11 +103,8 @@ we can use to focus queries onto specific contexts:
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 
-For convenience throughout this section, we make use of the fact that the
-preimage of a relation $D$ is equal to the image of its converse. Thus,
-alongside \lemref{im-preim}, we make use of the fact that the image 
-of a relation is conjugate to the image of its converse.
-
+We also use this
+with \lemref{im-preim}, again for notational convenience.
 % The authors
 % of that paper provide the following alternate definition of conjugacy:
 
