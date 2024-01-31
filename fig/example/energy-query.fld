@@ -11,16 +11,14 @@ let plot year countries =
         x = head (filter (isCountry country) nonRens);
         nonRensCap = x.nuclearCap + x.petrolCap + x.gasCap + x.coalCap
     in {
-      x: nonRensCap / (rensCap + nonRensCap),
+      x: rensCap / (rensCap + nonRensCap),
       y: (rensOut + x.nuclearOut) / (rensCap + x.nuclearCap)
     }
   in map plotCountry countries
 
 in ScatterPlot {
   caption: "Clean energy efficiency vs. proportion of renewable energy capacity",
-  data: plot 2018 [
-    "BRA", "CHN", "DEU", "FRA", "EGY", "IND", "JPN", "MEX", "NGA", "USA"
-  ],
+  data: plot 2018 [ "BRA", "CHN", "DEU", "FRA", "EGY", "IND", "JPN", "MEX", "NGA", "USA" ],
   xlabel: "Renewables/TotalEnergyCap",
   ylabel: "Clean Capacity Factor"
 }
