@@ -11,52 +11,54 @@ to take things on trust. These difficulties are further compounded when the info
 multiple data sources, such medical meta-analyses ~\citep{nakamura19}, ensemble models~\citep{virdee23}, or
 queries that span multiple database tables~\citep{selinger79}.
 
-With traditional print media, opaque outputs disconnected from the underlying data are to be expected. For
-digital media, other options are open to us. In this paper, we introduce a new program analysis framework
-which supports interactive exploration of input-output relationships directly via visual outputs such as
-charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} and
-\citet{perera22}), our framework lends itself to easier implementation than prior work and supports a novel
-form of provenance query which we call \emph{related inputs}. Related inputs characterises the relation of
-mutual relevance which arises between two different input elements when they contribute to a common output
-element. To discover such relationships, we make use of \emph{dynamic dependence graphs} (DDGs), an execution
-record used in the program slicing literature for analysing imperative programs~\cite{ferrante87}. We
-formalise related inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation
-for a dependence graph $G$, and give a procedure for computing related inputs over $G$. Borrowing a term from
-linguistics, we say that inputs related in this way are \emph{cognate} because their relatedness amounts to
-having a common ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common
-ancestry in either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51},
-functions between Boolean algebras which come in reciprocating pairs and which when ``self-composed''
-calculate relations of cognacy.
+With traditional print media, this sort of ``disconnect'' between chart and figures and the underlying data is
+to be expected, but for digital media, other options are open to us. In this paper, we introduce a new program
+analysis framework which supports interactive exploration of input-output relationships directly via visual
+outputs such as charts or tables. While this idea is not entirely new (see for example \citet{psallidas18} for
+a discussion on the relationship between data provenance and data visualisation), our framework supports a
+novel form of provenance query which we call \emph{related inputs}, as well as lending itself to easier
+implementation than prior work. Related inputs characterises the relation of mutual relevance which arises
+between two different input elements when they contribute to a common output element. Users are able to ask
+questions of the form ``How is this data element used, and what other data elements are used along with it?''
+To answer such questions, we make use of \emph{dynamic dependence graphs} (DDGs), an execution record used in
+the program slicing literature for analysing imperative programs~\cite{ferrante87}. We formalise related
+inputs as the image function for $R^{-1} \relcomp R$ where $R$ is the reachability relation for a dependence
+graph $G$, and give a procedure for computing related inputs over $G$. Borrowing a term from linguistics, we
+say that inputs related in this way are \emph{cognate} because their relatedness amounts to having a common
+ancestor in $G$ (or rather its opposite $G^{-1}$, but we will use cognacy to refer to common ancestry in
+either). The key mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51}, functions
+between Boolean algebras which come in reciprocating pairs and which when ``self-composed'' calculate
+relations of cognacy.
 
 In their ``reciprocating'' nature, conjugate pairs resemble Galois connections. In fact the relationship is
 very close: if $f$ and $g$ are conjugate, then $f$ and the De Morgan dual $\dual{g}$ form a Galois connection.
-This relates our approach to \citeauthor{perera22}'s work on the problem of \emph{brushing and linking} in
-data visualisation, which we recover as a special case of our framework. The image function for the other
-composite $R \relcomp R^{-1}$ captures a dual cognacy relation between output features whenever they compete
-for common input data; composing this operator with suitable projections at either end recovers brushing and
-linking. We provide some evidence that our graphical approach is easier to implement than one based on
-execution traces, as well as fast enough to support the kind of interactive scenarios we have in mind.
+This relates our approach to earlier work based on Galois connections and execution traces that addressed the
+problem of \emph{brushing and linking} in data visualisation~\cite{perera22}. In our framework, the image
+function for the flipped composite $R \relcomp R^{-1}$ captures a dual cognacy relation between output
+features which compete for common input data; composing this operator with suitable projections at either end
+recovers brushing and linking. However, because the core data structure is language-agnostic, our graphical
+approach is easier to implement than one based on execution traces. We also demonstrate that it is fast enough
+to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 
 The specific contributions of the paper are as follows:
-\begin{itemize}
-\item \secref{example} introduces the novel cognacy operator $\relInput$ (``related inputs'') from an end-user
-perspective, along with its components $\demandR$ and $\demandByR$. Using a realistic example, we unpack the
-intuitive relationship between $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
-\citeauthor{jonsson51}'s notion of conjugacy and also introduce the dual cognacy operator $\relOutput$
-(``related outputs'').
-\item \secref{core} defines the core functional language underlying our implementation and gives an
-operational semantics that pairs every result with a dynamic dependence graph suitable for computing
-$\demandR$ and $\demandByR$.
-\item \secref{conjugate} introduces the formal setting of conjugate operators between Boolean algebras. We
+\begin{itemize}[leftmargin=*]
+\item We motivate the novel cognacy operator $\relInput$ (``related inputs'') from an end-user perspective
+(\secref{example}). Using a realistic example, we unpack the intuitive relationship between its two components
+$\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of
+conjugacy and also introduce the dual cognacy operator $\relOutput$ (``related outputs'').
+\item We introduce the formal setting of conjugate operators between Boolean algebras (\secref{conjugate}). We
 explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
 $\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
-is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We define procedures for
+is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
 computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
-\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with
-an implementation due to \citet{perera22} based on traces and Galois connections. We contrast the overhead of
-building a trace vs.~building a dependence graph, computing $\demandR$ and $\demandByR$ over each, and the
+\item We define the core functional language which underlies our implementation and give an operational
+semantics that pairs every result with a dynamic dependence graph suitable for computing $\demandR$ and
+$\demandByR$ (\secref{core}).
+\item We compares the performance of our implementation based on graphs and conjugates with an implementation
+due to \citet{perera22} based on traces and Galois connections (\secref{evaluation}). We contrast the overhead
+of building trace vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the
 relative implementation burden of the two approaches.
 \end{itemize}
 
