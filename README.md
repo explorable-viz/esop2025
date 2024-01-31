@@ -1,4 +1,4 @@
-# graphical-slicing
+# Conjugate operators for transparent, explorable research outputs
 
 Draft paper on Galois slicing based on dynamic dependence graphs (DDGs).
 - ensure you have a working version of Python 3 (and that `python3` is in your PATH)
