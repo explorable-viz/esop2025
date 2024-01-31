@@ -77,36 +77,22 @@ that code. By putting this into a programming language instead, responsibility f
 lies with the implementors rather than users. These requirements suggested a solution built around dynamic
 program analysis, specifically a dynamic dependence graph approach similar to \citet{agrawal90}
 
-% When a \OurLang program is evaluated, it does not only produce an output value but also constructs a
-% dependency graph $G = (V,E)$
-%
-% In our graphs, parts of structured values that arise in the program's execution are given
-% ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is included
-% if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
-% of the value assigned to $\alpha$, in a manner made precise later in the paper.
+We say that an output $b \in B$ \textit{demands} an input $a \in A$ iff there exists a path in $G$ from $b$ to
+$a$. We can also say that $a$ is \textit{demanded by} $b$ iff there is a path from $a$ to $b$ in the opposite
+graph $G^{-1}$ whichtrivially obtained from $G$ by reversing the edges. Each of these operators is easily
+implemented by simply finding the nodes reachable from a given start node in the appropriate graph.
 
-Once the graph $G$ has been constructed, we can begin to interact with it. Fix the set of nodes associated
-with inputs to be $A$, and outputs to be $B$. We say that an output $b \in B$ \textit{demands} an input $a \in
-A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded by} $b$ iff
-there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ whichtrivially obtained from $G$ by reversing
-the edges. Each of these operators is easily implemented by simply finding the nodes reachable from a given
-start node in the appropriate graph.
+In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
+output chart. We then find all of the other inputs that the highlighted circle \textit{demands}, by finding
+its set of reachable nodes, and intersecting those with $A$. These nodes are those which correspond to the
+cells of the tables which we have highlighted in gray.
 
-In our example, the initial selected cell in the table is \textit{demanded by}
-the highlighted circle in the output chart. We then find all of the other inputs
-that the highlighted circle \textit{demands}, by finding its set of reachable
-nodes, and intersecting those with $A$. These nodes are those which
-correspond to the cells of the tables which we have highlighted in gray.
-
-The idea of multiple inputs working together to produce some visual output is not
-a unique problem. In fact, it is in a sense dual to a well known problem
-in data visualisation. In data visualisation, it is common for the same collection
-of input data to be reused across multiple charts, perhaps co-operating
-with other input data. Multiple outputs making use of common input suggests the
-problem of identifying elements in multiple charts which share their input data.
-In the visualisation community the problem of selecting an element in a chart
-and highlighting elements in other charts that use the same data is known as \textit{brushing and linking}
-\citet{becker87}.
+The idea of multiple inputs working together to produce some visual output is not a unique problem. In fact,
+it is in a sense dual to a well known problem in data visualisation. In data visualisation, it is common for
+the same data sources to visualised in different ways, to illustrate different aspects of the data. Multiple
+outputs making use of common input suggests a ``dual'' relationship between outputs whose demands overlap. In
+the visualisation literature the problem of selecting an element in a chart and highlighting elements in other
+charts that use the same data is known as \textit{brushing and linking} \citet{becker87}.
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
@@ -126,14 +112,8 @@ function, we find the data in the original table which is used to compute the he
 this data, and apply the \textit{demanded by} function. In this example, we find the points in the line chart
 on the right hand side which make use of the input values selected by the application of \textit{demands}.
 
-Historically, solutions to the problem of brushing and linking have been ad-hoc and relied on significant
-programmer effort in order to find the correct relation between outputs. Adding a new visualisation would
-potentially require this feature to be reimplemented or modified. In contrast, we can achieve the same
-functionality without forcing the programmer to manually implement the linking.
-
-As it happens, we are not the first to solve the problem of brushing and linking
-in a functional programming language. Prior work from \citet{perera22} has
-provided a solution through the user of Galois connections.
+As it happens, we are not the first to solve the problem of brushing and linking in a functional programming
+language. Prior work from \citet{perera22} has provided a solution through the user of Galois connections.
 
 When considered as functions from sets of outputs to sets of inputs (resp:
 sets of inputs to sets of outputs), then they satisify the property known as
