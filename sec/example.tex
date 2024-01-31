@@ -168,13 +168,13 @@ for example see \citet{MOLLER2006221}. This correspondence is what allows us to
 recapture their results. However, it is not so easy to adapt the Galois connection
 approach to include related inputs queries.
 
-One reason for this is the formulation of \textit{focussed} queries. Queries can
-be made more precise by specifiying which parts of the output (or input) we want
-to use to \textit{mediate} between our inputs (or outputs). In some cases, one
-may find that an input is related to all other inputs due to some small component
-of the output. We can therefore specify parts of the output which are uninteresting.
-In effect the user is able to ask, for a selected input $x$, what are the other
-inputs $X'$ that $x$ is related to, if we do not include relationships induced
-by a specific output $y$. This allows us to make these queries more precise, with
-the user able to adjust queries as they gain new information about a given
-visualisation.
+\subsection{Focused queries}
+
+A natural question that arises in any approach based on a dependency analysis is how informative queries are
+in the presence of ``noisy'' dependencies where the result depends on every input, as might arise when
+computing aggregates such as sums or averages. A variety of techniques may be helpful here, but for this paper
+we consider how related inputs queries can be made more precise by specifiying which \emph{parts} of the
+output we want to use to \textit{mediate} between our inputs. By projecting away a problematic output
+(i.e.~one which causes an input to be related to many other inputs), we can can obtain a \emph{query context}
+within which we can ask more fine-grained queries of the form ``With respect to this particular output, what
+other inputs are related to this input?''.
