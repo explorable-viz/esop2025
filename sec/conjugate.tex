@@ -121,13 +121,21 @@ with \lemref{im-preim}, again for notational convenience.
 % ranging over all possible values $a \in \mathcal{A}$, and computing their
 % meet with $b$.
 
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we write the
+   \textit{De Morgan Dual} of $f$ as $\dual{f}$, defined as:
+   $$
+   \dual{f} = \neg_B \after f \after \neg_A
+   $$
+\end{definition}
+
 \begin{definition}[Galois Connection For A Relation]
    For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
    to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
    flipped, and the functions defined as:
    \begin{itemize}
       \item $D_{\star}(Y') \eqdef D[Y']$
-      \item $D^{\star}(X') \eqdef \neg_{\powerset{Y}} \after D^{-1}[X'] \after \neg_{\powerset{X}} = \bigcup_{D^{-1}[Y'] \subseteq X'} \padArg{Y'}{0em} \quad (Y' \subseteq Y)$
+      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
    \end{itemize}
 \end{definition}
 
