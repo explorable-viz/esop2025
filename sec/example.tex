@@ -26,43 +26,45 @@ trying to understand the relationship between a visualisation and the data being
 \end{figure}
 
 Questions like these can in principle be answered by inspecting the source code for the visualisation
-(\figref{energy-query}). Here line 14 suggests that x-axis values were computed by summing renewables capacity
-and dividing by total capacity; line 15 shows that ``clean capacity factor'' on the y-axis is a ratio between
-output and capacity for the sum of renewables and nuclear, suggesting that nuclear power, despite being
-non-renewable, is being treated as a clean energy source. But deciphering this sort of information from the
-source code involves finding the sources, downloading them, figuring out which parts are relevant, and then
-trying to understand how those bits of code operate on the data set to produce particular aspects of the
-visualisation. Moreover, all of this must take place outside of the ``comprehension context'' in which the
-original question arose. Even a reader committed to a certain level of due diligence, such as a reviewer of a
-scientific paper, may simply lack the time or know-how to do this.
+(\figref{energy-query}). Here, line 14 suggests that x-axis values were computed by summing renewables
+capacity and dividing by total capacity; line 15 shows that ``clean capacity factor'' on the y-axis is a ratio
+between output and capacity for the sum of renewables and nuclear, suggesting that nuclear power, despite
+being non-renewable, is being treated as a clean energy source. But proceeding in this fashion involves
+finding the source code, downloading it, figuring out which parts are relevant, and then trying to understand
+how those bits of code operate on the data set to produce particular aspects of the visualisation. Moreover,
+all of this must take place outside of the ``comprehension context'' in which the original question arose.
+Even a reader committed to a certain level of due diligence, perhaps a reviewer of a scientific paper, may
+simply lack the time or know-how to do this.
 
 \todo{Introduce the idea of ``data linking'' first. Starting with the data set and asking how it is used in the visualisation runs counter to the narrative we have established so far.}
 
 In traditional media like hardcopy journals, this sort of opacity is unavoidable. By the time an article
 reaches a reader, the trail of information relating data sources to charts or figures in the article is no
 longer available. Skeuomorphic formats like Portable Document Format (PDF) that emulate paper fare no better,
-but with a truly digital format --- perhaps an online paper or news article --- we should be able to do things
-differently. Ideally we would like to enrich the artefact itself with interactions that allow the user to
-query relationships between data sources and visualisations and other computed content \emph{in situ}.
+but with a truly digital format --- perhaps an online research paper or news article --- we should be able to
+do things differently. Ideally we would like to enrich the artefact itself with interactions that allow the
+user to query relationships between data sources and visualisations and other computed content \emph{in situ}.
 
 % Many graphics libraries already come equipped with the ability to display tooltips when the user has specified
 % a visual element of interest. Whilst a tooltip provides a view that breaks down the values that a visual
 % element is representing, it does no more than disambiguate these outputs, without shedding any light on the
 % relationship to the input.
 
-To illustrate what this might look like in the scatter plot example, suppose the user identifies some input
-data of interest, perhaps the bioenergy capacity of China for 2018. They move their mouse over the appropriate
-cell in the table (\figref{related-inputs-main}, step 1) which is then highlighted in green. The system
-responds by generating two further selections automatically. First, any elements of the scatter plot which
-were computed using the selected input are given a similar green highlight; in this case just one point is
-highlighted, and in fact only the $y$ coordinate of that point (step 2). Finally, any other inputs that
-contributed to that output feature (in other words, that were needed to compute the $y$ coordinate of that
-point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
-\emph{answer} to the query from the selection that initiated the query in the first place.)
+To illustrate what this might look like in the scatter plot example, suppose the user were to identify some
+input data of interest, perhaps the bioenergy capacity of China for 2018. They move their mouse over the
+appropriate cell in the table (\figref{related-inputs-main}, step 1) which turns green. In response the system
+generates two further selections automatically. First, any elements of the scatter plot which were computed
+using the selected input are given a similar green highlight; in this case just one point is highlighted, and
+in fact only the $y$ coordinate of that point (step 2). Finally, any other inputs that contributed to that
+output feature (in other words, that were needed to compute the $y$ coordinate of that point) are highlighted
+in grey (steps 3a and 3b). (We use a different colour to visually distinguish the \emph{answer} to the query
+from the selection that initiated the query in the first place.)
 
-We call this feature \emph{data transparency}. Whilst data transparency doesn't go the whole way to explaining
-how the highlighted inputs were used to compute the highlighted output, it does move us substantially closer
-to the visualisation alone being transparent, and entirely self-explanatory.
+This feature, which we call \emph{data transparency}, is ``extensional'': it says what data is relevant,
+rather than revealing anything about why. In that sense data transparency falls short of being a full
+explanation of how the input selection was used to compute the output selection. Nevertheless it moves us
+substantially closer to research outputs self-contained enough to be able to reveal their fine-grained
+relationships to data sources.
 
 We would like these interactive queries to be provided automatically, rather
 than implemented by the author of the visualisation on an ad-hoc basis.
