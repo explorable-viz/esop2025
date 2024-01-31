@@ -8,15 +8,16 @@
    \label{fig:related-inputs-main}
 \end{figure}
 
-To see what built-in transparency might look like, consider the scatter plot in \figref{related-inputs-main}.
-Various semantic questions about what is being represented in the chart arise immediately, some of which may
-be partly answered by accompanying text. For example, the axis labels suggest that the x-axis represents some
-kind of ratio (renewables to total energy capacity, perhaps), and that the y-axis represents the ``capacity
-factor'' of clean energy sources. But many unknowns remain --- what the individual circles represent, which
-specific quantities are involved in the two ratios, what energy types are being considered, which of those
-might count as ``renewable'', and so on. The fact that these questions arise need not represent a problem with
-the visualisation per se. Indeed they are typical of the questions that arise in any context where a reader is
-trying to understand the relationship between a visualisation and the data being visualised.
+To see the sort of transparency problems that routinely arise, consider the scatter plot in
+\figref{related-inputs-main}. Various semantic questions about what is being represented in the chart arise
+immediately, some of which may be partly answered by accompanying text. For example, the axis labels suggest
+that the x-axis represents some kind of part-to-whole ratio (renewables to total energy capacity, perhaps),
+and that the y-axis represents the ``capacity factor'' of clean energy sources. But many unknowns remain ---
+what the individual circles represent, which specific quantities are involved in the two ratios, what energy
+types are being considered, which of those might count as ``renewable'', and so on. The fact that these
+questions arise need not represent a problem with the visualisation per se. Indeed they are typical of the
+questions that arise in any context where a reader is trying to understand the relationship between a
+visualisation and the data being visualised.
 
 \begin{figure}
    \small
@@ -36,14 +37,13 @@ all of this must take place outside of the ``comprehension context'' in which th
 Even a reader committed to a certain level of due diligence, perhaps a reviewer of a scientific paper, may
 simply lack the time or know-how to do this.
 
-\todo{Introduce the idea of ``data linking'' first. Starting with the data set and asking how it is used in the visualisation runs counter to the narrative we have established so far.}
-
 In traditional media like hardcopy journals, this sort of opacity is unavoidable. By the time an article
 reaches a reader, the trail of information relating data sources to charts or figures in the article is no
-longer available. Skeuomorphic formats like Portable Document Format (PDF) that emulate paper fare no better,
-but with a truly digital format --- perhaps an online research paper or news article --- we should be able to
-do things differently. Ideally we would like to enrich the artefact itself with interactions that allow the
-user to query relationships between data sources and visualisations and other computed content \emph{in situ}.
+longer available. Formats like Portable Document Format (PDF) that emulate paper fare no better. But with
+truly digital formats we should be able to do things differently. Ideally we would like to enrich the artefact
+itself with interactions that allow the user to query relationships between data sources and visualisations
+and other computed content \emph{in situ}. \todo{Introduce the idea of ``data linking'' here, i.e.~selecting
+some part of the output and seeing the demanded data.}
 
 % Many graphics libraries already come equipped with the ability to display tooltips when the user has specified
 % a visual element of interest. Whilst a tooltip provides a view that breaks down the values that a visual
@@ -60,20 +60,23 @@ output feature (in other words, that were needed to compute the $y$ coordinate o
 in grey (steps 3a and 3b). (We use a different colour to visually distinguish the \emph{answer} to the query
 from the selection that initiated the query in the first place.)
 
-This feature, which we call \emph{data transparency}, is ``extensional'': it says what data is relevant,
-rather than revealing anything about why. In that sense data transparency falls short of being a full
-explanation of how the input selection was used to compute the output selection. Nevertheless it moves us
+\subsection{Transparency by construction}
+
+The feature outlined above, which we call \emph{data transparency}, is ``extensional'': it says what data is
+relevant, rather than revealing anything about why. In that sense data transparency falls short of being a
+full explanation of how the input selection was used to compute the output selection. Nevertheless it moves us
 substantially closer to research outputs self-contained enough to be able to reveal their fine-grained
 relationships to data sources.
 
-We would like these interactive queries to be provided automatically, rather
-than implemented by the author of the visualisation on an ad-hoc basis.
-Moreover we wish to provide some form of correctness and minimality guarantees
-regarding query results.
-These requirements suggested a solution built around dynamic program analysis,
-specifically a dynamic dependence graph approach similar to \citet{agrawal90}
-When a \OurLang program is evaluated, it does not only produce an output value
-but also constructs a dependency graph $G = (V,E)$
+The key goal here is to enable data transparency automatically. One could in theory implement a similar
+feature on a bespoke basis for a given visualisation; but not only would that be difficult and error-prone, it
+would also require the programmer to embed knowledge of the dependencies that arise in their analysis into the
+user interface. By putting this into a programming language instead, responsibility for correctness of the
+feature lies with the implementors rather than users.
+
+These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
+dependence graph approach similar to \citet{agrawal90} When a \OurLang program is evaluated, it does not only
+produce an output value but also constructs a dependency graph $G = (V,E)$
 
 In our graphs, parts of structured values that arise in the program's execution are given
 ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is included
