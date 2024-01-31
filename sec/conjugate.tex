@@ -1,12 +1,7 @@
 \section{Conjugate Operators For Program Slicing}
 \label{sec:conjugate}
 
-In this section, we shall introduce some mathematical notions, explain why they
-are useful to us, and then use them to define the operations we use to compute
-related inputs and related outputs queries.
-
 \subsection{Preliminaries}
-
 \begin{definition}[Complement]
    For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement}
    of $Y$ with respect to $X$.
@@ -18,7 +13,7 @@ related inputs and related outputs queries.
    we write $\preim{D}[X'] : \powerset{X} \to \powerset{Y}$ to denote the preimage of $X'$ under $D$.
 \end{definition}
 
-We swap the usual order of $X$ and $Y$, since it allows us to read $Y \mathrel{D} X$ as
+We swap the usual order of $X$ and $Y$, when relating them via $D$, since it allows us to read $Y \mathrel{D} X$ as
 "outputs $Y$ demand inputs $X$".
 
 For the this section, when we refer to Boolean algebras, we are
@@ -26,8 +21,8 @@ usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
 One might expect the functions used to determine \textit{demands} and \textit{demanded by}
-to be inverses of each other. It turns out this notion is not quite correct, for
-two interlinked reasons. We do not consider individual values in the set of inputs
+to be inverses of each other. It turns out this notion is not quite correct.
+We do not consider individual values in the set of inputs
 or outputs, and when selecting a set of inputs, we may select an input that is
 entirely unused by the program.
 If we were to insist our operations were inverse, it would imply that for a set of
@@ -42,26 +37,54 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
    $$
       f(X') \cap Y' = \bot \iff X' \cap g(Y') = \bot 
    $$
+   Or equivalently:
+   $$
+      f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot
+   $$
 \end{definition}
 
-\todo{WIP}
-On its own the above condition doesn't seem very strong but conjugate functions
-have  properties we find useful. First consider the contrapositive of the above:
-$f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot$. Whilst this statement
-does not directly say anything about the contents of these intersections, we can
-deduce some of their properties.
+Straightforwardly, we would expect this condition to hold. If, for some subsets
+$X',Y'$, we find that the resources $X'$ is demanded by has an empty intersection
+with $Y'$, you would expect that the resources $Y$ demands has an empty intersection
+with $X'$. Otherwise, this condition does not seem to be very strong on the surface.
+
+We also expect our operators to be monotonic in their inputs. Conjugate functions
+are not only monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
+makes sense from the perspective of resource demand. The point we have made about
+unused inputs and outputs contributes to the property that we cannot necessarily
+expect these functions to preserve top. If there are inputs that are unused,
+then running demands on the whole output will necessarily miss out all the unused inputs.
+Later, we shall see how we can overcome this limitation, and use this to discover
+more information about the relationship between inputs and outputs. 
+
+\todo{I now think that this next bit could go into the sectoin on the core language,
+into the section about the discussion on projections/focussing, or the discussion of
+Galois connections.}
 
 Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
 demands functions, and that $g \after f (X')$ computes the set of inputs related
 to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
 Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
-If we consider $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$.
-So we can now write $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
+$g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
 new inputs we have discovered through our related inputs query. We can safely discard
 $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
 we can read $X_0$ as the set of inputs that are unused through the entire program.
 In a data science scenario, this is extremely useful since we often work with datasets
 that have a large amount of spurious data.
+
+Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
+demands) applied to the entirety of the output finds the entirety of the input, and
+similar for $f$ applied to the entire input.
+
+Conjugate functions also admit products, which we use to focus queries onto
+specific contexts:
+
+\begin{lemma}[Products of Conjugates Admit conjugates]
+   Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
+   then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
+\end{lemma}
+
 \todo{End WIP}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
@@ -105,10 +128,18 @@ meet with $b$.
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
 
-We have already discussed how we realize the dependency relation described in
-\secref{core} as a graph. We shall now detail how we use this graph to efficiently
-compute related-inputs and related-outputs queries.
-\todo{Is the above paragraph any good?}
+
+\begin{definition}[Graph]
+   A (directed) graph $G=(V,E)$ is a set of nodes $V$, and a set of (directed) edges $E \subseteq V \times V$
+\end{definition}
+For the rest of this section, we consider graphs where the nodes represent values
+in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
+is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
+The choice of dependency relation is irrelevant at this stage, we shall return
+to this discussion point in \secref{core}. Our work diverges from traditional
+approaches to dynamic dependence graphs since we only consider one type of edge,
+as opposed to separately defining data and control-flow edges \citet{agrawal90}.
+
 \begin{definition}[Opposite Graph]
    For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
    where $\param^{-1}$ denotes the relational inverse of an edge.
@@ -190,10 +221,123 @@ of operations. We succinctly define both sets as follows:
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
 the relationships between products of inputs and products of outputs. Doing this
 in a principled manner is effectively what allows us to perform focussed queries.}
-\subsection{Relationship to Galois Connections}
+Our framework allows us to not only identify the inputs which are related to each
+other, but also allows us to establish relationships from inputs to inputs that
+are only contingent on some part of the total output.
+
+A related inputs query proceeds from inputs to outputs and back to inputs. We call
+the output which creates this relationship by combining information from multiple
+inputs the \textit{mediating output}. Relatively simple related input queries can
+highlight an important aspect of these mediating outputs, since the output by which
+our input is demanded can have multiple independent parts, which may each induce
+different relationships between inputs. 
+
+Once we have run a related inputs query, we may determine that some of the related
+inputs are related by a part of the output we do not find interesting. Consider the
+example from our prior section. \todo{would rather use a different example here}
+
+Depending on the input selection, we may select the $x$ or $y$ (or both) fields
+of a circle in the scatter plot. Selecting a renewable energy sources \textit{capacity}
+field will find that it is demanded by both of the coordinate fields in the output.
+Then, running the backwards analysis, we find relationships to the various \textit{output}
+fields, as well as the \textit{capacity} fields of that nations non-renewable
+resources. 
+
+In this situation, the question arises of how the different output fields induce
+different relationships as they often do. Suppose we are only interested in the
+related inputs induced by the $x$ coordinate. We can refine the query by restricting
+the demand induced by $y$. Modifying the output selection, we then proceed as normal
+by finding all the inputs that the modified output selection demands.
+
+We can proceed equivalently in the setting of related outputs, by making an initial
+output selection, identifying a subset of the inputs we are not interested in,
+and using that to filter out irrelevant related outputs. A visual example of this
+is given in \figref{focussed-outs}.
+
+\begin{figure}
+   \includegraphics[width=\textwidth]{fig/conjugate/linkedoutputstemp.png}
+   \caption{Temporary example of focussed linked outputs}
+   \label{fig:focussed-outs}
+\end{figure}
+
+
+\subsubsection{Products of Projections of Views}
+Consider the situation where we have two input tables, say $A$ and $B$, which
+work together to produce two output charts $C$ and $D$. If both charts use their
+respective inputs in different ways, we naturally would like to be able to
+decompose these relationships. 
+
+For example, if $A' \subseteq A$ is related to $B' \subseteq B$, by $C$,
+and related to $B'' \subseteq B$ by $D$, then running $\relInput(A) = B' \cup B''$.
+If we are only interested in the way $A$ and $B$ are related via $C$, we are
+able to clamp down demand induced by $D$, sending it to bottom. 
+
+Fix $A,B, C,D$ to range over Boolean algebras.
+\newline
+\begin{salign}
+   \textrm{Meet and Join} \\
+   \joinF &: X \to X \times X & \meetF &: X \times X \to X \\
+   \bwd{\joinF}(a,a') &= a \vee a' & \bwd{\meetF}(a) &= (a, a) \\
+   \fwd{\joinF}(a)    &= (a, a) & \fwd{\meetF}(a, a') &= a \wedge a'
+\end{salign}
+\begin{salign}
+   \textrm{Projections/Injections} \\
+   \inFst &: A \to A \times B & \inSnd &: B \to A \times B \\
+   \bwd{\inFst}(a, b) &= a & \bwd{\inSnd}(a, b) &= b \\
+   \fwd{\inFst}(a) &= (a, \top) & \fwd{\inSnd}(b) &= (\top, b)\\
+   \dual{\inFst} &: A \times B \to A & \dual{\inSnd} &: A \times B \to B \\
+   \bwd{\dual{\inFst}}(a) &= (a, \bot) & \bwd{\dual{\inSnd}}(b) &= (\bot, b) \\ 
+   \fwd{\dual{\inFst}}(a, b) &= a & \fwd{\dual{\inSnd}}(a, b) &= b
+\end{salign}
+Assume $f: A \to C$, $g: A \to D$
+\begin{salign}
+   \textrm{Products} \\
+   \funProd{f}{g} &: A \to C \times D \\
+   \bwd{\funProd{f}{g}}(c, d) &=\bwd{ f}(c) \vee\bwd{ g}(d) \\
+   \fwd{\funProd{f}{g}}(a) &= (\fwd{f}(a)\fwd{,g}(a)) \\
+   \dual{\funProd{f}{g}}&: C \times D \to A \\
+   \bwd{\dual{\funProd{f}{g}}}(a) &= (\bwd{f}(a),\bwd{ g}(a)) \\
+   \fwd{\dual{\funProd{f}{g}}}(c, d) &=\fwd{ }(c) \wedge\fwd{ g}(d)
+\end{salign}
+
+\begin{figure}
+   \begin{tikzcd}
+      C \arrow[rr, "\bwd{\meetF}"]   &  & C \times C \arrow[dd, "\bwd{f}"', shift right=2] \arrow[dd, "\opName{id}", shift left=2] \\
+                                  &  &                                                                                          \\
+   A \arrow[uu, "\dual{\fwd{f}}"] &  & A \times C                                                                              
+   \end{tikzcd}
+   \caption{Related inputs with a single output view}   
+\end{figure}
+
+\subsection{Relationship to Galois Slicing}
 \todo{Here we need to formally explain the relationship to galois connections, and why
 this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
 demanded by. We need to include the efficient algorithm for forward slicing, and give
 a nice narrative structure that will lead into this. It may be worth explaining why
 the De morgan dual of a conjugate function creates a Galois connection. I am not
 certain if there is a good reference for this or if we need to derive it ourselves}
+
+One feature of our work runs parallel to a line of research due to \citet{perera22}.
+In that work, the authors devise a method for computing related output queries,
+using program slicing operators which form a \textit{Galois connection}. It is not
+surprising that we can recover their frameworks capabilities from ours, due to
+a well known fact about conjugate functions:
+
+\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
+   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define $h \eqdef \dual{g}$.
+   Then the following statements are equivalent:
+   \begin{itemize}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $h$ form a Galois connection
+   \end{itemize}
+\end{proposition}
+
+We can then recover their data-linked visualizations by treating the output views
+as a product of two individual views. The notion of conjugate functions is closed
+under the Cartesian product, and so we can take the product of two output views,
+and still recover a Galois connection between the inputs and the outputs, allowing
+us to reconstruct their linked visualizations. Despite this our approach does differ
+somewhat. In their paper, the authors construct multiple separate Galois connections,
+between the inputs and each of the pairs of outputs. In contrast, taking the product
+view, we can construct a single graph which contains both, and then restrict our
+attention to nodes which appear in only one or the other. 
