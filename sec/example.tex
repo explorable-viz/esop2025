@@ -50,39 +50,40 @@ some part of the output and seeing the demanded data.}
 % element is representing, it does no more than disambiguate these outputs, without shedding any light on the
 % relationship to the input.
 
-Once we are able to view the data sources \emph{in situ}, it becomes natural to want to ask questions in the
-other direction. In the scatter plot example, suppose the user were to express interest in the bioenergy
-capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the table
-(\figref{related-inputs-main}, step 1), which turns green. In response the system generates two further
-selections automatically. First, any elements of the scatter plot which were computed using the selected input
-are given a similar green highlight; in this case just one point is highlighted, and in fact only the $y$
-coordinate of that point (step 2). Finally, any other inputs that contributed to that output feature (in other
-words, that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and
-3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the selection that
-initiated the query in the first place.)
+If we are able to view data sources \emph{in situ}, it becomes natural to want to ask questions in the other
+direction. In the scatter plot example, suppose the user were to express interest in the bioenergy capacity of
+China for 2018. They do so by moving their mouse over the appropriate cell in the table
+(\figref{related-inputs-main} step 1), which turns green. In response the system generates two further
+selections automatically. First, any scatter plot elements computed using the selected input are given a
+similar green highlight; in this case just one point is highlighted, and in fact only the $y$ coordinate of
+that point (step 2). \todo{Point actually highlighted in black, only $y$ coordinate in green.} Finally, any
+other inputs that contribute to that output feature (in other words, that were needed to compute the $y$
+coordinate of that point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually
+distinguish the \emph{answer} to the query from the selection that initiated the query in the first place.)
 
 \subsection{Transparency by construction}
 
-The feature outlined above, which we call \emph{data transparency}, is ``extensional'': it says what data is
-relevant, rather than revealing anything about why. In that sense data transparency falls short of being a
-full explanation of how the input selection was used to compute the output selection. Nevertheless it moves us
-substantially closer to research outputs self-contained enough to be able to reveal their fine-grained
-relationships to data sources.
+The transparency feature outlined above, which we call \emph{data transparency}, is ``extensional'': it says
+what data is relevant, rather than revealing anything about why. In that sense data transparency falls short
+of being a full explanation of how the input selection was used to compute the output selection. Nevertheless
+it moves us substantially closer to research outputs self-contained enough to be able to reveal their
+fine-grained relationships to data sources \emph{in situ}.
 
-The key goal here is to enable data transparency automatically. One could in theory implement a similar
-feature on a bespoke basis for a given visualisation; but not only would that be difficult and error-prone, it
-would also require the programmer to embed knowledge of the dependencies that arise in their analysis into the
-user interface. By putting this into a programming language instead, responsibility for correctness of the
-feature lies with the implementors rather than users.
+The key goal here is to enable data transparency automatically. One could attempt to implement similar
+features on a bespoke basis for a given visualisation (see \citet{bremer15} for an elegant example); but not
+only would that be difficult and error-prone, it would also require embedding knowledge of the dependencies
+that arise in their visualisation code into that same program, making it fragile in the presence of changes to
+that code. By putting this into a programming language instead, responsibility for correctness of the feature
+lies with the implementors rather than users. These requirements suggested a solution built around dynamic
+program analysis, specifically a dynamic dependence graph approach similar to \citet{agrawal90}
 
-These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
-dependence graph approach similar to \citet{agrawal90} When a \OurLang program is evaluated, it does not only
-produce an output value but also constructs a dependency graph $G = (V,E)$
-
-In our graphs, parts of structured values that arise in the program's execution are given
-ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is included
-if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
-of the value assigned to $\alpha$, in a manner made precise later in the paper.
+% When a \OurLang program is evaluated, it does not only produce an output value but also constructs a
+% dependency graph $G = (V,E)$
+%
+% In our graphs, parts of structured values that arise in the program's execution are given
+% ids which serve as the nodes $V$. A directed edge $(\alpha,\alpha') \in E$ is included
+% if, during execution, the value assigned to $\alpha'$ was constructed by consuming part
+% of the value assigned to $\alpha$, in a manner made precise later in the paper.
 
 Once the graph $G$ has been constructed, we can begin to interact with it. Fix the set of nodes associated
 with inputs to be $A$, and outputs to be $B$. We say that an output $b \in B$ \textit{demands} an input $a \in
@@ -177,13 +178,3 @@ inputs $X'$ that $x$ is related to, if we do not include relationships induced
 by a specific output $y$. This allows us to make these queries more precise, with
 the user able to adjust queries as they gain new information about a given
 visualisation.
-
-\todo{This is useful but needs to be considered more, esp with the new "focussing" we can do}
-Providing the user with useful visual feedback is the core of our work. In our example,
-we could choose to simply fill in the circle or circles that demand the users initial input
-selection. This presents an issue however, since the circle is a 2-dimensional data point.
-If the circle is simply filled in it would be natural to ask which of the two dimensions has been
-selected. If the visualisation was a bubble chart, there could be three or four dimensions to each
-bubble, making the interpretation of a visual selection even more difficult. To that end, we provide
-a mechanism for the user to easily determine which attributes of a visual element have been
-highlighted as selected. \todo{Decide what we are going to do here, and do it}
