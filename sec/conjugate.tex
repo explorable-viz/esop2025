@@ -129,16 +129,6 @@ with \lemref{im-preim}, again for notational convenience.
    $$
 \end{definition}
 
-\begin{definition}[Galois Connection For A Relation]
-   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
-   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
-   flipped, and the functions defined as:
-   \begin{itemize}
-      \item $D_{\star}(Y') \eqdef D[Y']$
-      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
-   \end{itemize}
-\end{definition}
-
 \subsection{Efficient Queries on Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
 graphs. I think right now the question is open as to whether we want to include this
@@ -347,6 +337,18 @@ a well known fact about conjugate functions:
       \item $f$ and $h$ form a Galois connection
    \end{itemize}
 \end{proposition}
+
+The Galois connection we use is defined in the following way:
+
+\begin{definition}[Galois Connection For A Relation]
+   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
+   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
+   flipped, and the functions defined as:
+   \begin{itemize}
+      \item $D_{\star}(Y') \eqdef D[Y']$
+      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
+   \end{itemize}
+\end{definition}
 
 We can then recover their data-linked visualizations by treating the output views
 as a product of two individual views. The notion of conjugate functions is closed
