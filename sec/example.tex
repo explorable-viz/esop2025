@@ -14,10 +14,20 @@ immediately, some of which may be partly answered by accompanying text. For exam
 that the x-axis represents some kind of part-to-whole ratio (renewables to total energy capacity, perhaps),
 and that the y-axis represents the ``capacity factor'' of clean energy sources. But many unknowns remain ---
 what the individual circles represent, which specific quantities are involved in the two ratios, what energy
-types are being considered, which of those might count as ``renewable'', and so on. The fact that these
-questions arise need not represent a problem with the visualisation per se. Indeed they are typical of the
-questions that arise in any context where a reader is trying to understand the relationship between a
-visualisation and the data being visualised.
+types are being considered, which of those might count as ``renewable'', and so on.
+
+The fact that these questions arise need not represent a problem with the visualisation per se. Indeed they
+are typical of the questions that arise in any context where a reader is trying to understand the relationship
+between a visualisation and the data being visualised. One way to approach such questions would be to look at
+the source code for the visualisation (\figref{energy-query}). Here, line 14 suggests that x-axis values were
+computed by summing renewables capacity and dividing by total capacity; line 15 shows that ``clean capacity
+factor'' on the y-axis is a ratio between output and capacity for the sum of renewables and nuclear,
+suggesting that nuclear power, despite being non-renewable, is being treated as a clean energy source. But
+proceeding in this fashion involves finding the source code, downloading it, figuring out which parts are
+relevant, and then trying to understand how those bits of code operate on the data set to produce particular
+aspects of the visualisation. Moreover, all of this must take place outside of the ``comprehension context''
+in which the original question arose. Even a reader committed to a certain level of due diligence, perhaps a
+reviewer of a scientific paper, may simply lack the resources or inclination to do this.
 
 \begin{figure}
    \small
@@ -25,17 +35,6 @@ visualisation and the data being visualised.
    \caption{Source code for scatter plot in \figref{related-inputs-main}}
    \label{fig:energy-query}
 \end{figure}
-
-Questions like these can in principle be answered by inspecting the source code for the visualisation
-(\figref{energy-query}). Here, line 14 suggests that x-axis values were computed by summing renewables
-capacity and dividing by total capacity; line 15 shows that ``clean capacity factor'' on the y-axis is a ratio
-between output and capacity for the sum of renewables and nuclear, suggesting that nuclear power, despite
-being non-renewable, is being treated as a clean energy source. But proceeding in this fashion involves
-finding the source code, downloading it, figuring out which parts are relevant, and then trying to understand
-how those bits of code operate on the data set to produce particular aspects of the visualisation. Moreover,
-all of this must take place outside of the ``comprehension context'' in which the original question arose.
-Even a reader committed to a certain level of due diligence, perhaps a reviewer of a scientific paper, may
-simply lack the time or know-how to do this.
 
 In traditional media like hardcopy journals, this sort of opacity is unavoidable. By the time an article
 reaches a reader, the trail of information relating data sources to charts or figures in the article is no
@@ -50,15 +49,16 @@ some part of the output and seeing the demanded data.}
 % element is representing, it does no more than disambiguate these outputs, without shedding any light on the
 % relationship to the input.
 
-To illustrate what this might look like in the scatter plot example, suppose the user were to identify some
-input data of interest, perhaps the bioenergy capacity of China for 2018. They move their mouse over the
-appropriate cell in the table (\figref{related-inputs-main}, step 1) which turns green. In response the system
-generates two further selections automatically. First, any elements of the scatter plot which were computed
-using the selected input are given a similar green highlight; in this case just one point is highlighted, and
-in fact only the $y$ coordinate of that point (step 2). Finally, any other inputs that contributed to that
-output feature (in other words, that were needed to compute the $y$ coordinate of that point) are highlighted
-in grey (steps 3a and 3b). (We use a different colour to visually distinguish the \emph{answer} to the query
-from the selection that initiated the query in the first place.)
+Once we are able to view the data sources \emph{in situ}, it becomes natural to want to ask questions in the
+other direction. In the scatter plot example, suppose the user were to express interest in the bioenergy
+capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the table
+(\figref{related-inputs-main}, step 1), which turns green. In response the system generates two further
+selections automatically. First, any elements of the scatter plot which were computed using the selected input
+are given a similar green highlight; in this case just one point is highlighted, and in fact only the $y$
+coordinate of that point (step 2). Finally, any other inputs that contributed to that output feature (in other
+words, that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and
+3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the selection that
+initiated the query in the first place.)
 
 \subsection{Transparency by construction}
 
