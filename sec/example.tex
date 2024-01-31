@@ -9,15 +9,15 @@
 \end{figure}
 
 To see what built-in transparency might look like, consider the scatter plot in \figref{related-inputs-main}.
-Various semantic questions arise as soon as we look at this chart, some of which may be partly answered by
-accompanying text. Here the axis labels suggest that the x-axis represents some kind of ratio (renewables to
-total energy capacity, perhaps), and that the y-axis represents the ``capacity factor'' of clean energy
-sources. These give a sense of what the chart might be showing. But many unknowns remain --- what the
-individual circles represent, which specific quantities are involved in the two ratios, what energy types are
-being considered, which of those might count as ``renewable'', and so on. The fact that these questions arise
-need not represent a problem with the visualisation per se. Indeed they are typical of the questions that
-arise in any context where a reader is trying to understand the relationship between a visualisation and the
-data being visualised.
+Various semantic questions about what is being represented in the chart arise immediately, some of which may
+be partly answered by accompanying text. For example, the axis labels suggest that the x-axis represents some
+kind of ratio (renewables to total energy capacity, perhaps), and that the y-axis represents the ``capacity
+factor'' of clean energy sources. These give a sense of what the chart might be showing. But many unknowns
+remain --- what the individual circles represent, which specific quantities are involved in the two ratios,
+what energy types are being considered, which of those might count as ``renewable'', and so on. The fact that
+these questions arise need not represent a problem with the visualisation per se. Indeed they are typical of
+the questions that arise in any context where a reader is trying to understand the relationship between a
+visualisation and the data being visualised.
 
 \begin{figure}
    \small
@@ -28,21 +28,21 @@ data being visualised.
 
 Questions like these can in principle be answered by inspecting the source code for the visualisation
 (\figref{energy-query}). Here line 14 suggests that x-axis values were computed by summing renewables capacity
-and dividing it by total capacity; line 15 shows that the y-axis ``clean capacity factor'' is a ratio between
-output and capacity for both renewables \emph{and} nuclear, suggesting that nuclear power, despite being
+and dividing by total capacity; line 15 shows that ``clean capacity factor'' on the y-axis is a ratio between
+output and capacity for the sum of renewables and nuclear, suggesting that nuclear power, despite being
 non-renewable, is being treated as a clean energy source. But deciphering this sort of information from the
-source code involves finding the sources, download them, figuring out which parts are relevant, and then
+source code involves finding the sources, downloading them, figuring out which parts are relevant, and then
 trying to understand how those bits of code operate on the data set to produce particular aspects of the
 visualisation. Moreover, all of this must take place outside of the ``comprehension context'' in which the
-original question arose. Even if the reader is committed to a certain level of due diligence, such as when
-reviewing a scientific paper, they may simply lack the time or know-how to do this.
+original question arose. Even a reader committed to a certain level of due diligence, such as a reviewer of a
+scientific paper, may simply lack the time or know-how to do this.
 
-In traditional media like hardcopy journals, this sort of opacity is par for course. By the time an article
+In traditional media like hardcopy journals, this sort of opacity is unavoidable. By the time an article
 reaches a reader, the trail of information relating data sources to charts or figures in the article is no
-longer available. Skeuomorphic formats like Portable Document Format (PDF) that emulate paper inherit this
-opacity, but for a truly digital format --- perhaps an online paper or news article --- we should be able to
-do better. Ideally we would like to enrich the artefact itself with interactions that allow the user to query
-relationships between data sources and visualisations or other computed content \emph{in situ}.
+longer available. Skeuomorphic formats like Portable Document Format (PDF) that emulate paper fare no better,
+but with a truly digital format --- perhaps an online paper or news article --- we should be able to do things
+differently. Ideally we would like to enrich the artefact itself with interactions that allow the user to
+query relationships between data sources and visualisations and other computed content \emph{in situ}.
 
 % Many graphics libraries already come equipped with the ability to display tooltips when the user has specified
 % a visual element of interest. Whilst a tooltip provides a view that breaks down the values that a visual
