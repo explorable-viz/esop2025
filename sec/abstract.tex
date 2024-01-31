@@ -3,26 +3,25 @@
 Charts, figures, and text derived from data play an important role in decision making, from data-driven policy
 formulation to day-to-day choices informed by online articles. Fact-checking or understanding these outputs
 means understanding how they relate to the underlying data. Even for domain experts with access to the source
-code and data, this poses a significant challenge. In this paper we introduce a new program analysis framework
-which supports interactive exploration of fine-grained I/O relationships directly through the outputs
-themselves, making use of dynamic dependence graphs. Our main contribution is a novel notion in data
+code and data sets, this poses a significant challenge. In this paper we introduce a new program analysis
+framework which supports interactive exploration of fine-grained I/O relationships directly through the
+outputs themselves, making use of dynamic dependence graphs. Our main contribution is a novel notion in data
 provenance which we call \emph{related inputs}, a relation of mutual relevance or ``cognacy'' which arises
 between inputs when they contribute to common features of the output. Related inputs queries allows readers to
 ask questions of the form ``How is this data element used, and what other data elements are used along with
-it?'' Using \citeauthor{jonsson51}'s concept of conjugate operators on Boolean algebras, we formalise this
-notion as the image function for $R^{-1} \relcomp R$, where $R$ is the reachability relation for a dependence
-graph, and give a procedure for computing related inputs over the graph.
+it?'' We show how \citeauthor{jonsson51}'s concept of conjugate operators on Boolean algebras captures exactly
+the notion of cognacy in a dependence graph, and give a procedure for computing related inputs over such a
+graph.
 
 To demonstrate the approach in practice, we present a programming language called \OurLang which automatically
 enriches visual outputs with interactions supporting related inputs and similar fine-grained queries, and show
-how these can aid comprehension using realistic examples. Conjugate operators have products, and we show how
-the corresponding projections can be used to factor out data contributed by specific inputs or demand
-associated with specific outputs to provide more informative contextualised queries. We also show how the
-image function for the other composite $R \relcomp R^{-1}$ gives rise to a \emph{related outputs} operator,
-capturing a dual cognacy relation between output features whenever they compete for common input data.
-Composing this operator with suitable projections recovers a prior approach to the problem of \emph{brushing
-and linking} in data visualisation based on Galois connections and execution traces. As well as generalising
-and extending this prior work, the graphical approach presented in this paper performs better on most examples
-and is significantly simpler to implement.
+how these can aid comprehension using realistic examples. We show how projection operators can factor out data
+contributed by specific inputs or demand associated with specific outputs to provide more informative,
+contextualised queries. We also show how to derive a \emph{related outputs} operator, capturing a dual cognacy
+relation between output features whenever they compete for common input data; composed with suitable
+projections, this recovers a prior approach to the problem of \emph{brushing and linking} in data
+visualisation based on Galois connections and execution traces. As well as generalising and extending this
+prior work, the graphical approach presented in this paper performs better on most examples and is
+significantly simpler to implement.
 
 \end{abstract}
