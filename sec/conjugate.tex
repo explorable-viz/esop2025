@@ -1,28 +1,36 @@
 \section{Conjugate Operators For Program Slicing}
 \label{sec:conjugate}
 
-\subsection{Preliminaries}
-\begin{definition}[Complement]
-   For any set $X$ and any $Y \subseteq X$, write $\compl{Y} \subseteq X$ to denote the \textit{complement}
-   of $Y$ with respect to $X$.
-\end{definition}
+We shall introduce some preliminary notions, before building up the intuition
+needed to define \textit{demands} and \textit{demanded by}. Then we shall
+explain how we can refine queries on input-output relationships, as well as
+a connection to another line of work. 
 
-\begin{definition}[Image and Preimage]
-   For a relation $D \subseteq Y \times X$, and a subset $Y' \subset Y$, we write
-   $D[Y'] : \powerset{Y} \to \powerset{X}$ to denote the image of $Y'$ under $D$. For a subset $X' \subseteq X$
-   we write $\preim{D}[X'] : \powerset{X} \to \powerset{Y}$ to denote the preimage of $X'$ under $D$.
-\end{definition}
+\subsection{Conventions}
+For a set $X$, we write $\compl{X}$ to denote it's complement within a larger set.
+For a relation $D \subseteq Y \times X$, and a subset $Y' \subseteq Y$, we write
+$D[Y']: \powerset{Y} \to \powerset{X}$ for the image of $Y'$ under $D$. For a
+subsert $X'\subseteq X$ we similarly write $\preim{D}[X']: \powerset{X} \to \powerset{Y}$
+for the preimage of $X'$ under $D$.
 
-We swap the usual order of $X$ and $Y$, when relating them via $D$, since it allows us to read $Y \mathrel{D} X$ as
-"outputs $Y$ demand inputs $X$".
-
-For the this section, when we refer to Boolean algebras, we are
+For the rest of this section, when we refer to Boolean algebras, we are
 usually referring to the powerset lattice.
 Therefore we use the set theoretic symbols $\cap$ and $\cup$ for meet and join.
 
-One might expect the functions used to determine \textit{demands} and \textit{demanded by}
-to be inverses of each other. It turns out this notion is not quite correct.
-We do not consider individual values in the set of inputs
+For convenience we make use of the fact that the preimage of a relation $D$ is
+equal to the image of its converse.
+
+\subsection{Preliminaries}
+
+Before we give the definitions of \textit{demands} and \textit{demanded by}, we
+shall illuminate the intuitive properties we would expect them to have. We would
+expect the two functions to possess some notion of symmetry. If some inputs
+are demanded by some outputs, then of course we expect those outputs to demand
+those inputs. 
+
+In light of this, we might expect the functions used to determine \textit{demands}
+and \textit{demanded by} to be inverses of each other. It turns out this notion
+is not quite correct. We do not consider individual values in the set of inputs
 or outputs, and when selecting a set of inputs, we may select an input that is
 entirely unused by the program.
 If we were to insist our operations were inverse, it would imply that for a set of
@@ -48,14 +56,17 @@ $X',Y'$, we find that the resources $X'$ is demanded by has an empty intersectio
 with $Y'$, you would expect that the resources $Y$ demands has an empty intersection
 with $X'$. Otherwise, this condition does not seem to be very strong on the surface.
 
-We also expect our operators to be monotonic in their inputs. Conjugate functions
-are not only monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
-makes sense from the perspective of resource demand. The point we have made about
-unused inputs and outputs contributes to the property that we cannot necessarily
-expect these functions to preserve top. If there are inputs that are unused,
-then running demands on the whole output will necessarily miss out all the unused inputs.
-Later, we shall see how we can overcome this limitation, and use this to discover
-more information about the relationship between inputs and outputs. 
+We also expect our operators to be monotonic in their inputs, if we increase the
+selection on the output, we expect the inputs they demand to stay the same, or grow.
+We similarly expect the same property on inputs. Conjugate functions are not only
+monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
+makes sense from the perspective of resource demand.
+
+The fact that we may have unused inputs and outputs means that despite this, we cannot
+necessarily expect these functions to preserve top. If there are inputs that are
+unused, then running demands on the whole output will necessarily miss out all the
+unused inputs. Later, we shall see how we can overcome this limitation, and use
+this to discover more information about the relationship between inputs and outputs. 
 
 \todo{I now think that this next bit could go into the sectoin on the core language,
 into the section about the discussion on projections/focussing, or the discussion of
@@ -77,8 +88,8 @@ Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ 
 demands) applied to the entirety of the output finds the entirety of the input, and
 similar for $f$ applied to the entire input.
 
-Conjugate functions also admit products, which we use to focus queries onto
-specific contexts:
+Another advantage of conjugate functions is how they also admit products, which
+we can use to focus queries onto specific contexts:
 
 \begin{lemma}[Products of Conjugates Admit conjugates]
    Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
@@ -92,35 +103,30 @@ specific contexts:
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 
-For convenience throughout this section, we make use of the fact that the
-preimage of a relation $D$ is equal to the image of its converse. Thus,
-alongside \lemref{im-preim}, we make use of the fact that the image 
-of a relation is conjugate to the image of its converse.
+We also use this
+with \lemref{im-preim}, again for notational convenience.
+% The authors
+% of that paper provide the following alternate definition of conjugacy:
 
-The authors
-of that paper provide the following alternate definition of conjugacy:
+% \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
+%    Given a function $f: \powerset{X} \to \powerset{Y}$, there can exist only one
+%    conjugate function $g: \powerset{Y} \to \powerset{X}$. If $g$ exists we can
+%    calculate it using the following:
+%    $$
+%       g(Y') = \bigcap_{f(X') \cap Y' = \bot} \padArg{\compl{X}}{1em} \quad \text{for any $X' \in \powerset{X}$}
+%    $$
+% \end{definition}
 
-\begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
-   Given a function $f: \powerset{X} \to \powerset{Y}$, there can exist only one
-   conjugate function $g: \powerset{Y} \to \powerset{X}$. If $g$ exists we can
-   calculate it using the following:
+% In general, \defref{construct-conjugate} is inefficient, since it requires 
+% ranging over all possible values $a \in \mathcal{A}$, and computing their
+% meet with $b$.
+
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we write the
+   \textit{De Morgan Dual} of $f$ as $\dual{f}$, defined as:
    $$
-      g(Y') = \bigcap_{f(X') \cap Y' = \bot} \padArg{\compl{X}}{1em} \quad \text{for any $X' \in \powerset{X}$}
+   \dual{f} = \neg_B \after f \after \neg_A
    $$
-\end{definition}
-
-In general, \defref{construct-conjugate} is inefficient, since it requires 
-ranging over all possible values $a \in \mathcal{A}$, and computing their
-meet with $b$.
-
-\begin{definition}[Galois Connection For A Relation]
-   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
-   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
-   flipped, and the functions defined as:
-   \begin{itemize}
-      \item $D_{\star}(Y') \eqdef D[Y']$
-      \item $D^{\star}(X') \eqdef \neg_{\powerset{Y}} \after D^{-1}[X'] \after \neg_{\powerset{X}} = \bigcup_{D^{-1}[Y'] \subseteq X'} \padArg{Y'}{0em} \quad (Y' \subseteq Y)$
-   \end{itemize}
 \end{definition}
 
 \subsection{Efficient Queries on Graphs}
@@ -331,6 +337,18 @@ a well known fact about conjugate functions:
       \item $f$ and $h$ form a Galois connection
    \end{itemize}
 \end{proposition}
+
+The Galois connection we use is defined in the following way:
+
+\begin{definition}[Galois Connection For A Relation]
+   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
+   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
+   flipped, and the functions defined as:
+   \begin{itemize}
+      \item $D_{\star}(Y') \eqdef D[Y']$
+      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
+   \end{itemize}
+\end{definition}
 
 We can then recover their data-linked visualizations by treating the output views
 as a product of two individual views. The notion of conjugate functions is closed
