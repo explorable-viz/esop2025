@@ -79,7 +79,7 @@ program analysis, specifically a dynamic dependence graph approach similar to \c
 
 We say that an output $b \in B$ \textit{demands} an input $a \in A$ iff there exists a path in $G$ from $b$ to
 $a$. We can also say that $a$ is \textit{demanded by} $b$ iff there is a path from $a$ to $b$ in the opposite
-graph $G^{-1}$ whichtrivially obtained from $G$ by reversing the edges. Each of these operators is easily
+graph $G^{-1}$ trivially obtained from $G$ by reversing the edges. Each of these operators is easily
 implemented by simply finding the nodes reachable from a given start node in the appropriate graph.
 
 In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
@@ -115,9 +115,8 @@ on the right hand side which make use of the input values selected by the applic
 As it happens, we are not the first to solve the problem of brushing and linking in a functional programming
 language. Prior work from \citet{perera22} has provided a solution through the user of Galois connections.
 
-When considered as functions from sets of outputs to sets of inputs (resp:
-sets of inputs to sets of outputs), then they satisify the property known as
-\textit{conjugacy}, in the sense of \citet{jonsson51}:
+When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
+then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
 $$
    A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
 $$
