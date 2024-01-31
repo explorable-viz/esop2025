@@ -97,7 +97,7 @@ the highlighted circle in the output chart. We then find all of the other inputs
 that the highlighted circle \textit{demands}, by finding its set of reachable
 nodes, and intersecting those with $A$. These nodes are those which
 correspond to the cells of the tables which we have highlighted in gray.
-\todo{Paragraph introducing brushing and linking}
+
 The idea of multiple inputs working together to produce some visual output is not
 a unique problem. In fact, it is in a sense dual to a well known problem
 in data visualisation. In data visualisation, it is common for the same collection
@@ -114,24 +114,21 @@ and highlighting elements in other charts that use the same data is known as \te
    \caption{Examples of linked outputs, adapted from~\citet{perera22}}
    \label{fig:linked-outputs-main}
 \end{figure}
-\todo{Intuition on how it works as functions}
+
 If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
 then we can see that computing the set of related inputs is equivalent to their
 composition. It turns out that we can also solve the problem of brushing and linking
 by simply inverting the composition of the two functions.
-\todo{Once we replace the figure/example, this will work a lot nicer}
-Consider the interaction shown in \figref{linked-outputs-main}. Similar to our
-solution to related inputs, we begin by selecting an element of the chart, here
-we select a bar. Then, by applying the \textit{demands} function, we find the
-data in the original table which is used to compute the height of the bar. Then
-we take this data, and apply the \textit{demanded by} function. In this example,
-we find the points in the line chart on the right hand side which make use of
-the input values selected by the application of \textit{demands}.
-\todo{Historical context + introduction to the prior work}
-Historically, solutions to the problem of brushing and linking have been ad-hoc
-and relied on significant programmer effort in order to find the correct relation
-between outputs. Adding a new visualisation would potentially require this
-feature to be reimplemented or modified. In contrast, we can achieve the same
+
+Consider the interaction shown in \figref{linked-outputs-main}. Similar to our solution to related inputs, we
+begin by selecting an element of the chart, here we select a bar. Then, by applying the \textit{demands}
+function, we find the data in the original table which is used to compute the height of the bar. Then we take
+this data, and apply the \textit{demanded by} function. In this example, we find the points in the line chart
+on the right hand side which make use of the input values selected by the application of \textit{demands}.
+
+Historically, solutions to the problem of brushing and linking have been ad-hoc and relied on significant
+programmer effort in order to find the correct relation between outputs. Adding a new visualisation would
+potentially require this feature to be reimplemented or modified. In contrast, we can achieve the same
 functionality without forcing the programmer to manually implement the linking.
 
 As it happens, we are not the first to solve the problem of brushing and linking
@@ -139,9 +136,6 @@ in a functional programming language. Prior work from \citet{perera22} has
 provided a solution through the user of Galois connections. The fact that our
 work can recapture some of their results, whilst including a large amount of
 extra functionality is not surprising, as we shall begin to make clear.
-
-\todo{Now that we have reintroduced the core ideas and prior work, can include this stuff. Discussion on
-conjugates being equivalent to adjoints needs revision}
 
 When considered as functions from sets of outputs to sets of inputs (resp:
 sets of inputs to sets of outputs), then they satisify the property known as
@@ -155,13 +149,12 @@ if the intersection of some inputs $A$, and the inputs that $B$ demands is empty
 then it is trivial that the set of outputs that $A$ is demanded by does not
 contain any elements of $B$. This is equivalent to saying that the intersection
 of the outputs that $A$ is demanded by with the set of outputs under consideration
-$B$ is empty. \todo{This sentence needs to parse more niceley}
+$B$ is empty.
 
-It is well known that if you have a pair of conjugate functions,
-then one of them will form a Galois connection with the dual of the other,
-for example see \citet{MOLLER2006221}. This correspondence is what allows us to
-recapture their results. However, it is not so easy to adapt the Galois connection
-approach to include related inputs queries.
+It is well known that if you have a pair of conjugate functions, then one of them will form a Galois
+connection with the dual of the other, for example see \citet{moller06}. This correspondence is what allows us
+to recapture their results. However, it is not so easy to adapt the Galois connection approach to include
+related inputs queries.
 
 \subsection{Focused queries}
 
