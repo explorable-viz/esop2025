@@ -170,11 +170,16 @@ approach to include related inputs queries.
 
 \subsection{Focused queries}
 
-A natural question that arises in any approach based on a dependency analysis is how informative queries are
-in the presence of ``noisy'' dependencies where the result depends on every input, as might arise when
-computing aggregates such as sums or averages. A variety of techniques may be helpful here, but for this paper
+With any dependency analysis, there are situations where a given output depends on many inputs, such as when
+computing aggregates such as sums or averages. A challenge is then how to obtain informative queries in the
+presence of such noisy dependency information. A variety of techniques may be helpful here, but for this paper
 we consider how related inputs queries can be made more precise by specifiying which \emph{parts} of the
-output we want to use to \textit{mediate} between our inputs. By projecting away a problematic output
-(i.e.~one which causes an input to be related to many other inputs), we can can obtain a \emph{query context}
-within which we can ask more fine-grained queries of the form ``With respect to this particular output, what
-other inputs are related to this input?''.
+output we want to use to mediate between the inputs. By projecting away a problematic output (i.e.~one which
+causes an input to be related to many other inputs), we can can obtain a \emph{query context} within which we
+can ask more fine-grained queries of the form ``With respect to these particular outputs, what other inputs are
+related to this input?''
+
+The dual problem arises with related outputs, when an given output is related to many other outputs in virtue
+of there being some inputs which are shared by all of them (perhaps a common constant, for example). Again by
+restricting the mediating inputs to exclude the problematic input, we can obtain a query context within which
+we can proceed to ask more fine-grained related outputs queries, of the form ``With respect to these particular inputs, what other outputs are related to this output?''
