@@ -309,10 +309,25 @@ Assume $f: A \to C$, $g: A \to D$
    \caption{Related inputs with a single output view}   
 \end{figure}
 
-\subsection{Relationship to Galois Connections}
+\subsection{Relationship to Galois Slicing}
 \todo{Here we need to formally explain the relationship to galois connections, and why
 this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
 demanded by. We need to include the efficient algorithm for forward slicing, and give
 a nice narrative structure that will lead into this. It may be worth explaining why
 the De morgan dual of a conjugate function creates a Galois connection. I am not
 certain if there is a good reference for this or if we need to derive it ourselves}
+
+One feature of our work runs parallel to a line of research due to \citet{perera22}.
+In that work, the authors devise a method for computing related output queries,
+using program slicing operators which form a \textit{Galois connection}. It is not
+surprising that we can recover their frameworks capabilities from ours, due to
+a well known fact about conjugate functions:
+
+\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
+   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define $h \eqdef \dual{g}$.
+   Then the following statements are equivalent:
+   \begin{itemize}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $h$ form a Galois connection
+   \end{itemize}
+\end{proposition}
