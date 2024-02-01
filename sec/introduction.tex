@@ -1,34 +1,33 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Whether setting national policy or simply deciding what groceries to buy, when making decisions we
-increasingly rely on charts, figures and text created by scientists and journalists. These sorts of visual and
-textual summaries are essential to making and supporting claims, but are \emph{opaque} in the sense of being
-unable to reveal anything how they relate to the data they were derived from, making them hard to fact-check
-or drill into \emph{in situ}. If we know the problem domain well, then with access to the source code and data
-sets we may be able to reverse engineer some of these relationships. But this is unlikely to be easy, and
-often we have little choice but to take things on trust. These difficulties are further compounded when the
-information presented draws on multiple data sources, such medical meta-analyses ~\citep{nakamura19}, ensemble
-models~\citep{virdee23}, or queries that span multiple database tables~\citep{selinger79}.
+Whether formulating a national policy or simply deciding what groceries to buy, we increasingly rely on the
+charts, figures and text created by scientists and journalists. Interpreting these visual and textual
+summaries is essential to making informed decisions, but such artefacts are \emph{opaque} in the sense of
+being unable to reveal anything how they relate to the data they were derived from. If we have the appropriate
+skills, as well as access to the source code and data sets, we may be able to reverse engineer some of these
+relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and more often
+than not we have to take things on trust. These difficulties are further compounded when the information
+presented draws on multiple data sources, such medical meta-analyses~\citep{dersimonian86}, ensemble
+models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}.
 
-With traditional print media, this sort of ``disconnect'' between chart and figures and the underlying data is
-to be expected, but for digital media, other options are open to us. In this paper, we introduce a new program
+With traditional print media, a ``disconnect'' between chart and figures and the underlying data is to be
+expected, but for digital media, other options are open to us. In this paper, we introduce a new program
 analysis framework which supports interactive exploration of input-output relationships directly via visual
-outputs such as charts or tables. While this idea is not entirely new (see for example \citet{psallidas18}
-propose a deep relationship between data provenance and data visualisation), our framework supports a novel
-form of provenance query which we call \emph{related inputs}, as well as lending itself to easier
-implementation than prior work.
+outputs such as charts or tables. While this idea is not entirely new, our framework supports a novel form of
+provenance query which we call \emph{related inputs}, as well as lending itself to easier implementation than
+prior work.
 
 Related inputs characterises the relation of mutual relevance which arises between two input elements when
 they contribute to a common output element. Users are able to ask questions of the form ``What outputs use
 this data element, and what other data elements are used along with it?'' To answer such questions, we make
 use of \emph{dynamic dependence graphs} (DDGs), an execution record used in the program slicing literature for
-analysing imperative programs~\cite{ferrante87}. We formalise related inputs in terms of the composite
-relation $R^{-1} \relcomp R$ where $R$ is the reachability relation for a dependence graph $G$, and give a
-procedure for computing related inputs over $G$. Borrowing a term from linguistics, we say that inputs related
-in this way are \emph{cognate} because their relatedness amounts to having a common ancestor in $G$. The key
-mathematical idea is the concept of ``conjugate'' operators~\cite{jonsson51}, functions between Boolean
-algebras which come in reciprocating pairs and which when ``self-composed'' calculate relations of cognacy.
+analysing imperative programs~\cite{ferrante87}. Our key insight is that two inputs are related in this sense
+if they are \emph{cognate}, i.e.~have a common ancestor in the program's dependence graph $G$. This leads to a
+formalisation of related inputs in terms of the composite relation $R^{-1} \relcomp R$ where $R$ is
+reachability in $G$, and we give a procedure for computing related inputs over $G$. The concept of
+``conjugate'' operators~\cite{jonsson51}, functions between Boolean algebras which come in reciprocating
+pairs, turns out to nicely capture these relations of cognacy.
 
 Conjugate pairs are closely related to Galois connections: if $f$ and $g$ are conjugate, then $f$ and the De
 Morgan dual of $g$ form a Galois connection. This relates our approach to earlier work based on Galois
@@ -44,9 +43,9 @@ kind of interactive scenarios we have in mind.
 The specific contributions of the paper are as follows:
 \begin{itemize}[leftmargin=*]
 \item We motivate the novel cognacy operator $\relInput$ (``related inputs'') from an end-user perspective
-(\secref{example}). Using a realistic example, we unpack the intuitive relationship between its two components
-$\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of
-conjugacy and also introduce the dual cognacy operator $\relOutput$ (``related outputs'').
+(\secref{example}). We unpack the intuitive relationship between its two components $\demandR$ (``demands'')
+and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugacy and also introduce
+the dual cognacy operator $\relOutput$ (``related outputs'').
 \item We introduce the formal setting of conjugate operators between Boolean algebras (\secref{conjugate}). We
 explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
 $\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
@@ -55,9 +54,9 @@ computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachab
 \item We define a core functional language with an operational semantics that pairs every result with a
 dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts) of values as nodes in the graph.
 \item We compare the performance of our implementation based on graphs and conjugates with an implementation
-due to \citet{perera22} based on traces and Galois connections (\secref{evaluation}). We contrast the overhead
-of building trace vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the
-relative implementation burden of the two approaches.
+due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
+vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative
+implementation burden of the two approaches (\secref{evaluation}).
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
