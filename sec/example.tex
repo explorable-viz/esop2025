@@ -63,13 +63,12 @@ the feature lies with the implementors rather than users.
 
 \subsection{Transparency by construction}
 
-These requirements suggested a solution built around dynamic
-program analysis, specifically a dynamic dependence graph approach similar to \citet{agrawal90}
-
-We say that an output $b \in B$ \textit{demands} an input $a \in A$ iff there exists a path in $G$ from $b$ to
-$a$. We can also say that $a$ is \textit{demanded by} $b$ iff there is a path from $a$ to $b$ in the opposite
-graph $G^{-1}$ trivially obtained from $G$ by reversing the edges. Each of these operators is easily
-implemented by simply finding the nodes reachable from a given start node in the appropriate graph.
+These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
+dependence graph approach similar to \citet{agrawal90}. We say that an output $b \in B$ \textit{demands} an
+input $a \in A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded
+by} $b$ iff there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ trivially obtained from $G$ by
+reversing the edges. Each of these operators is easily implemented by simply finding the nodes reachable from
+a given start node in the appropriate graph.
 
 In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
 output chart. We then find all of the other inputs that the highlighted circle \textit{demands}, by finding
