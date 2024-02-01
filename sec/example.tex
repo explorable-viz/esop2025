@@ -54,14 +54,16 @@ about why --- it does move us substantially closer to research outputs self-cont
 comprehension, or even reuse, inasmuch as it picks out all of the relevant data needed to understand how a
 particular input was used.
 
+Crucially, we want to enable data transparency automatically. Implement similar features on a bespoke basis
+for a given visualisation is always an option (see \citet{bremer15} for an elegant example); but not only is
+that difficult and error-prone, it also involves embedding knowledge of the dependencies that arise in the
+visualisation code back into that same program, making it fragile in the presence of changes to that
+visualisation logic. By putting this into a programming language instead, responsibility for correctness of
+the feature lies with the implementors rather than users.
+
 \subsection{Transparency by construction}
 
-The key goal here is to enable data transparency automatically. One could attempt to implement similar
-features on a bespoke basis for a given visualisation (see \citet{bremer15} for an elegant example); but not
-only would that be difficult and error-prone, it would also require embedding knowledge of the dependencies
-that arise in their visualisation code into that same program, making it fragile in the presence of changes to
-that code. By putting this into a programming language instead, responsibility for correctness of the feature
-lies with the implementors rather than users. These requirements suggested a solution built around dynamic
+These requirements suggested a solution built around dynamic
 program analysis, specifically a dynamic dependence graph approach similar to \citet{agrawal90}
 
 We say that an output $b \in B$ \textit{demands} an input $a \in A$ iff there exists a path in $G$ from $b$ to
