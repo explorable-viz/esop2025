@@ -8,21 +8,21 @@
    \label{fig:related-inputs-main}
 \end{figure}
 
-To see the sort of comprehension challenges that arise routinely with visual artefacts, consider the scatter
-plot in \figref{related-inputs-main}. \todo{Start with figure just showing scatterplot.} Some questions we
-might have about what the chart represents may be partly answered by the accompanying text. For example, label
-on the x-axis suggests that it represents some kind of part-to-whole ratio (renewables to total energy
+To see the sort of comprehension challenges that routinely arise, consider the scatter plot in
+\figref{related-inputs-main}. \todo{Start with figure just showing scatterplot.} Some of the questions we
+might have about what the chart represents may be answered in part by the accompanying text. For example,
+label on the x-axis suggests that it represents some kind of part-to-whole ratio (renewables to total energy
 capacity, perhaps), whereas the y-axis purports to represent the ``capacity factor'' of clean energy sources.
-But these labels are really just informal commentary, and leave many questions unanswered: what the individual
-circles represent, which specific quantities are involved in the two ratios, the energy types being
-considered, which of those might count as ``renewable'', and so on. These uncertainties need not represent a
-problem with the visualisation; indeed such questions arise in any context where we need to understand the
-relationship between any kind of computed output and the data it was derived from.
+But these labels are really just informal commentary, and leave many questions unanswered, includg what the
+individual circles represent, which specific quantities are involved in the two ratios, which energy types
+being considered, which of those might count as ``renewable'', and so on. These uncertainties do not
+necessarily reflect a problem with the visualisation; indeed such questions arise in any context where we need
+to understand the relationship between computed content and the data it was derived from.
 
 One way to approach such questions is to inspect the source code for the visualisation. But this involves
 finding the source code, downloading it, figuring out which parts are relevant, and then trying to understand
-how those bits of code operate on the data set to produce particular aspects of the visualisation. All of this
-must take place offline, outside of the ``comprehension context'' in which the original question arose. Even a
+how those bits of code operate on the data set to produce particular aspects of the visualisation. And all of
+this must take place offline from the ``comprehension context'' in which the original question arose. Even a
 reader committed to a certain level of due diligence, perhaps a reviewer of a scientific paper, may simply
 lack the resources or inclination to do this.
 
@@ -34,53 +34,39 @@ Formats like Portable Document Format (PDF) that emulate paper fare little bette
 formats we should be able to do things differently. Ideally we would like to enrich the artefact itself with
 interactions that allow the user to query relationships between data sources and visualisations and other
 computed content \emph{in situ}. \todo{Example to illustrate basic idea of selecting some part of the output
-and seeing the demanded data.}
+and seeing the demanded data, plus going in the other direction, from some part of the input to the output it
+is demanded by.}
 
-Once visual outputs and other computed content are equipped with this sort of query, it becomes natural to
-want to ask questions in the other direction. In the scatter plot example, suppose the user were to express
-interest in the bioenergy capacity of China for 2018. They do so by moving their mouse over the appropriate
-cell in the table (\figref{related-inputs-main} step 1), which turns green. In response the system generates
-two further selections automatically. First, any scatter plot elements computed using the selected input are
-given a similar green highlight; in this case just one point is highlighted, and in fact only the $y$
-coordinate of that point (step 2, tooltip). Finally, any other inputs that contribute to that output feature
-(in other words, that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps
-3a and 3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the
-selection that initiated the query in the first place.)
+Crucially, we want to enable this basic capability --- which we call \emph{data transparency} --
+automatically. Implementing such a feature on a bespoke basis for a given visualisation is certainly an option
+(see \citet{bremer15} for an elegant example), but difficult and error-prone. Moreoer it involves embedding
+knowledge of the relationship between the visual outputs and the underlying data -- a relationship that is
+implicit in how the former is computed from the latter - back into the program, making it fragile in the
+presence of changes to the visualisation logic. By putting this into a programming language instead, the
+author of the visualisation can concern themselves purely with communication and visualisation issues and
+defer responsibility for transparency features to the implementors of their languages and tools.
+
+\subsection{Related inputs and related outputs}
+
+\todo{Introduce the idea of composing the two queries above to discover other inputs that are related to a
+given input in the sense of being demanded by something which demands the input of interest.} In the scatter
+plot example, suppose the user were to express interest in the bioenergy capacity of China for 2018. They do
+so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which
+turns green. In response the system generates two further selections automatically. First, any scatter plot
+elements computed using the selected input are given a similar green highlight; in this case just one point is
+highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). Finally, any other inputs
+that contribute to that output feature (in other words, that were needed to compute the $y$ coordinate of that
+point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
+\emph{answer} to the query from the selection that initiated the query in the first place.)
 
 Although this sort of ``data transparency'' falls short of being a full explanation of how the input selection
 was used to compute the output selection --- revealing only \emph{what} data is relevant, rather than anything
 about why --- it does move us substantially closer to research outputs self-contained enough to be able to
 ``explain themselves'' to an interested reader. The related inputs query result is in a sense a unit of
-comprehension, or even reuse, inasmuch as it picks out all of the relevant data needed to understand how a
+comprehension, or perhaps reuse, inasmuch as it picks out all of the relevant data needed to understand how a
 particular input was used.
 
-Crucially, we want to enable data transparency automatically. Implement similar features on a bespoke basis
-for a given visualisation is always an option (see \citet{bremer15} for an elegant example); but not only is
-that difficult and error-prone, it also involves embedding knowledge of the dependencies that arise in the
-visualisation code back into that same program, making it fragile in the presence of changes to that
-visualisation logic. By putting this into a programming language instead, responsibility for correctness of
-the feature lies with the implementors rather than users.
-
-\subsection{Transparency by construction}
-
-These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
-dependence graph approach similar to \citet{agrawal90}. We say that an output $b \in B$ \textit{demands} an
-input $a \in A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded
-by} $b$ iff there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ trivially obtained from $G$ by
-reversing the edges. Each of these operators is easily implemented by simply finding the nodes reachable from
-a given start node in the appropriate graph.
-
-In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
-output chart. We then find all of the other inputs that the highlighted circle \textit{demands}, by finding
-its set of reachable nodes, and intersecting those with $A$. These nodes are those which correspond to the
-cells of the tables which we have highlighted in gray.
-
-The idea of multiple inputs working together to produce some visual output is not a unique problem. In fact,
-it is in a sense dual to a well known problem in data visualisation. In data visualisation, it is common for
-the same data sources to visualised in different ways, to illustrate different aspects of the data. Multiple
-outputs making use of common input suggests a ``dual'' relationship between outputs whose demands overlap. In
-the visualisation literature the problem of selecting an element in a chart and highlighting elements in other
-charts that use the same data is known as \textit{brushing and linking} \citet{becker87}.
+\todo{Now introduce the idea of composing ``demands'' and ``demandedBy'' the other way around.}
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
@@ -88,38 +74,6 @@ charts that use the same data is known as \textit{brushing and linking} \citet{b
    \caption{Examples of linked outputs, adapted from~\citet{perera22}}
    \label{fig:linked-outputs-main}
 \end{figure}
-
-If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
-then we can see that computing the set of related inputs is equivalent to their
-composition. It turns out that we can also solve the problem of brushing and linking
-by simply inverting the composition of the two functions.
-
-Consider the interaction shown in \figref{linked-outputs-main}. Similar to our solution to related inputs, we
-begin by selecting an element of the chart, here we select a bar. Then, by applying the \textit{demands}
-function, we find the data in the original table which is used to compute the height of the bar. Then we take
-this data, and apply the \textit{demanded by} function. In this example, we find the points in the line chart
-on the right hand side which make use of the input values selected by the application of \textit{demands}.
-
-As it happens, we are not the first to solve the problem of brushing and linking in a functional programming
-language. Prior work from \citet{perera22} has provided a solution through the user of Galois connections.
-
-When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
-then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
-$$
-   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
-$$
-
-It is unsurprising that these two functions satisfy this property. Intuitively,
-if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
-then it is trivial that the set of outputs that $A$ is demanded by does not
-contain any elements of $B$. This is equivalent to saying that the intersection
-of the outputs that $A$ is demanded by with the set of outputs under consideration
-$B$ is empty.
-
-It is well known that if you have a pair of conjugate functions, then one of them will form a Galois
-connection with the dual of the other, for example see \citet{moller06}. This correspondence is what allows us
-to recapture their results. However, it is not so easy to adapt the Galois connection approach to include
-related inputs queries.
 
 \subsection{Focused queries}
 
@@ -154,3 +108,56 @@ The dual problem arises with related outputs, when an given output is related to
 of there being some inputs which are shared by all of them (perhaps a common constant, for example). Again by
 restricting the mediating inputs to exclude the problematic input, we can obtain a query context within which
 we can proceed to ask more fine-grained related outputs queries, of the form ``With respect to these particular inputs, what other outputs are related to this output?''
+
+\subsection{Transparency by construction}
+
+These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
+dependence graph approach similar to \citet{agrawal90}. We say that an output $b \in B$ \textit{demands} an
+input $a \in A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded
+by} $b$ iff there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ trivially obtained from $G$ by
+reversing the edges. Each of these operators is easily implemented by simply finding the nodes reachable from
+a given start node in the appropriate graph.
+
+In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
+output chart. We then find all of the other inputs that the highlighted circle \textit{demands}, by finding
+its set of reachable nodes, and intersecting those with $A$. These nodes are those which correspond to the
+cells of the tables which we have highlighted in gray.
+
+The idea of multiple inputs working together to produce some visual output is not a unique problem. In fact,
+it is in a sense dual to a well known problem in data visualisation. In data visualisation, it is common for
+the same data sources to visualised in different ways, to illustrate different aspects of the data. Multiple
+outputs making use of common input suggests a ``dual'' relationship between outputs whose demands overlap. In
+the visualisation literature the problem of selecting an element in a chart and highlighting elements in other
+charts that use the same data is known as \textit{brushing and linking} \citet{becker87}.
+
+If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
+then we can see that computing the set of related inputs is equivalent to their
+composition. It turns out that we can also solve the problem of brushing and linking
+by simply inverting the composition of the two functions.
+
+Consider the interaction shown in \figref{linked-outputs-main}. Similar to our solution to related inputs, we
+begin by selecting an element of the chart, here we select a bar. Then, by applying the \textit{demands}
+function, we find the data in the original table which is used to compute the height of the bar. Then we take
+this data, and apply the \textit{demanded by} function. In this example, we find the points in the line chart
+on the right hand side which make use of the input values selected by the application of \textit{demands}.
+
+As it happens, we are not the first to solve the problem of brushing and linking in a functional programming
+language. Prior work from \citet{perera22} has provided a solution through the user of Galois connections.
+
+When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
+then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
+$$
+   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
+$$
+
+It is unsurprising that these two functions satisfy this property. Intuitively,
+if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
+then it is trivial that the set of outputs that $A$ is demanded by does not
+contain any elements of $B$. This is equivalent to saying that the intersection
+of the outputs that $A$ is demanded by with the set of outputs under consideration
+$B$ is empty.
+
+It is well known that if you have a pair of conjugate functions, then one of them will form a Galois
+connection with the dual of the other, for example see \citet{moller06}. This correspondence is what allows us
+to recapture their results. However, it is not so easy to adapt the Galois connection approach to include
+related inputs queries.
