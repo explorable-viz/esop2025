@@ -53,20 +53,25 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
 Straightforwardly, we would expect this condition to hold for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
 $X'$ is demanded by has an empty intersection with $Y'$, you would expect that
-the resources $Y$ demands has an empty intersection with $X'$. Otherwise, this
-condition does not seem to be very strong on the surface.
+the resources $Y$ demands has an empty intersection with $X'$.n Whilst the property
+itself is simple, it has useful consequences.
 
-We also expect our operators to be monotonic in their inputs, if we increase the
-selection on the output, we expect the inputs they demand to stay the same, or grow.
-We similarly expect the same property on inputs. Conjugate functions are not only
-monotonic, but join-preserving, that is $f(X \cup Y) = f(X) \cup f(Y)$. This
-makes sense from the perspective of resource demand.
 
-The fact that we may have unused inputs and outputs means that despite this, we cannot
-necessarily expect these functions to preserve top. If there are inputs that are
-unused, then running demands on the whole output will necessarily miss out all the
-unused inputs. Later, we shall see how we can overcome this limitation, and use
-this to discover more information about the relationship between inputs and outputs. 
+Firstly, we would expect \textit{demands} and \textit{demanded by} to be monotonic
+in their inputs: taking a selection on the output and growing it (selecting more)
+should cause the size of the demand to stay the same, or grow.
+We similarly expect the same property of \textit{demanded by}.  It turns out that
+Conjugate functions are not only monotonic, but join-preserving: $f(X \cup Y) = f(X) \cup f(Y)$.
+From the perspective of resource demand, this makes sense: if we are investigating
+what two resources demand in totality, we do not expect them to demand a resource
+that neither of them demanded individually. 
+
+The fact that we may have unused inputs, or outputs not present as variables means
+that despite this, we cannot necessarily expect these functions to preserve the
+whole input set. If there are inputs that are unused, then running demands on
+the whole output will necessarily miss out all the unused inputs. Later, we shall
+see how we can overcome this limitation, and use this to discover more information
+about the relationship between inputs and outputs. 
 
 \todo{I now think that this next bit could go into the sectoin on the core language,
 into the section about the discussion on projections/focussing, or the discussion of
