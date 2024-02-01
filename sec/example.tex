@@ -34,20 +34,21 @@ like Portable Document Format (PDF) that emulate paper fare little better. But w
 should be able to do things differently. Ideally we would be able to enrich the artefact itself with
 interactions that allow the user to query relationships between data sources and visualisations and other
 computed content \emph{in situ}. \todo{Example to show basic idea of selecting some part of the output and
-seeing the demanded data, and then going in the other direction, from some part of the input to the output it
-is demanded by.} Although this sort of ``extensional'' transparency falls short of being a full explanation of
-how the input selection was used to compute the output selection --- revealing only \emph{what} data is
-relevant, rather than anything about why --- it does move us substantially closer to research outputs
-self-contained enough to be able to ``explain themselves'' to an interested reader.
+seeing the demanded data.} Although this sort of ``extensional'' transparency falls short of being a full
+explanation of how the input selection was used to compute the output selection --- revealing only \emph{what}
+data is relevant, rather than anything about why --- it does move us substantially closer to research outputs
+self-contained enough to be able to ``explain themselves'' to an interested reader. \todo{Now show example of
+going in the other direction, from some part of the input to the output it is demanded by. Why is this
+useful?}
 
 Crucially, we want to enable this bidirectional querying capability, which we call \emph{data transparency},
 automatically. Certainly one could implementing similar features on a bespoke basis for a given visualisation
-(see \citet{bremer15} for an elegant example), but that would be difficult and error-prone. Moreover it
-involves explicitly embedding knowledge of the relationship between visual outputs and inputs --- normally
-implicit in how the former is computed from the latter --- back into the program, making it fragile in the
-presence of changes to the visualisation logic. By putting this into a programming language instead, the
-author of the visualisation can concern themselves purely with communication and visualisation, and defer
-responsibility for transparency features to the infrastructure used to implement and host the visualisation.
+(see \citet{bremer15} for an elegant example), but that would be difficult and error-prone. We would have to
+explicitly embedding knowledge of the relationship between visual outputs and inputs --- normally implicit in
+how the former is computed from the latter --- back into the program, making it fragile in the presence of
+changes to the visualisation logic. By putting this into a programming language instead, the author of the
+visualisation can concern themselves purely with communication and visualisation, and defer responsibility for
+transparency features to the infrastructure used to implement and host the visualisation.
 
 \subsection{Related inputs and related outputs}
 
@@ -57,17 +58,17 @@ plot example, suppose the user were to express interest in the bioenergy capacit
 so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which
 turns green. In response the system generates two further selections automatically. First, any scatter plot
 elements computed using the selected input are given a similar green highlight; in this case just one point is
-highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). Finally, any other inputs
-that contribute to that output feature (in other words, that were needed to compute the $y$ coordinate of that
-point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
-\emph{answer} to the query from the selection that initiated the query in the first place.)
+highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). We call this output
+selection the \emph{mediating output}. Finally, any other inputs that contribute to the mediating output (in
+this case that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and
+3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the selection that
+initiated the query in the first place.)
 
 The result of a related inputs query is in a sense a unit of comprehension (or perhaps reuse) inasmuch as it
 picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
-does so by identifying the common output elements that explain why the inputs are related. (Here, the
-highlighted y-coordinate.) We call this output selection the \emph{mediating output}.
+does so by identifying the common, or ``mediating'', output elements that explain why the inputs are related.
 
-\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart?}
+\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart? Corresponding notion of ``mediating input''.}
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
