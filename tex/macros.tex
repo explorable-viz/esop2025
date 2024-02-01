@@ -2,6 +2,7 @@
 \newcommand*{\Lowlight}[1]{\textcolor{gray}{#1}}
 
 \renewcommand*{\join}{\vee}
+
 \renewcommand*{\meet}{\wedge}
 \renewcommand*{\bigjoin}{\bigvee}
 \renewcommand*{\bigmeet}{\bigwedge}
@@ -12,15 +13,23 @@
 \newcommand*{\fatnearrow}{\rotatebox[origin=c]{45}{$\Rightarrow$}}
 \newcommand*{\fatsearrow}{\rotatebox[origin=c]{-45}{$\Rightarrow$}}
 
-% Temporary for example section
+% These need to be reorganized
 \newcommand*{\demands}[1]{demands(#1)}
 \newcommand*{\demandR}{\triangledown}
 \newcommand*{\demandBy}[1]{demandedBy(#1)}
 \newcommand*{\demandByR}{\triangle}
 \newcommand*{\restrict}[2]{#1\hspace{-0.3em}\mid_{#2}}
+\newcommand*{\funProd}[2]{\langle#1,#2\rangle}
 \newcommand*{\padArg}[2]{\hspace{-#2}#1\hspace{#2}}
 \newcommand*{\relInput}{{\demandByR}\!{\demandR}}
 \newcommand*{\relOutput}{{\demandR}\!{\demandByR}}
+\newcommand*{\bwd}[1]{#1_{\demandR}}
+\newcommand*{\fwd}[1]{#1_{\demandByR}}
+\newcommand*{\joinF}{\opName{join}}
+\newcommand*{\meetF}{\opName{meet}}
+\newcommand*{\inFst}{\opName{inFst}}
+\newcommand*{\inSnd}{\opName{inSnd}}
+
 % Eventually need full set of macros for our stuff
 \newcommand*{\OurLang}{[our language]\xspace}%{Fluid\xspace}
 \newcommand*{\benchFont}[1]{\textbf{#1}}
