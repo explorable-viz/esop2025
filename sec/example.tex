@@ -60,11 +60,14 @@ elements computed using the selected input are given a similar green highlight; 
 highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). Finally, any other inputs
 that contribute to that output feature (in other words, that were needed to compute the $y$ coordinate of that
 point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
-\emph{answer} to the query from the selection that initiated the query in the first place.) The query result
-is in a sense a unit of comprehension (or perhaps reuse) inasmuch as it picks out all of the relevant data
-needed to understand how the original selected input is used.
+\emph{answer} to the query from the selection that initiated the query in the first place.)
 
-\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around.}
+The result of a related inputs query is in a sense a unit of comprehension (or perhaps reuse) inasmuch as it
+picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
+does so by identifying the common output elements that explain why the inputs are related. (Here, the
+highlighted y-coordinate.) We call this output selection the \emph{mediating output}.
+
+\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart?}
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
@@ -75,14 +78,15 @@ needed to understand how the original selected input is used.
 
 \subsection{Focused queries}
 
-With any dependency analysis, there are situations where a given output depends on many inputs, such as when
-computing aggregates such as sums or averages. A challenge is then how to obtain informative queries in the
-presence of such noisy dependency information. A variety of techniques may be helpful here, but for this paper
-we consider how related inputs queries can be made more precise by specifiying which \emph{parts} of the
-output we want to use to mediate between the inputs. By projecting away a problematic output (i.e.~one which
-causes an input to be related to many other inputs), we can can obtain a \emph{query context} within which we
-can ask more fine-grained queries of the form ``With respect to these particular outputs, what other inputs are
-related to this input?''
+With any dependency analysis, there are situations where a given output depends on many inputs (perhaps when
+computing aggregates such as sums or averages). Sometimes many outputs depend on the same input (perhaps with
+global constants or when there many views of the same data). A challenge is then how to obtain informative
+queries in the presence of such noisy dependency information. A variety of techniques may be helpful here, but
+for this paper we consider how related inputs queries can be made more precise by specifiying which
+\emph{parts} of the output we want to use to mediate between the inputs. By projecting away a problematic
+output (i.e.~one which causes an input to be related to many other inputs), we can can obtain a \emph{query
+context} within which we can ask more fine-grained queries of the form ``With respect to these particular
+outputs, what other inputs are related to this input?''
 
 \begin{figure}
 \begin{subfigure}[b]{0.45\textwidth}
