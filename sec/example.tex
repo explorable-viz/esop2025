@@ -34,35 +34,37 @@ like Portable Document Format (PDF) that emulate paper fare little better. But w
 should be able to do things differently. Ideally we would be able to enrich the artefact itself with
 interactions that allow the user to query relationships between data sources and visualisations and other
 computed content \emph{in situ}. \todo{Example to show basic idea of selecting some part of the output and
-seeing the demanded data.} Although this sort of ``extensional'' transparency falls short of being a full
-explanation of how the input selection was used to compute the output selection --- revealing only \emph{what}
-data is relevant, rather than anything about why --- it does move us substantially closer to research outputs
-self-contained enough to be able to ``explain themselves'' to an interested reader. \todo{Now show example of
-going in the other direction, from some part of the input to the output it is demanded by. Why is this
-useful?}
+seeing the demanded data.} Although this sort of fine-grained extensional query, which here we call \emph{data
+transparency}, falls short of being a full explanation of how the input selection was used to compute the
+output selection --- revealing only \emph{what} data is relevant, rather than anything about why --- it does
+move us substantially closer to research outputs self-contained enough to be able to ``explain themselves'' to
+an interested reader.
 
-Crucially, we want to enable this bidirectional querying capability, which we call \emph{data transparency},
-automatically. Certainly one could implementing similar features on a bespoke basis for a given visualisation
-(see \citet{bremer15} for an elegant example), but that would be difficult and error-prone. We would have to
-explicitly embedding knowledge of the relationship between visual outputs and inputs --- normally implicit in
-how the former is computed from the latter --- back into the program, making it fragile in the presence of
-changes to the visualisation logic. By putting this into a programming language instead, the author of the
-visualisation can concern themselves purely with communication and visualisation, and defer responsibility for
-transparency features to the infrastructure used to implement and host the visualisation.
+Crucially, we want to make this feature automatic. Certainly one could try implementing something similar on a
+bespoke basis for a specific visualisation (see \citet{bremer15} for an elegant example), but that would be
+difficult and error-prone. We would have to explicitly embedding knowledge of the relationship between visual
+outputs and inputs --- normally implicit in how the former is computed from the latter --- back into the
+program, making it fragile in the presence of changes to the visualisation logic. By putting this into a
+programming language instead, the author of the visualisation can concern themselves purely with communication
+and visualisation, and defer responsibility for transparency features to the infrastructure used to implement
+and host the visualisation.
+
+\todo{It is also meaningful to ask this sort of question in the other direction: from some part of the input
+to the output it is demanded by. Why is this useful?}
 
 \subsection{Related inputs and related outputs}
 
-\todo{Introduce idea of composing ``demands'' and ``demanded by'' to discover other inputs that are related to
-a given input in the sense of being demanded by something which demands the input of interest.} In the scatter
-plot example, suppose the user were to express interest in the bioenergy capacity of China for 2018. They do
-so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which
-turns green. In response the system generates two further selections automatically. First, any scatter plot
-elements computed using the selected input are given a similar green highlight; in this case just one point is
-highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). We call this output
-selection the \emph{mediating output}. Finally, any other inputs that contribute to the mediating output (in
-this case that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and
-3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the selection that
-initiated the query in the first place.)
+\todo{It turns out that ``demanded by'' is actually most useful if composed with ``demands'': then we can use
+it to discover other inputs that are related to a given input in the sense of being demanded by something
+which demands the input of interest.} In the scatter plot example, suppose the user were to express interest
+in the bioenergy capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the
+table (\figref{related-inputs-main} step 1), which turns green. In response the system generates two further
+selections automatically. First, any scatter plot elements that demand the selected input are given a similar
+green highlight; here just one point is highlighted, and in fact only the $y$ coordinate of that point (step
+2, tooltip). We call this output selection the \emph{mediating output}. Finally, any other inputs demanded by
+the mediating output (that were needed to compute the $y$ coordinate of that point) are highlighted in grey
+(steps 3a and 3b). (We use a different colour to visually distinguish the \emph{answer} to the query from the
+selection that initiated the query in the first place.)
 
 The result of a related inputs query is in a sense a unit of comprehension (or perhaps reuse) inasmuch as it
 picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
@@ -120,11 +122,6 @@ input $a \in A$ iff there exists a path in $G$ from $b$ to $a$. We can also say 
 by} $b$ iff there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ trivially obtained from $G$ by
 reversing the edges. Each of these operators is easily implemented by simply finding the nodes reachable from
 a given start node in the appropriate graph.
-
-In our example, the initial selected cell in the table is \textit{demanded by} the highlighted circle in the
-output chart. We then find all of the other inputs that the highlighted circle \textit{demands}, by finding
-its set of reachable nodes, and intersecting those with $A$. These nodes are those which correspond to the
-cells of the tables which we have highlighted in gray.
 
 The idea of multiple inputs working together to produce some visual output is not a unique problem. In fact,
 it is in a sense dual to a well known problem in data visualisation. In data visualisation, it is common for
