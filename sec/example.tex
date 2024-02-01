@@ -8,16 +8,16 @@
    \label{fig:related-inputs-main}
 \end{figure}
 
-To see the sort of comprehension challenges that routinely arise, consider the scatter plot in
-\figref{related-inputs-main}. \todo{Start with figure just showing scatterplot.} Some of the questions we
-might have about what the chart represents may be answered in part by the accompanying text. For example,
-label on the x-axis suggests that it represents some kind of part-to-whole ratio (renewables to total energy
-capacity, perhaps), whereas the y-axis purports to represent the ``capacity factor'' of clean energy sources.
-But these labels are really just informal commentary, and leave many questions unanswered, includg what the
-individual circles represent, which specific quantities are involved in the two ratios, which energy types
-being considered, which of those might count as ``renewable'', and so on. These uncertainties do not
-necessarily reflect a problem with the visualisation; indeed such questions arise in any context where we need
-to understand the relationship between computed content and the data it was derived from.
+To see the basic problem, consider the scatter plot in \figref{related-inputs-main}. \todo{Start with figure
+just showing scatterplot.} Some of the questions we might have about what the chart represents may be answered
+in part by the accompanying text. For example, label on the x-axis suggests that it represents some kind of
+part-to-whole ratio (renewables to total energy capacity, perhaps), whereas the y-axis purports to represent
+the ``capacity factor'' of clean energy sources. But these labels are really just informal commentary, and
+leave many questions unanswered, including what the individual circles represent, which specific quantities are
+involved in the two ratios, which energy types being considered, which of those might count as ``renewable'',
+and so on. These uncertainties do not necessarily reflect a problem with the visualisation; indeed such
+questions arise in any context where we need to understand the relationship between computed content and the
+data it was derived from.
 
 One way to approach such questions is to inspect the source code for the visualisation. But this involves
 finding the source code, downloading it, figuring out which parts are relevant, and then trying to understand
@@ -37,23 +37,24 @@ computed content \emph{in situ}. \todo{Example to illustrate basic idea of selec
 and seeing the demanded data, plus going in the other direction, from some part of the input to the output it
 is demanded by.}
 
-Crucially, we want to enable this basic capability --- which we call \emph{data transparency} --
-automatically. Implementing such a feature on a bespoke basis for a given visualisation is certainly an option
-(see \citet{bremer15} for an elegant example), but difficult and error-prone. Moreoer it involves embedding
-knowledge of the relationship between the visual outputs and the underlying data -- a relationship that is
-implicit in how the former is computed from the latter - back into the program, making it fragile in the
-presence of changes to the visualisation logic. By putting this into a programming language instead, the
-author of the visualisation can concern themselves purely with communication and visualisation issues and
-defer responsibility for transparency features to the implementors of their languages and tools.
+Crucially, we want to enable this querying capability --- which we call \emph{data transparency} --
+automatically. Certainly one could implementing such a feature on a bespoke basis for a given visualisation
+certainly an option (see \citet{bremer15} for an elegant example), but that would be difficult and
+error-prone. Moreover it involves explicitly embedding knowledge of the relationship between visual outputs
+and underlying data --- normally implicit in how the former is computed from the latter --- back into the
+program, making it fragile in the presence of changes to the visualisation logic. By putting this into a
+programming language instead, the author of the visualisation can concern themselves purely with communication
+and visualisation issues and defer responsibility for transparency features to the implementors of their
+languages and tools.
 
 \subsection{Related inputs and related outputs}
 
-\todo{Introduce the idea of composing the two queries above to discover other inputs that are related to a
-given input in the sense of being demanded by something which demands the input of interest.} In the scatter
-plot example, suppose the user were to express interest in the bioenergy capacity of China for 2018. They do
-so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which
-turns green. In response the system generates two further selections automatically. First, any scatter plot
-elements computed using the selected input are given a similar green highlight; in this case just one point is
+\todo{Introduce idea of composing two queries above to discover other inputs that are related to a given input
+in the sense of being demanded by something which demands the input of interest.} In the scatter plot example,
+suppose the user were to express interest in the bioenergy capacity of China for 2018. They do so by moving
+their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which turns green.
+In response the system generates two further selections automatically. First, any scatter plot elements
+computed using the selected input are given a similar green highlight; in this case just one point is
 highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). Finally, any other inputs
 that contribute to that output feature (in other words, that were needed to compute the $y$ coordinate of that
 point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
