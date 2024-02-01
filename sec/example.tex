@@ -15,27 +15,16 @@ For example, label on the x-axis suggests that it represents some kind of part-t
 total energy capacity, perhaps), whereas the y-axis purports to represent the ``capacity factor'' of clean
 energy sources. But these labels are really just informal commentary, and leave many questions unanswered:
 what the individual circles represent, which specific quantities are involved in the two ratios, the energy
-types being considered, which of those might count as ``renewable'', and so on.
+types being considered, which of those might count as ``renewable'', and so on. These uncertainties need not
+represent a problem with the visualisation; indeed these sorts of question arise in any context where we need
+to understand the relationship between a visualisation and the data being visualised.
 
-The fact that these uncertainties arise need not represent a problem with the visualisation per se. Indeed
-they are typical of the questions that arise in any context where a reader is trying to understand the
-relationship between a visualisation and the data being visualised. One way to approach such questions would
-be to inspect the source code for the visualisation, shown here in \figref{energy-query}. Line 14 suggests
-that x-axis values were computed by summing renewables capacity and dividing by total capacity; line 15 shows
-that ``clean capacity factor'' on the y-axis is a ratio between output and capacity for the sum of renewables
-and nuclear, suggesting that nuclear power, despite being non-renewable, is being treated as a clean energy
-source. But proceeding in this fashion involves finding the source code, downloading it, figuring out which
-parts are relevant, and then trying to understand how those bits of code operate on the data set to produce
-particular aspects of the visualisation. Moreover, all of this must take place outside of the ``comprehension
-context'' in which the original question arose. Even a reader committed to a certain level of due diligence,
-perhaps a reviewer of a scientific paper, may simply lack the resources or inclination to do this.
-
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{related-inputs-main}}
-   \label{fig:energy-query}
-\end{figure}
+One way to approach such questions would be to inspect the source code for the visualisation. But going down
+this road involves finding the source code, downloading it, figuring out which parts are relevant, and then
+trying to understand how those bits of code operate on the data set to produce particular aspects of the
+visualisation. Moreover, all of this must take place outside of the ``comprehension context'' in which the
+original question arose. Even a reader committed to a certain level of due diligence, perhaps a reviewer of a
+scientific paper, may simply lack the resources or inclination to do this.
 
 \subsection{In situ data transparency}
 
