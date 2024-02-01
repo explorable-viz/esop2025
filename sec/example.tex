@@ -28,46 +28,44 @@ lack the resources or inclination to do this.
 
 \subsection{In situ data transparency}
 
-In traditional media like hardcopy journals, this sort of opacity is unavoidable because the trail of
-information relating data sources to charts or figures is long gone by the time the article reaches a reader.
-Formats like Portable Document Format (PDF) that emulate paper fare little better. But with truly digital
-formats we should be able to do things differently. Ideally we would like to enrich the artefact itself with
+In traditional media like hardcopy journals, the trail of information relating data sources to charts or
+figures is long gone by the time the article reaches a reader, so this sort of opacity is unavoidable. Formats
+like Portable Document Format (PDF) that emulate paper fare little better. But with truly digital formats we
+should be able to do things differently. Ideally we would be able to enrich the artefact itself with
 interactions that allow the user to query relationships between data sources and visualisations and other
-computed content \emph{in situ}. \todo{Example to illustrate basic idea of selecting some part of the output
-and seeing the demanded data, plus going in the other direction, from some part of the input to the output it
-is demanded by.}
+computed content \emph{in situ}. \todo{Example to show basic idea of selecting some part of the output and
+seeing the demanded data, and then going in the other direction, from some part of the input to the output it
+is demanded by.} Although this sort of ``extensional'' transparency falls short of being a full explanation of
+how the input selection was used to compute the output selection --- revealing only \emph{what} data is
+relevant, rather than anything about why --- it does move us substantially closer to research outputs
+self-contained enough to be able to ``explain themselves'' to an interested reader.
 
-Crucially, we want to enable this querying capability --- which we call \emph{data transparency} --
-automatically. Certainly one could implementing such a feature on a bespoke basis for a given visualisation
-certainly an option (see \citet{bremer15} for an elegant example), but that would be difficult and
-error-prone. Moreover it involves explicitly embedding knowledge of the relationship between visual outputs
-and underlying data --- normally implicit in how the former is computed from the latter --- back into the
-program, making it fragile in the presence of changes to the visualisation logic. By putting this into a
-programming language instead, the author of the visualisation can concern themselves purely with communication
-and visualisation issues and defer responsibility for transparency features to the implementors of their
-languages and tools.
+Crucially, we want to enable this bidirectional querying capability, which we call \emph{data transparency},
+automatically. Certainly one could implementing similar features on a bespoke basis for a given visualisation
+(see \citet{bremer15} for an elegant example), but that would be difficult and error-prone. Moreover it
+involves explicitly embedding knowledge of the relationship between visual outputs and inputs --- normally
+implicit in how the former is computed from the latter --- back into the program, making it fragile in the
+presence of changes to the visualisation logic. By putting this into a programming language instead, the
+author of the visualisation can concern themselves purely with communication and visualisation, and defer
+responsibility for transparency features to the infrastructure used to implement and host the visualisation.
 
 \subsection{Related inputs and related outputs}
 
-\todo{Introduce idea of composing two queries above to discover other inputs that are related to a given input
-in the sense of being demanded by something which demands the input of interest.} In the scatter plot example,
-suppose the user were to express interest in the bioenergy capacity of China for 2018. They do so by moving
-their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which turns green.
-In response the system generates two further selections automatically. First, any scatter plot elements
-computed using the selected input are given a similar green highlight; in this case just one point is
+\todo{Introduce idea of composing ``demands'' and ``demanded by'' to discover other inputs that are related to
+a given input in the sense of being demanded by something which demands the input of interest.} In the scatter
+plot example, suppose the user were to express interest in the bioenergy capacity of China for 2018. They do
+so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which
+turns green. In response the system generates two further selections automatically. First, any scatter plot
+elements computed using the selected input are given a similar green highlight; in this case just one point is
 highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). Finally, any other inputs
 that contribute to that output feature (in other words, that were needed to compute the $y$ coordinate of that
 point) are highlighted in grey (steps 3a and 3b). (We use a different colour to visually distinguish the
 \emph{answer} to the query from the selection that initiated the query in the first place.)
 
-Although this sort of ``data transparency'' falls short of being a full explanation of how the input selection
-was used to compute the output selection --- revealing only \emph{what} data is relevant, rather than anything
-about why --- it does move us substantially closer to research outputs self-contained enough to be able to
-``explain themselves'' to an interested reader. The related inputs query result is in a sense a unit of
-comprehension, or perhaps reuse, inasmuch as it picks out all of the relevant data needed to understand how a
-particular input was used.
+The related inputs query result is in a sense a unit of comprehension, or perhaps reuse, inasmuch as it picks
+out all of the relevant data needed to understand how a particular input was used.
 
-\todo{Now introduce the idea of composing ``demands'' and ``demandedBy'' the other way around.}
+\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around.}
 
 \begin{figure}
    {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
