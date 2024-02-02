@@ -173,9 +173,12 @@ opposite graph, this correspondence is flipped.
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
 \end{definition}
-We implicitly include edges of the form $e = (\alpha, \alpha)$ in the reachability
-relation, since values like constants can be copied from the input directly through
-to the output. In these cases, the node trivially depends on itself.
+
+In some cases, a value in a program will be directly copied from the input to the
+output. In these cases, no edge will be constructed in the dependence graph. To
+avoid the problems this could cause, we extend the reachability relation
+with pairs of the form $(\alpha, \alpha)$. We can read this as the value
+depending on itself. 
 
 For the rest of this section we generally omit the $\param_G$
 from this relation, since it is usually obvious to which graph we refer.
