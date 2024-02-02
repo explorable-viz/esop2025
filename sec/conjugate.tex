@@ -19,6 +19,9 @@ $\cup$ for meet and join.
 Notationally we make use of the fact that the image of $Y'$ under a relation
 $D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$.
 
+For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
+where $\param^{-1}$ denotes the inverse of an edge.
+
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
@@ -141,10 +144,10 @@ when connecting our work to the state of the art of this area.
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
 
+We shall now consider how we can use the notions above, as well as properties
+of graphs to give an account of the efficient computation of related inputs
+and outputs. 
 
-\begin{definition}[Graph]
-   A (directed) graph $G=(V,E)$ is a set of nodes $V$, and a set of (directed) edges $E \subseteq V \times V$
-\end{definition}
 For the rest of this section, we consider graphs where the nodes represent values
 in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
 is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
@@ -153,10 +156,6 @@ to this discussion point in \secref{core}. Our work diverges from traditional
 approaches to dynamic dependence graphs since we only consider one type of edge,
 as opposed to separately defining data and control-flow edges \citet{agrawal90}.
 
-\begin{definition}[Opposite Graph]
-   For a graph $G = (V,E)$, define $G^{-1} \eqdef (V,E^{-1})$ to be the opposite graph,
-   where $\param^{-1}$ denotes the relational inverse of an edge.
-\end{definition}
 
 \begin{definition}[Sources and sinks]
    Define:
