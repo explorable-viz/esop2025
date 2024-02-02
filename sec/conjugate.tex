@@ -197,9 +197,13 @@ and \textit{demanded by} in terms of $R$.
    \end{itemize}
 \end{definition}
 
-Let us return to the notion of a related input query. The first step is to select
+Now that we have defined \textit{demands} and \textit{demanded by}, we can
+now return to the examples from the previous section, and place them in this
+more formal setting.
+The first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
+
 We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
 % \begin{definition}[Demanded By]\label{def:demanded-by}
 %    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
@@ -233,6 +237,11 @@ of operations. We succinctly define both sets as follows:
 \end{definition} 
 \input{fig/conjugate/reaches}
 
+The procedure detailed in \figref{conjugate:reaches} works by 
+traversing the neighbors of the selected set of nodes, until no new neighbors
+can be found. 
+\todo{Need a proposition that reaches computes the appropriate sets. Also need an account
+of forwards.} 
 \subsection{Projections and Conjugations for Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
 the relationships between products of inputs and products of outputs. Doing this
