@@ -240,8 +240,15 @@ of operations. We succinctly define both sets as follows:
 The procedure detailed in \figref{conjugate:reaches} works by 
 traversing the neighbors of the selected set of nodes, until no new neighbors
 can be found. 
-\todo{Need a proposition that reaches computes the appropriate sets. Also need an account
-of forwards.} 
+\begin{proposition}[Reaches computes demands]
+   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
+   The following holds:
+   $$
+      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'} 
+   $$
+\end{proposition}
+
+\todo{Need an account of forwards.} 
 \subsection{Projections and Conjugations for Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
 the relationships between products of inputs and products of outputs. Doing this
