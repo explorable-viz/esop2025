@@ -188,10 +188,12 @@ since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
 and \textit{demanded by} in terms of $R$.
 
 \begin{definition}[Demands and Demanded By]
-   For a graph $G = (V,E)$ with inputs $X \subseteq V$ and outputs $Y \subseteq V$, with reachability relation $R_G$, write the following:
+   For a graph $G = (V,E)$ with inputs $X \subseteq \sinks{G} \subset V$ and outputs
+   $Y \subseteq \sources{G} \subseteq V$, with reachability relation $R_G$,
+   and define them by the following:
    \begin{itemize}
-      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$
-      \item $\demandByR_G = \demandR_{G^{-1}}$
+      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$ \hfill (related outputs)
+      \item $\demandByR_G = \demandR_{G^{-1}}$ \hfill (related inputs)
    \end{itemize}
 \end{definition}
 
