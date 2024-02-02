@@ -148,13 +148,22 @@ We shall now consider how we can use the notions above, as well as properties
 of graphs to give an account of the efficient computation of related inputs
 and outputs. 
 
-For the rest of this section, we consider graphs where the nodes represent values
-in a \OurLang program, and an edge $(\alpha, \alpha')$ exists if the value that
-is associated to $\alpha$ \textit{depends} on the value associated to $\alpha'$.
-The choice of dependency relation is irrelevant at this stage, we shall return
-to this discussion point in \secref{core}. Our work diverges from traditional
-approaches to dynamic dependence graphs since we only consider one type of edge,
-as opposed to separately defining data and control-flow edges \citet{agrawal90}.
+
+For the rest of this section, all graphs we consider will be constructed during
+program evaluation. 
+
+\begin{definition}[Dynamic Dependence Graph]
+   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
+   represent values in the original program, and an edge $(\alpha, \alpha') \in E$
+   exists if, in the original program, the value associated to $\alpha$
+   \textit{depends} on the value associated with $\alpha'$
+\end{definition}where the nodes represent values
+
+The choice of dependency relation used to construct such a graph is irrelevant
+at this stage, we shall return to this discussion point in \secref{core}. Our
+work diverges from traditional approaches to dynamic dependence graphs since we
+only consider one type of edge, in contrast to separately defining data and
+control-flow edges as in \citet{agrawal90}.
 
 
 \begin{definition}[Sources and sinks]
