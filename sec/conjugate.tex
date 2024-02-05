@@ -6,18 +6,24 @@ needed to formally define \textit{demands} and \textit{demanded by}. Then we sha
 explain how we can refine queries on input-output relationships, as well as
 a connection to the state of the art in this area.
 \subsection{Notation}
-For a set $X$, we write $\compl{X}$ to denote its complement within a larger set.
-For a relation $D \subseteq Y \times X$, and a subset $Y' \subseteq Y$, we write
-$D[Y']: \powerset{Y} \to \powerset{X}$ for the image of $Y'$ under $D$. For a
-subset $X'\subseteq X$ we similarly write $\preim{D}[X']: \powerset{X} \to \powerset{Y}$
-for the preimage of $X'$ under $D$.
+For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
+$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$. For a
+subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
+for the preimage of $Y'$ under $D$.
+
+Notationally we make use of the fact that the image of $X'$ under a relation
+$D$ is equal to the preimage of $YX'$ under the inverse relation $D^{-1}$.
+
+For a set $X$, we write $\compl{X}$ to denote it's complement. 
+
+A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
+and join ($\wedge$) distribute over each other, and for each element $x \in X$,
+there is a complement element $\compl{X} \in X$.
 
 For the rest of this section, when we refer to Boolean algebras, we usually mean
-the powerset lattice. Therefore we use the set theoretic symbols $\cap$ and
-$\cup$ for meet and join.
-
-Notationally we make use of the fact that the image of $Y'$ under a relation
-$D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$.
+the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
+the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
+and intersection ($\cap$) respectively. 
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge. We write $\sources{G}$ for
@@ -25,10 +31,12 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall illuminate the intuitive properties we would expect them to have. We would
-expect the two functions to possess some notion of symmetry. If some inputs
-are demanded by some outputs, then of course we expect those outputs to demand
-those inputs.
+shall illuminate the intuitive properties we would expect them to have.
+We would like to be able to reprsent each operation as a function between sets
+of program inputs to sets of program outputs. We  expect these two functions
+to possess some notion of symmetry. If a subset of the inputs, $X$ are demanded
+by a subset of the outputs, $Y$, then it makes sense that this output set
+should demand at least every input in the set $X$. 
 
 In light of this, we might expect the functions used to determine \textit{demands}
 and \textit{demanded by} to be inverses of each other. It turns out this notion
@@ -37,31 +45,35 @@ or outputs, and when selecting a set of inputs, we may select an input that is
 entirely unused by the program.
 If we were to insist our operations were inverse, it would imply that for a set of
 inputs to be demanded by a set of outputs, every input in the set should be used,
-which is clearly not always the case. We instead relax the requirement from the
-two operations being inverse to them being \textit{conjugate}, in the sense of \citet{jonsson51}:
+which is clearly not always the case. As an example, when we are working with large
+datasets, it is common for one or more columns of a table to be unused.
+
+We instead relax the requirement from the
+two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
-   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $f$ and $g$ are \textit{conjugate} if the following holds:
+   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
+   and $f_{\demandByR}: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
+   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
+   if the following holds:
    $$
-      f(X') \cap Y' = \bot \iff X' \cap g(Y') = \bot
+      f(X') \cap Y' = \emptyset \iff X' \cap g(Y') = \emptyset 
    $$
    Or equivalently:
    $$
-      f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot
+      f(X') \cap Y' \neq \emptyset \iff X' \cap g(Y') \neq \emptyset
    $$
 \end{definition}
 
-Straightforwardly, we would expect this condition to hold for \textit{demands} and
+This makes sense as a condition for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
-$X'$ is demanded by has an empty intersection with $Y'$, you would expect that
-the resources $Y$ demands has an empty intersection with $X'$. Whilst the property
+$X'$ is demanded by has an empty intersection with $Y'$, we would expect that
+the resources $Y$ demands has an empty intersection with $X'$.n Whilst the property
 itself is simple, it has useful consequences.
 
 
-Firstly, we would expect \textit{demands} and \textit{demanded by} to be monotonic
-in their inputs: taking a selection on the output and growing it (selecting more)
+Another property we expect is for \textit{demands} to be monotonic
+in its inputs: taking a selection on the output and growing it (selecting more)
 should cause the size of the demand to stay the same, or grow.
 We similarly expect the same property of \textit{demanded by}.  It turns out that
 conjugate functions are not only monotonic, but join-preserving: $f(X \cup Y) = f(X) \cup f(Y)$.
@@ -69,40 +81,43 @@ From the perspective of resource demand, this makes sense: if we are investigati
 what two resources demand in totality, we do not expect them to demand a resource
 that neither of them demanded individually.
 
-The fact that we may have unused inputs, or outputs that are not present as variables, means
-that despite this, we cannot necessarily expect these functions to preserve the
-whole input set. If there are inputs that are unused, then running demands on
-the whole output will necessarily miss out all the unused inputs.
+As we have mentioned, it is possible for a program to only use some strict subset
+of its overall input. Therefore, despite their being join-preserving, we cannot
+necessarily expect the result of taking \textit{demands} demands on the entire
+output set to return the entire input set. If there are inputs that are unused,
+then running demands on the whole output will necessarily miss out all the unused
+inputs. Later, we shall see how we can overcome this limitation, and use this to
+discover more information about the relationship between inputs and outputs. 
 
-\todo{I now think that this next bit could go into the sectoin on the core language,
-into the section about the discussion on projections/focussing, or the discussion of
-Galois connections.}
+% \todo{I now think that this next bit could go into the sectoin on the core language,
+% into the section about the discussion on projections/focussing, or the discussion of
+% Galois connections.}
 
-Let us assume for the moment that $f,g$ are placeholders for the demanded by and
-demands functions, and that $g \after f (X')$ computes the set of inputs related
-to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
-Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
-If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
-$g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
-new inputs we have discovered through our related inputs query. We can safely discard
-$X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
-we can read $X_0$ as the set of inputs that are unused through the entire program.
-In a data science scenario, this is extremely useful since we often work with datasets
-that have a large amount of spurious data.
+% Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
+% demands functions, and that $g \after f (X')$ computes the set of inputs related
+% to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
+% Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
+% If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
+% $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+% new inputs we have discovered through our related inputs query. We can safely discard
+% $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
+% we can read $X_0$ as the set of inputs that are unused through the entire program.
+% In a data science scenario, this is extremely useful since we often work with datasets
+% that have a large amount of spurious data.
 
-Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
-demands) applied to the entirety of the output finds the entirety of the input, and
-similar for $f$ applied to the entire input.
+% Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
+% demands) applied to the entirety of the output finds the entirety of the input, and
+% similar for $f$ applied to the entire input.
 
-Another advantage of conjugate functions is how they also admit products, which
-we can use to focus queries onto specific contexts:
+% Another advantage of conjugate functions is how they also admit products, which
+% we can use to focus queries onto specific contexts:
 
-\begin{lemma}[Products of Conjugates Admit conjugates]
-   Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
-   then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
-\end{lemma}
+% \begin{lemma}[Products of Conjugates Admit conjugates]
+%    Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
+%    then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
+% \end{lemma}
 
-\todo{End WIP}
+% \todo{End WIP}
 
 Moreover, the image and preimage functions over general binary relations form
 conjguate pairs:
@@ -130,14 +145,14 @@ conjguate pairs:
 Lastly, we need to define the De Morgan Dual of a function, since it becomes useful
 when connecting our work to the state of the art of this area.
 \begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we call the function
-   $\dual{f}: A \to B$ the \textit{De Morgan Dual} of $f$, and define it as:
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
    $$
-   \dual{f} = \neg_B \after f \after \neg_A
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
    $$
 \end{definition}
 
-\subsection{Efficient Queries on Graphs}
+\subsection{Computing Demands and Demanded By over Dependence Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
@@ -157,8 +172,7 @@ program evaluation.
    \textit{depends} on the value associated with $\alpha'$
 \end{definition}where the nodes represent values
 
-The choice of dependency relation used to construct such a graph is irrelevant
-at this stage, we shall return to this discussion point in \secref{core}. Our
+We shall not consider how we arrive at such a graph until \secref{core}. Our
 work diverges from traditional approaches to dynamic dependence graphs since we
 only consider one type of edge, in contrast to separately defining data and
 control-flow edges as in \citet{agrawal90}.
@@ -172,14 +186,6 @@ opposite graph, this correspondence is flipped.
    closure} of $E$.
 \end{definition}
 
-In some cases, a value in a program will be directly copied from the input to the
-output. In these cases, no edge will be constructed in the dependence graph. To
-avoid the problems this could cause, we extend the reachability relation
-with pairs of the form $(\alpha, \alpha)$. We can read this as the value
-depending on itself.
-
-For the rest of this section we generally omit the $\param_G$
-from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and its opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
 since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
@@ -190,27 +196,17 @@ and \textit{demanded by} in terms of $R$.
    $Y \subseteq \sources{G} \subseteq V$, with reachability relation $R_G$,
    and define them by the following:
    \begin{itemize}
-      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$ \hfill (related outputs)
-      \item $\demandByR_G = \demandR_{G^{-1}}$ \hfill (related inputs)
+      \item $\demandR_G (X) \eqdef \restrict{R_G}{S(G) \times T(G)}[X]$ \hfill (demands)
+      \item $\demandByR_G (Y) \eqdef \demandR_{G^{-1}}[Y]$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
 
-Now that we have defined \textit{demands} and \textit{demanded by}, we can
-now return to the examples from the previous section, and place them in this
-more formal setting.
+Let us return to the problem of computing a related input query.
 The first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
-% \begin{definition}[Demanded By]\label{def:demanded-by}
-%    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-%    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
-%    $$
-%       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y')
-%    $$
-% \end{definition}
-
 
 Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
 $\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
@@ -219,13 +215,6 @@ is the set of all related outputs.
 
 The procedure for computing related outputs is similar, we simply swap the order
 of operations. We succinctly define both sets as follows:
-% \begin{definition}[Demands]\label{def:demand}
-%    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-%    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
-%    $$
-%       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
-%    $$
-% \end{definition}
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
@@ -237,9 +226,16 @@ of operations. We succinctly define both sets as follows:
 
 The procedure detailed in \figref{conjugate:reaches} works by
 traversing the neighbors of the selected set of nodes, until no new neighbors
-can be found.
-\todo{Need a proposition that reaches computes the appropriate sets. Also need an account
-of forwards.}
+can be found. 
+\begin{proposition}[Reaches computes demands]
+   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
+   The following holds:
+   $$
+      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'} 
+   $$
+\end{proposition}
+
+\todo{Need an account of forwards.} 
 \subsection{Projections and Conjugations for Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
 the relationships between products of inputs and products of outputs. Doing this

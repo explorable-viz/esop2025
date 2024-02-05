@@ -1,62 +1,131 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$V \reachesAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
+   \begin{subfigure}{\textwidth}
+      {\small \flushleft \shadebox{$V \reachesAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{$\reachesAlg{}$}}
+            ]
+            {
+               (\emptyset, \emptyset), V
+               \reachesVert{\hat{G}}
+               G
+            }
+            {
+               V \reachesAlg{\hat{G}} \sinks{G}
+            }
+            \end{smathpar}
+         }
+         \vspace{1mm}
+         {\small \flushleft \shadebox{$G, V \reachesVert{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
+         \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{$\reachesVert{}$-done}}
+         ]
+         {
+            \strut
+         }
+         {
+            G, \emptyset \reachesVert{\hat{G}} G
+         }
+         %
+         \and
+         %
+         \inferrule*[
+            lab={\ruleName{$\reachesVert{}$-skip}},
+            right={$\alpha \in \V(G)$}
+         ]
+         {
+            G, V
+            \reachesVert{\hat{G}}
+            G'
+         }
+         {
+            G, \alpha \cons V \reachesVert{\hat{G}} G'
+         }
+         %
+         \and
+         %
+         \inferrule*[
+            lab={\ruleName{$\reachesVert{}$-extend}},
+            right={$H = \set{\bind{\alpha}{V'}}$}
+         ]
+         {
+            G \disjunion H, V' \disjunion V
+            \reachesVert{\hat{G} \disjunion H}
+            G'
+         }
+         {
+            G, \alpha \cons V \reachesVert{\hat{G} \disjunion H} G'
+         }
+         \end{smathpar}}
+   \end{subfigure}
+   \\[3mm]
+   \begin{subfigure}{\textwidth}
+   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sinks{\hat{G}}$ and $V' \subseteq \sources{\hat{G}}$}}
    \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      {
+         (V, \emptyset),
+         \emptyset,
+         \inE{\hat{G}}(V)
+         \fwdEdges{\hat{G}}
+         G, H
+      }
+      {
+         V \fwdAlg{\hat{G}} \sources{G}
+      }
+   \end{smathpar}\vspace{1mm}
+   {\small \flushleft \shadebox{$G, H, E \fwdEdges{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
+   \begin{smathpar}
+      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
+      {
+         \strut
+      }
+      {
+         G, H, \emptyset \fwdEdges{\hat{G}} G, H
+      }
+      %
+      \and
+      %
       \inferrule*[
-         lab={\ruleName{$\reachesAlg{}$}}
+         lab={\ruleName{$\fwdEdges{}$-pending}},
+         right={$\hat{H} = H \cup \set{\bind{\alpha}{\set{\beta}}}$}
       ]
       {
-         (\emptyset, \emptyset), V
-         \reachesVert{\hat{G}}
-         G
+         \hat{H}(\alpha) \subset \hat{G}(\alpha)
+         \\
+         G, \hat{H}, E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
       {
-         V \reachesAlg{\hat{G}} \sinks{G}
+         G, H, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
       }
-      \end{smathpar}
-   }
-   \vspace{1mm}
-   {\small \flushleft \shadebox{$G, V \reachesVert{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
-   \begin{smathpar}
-   \inferrule*[
-      lab={\ruleName{$\reachesVert{}$-done}}
-   ]
-   {
-      \strut
-   }
-   {
-      G, \emptyset \reachesVert{\hat{G}} G
-   }
-   %
-   \and
-   %
-   \inferrule*[
-      lab={\ruleName{$\reachesVert{}$-skip}},
-      right={$\alpha \in \V(G)$}
-   ]
-   {
-      G, V
-      \reachesVert{\hat{G}}
-      G'
-   }
-   {
-      G, \alpha \cons V \reachesVert{\hat{G}} G'
-   }
-   %
-   \and
-   %
-   \inferrule*[
-      lab={\ruleName{$\reachesVert{}$-extend}},
-      right={$H = \set{\bind{\alpha}{V'}}$}
-   ]
-   {
-      G \disjunion H, V' \disjunion V
-      \reachesVert{\hat{G} \disjunion H}
-      G'
-   }
-   {
-      G, \alpha \cons V \reachesVert{\hat{G} \disjunion H} G'
-   }
-   \end{smathpar}}
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\fwdEdges{}$-extend}},
+         right={$\hat{H} = H \cup \set{\bind{\alpha}{\set{\beta}}}$}
+      ]
+      {
+         \hat{H}(\alpha) = \hat{G}(\alpha)
+         \\
+         G \disjunion \hat{G}(\alpha), H \setminus \set{\alpha}, \inE{\hat{G}}(\alpha) \cup E
+         \fwdEdges{\hat{G}}
+         G', H'
+      }
+      {
+         G, H, (\alpha, \beta) \cons E
+         \fwdEdges{\hat{G}}
+         G', H'
+      }
+   \end{smathpar}
+   \caption{Forward slicing \todo{Find and include story for this}}
+   \label{fig:conjugate:slicing:forward}
+   \end{subfigure}
    \caption{Find Reachable nodes}
    \label{fig:conjugate:reaches}
 \end{figure}
