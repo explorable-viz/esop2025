@@ -6,10 +6,13 @@ needed to formally define \textit{demands} and \textit{demanded by}. Then we sha
 explain how we can refine queries on input-output relationships, as well as
 a connection to the state of the art in this area.
 \subsection{Notation}
-For a relation $D \subseteq Y \times X$, and a subset $Y' \subseteq Y$, we write
-$D[Y']: \powerset{Y} \to \powerset{X}$ for the image of $Y'$ under $D$. For a
-subset $X'\subseteq X$ we similarly write $\preim{D}[X']: \powerset{X} \to \powerset{Y}$
-for the preimage of $X'$ under $D$.
+For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
+$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$. For a
+subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
+for the preimage of $Y'$ under $D$.
+
+Notationally we make use of the fact that the image of $X'$ under a relation
+$D$ is equal to the preimage of $YX'$ under the inverse relation $D^{-1}$.
 
 For a set $X$, we write $\compl{X}$ to denote it's complement. 
 
@@ -21,9 +24,6 @@ For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
 the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
 and intersection ($\cap$) respectively. 
-
-Notationally we make use of the fact that the image of $Y'$ under a relation
-$D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$.
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge. We write $\sources{G}$ for
