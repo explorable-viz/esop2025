@@ -28,7 +28,7 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
 
-\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a set of vertices, or ``addresses'', $\alpha$. Addresses act as unique identifiers that correspond (parts of) a term $e$ to vertices $V(e)$ in the graph, as in \defref{core:vertices}. The other language constructs that we introduce later, which are eliminators $\sigma$, values $v$, and patterns $w$, also correspond to vertices, with $\V(\sigma)$ and $\V(v)$ including any vertices appearing inside terms embedded in $\sigma$ or $v$.
+\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a set of vertices, or ``addresses'', $\alpha$. Addresses act as unique identifiers that correspond (parts of) a term $e$ to vertices $V(e)$ in the graph, as in \defref{core:vertices}. The other main language constructs that we introduce later, which are eliminators $\sigma$ and values $v$, also correspond to vertices, with $\V(\sigma)$ and $\V(v)$ including any vertices appearing inside terms embedded in $\sigma$ or $v$.
 
 
 \begin{definition}[Finite map notation]\label{def:finite-map}
@@ -45,14 +45,20 @@ Regular terms $\raw{e}$ include integers ranged over by $n, m$, variables ranged
 As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$. The last two terms define anonymous functions $\exFun{\sigma}$ and recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}. We introduce eliminators in \secref{core:continuations} and foreign functions in \secref{core:foreign}.
 
 
-\subsubsection{Continuations and eliminators}
+\subsubsection{Continuations, eliminators, and patterns}
 \label{sec:core:continuations}
 \input{fig/core/match}
 A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects
 which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
 (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
-against the initial part of a provided value, using this to select a continuation $\kappa$ to then be executed. The eliminator for variables $\elimVar{x}{\kappa}$ matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record with fields $\seq{x}$ and binds variables $\seq{x}$ to the components of that record. Lastly, the eliminator $\elimConstr{\seq{c \mapsto \sigma}}$ provides a branch $c \mapsto \sigma$ for each possible constructor $c$ of some data type $D$, where each (nested) eliminator $\sigma$ continues by matching against the arguments of that constructor.
+against the initial part of a provided value as some pattern $w$, which is either a variable, an integer, record, or data value, and then uses this for selecting a continuation $\kappa$ to be executed. The eliminator for variables $\elimVar{x}{\kappa}$ matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record with fields $\seq{x}$ and binds variables $\seq{x}$ to the components of that record. Lastly, the eliminator for data values $\elimConstr{\seq{c \mapsto \sigma}}$ provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each (nested) eliminator $\sigma$ continues by matching against the arguments of that constructor.
 
+\todo{revisit whether annotations on patterns are needed}
+
+\subsubsection{Values}
+\label{sec:core:values}
+
+Like terms, values $v$ include integers $n$, records  $\exRecord{\seq{x \mapsto v}}$, and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually defined.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
@@ -63,6 +69,7 @@ function they represent. By convention, we use $f$ and $\oplus$ to range over $\
 ${f}$ to the closure
 $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
+
 
 \subsection{Graph evaluation}
 
