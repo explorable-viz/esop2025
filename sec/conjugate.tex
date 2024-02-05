@@ -46,7 +46,10 @@ or outputs, and when selecting a set of inputs, we may select an input that is
 entirely unused by the program.
 If we were to insist our operations were inverse, it would imply that for a set of
 inputs to be demanded by a set of outputs, every input in the set should be used,
-which is clearly not always the case. We instead relax the requirement from the
+which is clearly not always the case. As an example, when we are working with large
+datasets, it is common for one or more columns of a table to be unused.
+
+We instead relax the requirement from the
 two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
@@ -78,12 +81,13 @@ From the perspective of resource demand, this makes sense: if we are investigati
 what two resources demand in totality, we do not expect them to demand a resource
 that neither of them demanded individually. 
 
-The fact that we may have unused inputs, or outputs not present as variables means
-that despite this, we cannot necessarily expect these functions to preserve the
-whole input set. If there are inputs that are unused, then running demands on
-the whole output will necessarily miss out all the unused inputs. Later, we shall
-see how we can overcome this limitation, and use this to discover more information
-about the relationship between inputs and outputs. 
+As we have mentioned, it is possible for a program to only use some strict subset
+of its overall input. Therefore, despite their being join-preserving, we cannot
+necessarily expect the result of taking \textit{demands} demands on the entire
+output set to return the entire input set. If there are inputs that are unused,
+then running demands on the whole output will necessarily miss out all the unused
+inputs. Later, we shall see how we can overcome this limitation, and use this to
+discover more information about the relationship between inputs and outputs. 
 
 \todo{I now think that this next bit could go into the sectoin on the core language,
 into the section about the discussion on projections/focussing, or the discussion of
