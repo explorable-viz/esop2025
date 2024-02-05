@@ -42,7 +42,7 @@ Regular terms $\raw{e}$ include integers ranged over by $n, m$, variables ranged
 , record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
 , and data values $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully saturated by arguments $\seq{e}$. A  constructor always inhabits a known data type $D$, and in particular always has the arity $n$ specified by its data type; we write $\datatype{c} = (n, D)$ to denote that $c$ takes $n \in \mathbb{N}$ arguments and constructs a value of data type $D$.
 
-As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$. The last two terms define anonymous functions $\exFun{\sigma}$ and recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}. We introduce eliminators in \secref{core:continuations} and foreign functions in \secref{core:foreign}.
+As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}. We introduce eliminators in \secref{core:continuations} and foreign functions in \secref{core:foreign}.
 
 
 \subsubsection{Continuations, eliminators, and patterns}
