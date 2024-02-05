@@ -71,7 +71,7 @@ $X'$ is demanded by has an empty intersection with $Y'$, we would expect that
 the resources $Y$ demands has an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
-   For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
+   For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 
@@ -194,8 +194,8 @@ since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
 and \textit{demanded by} in terms of $R$.
 
 \begin{definition}[Demands and Demanded By]
-   For a graph $G = (V,E)$ with inputs $X \subseteq \sinks{G} \subset V$ and outputs
-   $Y \subseteq \sources{G} \subseteq V$, with reachability relation $R_G$,
+   For a reachability relation $R_G \subseteq V \times V$, and sets $X \subseteq \sinks{G} \subset V$ and outputs
+   $Y \subseteq \sources{G} \subseteq V$,
    and define them by the following:
    \begin{itemize}
       \item $\demandR_G (X) \eqdef \restrict{R_G}{S(G) \times T(G)}[X]$ \hfill (demands)
