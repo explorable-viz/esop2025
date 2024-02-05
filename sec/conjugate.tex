@@ -68,19 +68,28 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
 This makes sense as a condition for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
 $X'$ is demanded by has an empty intersection with $Y'$, we would expect that
-the resources $Y$ demands has an empty intersection with $X'$. Whilst the property
-itself is simple, it has useful consequences.
+the resources $Y$ demands has an empty intersection with $X'$.
 
+\begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
+   For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
+   $D[\param]$ and $\preim{D}[\param]$ are conjugate.
+\end{lemma}
 
-Another property we expect is for \textit{demands} to be monotonic
-in its inputs: taking a selection on the output and growing it (selecting more)
-should cause the size of the demand to stay the same, or grow.
-We similarly expect the same property of \textit{demanded by}.  It turns out that
-conjugate functions are not only monotonic, but join-preserving: $f(X \cup Y) = f(X) \cup f(Y)$.
-From the perspective of resource demand, this makes sense: if we are investigating
-what two resources demand in totality, we do not expect them to demand a resource
-that neither of them demanded individually.
+We derive \textit{demands} and \textit{demanded by} from a dependency relation,
+and so we can write their general form simply:
+\textit{demands} and \textit{demanded by} as
+\begin{definition}[Demands and Demanded by for a dependency relation]
+   For a relation $D \subseteq X \times Y$, define:
+   \begin{itemize}
+      \item $\demandR_D(X) = D[X]$ \hfill (demands)
+      \item $\demandByR_D(Y) = \preim{D}[Y]$ \hfill (demanded by)
+   \end{itemize}
+\end{definition}
+By treating \textit{demands} and \textit{demanded by} as the image
+and preimage functions of a dependency relation $D$, we get their
+conjugacy for free. 
 
+\todo{Rework, include discussion of meet}
 As we have mentioned, it is possible for a program to only use some strict subset
 of its overall input. Therefore, despite their being join-preserving, we cannot
 necessarily expect the result of taking \textit{demands} demands on the entire
@@ -118,13 +127,6 @@ discover more information about the relationship between inputs and outputs.
 % \end{lemma}
 
 % \todo{End WIP}
-
-Moreover, the image and preimage functions over general binary relations form
-conjguate pairs:
-\begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
-   For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
-   $D[\param]$ and $\preim{D}[\param]$ are conjugate.
-\end{lemma}
 
 % The authors
 % of that paper provide the following alternate definition of conjugacy:
