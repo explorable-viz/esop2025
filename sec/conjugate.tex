@@ -91,6 +91,16 @@ conjugacy for free.
 
 \todo{Discuss specializing to functions here, then highlight link to Galois connections}
 
+We need to define the De Morgan Dual of a function, since it becomes useful
+when connecting our work to the state of the art of this area.
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
+   $$
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
+   $$
+\end{definition}
+
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
    Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
    $$
@@ -103,26 +113,6 @@ conjugacy for free.
    \end{itemize}
 \end{proposition}
 
-The Galois connection we use is defined in the following way:
-
-\begin{definition}[Galois Connection For A Relation]
-   For a relation $D \subseteq X \times Y$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
-   to mean the image/preimage Galois connection for a relation defined as:
-   \begin{itemize}
-      \item $D_{\star}(X') \eqdef D[Y']$
-      \item $D^{\star}(Y') \eqdef \dual{(\preim{D}[Y'])}$
-   \end{itemize}
-\end{definition}
-
-Lastly, we need to define the De Morgan Dual of a function, since it becomes useful
-when connecting our work to the state of the art of this area.
-\begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
-   $$
-   \dual{f} \eqdef \neg_B \after f \after \neg_A
-   $$
-\end{definition}
 
 \todo{Rework, include discussion of meet}
 As we have mentioned, it is possible for a program to only use some strict subset
