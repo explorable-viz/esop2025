@@ -89,6 +89,42 @@ By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free. 
 
+\todo{Discuss specializing to functions here, then highlight link to Galois connections}
+
+\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
+   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
+   $$
+      h \eqdef \dual{g}
+   $$
+   Then the following statements are equivalent:
+   \begin{itemize}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $h$ form a Galois connection
+   \end{itemize}
+\end{proposition}
+
+The Galois connection we use is defined in the following way:
+
+\begin{definition}[Galois Connection For A Relation]
+   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
+   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
+   flipped, and the functions defined as:
+   \begin{itemize}
+      \item $D_{\star}(Y') \eqdef D[Y']$
+      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
+   \end{itemize}
+\end{definition}
+
+Lastly, we need to define the De Morgan Dual of a function, since it becomes useful
+when connecting our work to the state of the art of this area.
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
+   $$
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
+   $$
+\end{definition}
+
 \todo{Rework, include discussion of meet}
 As we have mentioned, it is possible for a program to only use some strict subset
 of its overall input. Therefore, despite their being join-preserving, we cannot
@@ -144,15 +180,6 @@ discover more information about the relationship between inputs and outputs.
 % ranging over all possible values $a \in \mathcal{A}$, and computing their
 % meet with $b$.
 
-Lastly, we need to define the De Morgan Dual of a function, since it becomes useful
-when connecting our work to the state of the art of this area.
-\begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
-   $$
-   \dual{f} \eqdef \neg_B \after f \after \neg_A
-   $$
-\end{definition}
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
@@ -194,17 +221,28 @@ since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
 and \textit{demanded by} in terms of $R$.
 
 \begin{definition}[Demands and Demanded By]
-   For a reachability relation $R_G \subseteq V \times V$, and sets $X \subseteq \sinks{G} \subset V$ and outputs
-   $Y \subseteq \sources{G} \subseteq V$,
-   and define them by the following:
+   For a reachability relation $R_G \subseteq V \times V$, we write
+
    \begin{itemize}
-      \item $\demandR_G (X) \eqdef \restrict{R_G}{S(G) \times T(G)}[X]$ \hfill (demands)
-      \item $\demandByR_G (Y) \eqdef \demandR_{G^{-1}}[Y]$ \hfill (demanded by)
+      \item $\demandR_{R_G} (X)$ \hfill (demands)
+      \item $\demandByR_{R_G} (Y)$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
 
-Let us return to the problem of computing a related input query.
-The first step is to select
+Defining these two functions on the reachability relation now lets us give
+a formal account of related inputs and related outputs queries.
+\begin{definition}[Related Inputs and Outputs]
+   For $G = (V,E)$, define:
+   \begin{enumerate}
+      \item $\relInput_{R_G} \eqdef \demandR_{R_G} \after \demandByR_{R_G}$\hfill (related inputs)
+      \item $\relOutput_{R_G} \eqdef \demandByR_{R_G} \after \demandR_{R_G}$\hfill (related outputs)
+   \end{enumerate}
+\end{definition}
+A related input query can now be phrased as "what else can reach the nodes I can
+reach in the graph?", and a related output query can be phrased as "what else can
+be reached by the things that reach me?".
+
+To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
@@ -212,18 +250,10 @@ We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
 
 Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
 $\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
-opposite graph. Then the result of $\demandR(\demandByR(X)) \subseteq \sinks{G}$
-is the set of all related outputs.
+opposite graph.
 
 The procedure for computing related outputs is similar, we simply swap the order
-of operations. We succinctly define both sets as follows:
-\begin{definition}[Related Inputs and Outputs]
-   For $G = (V,E)$, define:
-   \begin{enumerate}
-      \item $\relInput_G \eqdef \demandR_G \after \demandByR_G$\hfill (related inputs)
-      \item $\relOutput_G \eqdef \demandByR_G \after \demandR_G$\hfill (related outputs)
-   \end{enumerate}
-\end{definition}
+of operations.
 \input{fig/conjugate/reaches}
 
 The procedure detailed in \figref{conjugate:reaches} works by
@@ -238,6 +268,8 @@ can be found.
 \end{proposition}
 
 \todo{Need an account of forwards.} 
+
+
 \subsection{Projections and Conjugations for Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
 the relationships between products of inputs and products of outputs. Doing this
@@ -336,30 +368,6 @@ In that work, the authors devise a method for computing related output queries,
 using program slicing operators which form a \textit{Galois connection}. It is not
 surprising that we can recover their framework's capabilities from ours, due to
 a well known fact about conjugate functions:
-
-\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
-   $$
-      h \eqdef \dual{g}
-   $$
-   Then the following statements are equivalent:
-   \begin{itemize}
-      \item $f$ and $g$ form a conjugate pair
-      \item $f$ and $h$ form a Galois connection
-   \end{itemize}
-\end{proposition}
-
-The Galois connection we use is defined in the following way:
-
-\begin{definition}[Galois Connection For A Relation]
-   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
-   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
-   flipped, and the functions defined as:
-   \begin{itemize}
-      \item $D_{\star}(Y') \eqdef D[Y']$
-      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
-   \end{itemize}
-\end{definition}
 
 We can then recover their data-linked visualizations by treating the output views
 as a product of two individual views. The notion of conjugate functions is closed
