@@ -26,22 +26,22 @@ For any constructor $c$ we write $\datatype{c}$ to mean the type signature $\tyF
    where $\seqRange{k_1}{k_n}$ are pairwise unique.
 \end{definition}
 
-\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by an ``address'' $\alpha$, representing a unique identifier for that term as a node in the graph. Regular terms $\raw{e}$ include integers $n$, variables $x$, let-bindings $\exLet{x}{e}{e'}$
-, record construction $\exRec{\seq{\bind{x}{e}}}$% which maps variables to terms (\defref{finite-map})
+\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by an ``address'' $\alpha$. An address is a unique identifier for a term as a node in the graph; the other main language constructs that we introduce later, which are eliminators, values, and patterns, also correspond to graph nodes. Regular terms $\raw{e}$ include integers $n$, variables $x$, let-bindings $\exLet{x}{e}{e'}$%
+, record construction $\exRec{\seq{\bind{x}{e}}}$ (see \defref{finite-map})% which maps variables to terms (\defref{finite-map})
 , record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
-, and data values $\exConstr{c}{\seq{e}}$ with data constructor $c$. In addition to regular application $\exApp{e}{e'}$, we also have  foreign application $\exForeignApp{f}{e}$ where the foreign function $f$, explained below, must be saturated with all its argument. The last two terms define anonymous functions $\exFun{\sigma}$, where $\sigma$ is an eliminator
+, and data values $\exConstr{c}{\seq{e}}$ with constructor $c$. As well as regular application $\exApp{e}{e'}$, we also have  foreign application $\exForeignApp{f}{\seq{e}}$ where a foreign function $f$ must be saturated with all its argument. The last two terms define anonymous functions $\exFun{\sigma}$ and recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}. We introduce eliminators in \secref{core:continuations} and foreign functions in \secref{core:foreign}.
 
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
-Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in $e$.
+Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
 
-\noindent \defref{core:vertices} extends to eliminators, values and patterns, with $\V(\sigma)$ and $\V(v)$
+\noindent \todo{An introduction/intuition is needed for \defref{core:vertices} that bridges it to the previous description of graph terms $e$.} \defref{core:vertices} extends to eliminators, values and patterns, with $\V(\sigma)$ and $\V(v)$
 also including any vertices appearing inside expressions embedded in $\sigma$ or $v$.
 
 \subsection{Continuations and eliminators}
-
-A \emph{continuation} $\kappa$ is either a term or an \textit{eliminator}. Eliminators are trie-like objects
+\label{sec:core:continuations}
+A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects
 which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
 (\citet{peytonjones2021} present a similar idea in a technical report.)
 
@@ -49,7 +49,7 @@ which can serve as a plausible desugaring target for surface-language pattern-ma
 \input{fig/core/eval}
 
 \subsection{Foreign functions}
-
+\label{sec:core:foreign}
 The language is parameterised by a finite map $\Phi: \Var \to \Type^+ \times \Type$ from variables to foreign
 function signatures $(\seq{A}, B)$. By convention $f$ and $\oplus$ ranges over $\dom{\Phi}$. Foreign functions
 \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}}
