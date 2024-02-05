@@ -6,15 +6,22 @@ needed to formally define \textit{demands} and \textit{demanded by}. Then we sha
 explain how we can refine queries on input-output relationships, as well as
 a connection to the state of the art in this area.
 \subsection{Notation}
-For a set $X$, we write $\compl{X}$ to denote it's complement within a larger set.
+
 For a relation $D \subseteq Y \times X$, and a subset $Y' \subseteq Y$, we write
 $D[Y']: \powerset{Y} \to \powerset{X}$ for the image of $Y'$ under $D$. For a
 subsert $X'\subseteq X$ we similarly write $\preim{D}[X']: \powerset{X} \to \powerset{Y}$
 for the preimage of $X'$ under $D$.
 
+For a set $X$, we write $\compl{X}$ to denote it's complement. 
+
+A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet $\vee$
+and join $\wedge$ distribute over each other, and for each element $x \in X$,
+there is a complement element $\compl{X} \in X$.
+
 For the rest of this section, when we refer to Boolean algebras, we usually mean
-the powerset lattice. Therefore we use the set theoretic symbols $\cap$ and
-$\cup$ for meet and join.
+the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
+the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
+and intersection ($\cap$) respectively. 
 
 Notationally we make use of the fact that the image of $Y'$ under a relation
 $D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$.
