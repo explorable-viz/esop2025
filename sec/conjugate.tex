@@ -192,8 +192,6 @@ avoid the problems this could cause, we extend the reachability relation
 with pairs of the form $(\alpha, \alpha)$. We can read this as the value
 depending on itself.
 
-For the rest of this section we generally omit the $\param_G$
-from this relation, since it is usually obvious to which graph we refer.
 When we are considering a graph $G$ and its opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
 since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
@@ -217,14 +215,6 @@ the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
-% \begin{definition}[Demanded By]\label{def:demanded-by}
-%    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-%    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
-%    $$
-%       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y')
-%    $$
-% \end{definition}
-
 
 Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
 $\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
@@ -233,13 +223,6 @@ is the set of all related outputs.
 
 The procedure for computing related outputs is similar, we simply swap the order
 of operations. We succinctly define both sets as follows:
-% \begin{definition}[Demands]\label{def:demand}
-%    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-%    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
-%    $$
-%       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
-%    $$
-% \end{definition}
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
