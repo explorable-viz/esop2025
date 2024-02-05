@@ -32,10 +32,12 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall illuminate the intuitive properties we would expect them to have. We would
-expect the two functions to possess some notion of symmetry. If some inputs
-are demanded by some outputs, then of course we expect those outputs to demand
-those inputs. 
+shall illuminate the intuitive properties we would expect them to have.
+We would like to be able to reprsent each operation as a function between sets
+of program inputs to sets of program outputs. We  expect these two functions
+to possess some notion of symmetry. If a subset of the inputs, $X$ are demanded
+by a subset of the outputs, $Y$, then it makes sense that this output set
+should demand at least every input in the set $X$. 
 
 In light of this, we might expect the functions used to determine \textit{demands}
 and \textit{demanded by} to be inverses of each other. It turns out this notion
