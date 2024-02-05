@@ -89,35 +89,35 @@ then running demands on the whole output will necessarily miss out all the unuse
 inputs. Later, we shall see how we can overcome this limitation, and use this to
 discover more information about the relationship between inputs and outputs. 
 
-\todo{I now think that this next bit could go into the sectoin on the core language,
-into the section about the discussion on projections/focussing, or the discussion of
-Galois connections.}
+% \todo{I now think that this next bit could go into the sectoin on the core language,
+% into the section about the discussion on projections/focussing, or the discussion of
+% Galois connections.}
 
-Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
-demands functions, and that $g \after f (X')$ computes the set of inputs related
-to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
-Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
-If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
-$g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
-new inputs we have discovered through our related inputs query. We can safely discard
-$X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
-we can read $X_0$ as the set of inputs that are unused through the entire program.
-In a data science scenario, this is extremely useful since we often work with datasets
-that have a large amount of spurious data.
+% Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
+% demands functions, and that $g \after f (X')$ computes the set of inputs related
+% to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
+% Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
+% If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
+% $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+% new inputs we have discovered through our related inputs query. We can safely discard
+% $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
+% we can read $X_0$ as the set of inputs that are unused through the entire program.
+% In a data science scenario, this is extremely useful since we often work with datasets
+% that have a large amount of spurious data.
 
-Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
-demands) applied to the entirety of the output finds the entirety of the input, and
-similar for $f$ applied to the entire input.
+% Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
+% demands) applied to the entirety of the output finds the entirety of the input, and
+% similar for $f$ applied to the entire input.
 
-Another advantage of conjugate functions is how they also admit products, which
-we can use to focus queries onto specific contexts:
+% Another advantage of conjugate functions is how they also admit products, which
+% we can use to focus queries onto specific contexts:
 
-\begin{lemma}[Products of Conjugates Admit conjugates]
-   Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
-   then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
-\end{lemma}
+% \begin{lemma}[Products of Conjugates Admit conjugates]
+%    Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
+%    then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
+% \end{lemma}
 
-\todo{End WIP}
+% \todo{End WIP}
 
 Moreover, the image and preimage functions over general binary relations form
 conjguate pairs:
