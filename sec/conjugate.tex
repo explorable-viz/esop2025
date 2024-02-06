@@ -48,6 +48,15 @@ Intuitively we can do this by lifting to the image and preimage functions of $f$
       \item $f_{\star}(Y') \eqdef \set{x \in x \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
+The above pair of functions is the usual image/preimage Galois connection for a function.
+\begin{lemma}[Galois Connection]
+   $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
+\end{lemma}
+In this setting, it is possible to read the action of $f^{\star}$ on a set $X'$
+as telling us which outputs $X'$ is sufficient for, since it tells us every output
+we can make with any element of $X'$. Similarly, we can read the action of $f_{\star}$
+on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
+
 
 We require the operations \textit{demands} and \textit{demanded by} to be
 \textit{conjugate}, in the sense of \citet{jonsson51}:
@@ -98,11 +107,6 @@ and so we can write their general form simply:
 By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free. 
-
-\begin{lemma}[Galois Connection]
-   $f^{\star}(A') \subseteq B' \iff A' \subseteq f_{\star}(B')$
-\end{lemma}
-\todo{Discuss specializing to functions here, then highlight link to Galois connections}
 
 We need to define the De Morgan Dual of a function, since it becomes useful
 when connecting our work to the state of the art of this area.
