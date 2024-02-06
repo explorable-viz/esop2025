@@ -17,18 +17,6 @@
    {\small \flushleft \shadebox{$\gamma, e, V \evalS G, v$}%
    \begin{smathpar}
       \inferrule*[
-      lab={\ruleName{$\evalS$-var}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS \emptyset, v
-      }
-      %
-      \and
-      %
-      \inferrule*[
          lab={\ruleName{$\evalS$-int}}
       ]
       {
@@ -39,6 +27,18 @@
          \evalS
          \set{\bind{\alpha'}{\alpha \cons V}},
          \annInt{n}{\alpha'}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+      lab={\ruleName{$\evalS$-var}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma \cons (\bind{x}{v}), \exVar{x}, V \evalS \emptyset, v
       }
       %
       \and
@@ -57,7 +57,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-project}}
+         lab={\ruleName{$\evalS$-record-project}}
       ]
       {
          \gamma, e, V \evalS G, \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}
@@ -68,7 +68,7 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalS$-constr}}]
+      \inferrule*[lab={\ruleName{$\evalS$-data-value}}]
       {
          \gamma, \seq{e}, V \evalS G, \seq{v}
       }
@@ -77,35 +77,6 @@
          \evalS
          G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
          \annConstr{c}{\seq{v}}{\alpha'}
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalS$-lambda}}]
-      {
-         \strut
-      }
-      {
-         \gamma, \exFun{\sigma}, V
-         \evalS
-         \set{\bind{\alpha}{V}},
-         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalS$-foreign}}
-      ]
-      {
-         \gamma, \seq{e}, V \evalS G, \seq{v}
-         \\
-         \interpret{f}(\seq{v}) = (G', u)
-      }
-      {
-         \gamma, \exForeignApp{f}{\seq{e}}, V
-         \evalS
-         G \disjunion G', u
       }
       %
       \and
@@ -129,6 +100,35 @@
          \gamma, \exApp{e}{e'}, V
          \evalS
          \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, v'
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-foreign-app}}
+      ]
+      {
+         \gamma, \seq{e}, V \evalS G, \seq{v}
+         \\
+         \interpret{f}(\seq{v}) = (G', u)
+      }
+      {
+         \gamma, \exForeignApp{f}{\seq{e}}, V
+         \evalS
+         G \disjunion G', u
+      }
+      %
+      \and
+      %
+      \inferrule*[lab={\ruleName{$\evalS$-function}}]
+      {
+         \strut
+      }
+      {
+         \gamma, \exFun{\sigma}, V
+         \evalS
+         \set{\bind{\alpha}{V}},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
       }
       %
       \and

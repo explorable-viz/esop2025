@@ -14,7 +14,7 @@ for the preimage of $Y'$ under $D$.
 Notationally we make use of the fact that the image of $X'$ under a relation
 $D$ is equal to the preimage of $YX'$ under the inverse relation $D^{-1}$.
 
-For a set $X$, we write $\compl{X}$ to denote it's complement. 
+For a set $X$, we write $\compl{X}$ to denote it's complement.
 
 A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
 and join ($\wedge$) distribute over each other, and for each element $x \in X$,
@@ -23,7 +23,7 @@ there is a complement element $\compl{X} \in X$.
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
 the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
-and intersection ($\cap$) respectively. 
+and intersection ($\cap$) respectively.
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge. We write $\sources{G}$ for
@@ -36,7 +36,7 @@ We would like to be able to reprsent each operation as a function between sets
 of program inputs to sets of program outputs. We  expect these two functions
 to possess some notion of symmetry. If a subset of the inputs, $X$ are demanded
 by a subset of the outputs, $Y$, then it makes sense that this output set
-should demand at least every input in the set $X$. 
+should demand at least every input in the set $X$.
 
 In light of this, we might expect the functions used to determine \textit{demands}
 and \textit{demanded by} to be inverses of each other. It turns out this notion
@@ -132,7 +132,7 @@ necessarily expect the result of taking \textit{demands} on the entire
 output set to return the entire input set. If there are inputs that are unused,
 then running demands on the whole output will necessarily miss out all the unused
 inputs. Later, we shall see how we can overcome this limitation, and use this to
-discover more information about the relationship between inputs and outputs. 
+discover more information about the relationship between inputs and outputs.
 
 % \todo{I now think that this next bit could go into the sectoin on the core language,
 % into the section about the discussion on projections/focussing, or the discussion of
@@ -258,12 +258,12 @@ of operations.
 
 The procedure detailed in \figref{conjugate:reaches} works by
 traversing the neighbors of the selected set of nodes, until no new neighbors
-can be found. 
+can be found.
 \begin{proposition}[Reaches computes demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
    The following holds:
    $$
-      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'} 
+      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
    $$
 \end{proposition}
 
