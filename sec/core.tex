@@ -28,8 +28,7 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
 
-\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a vertex, or ``address'', $\alpha$. Addresses act as unique identifiers that correspond (parts of) a term $e$ to vertices $V(e)$ in the graph, as defined in \defref{core:vertices}. The other main language constructs that we introduce later, which are eliminators $\sigma$ and values $v$, also correspond to vertices, with $\V(\sigma)$ and $\V(v)$ including any vertices appearing inside terms embedded in $\sigma$ or $v$.
-\todo{get rid of ``address'' terminology, and instead explain how vertices are represented in implementation}
+\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a vertex, or ``address'', $\alpha$. In implementation, vertices can be represented by any unique identifier, such as integers, that allows (parts of) a term $e$ to be corresponded to vertices $V(e)$ in a graph,  defined in \defref{core:vertices}. The other main language constructs that we introduce later, which are eliminators $\sigma$ and values $v$, also correspond to vertices, with $\V(\sigma)$ and $\V(v)$ including any vertices appearing inside terms embedded in $\sigma$ or $v$.
 
 \begin{definition}[Finite map notation]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{v}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{v_1}}{\bind{k_n}{v_n}}$
@@ -89,8 +88,8 @@ where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically p
 
 The rule for integer terms $n_\alpha$ simply returns its value form $n_\alpha'$ but associated with a fresh vertex $\alpha'$. The resulting dependence graph $\set{\bind{\alpha'}{\alpha \cons V}}$ then contains an output vertex $\alpha'$ with incoming edges from all vertices in $\alpha \cdot V$, expressing that evaluating to  $n_\alpha'$ depended on the original term $n_\alpha$ alongside any other inputs that were found in $V$. The rule for variables is standard, where the returned dependence graph is empty as no new vertices are constructed by simply looking up~values.
 
-The rule for records $\annRec{\seq{\bind{x}{e}}}{\alpha}$ evaluates the sequence of terms $\seq{e}$ associated with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha'}$ as a fresh vertex $\alpha'$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of $\annRec{\seq{\bind{x}{v}}}{\alpha'}$. Record projection $e.y$ uses the previous rule to evaluate the entire record $e$ before looking up the value for field $y$; note that the vertex associated \todo{...}
+The rule for records $\annRec{\seq{\bind{x}{e}}}{\alpha}$ evaluates the sequence of terms $\seq{e}$ associated with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha'}$ as a fresh vertex $\alpha'$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of $\annRec{\seq{\bind{x}{v}}}{\alpha'}$. Record projection $e.y$ uses the previous rule to evaluate the entire record $e$ before looking up the value for $y$; as the record value as a whole structure goes unused, its vertex is omitted in the dependence graph.
 
 
-Evaluating data values $c(\seq{e})_\alpha$ and foreign function calls $f(\seq{e})$ are similar to that of records, but for the latter, we also require a foreign function implementation $\hat{f}$ of $f$ that provides a way to be evaluated to a graph $G'$ and value $u$.
+Evaluation of data values $c(\seq{e})_\alpha$ and foreign function calls $f(\seq{e})$ is similar to that of records, but for the latter, we also require a foreign function implementation $\hat{f}$ of $f$ that provides a way to be evaluated to a graph $G'$ and value $u$.
 
