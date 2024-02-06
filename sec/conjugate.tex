@@ -77,7 +77,6 @@ the resources $Y$ demands has an empty intersection with $X'$.
 
 We derive \textit{demands} and \textit{demanded by} from a dependency relation,
 and so we can write their general form simply:
-\textit{demands} and \textit{demanded by} as
 \begin{definition}[Demands and Demanded by for a dependency relation]
    For a relation $D \subseteq X \times Y$, define:
    \begin{itemize}
@@ -89,6 +88,18 @@ By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free. 
 
+For a moment, let us restrict our view from relations to functions. The function
+and its preimage form a Galois connection in the usual way:
+\begin{definition}
+   For a function $f: A \to B$, and and its preimage $\preim{f}$ define:
+   \begin{itemize}
+      \item $f^{\star}(A') \eqdef \set{f(a) \;|\; a \in A'}$ \hfill (image)
+      \item $f_{\star}(B') \eqdef \set{a \in A \;|\; \preim{f}(a) \subseteq B'}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+\begin{lemma}[Galois Connection]
+   $f^{\star}(A') \subseteq B' \iff A' \subseteq f_{\star}(B')$
+\end{lemma}
 \todo{Discuss specializing to functions here, then highlight link to Galois connections}
 
 We need to define the De Morgan Dual of a function, since it becomes useful
@@ -117,7 +128,7 @@ when connecting our work to the state of the art of this area.
 \todo{Rework, include discussion of meet}
 As we have mentioned, it is possible for a program to only use some strict subset
 of its overall input. Therefore, despite their being join-preserving, we cannot
-necessarily expect the result of taking \textit{demands} demands on the entire
+necessarily expect the result of taking \textit{demands} on the entire
 output set to return the entire input set. If there are inputs that are unused,
 then running demands on the whole output will necessarily miss out all the unused
 inputs. Later, we shall see how we can overcome this limitation, and use this to
