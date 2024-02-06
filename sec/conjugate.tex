@@ -35,7 +35,7 @@ shall provide some more intuition on our setting, and how it leads us to the
 conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
-characterized by a relation $R \subseteq X \times Y$, where $(x, y) \in R$
+characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
@@ -43,7 +43,7 @@ Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
 Equivalently, we could view it as saying $x$ is necessary to produce $y$.
 It is well known that we can lift this function to the image and preimage functions of $f$:
-\begin{definition}
+\begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
       \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
@@ -70,6 +70,18 @@ input value is used in multiple ways, we would need to provide multiple copies
 of each input value.  
 
 Thus we most move beyond functions, and instead consider relations instead. 
+Just as with functions, we can consider the image and preimage of a relation:
+\begin{definition}[Image and Preimage of a Relation]
+   For a relation $D \subseteq X \times Y$, we define:
+   \begin{itemize}
+      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+finding the set of inputs which are necessary for the elements of $Y'$ we can
+no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+for. It instead gives us the set of outputs that $X'$ is necessary for. 
 
 
 We require the operations \textit{demands} and \textit{demanded by} to be
