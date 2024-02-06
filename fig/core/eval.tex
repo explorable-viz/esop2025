@@ -1,19 +1,4 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS G, \seq{v}$}%
-   \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\evalS$-seq}}
-      ]
-      {
-         \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
-      }
-      {
-         \gamma, \seq{e}, V \evalS \textstyle{\bigdisjunion}\seq{G}, \seq{v}
-      }
-      %
-      \and
-      %
-   \end{smathpar}}
    {\small \flushleft \shadebox{$\gamma, e, V \evalS G, v$}%
    \begin{smathpar}
       \inferrule*[
@@ -162,6 +147,22 @@
          \evalS
          G \disjunion G', v
       }
+   \end{smathpar}}
+   \\[2mm]
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS G, \seq{v}$}%
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\evalS$-seq}}
+      ]
+      {
+         \gamma, e_i, V \evalS G_i, v_i \quad (\forall i \numleq \length{\seq{e}})
+      }
+      {
+         \gamma, \seq{e}, V \evalS \textstyle{\bigdisjunion}\seq{G}, \seq{v}
+      }
+      %
+      \and
+      %
    \end{smathpar}}
    \\[2mm]
    {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs G, \gamma'$}
