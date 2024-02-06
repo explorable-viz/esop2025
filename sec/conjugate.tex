@@ -34,13 +34,15 @@ Before we give the definitions of \textit{demands} and \textit{demanded by}, we
 shall provide some more intuition on our setting, and how it leads us to the
 conditions we need.
 
-Let us first consider a function $f: X \to Y$, where we read $X$ as a set of
-\textit{inputs}, and $Y$ as a set of \textit{outputs}. Then we can read
-$f(x) = y$ as telling us that $x \in X$ is \textit{demanded by} $y \in Y$.
-We could also say that $y$ \textit{demands} the input $x$. Of course, it is
-possible that there exist two inputs, $x_1, x_2$ for which $f(x_1) = f(x_2)$.
-We must therefore extend $f$ to work with sets of inputs, and sets of outputs.
-Intuitively we can do this by lifting to the image and preimage functions of $f$:
+In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
+characterized by a relation $R \subseteq X \times Y$, where $(x, y) \in R$
+can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
+this notion to relate sets of inputs to sets of outputs.
+
+Let us first consider the case when the relation is a function $f: X \to Y$.
+We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.
+It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
@@ -54,16 +56,20 @@ The above pair of functions is the usual image/preimage Galois connection for a 
 \end{lemma}
 In this setting, it is possible to read the action of $f^{\star}$ on a set $X'$
 as telling us which outputs $X'$ is sufficient for, since it tells us every output
-we can make with any element of $X'$. Similarly, we can read the action of $f_{\star}$
+we can make with any element of $X'$, but also what the values of $x$ are necessary for.
+Similarly, we can read the action of $f_{\star}$
 on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
 
-Whilst the above is attractive, it is not in itself enough to capture properties
-needed for analysing demand in a programming language. Firstly, it requires that
+Whilst the above is attractive, we cannot rely on the dependency relation to be
+a function for two reasons. Firstly, it would require that
 every input value is used by a program. In the realm of data analysis, this is
 not always true. We may take a very large table as our input, and only consider
 a subset of the columns. Secondly, by restricting ourselves to functions, we force
-each input value to be used by only a single output value in a program. 
+each input value to be used by only a single output value in a program. If the same
+input value is used in multiple ways, we would need to provide multiple copies
+of each input value.  
 
+Thus we most move beyond functions, and instead consider relations instead. 
 
 
 We require the operations \textit{demands} and \textit{demanded by} to be
