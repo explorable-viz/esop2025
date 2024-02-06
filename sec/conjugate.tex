@@ -31,25 +31,12 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall illuminate the intuitive properties we would expect them to have.
-We would like to be able to reprsent each operation as a function between sets
-of program inputs to sets of program outputs. We  expect these two functions
-to possess some notion of symmetry. If a subset of the inputs, $X$ are demanded
-by a subset of the outputs, $Y$, then it makes sense that this output set
-should demand at least every input in the set $X$.
+will give the properties that we want them to have. 
+We would like to be able to represent each operation as a function between sets
+of program inputs to sets of program outputs. 
 
-In light of this, we might expect the functions used to determine \textit{demands}
-and \textit{demanded by} to be inverses of each other. It turns out this notion
-is not quite correct. We do not consider individual values in the set of inputs
-or outputs, and when selecting a set of inputs, we may select an input that is
-entirely unused by the program.
-If we were to insist our operations were inverse, it would imply that for a set of
-inputs to be demanded by a set of outputs, every input in the set should be used,
-which is clearly not always the case. As an example, when we are working with large
-datasets, it is common for one or more columns of a table to be unused.
-
-We instead relax the requirement from the
-two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
+We require the operations \textit{demands} and \textit{demanded by} to be
+\textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
@@ -67,8 +54,18 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
 
 This makes sense as a condition for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
-$X'$ is demanded by has an empty intersection with $Y'$, we would expect that
-the resources $Y$ demands has an empty intersection with $X'$.
+$X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
+of resources that $Y'$ demands to have an empty intersection with $X'$.
+
+One might ask why we do not consider the two operations to be each others inverse.
+We use the condition of conjugacy to account for input values in a program which may
+be unused by any outputs. In data analysis tasks, we will often make only partial
+use of an input dataset. For example, columns in a table may be unused in an
+analysis. In these cases, forcing the functions to be inverses would fail, since
+the set of outputs a set of inputs is \textit{demanded by} would not be changed
+by including the unused input, but this unused input would not be found when
+running \textit{demands} on the output set. 
+
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
@@ -240,7 +237,9 @@ a formal account of related inputs and related outputs queries.
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
-be reached by the things that reach me?".
+be reached by the things that reach me?". We can think of this notion as similar
+to that of "cognacy" in natural languages, for related outputs we are finding
+the common ancestors.
 
 To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
