@@ -31,9 +31,23 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-will give the properties that we want them to have. 
-We would like to be able to represent each operation as a function between sets
-of program inputs to sets of program outputs. 
+shall provide some more intuition on our setting, and how it leads us to the
+conditions we need.
+
+Let us first consider a function $f: X \to Y$, where we read $X$ as a set of
+\textit{inputs}, and $Y$ as a set of \textit{outputs}. Then we can read
+$f(x) = y$ as telling us that $x \in X$ is \textit{demanded by} $y \in Y$.
+We could also say that $y$ \textit{demands} the input $x$. Of course, it is
+possible that there exist two inputs, $x_1, x_2$ for which $f(x_1) = f(x_2)$.
+We must therefore extend $f$ to work with sets of inputs, and sets of outputs.
+Intuitively we can do this by lifting to the image and preimage functions of $f$:
+\begin{definition}
+   For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
+   \begin{itemize}
+      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
+      \item $f_{\star}(Y') \eqdef \set{x \in x \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
 
 We require the operations \textit{demands} and \textit{demanded by} to be
 \textit{conjugate}, in the sense of \citet{jonsson51}:
@@ -85,15 +99,6 @@ By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free. 
 
-For a moment, let us restrict our view from relations to functions. The function
-and its preimage form a Galois connection in the usual way:
-\begin{definition}
-   For a function $f: A \to B$, and and its preimage $\preim{f}$ define:
-   \begin{itemize}
-      \item $f^{\star}(A') \eqdef \set{f(a) \mid a \in A'}$ \hfill (image)   
-      \item $f_{\star}(B') \eqdef \set{a \in A \mid \preim{f}(a) \subseteq B'}$ \hfill (preimage)
-   \end{itemize}
-\end{definition}
 \begin{lemma}[Galois Connection]
    $f^{\star}(A') \subseteq B' \iff A' \subseteq f_{\star}(B')$
 \end{lemma}
