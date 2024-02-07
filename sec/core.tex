@@ -23,14 +23,14 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 
 \input{fig/core/syntax}
 
-\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely corresponds (parts of) a term to vertices in a graph (we use an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$;
-\defref{core:vertices} then extends to values $v$, patterns $w$, and eliminators $\sigma$, all of which may themselves be vertices and/or contain other entities that are vertices. We introduce these later.
-
-
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
-Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in~$e$.
+Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
+
+We define the graph terms $e$ of the language in \figref{syntax}  as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely corresponds (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$;
+\defref{core:vertices} then extends to values $v$, patterns $w$, and eliminators $\sigma$, all of which may themselves be vertices and/or contain other entities that are vertices. We introduce these constructs later.
+
 
 \begin{definition}[Finite map notation]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{v}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{v_1}}{\bind{k_n}{v_n}}$
@@ -68,11 +68,11 @@ ${f}$ to the closure
 $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
 
-
-\subsection{Evaluation and graph construction}
-
 \input{fig/core/eval}
 \input{fig/core/match}
+
+
+\subsection{Evaluation and graph construction}
 
 \begin{definition}[Disjoint union of maps]\label{def:disjoint-union}
    For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
@@ -82,9 +82,7 @@ where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically p
    For vertex $\alpha$ and set of vertices $V$, define $\bind{\alpha}{V}$ as the set of edges from all vertices in $V$ to $\alpha$.
 \end{definition}
 
-\figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language. This states that program $e$ under environment $\gamma$ evaluates to a value $v$ plus a dependence graph $G$; the  set of vertices $V$ corresponds to the inputs consumed by the current active function call, representing the other, ambient inputs that the evaluation step may also depend on. The relation $\gamma, \seq{e}, V \evalS G, \seq{v}$ is similar but for a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$, and constructs a dependence graph that is the disjoint union (\defref{disjoint-union}) of graphs produced by each individual evaluation. For convenience, we will use  notation $\bind{\alpha}{V}$ (\defref{incoming-edges}) for adding a new vertex $\alpha$ and its dependencies $V$ to a graph.
-
-
+We define a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language in \figref{core:eval}. This states that program $e$ under environment $\gamma$ evaluates to a value $v$ plus a dependence graph $G$; the  set of vertices $V$ corresponds to the inputs consumed by the current active function call, representing the other, ambient inputs that the evaluation step may also depend on. The relation $\gamma, \seq{e}, V \evalS G, \seq{v}$ is similar but for a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$, and constructs a dependence graph that is the disjoint union (\defref{disjoint-union}) of graphs produced by each individual evaluation. For convenience, we will use  notation $\bind{\alpha}{V}$ (\defref{incoming-edges}) for adding a new vertex $\alpha$ and its dependencies $V$ to a graph.
 
 The rule for integers $n_\alpha$ simply returns their value form $n_{\alpha'}$ but as a fresh vertex $\alpha'$. The resulting dependence graph $\set{\bind{\alpha'}{\alpha \cons V}}$ then contains a vertex $\alpha'$ with incoming edges from all vertices in $\alpha \cdot V$, expressing that evaluating to  $n_\alpha'$ depended on the original term $n_\alpha$ alongside any other inputs that were found in $V$. Variable evaluation is standard, and the returned dependence graph is empty due to no new vertices being constructed from simply looking up~values.
 Evaluation of functions $\exFun{\sigma}$ is by using their eliminator $\sigma$ and the current environment $\gamma$ to construct a closure $\exClosure{\gamma}{\varepsilon}{\sigma}_\alpha$ as a new vertex, where environment $\varepsilon$ specifies no available recursive definitions.
@@ -98,6 +96,10 @@ The last premise evaluates the body of the matched branch to a final value, wher
 Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and graph construction is unsurprising, unioning the graphs of $e$ and  $e'$. The case for recursive let-bindings $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$ is the same except requiring $\closeDefs$ to evaluate the environment of mutually recursive definitions $\seq{\bind{x}{\sigma}}$, as explained for~application.
 
 \subsubsection{Pattern matching}
+
+The relation $\seq{v}, \kappa \match \seq{w}, \gamma, e$  in \figref{core:pattern-matching} captures pattern-matching in a slightly unconventional way, by using a \emph{continuation} $\kappa$ to match a \emph{sequence} of values $\seq{v}$ (rather than an eliminator $\sigma$ that matches a single value $v$); it returns the corresponding matched patterns $\seq{w}$, an environment $\gamma$ of variable bindings that arose during the matches, and a term $e$ representing the branch body to be executed. The ``done'' rule expresses exactly when using a term $e$ as the continuation may succeed i.e. when the sequence of values to be matched is empty, and so $e$ must be the final branch body. The other rules use an eliminator $\sigma$ to match the head value of a non-empty sequence before recursing on its tail.
+
+% A variable eliminator  matching values $v$ against s $x$, the va
 
 \subsection{Projecting In Environments For Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
