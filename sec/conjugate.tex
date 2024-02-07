@@ -1,3 +1,4 @@
+\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
@@ -12,13 +13,13 @@ subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \pow
 for the preimage of $Y'$ under $D$.
 
 Notationally we make use of the fact that the image of $X'$ under a relation
-$D$ is equal to the preimage of $YX'$ under the inverse relation $D^{-1}$.
+$D$ is equal to the preimage of $YX'$\dnoteM{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
 
 For a set $X$, we write $\compl{X}$ to denote it's complement.
 
 A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
 and join ($\wedge$) distribute over each other, and for each element $x \in X$,
-there is a complement element $\compl{X} \in X$.
+there is a complement element $\compl{x} \in X$.
 
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
@@ -31,25 +32,72 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall illuminate the intuitive properties we would expect them to have.
-We would like to be able to reprsent each operation as a function between sets
-of program inputs to sets of program outputs. We  expect these two functions
-to possess some notion of symmetry. If a subset of the inputs, $X$ are demanded
-by a subset of the outputs, $Y$, then it makes sense that this output set
-should demand at least every input in the set $X$.
+shall provide some more intuition on our setting, and how it leads us to the
+conditions we need.
 
-In light of this, we might expect the functions used to determine \textit{demands}
-and \textit{demanded by} to be inverses of each other. It turns out this notion
-is not quite correct. We do not consider individual values in the set of inputs
-or outputs, and when selecting a set of inputs, we may select an input that is
-entirely unused by the program.
-If we were to insist our operations were inverse, it would imply that for a set of
-inputs to be demanded by a set of outputs, every input in the set should be used,
-which is clearly not always the case. As an example, when we are working with large
-datasets, it is common for one or more columns of a table to be unused.
+In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
+characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
+can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
+this notion to relate sets of inputs to sets of outputs.
 
-We instead relax the requirement from the
-two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
+Let us first consider the case when the relation is a function $f: X \to Y$.
+We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
+  If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
+It is well known that we can lift this function to the image and preimage functions of $f$:
+\begin{definition}[Image and Preimage of a Function]
+   For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
+   \begin{itemize}
+      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
+      \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+The above pair of functions is the usual image/preimage Galois connection for a function.
+\begin{lemma}[Galois Connection]
+   $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
+\end{lemma}
+In this setting, it is possible to read the action of $f^{\star}$ on a set $X'$
+as telling us which outputs $X'$ is sufficient for, since it tells us every output
+we can make with any element of $X'$, but also what the values of $x$ are necessary for.
+Similarly, we can read the action of $f_{\star}$
+on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
+
+Whilst the above is attractive, we cannot rely on the dependency relation to be
+a function for two reasons. Firstly, it would require that
+every input value is used by a program. In the realm of data analysis, this is
+not always true. We may take a very large table as our input, and only consider
+a subset of the columns. Secondly, by restricting ourselves to functions, we force
+each input value to be used by only a single output value in a program. If the same
+input value is used in multiple ways, we would need to provide multiple copies
+of each input value.  
+
+Thus we most move beyond functions, and instead consider relations instead. 
+Just as with functions, we can consider the image and preimage of a relation:
+\begin{definition}[Image and Preimage of a Relation]
+   For a relation $D \subseteq X \times Y$, we define:
+   \begin{itemize}
+      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+finding the set of inputs which are necessary for the elements of $Y'$ we can
+no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+for. This is because sufficiency means having all of the inputs required to
+produce an output, as a simple example consider the expression $3 + 4$, neither
+of the subexpressions $3$ or $4$ are sufficient to produce the result of
+evaluating the expression on their own. The image instead gives us the set of
+outputs that $X'$ is necessary for. We observe that in general,
+the set of outputs that a set of inputs is necessary for is a superset of the
+outputs it is sufficient for.
+
+We note that in general, these two operators do not form a Galois connection. See
+\todo{put figure in place}.
+
+\input{fig/conjugate/relations-not-galois}
+
+We require the operations \textit{demands} and \textit{demanded by} to be
+\textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
@@ -67,8 +115,18 @@ two operations being inverse to their being, \textit{conjugate}, in the sense of
 
 This makes sense as a condition for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
-$X'$ is demanded by has an empty intersection with $Y'$, we would expect that
-the resources $Y$ demands has an empty intersection with $X'$.
+$X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
+of resources that $Y'$ demands to have an empty intersection with $X'$.
+
+One might ask why we do not consider the two operations to be each others inverse.
+We use the condition of conjugacy to account for input values in a program which may
+be unused by any outputs. In data analysis tasks, we will often make only partial
+use of an input dataset. For example, columns in a table may be unused in an
+analysis. In these cases, forcing the functions to be inverses would fail, since
+the set of outputs a set of inputs is \textit{demanded by} would not be changed
+by including the unused input, but this unused input would not be found when
+running \textit{demands} on the output set. 
+
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
@@ -87,20 +145,6 @@ and so we can write their general form simply:
 By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free. 
-
-For a moment, let us restrict our view from relations to functions. The function
-and its preimage form a Galois connection in the usual way:
-\begin{definition}
-   For a function $f: A \to B$, and and its preimage $\preim{f}$ define:
-   \begin{itemize}
-      \item $f^{\star}(A') \eqdef \set{f(a) \mid a \in A'}$ \hfill (image)   
-      \item $f_{\star}(B') \eqdef \set{a \in A \mid \preim{f}(a) \subseteq B'}$ \hfill (preimage)
-   \end{itemize}
-\end{definition}
-\begin{lemma}[Galois Connection]
-   $f^{\star}(A') \subseteq B' \iff A' \subseteq f_{\star}(B')$
-\end{lemma}
-\todo{Discuss specializing to functions here, then highlight link to Galois connections}
 
 We need to define the De Morgan Dual of a function, since it becomes useful
 when connecting our work to the state of the art of this area.
@@ -240,7 +284,9 @@ a formal account of related inputs and related outputs queries.
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
-be reached by the things that reach me?".
+be reached by the things that reach me?". We can think of this notion as similar
+to that of "cognacy" in natural languages, for related outputs we are finding
+the common ancestors.
 
 To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
@@ -269,26 +315,26 @@ can be found.
 
 \todo{Need an account of forwards.} 
 
-\subsection{Relationship to Galois Slicing}
-\todo{Here we need to formally explain the relationship to galois connections, and why
-this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
-demanded by. We need to include the efficient algorithm for forward slicing, and give
-a nice narrative structure that will lead into this. It may be worth explaining why
-the De morgan dual of a conjugate function creates a Galois connection. I am not
-certain if there is a good reference for this or if we need to derive it ourselves}
+% \subsection{Relationship to Galois Slicing}
+% \todo{Here we need to formally explain the relationship to galois connections, and why
+% this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
+% demanded by. We need to include the efficient algorithm for forward slicing, and give
+% a nice narrative structure that will lead into this. It may be worth explaining why
+% the De morgan dual of a conjugate function creates a Galois connection. I am not
+% certain if there is a good reference for this or if we need to derive it ourselves}
 
-One feature of our work runs parallel to a line of research due to \citet{perera22}.
-In that work, the authors devise a method for computing related output queries,
-using program slicing operators which form a \textit{Galois connection}. It is not
-surprising that we can recover their framework's capabilities from ours, due to
-a well known fact about conjugate functions:
+% One feature of our work runs parallel to a line of research due to \citet{perera22}.
+% In that work, the authors devise a method for computing related output queries,
+% using program slicing operators which form a \textit{Galois connection}. It is not
+% surprising that we can recover their framework's capabilities from ours, due to
+% a well known fact about conjugate functions:
 
-We can then recover their data-linked visualizations by treating the output views
-as a product of two individual views. The notion of conjugate functions is closed
-under the Cartesian product, and so we can take the product of two output views,
-and still recover a Galois connection between the inputs and the outputs, allowing
-us to reconstruct their linked visualizations. Despite this our approach does differ
-somewhat. In their paper, the authors construct multiple separate Galois connections,
-between the inputs and each of the pairs of outputs. In contrast, taking the product
-view, we can construct a single graph which contains both, and then restrict our
-attention to nodes which appear in only one or the other.
+% We can then recover their data-linked visualizations by treating the output views
+% as a product of two individual views. The notion of conjugate functions is closed
+% under the Cartesian product, and so we can take the product of two output views,
+% and still recover a Galois connection between the inputs and the outputs, allowing
+% us to reconstruct their linked visualizations. Despite this our approach does differ
+% somewhat. In their paper, the authors construct multiple separate Galois connections,
+% between the inputs and each of the pairs of outputs. In contrast, taking the product
+% view, we can construct a single graph which contains both, and then restrict our
+% attention to nodes which appear in only one or the other.
