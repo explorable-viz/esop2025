@@ -12,13 +12,13 @@ subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \pow
 for the preimage of $Y'$ under $D$.
 
 Notationally we make use of the fact that the image of $X'$ under a relation
-$D$ is equal to the preimage of $YX'$ under the inverse relation $D^{-1}$.
+$D$ is equal to the preimage of $YX'$\dnoteM{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
 
 For a set $X$, we write $\compl{X}$ to denote it's complement.
 
 A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
 and join ($\wedge$) distribute over each other, and for each element $x \in X$,
-there is a complement element $\compl{X} \in X$.
+there is a complement element $\compl{x} \in X$.
 
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
@@ -41,13 +41,14 @@ this notion to relate sets of inputs to sets of outputs.
 
 Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
-Equivalently, we could view it as saying $x$ is necessary to produce $y$.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
+  If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
 It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
       \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
-      \item $f_{\star}(Y') \eqdef \set{x \in x \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
+      \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
 The above pair of functions is the usual image/preimage Galois connection for a function.
