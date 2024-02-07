@@ -23,12 +23,14 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 
 \input{fig/core/syntax}
 
+\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely corresponds (parts of) a term to vertices in a graph (we use an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$;
+\defref{core:vertices} then extends to values $v$, patterns $w$, and eliminators $\sigma$, all of which may themselves be vertices and/or contain other entities that are vertices. We introduce these later.
+
+
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
 Define $\V(e)$ to be the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
-
-\figref{syntax} defines the graph terms $e$ of the language as regular terms $\raw{e}$ indexed by a vertex, or ``address'', $\alpha$. In implementation, vertices can be represented by any unique identifier, such as integers, that allows (parts of) a term $e$ to be corresponded to vertices $V(e)$ in a graph,  defined in \defref{core:vertices}. The other main language constructs that we introduce later, which are eliminators $\sigma$ and values $v$, also correspond to vertices, with $\V(\sigma)$ and $\V(v)$ including any vertices appearing inside terms embedded in $\sigma$ or $v$.
 
 \begin{definition}[Finite map notation]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{v}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{v_1}}{\bind{k_n}{v_n}}$
@@ -46,13 +48,12 @@ As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign appl
 
 \subsubsection{Continuations, eliminators, and patterns}
 \label{sec:core:continuations}
-\input{fig/core/match}
 A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects
 which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
 (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
 against the initial part of a provided value as some pattern $w$, which is either a variable, an integer, record, or data value, and then uses this for selecting a continuation $\kappa$ to be executed. The eliminator for variables $\elimVar{x}{\kappa}$ matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record with fields $\seq{x}$ and binds variables $\seq{x}$ to the components of that record. Lastly, the eliminator for data values $\elimConstr{\seq{c \mapsto \sigma}}$ provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each (nested) eliminator $\sigma$ continues by matching against the arguments of that constructor.
 
-\todo{revisit whether annotations on patterns are needed}
+\todo{revisit whether annotations on elims are needed}
 
 \subsubsection{Values}
 \label{sec:core:values}
@@ -73,6 +74,7 @@ where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically p
 \subsection{Graph evaluation}
 
 \input{fig/core/eval}
+\input{fig/core/match}
 
 \begin{definition}[Disjoint union of maps]\label{def:disjoint-union}
    For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
