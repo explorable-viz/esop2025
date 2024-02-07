@@ -12,7 +12,7 @@ subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \pow
 for the preimage of $Y'$ under $D$.
 
 Notationally we make use of the fact that the image of $X'$ under a relation
-$D$ is equal to the preimage of $YX'$\dnoteM{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
+$D$ is equal to the preimage of $YX'$\DOnote{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
 
 For a set $X$, we write $\compl{X}$ to denote it's complement.
 
@@ -41,13 +41,13 @@ this notion to relate sets of inputs to sets of outputs.
 
 Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
-Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.\DOnote{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
 It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
-      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
+      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)
       \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
@@ -68,9 +68,9 @@ not always true. We may take a very large table as our input, and only consider
 a subset of the columns. Secondly, by restricting ourselves to functions, we force
 each input value to be used by only a single output value in a program. If the same
 input value is used in multiple ways, we would need to provide multiple copies
-of each input value.  
+of each input value.
 
-Thus we most move beyond functions, and instead consider relations instead. 
+Thus we most move beyond functions, and instead consider relations instead.
 
 
 We require the operations \textit{demands} and \textit{demanded by} to be
@@ -82,7 +82,7 @@ We require the operations \textit{demands} and \textit{demanded by} to be
    we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
    if the following holds:
    $$
-   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset 
+   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset
    $$
    Or equivalently:
    $$
@@ -102,7 +102,7 @@ use of an input dataset. For example, columns in a table may be unused in an
 analysis. In these cases, forcing the functions to be inverses would fail, since
 the set of outputs a set of inputs is \textit{demanded by} would not be changed
 by including the unused input, but this unused input would not be found when
-running \textit{demands} on the output set. 
+running \textit{demands} on the output set.
 
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
@@ -121,13 +121,13 @@ and so we can write their general form simply:
 \end{definition}
 By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
-conjugacy for free. 
+conjugacy for free.
 
 We need to define the De Morgan Dual of a function, since it becomes useful
 when connecting our work to the state of the art of this area.
 \begin{definition}[De Morgan Dual]
    For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
    $$
    \dual{f} \eqdef \neg_B \after f \after \neg_A
    $$
@@ -290,7 +290,7 @@ can be found.
    $$
 \end{proposition}
 
-\todo{Need an account of forwards.} 
+\todo{Need an account of forwards.}
 
 % \subsection{Relationship to Galois Slicing}
 % \todo{Here we need to formally explain the relationship to galois connections, and why
