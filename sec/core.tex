@@ -71,7 +71,7 @@ $\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
 
 
-\subsection{Graph evaluation}
+\subsection{Evaluation and graph construction}
 
 \input{fig/core/eval}
 \input{fig/core/match}
@@ -99,7 +99,7 @@ The last premise evaluates the body of the matched branch to a final value, wher
 
 Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and graph construction is unsurprising, unioning the graphs of $e$ and  $e'$. The case for recursive let-bindings $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$ is the same except requiring $\closeDefs$ to evaluate the environment of mutually recursive definitions $\seq{\bind{x}{\sigma}}$, as explained for~application.
 
-\subsubsection{Graph pattern matching}
+\subsubsection{Pattern matching}
 
 \subsection{Projecting In Environments For Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
