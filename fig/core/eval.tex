@@ -28,6 +28,19 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\evalS$-function}}]
+      {
+         \strut
+      }
+      {
+         \gamma, \exFun{\sigma}, V
+         \evalS
+         \set{\bind{\alpha}{V}},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
          \gamma, \seq{e}, V \evalS G, \seq{v}
@@ -101,19 +114,6 @@
          \gamma, \exForeignApp{f}{\seq{e}}, V
          \evalS
          G \disjunion G', u
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalS$-function}}]
-      {
-         \strut
-      }
-      {
-         \gamma, \exFun{\sigma}, V
-         \evalS
-         \set{\bind{\alpha}{V}},
-         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
       }
       %
       \and
