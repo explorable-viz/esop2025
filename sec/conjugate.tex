@@ -3,7 +3,7 @@
 
 We shall introduce some preliminary notions, before building up the intuition
 needed to formally define \textit{demands} and \textit{demanded by}. Then, we shall
-explain how we can refine queries on input-output relationships. Finally, we will describe the 
+explain how we can refine queries on input-output relationships. Finally, we will describe the
 connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
@@ -29,6 +29,7 @@ where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$
 the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \subsection{Preliminaries}
+\cd{Is this really preliminaries? Maybe something like ``Informal description of \textit{demands} and \textit{demanded by}''?}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
 shall provide some more intuition on our setting, and how it leads us to the
@@ -36,12 +37,13 @@ conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
+\cd{Do you mean the reachability relation R, which you introduce later, or do you mean D?}
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
 Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
-Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.\DOnote{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
 \jb{Clarification: I'm not saying that $f(x)=y$ for all $x$, just that for a given $x$, if we
 say the result of applying the funciton is $y$, we could view $x$ as being sufficient input
@@ -51,11 +53,12 @@ It is well known that we can lift this function to the image and preimage functi
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
-      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
+      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)
       \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-The above pair of functions is the usual image/preimage Galois connection for a function.
+The above pair of functions forms the usual image/preimage Galois connection for a function.
+\cd{I would probably not phrase this is a lemma (i.e. lemma 3.2), but leave it as an obvious remark -- is that a stretch? This way we avoid needing a proof.}
 \begin{lemma}[Galois Connection]
    $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
 \end{lemma}
@@ -72,9 +75,10 @@ not always true. We may take a very large table as our input, and only consider
 a subset of the columns. Secondly, by restricting ourselves to functions, we force
 each input value to be used by only a single output value in a program. If the same
 input value is used in multiple ways, we would need to provide multiple copies
-of each input value.  
+of each input value.
 
-Thus we most move beyond functions, and instead consider relations instead. 
+Thus, we most move beyond functions, and consider relations instead.
+
 Just as with functions, we can consider the image and preimage of a relation:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
@@ -84,23 +88,28 @@ Just as with functions, we can consider the image and preimage of a relation:
    \end{itemize}
 \end{definition}
 In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
-finding the set of inputs which are necessary for the elements of $Y'$ we can
+finding the set of inputs which are necessary for the elements of $Y'$, we can
 no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
 for. This is because sufficiency means having all of the inputs required to
-produce an output, as a simple example consider the expression $3 + 4$, neither
+produce an output. As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
-outputs that $X'$ is necessary for. We observe that in general,
+outputs that $X'$ is necessary for. We observe that, in general,
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
 We note that in general, these two operators do not form a Galois connection, since
 the composition of the two functions is not monotonic, see \figref{relation-not-galois}
+\cd{Given all this discussion above, I'm wondering whether this would be better suited in
+the context of a dependence graph (which comes later). Otherwise, I find it a bit
+confusing when you talk about general relations.}
 
 \input{fig/conjugate/relations-not-galois}
 
 Instead of a Galois connection, we shall instead see that these two functions are
 \textit{conjugate}, in the sense of \citet{jonsson51}:
+
+\cd{Are we going back to functions? Didn't we just say they were bad?}
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
@@ -108,7 +117,7 @@ Instead of a Galois connection, we shall instead see that these two functions ar
    we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
    if the following holds:
    $$
-   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset 
+   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset
    $$
    Or equivalently:
    $$
@@ -139,13 +148,13 @@ and introduce a simple notation for them:
 \end{definition}
 By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
-conjugacy for free. 
+conjugacy for free.
 
 We need to define the De Morgan Dual of a function, since it becomes useful
 when connecting our work to the state of the art of this area.
 \begin{definition}[De Morgan Dual]
    For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
    $$
    \dual{f} \eqdef \neg_B \after f \after \neg_A
    $$
