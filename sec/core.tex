@@ -97,9 +97,9 @@ Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and gr
 
 \subsubsection{Pattern matching}
 
-The relation $\seq{v}, \kappa \match \seq{w}, \gamma, e$  in \figref{core:pattern-matching} captures pattern-matching in a slightly unconventional way, by using a \emph{continuation} $\kappa$ to match a \emph{sequence} of values $\seq{v}$ (rather than an eliminator $\sigma$ that matches a single value $v$); it returns the corresponding matched patterns $\seq{w}$, an environment $\gamma$ of variable bindings that arose during the matches, and a term $e$ representing the branch body to be executed. The ``done'' rule expresses exactly when using a term $e$ as the continuation may succeed i.e. when the sequence of values to be matched is empty, and so $e$ must be the final branch body. The other rules use an eliminator $\sigma$ to match the head value of a non-empty sequence before recursing on its tail.
+The relation $\seq{v}, \kappa \match \seq{w}, \gamma, e$  in \figref{core:pattern-matching} captures pattern-matching in a slightly unconventional way, by using a \emph{continuation} $\kappa$ to match a \emph{sequence} of values $\seq{v}$ (rather than an eliminator $\sigma$ that matches a single value $v$); it returns the corresponding matched patterns $\seq{w}$, an environment $\gamma$ of variable bindings that arose during the matches, and a term $e$ representing the branch body to be executed. The ``done'' rule expresses exactly when using a term $e$ as the continuation may succeed i.e. when the sequence of values to be matched is empty, and so $e$ must be the final branch body. The other rules use an eliminator $\sigma$ to match the head of a non-empty sequence $v \cdot \seq{v}$, and then recurse by using the selected continuation of $\sigma$ to match on the tail $vs$.
 
-% A variable eliminator  matching values $v$ against s $x$, the va
+A variable eliminator $\elimVar{x}{\kappa}$ applied to any value $v$ simply adds  binding $\bind{x}{v}$ to the environment and records $x$ as the matched pattern.
 
 \subsection{Projecting In Environments For Focussed Queries}
 \todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
