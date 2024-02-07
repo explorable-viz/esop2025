@@ -4,12 +4,12 @@
 Whether formulating a national policy or simply deciding what groceries to buy, we increasingly rely on the
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions, but such artefacts are \emph{opaque} in the sense of
-being unable to reveal anything about how they relate to the data they were derived from. If we have the appropriate
-skills, as well as access to the source code and data sets, we may be able to reverse engineer some of these
-relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and more often
-than not we have to take things on trust. These difficulties are further compounded when the information
-presented draws on multiple data sources, such as medical meta-analyses~\citep{dersimonian86}, ensemble
-models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}.
+being unable to reveal anything about how they relate to the data they were derived from. If we have the
+appropriate skills, as well as access to the source code and data sets, we may be able to reverse engineer
+some of these relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and
+more often than not we have to take things on trust. These difficulties are further compounded when the
+information presented draws on multiple data sources, such as medical meta-analyses~\citep{dersimonian86},
+ensemble models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}.
 
 With traditional print media, a ``disconnect'' between chart and figures and the underlying data is to be
 expected, but for digital media, other options are open to us. In this paper, we introduce a new program
@@ -18,25 +18,26 @@ outputs such as charts or tables. While this idea is not entirely new, our frame
 provenance query which we call \emph{related inputs}, as well as lending itself to an easier implementation than
 prior work.
 
-Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when
-they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use
-this data element, and what other data elements are used along with it?'' To answer such questions, we make
-use of \emph{dynamic dependence graphs} (DDGs), an execution record used in the program slicing literature for
-analysing imperative programs~\cite{ferrante87}. Our key insight is that two inputs are related in this sense
-if they are \emph{cognate}, i.e.~have a common ancestor in the program's dependence graph $G$. This leads to a
-formalisation of related inputs in terms of the composite relation $R^{-1} \relcomp R$ where $R$ is
-reachability in $G$, and we give a procedure for computing related inputs over $G$. The concept of
-``conjugate'' operators~\cite{jonsson51}, functions between Boolean algebras which come in reciprocating
-pairs, turns out to nicely capture these relations of cognacy.
+Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements
+when they contribute to a common output element (by element we mean some part of the input or output data).
+Users are able to ask questions of the form ``What outputs use this data element, and what other data elements
+are used along with it?'' To answer such questions, we make use of \emph{dynamic dependence graphs} (DDGs), an
+execution record used in the program slicing literature for analysing imperative programs~\cite{ferrante87}.
+Our key insight is that two inputs are related in this sense if they are \emph{cognate}, i.e.~have a common
+ancestor in the program's dependence graph $G$. This leads to a formalisation of related inputs in terms of
+the composite relation $R^{-1} \relcomp R$ where $R$ is reachability in $G$, and we give a procedure for
+computing related inputs over $G$. The concept of ``conjugate'' operators~\cite{jonsson51}, functions between
+Boolean algebras which come in reciprocating pairs, turns out to nicely capture these relations of cognacy.
 
-Conjugate pairs are closely related to Galois connections: if $f$ and $g$ are conjugate, then $f$ and the De
-Morgan dual of $g$ form a Galois connection. This relates our approach to work by~\citet{perera22} based on Galois
-connections and execution traces that addressed the problem of \emph{brushing and linking} in data
-visualisation. In our framework, the flipped composite $R \relcomp R^{-1}$ gives rise to a
-dual cognacy relation between output features which compete for common input data; composing related outputs
-with suitable projections at either end recovers the brushing and linking approach of the earlier work.
-However, our graphical approach is language-agnostic, easier to implement, and also fast enough to support the
-kind of interactive scenarios we have in mind.
+Conjugate pairs are closely related to \emph{Galois connections}, pairs of functions which are each other's
+closest approximation to a reciprocal and which lend themselves to bidirectional reasoning about resource
+consumption. If $f$ and $g$ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection.
+This relates our approach to work by~\citet{perera22} based on Galois connections and execution traces that
+addressed the problem of \emph{brushing and linking} in data visualisation. In our framework, the flipped
+composite $R \relcomp R^{-1}$ gives rise to a dual cognacy relation between output features which compete for
+common input data; composing related outputs with suitable projections at either end recovers the brushing and
+linking approach of the earlier work. However, our graphical approach is language-agnostic, easier to
+implement, and also fast enough to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 
