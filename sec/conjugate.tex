@@ -30,6 +30,7 @@ where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$
 the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \subsection{Preliminaries}
+\cd{Is this really preliminaries? Maybe something like ``Informal description of \textit{demands} and \textit{demanded by}''?}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
 shall provide some more intuition on our setting, and how it leads us to the
@@ -37,6 +38,7 @@ conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
+\cd{Do you mean the reachability relation R, which you introduce later, or do you mean D?}
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
@@ -52,7 +54,8 @@ It is well known that we can lift this function to the image and preimage functi
       \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-The above pair of functions is the usual image/preimage Galois connection for a function.
+The above pair of functions forms the usual image/preimage Galois connection for a function.
+\cd{I would probably not phrase this is a lemma (i.e. lemma 3.2), but leave it as an obvious remark -- is that a stretch? This way we avoid needing a proof.}
 \begin{lemma}[Galois Connection]
    $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
 \end{lemma}
@@ -71,10 +74,8 @@ each input value to be used by only a single output value in a program. If the s
 input value is used in multiple ways, we would need to provide multiple copies
 of each input value.
 
-<<<<<<< HEAD
-Thus we most move beyond functions, and instead consider relations instead.
-=======
-Thus we most move beyond functions, and instead consider relations instead.
+Thus, we most move beyond functions, and consider relations instead.
+
 Just as with functions, we can consider the image and preimage of a relation:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
@@ -84,16 +85,17 @@ Just as with functions, we can consider the image and preimage of a relation:
    \end{itemize}
 \end{definition}
 In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
-finding the set of inputs which are necessary for the elements of $Y'$ we can
+finding the set of inputs which are necessary for the elements of $Y'$, we can
 no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
 for. This is because sufficiency means having all of the inputs required to
-produce an output, as a simple example consider the expression $3 + 4$, neither
+produce an output. As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
-outputs that $X'$ is necessary for. We observe that in general,
+outputs that $X'$ is necessary for. We observe that, in general,
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
->>>>>>> main
+
+\cd{Given all this discussion above, I'm wondering whether this would be better suited in the context of a dependence graph (which comes later). Otherwise, I find it  a bit confusing when you talk about general relations.}
 
 We note that in general, these two operators do not form a Galois connection. See
 \todo{put figure in place}.
@@ -102,6 +104,8 @@ We note that in general, these two operators do not form a Galois connection. Se
 
 We require the operations \textit{demands} and \textit{demanded by} to be
 \textit{conjugate}, in the sense of \citet{jonsson51}:
+
+\cd{Are we going back to functions? Didn't we just say they were bad?}
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
