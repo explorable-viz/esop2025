@@ -28,6 +28,19 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\evalS$-function}}]
+      {
+         \strut
+      }
+      {
+         \gamma, \exFun{\sigma}, V
+         \evalS
+         \set{\bind{\alpha}{V}},
+         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
+      }
+      %
+      \and
+      %
       \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
          \gamma, \seq{e}, V \evalS G, \seq{v}
@@ -67,29 +80,6 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-app}},
-         width=4in,
-      ]
-      {
-         \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
-         \\
-         \gamma_1, \rho, \set{\alpha} \closeDefs G_2, \gamma_2
-         \\
-         \gamma, e', V \evalS G_3, v'
-         \hspace{0.5cm}
-         v', \sigma \match w, \gamma_3, e''
-         \\
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e'', \set{\alpha} \evalS G_4, u
-      }
-      {
-         \gamma, \exApp{e}{e'}, V
-         \evalS
-         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, u
-      }
-      %
-      \and
-      %
-      \inferrule*[
          lab={\ruleName{$\evalS$-foreign-app}}
       ]
       {
@@ -105,15 +95,25 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalS$-function}}]
+      \inferrule*[
+         lab={\ruleName{$\evalS$-app}},
+         width=4in,
+      ]
       {
-         \strut
+         \gamma, e, V \evalS G_1, \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}
+         \\
+         \gamma_1, \rho, \set{\alpha} \closeDefs G_2, \gamma_2
+         \\
+         \gamma, e', V \evalS G_3, v'
+         \hspace{0.5cm}
+         v', \sigma \match w, \gamma_3, e''
+         \hspace{0.5cm}
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e'', \set{\alpha} \cdot \V(w) \evalS G_4, u
       }
       {
-         \gamma, \exFun{\sigma}, V
+         \gamma, \exApp{e}{e'}, V
          \evalS
-         \set{\bind{\alpha}{V}},
-         \annClosure{\gamma}{\seqEmpty}{\sigma}{\alpha}
+         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, u
       }
       %
       \and
@@ -184,6 +184,7 @@
       }
    \end{smathpar}
    }
-   \caption{Graph semantics: evaluation}
+   \vspace{-0.5cm}
+   \caption{Graph operational semantics: evaluation}
    \label{fig:core:eval}
 \end{figure}

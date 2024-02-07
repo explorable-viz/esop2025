@@ -1,33 +1,34 @@
+\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
 We shall introduce some preliminary notions, before building up the intuition
-needed to formally define \textit{demands} and \textit{demanded by}. Then we shall
-explain how we can refine queries on input-output relationships, as well as
-a connection to the state of the art in this area.
-\subsection{Notation}
+needed to formally define \textit{demands} and \textit{demanded by}. Then, we shall
+explain how we can refine queries on input-output relationships. Finally, we will describe the
+connection to the state-of-the-art in this area.
+
+\subsection{Background notions and notation}
 For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
 $D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$. For a
 subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
 for the preimage of $Y'$ under $D$.
+Notationally, we make use of the fact that the image of $X'$ under a relation
+$D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$, \cd{and we write ... to mean ...}.
+Also, for a set $X$, we write $\compl{X}$ to denote it's complement.
 
-Notationally we make use of the fact that the image of $X'$ under a relation
-$D$ is equal to the preimage of $YX'$\DOnote{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
-
-For a set $X$, we write $\compl{X}$ to denote it's complement.
-
-A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
+We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\vee$)
 and join ($\wedge$) distribute over each other, and for each element $x \in X$,
 there is a complement element $\compl{x} \in X$.
-
+%
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
 the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
-and intersection ($\cap$) respectively.
+and intersection ($\cap$), respectively.
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
-where $\param^{-1}$ denotes the inverse of an edge. We write $\sources{G}$ for
+where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
 the source vertices in a graph, and $\sinks{G}$ for the sinks.
+
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
@@ -35,7 +36,7 @@ shall provide some more intuition on our setting, and how it leads us to the
 conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
-characterized by a relation $R \subseteq X \times Y$, where $(x, y) \in R$
+characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
@@ -44,7 +45,7 @@ We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
 Equivalently, we could view it as saying $x$ is necessary to produce $y$.\DOnote{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
 It is well known that we can lift this function to the image and preimage functions of $f$:
-\begin{definition}
+\begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
       \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)
@@ -70,8 +71,34 @@ each input value to be used by only a single output value in a program. If the s
 input value is used in multiple ways, we would need to provide multiple copies
 of each input value.
 
+<<<<<<< HEAD
 Thus we most move beyond functions, and instead consider relations instead.
+=======
+Thus we most move beyond functions, and instead consider relations instead.
+Just as with functions, we can consider the image and preimage of a relation:
+\begin{definition}[Image and Preimage of a Relation]
+   For a relation $D \subseteq X \times Y$, we define:
+   \begin{itemize}
+      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+finding the set of inputs which are necessary for the elements of $Y'$ we can
+no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+for. This is because sufficiency means having all of the inputs required to
+produce an output, as a simple example consider the expression $3 + 4$, neither
+of the subexpressions $3$ or $4$ are sufficient to produce the result of
+evaluating the expression on their own. The image instead gives us the set of
+outputs that $X'$ is necessary for. We observe that in general,
+the set of outputs that a set of inputs is necessary for is a superset of the
+outputs it is sufficient for.
+>>>>>>> main
 
+We note that in general, these two operators do not form a Galois connection. See
+\todo{put figure in place}.
+
+\input{fig/conjugate/relations-not-galois}
 
 We require the operations \textit{demands} and \textit{demanded by} to be
 \textit{conjugate}, in the sense of \citet{jonsson51}:
