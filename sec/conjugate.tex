@@ -1,4 +1,3 @@
-\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
@@ -316,7 +315,13 @@ necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
 \jb{Here, I will include a definition of the sufficiency query here}
-
+\begin{definition}[Sufficiency]
+   For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
+   inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
+   $$
+      \sufficientR(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }
+   $$
+\end{definition}
 It turns out that we can modify $\demandByR(\param)$ into this query on
 sufficiency, using the De Morgan Dual.
 
