@@ -80,6 +80,22 @@
       \and
       %
       \inferrule*[
+         lab={\ruleName{$\evalS$-foreign-app}}
+      ]
+      {
+         \gamma, \seq{e}, V \evalS G, \seq{v}
+         \\
+         \interpret{f}(\seq{v}) = (G', u)
+      }
+      {
+         \gamma, \exForeignApp{f}{\seq{e}}, V
+         \evalS
+         G \disjunion G', u
+      }
+      %
+      \and
+      %
+      \inferrule*[
          lab={\ruleName{$\evalS$-app}},
          width=4in,
       ]
@@ -98,22 +114,6 @@
          \gamma, \exApp{e}{e'}, V
          \evalS
          \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}, u
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalS$-foreign-app}}
-      ]
-      {
-         \gamma, \seq{e}, V \evalS G, \seq{v}
-         \\
-         \interpret{f}(\seq{v}) = (G', u)
-      }
-      {
-         \gamma, \exForeignApp{f}{\seq{e}}, V
-         \evalS
-         G \disjunion G', u
       }
       %
       \and
