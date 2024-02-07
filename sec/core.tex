@@ -53,8 +53,6 @@ which can serve as a plausible desugaring target for surface-language pattern-ma
 (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
 against the initial part of a provided value as some pattern $w$, which is either a variable, an integer, record, or data value, and then uses this for selecting a continuation $\kappa$ to be executed. The eliminator for variables $\elimVar{x}{\kappa}$ matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record with fields $\seq{x}$ and binds variables $\seq{x}$ to the components of that record. Lastly, the eliminator for data values $\elimConstr{\seq{c \mapsto \sigma}}$ provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each (nested) eliminator $\sigma$ continues by matching against the arguments of that constructor.
 
-\todo{revisit whether annotations on elims are needed}
-
 \subsubsection{Values}
 \label{sec:core:values}
 
