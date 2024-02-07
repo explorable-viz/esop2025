@@ -35,7 +35,7 @@ shall provide some more intuition on our setting, and how it leads us to the
 conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
-characterized by a relation $R \subseteq X \times Y$, where $(x, y) \in R$
+characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
@@ -44,7 +44,7 @@ We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
 Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
 It is well known that we can lift this function to the image and preimage functions of $f$:
-\begin{definition}
+\begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
       \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
@@ -71,7 +71,29 @@ input value is used in multiple ways, we would need to provide multiple copies
 of each input value.  
 
 Thus we most move beyond functions, and instead consider relations instead. 
+Just as with functions, we can consider the image and preimage of a relation:
+\begin{definition}[Image and Preimage of a Relation]
+   For a relation $D \subseteq X \times Y$, we define:
+   \begin{itemize}
+      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+finding the set of inputs which are necessary for the elements of $Y'$ we can
+no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+for. This is because sufficiency means having all of the inputs required to
+produce an output, as a simple example consider the expression $3 + 4$, neither
+of the subexpressions $3$ or $4$ are sufficient to produce the result of
+evaluating the expression on their own. The image instead gives us the set of
+outputs that $X'$ is necessary for. We observe that in general,
+the set of outputs that a set of inputs is necessary for is a superset of the
+outputs it is sufficient for.
 
+We note that in general, these two operators do not form a Galois connection. See
+\todo{put figure in place}.
+
+\input{fig/conjugate/relations-not-galois}
 
 We require the operations \textit{demands} and \textit{demanded by} to be
 \textit{conjugate}, in the sense of \citet{jonsson51}:
