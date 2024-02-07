@@ -309,8 +309,28 @@ can be found.
    $$
 \end{proposition}
 
+\subsection{Relationship to Galois Slicing}
 \jb{Basic idea of an account for forwards goes here}
+We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
+necessary for?" Asking this question naturally leads us to ask how we can
+adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
+\jb{Here, I will include a definition of the sufficiency query here}
+
+It turns out that we can modify $\demandByR(\param)$ into this query on
+sufficiency, using the De Morgan Dual.
+
+\begin{lemma}[Placeholder lemma relating necessity to sufficiency]
+   \jb{This will be replaced with a formal version}
+   $\dual{\demandByR(\param)} = $ sufficiency
+\end{lemma}
+
+Because of the lemma above, we could reuse \textit{reaches} in order to compute
+this, by taking the complements of the input sets, running \textit{reaches}, and
+then complementing the output, however this could in practise be inefficient,
+since taking complements of large sets can be an expensive operation. We therefore
+provide a more efficient implementation of the sufficiency analyis, detailed in
+\figref{conjugate:slicing:forward}.
 % \subsection{Relationship to Galois Slicing}
 % \todo{Here we need to formally explain the relationship to galois connections, and why
 % this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
