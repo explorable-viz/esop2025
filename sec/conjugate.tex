@@ -1,4 +1,5 @@
-\section{Conjugate Operators For Dynamic Dependence Analysis}
+\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
+\section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
 We shall introduce some preliminary notions, before building up the intuition
@@ -6,18 +7,24 @@ needed to formally define \textit{demands} and \textit{demanded by}. Then we sha
 explain how we can refine queries on input-output relationships, as well as
 a connection to the state of the art in this area.
 \subsection{Notation}
-For a set $X$, we write $\compl{X}$ to denote it's complement within a larger set.
-For a relation $D \subseteq Y \times X$, and a subset $Y' \subseteq Y$, we write
-$D[Y']: \powerset{Y} \to \powerset{X}$ for the image of $Y'$ under $D$. For a
-subsert $X'\subseteq X$ we similarly write $\preim{D}[X']: \powerset{X} \to \powerset{Y}$
-for the preimage of $X'$ under $D$.
+For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
+$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$. For a
+subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
+for the preimage of $Y'$ under $D$.
+
+Notationally we make use of the fact that the image of $X'$ under a relation
+$D$ is equal to the preimage of $YX'$\dnoteM{Lost here- is this a typo?} under the inverse relation $D^{-1}$.
+
+For a set $X$, we write $\compl{X}$ to denote it's complement.
+
+A Boolean Algebra is a lattice $(X, \leq)$, where the operations of meet ($\vee$)
+and join ($\wedge$) distribute over each other, and for each element $x \in X$,
+there is a complement element $\compl{x} \in X$.
 
 For the rest of this section, when we refer to Boolean algebras, we usually mean
-the powerset lattice. Therefore we use the set theoretic symbols $\cap$ and
-$\cup$ for meet and join.
-
-Notationally we make use of the fact that the image of $Y'$ under a relation
-$D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$.
+the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
+the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
+and intersection ($\cap$) respectively.
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge. We write $\sources{G}$ for
@@ -25,93 +32,181 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 \subsection{Preliminaries}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall illuminate the intuitive properties we would expect them to have. We would
-expect the two functions to possess some notion of symmetry. If some inputs
-are demanded by some outputs, then of course we expect those outputs to demand
-those inputs. 
+shall provide some more intuition on our setting, and how it leads us to the
+conditions we need.
 
-In light of this, we might expect the functions used to determine \textit{demands}
-and \textit{demanded by} to be inverses of each other. It turns out this notion
-is not quite correct. We do not consider individual values in the set of inputs
-or outputs, and when selecting a set of inputs, we may select an input that is
-entirely unused by the program.
-If we were to insist our operations were inverse, it would imply that for a set of
-inputs to be demanded by a set of outputs, every input in the set should be used,
-which is clearly not always the case. We instead relax the requirement from the
-two operations being inverse to their being, \textit{conjugate}, in the sense of \citet{jonsson51}:
+In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
+characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
+can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
+this notion to relate sets of inputs to sets of outputs.
+
+Let us first consider the case when the relation is a function $f: X \to Y$.
+We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
+Equivalently, we could view it as saying $x$ is necessary to produce $y$.\dnoteM{I don't follow how this is equivalent.
+  If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
+It is well known that we can lift this function to the image and preimage functions of $f$:
+\begin{definition}[Image and Preimage of a Function]
+   For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
+   \begin{itemize}
+      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)   
+      \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+The above pair of functions is the usual image/preimage Galois connection for a function.
+\begin{lemma}[Galois Connection]
+   $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
+\end{lemma}
+In this setting, it is possible to read the action of $f^{\star}$ on a set $X'$
+as telling us which outputs $X'$ is sufficient for, since it tells us every output
+we can make with any element of $X'$, but also what the values of $x$ are necessary for.
+Similarly, we can read the action of $f_{\star}$
+on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
+
+Whilst the above is attractive, we cannot rely on the dependency relation to be
+a function for two reasons. Firstly, it would require that
+every input value is used by a program. In the realm of data analysis, this is
+not always true. We may take a very large table as our input, and only consider
+a subset of the columns. Secondly, by restricting ourselves to functions, we force
+each input value to be used by only a single output value in a program. If the same
+input value is used in multiple ways, we would need to provide multiple copies
+of each input value.  
+
+Thus we most move beyond functions, and instead consider relations instead. 
+Just as with functions, we can consider the image and preimage of a relation:
+\begin{definition}[Image and Preimage of a Relation]
+   For a relation $D \subseteq X \times Y$, we define:
+   \begin{itemize}
+      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+   \end{itemize}
+\end{definition}
+In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+finding the set of inputs which are necessary for the elements of $Y'$ we can
+no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+for. This is because sufficiency means having all of the inputs required to
+produce an output, as a simple example consider the expression $3 + 4$, neither
+of the subexpressions $3$ or $4$ are sufficient to produce the result of
+evaluating the expression on their own. The image instead gives us the set of
+outputs that $X'$ is necessary for. We observe that in general,
+the set of outputs that a set of inputs is necessary for is a superset of the
+outputs it is sufficient for.
+
+We note that in general, these two operators do not form a Galois connection. See
+\todo{put figure in place}.
+
+\input{fig/conjugate/relations-not-galois}
+
+We require the operations \textit{demands} and \textit{demanded by} to be
+\textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
-   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $f$ and $g$ are \textit{conjugate} if the following holds:
+   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
+   and $f_{\demandByR}: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
+   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
+   if the following holds:
    $$
-      f(X') \cap Y' = \bot \iff X' \cap g(Y') = \bot 
+   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset 
    $$
    Or equivalently:
    $$
-      f(X') \cap Y' \neq \bot \iff X' \cap g(Y') \neq \bot
+   f_{\demandR}(X') \cap Y' \neq \emptyset \iff X' \cap f_{\demandByR}(Y') \neq \emptyset
    $$
 \end{definition}
 
-Straightforwardly, we would expect this condition to hold for \textit{demands} and
+This makes sense as a condition for \textit{demands} and
 \textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
-$X'$ is demanded by has an empty intersection with $Y'$, you would expect that
-the resources $Y$ demands has an empty intersection with $X'$.n Whilst the property
-itself is simple, it has useful consequences.
+$X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
+of resources that $Y'$ demands to have an empty intersection with $X'$.
+
+One might ask why we do not consider the two operations to be each others inverse.
+We use the condition of conjugacy to account for input values in a program which may
+be unused by any outputs. In data analysis tasks, we will often make only partial
+use of an input dataset. For example, columns in a table may be unused in an
+analysis. In these cases, forcing the functions to be inverses would fail, since
+the set of outputs a set of inputs is \textit{demanded by} would not be changed
+by including the unused input, but this unused input would not be found when
+running \textit{demands} on the output set. 
 
 
-Firstly, we would expect \textit{demands} and \textit{demanded by} to be monotonic
-in their inputs: taking a selection on the output and growing it (selecting more)
-should cause the size of the demand to stay the same, or grow.
-We similarly expect the same property of \textit{demanded by}.  It turns out that
-Conjugate functions are not only monotonic, but join-preserving: $f(X \cup Y) = f(X) \cup f(Y)$.
-From the perspective of resource demand, this makes sense: if we are investigating
-what two resources demand in totality, we do not expect them to demand a resource
-that neither of them demanded individually. 
-
-The fact that we may have unused inputs, or outputs not present as variables means
-that despite this, we cannot necessarily expect these functions to preserve the
-whole input set. If there are inputs that are unused, then running demands on
-the whole output will necessarily miss out all the unused inputs. Later, we shall
-see how we can overcome this limitation, and use this to discover more information
-about the relationship between inputs and outputs. 
-
-\todo{I now think that this next bit could go into the sectoin on the core language,
-into the section about the discussion on projections/focussing, or the discussion of
-Galois connections.}
-
-Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
-demands functions, and that $g \after f (X')$ computes the set of inputs related
-to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
-Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
-If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
-$g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
-new inputs we have discovered through our related inputs query. We can safely discard
-$X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
-we can read $X_0$ as the set of inputs that are unused through the entire program.
-In a data science scenario, this is extremely useful since we often work with datasets
-that have a large amount of spurious data.
-
-Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
-demands) applied to the entirety of the output finds the entirety of the input, and
-similar for $f$ applied to the entire input.
-
-Another advantage of conjugate functions is how they also admit products, which
-we can use to focus queries onto specific contexts:
-
-\begin{lemma}[Products of Conjugates Admit conjugates]
-   Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
-   then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
-\end{lemma}
-
-\todo{End WIP}
-
-Moreover, the image and preimage functions over general binary relations form
-conjguate pairs:
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
-   For a relation $D \subseteq Y \times X$, and subsets $Y' \subseteq Y, X' \subseteq X$,
+   For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
+
+We derive \textit{demands} and \textit{demanded by} from a dependency relation,
+and so we can write their general form simply:
+\begin{definition}[Demands and Demanded by for a dependency relation]
+   For a relation $D \subseteq X \times Y$, define:
+   \begin{itemize}
+      \item $\demandR_D(X) = D[X]$ \hfill (demands)
+      \item $\demandByR_D(Y) = \preim{D}[Y]$ \hfill (demanded by)
+   \end{itemize}
+\end{definition}
+By treating \textit{demands} and \textit{demanded by} as the image
+and preimage functions of a dependency relation $D$, we get their
+conjugacy for free. 
+
+We need to define the De Morgan Dual of a function, since it becomes useful
+when connecting our work to the state of the art of this area.
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as: 
+   $$
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
+   $$
+\end{definition}
+
+\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
+   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
+   $$
+      h \eqdef \dual{g}
+   $$
+   Then the following statements are equivalent:
+   \begin{itemize}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $h$ form a Galois connection
+   \end{itemize}
+\end{proposition}
+
+
+\todo{Rework, include discussion of meet}
+As we have mentioned, it is possible for a program to only use some strict subset
+of its overall input. Therefore, despite their being join-preserving, we cannot
+necessarily expect the result of taking \textit{demands} on the entire
+output set to return the entire input set. If there are inputs that are unused,
+then running demands on the whole output will necessarily miss out all the unused
+inputs. Later, we shall see how we can overcome this limitation, and use this to
+discover more information about the relationship between inputs and outputs.
+
+% \todo{I now think that this next bit could go into the sectoin on the core language,
+% into the section about the discussion on projections/focussing, or the discussion of
+% Galois connections.}
+
+% Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
+% demands functions, and that $g \after f (X')$ computes the set of inputs related
+% to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
+% Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
+% If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
+% $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
+% new inputs we have discovered through our related inputs query. We can safely discard
+% $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
+% we can read $X_0$ as the set of inputs that are unused through the entire program.
+% In a data science scenario, this is extremely useful since we often work with datasets
+% that have a large amount of spurious data.
+
+% Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
+% demands) applied to the entirety of the output finds the entirety of the input, and
+% similar for $f$ applied to the entire input.
+
+% Another advantage of conjugate functions is how they also admit products, which
+% we can use to focus queries onto specific contexts:
+
+% \begin{lemma}[Products of Conjugates Admit conjugates]
+%    Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
+%    then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
+% \end{lemma}
+
+% \todo{End WIP}
 
 % The authors
 % of that paper provide the following alternate definition of conjugacy:
@@ -125,32 +220,23 @@ conjguate pairs:
 %    $$
 % \end{definition}
 
-% In general, \defref{construct-conjugate} is inefficient, since it requires 
+% In general, \defref{construct-conjugate} is inefficient, since it requires
 % ranging over all possible values $a \in \mathcal{A}$, and computing their
 % meet with $b$.
 
-Lastly, we need to define the De Morgan Dual of a function, since it becomes useful
-when connecting our work to the state of the art of this area.
-\begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we call the function
-   $\dual{f}: A \to B$ the \textit{De Morgan Dual} of $f$, and define it as: 
-   $$
-   \dual{f} = \neg_B \after f \after \neg_A
-   $$
-\end{definition}
 
-\subsection{Efficient Queries on Graphs}
+\subsection{Computing Demands and Demanded By over Dependence Graphs}
 \todo{Some of this may be moved to \secref{core}, since it concerns dependence
 graphs. I think right now the question is open as to whether we want to include this
 here or there, or decompose it into the relevant halves}
 
 We shall now consider how we can use the notions above, as well as properties
 of graphs to give an account of the efficient computation of related inputs
-and outputs. 
+and outputs.
 
 
 For the rest of this section, all graphs we consider will be constructed during
-program evaluation. 
+program evaluation.
 
 \begin{definition}[Dynamic Dependence Graph]
    A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
@@ -159,215 +245,96 @@ program evaluation.
    \textit{depends} on the value associated with $\alpha'$
 \end{definition}where the nodes represent values
 
-The choice of dependency relation used to construct such a graph is irrelevant
-at this stage, we shall return to this discussion point in \secref{core}. Our
+We shall not consider how we arrive at such a graph until \secref{core}. Our
 work diverges from traditional approaches to dynamic dependence graphs since we
 only consider one type of edge, in contrast to separately defining data and
 control-flow edges as in \citet{agrawal90}.
 
 When a dependence graph $G$ is constructed, the sources $\sources{G}$ correspond
 to the output nodes, and the sinks $\sinks{G}$ correspond to input nodes. In the
-opposite graph, this correspondence is flipped.  
+opposite graph, this correspondence is flipped.
 
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
 \end{definition}
 
-In some cases, a value in a program will be directly copied from the input to the
-output. In these cases, no edge will be constructed in the dependence graph. To
-avoid the problems this could cause, we extend the reachability relation
-with pairs of the form $(\alpha, \alpha)$. We can read this as the value
-depending on itself. 
-
-For the rest of this section we generally omit the $\param_G$
-from this relation, since it is usually obvious to which graph we refer.
-When we are considering a graph $G$ and it's opposite $G^{-1}$,
+When we are considering a graph $G$ and its opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
 since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
 and \textit{demanded by} in terms of $R$.
 
-\begin{definition}[Demands and Demanded By]
-   For a graph $G = (V,E)$ with inputs $X \subseteq \sinks{G} \subset V$ and outputs
-   $Y \subseteq \sources{G} \subseteq V$, with reachability relation $R_G$,
-   and define them by the following:
+\begin{definition}[Demands and Demanded By on a Graph]
+   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, we write
+
    \begin{itemize}
-      \item $\demandR_G \eqdef \restrict{R_G}{S(G) \times T(G)}[\param]$ \hfill (related outputs)
-      \item $\demandByR_G = \demandR_{G^{-1}}$ \hfill (related inputs)
+      \item $\demandR_G$(X) \eqdef $\demandR_{R_G} (X)$ \hfill (demands)
+      \item $\demandByR_G$(Y) \eqdef $\demandByR_{R_G} (Y)$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
 
-Now that we have defined \textit{demands} and \textit{demanded by}, we can
-now return to the examples from the previous section, and place them in this
-more formal setting.
-The first step is to select
+Defining these two functions on the reachability relation now lets us give
+a formal account of related inputs and related outputs queries.
+\begin{definition}[Related Inputs and Outputs]
+   For $G = (V,E)$, define:
+   \begin{enumerate}
+      \item $\relInput_{R_G} \eqdef \demandR_{R_G} \after \demandByR_{R_G}$\hfill (related inputs)
+      \item $\relOutput_{R_G} \eqdef \demandByR_{R_G} \after \demandR_{R_G}$\hfill (related outputs)
+   \end{enumerate}
+\end{definition}
+A related input query can now be phrased as "what else can reach the nodes I can
+reach in the graph?", and a related output query can be phrased as "what else can
+be reached by the things that reach me?". We can think of this notion as similar
+to that of "cognacy" in natural languages, for related outputs we are finding
+the common ancestors.
+
+To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
-% \begin{definition}[Demanded By]\label{def:demanded-by}
-%    For a dependence graph $G = (V,E)$, a set of outputs $Y' \subseteq V$ and a subset of inputs
-%    $X  \subseteq X \subseteq V$, write $\demandByR(X)$ to mean the set of outputs that $X$ is demanded by, with
-%    $$
-%       \demandByR(X) =  \bigcap_{R[Y] \cap X \neq \bot} \padArg{Y}{1.3em} = \bigcup_{R[Y] \subseteq X} \padArg{\compl{Y}}{0.8em} \quad (Y \subseteq Y') 
-%    $$
-% \end{definition}
-
 
 Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
 $\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
-opposite graph. Then the result of $\demandR(\demandByR(X)) \subseteq \sinks{G}$
-is the set of all related outputs. 
+opposite graph.
 
 The procedure for computing related outputs is similar, we simply swap the order
-of operations. We succinctly define both sets as follows:
-% \begin{definition}[Demands]\label{def:demand}
-%    For a dependence graph $G = (V,E)$, a set of inputs $X' \subseteq V$ and a subset of outputs,
-%    $Y \subseteq Y' \subseteq V$, we write $\demandR(Y)$ to mean the set of inputs that $Y$ demands, with
-%    $$
-%       \demandR(Y) = \bigcap_{R^{-1}[X] \cap Y \neq \bot} \padArg{X}{1.5em} = \bigcup_{R^{-1}[X] \subseteq Y} \padArg{\compl{X}}{1em} \quad (X \subseteq X')
-%    $$
-% \end{definition}
-\begin{definition}[Related Inputs and Outputs]
-   For $G = (V,E)$, define:
-   \begin{enumerate}
-      \item $\relInput_G \eqdef \demandR_G \after \demandByR_G$\hfill (related inputs)
-      \item $\relOutput_G \eqdef \demandByR_G \after \demandR_G$\hfill (related outputs)
-   \end{enumerate}
-\end{definition} 
+of operations.
 \input{fig/conjugate/reaches}
 
-The procedure detailed in \figref{conjugate:reaches} works by 
+The procedure detailed in \figref{conjugate:reaches} works by
 traversing the neighbors of the selected set of nodes, until no new neighbors
-can be found. 
-\todo{Need a proposition that reaches computes the appropriate sets. Also need an account
-of forwards.} 
-\subsection{Projections and Conjugations for Focussed Queries}
-\todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
-the relationships between products of inputs and products of outputs. Doing this
-in a principled manner is effectively what allows us to perform focussed queries.}
-Our framework allows us to not only identify the inputs which are related to each
-other, but also allows us to establish relationships from inputs to inputs that
-are only contingent on some part of the total output.
-
-A related inputs query proceeds from inputs to outputs and back to inputs. We call
-the output which creates this relationship by combining information from multiple
-inputs the \textit{mediating output}. Relatively simple related input queries can
-highlight an important aspect of these mediating outputs, since the output by which
-our input is demanded can have multiple independent parts, which may each induce
-different relationships between inputs. 
-
-Once we have run a related inputs query, we may determine that some of the related
-inputs are related by a part of the output we do not find interesting. Consider the
-example from our prior section. \todo{would rather use a different example here}
-
-Depending on the input selection, we may select the $x$ or $y$ (or both) fields
-of a circle in the scatter plot. Selecting a renewable energy sources \textit{capacity}
-field will find that it is demanded by both of the coordinate fields in the output.
-Then, running the backwards analysis, we find relationships to the various \textit{output}
-fields, as well as the \textit{capacity} fields of that nations non-renewable
-resources. 
-
-In this situation, the question arises of how the different output fields induce
-different relationships as they often do. Suppose we are only interested in the
-related inputs induced by the $x$ coordinate. We can refine the query by restricting
-the demand induced by $y$. Modifying the output selection, we then proceed as normal
-by finding all the inputs that the modified output selection demands.
-
-We can proceed equivalently in the setting of related outputs, by making an initial
-output selection, identifying a subset of the inputs we are not interested in,
-and using that to filter out irrelevant related outputs, as we saw in 
-\figrefTwo{example:related-outputs-2}{example:related-outputs-1}
-
-% \subsubsection{Products of Projections of Views}
-% Consider the situation where we have two input tables, say $A$ and $B$, which
-% work together to produce two output charts $C$ and $D$. If both charts use their
-% respective inputs in different ways, we naturally would like to be able to
-% decompose these relationships. 
-
-% For example, if $A' \subseteq A$ is related to $B' \subseteq B$, by $C$,
-% and related to $B'' \subseteq B$ by $D$, then running $\relInput(A) = B' \cup B''$.
-% If we are only interested in the way $A$ and $B$ are related via $C$, we are
-% able to clamp down demand induced by $D$, sending it to bottom. 
-
-% Fix $A,B, C,D$ to range over Boolean algebras.
-% \newline
-% \begin{salign}
-%    \textrm{Meet and Join} \\
-%    \joinF &: X \to X \times X & \meetF &: X \times X \to X \\
-%    \bwd{\joinF}(a,a') &= a \vee a' & \bwd{\meetF}(a) &= (a, a) \\
-%    \fwd{\joinF}(a)    &= (a, a) & \fwd{\meetF}(a, a') &= a \wedge a'
-% \end{salign}
-% \begin{salign}
-%    \textrm{Projections/Injections} \\
-%    \inFst &: A \to A \times B & \inSnd &: B \to A \times B \\
-%    \bwd{\inFst}(a, b) &= a & \bwd{\inSnd}(a, b) &= b \\
-%    \fwd{\inFst}(a) &= (a, \top) & \fwd{\inSnd}(b) &= (\top, b)\\
-%    \dual{\inFst} &: A \times B \to A & \dual{\inSnd} &: A \times B \to B \\
-%    \bwd{\dual{\inFst}}(a) &= (a, \bot) & \bwd{\dual{\inSnd}}(b) &= (\bot, b) \\ 
-%    \fwd{\dual{\inFst}}(a, b) &= a & \fwd{\dual{\inSnd}}(a, b) &= b
-% \end{salign}
-% Assume $f: A \to C$, $g: A \to D$
-% \begin{salign}
-%    \textrm{Products} \\
-%    \funProd{f}{g} &: A \to C \times D \\
-%    \bwd{\funProd{f}{g}}(c, d) &=\bwd{ f}(c) \vee\bwd{ g}(d) \\
-%    \fwd{\funProd{f}{g}}(a) &= (\fwd{f}(a)\fwd{,g}(a)) \\
-%    \dual{\funProd{f}{g}}&: C \times D \to A \\
-%    \bwd{\dual{\funProd{f}{g}}}(a) &= (\bwd{f}(a),\bwd{ g}(a)) \\
-%    \fwd{\dual{\funProd{f}{g}}}(c, d) &=\fwd{ }(c) \wedge\fwd{ g}(d)
-% \end{salign}
-
-% \begin{figure}
-%    \begin{tikzcd}
-%       C \arrow[rr, "\bwd{\meetF}"]   &  & C \times C \arrow[dd, "\bwd{f}"', shift right=2] \arrow[dd, "\opName{id}", shift left=2] \\
-%                                   &  &                                                                                          \\
-%    A \arrow[uu, "\dual{\fwd{f}}"] &  & A \times C                                                                              
-%    \end{tikzcd}
-%    \caption{Related inputs with a single output view}   
-% \end{figure}
-
-\subsection{Relationship to Galois Slicing}
-\todo{Here we need to formally explain the relationship to galois connections, and why
-this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
-demanded by. We need to include the efficient algorithm for forward slicing, and give
-a nice narrative structure that will lead into this. It may be worth explaining why
-the De morgan dual of a conjugate function creates a Galois connection. I am not
-certain if there is a good reference for this or if we need to derive it ourselves}
-
-One feature of our work runs parallel to a line of research due to \citet{perera22}.
-In that work, the authors devise a method for computing related output queries,
-using program slicing operators which form a \textit{Galois connection}. It is not
-surprising that we can recover their frameworks capabilities from ours, due to
-a well known fact about conjugate functions:
-
-\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define $h \eqdef \dual{g}$.
-   Then the following statements are equivalent:
-   \begin{itemize}
-      \item $f$ and $g$ form a conjugate pair
-      \item $f$ and $h$ form a Galois connection
-   \end{itemize}
+can be found.
+\begin{proposition}[Reaches computes demands]
+   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
+   The following holds:
+   $$
+      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
+   $$
 \end{proposition}
 
-The Galois connection we use is defined in the following way:
+\todo{Need an account of forwards.} 
 
-\begin{definition}[Galois Connection For A Relation]
-   For a relation $D \subseteq Y \times X$, we write $D_{\star} \dashv D^{\star} : \powerset{X} \to \powerset{Y}$
-   to mean the image/preimage Galois connection for a function $f : X \to Y$, with the direction of the relation
-   flipped, and the functions defined as:
-   \begin{itemize}
-      \item $D_{\star}(Y') \eqdef D[Y']$
-      \item $D^{\star}(X') \eqdef \dual{(\preim{D}[X'])}$
-   \end{itemize}
-\end{definition}
+% \subsection{Relationship to Galois Slicing}
+% \todo{Here we need to formally explain the relationship to galois connections, and why
+% this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
+% demanded by. We need to include the efficient algorithm for forward slicing, and give
+% a nice narrative structure that will lead into this. It may be worth explaining why
+% the De morgan dual of a conjugate function creates a Galois connection. I am not
+% certain if there is a good reference for this or if we need to derive it ourselves}
 
-We can then recover their data-linked visualizations by treating the output views
-as a product of two individual views. The notion of conjugate functions is closed
-under the Cartesian product, and so we can take the product of two output views,
-and still recover a Galois connection between the inputs and the outputs, allowing
-us to reconstruct their linked visualizations. Despite this our approach does differ
-somewhat. In their paper, the authors construct multiple separate Galois connections,
-between the inputs and each of the pairs of outputs. In contrast, taking the product
-view, we can construct a single graph which contains both, and then restrict our
-attention to nodes which appear in only one or the other. 
+% One feature of our work runs parallel to a line of research due to \citet{perera22}.
+% In that work, the authors devise a method for computing related output queries,
+% using program slicing operators which form a \textit{Galois connection}. It is not
+% surprising that we can recover their framework's capabilities from ours, due to
+% a well known fact about conjugate functions:
+
+% We can then recover their data-linked visualizations by treating the output views
+% as a product of two individual views. The notion of conjugate functions is closed
+% under the Cartesian product, and so we can take the product of two output views,
+% and still recover a Galois connection between the inputs and the outputs, allowing
+% us to reconstruct their linked visualizations. Despite this our approach does differ
+% somewhat. In their paper, the authors construct multiple separate Galois connections,
+% between the inputs and each of the pairs of outputs. In contrast, taking the product
+% view, we can construct a single graph which contains both, and then restrict our
+% attention to nodes which appear in only one or the other.

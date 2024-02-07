@@ -4,22 +4,22 @@
 Whether formulating a national policy or simply deciding what groceries to buy, we increasingly rely on the
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions, but such artefacts are \emph{opaque} in the sense of
-being unable to reveal anything how they relate to the data they were derived from. If we have the appropriate
+being unable to reveal anything about how they relate to the data they were derived from. If we have the appropriate
 skills, as well as access to the source code and data sets, we may be able to reverse engineer some of these
 relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and more often
 than not we have to take things on trust. These difficulties are further compounded when the information
-presented draws on multiple data sources, such medical meta-analyses~\citep{dersimonian86}, ensemble
+presented draws on multiple data sources, such as medical meta-analyses~\citep{dersimonian86}, ensemble
 models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}.
 
 With traditional print media, a ``disconnect'' between chart and figures and the underlying data is to be
 expected, but for digital media, other options are open to us. In this paper, we introduce a new program
 analysis framework which supports interactive exploration of input-output relationships directly via visual
 outputs such as charts or tables. While this idea is not entirely new, our framework supports a novel form of
-provenance query which we call \emph{related inputs}, as well as lending itself to easier implementation than
+provenance query which we call \emph{related inputs}, as well as lending itself to an easier implementation than
 prior work.
 
-Related inputs characterises the relation of mutual relevance which arises between two input elements when
-they contribute to a common output element. Users are able to ask questions of the form ``What outputs use
+Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when
+they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use
 this data element, and what other data elements are used along with it?'' To answer such questions, we make
 use of \emph{dynamic dependence graphs} (DDGs), an execution record used in the program slicing literature for
 analysing imperative programs~\cite{ferrante87}. Our key insight is that two inputs are related in this sense
@@ -30,12 +30,12 @@ reachability in $G$, and we give a procedure for computing related inputs over $
 pairs, turns out to nicely capture these relations of cognacy.
 
 Conjugate pairs are closely related to Galois connections: if $f$ and $g$ are conjugate, then $f$ and the De
-Morgan dual of $g$ form a Galois connection. This relates our approach to earlier work based on Galois
+Morgan dual of $g$ form a Galois connection. This relates our approach to work by~\citet{perera22} based on Galois
 connections and execution traces that addressed the problem of \emph{brushing and linking} in data
-visualisation~\cite{perera22}. In our framework, the flipped composite $R \relcomp R^{-1}$ gives rise to a
+visualisation. In our framework, the flipped composite $R \relcomp R^{-1}$ gives rise to a
 dual cognacy relation between output features which compete for common input data; composing related outputs
 with suitable projections at either end recovers the brushing and linking approach of the earlier work.
-However, our language-agnostic graphical approach is easier to implement, and also fast enough to support the
+However, our graphical approach is language-agnostic, easier to implement, and also fast enough to support the
 kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
@@ -52,7 +52,7 @@ $\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and tha
 is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
 computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
 \item We define a core functional language with an operational semantics that pairs every result with a
-dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts) of values as nodes in the graph.
+dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
 \item We compare the performance of our implementation based on graphs and conjugates with an implementation
 due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
 vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative

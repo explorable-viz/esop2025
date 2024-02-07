@@ -2,8 +2,8 @@
    \small
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.2cm}L{3.6cm}}
-         &\textit{Expression}&
-         \lowlight{$\Expr\;\Gamma\;A$}
+         &\textit{Term}&
+         % \lowlight{$\Expr\;\Gamma\;A$}
          \\
          $e ::=$
          &
@@ -22,6 +22,11 @@
          variable
          \\
          &
+         $\exLet{x}{e}{e'}$
+         &
+         let
+         \\
+         &
          $\exRec{\seq{\bind{x}{e}}}$
          &
          record
@@ -37,11 +42,6 @@
          data value
          \\
          &
-         $\exFun{\sigma}$
-         &
-         function
-         \\
-         &
          $\exApp{e}{e'}$
          &
          application
@@ -52,9 +52,9 @@
          foreign application
          \\
          &
-         $\exLet{x}{e}{e'}$
+         $\exFun{\sigma}$
          &
-         let
+         function
          \\
          &
          $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
@@ -62,7 +62,7 @@
          recursive let
          \\[2mm]
          &\textit{Continuation}&
-         \lowlight{$K$}
+         % \lowlight{$K$}
          \\
          $\kappa ::=$
          &
@@ -80,15 +80,9 @@
    \begin{minipage}[t]{0.48\textwidth}
       \begin{tabularx}{\textwidth}{rL{2.7cm}L{3cm}}
          &\textit{Eliminator}&
-         \lowlight{$\Elim\;\Gamma\,A\;K$}
+         % \lowlight{$\Elim\;\Gamma\,A\;K$}
          \\
          $\sigma ::=$
-         &
-         $\annot{\raw{\sigma}}{\alpha}$
-         &
-         variable
-         \\
-         $\raw{\sigma} ::=$
          &
          $\elimVar{x}{\kappa}$
          &
@@ -102,39 +96,10 @@
          &
          $\elimConstr{\seq{\elimBind{c}{\sigma}}}$
          &
-         constructor
-         \\[2mm]
-         &\textit{Value}&
-         \lowlight{$\Val{A}$}
-         \\
-         $v ::=$
-         &
-         $\annot{\raw{v}}{\alpha}$
-         &
-         \\
-         $\raw{v} ::=$
-         &
-         $\exInt{n}$
-         &
-         integer
-         \\
-         &
-         $\exRec{\seq{\bind{x}{v}}}$
-         &
-         record
-         \\
-         &
-         $\exConstr{c}{\seq{v}}$
-         &
-         constructor
-         \\
-         &
-         $\exClosure{\gamma}{\rho}{\sigma}$
-         &
-         closure
+         data value
          \\[2mm]
          &\textit{Pattern}&
-         \lowlight{$\Patt\;A\;\Gamma$}
+         % \lowlight{$\Patt\;A\;\Gamma$}
          \\
          $w ::=$
          &
@@ -160,9 +125,39 @@
          &
          $\exConstr{c}{\seq{w}}$
          &
-         constructor
+         data value
+         \\[2mm]
+         &\textit{Value}&
+         % \lowlight{$\Val{A}$}
+         \\
+         $v ::=$
+         &
+         $\annot{\raw{v}}{\alpha}$
+         &
+         \\
+         $\raw{v} ::=$
+         &
+         $\exInt{n}$
+         &
+         integer
+         \\
+         &
+         $\exRec{\seq{\bind{x}{v}}}$
+         &
+         record
+         \\
+         &
+         $\exConstr{c}{\seq{v}}$
+         &
+         data value
+         \\
+         &
+         $\exClosure{\gamma}{\rho}{\sigma}$
+         &
+         closure
          \\[0mm]
       \end{tabularx}
    \end{minipage}
-\caption{Syntax as term graphs}
+\caption{Syntax of graph terms }
+\label{fig:syntax}
 \end{figure}
