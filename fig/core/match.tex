@@ -37,12 +37,12 @@
          \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}',
          \elimRecord{\seq{y}}{\kappa}
          \match
-         \exRec{\seq{\bind{y}{w}}} \cons \seq{w}', \gamma, e
+         \annot{\exRec{\seq{\bind{y}{w}}}}{\alpha} \cons \seq{w}', \gamma, e
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\match$-constr}}]
+      \inferrule*[lab={\ruleName{$\match$-data-value}}]
       {
          \seq{v} \concat \seq{v}', \kappa
          \match
@@ -51,9 +51,10 @@
       {
          \annot{\exConstr{c}{\seq{v}}}{\alpha} \cons \seq{v}', (\elimBind{c}{\kappa}) \cons \sigma
          \match
-         \exConstr{c}{\seq{w}} \cons \seq{w}', \gamma, e
+         \annot{\exConstr{c}{\seq{w}}}{\alpha} \cons \seq{w}', \gamma, e
       }
    \end{smathpar}}
-\caption{Graph semantics: pattern-matching}
+\vspace{-0.5cm}
+\caption{Graph operational semantics: pattern-matching}
 \label{fig:core:pattern-matching}
 \end{figure}
