@@ -1,4 +1,3 @@
-\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
@@ -30,6 +29,7 @@ where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$
 the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \subsection{Preliminaries}
+\cd{Is this really preliminaries? Maybe something like ``Informal description of \textit{demands} and \textit{demanded by}''?}
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
 shall provide some more intuition on our setting, and how it leads us to the
@@ -37,6 +37,7 @@ conditions we need.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in R$
+\cd{Do you mean the reachability relation R, which you introduce later, or do you mean D?}
 can be read as $x$ is \textit{demanded by} $y$. We shall eventually generalize
 this notion to relate sets of inputs to sets of outputs.
 
@@ -44,6 +45,10 @@ Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
 Equivalently, we could view it as saying $x$ is necessary to produce $y$.\DOnote{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
+\jb{Clarification: I'm not saying that $f(x)=y$ for all $x$, just that for a given $x$, if we
+say the result of applying the funciton is $y$, we could view $x$ as being sufficient input
+to the function to produce $y$. I can see how what I wrote initially would give that impression
+but I'm currently unsure how to word it better.}
 It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
@@ -52,7 +57,8 @@ It is well known that we can lift this function to the image and preimage functi
       \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-The above pair of functions is the usual image/preimage Galois connection for a function.
+The above pair of functions forms the usual image/preimage Galois connection for a function.
+\cd{I would probably not phrase this is a lemma (i.e. lemma 3.2), but leave it as an obvious remark -- is that a stretch? This way we avoid needing a proof.}
 \begin{lemma}[Galois Connection]
    $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
 \end{lemma}
@@ -71,10 +77,8 @@ each input value to be used by only a single output value in a program. If the s
 input value is used in multiple ways, we would need to provide multiple copies
 of each input value.
 
-<<<<<<< HEAD
-Thus we most move beyond functions, and instead consider relations instead.
-=======
-Thus we most move beyond functions, and instead consider relations instead.
+Thus, we most move beyond functions, and consider relations instead.
+
 Just as with functions, we can consider the image and preimage of a relation:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
@@ -84,24 +88,28 @@ Just as with functions, we can consider the image and preimage of a relation:
    \end{itemize}
 \end{definition}
 In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
-finding the set of inputs which are necessary for the elements of $Y'$ we can
+finding the set of inputs which are necessary for the elements of $Y'$, we can
 no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
 for. This is because sufficiency means having all of the inputs required to
-produce an output, as a simple example consider the expression $3 + 4$, neither
+produce an output. As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
-outputs that $X'$ is necessary for. We observe that in general,
+outputs that $X'$ is necessary for. We observe that, in general,
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
->>>>>>> main
 
-We note that in general, these two operators do not form a Galois connection. See
-\todo{put figure in place}.
+We note that in general, these two operators do not form a Galois connection, since
+the composition of the two functions is not monotonic, see \figref{relation-not-galois}
+\cd{Given all this discussion above, I'm wondering whether this would be better suited in
+the context of a dependence graph (which comes later). Otherwise, I find it a bit
+confusing when you talk about general relations.}
 
 \input{fig/conjugate/relations-not-galois}
 
-We require the operations \textit{demands} and \textit{demanded by} to be
+Instead of a Galois connection, we shall instead see that these two functions are
 \textit{conjugate}, in the sense of \citet{jonsson51}:
+
+\cd{Are we going back to functions? Didn't we just say they were bad?}
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
@@ -122,15 +130,7 @@ This makes sense as a condition for \textit{demands} and
 $X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
 of resources that $Y'$ demands to have an empty intersection with $X'$.
 
-One might ask why we do not consider the two operations to be each others inverse.
-We use the condition of conjugacy to account for input values in a program which may
-be unused by any outputs. In data analysis tasks, we will often make only partial
-use of an input dataset. For example, columns in a table may be unused in an
-analysis. In these cases, forcing the functions to be inverses would fail, since
-the set of outputs a set of inputs is \textit{demanded by} would not be changed
-by including the unused input, but this unused input would not be found when
-running \textit{demands} on the output set.
-
+\todo{Add a figure for conjugates}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
@@ -138,7 +138,7 @@ running \textit{demands} on the output set.
 \end{lemma}
 
 We derive \textit{demands} and \textit{demanded by} from a dependency relation,
-and so we can write their general form simply:
+and introduce a simple notation for them:
 \begin{definition}[Demands and Demanded by for a dependency relation]
    For a relation $D \subseteq X \times Y$, define:
    \begin{itemize}
@@ -317,8 +317,35 @@ can be found.
    $$
 \end{proposition}
 
-\todo{Need an account of forwards.}
+\subsection{Relationship to Galois Slicing}
+\jb{Basic idea of an account for forwards goes here}
+We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
+necessary for?" Asking this question naturally leads us to ask how we can
+adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
+\jb{Here, I will include a definition of the sufficiency query here}
+\begin{definition}[Sufficiency]
+   For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
+   inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
+   \begin{itemize}
+      \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }$ \hfill (sufficiency)
+   \end{itemize}
+\end{definition}
+It turns out that we can modify $\demandByR(\param)$ into this query on
+sufficiency, using the De Morgan Dual.
+
+\begin{lemma}[Sufficiency is the dual of necessity]
+   For a graph $G = (V,E)$ with inputs $X \subseteq V$ of the inputs $X \subseteq X$
+   the following holds:
+   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$ 
+\end{lemma}
+
+Because of the lemma above, we could reuse \textit{reaches} in order to compute
+this, by taking the complements of the input sets, running \textit{reaches}, and
+then complementing the output, however this could in practise be inefficient,
+since taking complements of large sets can be an expensive operation. We therefore
+provide a more efficient implementation of the sufficiency analyis, detailed in
+\figref{conjugate:slicing:forward}.
 % \subsection{Relationship to Galois Slicing}
 % \todo{Here we need to formally explain the relationship to galois connections, and why
 % this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
