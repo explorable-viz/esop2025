@@ -66,9 +66,13 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalS$-data-value}}]
+      \inferrule*[lab={\ruleName{$\evalS$-data-value}}, right={$
+      \Sigma(c) = (n, D) \land
+       |\seq{e}| = n $}]
       {
          \gamma, \seq{e}, V \evalS G, \seq{v}
+         \\
+         \\
       }
       {
          \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
