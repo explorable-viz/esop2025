@@ -120,16 +120,11 @@ outputs it is sufficient for.
 
 We note that in general, these two operators do not form a Galois connection, since
 the composition of the two functions is not monotonic, see \figref{relation-not-galois}
-\cd{Given all this discussion above, I'm wondering whether this would be better suited in
-the context of a dependence graph (which comes later). Otherwise, I find it a bit
-confusing when you talk about general relations.}
 
 \input{fig/conjugate/relations-not-galois}
 
 Instead of a Galois connection, we shall instead see that these two functions are
 \textit{conjugate}, in the sense of \citet{jonsson51}:
-
-\cd{Are we going back to functions? Didn't we just say they were bad?}
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
@@ -156,10 +151,13 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
+\begin{proof}
+   \todo{This isn't too much work}
+\end{proof}
 \DOnote{Is this a standard result with a citation or is a proof needed here or in an appendix?}
 
-We derive \textit{demands} and \textit{demanded by} from a dependency relation,
-and introduce a simple notation for them:
+We use the following notation to give the functions for \textit{demands} and
+\textit{demanded by} for a relation:
 \begin{definition}[Demands and Demanded by for a dependency relation]
    For a relation $D \subseteq X \times Y$, define:
    \begin{itemize}
@@ -192,16 +190,6 @@ when connecting our work to the state of the art of this area.
       \item $f$ and $h$ form a Galois connection
    \end{itemize}
 \end{proposition}
-
-
-\todo{Rework, include discussion of meet}
-As we have mentioned, it is possible for a program to only use some strict subset
-of its overall input. Therefore, despite their being join-preserving, we cannot
-necessarily expect the result of taking \textit{demands} on the entire
-output set to return the entire input set. If there are inputs that are unused,
-then running demands on the whole output will necessarily miss out all the unused
-inputs. Later, we shall see how we can overcome this limitation, and use this to
-discover more information about the relationship between inputs and outputs.
 
 % \todo{I now think that this next bit could go into the sectoin on the core language,
 % into the section about the discussion on projections/focussing, or the discussion of
