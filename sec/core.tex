@@ -62,7 +62,12 @@ against the initial part of a provided value as some \emph{pattern} $w$, which i
 \subsubsection{Values}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined.
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. 
+
+Figure~\ref{fig:environments} defines syntax of environments, which behave like finite maps but are extend using the operator
+$\cons$.
+
+\input{fig/core/env}
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
@@ -71,7 +76,7 @@ function they represent. By convention, we use $f$ and $\oplus$ to range over $\
 \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}}
 = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment which maps every
 ${f}$ to the closure
-$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
+$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
 
 \input{fig/core/eval}
@@ -86,7 +91,8 @@ where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically p
 \end{definition}
 
 \begin{definition}[Incoming edges]\label{def:incoming-edges}
-   For vertex $\alpha$ and set of vertices $V$, define $\bind{\alpha}{V}$ as the set of edges from all vertices in $V$ to $\alpha$.
+  For vertex $\alpha$ and set of vertices $V$, define $\bind{\alpha}{V}$ as the set of edges from all vertices in $V$ to $\alpha$.
+  \DOnote{Is this the best notation? If we are thinking of edges from $V$ to $\alpha$ then it feels like the notation should reflect that ordering?}
 \end{definition}
 
 We define a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language in \figref{core:eval}. This states that program $e$ under environment $\gamma$ evaluates to a value $v$ plus a dependence graph $G$; the  set of vertices $V$ corresponds to the inputs consumed by the current active function call, representing the other, ambient inputs that the evaluation step may also depend on. The relation $\gamma, \seq{e}, V \evalS G, \seq{v}$ is similar but for a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$, and constructs a dependence graph that is the disjoint union (\defref{disjoint-union}) of graphs produced by each individual evaluation. For convenience, we will use  notation $\bind{\alpha}{V}$ (\defref{incoming-edges}) for adding a new vertex $\alpha$ and its dependencies $V$ to a graph.
