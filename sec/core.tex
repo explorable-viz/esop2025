@@ -59,15 +59,11 @@ which can serve as a plausible desugaring target for surface-language pattern-ma
 (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
 against the initial part of a provided value as some \emph{pattern} $w$, which is either a variable, an integer, record, or data value, and then uses this to select a continuation $\kappa$ to be executed. The variable eliminator $\elimVar{x}{\kappa}$  matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that has fields $\seq{x}$, and binds variables $\seq{x}$ to the associated components of that record. Lastly, the eliminator $\elimConstr{\seq{c \mapsto \sigma}}$ for data values  provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each internal eliminator $\sigma$ continues by matching against the arguments of that constructor.
 
-\subsubsection{Values}
+\subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined.
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\rho, \gamma$ behave like finite maps but are extended using the operator $\cons$.
 
-\figref{environments} defines syntax of environments, which behave like finite maps but are extend using the operator
-$\cons$.
-
-\input{fig/core/env}
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
