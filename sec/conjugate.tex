@@ -28,8 +28,28 @@ For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite gr
 where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
 the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
-\subsection{Preliminaries}
-\cd{Is this really preliminaries? Maybe something like ``Informal description of \textit{demands} and \textit{demanded by}''?}
+\subsection{Dependence Graphs}
+We shall give an account of how we can compute related input and output queries
+efficiently, using dynamic dependence graphs.
+
+
+\begin{definition}[Dynamic Dependence Graph]
+   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
+   represent values in the original program, and an edge $(\alpha, \alpha') \in E$
+   exists if, in the original program, the value associated to $\alpha$
+   \textit{depends} on the value associated with $\alpha'$
+\end{definition}where the nodes represent values
+
+We shall not consider how we arrive at such a graph until \secref{core}. Our
+work diverges from traditional approaches to dynamic dependence graphs since we
+only consider one type of edge, in contrast to separately defining data and
+control-flow edges as in \citet{agrawal90}.
+
+In each graph, we mark out a subset of the nodes, $X \subset V$ which represent
+the inputs to the program, and a subset of nodes $Y \subset V$ which represent
+the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$
+
+
 
 Before we give the definitions of \textit{demands} and \textit{demanded by}, we
 shall provide some more intuition on our setting, and how it leads us to the
@@ -231,29 +251,6 @@ discover more information about the relationship between inputs and outputs.
 
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
-\todo{Some of this may be moved to \secref{core}, since it concerns dependence
-graphs. I think right now the question is open as to whether we want to include this
-here or there, or decompose it into the relevant halves}
-
-We shall now consider how we can use the notions above, as well as properties
-of graphs to give an account of the efficient computation of related inputs
-and outputs.
-
-
-For the rest of this section, all graphs we consider will be constructed during
-program evaluation.
-
-\begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
-   represent values in the original program, and an edge $(\alpha, \alpha') \in E$
-   exists if, in the original program, the value associated to $\alpha$
-   \textit{depends} on the value associated with $\alpha'$
-\end{definition}where the nodes represent values
-
-We shall not consider how we arrive at such a graph until \secref{core}. Our
-work diverges from traditional approaches to dynamic dependence graphs since we
-only consider one type of edge, in contrast to separately defining data and
-control-flow edges as in \citet{agrawal90}.
 
 When a dependence graph $G$ is constructed, the sources $\sources{G}$ correspond
 to the output nodes, and the sinks $\sinks{G}$ correspond to input nodes. In the
