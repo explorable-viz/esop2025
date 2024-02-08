@@ -32,7 +32,6 @@ the source vertices in a graph, and $\sinks{G}$ for the sinks.
 We shall give an account of how we can compute related input and output queries
 efficiently, using dynamic dependence graphs.
 
-
 \begin{definition}[Dynamic Dependence Graph]
    A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
@@ -40,7 +39,10 @@ efficiently, using dynamic dependence graphs.
    \textit{depends} on the value associated with $\alpha'$
 \end{definition}where the nodes represent values
 
-We shall not consider how we arrive at such a graph until \secref{core}. Our
+We shall not consider the details of how we arrive at a specific dependence graph
+until we reach \secref{core}. For now, it is enough to note that a dependence
+graph is computed as part of program evaluation.
+
 work diverges from traditional approaches to dynamic dependence graphs since we
 only consider one type of edge, in contrast to separately defining data and
 control-flow edges as in \citet{agrawal90}.
