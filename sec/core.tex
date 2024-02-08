@@ -76,7 +76,7 @@ function they represent. By convention, we use $f$ and $\oplus$ to range over $\
 \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}}
 = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment which maps every
 ${f}$ to the closure
-$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
+$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
 
 \input{fig/core/eval}
