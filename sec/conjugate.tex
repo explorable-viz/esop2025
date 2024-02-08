@@ -244,10 +244,13 @@ For the rest of this section, all graphs we consider will be constructed during
 program evaluation.
 
 \begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
+  A dynamic dependence graph $G = (V,E)$ is a graph where the vertices (also called
+  \emph{nodes}) $\alpha \in V$
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
    exists if, in the original program, the value associated to $\alpha$
    \textit{depends} on the value associated with $\alpha'$
+   \DOnote{I think this should be talking about values in the execution rather than
+   in the original program (which makes it sound like static source code)}
 \end{definition}where the nodes represent values
 
 We shall not consider how we arrive at such a graph until \secref{core}. Our
