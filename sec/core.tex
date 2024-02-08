@@ -62,7 +62,12 @@ against the initial part of a provided value as some \emph{pattern} $w$, which i
 \subsubsection{Values}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined.
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. 
+
+Figure~\ref{fig:environments} defines syntax of environments, which behave like finite maps but are extend using the operator
+$\cons$.
+
+\input{fig/core/env}
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
@@ -71,7 +76,7 @@ function they represent. By convention, we use $f$ and $\oplus$ to range over $\
 \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}}
 = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment which maps every
 ${f}$ to the closure
-$\exClosure{\seqEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
+$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
 where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically part of the language, user programs by convention use the first-class representation.
 
 \input{fig/core/eval}
