@@ -62,6 +62,9 @@ Let us first consider the case when the relation is a function $f: X \to Y$.
 If, for some input $x \in X$, we find that $f(x) = y$, for some $y \in Y$, we
 can say that $x$ is demanded by $y$, or that $x$ is sufficient to produce $y$.
 
+We do not, in general, wish to consider individual input or output values on their
+own. Instead, we like to consider sets of inputs, and sets of outputs. Thus we
+must lift the function to sets.
 It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
@@ -81,9 +84,9 @@ we can make with any element of $X'$, but also what the values of $x$ are necess
 Similarly, we can read the action of $f_{\star}$
 on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
 
-Whilst the above is attractive, we cannot rely on the dependency relation to be
-a function for two reasons. Firstly, it would require that
-every input value is used by a program. In the realm of data analysis, this is
+Whilst the above is attractive, this is not the generalization to sets of values
+that we want.  Firstly, since $D$ is a function, it requires that every input
+value is used by a program. In the realm of data analysis, this is
 not always true. We may take a very large table as our input, and only consider
 a subset of the columns. Secondly, by restricting ourselves to functions, we force
 each input value to be used by only a single output value in a program. If the same
