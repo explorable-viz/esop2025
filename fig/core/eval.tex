@@ -10,7 +10,7 @@
       {
          \gamma, \annInt{n}{\alpha}, V
          \evalS
-         \set{\bind{\alpha'}{\alpha \cons V}},
+         \set{\bind{\alpha'}{(V \cons \alpha)}},
          \annInt{n}{\alpha'}
       }
       %
@@ -48,7 +48,7 @@
       {
          \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
          \evalS
-         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         G \disjunion \set{\bind{\alpha'}{(V \cons \alpha)}},
          \annRec{\seq{\bind{x}{v}}}{\alpha'}
       }
       %
@@ -77,7 +77,7 @@
       {
          \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
          \evalS
-         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         G \disjunion \set{\bind{\alpha'}{(V \cons \alpha)}},
          \annConstr{c}{\seq{v}}{\alpha'}
       }
       %
