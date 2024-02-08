@@ -66,9 +66,13 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\evalS$-data-value}}]
+      \inferrule*[lab={\ruleName{$\evalS$-data-value}}, right={$
+      \Sigma(c) = (n, D) \land
+       |\seq{e}| = n $}]
       {
          \gamma, \seq{e}, V \evalS G, \seq{v}
+         \\
+         \\
       }
       {
          \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
@@ -185,6 +189,6 @@
    \end{smathpar}
    }
    \vspace{-0.5cm}
-   \caption{Graph operational semantics: evaluation}
+   \caption{Operational semantics: evaluation and graph construction}
    \label{fig:core:eval}
 \end{figure}
