@@ -23,30 +23,31 @@ We first introduce the syntax of our core language constructs (\secref{core:synt
 \subsection{Syntax and graph terms}
 \label{sec:core:syntax}
 
+Throughout, we make use of the following notational convenction for finite maps:
+%
+\begin{definition}[Finite map notation]\label{def:finite-map}
+  Write $\set{\seq{\bind{k}{S}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{S_1}}{\bind{k_n}{S_n}}$
+  over some syntactic category $S$, where $\seqRange{k_1}{k_n}$ are pairwise unique.
+\end{definition}
+
 \input{fig/core/syntax}
+
+Terms of the core language (called \emph{regular terms}) are ranged over by $\raw{e}$, defined in \figref{syntax}.
+Regular terms include integer constants ranged over by $n, m$; variables ranged over by $x, y, f$; let-bindings $\exLet{x}{e}{e'}$%
+; record construction $\exRec{\seq{\bind{x}{e}}}$, using the notation of \defref{finite-map}% which maps variables to terms (\defref{finite-map})
+; record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
+; and data values $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully saturated by arguments $\seq{e}$. A  constructor always inhabits a known data type $D$ and has an arity specified by $D$; we write $\datatype{c} = (n, D)$ to denote that $c$ takes $n \in \mathbb{N}$ arguments and constructs a value of data type $D$.
+
+As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions explained further in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}, explained further in \secref{core:continuations}.
+
+We define the graph terms $e$ of the language in \figref{syntax} as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely associated (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$.
 
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
 Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
 
-We define the graph terms $e$ of the language in \figref{syntax}  as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely corresponds (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$;
 \defref{core:vertices} then extends to values $v$, patterns $w$, and eliminators $\sigma$, all of which may themselves be vertices and/or contain other entities that are vertices. We introduce these constructs later.
-
-
-\begin{definition}[Finite map notation]\label{def:finite-map}
-   Write $\set{\seq{\bind{k}{v}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{v_1}}{\bind{k_n}{v_n}}$
-   where $\seqRange{k_1}{k_n}$ are pairwise unique.
-\end{definition}
-
-
-Regular terms $\raw{e}$ include integers ranged over by $n, m$; variables ranged over by $x, y, f$; let-bindings $\exLet{x}{e}{e'}$%
-; record construction $\exRec{\seq{\bind{x}{e}}}$, using notation from \defref{finite-map}% which maps variables to terms (\defref{finite-map})
-; record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
-; and data values $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully saturated by arguments $\seq{e}$. A  constructor always inhabits a known data type $D$ and has an arity specified by $D$; we write $\datatype{c} = (n, D)$ to denote that $c$ takes $n \in \mathbb{N}$ arguments and constructs a value of data type $D$.
-
-As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}. We explain eliminators next  and foreign functions in \secref{core:foreign}.
-
 
 \subsubsection{Continuations, eliminators, and patterns}
 \label{sec:core:continuations}
