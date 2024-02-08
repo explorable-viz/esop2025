@@ -5,7 +5,8 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 
 \todo{ Insert some summarising statements about our language, e.g. being untyped, how general the calculus is, what we implement it in, whether it can be easily reimplemented in other host languages, etc. }
 
-\todo{ Insert skeleton for section structure. }
+We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a big-step operational semantics that simultaneously (i) evaluates a program to a value and (ii) constructs a dynamic dependence graph of that evaluation process (\secref{core:semantics}).
+\todo{ Finish skeleton for section structure. }
 
 \begin{figure}
    \small
@@ -20,6 +21,7 @@ In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and
 
 
 \subsection{Syntax and graph terms}
+\label{sec:core:syntax}
 
 \input{fig/core/syntax}
 
@@ -73,6 +75,7 @@ where $\length{\seq{x}} = \Phi{(f)}$. Although saturated calls are technically p
 
 
 \subsection{Evaluation and graph construction}
+\label{sec:core:semantics}
 
 \begin{definition}[Disjoint union of maps]\label{def:disjoint-union}
    For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
