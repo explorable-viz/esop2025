@@ -273,15 +273,20 @@ of operations.
 
 The procedure detailed in \figref{conjugate:reaches} works by
 traversing the neighbors of the selected set of nodes, until no new neighbors
-can be found.
-\begin{proposition}[Reaches computes demands]
+can be found. The procedure builds a graph, $G'$, which is a subgraph of $G$
+corresponding to the subset of nodes in $G$ which are reachable from the input
+set. When it finishes running, we take $\sinks{G'}$ to be the set of outputs
+related to the initially selected inputs.
+\begin{proposition}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
    The following holds:
    $$
-      (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
+      Y \reachesAlg{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
    $$
-   \DOnote{What is $G'$ here?}
 \end{proposition}
+\begin{proof}
+   \todo{Not sure if we include this here or in an appendix}
+\end{proof}
 
 \subsection{Relationship to Galois Slicing}
 \jb{Basic idea of an account for forwards goes here}
@@ -336,9 +341,12 @@ provide a more efficient implementation of the sufficiency analyis, detailed in
    For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subset V$
    the following holds:
    $$
-      \sufficientR(X') eq ?
+       X' \fwdAlg{G} \sources{G'} \iff \sufficientR(X') = \sources{G'}
    $$
 \end{proposition}
+\begin{proof}
+   \todo{Also unsure if we put this here or in an appendix}
+\end{proof}
 
 \jb{Not sure how much of this can go here, or be moved to the related work section}
 It turns out that the Galois connection created with \textit{sufficiency} and
