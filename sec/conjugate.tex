@@ -116,14 +116,14 @@ outputs that $X'$ is necessary for. We make the observation that
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$, 
 ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
 
 
 We note that in general, these two operators do not form a Galois connection, since
-the composition of the two functions is not monotonic, see \figref{relation-not-galois}
+the composition of the two functions is not monotonic, see \figref{relation-not-galois},
+contradicting a basic fact of Galois connections.
 
 \input{fig/conjugate/relations-not-galois}
 
@@ -153,25 +153,21 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
-   $D[\param]$ and $\preim{D}[\param]$ are conjugate.
+   $D_{\demandByR}(\param)$ and $D_{demandR}(\param)$ are conjugate.
 \end{lemma}
 \begin{proof}
    \todo{Need to provide a proof for this.}
 \end{proof}
-
 
 We use the following notation to give the functions for \textit{demands} and
 \textit{demanded by} for a relation:
 \begin{definition}[Demands and Demanded by for a dependency relation]
    For a relation $D \subseteq X \times Y$, define:
    \begin{itemize}
-      \item $\demandR_D(X) = D[X]$ \hfill (demands)
-      \item $\demandByR_D(Y) = \preim{D}[Y]$ \hfill (demanded by)
+      \item $\demandR_D(X) = D_{\demandR}(X)$ \hfill (demands)
+      \item $\demandByR_D(Y) = D_{\demandByR}(Y)$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
-By treating \textit{demands} and \textit{demanded by} as the image
-and preimage functions of a dependency relation $D$, we get their
-conjugacy for free.
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{conjugate:dependence-graph-algos}
