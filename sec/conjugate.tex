@@ -173,16 +173,6 @@ By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free.
 
-We need to define the De Morgan Dual of a function, since it becomes useful
-when connecting our work to the state of the art of this area.
-\begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
-   $$
-   \dual{f} \eqdef \neg_B \after f \after \neg_A
-   $$
-\end{definition}
-
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
    Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
    $$
@@ -310,7 +300,6 @@ We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
-\jb{Here, I will include a definition of the sufficiency query here}
 \begin{definition}[Sufficiency]
    For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
    inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
@@ -320,6 +309,14 @@ adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?
 \end{definition}
 It turns out that we can modify $\demandByR(\param)$ into this query on
 sufficiency, using the De Morgan Dual.
+
+\begin{definition}[De Morgan Dual]
+   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
+   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
+   $$
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
+   $$
+\end{definition}
 
 \begin{lemma}[Sufficiency is the dual of necessity]
    For a graph $G = (V,E)$ with inputs $X \subseteq V$ of the inputs $X \subseteq X$
