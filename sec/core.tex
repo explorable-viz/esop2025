@@ -16,29 +16,40 @@ We first introduce the syntax of our core language constructs (\secref{core:synt
 \end{figure}
 
 
-% \input{fig/basic-elements}
-
-
-% \newpage
-\subsection{Syntax and graph terms}
-\label{sec:core:syntax}
-
-Throughout, we make use of the following notational convention for finite maps and lists:
+\newpage
+\subsection{Preliminaries}
+\label{sec:core:preliminaries}
+Throughout, we make use of the following notational convention for finite sequences and finite~maps:
 %
+\begin{definition}[Finite sequence notation]\label{def:list}
+   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$.
+ \end{definition}
+
+ \begin{definition}[Cons/snoc of finite sequences]\label{def:cons}
+    For finite sequence $\seq{a}$ and element $a$, write $a \cons \seq{a}$ for cons (prepending $a$ to $\seq{a}$)  and $\seq{a} \cons a$ for snoc (appending $a$ to $\seq{a}$).
+ \end{definition}
+
 \begin{definition}[Finite map notation]\label{def:finite-map}
-  Write $\set{\seq{\bind{k}{S}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{S_1}}{\bind{k_n}{S_n}}$
-  over some syntactic category $S$, where keys $\seqRange{k_1}{k_n}$ are pairwise unique.
+  Write $\set{\seq{\bind{k}{a}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{a_1}}{\bind{k_n}{a_n}}$ where keys $\seqRange{k_1}{k_n}$ are pairwise unique.
 \end{definition}
 
 \begin{definition}[Disjoint union of finite maps]\label{def:disjoint-union}
-   For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
+   For finite maps $M$, $M'$ with $\dom{M} \cap \dom{M'} = \emptyset$, define $M \disjunion M' = M \cup M'$.
 \end{definition}
 
-\begin{definition}[Cons/snoc of lists]\label{def:cons}
-   For element $a$ and list $\seq{a}$, we write $a \cons \seq{a}$ for cons (prepending $a$ to $\seq{a}$)  and $\seq{a} \cons a$ for snoc (appending $a$ to $\seq{a}$).
+We also use the $\cons$ notation in \defref{cons} for sets and finite maps in the following way:
+
+\begin{definition}[Set insertion]
+   For set $A$ and element $a$,  write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
+\end{definition}
+\begin{definition}[Map extension]
+   For finite map $M$ and pair $(k : a)$,  write $(k : a) \cdot M$ or $M \cdot (k : a)$ to mean $M \disjunion \set{(k : a)}$.
 \end{definition}
 
-\defref{cons} of $\cons$ extends to sets. For finite maps, $\cons$ also respects the ``disjoint keys'' constraint.
+
+\subsection{Syntax and graph terms}
+\label{sec:core:syntax}
+
 
 \input{fig/core/syntax}
 
