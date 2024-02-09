@@ -83,7 +83,7 @@ against the initial part of a provided value as some \emph{pattern} $w$, which i
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\gamma, \rho$ are defined as finite maps.
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$ is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An environment is defined as a finite map.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
