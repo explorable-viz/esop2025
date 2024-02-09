@@ -173,55 +173,18 @@ By treating \textit{demands} and \textit{demanded by} as the image
 and preimage functions of a dependency relation $D$, we get their
 conjugacy for free.
 
-
-% \todo{I now think that this next bit could go into the sectoin on the core language,
-% into the section about the discussion on projections/focussing, or the discussion of
-% Galois connections.}
-
-% Let us assume, for the moment that $f,g$ are placeholders for the demanded by and
-% demands functions, and that $g \after f (X')$ computes the set of inputs related
-% to $X'$. If there are elements of $X'$ that are unused, then $g \after f (X') \neq X'$.
-% Call this subset $X_0 \subset X'$ with $X_0 \notin g \after f(X')$. Then $x \in X_0 \iff D[\set{x}] = \bot$.
-% If we write $X_1 = (X' \setminus X_0) \subseteq g \after f(X')$, we can also  write
-% $g \after f (X') = X_1 \disjunion X_2$, and read $X_2$ as the
-% new inputs we have discovered through our related inputs query. We can safely discard
-% $X_0$ as the set of unused inputs. If we apply this to the entire set of inputs,
-% we can read $X_0$ as the set of inputs that are unused through the entire program.
-% In a data science scenario, this is extremely useful since we often work with datasets
-% that have a large amount of spurious data.
-
-% Once $X_0$ has been thrown away, we are safe to conclude that $g$ (remember $g$ is
-% demands) applied to the entirety of the output finds the entirety of the input, and
-% similar for $f$ applied to the entire input.
-
-% Another advantage of conjugate functions is how they also admit products, which
-% we can use to focus queries onto specific contexts:
-
-% \begin{lemma}[Products of Conjugates Admit conjugates]
-%    Let, $f: X \to Y, g: A \to B$ be functions, with $f': Y \to X, g': B \to A$ their conjugates,
-%    then $\funProd{f}{g}$ and $\funProd{f'}{g'}$ form a conjugate pair.
-% \end{lemma}
-
-% \todo{End WIP}
-
-% The authors
-% of that paper provide the following alternate definition of conjugacy:
-
-% \begin{definition}[Computation of Conjugate Function]\label{def:construct-conjugate}
-%    Given a function $f: \powerset{X} \to \powerset{Y}$, there can exist only one
-%    conjugate function $g: \powerset{Y} \to \powerset{X}$. If $g$ exists we can
-%    calculate it using the following:
-%    $$
-%       g(Y') = \bigcap_{f(X') \cap Y' = \bot} \padArg{\compl{X}}{1em} \quad \text{for any $X' \in \powerset{X}$}
-%    $$
-% \end{definition}
-
-% In general, \defref{construct-conjugate} is inefficient, since it requires
-% ranging over all possible values $a \in \mathcal{A}$, and computing their
-% meet with $b$.
-
-
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
+We now provide some detail on the use of the notions defined above to compute
+\textit{demands} and \textit{demanded by} on a concrete dependence graph.
+We shall also introduce some notation, used to read the definitions of the
+algorithms in \figref{conjugate:reaches}.
+
+\begin{definition}[Finite Sequences]
+   
+\end{definition}
+\begin{definition}[Graphs as Finite Maps]
+   A graph $G =(V,E)$ can equivalently be viewed as a finite map
+\end{definition}
 
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
@@ -359,28 +322,3 @@ execution trace with different selection states, meaning it takes time proportio
 to the execution of the original program. In contrast, running slicing queries
 over a graph is efficient, only taking time proportional to the portion of the
 graph that's actually traversed. 
-
-
-% \subsection{Relationship to Galois Slicing}
-% \todo{Here we need to formally explain the relationship to galois connections, and why
-% this matters for us. We will need to formulate forward slicing as the De Morgan Dual of
-% demanded by. We need to include the efficient algorithm for forward slicing, and give
-% a nice narrative structure that will lead into this. It may be worth explaining why
-% the De morgan dual of a conjugate function creates a Galois connection. I am not
-% certain if there is a good reference for this or if we need to derive it ourselves}
-
-% One feature of our work runs parallel to a line of research due to \citet{perera22}.
-% In that work, the authors devise a method for computing related output queries,
-% using program slicing operators which form a \textit{Galois connection}. It is not
-% surprising that we can recover their framework's capabilities from ours, due to
-% a well known fact about conjugate functions:
-
-% We can then recover their data-linked visualizations by treating the output views
-% as a product of two individual views. The notion of conjugate functions is closed
-% under the Cartesian product, and so we can take the product of two output views,
-% and still recover a Galois connection between the inputs and the outputs, allowing
-% us to reconstruct their linked visualizations. Despite this our approach does differ
-% somewhat. In their paper, the authors construct multiple separate Galois connections,
-% between the inputs and each of the pairs of outputs. In contrast, taking the product
-% view, we can construct a single graph which contains both, and then restrict our
-% attention to nodes which appear in only one or the other.
