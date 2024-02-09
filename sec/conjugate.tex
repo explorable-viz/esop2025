@@ -8,11 +8,11 @@ connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
 For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
-denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$. 
+denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
 
 For a set $X$, we write $\compl{X}$ to denote it's complement.
 For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
-of $B$ within $A$. 
+of $B$ within $A$.
 \newline
 We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
 and join ($\vee$) distribute over each other, and for each element $x \in X$,
@@ -117,7 +117,7 @@ the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
 We shall make use of the fact that the image of $X'$ under a relation
-is equal to the preimage of $X'$ under the inverse relation $D^{-1}$, 
+is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
 ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
 
 
@@ -170,7 +170,7 @@ We use the following notation to give the functions for \textit{demands} and
 \end{definition}
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
-\label{conjugate:dependence-graph-algos}
+\label{sec:conjugate:dependence-graph-algos}
 We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
 We shall also introduce some more notation, used to read the definitions of the
@@ -315,7 +315,7 @@ sufficiency, using the De Morgan Dual.
 \begin{lemma}[Sufficiency is the dual of necessity]
    For a graph $G = (V,E)$ with inputs $X \subseteq V$ of the inputs $X \subseteq X$
    the following holds:
-   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$ 
+   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$
 \end{lemma}
 
 Because of the lemma above, we could reuse \textit{reaches} in order to compute
@@ -346,4 +346,4 @@ between inputs and outputs. Their work relies on rewinding and replaying this
 execution trace with different selection states, meaning it takes time proportional
 to the execution of the original program. In contrast, running slicing queries
 over a graph is efficient, only taking time proportional to the portion of the
-graph that's actually traversed. 
+graph that's actually traversed.
