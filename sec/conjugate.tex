@@ -175,9 +175,9 @@ conjugacy for free.
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{conjugate:dependence-graph-algos}
-We now provide some detail on the use of the notions defined above to compute
+We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
-We shall also introduce some notation, used to read the definitions of the
+We shall also introduce some more notation, used to read the definitions of the
 algorithms in \figref{conjugate:reaches}.
 
 \begin{definition}[Finite Sequences]\label{def:list}
@@ -194,8 +194,10 @@ algorithms in \figref{conjugate:reaches}.
    where keys $\seqRange{k_1}{k_n}$ are pairwise unique.
 \end{definition}
 
+Whilst we can view a graph abstractly as a collection of vertices and edges, it
+will be concretely represented as a finite map.
 \begin{definition}[Graphs as Finite Maps]
-   A graph $G =(V,E)$ can equivalently be viewed as a finite map $M \eqdef \set{\seq{\bind{v}{\seq{a}}}}$,
+   A graph $G =(V,E)$ can be viewed as a finite map $M \eqdef \set{\seq{\bind{v}{\seq{a}}}}$,
    where a pair $\bind{v}{\seq{a}} \in M \iff v \in V$ and $(v, a_i) \in E$ for all $a_i \in \seq{a}$
 \end{definition}
 
@@ -212,6 +214,8 @@ We also use the $\cons$ notation in \defref{cons} for sets and finite maps in th
    For finite map $M$ and pair $(k : a)$,  write $(k : a) \cdot M$ or $M \cdot (k : a)$ to mean $M \disjunion \set{(k : a)}$.
 \end{definition}
 
+Once a graph has been constructed, we must look at which nodes can be reached from
+other nodes by traversing edges in the graph.
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
