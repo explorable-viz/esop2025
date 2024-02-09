@@ -1,4 +1,3 @@
-\newcommand{\dnoteM}[1]{\textcolor{purple}{DO: #1}}
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
@@ -9,21 +8,25 @@ connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
 For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
-$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$. For a
+$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$.
+\DOnote{I've stared at this a few times and it confuses me.
+  Shouldn't this be $D[-]: \powerset{X} \to \powerset{Y}$
+  as $D[X'] \in \powerset{Y}$ and the same in the next part?}
+For a
 subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
 for the preimage of $Y'$ under $D$.
 Notationally, we make use of the fact that the image of $X'$ under a relation
 $D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$, \cd{and we write ... to mean ...}.
 Also, for a set $X$, we write $\compl{X}$ to denote it's complement.
 
-We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\vee$)
-and join ($\wedge$) distribute over each other, and for each element $x \in X$,
+We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
+and join ($\vee$) distribute over each other, and for each element $x \in X$,
 there is a complement element $\compl{x} \in X$.
 %
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
-the order is set inclusion $\subseteq$, and meet and join are given by union ($\cup$)
-and intersection ($\cap$), respectively.
+the order is set inclusion $\subseteq$, and meet and join are given by intersection ($\cap$)
+and union ($\cup$), respectively.
 
 For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
@@ -46,6 +49,10 @@ Let us first consider the case when the relation is a function $f: X \to Y$.
 We can view $f(x) = y$ as saying that $x$ is sufficient for us to produce $y$.
 Equivalently, we could view it as saying $x$ is necessary to produce $y$.\DOnote{I don't follow how this is equivalent.
   If $f$ is a constant function then for any $f(x) = y$ then $x$ is not necessary for $y$}
+\jb{Clarification: I'm not saying that $f(x)=y$ for all $x$, just that for a given $x$, if we
+say the result of applying the funciton is $y$, we could view $x$ as being sufficient input
+to the function to produce $y$. I can see how what I wrote initially would give that impression
+but I'm currently unsure how to word it better.}
 It is well known that we can lift this function to the image and preimage functions of $f$:
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
@@ -95,14 +102,15 @@ outputs that $X'$ is necessary for. We observe that, in general,
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-\cd{Given all this discussion above, I'm wondering whether this would be better suited in the context of a dependence graph (which comes later). Otherwise, I find it  a bit confusing when you talk about general relations.}
-
-We note that in general, these two operators do not form a Galois connection. See
-\todo{put figure in place}.
+We note that in general, these two operators do not form a Galois connection, since
+the composition of the two functions is not monotonic, see \figref{relation-not-galois}
+\cd{Given all this discussion above, I'm wondering whether this would be better suited in
+the context of a dependence graph (which comes later). Otherwise, I find it a bit
+confusing when you talk about general relations.}
 
 \input{fig/conjugate/relations-not-galois}
 
-We require the operations \textit{demands} and \textit{demanded by} to be
+Instead of a Galois connection, we shall instead see that these two functions are
 \textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \cd{Are we going back to functions? Didn't we just say they were bad?}
@@ -126,23 +134,16 @@ This makes sense as a condition for \textit{demands} and
 $X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
 of resources that $Y'$ demands to have an empty intersection with $X'$.
 
-One might ask why we do not consider the two operations to be each others inverse.
-We use the condition of conjugacy to account for input values in a program which may
-be unused by any outputs. In data analysis tasks, we will often make only partial
-use of an input dataset. For example, columns in a table may be unused in an
-analysis. In these cases, forcing the functions to be inverses would fail, since
-the set of outputs a set of inputs is \textit{demanded by} would not be changed
-by including the unused input, but this unused input would not be found when
-running \textit{demands} on the output set.
-
+\todo{Add a figure for conjugates}
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
+\DOnote{Is this a standard result with a citation or is a proof needed here or in an appendix?}
 
 We derive \textit{demands} and \textit{demanded by} from a dependency relation,
-and so we can write their general form simply:
+and introduce a simple notation for them:
 \begin{definition}[Demands and Demanded by for a dependency relation]
    For a relation $D \subseteq X \times Y$, define:
    \begin{itemize}
@@ -247,10 +248,13 @@ For the rest of this section, all graphs we consider will be constructed during
 program evaluation.
 
 \begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
+  A dynamic dependence graph $G = (V,E)$ is a graph where the vertices (also called
+  \emph{nodes}) $\alpha \in V$
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
    exists if, in the original program, the value associated to $\alpha$
    \textit{depends} on the value associated with $\alpha'$
+   \DOnote{I think this should be talking about values in the execution rather than
+   in the original program (which makes it sound like static source code)}
 \end{definition}where the nodes represent values
 
 We shall not consider how we arrive at such a graph until \secref{core}. Our
@@ -319,10 +323,38 @@ can be found.
    $$
       (\emptyset, \emptyset), Y \reachesVert{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
    $$
+   \DOnote{What is $G'$ here?}
 \end{proposition}
 
-\todo{Need an account of forwards.}
+\subsection{Relationship to Galois Slicing}
+\jb{Basic idea of an account for forwards goes here}
+We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
+necessary for?" Asking this question naturally leads us to ask how we can
+adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
+\jb{Here, I will include a definition of the sufficiency query here}
+\begin{definition}[Sufficiency]
+   For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
+   inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
+   \begin{itemize}
+      \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }$ \hfill (sufficiency)
+   \end{itemize}
+\end{definition}
+It turns out that we can modify $\demandByR(\param)$ into this query on
+sufficiency, using the De Morgan Dual.
+
+\begin{lemma}[Sufficiency is the dual of necessity]
+   For a graph $G = (V,E)$ with inputs $X \subseteq V$ of the inputs $X \subseteq X$
+   the following holds:
+   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$ 
+\end{lemma}
+
+Because of the lemma above, we could reuse \textit{reaches} in order to compute
+this, by taking the complements of the input sets, running \textit{reaches}, and
+then complementing the output, however this could in practise be inefficient,
+since taking complements of large sets can be an expensive operation. We therefore
+provide a more efficient implementation of the sufficiency analyis, detailed in
+\figref{conjugate:slicing:forward}.
 % \subsection{Relationship to Galois Slicing}
 % \todo{Here we need to formally explain the relationship to galois connections, and why
 % this matters for us. We will need to formulate forward slicing as the De Morgan Dual of

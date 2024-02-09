@@ -1,16 +1,18 @@
 % Inline commentary
 \newcommand*{\CDnote}[1]{\todo{CD: #1}}
 \newcommand*{\DOnote}[1]{\todo{DO: #1}}
-\newcommand*{\JBnote[1]}{\todo{JB: #1}}
-\newcommand*{\MNnote[1]}{\todo{MN: #1}}
-\newcommand*{\RPnote[1]}{\todo{RP: #1}}
+\newcommand*{\JBnote}[1]{\todo{JB: #1}}
+\newcommand*{\MNnote}[1]{\todo{MN: #1}}
+\newcommand*{\RPnote}[1]{\todo{RP: #1}}
 
 \renewcommand*{\ruleName}[1]{\textcolor{gray}{\textnormal{\textsf{#1}}}}
 \newcommand*{\Lowlight}[1]{\textcolor{gray}{#1}}
 
 \renewcommand*{\join}{\vee}
 
+% comment macros
 \newcommand{\cd}[1]{\textcolor{teal}{[CD: #1]}}
+\newcommand{\jb}[1]{\textcolor{orange}{[JB: #1]}}
 
 \renewcommand*{\meet}{\wedge}
 \renewcommand*{\bigjoin}{\bigvee}
@@ -27,6 +29,7 @@
 \newcommand*{\demandR}{\triangledown}
 \newcommand*{\demandBy}[1]{demandedBy(#1)}
 \newcommand*{\demandByR}{\triangle}
+\newcommand*{\sufficientR}{\blacktriangle}
 \newcommand*{\restrict}[2]{#1\hspace{-0.3em}\mid_{#2}}
 \newcommand*{\funProd}[2]{\langle#1,#2\rangle}
 \newcommand*{\padArg}[2]{\hspace{-#2}#1\hspace{#2}}
@@ -142,7 +145,7 @@
 \newcommand*{\elimmapsto}{\mapsto}
 \newcommand*{\elimBind}[2]{{#1}\elimmapsto{#2}}
 \newcommand*{\elimConstr}[1]{\set{#1}}
-\newcommand*{\elimRecord}[2]{\elimBind{\exRecord{}_{#1}}{#2}}
+\newcommand*{\elimRecord}[2]{\elimBind{\exRecord{#1}}{#2}}
 \newcommand*{\elimVar}[2]{\elimBind{#1}{#2}}
 \newcommand*{\elimBranch}[1]{\{#1\}}
 
