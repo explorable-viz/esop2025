@@ -13,6 +13,7 @@ denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
 For a set $X$, we write $\compl{X}$ to denote it's complement.
 For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
 of $B$ within $A$. 
+\newline
 We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
 and join ($\vee$) distribute over each other, and for each element $x \in X$,
 there is a complement element $\compl{x} \in X$.
@@ -33,17 +34,18 @@ efficiently, using dynamic dependence graphs.
 \begin{definition}[Dynamic Dependence Graph]
    A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
-   exists if, in the original program, the value associated to $\alpha$
+   exists if in the evaluation of the program, the value associated to $\alpha$
    \textit{depends} on the value associated with $\alpha'$
-\end{definition}where the nodes represent values
+\end{definition}
 
 We shall not consider the details of how we arrive at a specific dependence graph
 until we reach \secref{core}. For now, it is enough to note that a dependence
-graph is computed as part of program evaluation.
+graph is computed as part of program evaluation, with the nodes associated to
+any value in the original program, or values which arise during execution.
 
-work diverges from traditional approaches to dynamic dependence graphs since we
-only consider one type of edge, in contrast to separately defining data and
-control-flow edges as in \citet{agrawal90}.
+This definition diverges somewhat from traditional approaches to dynamic dependence
+graphs since we only consider one type of edge -- a data dependency -- in contrast
+to separately defining data and control-flow edges as in \citet{agrawal90}.
 
 In each graph, we mark out a subset of the nodes, $X \subset V$ which represent
 the inputs to the program, and a subset of nodes $Y \subset V$ which represent
