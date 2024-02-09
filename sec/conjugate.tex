@@ -7,16 +7,9 @@ explain how we can refine queries on input-output relationships. Finally, we wil
 connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
-For a relation $D \subseteq X \times Y$, and a subset $X' \subseteq X$, we write
-$D[X']: \powerset{X} \to \powerset{Y}$ for the image of $X'$ under $D$.
-\DOnote{I've stared at this a few times and it confuses me.
-  Shouldn't this be $D[-]: \powerset{X} \to \powerset{Y}$
-  as $D[X'] \in \powerset{Y}$ and the same in the next part?}
-For a
-subset $Y' \subseteq Y$ we similarly write $\preim{D}[Y']: \powerset{Y} \to \powerset{X}$
-for the preimage of $Y'$ under $D$.
-Notationally, we make use of the fact that the image of $X'$ under a relation
-$D$ is equal to the preimage of $Y'$ under the inverse relation $D^{-1}$, \cd{and we write ... to mean ...}.
+For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
+denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$. 
+
 Also, for a set $X$, we write $\compl{X}$ to denote it's complement.
 For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
 of $B$ in $A$. 
@@ -119,9 +112,15 @@ for. This is because sufficiency means having all of the inputs required to
 produce an output. As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
-outputs that $X'$ is necessary for. We observe that, in general,
+outputs that $X'$ is necessary for. We make the observation that
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
+
+
+We shall make use of the fact that the image of $X'$ under a relation
+is equal to the preimage of $X'$ under the inverse relation $D^{-1}$, 
+ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
+
 
 We note that in general, these two operators do not form a Galois connection, since
 the composition of the two functions is not monotonic, see \figref{relation-not-galois}
@@ -157,9 +156,9 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
    $D[\param]$ and $\preim{D}[\param]$ are conjugate.
 \end{lemma}
 \begin{proof}
-   \todo{This isn't too much work}
+   \todo{Need to provide a proof for this.}
 \end{proof}
-\DOnote{Is this a standard result with a citation or is a proof needed here or in an appendix?}
+
 
 We use the following notation to give the functions for \textit{demands} and
 \textit{demanded by} for a relation:
