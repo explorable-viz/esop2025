@@ -251,6 +251,9 @@ the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
+\jb{Potentially want to move the natural language description for reaches here,
+which may also require moving the correctness proposition here. Probably the
+right plan.}
 
 Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
 $\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
@@ -276,12 +279,16 @@ related to the initially selected inputs.
 \begin{proof}
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
-
+\jb{Should include a corollary that applying reaches with the appropriate set on
+the opposite graph computes demanded by}
 \subsection{Relationship to Galois Slicing}
 We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 
+\jb{Need to provide a little more context on how this analysis works, which won't
+be too hard, since it's just describing how we can interpret this as "having all
+of the necessary values"}
 \begin{definition}[Sufficiency]
    For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
    inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
@@ -291,7 +298,7 @@ adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?
 \end{definition}
 It turns out that we can modify $\demandByR(\param)$ into this query on
 sufficiency, using the De Morgan Dual.
-
+\jb{"It turns out" feels like a bad lead in to this}
 \begin{definition}[De Morgan Dual]
    For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
    \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
@@ -336,7 +343,10 @@ provide a more efficient implementation of the sufficiency analyis, detailed in
    \todo{Also unsure if we put this here or in an appendix}
 \end{proof}
 
-\jb{Not sure how much of this can go here, or be moved to the related work section}
+\jb{Not sure how much of this can go here. Some of it should be moved further
+up, since it covers the way we recover the Galois connection with sufficiency
+and demands. Some of it can go into related work. On its own this paragraph
+does not provide enough information to be useful}
 It turns out that the Galois connection created with \textit{sufficiency} and
 \textit{demands} exactly mirrors a Galois connection used in the current state
 of the art for linked visualization work, \citet{perera22}. In that work, the
