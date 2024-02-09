@@ -22,23 +22,6 @@ We first introduce the syntax of our core language constructs (\secref{core:synt
 Throughout, we make use of the following notational convention for finite sequences and finite~maps:
 %
 
- \begin{definition}[Cons/snoc of finite sequences]\label{def:cons}
-    For finite sequence $\seq{a}$ and element $a$, write $a \cons \seq{a}$ for cons (prepending $a$ to $\seq{a}$)  and $\seq{a} \cons a$ for snoc (appending $a$ to $\seq{a}$).
- \end{definition}
-
-\begin{definition}[Disjoint union of finite maps]\label{def:disjoint-union}
-   For finite maps $M$, $M'$ with $\dom{M} \cap \dom{M'} = \emptyset$, define $M \disjunion M' = M \cup M'$.
-\end{definition}
-
-We also use the $\cons$ notation in \defref{cons} for sets and finite maps in the following way:
-
-\begin{definition}[Set insertion]
-   For set $A$ and element $a$,  write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
-\end{definition}
-\begin{definition}[Map extension]
-   For finite map $M$ and pair $(k : a)$,  write $(k : a) \cdot M$ or $M \cdot (k : a)$ to mean $M \disjunion \set{(k : a)}$.
-\end{definition}
-
 
 \subsection{Syntax and graph terms}
 \label{sec:core:syntax}
