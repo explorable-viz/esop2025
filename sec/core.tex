@@ -64,21 +64,21 @@ Regular terms include integer constants ranged over by $n, m$; variables ranged 
 
 As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions explained further in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}, explained further in \secref{core:continuations}.
 
-We define the graph terms $e$ of the language in \figref{syntax} as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely associates (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language constructs that correspond to vertices are values $v$ and patterns $w$.
+We define the graph terms $e$ of the language in \figref{syntax} as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely associates (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language construct that corresponds to vertices are values $v$.
 
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
 Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 \end{definition}
 
-\defref{core:vertices} then extends to values $v$, patterns $w$, and eliminators $\sigma$, all of which may themselves be vertices and/or contain other entities that are vertices. We introduce these constructs later.
+\defref{core:vertices} then extends to values $v$ and eliminators $\sigma$, which may themselves be vertices and/or contain other entities that are vertices. We introduce these constructs below.
 
-\subsubsection{Continuations, eliminators, and patterns}
+\subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
 A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects
 which can serve as a plausible desugaring target for surface-language pattern-matching constructs.
 (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
-against the initial part of a provided value as some \emph{pattern} $w$, which is either a variable, an integer, record, or data value, and then uses this to select a continuation $\kappa$ to be executed. The variable eliminator $\elimVar{x}{\kappa}$  matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that has fields $\seq{x}$, and binds variables $\seq{x}$ to the associated components of that record. Lastly, the eliminator $\elimConstr{\seq{c \mapsto \sigma}}$ for data values  provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each internal eliminator $\sigma$ continues by matching against the arguments of that constructor.
+against the initial part of a given value as either a variable, record, or data value, and then uses this to select a continuation $\kappa$ to be executed. The variable eliminator $\elimVar{x}{\kappa}$  matches any value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that has fields $\seq{x}$, and binds variables $\seq{x}$ to the associated components of that record. Lastly, the eliminator $\elimConstr{\seq{c \mapsto \sigma}}$ for data values  provides a branch $c \mapsto \sigma$ for each  constructor $c$ of some data type $D$, where each internal eliminator $\sigma$ continues by matching against the arguments of that constructor.
 
 \subsubsection{Values and environments}
 \label{sec:core:values}
