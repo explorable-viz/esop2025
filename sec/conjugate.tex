@@ -52,22 +52,18 @@ the inputs to the program, and a subset of nodes $Y \subset V$ which represent
 the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. In the opposite graph,
 this is flipped.
 
-Before we give the definitions of \textit{demands} and \textit{demanded by}, we
-shall provide some more intuition on our setting, and how it leads us to the
-conditions we need.
-
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
 can be read as $x$ is \textit{demanded by} $y$.
 
-Let us first consider the case when the relation is a function $f: X \to Y$.
+Let us first consider the case when the relation is itself a function $f: X \to Y$.
 If, for some input $x \in X$, we find that $f(x) = y$, for some $y \in Y$, we
 can say that $x$ is demanded by $y$, or that $x$ is sufficient to produce $y$.
 
 We do not, in general, wish to consider individual input or output values on their
 own. Instead, we like to consider sets of inputs, and sets of outputs. Thus we
-must lift the function to sets.
-It is well known that we can lift this function to the image and preimage functions of $f$:
+must lift the function to sets. The simplest way to do so would be to take the
+the image and preimage functions of $f$:
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
@@ -80,17 +76,19 @@ The above pair of functions forms the usual image/preimage Galois connection for
 \begin{lemma}[Galois Connection]
    $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
 \end{lemma}
-In this setting, it is possible to read the action of $f^{\star}$ on a set $X'$
+
+Taking this approach, it would be possible to read the action of $f^{\star}$ on a set $X'$
 as telling us which outputs $X'$ is sufficient for, since it tells us every output
-we can make with any element of $X'$, but also what the values of $x$ are necessary for.
-Similarly, we can read the action of $f_{\star}$
-on a set $Y'$ as telling us which inputs are necessary to make any element of $Y'$.
+we can make with any element of $X'$. We can also read $f^{\star}$ as telling us
+what the values of $x$ are necessary for. Similarly, we can read the action of
+$f_{\star}$ on a set $Y'$ as telling us which inputs are necessary to make any
+element of $Y'$.
 
 Whilst the above is attractive, this is not the generalization to sets of values
-that we want.  Firstly, since $D$ is a function, it requires that every input
-value is used by a program. In the realm of data analysis, this is
-not always true. We may take a very large table as our input, and only consider
-a subset of the columns. Secondly, by restricting ourselves to functions, we force
+that we want.  Firstly, restricting $D$ to behave like a function requires that
+every input value is used by a program. In the realm of data analysis, this is
+not always true. It is common that we take a large table as an input, but only
+make use of a subset of its columns. Secondly, by restricting $D$ to be a function, we force
 each input value to be used by only a single output value in a program. If the same
 input value is used in multiple ways, we would need to provide multiple copies
 of each input value.
@@ -98,8 +96,8 @@ of each input value.
 Thus, we cannot begin with functions from $X \to Y$, and consider the more general
 dependency relations instead. With a dependency relation, not every input needs to
 have an output which demands it, and an input may be used by multiple outputs.
-Thus, to generalize dependency to sets of inputs and sets of outputs, we can lift
-the relation to its image and preimage:
+We can then generalize a dependency relation to sets of inputs and sets of outputs,
+by lifting the relation to its image and preimage:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
    \begin{itemize}
