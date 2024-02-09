@@ -37,7 +37,7 @@ Throughout, we make use of the following notational convention for finite maps:
 
 Terms of the core language (called \emph{regular terms}) are ranged over by $\raw{e}$, defined in \figref{syntax}.
 Regular terms include integer constants ranged over by $n, m$; variables ranged over by $x, y, f$; let-bindings $\exLet{x}{e}{e'}$%
-; record construction $\exRec{\seq{\bind{x}{e}}}$, using the notation of \defref{finite-map}% which maps variables to terms (\defref{finite-map})
+; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
 ; record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
 ; and data values $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully saturated by arguments $\seq{e}$. A  constructor always inhabits a known data type $D$ and has an arity specified by $D$; we write $\datatype{c} = (n, D)$ to denote that $c$ takes $n \in \mathbb{N}$ arguments and constructs a value of data type $D$.
 
@@ -62,7 +62,7 @@ against the initial part of a provided value as some \emph{pattern} $w$, which i
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\rho, \gamma$ behave like finite maps but are extended using the operator $\cons$.
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\gamma, \rho$ behave like finite maps but are extended using the operator $\cons$.
 
 
 \subsubsection{Foreign functions}
