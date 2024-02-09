@@ -19,20 +19,26 @@ We first introduce the syntax of our core language constructs (\secref{core:synt
 % \input{fig/basic-elements}
 
 
-
+% \newpage
 \subsection{Syntax and graph terms}
 \label{sec:core:syntax}
 
-Throughout, we make use of the following notational convention for finite maps:
+Throughout, we make use of the following notational convention for finite maps and lists:
 %
 \begin{definition}[Finite map notation]\label{def:finite-map}
   Write $\set{\seq{\bind{k}{S}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{S_1}}{\bind{k_n}{S_n}}$
-  over some syntactic category $S$, where $\seqRange{k_1}{k_n}$ are pairwise unique.
+  over some syntactic category $S$, where keys $\seqRange{k_1}{k_n}$ are pairwise unique.
 \end{definition}
 
-\begin{definition}[Disjoint union of maps]\label{def:disjoint-union}
+\begin{definition}[Disjoint union of finite maps]\label{def:disjoint-union}
    For finite maps $m$, $m'$ with $\dom{m} \cap \dom{m'} = \emptyset$, define $m \disjunion m' = m \cup m'$.
 \end{definition}
+
+\begin{definition}[Cons/snoc of lists]\label{def:cons}
+   For element $a$ and list $\seq{a}$, we write $a \cons \seq{a}$ for cons (prepending $a$ to $\seq{a}$)  and $\seq{a} \cons a$ for snoc (appending $a$ to $\seq{a}$).
+\end{definition}
+
+\defref{cons} of $\cons$ extends to sets. For finite maps, $\cons$ also respects the ``disjoint keys'' constraint.
 
 \input{fig/core/syntax}
 
@@ -66,8 +72,7 @@ against the initial part of a provided value as some \emph{pattern} $w$, which i
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\gamma, \rho$ behave like finite maps but are extended using the operator $\cons$.
-
+Values $v$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and data values $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\gamma$ is the environment, and to support mutual recursion,  ${\rho}$ is the (possibly empty) environment of functions with which the original function was mutually~defined. Finally, value environments $\gamma, \rho$ are defined as finite maps.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
