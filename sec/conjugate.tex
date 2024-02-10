@@ -219,7 +219,7 @@ outgoing edges to all vertices in $U \subseteq V$.
    \begin{itemize}
       \item $\inE{G}(\alpha) \eqdef \set{(\beta, \alpha) \mid (\beta, \alpha) \in E}$\hfill (in edges)
       \item $\outE{G}(\alpha) \eqdef \set{(\alpha, \beta) \mid (\alpha, \beta) \in E}$\hfill (out edges)
-   \end{itemize} 
+   \end{itemize}
 \end{definition}
 \begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{U}}}$,
@@ -275,7 +275,7 @@ the input of interest, $X' \subseteq \sources{G}$. We proceed by finding all nod
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We compute this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
-The algorithm computes reachability by incrementally building a subgraph $G'$, 
+The algorithm computes reachability by incrementally building a subgraph $G'$,
 consisting of all nodes and edges that can be traversed from the initial starting set.
 $\demandsAlg{}$ begins by taking a set of nodes and accumulating their neighbours.
 Every time a new node is reached by traversing an edge, we enqueue its own
@@ -379,7 +379,7 @@ to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E
 Because the edges in the parent graph $G$ all point in the direction of inputs to
 outputs, computing the inward neighbours of a node is inefficient in the adjacency
 map. We therefore perform the check related to input neighbors of a node on the
-opposite adjacency map.  
+opposite adjacency map.
 
 Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
 The algorithm terminates when there are no more edges to be considered (\ruleName{$\fwdEdges{}$-pending}).
