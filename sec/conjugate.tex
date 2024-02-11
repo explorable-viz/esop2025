@@ -176,27 +176,27 @@ We now provide some detail on the computation of
 We shall also introduce some more notation, used to read the definitions of the
 algorithms in \figref{conjugate:reaches}.
 
-\begin{definition}[Finite sequences]\label{def:list}
-   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$. We also write $a \cons \seq{a}$ for
+\begin{notation*}[Finite sequences]\label{def:list}
+   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$.\\ We also write $a \cons \seq{a}$ for
    cons (prepend)  and $\seq{a} \cons a$ for snoc (append).
-\end{definition}
+\end{notation*}
 
 
-\begin{definition}[Finite maps]\label{def:finite-map}
+\begin{notation*}[Finite maps]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{a}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{a_1}}{\bind{k_n}{a_n}}$
    whose domain $\dom{\set{\seq{\bind{k}{a}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
-\end{definition}
+\end{notation*}
 
 
-\begin{definition}[Disjoint union]\label{def:disjoint-union}
+\begin{notation*}[Disjoint union]\label{def:disjoint-union}
    For sets $A$, $A'$ with $\dom{A} \cap \dom{A'} = \emptyset$, define $A \disjunion A' = A \cup A'$.
    We also write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
-\end{definition}
+\end{notation*}
 
 
 Whilst one can view a graph abstractly as a collection of vertices and edges, we
 will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
-\begin{definition}[Graphs as Finite Maps]
+\begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
    where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
 \end{definition}
