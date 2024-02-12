@@ -142,7 +142,7 @@ not always true. It is common that we take a large table as an input, but only
 make use of a subset of its columns. Secondly, by restricting $D$ to be a function, we force
 each input value to be used by only a single output value in a program. If the same
 input value is used in multiple ways, we would need to provide multiple copies
-of each input value.
+of each input value. \cd{I think it might be better to start with dependency relations, and then make the observation that, if they were functions, they would form a Galois connection (I believe Roly suggested this in one of the meetings).}
 
 Thus, we cannot begin with functions from $X \to Y$, and consider the more general
 dependency relations instead. With a dependency relation, not every input needs to
@@ -174,17 +174,19 @@ ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
 
 We note that in general, these two operators do not form a Galois connection, since
 the composition of the two functions is not monotonic, see \figref{relation-not-galois},
-contradicting a basic fact of Galois connections.
+contradicting a basic fact of Galois connections. \cd{The figure needs to be explained.}
 
 \input{fig/conjugate/relations-not-galois}
 
 Instead of a Galois connection, we shall instead see that these two functions are
 \textit{conjugate}, in the sense of \citet{jonsson51}:
 
+
+\cd{Going back to functions is confusing. Can't we talk directly about relations?}
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
    and $f_{\demandByR}: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
+   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ \cd{I'm confused by this type} are a \textit{conjugate pair}
    if the following holds:
    $$
    f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset
@@ -204,11 +206,13 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
-   $D_{\demandByR}(\param)$ and $D_{demandR}(\param)$ are conjugate.
+   $D_{\demandByR}(\param)$ and $D_{demandR}(\param)$ are conjugate. \cd{$D_{demandR}(\param)$ typo?}
 \end{lemma}
 \begin{proof}
    \todo{Need to provide a proof for this.}
+   \cd{I'm a bit confused about how this proof will look like, but we can talk about it.}
 \end{proof}
+
 
 We use the following notation to give the functions for \textit{demands} and
 \textit{demanded by} for a relation:
@@ -220,6 +224,8 @@ We use the following notation to give the functions for \textit{demands} and
    \end{itemize}
 \end{definition}
 
+\cd{The definition above looks like just notation now. Do you want to say more? Is this additional notation neccessary?}
+
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 We now provide some detail on the computation of
@@ -228,11 +234,14 @@ Whilst one can view a graph abstractly as a collection of vertices and edges, we
 will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
 \begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
-   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
+   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$.
 \end{definition}
+
+\cd{Do we need two definitions for the DDG?}
 
 Once a graph has been constructed, we must look at which nodes can be reached from
 other nodes by traversing edges in the graph.
+\cd{The reachability definition is very general. I would leave it as a known remark, rather than having it as a definition.}
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
@@ -263,7 +272,7 @@ a formal account of related inputs and related outputs queries.
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
-be reached by the things that reach me?". We can think of this notion as similar
+be reached by the things that reach me?". \cd{I think we need to relate more this intuition to the last def. You try to do this a bit in the next paragraph.} We can think of this notion as similar
 to that of "cognacy" in natural languages, for related outputs we are finding
 the common ancestors.
 
