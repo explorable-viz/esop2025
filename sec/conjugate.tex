@@ -1,15 +1,16 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
-
+\jb{If you have any issues with the direction of functions, or relations, I am already
+working on sorting those as part of my final pass over the section}
 We shall introduce some preliminary notions (\secref{conjugate:notation}), before building up the intuition
 needed to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read the
-algorithms that compute them (\secref{conjugate:dependence-graph-algos}). Then, we shall
-explain how we can refine queries on input-output relationships. Finally, we will describe the
+algorithms that compute them (\secref{conjugate:dependence-graph-algos}). Then, we will describe the
 connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
 \label{sec:conjugate:notation}
-
+We give some notation used throughout the rest of the paper, some of it standard,
+and some of it bespoke.
 % For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
 % denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
 
@@ -42,14 +43,14 @@ connection to the state-of-the-art in this area.
 
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-   For sets $X$, $Y$ with $\dom{X} \cap \dom{Y} = \emptyset$ \cd{$X \cap Y = \emptyset$?}, we define $X \disjunion Y = X \cup Y$.
+   For sets $X$, $Y$ with $X \cap Y = \emptyset$, we define $X \disjunion Y = X \cup Y$.
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
 \begin{notation*}[Set, complement set]\label{def:set-complement}
-   For a set $X$, we write $\compl{X}$ to denote its complement.\\
-   For two sets $X, Y$, we write $X \setminus Y \eqdef X \wedge \compl{Y}$ \cd{$X \setminus Y \eqdef X \cap \compl{Y}$?} for the relative complement
-   of $Y$ within $X$.
+   For a set $A$,  write $\compl{A}$ to denote it's complement.\\
+   For two sets, $A, B$, we write $A \setminus B \eqdef A \cap \compl{B}$ for the relative complement
+   of $B$, the set of elements of $A$ that are not in $B$
 \end{notation*}
 
 \begin{notation*}[Relation, inverse relation]\label{def:inverse-relation}
@@ -64,14 +65,15 @@ We also write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge.
 \end{notation*}
 
-We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
-and join ($\vee$) distribute over each other, and for each element $x \in X$,
-there is a complement element $\compl{x} \in X$.
+We use the standard notion of Boolean algebra as a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$
+with distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$)
+and join ($\vee$) which distribute over each other, and a unary operation negate ($\neg$).
 %
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
-the order is set inclusion $\subseteq$, and meet and join are given by intersection ($\cap$)
-and union ($\cup$), respectively.
+ordered by set inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is
+the whole set $X$, meet and join are given by intersection ($\cap$) and union ($\cup$)
+respectively, and negation is $\compl{X'}$.
 
 
 \subsection{Dependence Graphs}
@@ -92,6 +94,10 @@ a value in the original program, or to values arising during execution.
    \textit{depends} on the value associated with $\alpha'$. \cd{is this dependency direction correct? doesn't $\alpha'$ depend on $\alpha$?}
 \end{definition}
 
+We shall not consider the details of how we arrive at a specific dependence graph
+until we reach \secref{core}. For now, it is enough to know that a dependence
+graph is constructed during the evaluation of a program, with the nodes associated to
+values that are either present in the original program or arise during execution.
 
 This definition diverges somewhat from traditional approaches to dynamic dependence
 graphs since we only consider one type of edge -- a data dependency -- in contrast
@@ -111,10 +117,11 @@ Let us first consider the case when the relation is itself a function $f: X \to 
 If, for some input $x \in X$, we find that $f(x) = y$, for some $y \in Y$, we
 can say that $x$ is demanded by $y$, or that $x$ is sufficient to produce $y$.
 
-We do not, in general, wish to consider individual input or output values on their
-own. Instead, we like to consider sets of inputs, and sets of outputs. Thus we
-must lift the function to sets. The simplest way to do so would be to take the
-the image and preimage functions of $f$:
+We generally do not wish to restrict ourselves to considering only one input or
+output value at a time. Instead we need to be able to consider multiple inputs
+or outputs at once, requiring us to lift our function to operate on sets of values.
+The simplest way to do so would be to take the the image and preimage functions
+of $f$:
 \begin{definition}[Image and Preimage of a Function]
    For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
    \begin{itemize}
@@ -130,37 +137,38 @@ The above pair of functions forms the usual image/preimage Galois connection for
 
 Taking this approach, it would be possible to read the action of $f^{\star}$ on a set $X'$
 as telling us which outputs $X'$ is sufficient for, since it tells us every output
-we can make with any element of $X'$. We can also read $f^{\star}$ as telling us
+we can make using just the elements of $X'$. We can also read $f^{\star}$ as telling us
 what the values of $x$ are necessary for. Similarly, we can read the action of
 $f_{\star}$ on a set $Y'$ as telling us which inputs are necessary to make any
 element of $Y'$.
 
-Whilst the above is attractive, this is not the generalization to sets of values
-that we want.  Firstly, restricting $D$ to behave like a function requires that
+Whilst the above is attractive, this simple generalization fails for two reasons.
+Firstly, by restricting $D$ to behave like a function we require that
 every input value is used by a program. In the realm of data analysis, this is
-not always true. It is common that we take a large table as an input, but only
-make use of a subset of its columns. Secondly, by restricting $D$ to be a function, we force
+not always true. For example, is is common that we take a large table as an input, whilst
+only making use of a subset of its columns. Secondly, starting from a function forces
 each input value to be used by only a single output value in a program. If the same
 input value is used in multiple ways, we would need to provide multiple copies
 of each input value. \cd{I think it might be better to start with dependency relations, and then make the observation that, if they were functions, they would form a Galois connection (I believe Roly suggested this in one of the meetings).}
 
-Thus, we cannot begin with functions from $X \to Y$, and consider the more general
-dependency relations instead. With a dependency relation, not every input needs to
-have an output which demands it, and an input may be used by multiple outputs.
+Thus, we cannot begin with functions of type $X \to Y$, and consider more general
+dependency relations instead. With a dependency relation, there can be inputs
+which are not demanded by any output, and inputs can be demanded by multiple outputs.
 We can then generalize a dependency relation to sets of inputs and sets of outputs,
 by lifting the relation to its image and preimage:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
    \begin{itemize}
-      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
-      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+      \item $\demandByR_{D}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+In this setting, whilst we can still view the preimage $\demandR_{D}(Y')$ as
 finding the set of inputs which are necessary for the elements of $Y'$, we can
-no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
-for. This is because sufficiency means having all of the inputs required to
-produce an output. As a simple example, consider the expression $3 + 4$, neither
+no longer view $\demandByR_{D}(X')$ as the set of outputs that $X'$ is sufficient
+for. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
+$x_i \in X'$ for every $(x_i, y) \in D$.  
+As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
 outputs that $X'$ is necessary for. We make the observation that
@@ -169,12 +177,14 @@ outputs it is sufficient for.
 
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
+ie $\demandByR_{D}(X') = D^{-1}_{\demandR}(X')$. For the rest of the paper,
+when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
+and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 
 
-We note that in general, these two operators do not form a Galois connection, since
-the composition of the two functions is not monotonic, see \figref{relation-not-galois},
-contradicting a basic fact of Galois connections. \cd{The figure needs to be explained.}
+We note that these two operators do not always form a Galois connection, since
+the composition of the two functions is not necessarily monotonic, contradicting
+a basic fact of Galois connections, see \figref{relation-not-galois}. \cd{The figure needs to be explained.}
 
 \input{fig/conjugate/relations-not-galois}
 
@@ -184,29 +194,27 @@ Instead of a Galois connection, we shall instead see that these two functions ar
 
 \cd{Going back to functions is confusing. Can't we talk directly about relations?}
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
-   and $f_{\demandByR}: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ \cd{I'm confused by this type} are a \textit{conjugate pair}
+   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
+   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
+   we say that $(f, g): \powerset{X} \to \powerset{Y}$ \cd{I'm confused by this type} are a \textit{conjugate pair}
    if the following holds:
    $$
-   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset
+   f(X') \cap Y' = \emptyset \iff X' \cap g(Y') = \emptyset
    $$
    Or equivalently:
    $$
-   f_{\demandR}(X') \cap Y' \neq \emptyset \iff X' \cap f_{\demandByR}(Y') \neq \emptyset
+   f(X') \cap Y' \neq \emptyset \iff X' \cap g(Y') \neq \emptyset
    $$
 \end{definition}
 
 This makes sense as a condition for \textit{demands} and
-\textit{demanded by}: if for some subsets $X',Y'$, we find that the resources
+\textit{demanded by}: if for some subsets $X',Y'$, we find that the output values
 $X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
-of resources that $Y'$ demands to have an empty intersection with $X'$.
-
-\todo{Add a figure for conjugates}
+of input values that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
-   $D_{\demandByR}(\param)$ and $D_{demandR}(\param)$ are conjugate. \cd{$D_{demandR}(\param)$ typo?}
+   $\demandByR_{D}(\param)$ and $\demandR_{D}(\param)$ are conjugate.
 \end{lemma}
 \begin{proof}
    \todo{Need to provide a proof for this.}
@@ -214,34 +222,25 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
 \end{proof}
 
 
-We use the following notation to give the functions for \textit{demands} and
-\textit{demanded by} for a relation:
-\begin{definition}[Demands and Demanded by for a dependency relation]
-   For a relation $D \subseteq X \times Y$, define:
-   \begin{itemize}
-      \item $\demandR_D(X) = D_{\demandR}(X)$ \hfill (demands)
-      \item $\demandByR_D(Y) = D_{\demandByR}(Y)$ \hfill (demanded by)
-   \end{itemize}
-\end{definition}
-
-\cd{The definition above looks like just notation now. Do you want to say more? Is this additional notation neccessary?}
-
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
 Whilst one can view a graph abstractly as a collection of vertices and edges, we
 will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
+
 \begin{definition}[Graphs as finite maps]
-   A graph $G =(V,E)$ is a finite map $M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
-   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$.
+   A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
+   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
 \end{definition}
+We will often refer to a graph without explicitly referring to its representation
+as a map, or a pair of sets.
+Once a graph has been constructed, the set of nodes that a value is demanded by
+can be represented by the set of nodes which are reachable by traversing the
+edges of the graph.
 
-\cd{Do we need two definitions for the DDG?}
 
-Once a graph has been constructed, we must look at which nodes can be reached from
-other nodes by traversing edges in the graph.
-\cd{The reachability definition is very general. I would leave it as a known remark, rather than having it as a definition.}
+\cd{The reachability definition is very general. I would leave it as a notation + a bit of known background, rather than having it as a definition.}
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
@@ -249,15 +248,15 @@ other nodes by traversing edges in the graph.
 
 When we are considering a graph $G$ and its opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
-since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
-and \textit{demanded by} in terms of $R$.
+since $R_G^{-1} = R_{G^{-1}}$. For convenience when define \textit{demands}
+and \textit{demanded by} in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, we write
 
    \begin{itemize}
-      \item $\demandR_G$(X) \eqdef $\demandR_{R_G} (X)$ \hfill (demands)
-      \item $\demandByR_G$(Y) \eqdef $\demandByR_{R_G} (Y)$ \hfill (demanded by)
+      \item $\demandR_G(X) \eqdef \demandR_{R_G} (X)$ \hfill (demands)
+      \item $\demandByR_G(Y) \eqdef \demandByR_{R_G} (Y)$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
 
@@ -266,51 +265,57 @@ a formal account of related inputs and related outputs queries.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
-      \item $\relInput_{R_G} \eqdef \demandR_{R_G} \after \demandByR_{R_G}$\hfill (related inputs)
-      \item $\relOutput_{R_G} \eqdef \demandByR_{R_G} \after \demandR_{R_G}$\hfill (related outputs)
+      \item $\relInput_{G} \eqdef \demandR_{G} \after \demandByR_{G}$\hfill (related inputs)
+      \item $\relOutput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
 be reached by the things that reach me?". \cd{I think we need to relate more this intuition to the last def. You try to do this a bit in the next paragraph.} We can think of this notion as similar
 to that of "cognacy" in natural languages, for related outputs we are finding
-the common ancestors.
+the common ancestors, and for related inputs the common descendants. 
 
 To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
-We calculate this set by the algorithm detailed in \figref{conjugate:reaches}.
-\jb{Potentially want to move the natural language description for reaches here,
-which may also require moving the correctness proposition here. Probably the
-right plan.}
+We calculate this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
+$\demandsAlg{}$ works by taking a set of nodes and accumulating their neighbors.
+Everytime a new node is reached by traversing an edge, we enqueue its own
+neighbors, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
+If we traverse an edge and reach a node we've already met, we simply skip it
+(\ruleName{$\demandsVert{}$-skip})
+At the algorithms termination (\ruleName{$\demandsVert{}$-done}), we have traversed every
+edge and node reachable from the input set.
+Once it has terminated, and we have constructed the subgraph of demanded nodes,
+we filter out any nodes which do not appear as outputs by only considering the
+graphs set of sinks, $\sinks{G}$ (\ruleName{$\demandsAlg{}$}).
 
-Since $\demandByR(X) \subseteq \sources{G}$, we can take the result and apply
-$\demandR(\param)$. We can compute this be reusing \textit{reaches} on the
-opposite graph.
+Since $\demandByR(X) \subseteq \sinks{G}$, we must now take this set and apply
+$\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$ on the
+opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
 
 The procedure for computing related outputs is similar, we simply swap the order
 of operations.
-\input{fig/conjugate/reaches}
-
-The procedure detailed in \figref{conjugate:reaches} works by
-traversing the neighbors of the selected set of nodes, until no new neighbors
-can be found. The procedure builds a graph, $G'$, which is a subgraph of $G$
-corresponding to the subset of nodes in $G$ which are reachable from the input
-set. When it finishes running, we take $\sinks{G'}$ to be the set of outputs
-related to the initially selected inputs.
+\input{fig/conjugate/algorithms}
 \begin{proposition}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
    The following holds:
    $$
-      Y \reachesAlg{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
+      Y \demandsAlg{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
    $$
 \end{proposition}
 \begin{proof}
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
-\jb{Should include a corollary that applying reaches with the appropriate set on
-the opposite graph computes demanded by}
+
+\begin{corollary}
+   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sinks{G} \subset V$
+   the following holds:
+   $$
+      X' \demandsAlg{G^{-1}} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+   $$
+\end{corollary}
 \subsection{Relationship to Galois Slicing}
 We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
@@ -338,14 +343,11 @@ sufficiency, using the De Morgan Dual.
 \end{definition}
 
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$. Define:
-   $$
-      h \eqdef \dual{g}
-   $$
-   Then the following statements are equivalent:
+   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$.
+   The following statements are equivalent:
    \begin{itemize}
       \item $f$ and $g$ form a conjugate pair
-      \item $f$ and $h$ form a Galois connection
+      \item $f$ and $\dual{g}$ form a Galois connection
    \end{itemize}
 \end{proposition}
 
@@ -355,12 +357,24 @@ sufficiency, using the De Morgan Dual.
    $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$
 \end{lemma}
 
-Because of the lemma above, we could reuse \textit{reaches} in order to compute
-this, by taking the complements of the input sets, running \textit{reaches}, and
+Because of the lemma above, we could reuse $\demandsAlg{}$ in order to compute
+this, by taking the complements of the input sets, running $\demandsAlg{}$, and
 then complementing the output, however this could in practise be inefficient,
 since taking complements of large sets can be an expensive operation. We therefore
 provide a more efficient implementation of the sufficiency analyis, detailed in
 \figref{conjugate:slicing:forward}.
+
+The algorithm $\fwdAlg{G}$ similarly builds a subgraph of the overall dependence
+graph. Rather than automatically adding a node to the subgraph, when we reach a
+new node, we must first add it to a subgraph of pending nodes, which we mark $H$
+(\ruleName{$\fwdEdges{}$-pending}). A node $\alpha$ can only be moved
+from the pending graph $H$ to the current "sufficiency graph" $G'$ if every
+predecessor of $\alpha$ is already in $G'$. Then we can remove it from $H$ and add
+it to $G'$, whilst adding its descendants to $H$ (\ruleName{$\fwdAlg{}$-extend}).
+We are finished when there are no new edges to traverse, at which point we return
+$\sources{G'}$. It is possible for the algorithm to terminate with a non-empty
+pending graph (\ruleName{$\fwdEdges{}$-done}). If it does, then the nodes in the pending set can be thought of
+as representing values that the set only contains partial information for.
 
 \begin{proposition}[Forwards Computes Sufficency]
    For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subset V$
