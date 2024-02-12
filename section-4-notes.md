@@ -5,6 +5,10 @@
 - [ ] In the summarising statements for the language, include the name of the language (\OurLang) and point to the scatter plot source code as an example of a program written in the language. Mention that it is a pure functional language.
 - [ ] I would rename "regular terms" to "raw terms" (since "regular" can have technical meanings), and "graph terms" to just "terms". Introduce "terms" early -- at the same time as introducing raw terms, and explain the pattern of mutually inductive definition of e and raw e. I probably wouldn't describe terms as raw terms "indexed by" addresses but rather as "paired with".
 - [ ] It may be confusing to use the term "vertex" to refer to α at this stage. Terms are trees are graph and thus have vertices already and it might be less ambiguous to refer to the αs as "addresses" and then say that these addresses will (later) form the vertices of the graphs that we build.
+- [ ] Def. 4.1 (Vertices of a term). This should come later, when it becomes relevant. The sentence "which may themselves be vertices and/or contain [...] vertices" sounds odd, not sure how either of these things can "be" vertices (addresses).
+- [ ] For continuations, give some intuition, e.g.: "A continuation κ describes how an execution proceeds after a value is pattern-matched and is either of the form e or σ.
+- [ ] A record eliminator doesn't bind variables \seq{x} to the components of the record -- those bindings are specified by κ (via any variable eliminators contained therein). The \seq{x} in a record eliminator only specifies how to project out a corresponding sequence of values from the record.
+- [ ] "Trie" needs some citations. I would use the Hinze paper Generalising Generalised Tries. The Peyton-Jones citation might be better off without saying "technical report". "serve as a plausible desugaring target" feels a bit too similar to the wording from POPL 2022, maybe restate and say that the piecewise function definitions in \OurLang shown in e.g. Fig 6 are desugared into eliminators but we omit the details.
 
 ## Discussion points
 
