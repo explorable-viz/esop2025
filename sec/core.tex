@@ -133,43 +133,6 @@ The relation $\seq{v}, \kappa \match V, \gamma, e$  in \figref{core:pattern-matc
 
 A variable eliminator $\elimVar{x}{\kappa}$ applied to any value $v$ simply adds  binding $\bind{x}{v}$ to the environment and returns the vertices $\V(v)$ embedded in $v$. The eliminator $\elimRecord{\seq{y}}{\kappa}$ only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ (to return $\alpha$) if the variables in $\seq{y}$ are also fields in $\seq{x}$; this is enforced by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$ which simultaneously coincides those relevant values of $\seq{v}$ with $\seq{u}$. Those field values $\seq{u}$ are then unpacked and matched against, and the rest of original values matched afterwards. Lastly, an eliminator $(\elimBind{c}{\kappa}) \cons \sigma$ for a specific constructor $c$ only matches a value constructed by $c$; matching on a constructor's arguments is then similar to that of a record's fields.
 
-\subsection{Projecting In Environments For Focussed Queries}
-\todo{Here we need to talk about how we can take sets of inputs (resp: outputs), and consider
-the relationships between products of inputs and products of outputs. Doing this
-in a principled manner is effectively what allows us to perform focussed queries.}
-Our framework allows us to not only identify the inputs which are related to each
-other, but also allows us to establish relationships from inputs to inputs that
-are only contingent on some part of the total output.
-
-A related inputs query proceeds from inputs to outputs and back to inputs. We call
-the output which creates this relationship by combining information from multiple
-inputs the \textit{mediating output}. Relatively simple related input queries can
-highlight an important aspect of these mediating outputs, since the output by which
-our input is demanded can have multiple independent parts, which may each induce
-different relationships between inputs.
-
-Once we have run a related inputs query, we may determine that some of the related
-inputs are related by a part of the output we do not find interesting. Consider the
-example from our prior section. \todo{would rather use a different example here}
-
-Depending on the input selection, we may select the $x$ or $y$ (or both) fields
-of a circle in the scatter plot. Selecting a renewable energy sources \textit{capacity}
-field will find that it is demanded by both of the coordinate fields in the output.
-Then, running the backwards analysis, we find relationships to the various \textit{output}
-fields, as well as the \textit{capacity} fields of that nations non-renewable
-resources.
-
-In this situation, the question arises of how the different output fields induce
-different relationships as they often do. Suppose we are only interested in the
-related inputs induced by the $x$ coordinate. We can refine the query by restricting
-the demand induced by $y$. Modifying the output selection, we then proceed as normal
-by finding all the inputs that the modified output selection demands.
-
-We can proceed equivalently in the setting of related outputs, by making an initial
-output selection, identifying a subset of the inputs we are not interested in,
-and using that to filter out irrelevant related outputs, as we saw in
-\figrefTwo{example:related-outputs-2}{example:related-outputs-1}
-
 % \subsubsection{Products of Projections of Views}
 % Consider the situation where we have two input tables, say $A$ and $B$, which
 % work together to produce two output charts $C$ and $D$. If both charts use their
