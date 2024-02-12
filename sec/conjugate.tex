@@ -31,24 +31,24 @@ and some of it bespoke.
 % the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \begin{notation*}[Finite sequences]\label{def:list}
-   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$.\\ We also write $a \cons \seq{a}$ for
-   cons (prepend)  and $\seq{a} \cons a$ for snoc (append).
+   Write ${\seq{x}}$ to denote a finite sequence of elements $\seqRange{x_1}{x_n}$.\\ We also write $x \cons \seq{x}$ for
+   cons (prepend)  and $\seq{x} \cons x$ for snoc (append).
 \end{notation*}
 
 \begin{notation*}[Finite maps]\label{def:finite-map}
-   Write $\set{\seq{\bind{k}{a}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{a_1}}{\bind{k_n}{a_n}}$
-   whose domain $\dom{\set{\seq{\bind{k}{a}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
+   Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$
+   whose domain $\dom{\set{\seq{\bind{k}{x}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
 \end{notation*}
 
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-   For sets $A$, $A'$ with $\dom{A} \cap \dom{A'} = \emptyset$, define $A \disjunion A' = A \cup A'$.
-   We also write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
+   For sets $X$, $Y$ with $\dom{X} \cap \dom{Y} = \emptyset$ \cd{$X \cap Y = \emptyset$?}, we define $X \disjunion Y = X \cup Y$.
+   We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
 \begin{notation*}[Set, complement set]\label{def:set-complement}
    For a set $A$,  write $\compl{A}$ to denote it's complement.\\
-   For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
+   For two sets, $A, B$, we write $A \setminus B \eqdef A \cap \compl{B}$ for the relative complement
    of $B$, the set of elements of $A$ that are not in $B$
 \end{notation*}
 
@@ -58,8 +58,8 @@ and some of it bespoke.
 \end{notation*}
 
 \begin{notation*}[Graph, opposite graph]\label{def:opposite-graph}
-For a graph $G = (V,E)$,  write $\sources{G}$ for
-the source vertices in $G$, and $\sinks{G}$ for the sinks.
+For a graph $G = (V,E)$, we write $\sources{G}$ for
+the source vertices in $G$ and $\sinks{G}$ for the sinks.
 We also write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge.
 \end{notation*}
@@ -77,14 +77,20 @@ respectively, and negation is $\compl{X'}$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-We shall give an account of how we can compute related input and output queries
-efficiently, using dynamic dependence graphs.
+As mentioned earlier in the paper, we make use of dynamic dependence graphs. 
+%We shall give an account of how we can compute related input and output queries
+%efficiently, using dynamic dependence graphs.
+While we defer the details of how we arrive at a specific dependence graph
+until \secref{core}, for now we note that such a graph is computed as part
+of a program's evaluation, such that the graph's nodes are associated either to
+a value in the original program, or to values arising during execution.
+
 
 \begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where the nodes $\alpha \in V$
+   A dynamic dependence graph $G = (V,E)$ is a graph where \cd{a subset of?} the nodes $\alpha \in V$
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
-   exists if in the evaluation of the program, the value associated to $\alpha$
-   \textit{depends} on the value associated with $\alpha'$
+   exists if, in the evaluation of the program, the value associated to $\alpha$
+   \textit{depends} on the value associated with $\alpha'$. \cd{is this dependency direction correct? doesn't $\alpha'$ depend on $\alpha$?}
 \end{definition}
 
 We shall not consider the details of how we arrive at a specific dependence graph
@@ -96,10 +102,11 @@ This definition diverges somewhat from traditional approaches to dynamic depende
 graphs since we only consider one type of edge -- a data dependency -- in contrast
 to separately defining data and control-flow edges as in \citet{agrawal90}.
 
-In each graph, we mark out a subset of the nodes, $X \subset V$ which represent
-the inputs to the program, and a subset of nodes $Y \subset V$ which represent
+In each graph, we mark out a subset of the nodes, $X \subset V$, which represent
+the inputs to the program, and a subset of nodes $Y \subset V$, which represent
 the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. In the opposite graph,
-this is flipped.
+this is flipped. \cd{sometimes we talk about values in the program, other times we refer to inputs to the program, which I find confusing.
+Maybe we could even have a simple example of a DDG for clarification?}
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
