@@ -151,13 +151,13 @@ by lifting the relation to its image and preimage:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define:
    \begin{itemize}
-      \item $D_{\demandByR}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
-      \item $D_{\demandR}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+      \item $\demandByR_{D}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
+      \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
+In this setting, whilst we can still view the preimage $\demandR_{D}(Y')$ as
 finding the set of inputs which are necessary for the elements of $Y'$, we can
-no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
+no longer view $\demandByR_{D}(X')$ as the set of outputs that $X'$ is sufficient
 for. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
 $x_i \in X'$ for every $(x_i, y) \in D$.  
 As a simple example, consider the expression $3 + 4$, neither
@@ -169,7 +169,9 @@ outputs it is sufficient for.
 
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
+ie $\demandByR_{D}(X') = D^{-1}_{\demandR}(X')$. For the rest of the paper,
+when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
+and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 
 
 We note that these two operators do not always form a Galois connection, since
@@ -182,16 +184,16 @@ Instead of a Galois connection, we shall instead see that these two functions ar
 \textit{conjugate}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f_{\demandR}: \powerset{X} \to \powerset{Y}$
-   and $f_{\demandByR}: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $(f_{\demandR}, f_{\demandByR}): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
+   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
+   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
+   we say that $(f, g): \powerset{X} \to \powerset{Y}$ are a \textit{conjugate pair}
    if the following holds:
    $$
-   f_{\demandR}(X') \cap Y' = \emptyset \iff X' \cap f_{\demandByR}(Y') = \emptyset
+   f(X') \cap Y' = \emptyset \iff X' \cap g(Y') = \emptyset
    $$
    Or equivalently:
    $$
-   f_{\demandR}(X') \cap Y' \neq \emptyset \iff X' \cap f_{\demandByR}(Y') \neq \emptyset
+   f(X') \cap Y' \neq \emptyset \iff X' \cap g(Y') \neq \emptyset
    $$
 \end{definition}
 
@@ -204,21 +206,12 @@ of resources that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
-   $D_{\demandByR}(\param)$ and $D_{demandR}(\param)$ are conjugate.
+   $\demandByR_{D}(\param)$ and $\demandR_{D}(\param)$ are conjugate.
 \end{lemma}
 \begin{proof}
    \todo{Need to provide a proof for this.}
 \end{proof}
 
-We use the following notation to give the functions for \textit{demands} and
-\textit{demanded by} for a relation:
-\begin{definition}[Demands and Demanded by for a dependency relation]
-   For a relation $D \subseteq X \times Y$, define:
-   \begin{itemize}
-      \item $\demandR_D(X) = D_{\demandR}(X)$ \hfill (demands)
-      \item $\demandByR_D(Y) = D_{\demandByR}(Y)$ \hfill (demanded by)
-   \end{itemize}
-\end{definition}
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
