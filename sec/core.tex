@@ -56,7 +56,7 @@ trie-like objects which can serve as a plausible desugaring target for surface-l
 constructs. (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator specifies
 how to pattern-match and select a continuation $\kappa$ to be executed under additional variable bindings. The
 variable eliminator $\elimVar{x}{\kappa}$  matches any value and binds it to variable $x$. The record
-eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that has fields $\seq{x}$, and binds variables
+eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record with fields $\seq{x}$, and binds variables
 $\seq{x}$ to the associated components of that record. Finally, the eliminator $\elimConstr{\seq{c \mapsto
 \sigma}}$ for constructors provides a branch $c \mapsto \sigma$ for each constructor $c$ of some data type
 $D$, where each $\sigma$ continues by matching against the arguments of that constructor.
@@ -131,7 +131,15 @@ Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and gr
 
 The relation $\seq{v}, \kappa \match V, \gamma, e$  in \figref{core:pattern-matching} captures pattern-matching in a slightly unconventional way: by using a \emph{continuation} $\kappa$ to match a \emph{sequence} of values $\seq{v}$ (rather than an eliminator $\sigma$ that matches a single value $v$). It then returns vertices $V$ of the matched values  the taken branch depended on, the variable bindings $\gamma$ that arose during those matches, and a final term $e$ to be executed after all values have been matched. The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed -- i.e. when the sequence of values to be matched is empty, and so $e$ is treated as the final term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty sequence $v \cons \seq{v}$, and then recursing on  tail $\seq{v}$ with the continuation that was selected inside $\sigma$.
 
-A variable eliminator $\elimVar{x}{\kappa}$ applied to any value $v$ simply adds  binding $\bind{x}{v}$ to the environment and returns the vertices $\V(v)$ embedded in $v$. The eliminator $\elimRecord{\seq{y}}{\kappa}$ only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ (to return $\alpha$) if the variables in $\seq{y}$ are also fields in $\seq{x}$; this is enforced by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$ which simultaneously coincides those relevant values of $\seq{v}$ with $\seq{u}$. Those field values $\seq{u}$ are then unpacked and matched against, and the rest of original values matched afterwards. Lastly, an eliminator $(\elimBind{c}{\kappa}) \cons \sigma$ for a specific constructor $c$ only matches a value constructed by $c$; matching on a constructor's arguments is then similar to that of a record's fields.
+A variable eliminator $\elimVar{x}{\kappa}$ applied to any value $v$ simply adds binding $\bind{x}{v}$ to the
+environment and returns the vertices $\V(v)$ embedded in $v$. The eliminator $\elimRecord{\seq{y}}{\kappa}$
+only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ (to return $\alpha$) if the variables
+in $\seq{y}$ are also fields in $\seq{x}$; this is enforced by the premise $\exRec{\seq{\bind{y}{u}}}
+\subseteq \exRec{\seq{\bind{x}{v}}}$ which simultaneously coincides those relevant values of $\seq{v}$ with
+$\seq{u}$. Those field values $\seq{u}$ are then unpacked and matched against, and the rest of original values
+matched afterwards. Lastly, an eliminator $(\elimBind{c}{\kappa}) \cons \sigma$ for a specific constructor $c$
+only matches a value constructed by $c$; matching on a constructor's arguments is then similar to that of a
+record's fields.
 
 % \subsubsection{Products of Projections of Views}
 % Consider the situation where we have two input tables, say $A$ and $B$, which
