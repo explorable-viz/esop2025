@@ -295,8 +295,14 @@ related to the initially selected inputs.
 \begin{proof}
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
-\jb{Should include a corollary that applying reaches with the appropriate set on
-the opposite graph computes demanded by}
+
+\begin{corollary}
+   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sinks{G} \subset V$
+   the following holds:
+   $$
+      X' \demandsAlg{G^{-1}} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+   $$
+\end{corollary}
 \subsection{Relationship to Galois Slicing}
 We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
