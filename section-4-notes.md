@@ -3,7 +3,7 @@
 - [ ] Paragraph 1. Need a clearer picture of what this section sets out to achieve. Section 3 could be characterised as defining the abstract setting of dependence graphs and conjugate operators over such graphs. This section shows how we implement that graphical abstraction for the programming language used to implement the figures in Section 2. Then go on to unpack how we do that.
 - [ ] Merge closing sentence of para. 1 with opening sentence of para. 2; and the operational semantics doesn't really allow "the user to automatically compute demands/demanded by". As well as mentioning the big-step semantics, although mention the auxiliary definitions for dealing with pattern-matching and mutual recursion (as another a way of signposting the features of the language).
 - [ ] In the summarising statements for the language, include the name of the language (\OurLang) and point to the scatter plot source code as an example of a program written in the language. Mention that it is a pure functional language.
-- [ ] I would rename "regular terms" to "raw terms" (since "regular" can have technical meanings), and "graph terms" to just "terms". Introduce "terms" early -- at the same time as introducing raw terms, and explain the pattern of mutually inductive definition of e and raw e.
+- [ ] I would rename "regular terms" to "raw terms" (since "regular" can have technical meanings), and "graph terms" to just "terms". Introduce "terms" early -- at the same time as introducing raw terms, and explain the pattern of mutually inductive definition of e and raw e. I probably wouldn't describe terms as raw terms "indexed by" addresses but rather as "paired with".
 - [ ] It may be confusing to use the term "vertex" to refer to α at this stage. Terms are trees are graph and thus have vertices already and it might be less ambiguous to refer to the αs as "addresses" and then say that these addresses will (later) form the vertices of the graphs that we build.
 
 ## Discussion points
@@ -20,7 +20,7 @@ When introducing the graphical syntax, "term graph" is a potentially useful bit 
 
 There are design decisions about how to represent terms as graphs. For example, a "hash consing" representation would be legitimate (one that assigns the same address to all terms of the same shape). We just assume every subtree of the starting program has a unique address and moreover that every value constructed at runtime has a unique address. Other strategies in between these two are possible.
 
-We should also clarify what it means for a term to be well-formed (w.r.t. to any addresses contained within it). The requirement is that if any two subtrees have the same address then they be identical (not just have the same shape). So (3_α, 4_α) is ill-formed but (3_α, 3_α) is ok and would be an example of hash-consing.
+We should also clarify what it means for a term to be well-formed (w.r.t. to any addresses contained within it, i.e. what counts as a valid labellig of subtrees with addresses). The requirement is that if any two subtrees have the same address then they be identical (not just have the same shape). So (3_α, 4_α) is ill-formed but (3_α, 3_α) is ok and would be an example of hash-consing.
 
 ### Graph evaluation
 
