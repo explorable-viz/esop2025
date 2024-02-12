@@ -1,63 +1,65 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \reachesAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
+      {\small \flushleft \shadebox{$V \demandsAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sources{\hat{G}}$ and $V' \subseteq \sinks{\hat{G}}$}
          \begin{smathpar}
             \inferrule*[
-               lab={\ruleName{$\reachesAlg{}$}}
+               lab={\ruleName{$\demandsAlg{}$}}
             ]
             {
                (\emptyset, \emptyset), V
-               \reachesVert{\hat{G}}
+               \demandsVert{\hat{G}}
                G
             }
             {
-               V \reachesAlg{\hat{G}} \sinks{G}
+               V \demandsAlg{\hat{G}} \sinks{G}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, V \reachesVert{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
+         {\small \flushleft \shadebox{$G, V \demandsVert{\hat{G}} G'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$}
          \begin{smathpar}
          \inferrule*[
-            lab={\ruleName{$\reachesVert{}$-done}}
+            lab={\ruleName{$\demandsVert{}$-done}}
          ]
          {
             \strut
          }
          {
-            G, \emptyset \reachesVert{\hat{G}} G
+            G, \emptyset \demandsVert{\hat{G}} G
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\reachesVert{}$-skip}},
+            lab={\ruleName{$\demandsVert{}$-skip}},
             right={$\alpha \in \V(G)$}
          ]
          {
             G, V
-            \reachesVert{\hat{G}}
+            \demandsVert{\hat{G}}
             G'
          }
          {
-            G, \alpha \cons V \reachesVert{\hat{G}} G'
+            G, \alpha \cons V \demandsVert{\hat{G}} G'
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\reachesVert{}$-extend}},
+            lab={\ruleName{$\demandsVert{}$-extend}},
             right={$H = \set{\bind{\alpha}{V'}}$}
          ]
          {
             G \disjunion H, V' \disjunion V
-            \reachesVert{\hat{G} \disjunion H}
+            \demandsVert{\hat{G} \disjunion H}
             G'
          }
          {
-            G, \alpha \cons V \reachesVert{\hat{G} \disjunion H} G'
+            G, \alpha \cons V \demandsVert{\hat{G} \disjunion H} G'
          }
          \end{smathpar}}
+         \caption{Computation of Demands/Demanded By}
+         \label{fig:conjugate:algorithms:demands}
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
@@ -127,5 +129,5 @@
    \label{fig:conjugate:slicing:forward}
    \end{subfigure}
    \caption{Find Reachable nodes}
-   \label{fig:conjugate:reaches}
+   \label{fig:conjugate:algorithms}
 \end{figure}
