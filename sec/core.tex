@@ -1,11 +1,18 @@
-\section{A Core Language for Transparent Research Outputs}
+\section{A Core Language with Graphical Syntax and Semantics}
 \label{sec:core}
 
-In \secref{conjugate}, we formalised a notion of \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) as conjugate operators, and showed how these could be used to derive sets of related inputs and related outputs from a given dependence graph. This section shifts from the setting of graphs to that of programs, by showing how to represent (parts of) programs as vertices in a graph. We present a core calculus for a functional language whose operational semantics pairs each program and output with an accompanying dependence graph,  allowing the user to automatically compute $\demandR$ and $\demandByR$.
+In \secref{conjugate} we \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) as conjugate
+operators over dependence graphs and showed how these could be used to derive sets of related inputs and
+related outputs from a given graph. This section shifts from the setting of graphs to that of programs, by
+showing how to represent (parts of) programs as vertices in a graph \todo{}. We present a core calculus for a
+functional language whose operational semantics pairs each program and output with an accompanying dependence
+graph,  allowing the user to automatically compute $\demandR$ and $\demandByR$.
 
-\todo{ Insert some summarising statements about our language, e.g. being untyped, how general the calculus is, what we implement it in, whether it can be easily reimplemented in other host languages, etc. }
+\todo{Insert some summarising statements about our language, e.g. being untyped, how general the calculus is, what we implement it in, whether it can be easily reimplemented in other host languages, etc. }
 
-We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a big-step operational semantics that simultaneously (i) evaluates a program to a value and (ii) constructs a dynamic dependence graph of that evaluation process (\secref{core:semantics}).
+We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a
+big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs a
+dynamic dependence graph for the evaluation of that term (\secref{core:semantics}).
 
 Throughout, we make use of the notation for finite sequences and finite~maps from \secref{conjugate:dependence-graph-algos}.
 %
