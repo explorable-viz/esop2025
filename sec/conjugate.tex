@@ -227,12 +227,14 @@ We now provide some detail on the computation of
 Whilst one can view a graph abstractly as a collection of vertices and edges, we
 will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
 \begin{definition}[Graphs as finite maps]
-   A graph $G =(V,E)$ is a finite map $M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
+   A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
    where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
 \end{definition}
-
-Once a graph has been constructed, we must look at which nodes can be reached from
-other nodes by traversing edges in the graph.
+We will often refer to a graph without explicitly referring to its representation
+as a map, or a pair of sets.
+Once a graph has been constructed, the set of nodes that a value is demanded by
+can be represented by the set of nodes which are reachable by traversing the
+edges of the graph.
 \begin{definition}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
