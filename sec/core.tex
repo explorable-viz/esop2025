@@ -109,8 +109,8 @@ $\alpha'$ with outgoing edges to all vertices in $\alpha \cons V$, expressing th
 depended on the original term $n_\alpha$ alongside any other inputs that were found in $V$. Variable
 evaluation is standard, and the returned dependence graph is empty due to no new vertices being constructed
 from simply looking up values. Evaluation of an anonymous function $\exFun{\sigma}$ constructs the closure
-$\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ as a new vertex, capturing is the current environment $\gamma$
-and using $\envEmpty$ as the set of associated mutually recursive definitions.
+$\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ as a new vertex, capturing the current environment $\gamma$ and
+using $\envEmpty$ as the set of associated mutually recursive definitions.
 
 The rule for records $\annRec{\seq{\bind{x}{e}}}{\alpha}$ evaluates the sequence of terms $\seq{e}$ associated
 with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha'}$ as a fresh vertex
