@@ -158,8 +158,9 @@ by lifting the relation to its image and preimage:
 In this setting, whilst we can still view the preimage $D_{\demandR}(Y')$ as
 finding the set of inputs which are necessary for the elements of $Y'$, we can
 no longer view $D_{\demandByR}(X')$ as the set of outputs that $X'$ is sufficient
-for. This is because sufficiency means having all of the inputs required to
-produce an output. As a simple example, consider the expression $3 + 4$, neither
+for. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
+$x_i \in X'$ for every $(x_i, y) \in D$.  
+As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
 outputs that $X'$ is necessary for. We make the observation that
@@ -171,9 +172,9 @@ is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
 ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
 
 
-We note that in general, these two operators do not form a Galois connection, since
-the composition of the two functions is not monotonic, see \figref{relation-not-galois},
-contradicting a basic fact of Galois connections.
+We note that these two operators do not always form a Galois connection, since
+the composition of the two functions is not necessarily monotonic, contradicting
+a basic fact of Galois connections, see \figref{relation-not-galois}.
 
 \input{fig/conjugate/relations-not-galois}
 
