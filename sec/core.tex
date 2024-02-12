@@ -53,14 +53,13 @@ Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 \label{sec:core:continuations}
 A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
 trie-like objects which can serve as a plausible desugaring target for surface-language pattern-matching
-constructs. (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator matches
-against the initial part of a given value as either a variable, record or constructor, and then uses this to
-select a continuation $\kappa$ to be executed. The variable eliminator $\elimVar{x}{\kappa}$  matches any
-value and binds it to variable $x$. The record eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that
-has fields $\seq{x}$, and binds variables $\seq{x}$ to the associated components of that record. Finally, the
-eliminator $\elimConstr{\seq{c \mapsto \sigma}}$ for constructors provides a branch $c \mapsto \sigma$ for
-each constructor $c$ of some data type $D$, where each $\sigma$ continues by matching against the arguments of
-that constructor.
+constructs. (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator specifies
+how to pattern-match and select a continuation $\kappa$ to be executed under additional variable bindings. The
+variable eliminator $\elimVar{x}{\kappa}$  matches any value and binds it to variable $x$. The record
+eliminator $\elimRecord{\seq{x}}{\kappa}$ matches a record that has fields $\seq{x}$, and binds variables
+$\seq{x}$ to the associated components of that record. Finally, the eliminator $\elimConstr{\seq{c \mapsto
+\sigma}}$ for constructors provides a branch $c \mapsto \sigma$ for each constructor $c$ of some data type
+$D$, where each $\sigma$ continues by matching against the arguments of that constructor.
 
 \subsubsection{Values and environments}
 \label{sec:core:values}
