@@ -1,24 +1,72 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
-We shall introduce some preliminary notions, before building up the intuition
-needed to formally define \textit{demands} and \textit{demanded by}. Then, we shall
+We shall introduce some preliminary notions (\secref{conjugate:notation}), before building up the intuition
+needed to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read the
+algorithms that compute them (\secref{conjugate:dependence-graph-algos}). Then, we shall
 explain how we can refine queries on input-output relationships. Finally, we will describe the
 connection to the state-of-the-art in this area.
 
 \subsection{Background notions and notation}
-For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
-denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$. 
+\label{sec:conjugate:notation}
 
-For a set $X$, we write $\compl{X}$ to denote it's complement.
-For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
-of $B$ within $A$. 
-\newline
-We use the standard notion of Boolean algebra as a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$
-with distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$)
-and join ($\vee$) which distribute over each other, and a unary operation negate ($\neg$).
-When working with multiple Boolean algebras, we will often omit the tuples, and instead
-subsript the operations with the underlying set, ie $\wedge_A$ or $\neg_A$.
+% For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
+% denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
+
+% For a set $X$, we write $\compl{X}$ to denote it's complement.
+% For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
+% of $B$ within $A$.
+% \newline
+% We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
+% and join ($\vee$) distribute over each other, and for each element $x \in X$,
+% there is a complement element $\compl{x} \in X$.
+% %
+% For the rest of this section, when we refer to Boolean algebras, we usually mean
+% the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
+% the order is set inclusion $\subseteq$, and meet and join are given by intersection ($\cap$)
+% and union ($\cup$), respectively.
+
+% For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
+% where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
+% the source vertices in a graph, and $\sinks{G}$ for the sinks.
+
+\begin{notation*}[Finite sequences]\label{def:list}
+   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$.\\ We also write $a \cons \seq{a}$ for
+   cons (prepend)  and $\seq{a} \cons a$ for snoc (append).
+\end{notation*}
+
+\begin{notation*}[Finite maps]\label{def:finite-map}
+   Write $\set{\seq{\bind{k}{a}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{a_1}}{\bind{k_n}{a_n}}$
+   whose domain $\dom{\set{\seq{\bind{k}{a}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
+\end{notation*}
+
+
+\begin{notation*}[Disjoint union]\label{def:disjoint-union}
+   For sets $A$, $A'$ with $\dom{A} \cap \dom{A'} = \emptyset$, define $A \disjunion A' = A \cup A'$.
+   We also write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
+\end{notation*}
+
+\begin{notation*}[Set, complement set]\label{def:set-complement}
+   For a set $A$,  write $\compl{A}$ to denote it's complement.\\
+   For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
+   of $B$ within $A$.
+\end{notation*}
+
+\begin{notation*}[Relation, inverse relation]\label{def:inverse-relation}
+   For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
+   denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
+\end{notation*}
+
+\begin{notation*}[Graph, opposite graph]\label{def:opposite-graph}
+For a graph $G = (V,E)$,  write $\sources{G}$ for
+the source vertices in $G$, and $\sinks{G}$ for the sinks.
+We also write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
+where $\param^{-1}$ denotes the inverse of an edge.
+\end{notation*}
+
+We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
+and join ($\vee$) distribute over each other, and for each element $x \in X$,
+there is a complement element $\compl{x} \in X$.
 %
 For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
@@ -26,11 +74,9 @@ ordered by set inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top i
 the whole set $X$, meet and join are given by intersection ($\cap$) and union ($\cup$)
 respectively, and negation is $\compl{X'}$.
 
-For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
-where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
-the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \subsection{Dependence Graphs}
+\label{sec:conjugate:dependence-graphs}
 We shall give an account of how we can compute related input and output queries
 efficiently, using dynamic dependence graphs.
 
@@ -120,7 +166,7 @@ the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
 We shall make use of the fact that the image of $X'$ under a relation
-is equal to the preimage of $X'$ under the inverse relation $D^{-1}$, 
+is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
 ie $D_{\demandByR}(X') = D^{-1}_{\demandR}(X')$.
 
 
@@ -173,44 +219,14 @@ We use the following notation to give the functions for \textit{demands} and
 \end{definition}
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
-\label{conjugate:dependence-graph-algos}
+\label{sec:conjugate:dependence-graph-algos}
 We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
-We shall also introduce some more notation, used to read the definitions of the
-algorithms in \figref{conjugate:algorithms}.
-
-\begin{definition}[Finite Sequences]\label{def:list}
-   Write ${\seq{a}}$ to denote a finite sequence of elements $\seqRange{a_1}{a_n}$.
-\end{definition}
-
-\begin{definition}[Cons/snoc of finite sequences]\label{def:cons}
-   For finite sequence $\seq{a}$ and element $a$, write $a \cons \seq{a}$ for
-   cons (prepending $a$ to $\seq{a}$)  and $\seq{a} \cons a$ for snoc (appending $a$ to $\seq{a}$).
-\end{definition}
-
-\begin{definition}[Finite Maps]\label{def:finite-map}
-   Write $\set{\seq{\bind{k}{a}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{a_1}}{\bind{k_n}{a_n}}$
-   where keys $\seqRange{k_1}{k_n}$ are pairwise unique.
-\end{definition}
-
-Whilst we can view a graph abstractly as a collection of vertices and edges, it
-will be concretely represented as a finite map.
-\begin{definition}[Graphs as Finite Maps]
-   A graph $G =(V,E)$ can be viewed as a finite map $M \eqdef \set{\seq{\bind{v}{\seq{a}}}}$,
-   where a pair $\bind{v}{\seq{a}} \in M \iff v \in V$ and $(v, a_i) \in E$ for all $a_i \in \seq{a}$
-\end{definition}
-
-\begin{definition}[Disjoint union of finite maps]\label{def:disjoint-union}
-   For finite maps $M$, $M'$ with $\dom{M} \cap \dom{M'} = \emptyset$, define $M \disjunion M' = M \cup M'$.
-\end{definition}
-
-We also use the $\cons$ notation in \defref{cons} for sets and finite maps in the following way:
-
-\begin{definition}[Set insertion]
-   For set $A$ and element $a$,  write $a \cdot A$ or $A \cdot a$ to mean $A \disjunion \set{a}$.
-\end{definition}
-\begin{definition}[Map extension]
-   For finite map $M$ and pair $(k : a)$,  write $(k : a) \cdot M$ or $M \cdot (k : a)$ to mean $M \disjunion \set{(k : a)}$.
+Whilst one can view a graph abstractly as a collection of vertices and edges, we
+will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
+\begin{definition}[Graphs as finite maps]
+   A graph $G =(V,E)$ is a finite map $M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
+   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
 \end{definition}
 
 Once a graph has been constructed, we must look at which nodes can be reached from
@@ -225,7 +241,7 @@ we will abuse the notation for the preimage and image of $R$,
 since $R_G^{-1} = R_{G^{-1}}$. We can now define \textit{demands}
 and \textit{demanded by} in terms of $R$.
 
-\begin{definition}[Demands and Demanded By on a Graph]
+\begin{definition}[Demands and Demanded By on a graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, we write
 
    \begin{itemize}
@@ -322,7 +338,7 @@ sufficiency, using the De Morgan Dual.
 \begin{lemma}[Sufficiency is the dual of necessity]
    For a graph $G = (V,E)$ with inputs $X \subseteq V$ of the inputs $X \subseteq X$
    the following holds:
-   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$ 
+   $$\dual{\demandByR_G(X')} = \sufficientR_G(X')$$
 \end{lemma}
 
 Because of the lemma above, we could reuse \textit{demands} in order to compute
@@ -356,4 +372,4 @@ between inputs and outputs. Their work relies on rewinding and replaying this
 execution trace with different selection states, meaning it takes time proportional
 to the execution of the original program. In contrast, running slicing queries
 over a graph is efficient, only taking time proportional to the portion of the
-graph that's actually traversed. 
+graph that's actually traversed.
