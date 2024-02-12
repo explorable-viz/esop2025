@@ -9,6 +9,9 @@
 - [ ] For continuations, give some intuition, e.g.: "A continuation κ describes how an execution proceeds after a value is pattern-matched and is either of the form e or σ.
 - [ ] A record eliminator doesn't bind variables \seq{x} to the components of the record -- those bindings are specified by κ (via any variable eliminators contained therein). The \seq{x} in a record eliminator only specifies how to project out a corresponding sequence of values from the record. Maybe it would be better to rewrite this section to say what eliminators "are" rather than what they "do" (since what they "do" is given by pattern-matching). E.g. a record eliminator {\seq{x}} \mapsto κ specifies how to match a record with fields \seq{x} and provides a continuation κ which will be used to match the values of those fields, a constructor eliminator provides a branch c \mapsto σ for each constructor and where each σ specifies how the arguments to that constructor will be matched, etc.
 - [ ] "Trie" needs some citations. I would use the Hinze paper Generalising Generalised Tries. The Peyton-Jones citation might be better off without saying "technical report". "serve as a plausible desugaring target" feels a bit too similar to the wording from POPL 2022, maybe restate and say that the piecewise function definitions in \OurLang shown in e.g. Fig 6 are desugared into eliminators but we omit the details.
+- [ ] 4.1.4 Foreign functions: this could maybe come earlier, e.g. when we first introduce the language and introduce Σ for constructors (given the similarity between Φ and Σ).
+- [ ] "has an arity specified by D" seems redundant given what follows and arguably it is Σ not D that specifies the arity. Is D actually used anywhere? (It's used in the typing judgements which are currently not included and probably in the desugaring when checking e.g. that clauses of a function all match the same datatype, which is also not included, so it may be better to drop it.)
+- [ ] The side-condition in the constructor rule could inline n and if D were omitted too then this would simplify further.
 
 ## Discussion points
 
@@ -31,3 +34,4 @@ We should also clarify what it means for a term to be well-formed (w.r.t. to any
 We need to point out that there are also design choices here about what kind of dependency information to capture. For example, whether to only store value-value dependencies or also store value-expression dependencies. (We probably need some other examples; the usual "control" vs. "data" distinction probably doesn't apply in our pure setting, though.)
 
 Regarding our own language, there may be a case for omitting expression dependencies. They aren't made use of anywhere in the examples. The implementation currently ignores them (projecting away the e in γ, e). It might make more sense to omit them and include the discussion in future work about intensional transparency.
+
