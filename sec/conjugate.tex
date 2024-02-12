@@ -266,8 +266,8 @@ To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
-We calculate this set by the algorithm $\demandsAlg$ detailed in \figref{conjugate:algorithms:demands}.
-$\demandsAlg$ works by taking a set of nodes and accumulating their neighbors.
+We calculate this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
+$\demandsAlg{}$ works by taking a set of nodes and accumulating their neighbors.
 Everytime a new node is reached by traversing an edge, we enqueue its own
 neighbors, and add it to the graph we are constructing. At the algorithms
 termination, we have traversed every edge and node reachable from the input set.
@@ -276,7 +276,7 @@ we filter out any nodes which do not appear as outputs by only considering the
 graphs set of sinks, $\sinks{G}$.
 
 Since $\demandByR(X) \subseteq \sinks{G}$, we must now take this set and apply
-$\demandR(\param)$. We can compute this be reusing $\demandsAlg$ on the
+$\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$ on the
 opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
 
 The procedure for computing related outputs is similar, we simply swap the order
@@ -347,6 +347,17 @@ then complementing the output, however this could in practise be inefficient,
 since taking complements of large sets can be an expensive operation. We therefore
 provide a more efficient implementation of the sufficiency analyis, detailed in
 \figref{conjugate:slicing:forward}.
+
+The algorithm $\fwdAlg{G}$ similarly builds a subgraph of the overall dependence
+graph. Rather than automatically adding a node to the subgraph, we must first
+add it to a subgraph of pending nodes, which we mark $H$. A node $\alpha$ can only be moved
+from the pending graph $H$ to the current "sufficiency graph" $G'$ if every
+predecessor of $\alpha$ is already in $G'$. Then we can remove it from $H$ and add
+it to $G'$, whilst adding its descendants to $H$ ($\fwdAlg{G}$-extend).
+We are finished when there are no new edges to traverse, at which point we return
+$\sources{G'}$. It is possible for the algorithm to terminate with a non-empty
+pending graph. If it does, then the nodes in the pending set can be thought of
+as representing values that the set only contains partial information for.
 
 \begin{proposition}[Forwards Computes Sufficency]
    For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subset V$
