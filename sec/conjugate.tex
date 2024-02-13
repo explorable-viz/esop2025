@@ -92,6 +92,7 @@ a value in the original program, or to values arising during execution.
    represent values in the original program, and an edge $(\alpha, \alpha') \in E$
    exists if, in the evaluation of the program, the value associated to $\alpha$
    \textit{depends} on the value associated with $\alpha'$. \cd{is this dependency direction correct? doesn't $\alpha'$ depend on $\alpha$?}
+   \jb{nodes represent inputs to the program or values produced during the programs execution.}
 \end{definition}
 
 We shall not consider the details of how we arrive at a specific dependence graph
@@ -196,7 +197,7 @@ Instead of a Galois connection, we shall instead see that these two functions ar
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
    and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $(f, g): \powerset{X} \to \powerset{Y}$ \cd{I'm confused by this type} are a \textit{conjugate pair}
+   we say that $f, g$ form a \textit{conjugate pair}
    if the following holds:
    $$
    f(X') \cap Y' = \emptyset \iff X' \cap g(Y') = \emptyset
