@@ -189,6 +189,23 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
    \cd{I'm a bit confused about how this proof will look like, but we can talk about it.}
 \end{proof}
 
+We observe that restricting the graphs set of inputs $X$ and outputs $Y$ such that there are
+no inputs which are unused, then $\demandR$ will preserve $\bot$, ie $\demandR(\emptyset) = \emptyset$.
+\begin{lemma}
+   If $\demandByR_D(\emptyset) = \emptyset$, then $\demandR \after \demandByR$ is monotonically
+   increasing.
+\end{lemma}
+Similarly, if we have no outputs which are free, then $\demandByR$ will also
+preserve $\bot$, so $\demandByR(\emptyset) = \emptyset$.
+\begin{lemma}
+   If $\demandR_D(\emptyset) = \emptyset$, then $\demandByR \after \demandR$ is monotonically
+   increasing.
+\end{lemma}
+As a corollary, if both of the above lemma's are true, then $\demandR$ and $\demandByR$ actually
+do form a(n antitone) Galois connection. This is useful to know, since we may be
+working in a context where we wish to consider a filtered view of the data, where
+the user is shown only the data used by the original program. 
+
 As an aside, let us now consider the case when $D$ is itself a function. In this
 case, all inputs need to be used, and each input can only be used once. If that
 is the case, then taking the image and preimage of the function doesn't just create
