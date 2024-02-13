@@ -1,7 +1,7 @@
 \section{A Core Language with Graphical Syntax and Semantics}
 \label{sec:core}
 
-In \secref{conjugate} we \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) as conjugate
+In \secref{conjugate} we defined \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) as conjugate
 operators over dependence graphs and showed how these could be used to derive sets of related inputs and
 related outputs from a given graph. This section shifts from the setting of graphs to that of programs, by
 showing how to represent (parts of) programs as vertices in a graph. We present a core calculus for a
@@ -51,7 +51,8 @@ Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
-A \emph{continuation} $\kappa$ is either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
+A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
+either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
 trie-like objects which can serve as a plausible desugaring target for surface-language pattern-matching
 constructs. (\citet{peytonjones2021} present a similar idea in a technical report.) An eliminator specifies
 how to pattern-match and select a continuation $\kappa$ to be executed under additional variable bindings. The
