@@ -306,10 +306,10 @@ The procedure for computing related outputs is similar, we simply swap the order
 of operations.
 \input{fig/conjugate/algorithms}
 \begin{proposition}[Reaches Computes Demands]
-   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sources{G} \subset V$
+   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
    The following holds:
    $$
-      Y \demandsAlg{G} \sinks{G'} \iff \demandR_G(Y) = \sinks{G'}
+      Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
    $$
 \end{proposition}
 \begin{proof}
@@ -317,7 +317,7 @@ of operations.
 \end{proof}
 
 \begin{corollary}
-   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sinks{G} \subset V$
+   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
    the following holds:
    $$
       X' \demandsAlg{G^{-1}} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
