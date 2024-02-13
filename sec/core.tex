@@ -7,8 +7,6 @@ This section shows how we implement that graphical abstraction for the pure func
 big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
 dependence graph for the evaluation of that term; we also address how we deal with pattern-matching and mutual recursion (\secref{core:semantics}).
 
-
-
 \begin{figure}
    \small
    {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
@@ -24,18 +22,20 @@ dependence graph for the evaluation of that term; we also address how we deal wi
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-Terms of the core language (called \emph{regular terms}) are ranged over by $\raw{e}$, defined in \figref{syntax}.
-Regular terms include integer constants ranged over by $n, m$; variables ranged over by $x, y, f$; let-bindings $\exLet{x}{e}{e'}$%
+\figref{syntax} defines the \emph{terms} $e$ of the language mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
+%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
+
+
+Raw terms $\raw{e}$ include integer constants ranged over by $n, m$%
+; variables ranged over by $x, y, f$%
+; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
 ; record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
 ; and constructor expressions $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully
-saturated by arguments $\seq{e}$. A  constructor always inhabits a known data type $D$ and has an arity
-specified by $D$; we write $\datatype{c} = (n, D)$ to denote that $c$ takes $n \in \mathbb{N}$ arguments and
-constructs a value of data type~$D$.
+saturated by arguments $\seq{e}$. We write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
 
 As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions explained further in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}, explained further in \secref{core:continuations}.
 
-We define the \emph{graph terms} $e$ of the language in \figref{syntax} as regular terms $\raw{e}$ indexed by a vertex $\alpha$. Concretely, a vertex can be implemented as any identifier that uniquely associates (parts of) a term to vertices in a graph (our specific implementation uses an integer counter for generating fresh vertices). The other language construct that corresponds to vertices are values $v$.
 
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
