@@ -88,11 +88,11 @@ a value in the original program, or to values arising during execution.
 
 
 \begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where \cd{a subset of?} the nodes $\alpha \in V$
-   represent values in the original program, and an edge $(\alpha, \alpha') \in E$
-   exists if, in the evaluation of the program, the value associated to $\alpha$
-   \textit{depends} on the value associated with $\alpha'$. \cd{is this dependency direction correct? doesn't $\alpha'$ depend on $\alpha$?}
-   \jb{nodes represent inputs to the program or values produced during the programs execution.}
+   A dynamic dependence graph $G = (V,E)$ is a graph where a node $\alpha \in V$
+   represents an input to the original program or a value produced during execution,
+   and an edge $(\alpha, \alpha') \in E$ exists if, in the evaluation of the program,
+   the value associated to $\alpha'$
+   \textit{depends} on the value associated with $\alpha$.
 \end{definition}
 
 We shall not consider the details of how we arrive at a specific dependence graph
