@@ -261,7 +261,7 @@ a formal account of related inputs and related outputs queries.
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
-be reached by the things that reach me?". \cd{I think we need to relate more this intuition to the last def. You try to do this a bit in the next paragraph.} We can think of this notion as similar
+be reached by the things that reach me?". We can think of this notion as similar
 to that of "cognacy" in natural languages, for related outputs we are finding
 the common ancestors, and for related inputs the common descendants. 
 
@@ -270,6 +270,9 @@ the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
 We calculate this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
+This algorithm simply computes the set of nodes we can reach from the set $X'$,
+in the form of a graph $G'$ which is a subgraph of $G$ containing only the nodes
+$X'$ and the nodes reachable from $X'$ in $G$.
 $\demandsAlg{}$ works by taking a set of nodes and accumulating their neighbors.
 Everytime a new node is reached by traversing an edge, we enqueue its own
 neighbors, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
@@ -279,14 +282,19 @@ At the algorithms termination (\ruleName{$\demandsVert{}$-done}), we have traver
 edge and node reachable from the input set.
 Once it has terminated, and we have constructed the subgraph of demanded nodes,
 we filter out any nodes which do not appear as outputs by only considering the
-graphs set of sinks, $\sinks{G}$ (\ruleName{$\demandsAlg{}$}).
+graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
-Since $\demandByR(X) \subseteq \sinks{G}$, we must now take this set and apply
-$\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$ on the
-opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
+\begin{proposition}[Reaches Computes Demanded By]
+   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
+   the following holds:
+   $$
+      X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+   $$
+\end{proposition}
 
-The procedure for computing related outputs is similar, we simply swap the order
-of operations.
+Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
+set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
+on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
 \input{fig/conjugate/algorithms}
 \begin{proposition}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
@@ -299,13 +307,10 @@ of operations.
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
 
-\begin{corollary}
-   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
-   the following holds:
-   $$
-      X' \demandsAlg{G^{-1}} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
-   $$
-\end{corollary}
+When trying to compute related outputs, we perform effectively the same process,
+but we begin by considering the set of outputs we're interested in, $Y'$, and
+run $\demandsAlg{}$ on the opposite graph $G^{-1}$.
+
 \subsection{Relationship to Galois Slicing}
 We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
