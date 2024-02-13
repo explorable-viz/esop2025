@@ -1,18 +1,13 @@
 \section{A Core Language with Graphical Syntax and Semantics}
 \label{sec:core}
 
-In \secref{conjugate} we defined \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) as conjugate
-operators over dependence graphs and showed how these could be used to derive sets of related inputs and
-related outputs from a given graph. This section shifts from the setting of graphs to that of programs, by
-showing how to represent (parts of) programs as vertices in a graph. We present a core calculus for a
-functional language whose operational semantics pairs each program and output with an accompanying dependence
-graph,  allowing the user to automatically compute $\demandR$ and $\demandByR$.
+In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) over such graphs.
+% using this to derive sets of related inputs and related outputs.
+This section shows how we implement that graphical abstraction for the pure functional language \OurLang used to generate the scatter plots in \secref{example}; an example of a program in \OurLang is \figref{energy-query}, which is the source code behind those plots. We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a
+big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
+dependence graph for the evaluation of that term; we also address how we deal with pattern-matching and mutual recursion (\secref{core:semantics}).
 
-\todo{Insert some summarising statements about our language, e.g. being untyped, how general the calculus is, what we implement it in, whether it can be easily reimplemented in other host languages, etc.}
 
-We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a
-big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs a
-dynamic dependence graph for the evaluation of that term (\secref{core:semantics}).
 
 \begin{figure}
    \small
