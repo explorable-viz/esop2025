@@ -373,10 +373,10 @@ pending graph (\ruleName{$\fwdEdges{}$-done}). If it does, then the nodes in the
 as representing values that the set only contains partial information for.
 
 \begin{proposition}[Forwards Computes Sufficency]
-   For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subset V$
+   For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subseteq \sources{G} \subset V$
    the following holds:
    $$
-       X' \fwdAlg{G} \sources{G'} \iff \sufficientR(X') = \sources{G'}
+       X' \fwdAlg{G} \sinks{G'} \iff \sufficientR(X') = \sinks{G'}
    $$
 \end{proposition}
 \begin{proof}
