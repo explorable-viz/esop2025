@@ -106,14 +106,12 @@ to separately defining data and control-flow edges as in \citet{agrawal90}.
 
 In each graph, we mark out a subset of the nodes, $X \subset V$, which represent
 the inputs to the program, and a subset of nodes $Y \subset V$, which represent
-the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. In the opposite graph,
-this is flipped. \cd{sometimes we talk about values in the program, other times we refer to inputs to the program, which I find confusing.
-Maybe we could even have a simple example of a DDG for clarification?}
+the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. Taking the opposite
+graph has the effect of swapping the sets of sources and sinks.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
 can be read as $x$ is \textit{demanded by} $y$.
-
 
 With a dependency relation, there can be inputs which are not demanded by any
 output, and inputs can be demanded by multiple outputs. These properties are nice
@@ -147,7 +145,6 @@ is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
 ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. For the rest of the paper,
 when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
 and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
-
 
 We note that these two operators do not always form a Galois connection, since
 the composition of the two functions is not necessarily monotonic, contradicting
@@ -192,36 +189,11 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
    \cd{I'm a bit confused about how this proof will look like, but we can talk about it.}
 \end{proof}
 
-\jb{Moved to the end for now, it needs rewriting}
-Let us first consider the case when the relation is itself a function $f: X \to Y$.
-If, for some input $x \in X$, we find that $f(x) = y$, for some $y \in Y$, we
-can say that $x$ is demanded by $y$, or that $x$ is sufficient to produce $y$.
-
-We generally do not wish to restrict ourselves to considering only one input or
-output value at a time. Instead we need to be able to consider multiple inputs
-or outputs at once, requiring us to lift our function to operate on sets of values.
-The simplest way to do so would be to take the the image and preimage functions
-of $f$:
-\begin{definition}[Image and Preimage of a Function]
-   For a function $f: X \to Y$ and $X' \subseteq X$, $Y' \subseteq Y$ define:
-   \begin{itemize}
-      \item $f^{\star}(X') \eqdef \set{f(x) \mid x \in X'}$ \hfill (image)
-      \item $f_{\star}(Y') \eqdef \set{x \in X \mid \exists y \in Y' . f(x) = y}$ \hfill (preimage)
-   \end{itemize}
-\end{definition}
-The above pair of functions forms the usual image/preimage Galois connection for a function.
-\cd{I would probably not phrase this is a lemma (i.e. lemma 3.2), but leave it as an obvious remark -- is that a stretch? This way we avoid needing a proof.}
-\begin{lemma}[Galois Connection]
-   $f^{\star}(X') \subseteq Y' \iff X' \subseteq f_{\star}(Y')$
-\end{lemma}
-
-Taking this approach, it would be possible to read the action of $f^{\star}$ on a set $X'$
-as telling us which outputs $X'$ is sufficient for, since it tells us every output
-we can make using just the elements of $X'$. We can also read $f^{\star}$ as telling us
-what the values of $x$ are necessary for. Similarly, we can read the action of
-$f_{\star}$ on a set $Y'$ as telling us which inputs are necessary to make any
-element of $Y'$.
-
+As an aside, let us now consider the case when $D$ is itself a function. In this
+case, all inputs need to be used, and each input can only be used once. If that
+is the case, then taking the image and preimage of the function doesn't just create
+a conjugate pair, but instead creates the usual image/preimage Galois connection for
+a function. 
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
