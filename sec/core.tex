@@ -115,10 +115,9 @@ $\alpha'$; the dependence graph is then the dependencies of each $v_i \in v$ alo
 $\annRec{\seq{\bind{x}{v}}}{\alpha'}$. Record projection $e.y$ uses the previous rule to evaluate the entire
 record $e$ before looking up the value for $y$; as the record value as a whole structure goes unused, its
 vertex is omitted in the dependence graph. Evaluation of constructor expressions $c(\seq{e})_\alpha$ and
-foreign function calls $f(\seq{e})$ is similar to that of records; for the former, we must also check that the
-arity of constructor $c$ coincides with the number of arguments in $\seq{e}$, and for the latter, we require
-there to be a foreign implementation $\hat{f}$ of $f$ that provides a way to evaluate the foreign call to a
-graph and value.
+foreign function calls $f(\seq{e})$ is similar to that of records, but also coincides the
+arity of $c$ or $f$ with the number of arguments in $\seq{e}$. \todo{refine:} For foreign calls, $\hat{f}$ is the
+foreign implementation of $f$ that provides a way to evaluate its call to a graph and value, as we required  in \secref{core:foreign}.
 
 
 Application $\exApp{e}{e'}$ is more involved, dealing with both mutual recursion and pattern-matching. First
