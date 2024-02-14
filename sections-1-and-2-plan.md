@@ -14,14 +14,13 @@
 ## Automated data transparency
 - [ ] However, coding up visualisations like Bremer's is laborious and requires the author of the visualisation to anticipate the kind of queries the user might have. Things don't naturally generalise: for example Bremer's visualisation doesn't allow the user to select more than one of the circles at once.
 - [ ] Recently, there has been interest in treating this a programming language infrastructure problem: baking data dependency information directly into outputs, so that "provenance queries" can be supported automatically. - [ ] While there are many challenges in doing this, the potential is great too. Ideally the user to have the best of both worlds: the high-level overview provided by the visual summary, plus "incremental discoverability" of as much detail as they want about the underlying data, only about the parts they care about.
+- [ ] Psallidas et al identified some connections between key concepts in data visualisation such as selection of visual elements, and data provenance; Perera et al implemented something resembling this idea using dependency tracking to link specific output selections to input selections
+- [ ] We call this broad idea of [..] _data transparency_, and illustrate this using our implementation in Fig 1. The rectangles that we asked the reader to disregard earlier are an _output selection_ […]
+- [ ] Although it falls short of providing a full explanation […] this does significantly improve on the current state of affairs
 
 - [ ] Consider stacked bar chart in upper part of Fig. 1, for example (ignoring rectangles highlighted with a dark border for now)
 - [ ] While one could try to use the source code and data sources to answer some of these questions, this requires substantial expertise and time spent offline from the “comprehension context” in which the questions originally arose
 - [ ] Even a reviewer of a scientific paper may lack the resources or inclination to do this and any time spent on this is time taken away from reviewing the science
-
-- [ ] Psallidas et al identified some connections between key concepts in data visualisation such as selection of visual elements, and data provenance; Perera et al implemented something resembling this idea using dependency tracking to link specific output selections to input selections
-- [ ] We call this idea of [..] _data transparency_, and illustrate this using our implementation in Fig 1. The rectangles that we asked the reader to disregard earlier are an _output selection_ […]
-- [ ] Although it falls short of providing a full explanation […] this does significantly improve on the current state of affairs
 
 ## Contributions
 
