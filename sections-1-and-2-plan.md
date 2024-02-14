@@ -26,11 +26,23 @@ underlying data is to be expected, but for digital media, other options are open
 
 ## Contributions
 
+- [ ] In this paper, we develop the idea of data transparency in two new directions. First we approach the problem in a language-independent way, using _dependence graphs_ […]. This separates the problem of defining queries over the graph from the problem of generating a dependence graph for a particular program. This approach is well-known from the program slicing literature, but has not yet been applied to data transparency [which operates under slightly different assumptions?]. In particular, previous approaches based on traces (e.g. Ricciotti et al) have involved defining a “reverse interpreter” that folds a trace back into a program slice, whereas with a graph […] This partitioning both reduces the implementation burden and improves performance compared to approaches based on reverse interpretation over a trace.
+
+- [ ] Second, we introduce a new kind of provenance query called _related inputs_, which allows a user to explore relations of cognacy (common ancestry) in the graph […]. In the graphical setting this is an easy thing to compute, since it amounts to reachability in $G$ composed with reachability in the opposite graph.
+
+- [ ] Section 2 presents an overview of our approach and language, and motivates the idea of ``related inputs'' query from an end-user perspective. Our specific contributions are then as follows: [..]
+
+  - [ ] We define a new program analysis framework over dynamic dependence graphs (Section 3), introducing the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being conjugate
+  is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
+  computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$
+  - [ ] We define a core functional language with an operational semantics that pairs every result with a
+   dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
+  - [ ] We compare the performance of our implementation based on graphs and conjugates with an implementation
+due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
+vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two approaches (\secref{evaluation}).
+
 # 2. Overview of approach and solution
 
 ## Focus of this paper
-- [ ] In this paper, we develop the idea of data transparency in two new directions. First we approach the problem in a language-independent way, using _dependence graphs_ […]. This separates the problem of defining queries over the graph from the problem of generating a dependence graph for a particular program. This approach is well-known from the program slicing literature, but has not yet been applied to data transparency [which operates under slightly different assumptions?]. In particular, previous approaches based on traces (e.g. Ricciotti et al) have involved defining a “reverse interpreter” that folds a trace back into a program slice, whereas with a graph […]
-- [ ] This partitioning both reduces the implementation burden and improves performance compared to approaches that […]
-- [ ] Second, we introduce a new kind of provenance query called _related inputs_, which allows a user to explore relations of cognacy (common ancestry) in the graph […]. In the graphical setting this is an easy thing to compute, since it amounts to reachability in $G$ composed with reachability in the opposite graph.
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
 - [ ] Finally, the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related outputs_ which allows the user to […].
