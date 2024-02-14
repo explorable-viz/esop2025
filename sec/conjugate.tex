@@ -78,7 +78,7 @@ respectively, and negation is $\compl{X'}$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-As mentioned earlier in the paper, we make use of dynamic dependence graphs. 
+As mentioned earlier in the paper, we make use of dynamic dependence graphs.
 %We shall give an account of how we can compute related input and output queries
 %efficiently, using dynamic dependence graphs.
 While we defer the details of how we arrive at a specific dependence graph
@@ -167,7 +167,7 @@ In this setting, whilst we can still view the preimage $\demandR_{D}(Y')$ as
 finding the set of inputs which are necessary for the elements of $Y'$, we can
 no longer view $\demandByR_{D}(X')$ as the set of outputs that $X'$ is sufficient
 for. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
-$x_i \in X'$ for every $(x_i, y) \in D$.  
+$x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. The image instead gives us the set of
@@ -273,7 +273,7 @@ A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
 be reached by the things that reach me?". \cd{I think we need to relate more this intuition to the last def. You try to do this a bit in the next paragraph.} We can think of this notion as similar
 to that of "cognacy" in natural languages, for related outputs we are finding
-the common ancestors, and for related inputs the common descendants. 
+the common ancestors, and for related inputs the common descendants.
 
 To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sinks{G}$. We proceed by finding all nodes
@@ -293,7 +293,7 @@ graphs set of sinks, $\sinks{G}$ (\ruleName{$\demandsAlg{}$}).
 
 Since $\demandByR(X) \subseteq \sinks{G}$, we must now take this set and apply
 $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$ on the
-opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
+opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
 
 The procedure for computing related outputs is similar, we simply swap the order
 of operations.
