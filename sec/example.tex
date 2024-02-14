@@ -81,13 +81,6 @@ does so by identifying the common, or mediating, output elements that explain wh
 
 \todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart? Corresponding notion of ``mediating input''.}
 
-%\begin{figure}
-%   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-1.png}\label{fig:linked-outputs-1}}
-%   {\centering\includegraphics[scale=0.4]{fig/example/linked-outputs-2.png}\label{fig:linked-outputs-2}}
-%   \caption{Examples of linked outputs, adapted from~\citet{perera22}}
-%   \label{fig:linked-outputs-main}
-%\end{figure}
-
 \subsection{Focused queries}
 
 With any dependency analysis, there are situations where a given output depends on many inputs (perhaps when
@@ -123,49 +116,12 @@ to mediate between the inputs, and dually how more fine-grained related outputs 
 \subsection{Transparency by construction}
 
 \todo{Wrap up with something about our solution and how it is able to support the above scenarios, and make it clear what the rest of the paper achieves (or at least the next couple of sections).}
-%
-%These requirements suggested a solution built around dynamic program analysis, specifically a dynamic
-%dependence graph approach similar to \citet{agrawal90}. We say that an output $b \in B$ \textit{demands} an
-%input $a \in A$ iff there exists a path in $G$ from $b$ to $a$. We can also say that $a$ is \textit{demanded
-%by} $b$ iff there is a path from $a$ to $b$ in the opposite graph $G^{-1}$ trivially obtained from $G$ by
-%reversing the edges. Each of these operators is easily implemented by simply finding the nodes reachable from
-%a given start node in the appropriate graph.
-%
-%The idea of multiple inputs working together to produce some visual output is not a unique problem. In fact,
-%it is in a sense dual to a well known problem in data visualisation. In data visualisation, it is common for
-%the same data sources to visualised in different ways, to illustrate different aspects of the data. Multiple
-%outputs making use of common input suggests a ``dual'' relationship between outputs whose demands overlap. In
-%the visualisation literature the problem of selecting an element in a chart and highlighting elements in other
-%charts that use the same data is known as \textit{brushing and linking} \citet{becker87}.
-%
-%If we consider the notions of \textit{demands} and \textit{demanded by} as functions,
-%then we can see that computing the set of related inputs is equivalent to their
-%composition. It turns out that we can also solve the problem of brushing and linking
-%by simply inverting the composition of the two functions.
-%
-%Consider the interaction shown in \figref{linked-outputs-main}. Similar to our solution to related inputs, we
-%begin by selecting an element of the chart, here we select a bar. Then, by applying the \textit{demands}
-%function, we find the data in the original table which is used to compute the height of the bar. Then we take
-%this data, and apply the \textit{demanded by} function. In this example, we find the points in the line chart
-%on the right hand side which make use of the input values selected by the application of \textit{demands}.
-%
-%As it happens, we are not the first to solve the problem of brushing and linking in a functional programming
-%language. Prior work from \citet{perera22} has provided a solution through the user of Galois connections.
-%
+
 %When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
 %then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
 %$$
 %   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
 %$$
 %
-%It is unsurprising that these two functions satisfy this property. Intuitively,
-%if the intersection of some inputs $A$, and the inputs that $B$ demands is empty,
-%then it is trivial that the set of outputs that $A$ is demanded by does not
-%contain any elements of $B$. This is equivalent to saying that the intersection
-%of the outputs that $A$ is demanded by with the set of outputs under consideration
-%$B$ is empty.
-%
-%It is well known that if you have a pair of conjugate functions, then one of them will form a Galois
-%connection with the dual of the other, for example see \citet{moller06}. This correspondence is what allows us
-%to recapture their results. However, it is not so easy to adapt the Galois connection approach to include
-%related inputs queries.
+%If you have a pair of conjugate functions, then one of them will form a Galois
+%connection with the dual of the other, for example see \citet{moller06}.
