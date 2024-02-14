@@ -1,7 +1,11 @@
-# 1. Towards transparent research outputs
+# 1. Introduction: Towards Transparent Research Outputs
 
-## Overall problem space
-- [ ] [?] Before we turn to the details of our approach in Section 3, we take some time to explain the overall problem space we are interested in and how our work advances upon work to date in this area
+- [ ] Whether formulating a national policy or [..], we increasingly rely on [..] created by scientists and journalists. Interpreting these visual and textual summaries is essential to making informed decisions.
+- [ ] Unfortunately such artefacts are \emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
+- [ ] If we have the appropriate skills, a lot of time, and access to the source code and data sets, we may be able to reverse engineer some of these relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and more often than not we have to take things on trust.
+- [ ] These difficulties are only compounded when the information presented draws on multiple data sources, such as [...]
+
+
 - [ ] Basic problem we are concerned with is that charts and other visual summaries are _opaque_ – diconnected from data used to produce them
 - [ ] Consider stacked bar chart in upper part of Fig. 1, for example (ignoring rectangles highlighted with a dark border for now)
 - [ ] Many questions one might have about what the chart “represents” – how visual elements map to underlying data
