@@ -7,14 +7,7 @@ This section shows how we implement that graphical abstraction for \OurLang -- a
 big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
 dependence graph for the evaluation of that term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
 
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{related-inputs-main}}
-   \label{fig:energy-query}
-\end{figure}
-
-\subsection{Syntax and terms}
+\subsection{Syntax and graph terms}
 \label{sec:core:syntax}
 
 \input{fig/core/syntax}
@@ -86,19 +79,14 @@ It then returns the selected branch $e$, an environment $\gamma$ providing bindi
 
 The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the selected continuation  inside $\sigma$.
 
-\begin{definition}[Vertices of a term]
-\label{def:core:vertices}
-Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in a term~$e$, and similarly for values $v$ and eliminators $\sigma$.
-\end{definition}
 
-A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns all the vertices $\V(v)$ embedded in $v$, denoting \todo{need to clarify...}. The eliminator $\elimRecord{\seq{y}}{\kappa}$
+A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns no vertices, reflecting the fact that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The eliminator $\elimRecord{\seq{y}}{\kappa}$
 only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the variables
-in $\seq{y}$ are also fields in $\seq{x}$, returning the (top-level) vertex $\alpha$ associated with the  record; the condition is enforced by  $\exRec{\seq{\bind{y}{u}}}
-\subseteq \exRec{\seq{\bind{x}{v}}}$ which simultaneously projects out the corresponding values of
+in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associated with the record; this condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$, which simultaneously projects out the corresponding values of
  $\seq{u}$ from $\seq{v}$. Lastly, an eliminator with a branch $(\elimBind{c}{\kappa})$
-only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$ constructed by $c$, and returns the vertex $\alpha$ associated with that particular instance of $c$.
+only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$, and returns the vertex $\alpha$ associated with that particular instance of $c$.
 
-\subsubsection{Evaluation }
+\subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language.
 This states that term $e$ under environment $\gamma$ evaluates to a value $v$ plus dependence graph $G$; the
 vertex set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated. \todo{refine} The set $V$ is initially empty for a top-level program $e$, and grows via the output of the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$ which is invoked when a function is applied to an argument.
