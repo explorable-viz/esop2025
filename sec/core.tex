@@ -77,7 +77,7 @@ environment is defined as a finite~map.
 Rather than matching a single value $v$ against an eliminator $\sigma$, the judgement matches a ``{stack}'' of values $\seq{v}$ against a continuation $\kappa$.
 It then returns the selected branch $e$, an environment $\gamma$ providing bindings for the free variables in $e$, and a set $V$ of vertices found in the matched portions of $\seq{v}$.
 
-The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the selected continuation  inside $\sigma$.
+The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected in $\sigma$.
 
 
 A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns no vertices, reflecting the fact that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The eliminator $\elimRecord{\seq{y}}{\kappa}$
