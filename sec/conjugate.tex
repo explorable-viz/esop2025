@@ -227,10 +227,10 @@ edges of the graph.
 
 
 \cd{The reachability definition is very general. I would leave it as a notation + a bit of known background, rather than having it as a definition.}
-\begin{definition}[Reachability]
+\begin{notation}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
-\end{definition}
+\end{notation}
 
 When we are considering a graph $G$ and its opposite $G^{-1}$,
 we will abuse the notation for the preimage and image of $R$,
@@ -238,11 +238,13 @@ since $R_G^{-1} = R_{G^{-1}}$. For convenience when define \textit{demands}
 and \textit{demanded by} in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
-   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, we write
+   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, 
+   let us write $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$, the restriction
+   of $R_G$ to the sources and sinks of $G$. We write
 
    \begin{itemize}
-      \item $\demandR_G(X) \eqdef \demandR_{R_G} (X)$ \hfill (demands)
-      \item $\demandByR_G(Y) \eqdef \demandByR_{R_G} (Y)$ \hfill (demanded by)
+      \item $\demandR_G(X) \eqdef \demandR_{R'_G} (X)$ \hfill (demands)
+      \item $\demandByR_G(Y) \eqdef \demandByR_{R'_G} (Y)$ \hfill (demanded by)
    \end{itemize}
 \end{definition}
 
