@@ -310,7 +310,7 @@ but we begin by considering the set of outputs we're interested in, $Y'$, and
 run $\demandsAlg{}$ on the opposite graph $G^{-1}$.
 
 \subsection{Relationship to Galois Slicing}
-We mentioned earlier that $\demandByR(X')$ can be read as asking "What is $X'$
+We mentioned earlier that $\demandByR_D(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 In fact, we can use the notion of sufficiency as a test of correctness. If we
@@ -319,8 +319,8 @@ demands must surely be sufficient information to reconstruct it. This leads us
 to define the following \textit{sufficiency} analysis.
 
 \begin{definition}[Sufficiency]
-   For a graph $G=(V,E)$ with reachability relation $R_G \subseteq V \times V$,
-   inputs $X \subseteq V$, outputs $Y \subseteq V$ we define:
+   For a graph $G=(V,E)$ with inputs $X \subseteq V$, outputs $Y \subseteq V$ we define,
+   and a subset of the inputs $X' \subseteq X$
    \begin{itemize}
       \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }$ \hfill (sufficiency)
    \end{itemize}
