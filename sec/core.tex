@@ -48,15 +48,15 @@ Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
 \label{sec:core:continuations}
 A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
 either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
-trie-like objects which can serve as a plausible desugaring target for surface-language pattern-matching
+trie-like objects \cite{hinze00} which can serve as a plausible desugaring target for surface-language pattern-matching
 constructs. (\citet{peytonjones2021} present a similar idea.) An eliminator specifies
 how to pattern-match and then select a continuation $\kappa$ to be executed under additional variable bindings. A
-variable eliminator $\elimVar{x}{\kappa}$ specifies how to match any value (as  variable $x$) and continue as $\kappa$. A record
-eliminator $\elimRecord{\seq{x}}{\kappa}$ specifies how to match a record with fields $\seq{x}$, and provides
+variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as $\kappa$. A record
+eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$, and provides
 a continuation $\kappa$ for matching the values of those fields. Lastly, the eliminator $\elimConstr{\seq{c \mapsto
 \sigma}}$ for constructors provides a branch $c \mapsto \sigma$ for each constructor $c$ in
 $\seq{c}$, where each $\sigma$ specifies how the arguments to  $c$  will be matched.
-(We assume that constructors come from the same data type, but this is not enforced in the core language).
+(We assume these constructors come from the same data type, but this is not enforced in the core language).
 
 \subsubsection{Values and environments}
 \label{sec:core:values}
