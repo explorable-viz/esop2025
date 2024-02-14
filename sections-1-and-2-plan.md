@@ -6,8 +6,9 @@
 - [ ] Even a reviewer of a scientific paper may lack the resources or inclination to do this and perhaps more often than we would like we have to take things on trust.
 - [ ] These difficulties are only compounded when the information presented draws on multiple data sources, such as [...]
 
-- [ ] With traditional print media, this kind of ``disconnect'' between outputs like chart and figures and the
-underlying data is to be expected, but for digital media, other options are open to us.
+## Paragraph
+
+- [ ] With traditional print media there is not much we can do about this ``disconnect'' between outputs like chart and figures and the underlying data, but for digital media, other options are open to us.
 - [ ] One way to address this problem is to engineer visual artefacts to be more ``self-explanatory'', i.e. able to reveal to an interested reader the relationship to underlying data
 - [ ] Consider the histogram in Fig. 1, which shows urban population growth in Asia from [..], ignoring for a moment the pop-up showing information about Chiang Mai. Given just the histogram, there are many questions a reader might have about what the chart “represents” – how visual elements map to underlying data. What are the individual points, what does the colour scheme indicate, do individual points represents large cities or small cities, etc.
 - [ ] These uncertainties do not necessarily reflect a problem with the visualisation; any summary must inevitably emphasis aggregate information at the expense of detail
@@ -52,8 +53,7 @@ how the former is computed from the latter --- into the same program, rendering 
 time the visualisation logic changes. By putting this into a programming language instead, the author of the
 visualisation can concern themselves purely with communication and visualisation, and defer responsibility for
 transparency features to the infrastructure used to implement and host the visualisation.
-
-
+- [ ]
 
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
-- [ ] Finally, the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related outputs_ which allows the user to […].
+- [ ] Finally, the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related outputs_ which allows the user to query the other output elements that are ``cognate'' in the opposite sense to some outputs of interest.
