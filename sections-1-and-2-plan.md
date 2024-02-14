@@ -43,6 +43,17 @@ vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each,
 
 # 2. Overview of approach and solution
 
-## Focus of this paper
+- [ ] So goal of data transparency is to enrich the computed content with interactions that allow the user to
+query relationships between data sources and visualisations and other outputs \emph{in situ}, i.e. without
+leaving the ``comprehension context'' in which their query arose. Crucially, we want to make this feature
+automatic. Hand-crafted efforts like Bremers are not only labour-intensive, but involve manually embedding
+knowledge of the relationship between visual outputs and inputs --- information that is usually implicit in
+how the former is computed from the latter --- into the same program, rendering it potentially invalid every
+time the visualisation logic changes. By putting this into a programming language instead, the author of the
+visualisation can concern themselves purely with communication and visualisation, and defer responsibility for
+transparency features to the infrastructure used to implement and host the visualisation.
+
+
+
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
 - [ ] Finally, the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related outputs_ which allows the user to […].
