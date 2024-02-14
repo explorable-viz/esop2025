@@ -37,10 +37,11 @@
   is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
   computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$
   - [ ] We define a core functional language with an operational semantics that pairs every result with a
-   dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
+  dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
   - [ ] We compare the performance of our implementation based on graphs and conjugates with an implementation
-due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
-vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two approaches (\secref{evaluation}).
+  due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
+  vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative
+  implementation burden of the two approaches (\secref{evaluation}).
 
 # 2. Overview of approach and solution
 
@@ -57,20 +58,19 @@ transparency features to the infrastructure used to implement and host the visua
 
 ## Conjugate operators over dependence graphs
 
-- [ ] Our insight in this paper is that dependence graphs provide an alternative approach to data transparency that is more language-independent and [...] Moreover, certain problems are much easier to formulate in the graphical setting. For example the ``related outputs'' operator illustrated in Fig 2. amounts to computing _cognacy_ (common ancestry) in G^{\op}, or common descendancy in G, which in turn simply amounts to computing backwards reachability in G and composing that with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in G) (△▽). While retaining a forwards sufficiency analysis is useful for performance reasons, it can be defined in a language-agnostic way and is technically redundant.
+- [ ] Our insight in this paper is that dependence graphs provide an alternative approach to data transparency that is more language-independent and [...] Moreover, certain problems are much easier to formulate in the graphical setting. For example the ``related outputs'' operator illustrated in Fig 2. amounts to computing _cognacy_ (common ancestry) in G^{\op}, or common descendancy in G, which in turn simply amounts to computing backwards reachability in G and composing that with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51}, functions between Boolean algebras which come in reciprocating pairs, turns out to nicely capture these relations of cognacy.
+- [ ] In our setting, we rely mainly on △ and its conjugate ▽ computed as △ on G^{\op}. We also give an implementation of ▲ (``suffices for'') over G  for the reasons mentioned above; it too can be defined in a language-agnostic way and also turns out to be useful as the basis of an alternative implementation of △ using the De Morgan dual which under some circumstances is faster.
 - [ ] Our second contribution is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
 - [ ] Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use this data element, and what other data element are used along with it?''
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
 - [ ] The easy symmetry of these two operations over G are interesting because △ is the De Morgan dual of ▲, the adjoint of ▽. This is actually a very simple notion arising as the image and preimage of the reachability relation of G; for functions, the image and preimage are adjoint, but for general relations they are _conjugate_.
+
+
+
 
 ## \OurLang: A Data-Transparent Programming Language
 
 - [ ] We implement the abstract framework outlined above in a programming language called \OurLang, which [...].
 - [ ] Example of scatter plot from Fig. 2
 - [ ] Key point is that the author of the visualisation just expresses their output as a pure function of the inputs -- all the transparency features come for free. We provide a d3.js front end and a set of data types for common visualisations, and then enrich the d3.js renderings of the outputs with (a) selection information, and (b) additional interactions that [...]
-- [ ] In the rest of the paper, we set out the formal graph framework (\secref{conjugate}), show how our Fluid interpreter implements the graph framework (\secref{core}) and then [performance] (\secref{evaluation}).
-
-This leads to a formalisation of related inputs in terms of
-the composite relation $R^{-1} \relcomp R$ where $R$ is reachability in $G$, and we give a procedure for
-computing related inputs over $G$. The concept of ``conjugate'' operators~\cite{jonsson51}, functions between
-Boolean algebras which come in reciprocating pairs, turns out to nicely capture these relations of cognacy.
+- [ ] In the rest of the paper, we set out the formal graph framework (\secref{conjugate}), show how our Fluid interpreter implements the graph framework (\secref{core}) and then [performance] (\secref{evaluation}). Our implementation is open source and available at [...], which also has several interactive demos.
