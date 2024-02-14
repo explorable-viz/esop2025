@@ -55,13 +55,19 @@ visualisation can concern themselves purely with communication and visualisation
 transparency features to the infrastructure used to implement and host the visualisation.
 - [ ] However, computing bidirectional dependency information that [..] is challenging both performance-wise and in terms of implementation burden. For example, the approach taken by Perera et al to implement features similar to the ones shown in Fig 2. require two separate analyses: a backwards analysis to determine data needed by an output selection, and then a forwards analysis whose De Morgan dual determines any parts of the other chart that also need any of that data. Although extensionally each determines the other, these analyses are defined separately and each depends on details of the language, imposing a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire computation, [..]
 
-# 2. Conjugate operators over dependence graphs
+## Conjugate operators over dependence graphs
 
 - [ ] Our insight in this paper is that dependence graphs provide an alternative approach to data transparency that is more language-independent and [...] Moreover, certain problems are much easier to formulate in the graphical setting. For example the ``related outputs'' operator illustrated in Fig 2. amounts to computing _cognacy_ (common ancestry) in G^{\op}, or common descendancy in G, which in turn simply amounts to computing backwards reachability in G and composing that with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in G) (△▽). While retaining a forwards sufficiency analysis is useful for performance reasons, it can be defined in a language-agnostic way and is technically redundant.
 - [ ] Our second contribution is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
 - [ ] Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use this data element, and what other data element are used along with it?''
-- [ ] The easy symmetry of these two operations over G are interesting because △ is the De Morgan dual of ▲, the adjoint of ▽. This is actually a very simple notion arising as the image and preimage of the reachability relation of G; for functions, the image and preimage are adjoint, but for general relations they are _conjugate_.
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
+- [ ] The easy symmetry of these two operations over G are interesting because △ is the De Morgan dual of ▲, the adjoint of ▽. This is actually a very simple notion arising as the image and preimage of the reachability relation of G; for functions, the image and preimage are adjoint, but for general relations they are _conjugate_.
+
+## \OurLang: A Data-Transparent Programming Language
+
+- [ ] We implement the abstract framework outlined above in a programming language called \OurLang, which [...].
+- [ ] Example of scatter plot from Fig. 2
+- [ ] Key point is that the author of the visualisation just expresses their output as a pure function of the inputs -- all the transparency features come for free. We provide a d3.js front end and a set of data types for common visualisations, and then enrich the d3.js renderings of the outputs with (a) selection information, and (b) additional interactions that [...]
 
 This leads to a formalisation of related inputs in terms of
 the composite relation $R^{-1} \relcomp R$ where $R$ is reachability in $G$, and we give a procedure for
