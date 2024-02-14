@@ -138,7 +138,7 @@ Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and gr
 
 \subsubsection{Pattern matching}
 
-\figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match V, \gamma, e$.
+\figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$.
 Rather than matching a single value $v$ against an eliminator $\sigma$, the judgement matches a \emph{sequence} of values $\seq{v}$ against a continuation $\kappa$.
 It then returns the selected branch $e$, an environment $\gamma$ providing bindings for the free variables in $e$, and a set $V$ of vertices found in the matched portions of $\seq{v}$. The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed -- i.e. when the sequence of values to be matched is empty, and so $e$ is treated as the final term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty sequence $v \cons \seq{v}$, and then recursing on  tail $\seq{v}$ with the continuation that was selected inside $\sigma$.
 
