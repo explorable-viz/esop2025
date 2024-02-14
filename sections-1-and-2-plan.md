@@ -2,11 +2,10 @@
 
 - [ ] Whether formulating a national policy or [..], we increasingly rely on [..] created by scientists and journalists. Interpreting these visual and textual summaries is essential to making informed decisions.
 - [ ] Unfortunately such artefacts are \emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
-- [ ] If we have the appropriate skills, a lot of time, and access to the source code and data sets, we may be able to reverse engineer some of these relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and more often than not we have to take things on trust.
+- [ ] While one could try to use the source code and data sources to answer some of these questions, this requires substantial expertise and time spent offline from the “comprehension context” in which the questions originally arose.
+- [ ] Even a reviewer of a scientific paper may lack the resources or inclination to do this and perhaps more often than we would like we have to take things on trust.
 - [ ] These difficulties are only compounded when the information presented draws on multiple data sources, such as [...]
 
-- [ ] While one could try to use the source code and data sources to answer some of these questions, this requires substantial expertise and time spent offline from the “comprehension context” in which the questions originally arose
-- [ ] Even a reviewer of a scientific paper may lack the resources or inclination to do this and any time spent on this is time taken away from reviewing the science
 - [ ] One way to address this problem is to engineer visual artefacts to be more ``self-explanatory'', i.e. able to reveal to an interested reader the relationship to underlying data
 - [ ] Consider the histogram in Fig. 1, which shows urban population growth in Asia from [..], ignoring for a moment the pop-up showing information about Chiang Mai. Given just the histogram, there are many questions a reader might have about what the chart “represents” – how visual elements map to underlying data.
 - [ ] Partial information is conveyed by legends and axis labels, but many questions remain: what are the individual points, what does the colour scheme indicate, do individual points represents large cities or small cities, etc.
