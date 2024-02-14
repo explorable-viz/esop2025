@@ -30,12 +30,23 @@ Raw terms $\raw{e}$ include integer constants ranged over by $n, m$%
 ; variables ranged over by $x, y, f$%
 ; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
-; record projection $\exRecProj{e}{x}$% for accessing variable $x$ in record $e$
-; and constructor expressions $\exConstr{c}{\seq{e}}$ where $c$ ranges over data constructors and is fully
-saturated by arguments $\seq{e}$. We write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
+; and record projection $\exRecProj{e}{x}$. % for accessing variable $x$ in record $e$
+We also have constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors and is fully
+saturated by arguments $\seq{e}$; we write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
 
-As well as standard application $\exApp{e}{e'}$, we also have \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions explained further in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$ where $\sigma$ is a pattern-matching construct called an \emph{eliminator}, explained further in \secref{core:continuations}.
+Application comes in two forms:  standard application $\exApp{e}{e'}$, and \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions which are explained in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
+\subsubsection{Foreign functions}
+\label{sec:core:foreign}
+The language is parameterised by a finite map $\Phi(f) = n$ from variables $f$ to the arities $n \in \Nat$ of the
+foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). A crucial specification of foreign functions, for the graph semantics later, is that each provides an interpretation that computes both the function's result and a suitable dependence graph.
+
+Foreign functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
+i.e.~$\length{\seq{e}} = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment
+which maps every ${f}$ to the closure
+$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
+where $\length{\seq{x}} = \Phi{(f)}$. Saturated calls are only part of the core language and user programs
+instead use the first-class representation.
 
 \begin{definition}[Vertices of a term]
 \label{def:core:vertices}
@@ -66,17 +77,6 @@ $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
 environment is defined as a finite map.
-
-\subsubsection{Foreign functions}
-\label{sec:core:foreign}
-The language is parameterised by a finite map $\Phi: \Var \to \Nat$ from variables to the arities of the
-foreign function they represent. By convention, we use $f$ and $\oplus$ to range over $\dom{\Phi}$. Foreign
-functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
-i.e.~$\length{\seq{e}} = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment
-which maps every ${f}$ to the closure
-$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
-where $\length{\seq{x}} = \Phi{(f)}$. Saturated calls are only part of the core language and user programs
-instead use the first-class representation.
 
 \input{fig/core/eval}
 \input{fig/core/match}
