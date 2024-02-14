@@ -1,3 +1,5 @@
+# 1. Towards transparent research outputs
+
 ## Overall problem space
 - [ ] [?] Before we turn to the details of our approach in Section 3, we take some time to explain the overall problem space we are interested in and how our work advances upon work to date in this area
 - [ ] Basic problem we are concerned with is that charts and other visual summaries are _opaque_ – diconnected from data used to produce them
@@ -14,6 +16,10 @@
 - [ ] Psallidas et al identified some connections between key concepts in data visualisation such as selection of visual elements, and data provenance; Perera et al implemented something resembling this idea using dependency tracking to link specific output selections to input selections
 - [ ] We call this idea of [..] _data transparency_, and illustrate this using our implementation in Fig 1. The rectangles that we asked the reader to disregard earlier are an _output selection_ […]
 - [ ] Although it falls short of providing a full explanation […] this does significantly improve on the current state of affairs
+
+## Contributions
+
+# 2. Overview of approach and solution
 
 ## Focus of this paper
 - [ ] In this paper, we develop the idea of data transparency in two new directions. First we approach the problem in a language-independent way, using _dependence graphs_ […]. This separates the problem of defining queries over the graph from the problem of generating a dependence graph for a particular program. This approach is well-known from the program slicing literature, but has not yet been applied to data transparency [which operates under slightly different assumptions?]. In particular, previous approaches based on traces (e.g. Ricciotti et al) have involved defining a “reverse interpreter” that folds a trace back into a program slice, whereas with a graph […]
