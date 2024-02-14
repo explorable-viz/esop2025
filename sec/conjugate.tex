@@ -182,16 +182,19 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
    \todo{Proof can proceed by an argument related to sets}
 \end{proof}
 
-We observe that restricting the graphs set of inputs $X$ and outputs $Y$ such that there are
+We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are
 no inputs which are unused, then $\demandR$ will preserve $\bot$, ie $\demandR(\emptyset) = \emptyset$.
+This means that applying $\demandByR$ after $\demandR$, we will not lose any of
+the originally selected inputs.
 \begin{lemma}
-   If $\demandByR_D(\emptyset) = \emptyset$, then $\demandR \after \demandByR$ is monotonically
+   If $\demandByR_D(\emptyset) = \emptyset$, then $\demandR \after \demandByR$ is
    increasing.
 \end{lemma}
 Similarly, if we have no outputs which are free, then $\demandByR$ will also
-preserve $\bot$, so $\demandByR(\emptyset) = \emptyset$.
+preserve $\bot$, and composing the functions in the opposite way will also
+be increasing.
 \begin{lemma}
-   If $\demandR_D(\emptyset) = \emptyset$, then $\demandByR \after \demandR$ is monotonically
+   If $\demandR_D(\emptyset) = \emptyset$, then $\demandByR \after \demandR$ is
    increasing.
 \end{lemma}
 As a corollary, if both of the above lemma's are true, then $\demandR$ and $\demandByR$ actually
