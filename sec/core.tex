@@ -48,13 +48,6 @@ $\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi
 where $\length{\seq{x}} = \Phi{(f)}$. Saturated calls are only part of the core language and user programs
 instead use the first-class representation.
 
-\begin{definition}[Vertices of a term]
-\label{def:core:vertices}
-Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in~$e$.
-\end{definition}
-
-\defref{core:vertices} then extends to values $v$ and eliminators $\sigma$ which also may  contain vertices.
-
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
 A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
@@ -92,6 +85,11 @@ Rather than matching a single value $v$ against an eliminator $\sigma$, the judg
 It then returns the selected branch $e$, an environment $\gamma$ providing bindings for the free variables in $e$, and a set $V$ of vertices found in the matched portions of $\seq{v}$.
 
 The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the selected continuation  inside $\sigma$.
+
+\begin{definition}[Vertices of a term]
+\label{def:core:vertices}
+Define $\V(e)$ as the set of vertices $\alpha$ that occur anywhere in a term~$e$, and similarly for values $v$ and eliminators $\sigma$.
+\end{definition}
 
 A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns all the vertices $\V(v)$ embedded in $v$, denoting \todo{need to clarify...}. The eliminator $\elimRecord{\seq{y}}{\kappa}$
 only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the variables
