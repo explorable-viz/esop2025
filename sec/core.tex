@@ -101,8 +101,8 @@ only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$ constructed by $c$,
 \subsubsection{Evaluation }
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language.
 This states that term $e$ under environment $\gamma$ evaluates to a value $v$ plus dependence graph $G$; the
-set of vertices $V$ corresponds to the inputs consumed by the current active function call, representing the
-other, ambient inputs that the evaluation step may also depend on. The relation $\gamma, \seq{e}, V \evalS G,
+vertex set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated. \todo{refine} The set $V$ is initially empty for a top-level program $e$, and grows via the output of the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$ which is invoked when a function is applied to an argument.
+ The relation $\gamma, \seq{e}, V \evalS G,
 \seq{v}$ is similar but for a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in
 \seq{e}$ to a value in $v_i \in \seq{v}$, and constructs a dependence graph that is the disjoint union of
 graphs produced by each individual evaluation. For convenience, we will use notation $\bind{\alpha}{V}$ in
