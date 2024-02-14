@@ -14,7 +14,7 @@ dependence graph for the evaluation of that term (\secref{core:semantics}); we a
    \label{fig:energy-query}
 \end{figure}
 
-\subsection{Syntax and graph terms}
+\subsection{Syntax and terms}
 \label{sec:core:syntax}
 
 \input{fig/core/syntax}
@@ -138,7 +138,9 @@ Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and gr
 
 \subsubsection{Pattern matching}
 
-The relation $\seq{v}, \kappa \match V, \gamma, e$  in \figref{core:pattern-matching} captures pattern-matching in a slightly unconventional way: by using a \emph{continuation} $\kappa$ to match a \emph{sequence} of values $\seq{v}$ (rather than an eliminator $\sigma$ that matches a single value $v$). It then returns vertices $V$ of the matched values  the taken branch depended on, the variable bindings $\gamma$ that arose during those matches, and a final term $e$ to be executed after all values have been matched. The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed -- i.e. when the sequence of values to be matched is empty, and so $e$ is treated as the final term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty sequence $v \cons \seq{v}$, and then recursing on  tail $\seq{v}$ with the continuation that was selected inside $\sigma$.
+\figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match V, \gamma, e$.
+Rather than matching a single value $v$ against an eliminator $\sigma$, the judgement matches a \emph{sequence} of values $\seq{v}$ against a continuation $\kappa$.
+It then returns the selected branch $e$, an environment $\gamma$ providing bindings for the free variables in $e$, and a set $V$ of vertices found in the matched portions of $\seq{v}$. The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed -- i.e. when the sequence of values to be matched is empty, and so $e$ is treated as the final term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty sequence $v \cons \seq{v}$, and then recursing on  tail $\seq{v}$ with the continuation that was selected inside $\sigma$.
 
 A variable eliminator $\elimVar{x}{\kappa}$ applied to any value $v$ simply adds binding $\bind{x}{v}$ to the
 environment and returns the vertices $\V(v)$ embedded in $v$. The eliminator $\elimRecord{\seq{y}}{\kappa}$
