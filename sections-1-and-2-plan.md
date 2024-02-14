@@ -1,20 +1,21 @@
 # 1. Introduction: Towards Transparent Research Outputs
 
 - [ ] Whether formulating a national policy or [..], we increasingly rely on [..] created by scientists and journalists. Interpreting these visual and textual summaries is essential to making informed decisions.
-- [ ] Unfortunately such artefacts are \emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
-- [ ] While one could try to use the source code and data sources to answer some of these questions, this requires substantial expertise and time spent offline from the “comprehension context” in which the questions originally arose.
-- [ ] Even a reviewer of a scientific paper may lack the resources or inclination to do this and perhaps more often than we would like we have to take things on trust.
+- [ ] However, for the most part such artefacts are \emph{opaque}: unable to reveal anything about how they relate to the data they were derived from.
+- [ ] While one could try to use the source code and data sources to reverse engineer some of these relationships, this requires substantial expertise, as well as valuable time spent away from the “comprehension context” in which we encountered the artefact.
 - [ ] These difficulties are only compounded when the information presented draws on multiple data sources, such as [...]
+- [ ] Even professional reviewers may lack the resources or inclination to get too involved. Perhaps more often than we would like, we end up taking things on trust.
 
 ## Paragraph
 
-- [ ] With traditional print media there is not much we can do about this ``disconnect'' between outputs like chart and figures and the underlying data, but for digital media, other options are open to us.
-- [ ] One way to address this problem is to engineer visual artefacts to be more ``self-explanatory'', i.e. able to reveal to an interested reader the relationship to underlying data
-- [ ] Consider the histogram in Fig. 1, which shows urban population growth in Asia from [..], ignoring for a moment the pop-up showing information about Chiang Mai. Given just the histogram, there are many questions a reader might have about what the chart “represents” – how visual elements map to underlying data. What are the individual points, what does the colour scheme indicate, do individual points represents large cities or small cities, etc.
-- [ ] These uncertainties do not necessarily reflect a problem with the visualisation; any summary must inevitably emphasis aggregate information at the expense of detail
-- [ ] What Bremer did was add interactions to her chart to allows the user to explore some of these questions themselves _in situ_, i.e. without leaving the context of the chart
+- [ ] With traditional print media, there is not much we can do about this ``disconnect'' between outputs like chart and figures and the underlying data. For digital media, other options are open to us.
+- [ ] One way to improve things is to engineer visual artefacts to be more ``self-explanatory'', so they can reveal to an interested user the relationship to the underlying data.
+- [ ] Consider the histogram in Fig. 1, which shows urban population growth in Asia from [..]. Ignore for a moment the pop-up showing information about Chiang Mai. Given just the histogram, there are many questions a reader might have about what the chart “represents” – in other words how visual elements map to underlying data. Whether the points represent individual cities, what the colour scheme indicates, which of the points represents large cities or small cities, etc.
+- [ ] Sometimes legends and other text can help, but ambiguities inevitably remain. These do not necessarily reflect a problem with the visualisation. The entire ``value proposition'' of a summary, after all, is exactly that it emphasises aggregate information at the expense of detail.
+- [ ] Bremer made it possible for the user to explore some of these questions themselves _in situ_, that is to say without leaving the context of the chart, via additional interactions. For example, by selecting the red dot shown, theey are able to bring up a view of the data that the dot ``represents`` (was calculated from).
 
 ## Automated data transparency
+
 - [ ] However, coding up visualisations like Bremer's is laborious and requires the author to anticipate the kind of queries the user might have. Things don't naturally generalise: for example Bremer's visualisation doesn't allow the user to select more than one of the circles at once.
 - [ ] Recently, there has been interest in treating this as programming language infrastructure problem: baking data dependency information directly into outputs, so that these sorts of queries can be supported automatically.
 - [ ] The promise of this approach is that the user can have the best of both worlds: the high-level overview provided by the visual summary, plus "incremental discoverability" of as much detail as they want about the underlying data, only about the parts they care about, with some kind of formal guarantee that the revealed data is "minimal" and "sufficient".
