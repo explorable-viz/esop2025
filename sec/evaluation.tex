@@ -21,12 +21,19 @@ developer was forced to implement a separate backwards evaluation semantics, whi
 propagated selection information upwards through the execution trace until reaching
 the program inputs. This approach was laborious. In contrast, whilst evaluating
 a program to a dynamic dependence graph allowed us to use a simple procedure to
-compute both $\demandR_D$ and $\demandedByR_D$, whilst only requiring that the
+compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
 developer implement the desired dynamic dependence graph. 
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{sec:conjugate},
 we provide the core technical details of the approach without having to mention
 the details of the language, or the specific choice of dependency relation.
+\todo{Separation of concerns}
+Continuing the previous point of discussion, the separation of concerns is also
+a benefit. The dependency relation only needs to be implemented once, as part of
+program evaluation, leading to a more modular system. If a languages evaluation
+function is parameterised by the dependency relation, then it becomes possible
+to work with a variety of dependency relations without forcing the developer to
+entirely reimplement the forward and backward semantics of evaluation.
 \subsection{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
