@@ -391,6 +391,16 @@ input nodes only provide partial information.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
+We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In
+this diagram, green nodes are the nodes in $G'$ that we have found sufficient
+inputs for, the blue nodes are unvisited, and the orange nodes are the nodes in
+$H$. Dashed edges are edges in the current edge list, and dotted edges are those
+currently under consideration. Over the eight steps pictured, we add the edges
+$\set{(x_1,x_5),(x_2,x_5),(x_3, x_6),(x_3,x_7)}$ to the set $E$, and traverse
+them one by one, first adding $x_5$ to $H$, then moving it to $G'$. We add $x_6$,
+then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we
+have no new edges to consider, and so halt in the state pictured in step eight.
+
 \begin{proposition}[Forwards Computes Sufficency]
    For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subseteq \sources{G} \subset V$
    the following holds:
