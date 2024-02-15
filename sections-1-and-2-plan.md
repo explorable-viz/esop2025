@@ -69,20 +69,21 @@ the trace is relevant.
 ## Conjugate operators over dependence graphs
 
 - [ ] Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic
-approach to data transparency that both improves performance and reduces the implementation burden. Moreover,
+foundation for data transparency that both improves performance and reduces the implementation burden. Moreover,
 certain problems are much easier to formulate in the graphical setting. For example ``related outputs''
 simply amounts to computing _cognacy_ (common ancestry) in G^{\op}, or common
 descendancy in G, which in turn simply amounts to computing backwards reachability in G and composing that
 with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in
-G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51}, functions between Boolean algebras which
-come in reciprocating pairs, turns out to nicely capture these relations of cognacy. Conjugate pairs are
-closely related to Galois connections; if $f$ and $g$ are conjugate, then $f$ and the De Morgan dual of $g$
-form a Galois connection [connecting our approach to the work above]
+G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras turns out to nicely capture these relations of cognacy.
+- [ ] Definition
+- [ ] The canonical example of a conjugate pair are the image and preimage functions for a relation R \subset
+X \times Y. For funtions, the image and preimage form a Galois connection, but for general relations they are
+conjugate. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then
+$f$ and the De Morgan dual of $g$ form a Galois connection.
 - [ ] For this reason, our setting technically only requires a single operator ▽_G, since its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as ▽_G^{\op}. It is well-known that extensionally these things determine each other, but here we can also derive a procedure. We also give a direct implementation of ▲_G which turns out to be useful as the basis of an alternative implementation of △_G (again through De Morgan duality) which under some circumstances is faster.
-- [ ] Our second contribution is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
+- [ ] Our second insight is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
 - [ ] Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use this data element, and what other data element are used along with it?''
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
-- [ ] The easy symmetry of these two operations over G are interesting because △ is the De Morgan dual of ▲, the adjoint of ▽. This is actually a very simple notion arising as the image and preimage of the reachability relation of G; for functions, the image and preimage are adjoint, but for general relations they are _conjugate_.
 
 ## \OurLang: A Data-Transparent Programming Language
 
