@@ -357,19 +357,6 @@ since taking complements of large sets can be an expensive operation. We therefo
 provide a more efficient implementation of the sufficiency analyis, detailed in
 \figref{conjugate:slicing:forward}.
 
-The algorithm $\fwdAlg{G}$ builds a subgraph of the overall dependence
-graph, just like $\demandsAlg{}$. Rather than automatically adding a node to the subgraph, when we reach a
-new node, we must first add it to a subgraph of pending nodes, which we mark $H$
-(\ruleName{$\fwdEdges{}$-pending}). A node $\alpha$ can only be moved
-from the pending graph $H$ to the current "sufficiency graph" $G'$ if every
-predecessor of $\alpha$ is already in $G'$. Then we can remove it from $H$ and add
-it to $G'$, whilst adding its descendants to $H$ (\ruleName{$\fwdAlg{}$-extend}).
-We are finished when there are no new edges to traverse, at which point we return
-$\sources{G'}$. It is possible for the algorithm to terminate with a non-empty
-pending graph (\ruleName{$\fwdEdges{}$-done}). If it does, then the nodes in the pending set can be thought of
-as representing values that the set only contains partial information for.
-We give a visual demonstration of the various steps of the algorithm in \figref{suffices-algo-diagram}
-
 The algorithm $\fwdAlg{G}$ builds a subgraph of the original dependence graph,
 similar to $\demandsAlg{}$. In the main subroutine, $\fwdEdges$, we consider
 the subgraph under construction $G$, the subgraph of pending nodes $H$, and
