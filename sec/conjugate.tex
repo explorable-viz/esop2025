@@ -369,6 +369,11 @@ $\sources{G'}$. It is possible for the algorithm to terminate with a non-empty
 pending graph (\ruleName{$\fwdEdges{}$-done}). If it does, then the nodes in the pending set can be thought of
 as representing values that the set only contains partial information for.
 We give a visual demonstration of the various steps of the algorithm in \figref{suffices-algo-diagram}
+
+The algorithm $\fwdAlg{G}$ builds a subgraph of the original dependence graph,
+similar to $\demandsAlg{}$. For efficiency, the algorithm proceeds in a manner
+which allows it to only traverse each edge in the graph once.
+
 \input{fig/conjugate/suffices-algo-explanation}
 
 \begin{proposition}[Forwards Computes Sufficency]
