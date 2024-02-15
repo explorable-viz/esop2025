@@ -87,13 +87,13 @@ in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associa
 only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$, and returns the vertex $\alpha$ associated with that particular instance of $c$.
 
 \subsubsection{Evaluation}
-\figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS G, v$ for the core language,
-stating that term $e$, for environment $\gamma$ and vertices $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; $V$ is initially empty for a top-level term, and may grow whenever pattern-matching $... \match ..., V'$ occurs i.e. a function is applied to an argument (as  described in~\secref{core:semantics:pattern-matching}).
+\figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language,
+stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs.
 
 
-The other evaluation relation $\gamma, \seq{e}, V \evalS G,
-\seq{v}$ is similar but for a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in
-\seq{e}$ to a value in $v_i \in \seq{v}$, and constructs a dependence graph that is the disjoint union of
+The other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ is similar but for a sequence of
+terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$,
+and constructs a dependence graph that is the disjoint union of
 graphs produced by each individual evaluation. For convenience, we will use notation $\bind{\alpha}{V}$ in
 \defref{outgoing-edges} for adding a new vertex $\alpha$ and its dependencies $V$ to a graph.
 
