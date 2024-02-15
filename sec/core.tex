@@ -94,13 +94,12 @@ stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluat
 The other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ is similar but for a sequence of
 terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$,
 and constructs a dependence graph that is the disjoint union of
-graphs produced by each individual evaluation. For convenience, we will use notation $\bind{\alpha}{V}$ in
-\defref{outgoing-edges} for adding a new vertex $\alpha$ and its dependencies $V$ to a graph.
+graphs produced by each individual evaluation.
 
-\begin{definition}[Outgoing edges]\label{def:outgoing-edges}
-   For vertex $\alpha$ and set of vertices $V$, define $\bind{\alpha}{V}$ as a set of edges from $\alpha$ to all vertices in $V$.
- %   \DOnote{Is this the best notation? If we are thinking of edges from $V$ to $\alpha$ then it feels like the notation should reflect that ordering?}
-\end{definition}
+\todo{Update para after Sec 3 has been updated with a definition}
+For convenience, the evaluation rules  reuse the notation $\bind{\alpha}{V}$ from
+\todo{ref}, denoting the star graph where vertex $\alpha$ depends on vertices in $V$, for specifying the ``new'' graph
+fragments that are added to the overall graph being constructed.
 
 
 The rule for integers $n_\alpha$ simply returns their value form $n_{\alpha'}$ but as a fresh vertex
