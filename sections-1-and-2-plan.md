@@ -46,16 +46,17 @@
 
 # 2. Overview of approach and solution
 
-- [ ] So goal of data transparency is to enrich the computed content with interactions that allow the user to
-query relationships between data sources and visualisations and other outputs \emph{in situ}, i.e. without
-leaving the ``comprehension context'' in which their query arose. Crucially, we want to make this feature
-automatic. Hand-crafted efforts like Bremers are not only labour-intensive, but involve manually embedding
-knowledge of the relationship between visual outputs and inputs --- information that is usually implicit in
-how the former is computed from the latter --- into the same program, rendering it potentially invalid every
-time the visualisation logic changes. By putting this into a programming language instead, the author of the
-visualisation can concern themselves purely with communication and visualisation, and defer responsibility for
-transparency features to the infrastructure used to implement and host the visualisation.
-- [ ] However, computing bidirectional dependency information that [..] is challenging both performance-wise and in terms of implementation burden. For example, the approach taken by Perera et al to implement features similar to the ones shown in Fig 2. require two separate analyses: a backwards analysis to determine data needed by an output selection, and then a forwards analysis whose De Morgan dual determines any parts of the other chart that also need any of that data. Although extensionally each determines the other, these analyses are defined separately and each depends on details of the language, imposing a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire computation, [..]
+- [ ] As outlined in \secref{intro}, the aim of data transparency is to enrich the computed content with
+interactions that allow the user to query relationships between data sources and visualisations and other
+outputs \emph{in situ}, i.e. within the ``comprehension context'' in which these sorts of questions naturally
+arise. Crucially, we want to make this feature automatic. Hand-crafted efforts like Bremers are not only
+labour-intensive, but involve manually embedding metadata about the relationship between visual outputs and
+inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
+analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+responsibility for gathering this information into the programming language, the author or data scientist can
+concern themselves purely with analysis and visualisation, and defer responsibility for transparency
+features to the infrastructure used to implement and host the visualisation.
+- [ ] However, computing the bidirectional dependency information need to realise this idea is costly both in terms of performance and implementation burden. For example, the approach taken by Perera et al to implement the linked outputs analysis require do implement a feature similar to the one shown in Fig 2. requires two separate analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of that data. Although extensionally each determines the other, these analyses need to be defined separately and each depends on details of the language, imposing a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire computation regardless of whether all of the trace is relevant.
 
 ## Conjugate operators over dependence graphs
 
