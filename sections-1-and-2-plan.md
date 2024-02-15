@@ -76,14 +76,22 @@ descendancy in G, which in turn simply amounts to computing backwards reachabili
 with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in
 G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras turns out to nicely capture these relations of cognacy.
 - [ ] Definition
-- [ ] The canonical example of a conjugate pair are the image and preimage functions for a relation R \subset
-X \times Y. For funtions, the image and preimage form a Galois connection, but for general relations they are
-conjugate. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then
+- [ ] Intuitively, this says that if a set of outputs Y demands a set of inputs X, then any set of inputs X' that overlaps with X is demanded by a set of outputs that overlaps with Y. The canonical example of a conjugate pair are the image and preimage functions for a relation R \subset
+X \times Y. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then
 $f$ and the De Morgan dual of $g$ form a Galois connection.
-- [ ] For this reason, our setting technically only requires a single operator ▽_G, since its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as ▽_G^{\op}. It is well-known that extensionally these things determine each other, but here we can also derive a procedure. We also give a direct implementation of ▲_G which turns out to be useful as the basis of an alternative implementation of △_G (again through De Morgan duality) which under some circumstances is faster.
-- [ ] Our second insight is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
-- [ ] Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use this data element, and what other data element are used along with it?''
-- [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
+- [ ] Because of these easy relationships, our setting technically only requires a single operator ▽_G, since
+its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as ▽_G^{\op}. It is well-known that
+extensionally these things determine each other, but here we can also derive a procedure. We also give a
+direct implementation of ▲_G which turns out to be useful as the basis of an alternative implementation of
+△_G (again through De Morgan duality) which under some circumstances is faster.
+- [ ] Our second insight is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△). Fig 2 illustrates related inputs, again using images from our implementation. Suppose the user were this time to start from one of the input data sets, this time expressing interest in the bioenergy capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which turns green. In response the system generates two further selections automatically. First, any scatter plot elements that demand the selected input are given a similar green highlight; here just one point is highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip).
+- [ ] We call this output selection the \emph{mediating output} because of its role in establishing a
+connection between otherwise unrelated inputs. Finally, any other inputs demanded by the mediating output
+(that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and 3b). (We
+use a different colour to visually distinguish the \emph{answer} to the query from the selection that
+initiated the query in the first place.)
+- [ ] The result of a related inputs query can be thought of as a unit of comprehension, or perhaps reuse. It picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
+does so by identifying the common, or mediating, output elements that explain why the inputs are related. Sometimes a single input is used in many different outputs, or different aspects of a single output, resulting in a rather ``noisy'' query (lots of inputs are related); in \secref{} we also show how to project way irrelevant parts of the output to obtain a refined query context in which more precise answers can be obtained. (The same approach can be used to discard irrelevant inputs in a related outputs query to obtain more precise results.)
 
 ## \OurLang: A Data-Transparent Programming Language
 
