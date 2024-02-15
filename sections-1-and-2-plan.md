@@ -83,6 +83,9 @@ its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as 
 extensionally these things determine each other, but here we can also derive a procedure. We also give a
 direct implementation of ▲_G which turns out to be useful as the basis of an alternative implementation of
 △_G (again through De Morgan duality) which under some circumstances is faster.
+
+## 2.2 Related inputs
+
 - [ ] Our second insight is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△). Fig 2 illustrates related inputs, again using images from our implementation. Suppose the user were this time to start from one of the input data sets, this time expressing interest in the bioenergy capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the table (\figref{related-inputs-main} step 1), which turns green. In response the system generates two further selections automatically. First, any scatter plot elements that demand the selected input are given a similar green highlight; here just one point is highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip).
 - [ ] We call this output selection the \emph{mediating output} because of its role in establishing a
 connection between otherwise unrelated inputs. Finally, any other inputs demanded by the mediating output
