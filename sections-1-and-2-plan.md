@@ -42,7 +42,7 @@
   - [ ] \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace   vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two approaches ().
   - [ ] Section 6 reviews related work in more detail, including program slicing and DDGs.
 
-Section 7 wraps up with a discussion of some limitations and plans for future work. In particular, the sort of transparency infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of how output parts are related to input parts. We discuss extending this to more ``intensional'' forms transparency and propose some other ways of improving on the present system.
+- [ ] Section 7 wraps up with a discussion of some limitations and plans for future work. In particular, the sort of transparency infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of how output parts are related to input parts. We discuss extending this to more ``intensional'' forms transparency and propose some other ways of improving on the present system.
 
 # 2. Overview of approach and solution
 
@@ -59,12 +59,11 @@ features to the infrastructure used to implement and host the visualisation.
 - [ ] However, computing the bidirectional dependency information need to realise this idea is costly both in
 terms of performance and implementation burden. For example, the approach taken by Perera et al to implement
 the ``related outputs'' analysis required to implement a feature similar to the one shown in Fig 2. requires
-two separate analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and
-a forwards ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also
-need any of that data. Although extensionally each determines the other, these analyses need to be defined
-separately and each depends on details of the language, imposing a significant burden on the implementor.
-Moreover each runs over an execution record or trace of the entire computation regardless of whether all of
-the trace is relevant.
+two separate analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a
+forwards ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need
+any of that data. These analyses need to be defined separately and each depends on details of the language,
+imposing a significant burden on the implementor. Moreover each runs over an execution record or trace of the
+entire computation regardless of whether all of the trace is relevant.
 
 ## Conjugate operators over dependence graphs
 
