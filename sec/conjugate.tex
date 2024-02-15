@@ -365,14 +365,22 @@ provide a more efficient implementation of the sufficiency analyis, detailed in
 The algorithm $\fwdAlg{G}$ builds a subgraph of the original dependence graph,
 similar to $\demandsAlg{}$. In the main subroutine, $\fwdEdges{}$, we consider
 the subgraph under construction $G$, the subgraph of pending nodes $H$, and
-the current set of edges under consideration $E$.
-For efficiency, the algorithm proceeds in a manner
-which allows it to only traverse each edge in the graph once. When considering
-an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by adding it to $H$.
-If doing causes the neighbours of $\alpha$ in $H$ to be equal to its neighbours in
-$\hat{G}$, then we can remove $\alpha$ from $H$, and add it to $G$ (\ruleName{$\fwdEdges{}$-extend}), before
-adding its outgoing edges to $E$. Otherwise, we extend the edges in $H$ with
-$(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
+the current set of edges under consideration $E$. For efficiency, the algorithm
+proceeds in a manner which allows it to only traverse each edge in the graph once.
+When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
+adding it to $H$.
+
+The edges in the parent graph $G$ all point in the direction of inputs to outputs.
+When thought of as an adjacency graph, this means that computing the inward
+neighbours of a node, $\alpha$ is inefficient. Therefore, we maintain the opposite
+graph of $G$ and $H$ to facilitate the checks we run when adding a node to $H$
+or $G$. 
+
+If doing so causes the neighbours of $\alpha$ in $H$ to be equal
+to its neighbours in $\hat{G}$, then we can remove $\alpha$ from $H$, and add it
+to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E$.
+
+Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
 The algorithm terminates when there are no more edges to be considered (\ruleName{$\fwdEdges{}$-pending}).
 When this happens, it is possible that $H$ is non-empty. This implies that during
 the algorithms execution, we have traversed at least one node without traversing
