@@ -99,5 +99,20 @@ mutual
                      -> (a : Label)
                      -> ReachesV G'' (graphUnion G (toGraph a V')) (union V' V) G' {!!} prf2
                      -> ReachesV G'' G (cons a V) G'  {!!} prf2
+------
+
+Demands : Graph -> Vertices -> set Label
+Demands = {!!}
+
 
 -----------
+-- Reaches computes demanded by
+
+theoremReaachesDemands : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
+                         -> (prf : subset X' (S (V , E)))
+                         -- -> subset (S (V , E)) V -- need strictness
+                         -> (forall (G' : Graph)
+                            -> Reaches (V , E) X' (T G') {!prf!} {!!}
+                            -> ({a : Label} -> Demands (V , E) X' a ≡ T G' a))
+
+theoremReaachesDemands = {!!}
