@@ -14,6 +14,15 @@ Benefits of graphical approach:
    \item Language agnostic approach
    \item Separation of concerns
 \end{itemize}
+\todo{No Need to define backwards semantics}
+A key benefit of our approach is in avoiding the need to define a backwards
+evaluation scheme. In prior work in this area -- such as \citet{perera22} -- the
+developer was forced to implement a separate backwards evaluation semantics, which
+propagated selection information upwards through the execution trace until reaching
+the program inputs. This approach was laborious. In contrast, whilst evaluating
+a program to a dynamic dependence graph allowed us to use a simple procedure to
+compute both $\demandR_D$ and $\demandedByR_D$, whilst only requiring that the
+developer implement the desired dynamic dependence graph. 
 \todo{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
