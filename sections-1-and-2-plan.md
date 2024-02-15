@@ -65,7 +65,7 @@ any of that data. These analyses need to be defined separately and each depends 
 imposing a significant burden on the implementor. Moreover each runs over an execution record or trace of the
 entire computation regardless of whether all of the trace is relevant.
 
-## Conjugate operators over dependence graphs
+## 2.1 Conjugate operators over dependence graphs
 
 - [ ] Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic
 foundation for data transparency that both improves performance and reduces the implementation burden. Moreover,
