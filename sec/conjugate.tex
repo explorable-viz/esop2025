@@ -76,7 +76,7 @@ respectively, and negation is $\compl{X'}$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-As mentioned earlier in the paper, we make use of dynamic dependence graphs. 
+As mentioned earlier in the paper, we make use of dynamic dependence graphs.
 %We shall give an account of how we can compute related input and output queries
 %efficiently, using dynamic dependence graphs.
 Whilst we defer the details of how we arrive at a specific dependence graph
@@ -124,7 +124,7 @@ In this setting, we can view the preimage $\demandR_{D}(Y')$ as
 finding the set of inputs which are necessary for the elements of $Y'$.
 We can also view $\demandByR_{D}(X')$ as the set of outputs that $X'$ is necessary
 for. For the values in $X'$ to be \textit{sufficient} for some output, $y \in Y$, we need
-$x_i \in X'$ for every $(x_i, y) \in D$.  
+$x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
 evaluating the expression on their own. We make the observation that
@@ -141,8 +141,8 @@ We note that these two functions do not always form a Galois connection, since
 the composition of the two functions is not necessarily monotonic, contradicting
 a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
 In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to the $\set{x_1, x_2}$, and find
-$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is 
-neither a superset or subset of the originally selected set. Since the composite function 
+$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
+neither a superset or subset of the originally selected set. Since the composite function
 $\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
 cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
 We can read the green set as unused inputs, or free outputs. The light blue sets are the
@@ -200,13 +200,13 @@ be increasing.
 As a corollary, if both of the above lemma's are true, then $\demandR$ and $\demandByR$ actually
 do form a(n antitone) Galois connection. This is useful to know, since we may be
 working in a context where we wish to consider a filtered view of the data, where
-the user is shown only the data used by the original program. 
+the user is shown only the data used by the original program.
 
 As an aside, in the case when $D$ is itself a function, then all of inputs need
 to be used, and each input can only be used once. If that
 is the case, then taking the image and preimage of the function doesn't just create
 a conjugate pair, but instead creates the usual image/preimage Galois connection for
-a function. 
+a function.
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
@@ -238,7 +238,7 @@ since $R_G^{-1} = R_{G^{-1}}$. For convenience when define \textit{demands}
 and \textit{demanded by} in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
-   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, 
+   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$,
    let us write $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$, the restriction
    of $R_G$ to the sources and sinks of $G$. We write
 
@@ -261,7 +261,7 @@ A related input query can now be phrased as "what else can reach the nodes I can
 reach in the graph?", and a related output query can be phrased as "what else can
 be reached by the things that reach me?". We can think of this notion as similar
 to that of "cognacy" in natural languages, for related outputs we are finding
-the common ancestors, and for related inputs the common descendants. 
+the common ancestors, and for related inputs the common descendants.
 
 To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sources{G}$. We proceed by finding all nodes
@@ -292,7 +292,7 @@ graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
 set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
-on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$. 
+on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
 \input{fig/conjugate/algorithms}
 \begin{proposition}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
