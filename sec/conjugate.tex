@@ -212,20 +212,28 @@ a function.
 We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
 Whilst one can view a graph abstractly as a collection of vertices and edges, we
-will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
-
-\begin{definition}[Graphs as finite maps]
-   A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
-   where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
+will define it  as a finite map of pairs $(v : U)$ denoting that a vertex $v$ has
+outgoing edges to all vertices in $U \subseteq V$.
+\begin{definition}[In and Out Edges]
+   For a graph $G=(V,E)$, and a node $\alpha \in V$, we define:
+   \begin{itemize}
+      \item $\inE{G}(\alpha) \eqdef \set{(\beta, \alpha) \mid (\beta, \alpha) \in E}$\hfill (in edges)
+      \item $\outE{G}(\alpha) \eqdef \set{(\alpha, \beta) \mid (\alpha, \beta) \in E}$\hfill (out edges)
+   \end{itemize} 
 \end{definition}
+\begin{definition}[Graphs as finite maps]
+   A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{U}}}$,
+   where $\bind{v}{U} \in G_M \iff v \in V$, $U \subseteq V$ and $(v, u_i) \in E$ for all $u_i \in U$
+\end{definition}
+When constructing a graph incrementally, we may exploit this notation, and use
+$\bind{v}{U}$ to refer to a "star" graph, with one central node pointing at its
+neighbours.
 We will often refer to a graph without explicitly referring to its representation
 as a map, or a pair of sets.
 Once a graph has been constructed, the set of nodes that a value is demanded by
 can be represented by the set of nodes which are reachable by traversing the
 edges of the graph.
 
-
-\cd{The reachability definition is very general. I would leave it as a notation + a bit of known background, rather than having it as a definition.}
 \begin{notation}[Reachability]
    For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
    closure} of $E$.
@@ -266,13 +274,12 @@ To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sources{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
-We calculate this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
-This algorithm simply computes the set of nodes we can reach from the set $X'$,
-in the form of a graph $G'$ which is a subgraph of $G$ containing only the nodes
-$X'$ and the nodes reachable from $X'$ in $G$.
-$\demandsAlg{}$ works by taking a set of nodes and accumulating their neighbors.
-Everytime a new node is reached by traversing an edge, we enqueue its own
-neighbors, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
+We compute this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
+The algorithm computes reachability by incrementally building a subgraph $G'$, 
+consisting of all nodes and edges that can be traversed from the initial starting set.
+$\demandsAlg{}$ begins by taking a set of nodes and accumulating their neighbours.
+Every time a new node is reached by traversing an edge, we enqueue its own
+neighbours, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
 If we traverse an edge and reach a node we've already met, we simply skip it
 (\ruleName{$\demandsVert{}$-skip})
 At the algorithms termination (\ruleName{$\demandsVert{}$-done}), we have traversed every
@@ -324,7 +331,7 @@ to define the following \textit{sufficiency} analysis.
       \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }$ \hfill (sufficiency)
    \end{itemize}
 \end{definition}
-This definition looks remarkably similar to $\demandByR(\param)$, albeit the
+This definition looks remarkably similar to $\demandByR_D$, albeit the
 definition of $\sufficientR_D$ needs every ancestor to be in the input set,
 rather than any ancestor to be in the input set. We can, in fact, turn this query on
 sufficiency into $\demandByR_D$, using the De Morgan Dual.
@@ -358,19 +365,40 @@ since taking complements of large sets can be an expensive operation. We therefo
 provide a more efficient implementation of the sufficiency analyis, detailed in
 \figref{conjugate:slicing:forward}.
 
-The algorithm $\fwdAlg{G}$ builds a subgraph of the overall dependence
-graph, just like $\demandsAlg{}$. Rather than automatically adding a node to the subgraph, when we reach a
-new node, we must first add it to a subgraph of pending nodes, which we mark $H$
-(\ruleName{$\fwdEdges{}$-pending}). A node $\alpha$ can only be moved
-from the pending graph $H$ to the current "sufficiency graph" $G'$ if every
-predecessor of $\alpha$ is already in $G'$. Then we can remove it from $H$ and add
-it to $G'$, whilst adding its descendants to $H$ (\ruleName{$\fwdAlg{}$-extend}).
-We are finished when there are no new edges to traverse, at which point we return
-$\sources{G'}$. It is possible for the algorithm to terminate with a non-empty
-pending graph (\ruleName{$\fwdEdges{}$-done}). If it does, then the nodes in the pending set can be thought of
-as representing values that the set only contains partial information for.
-We give a visual demonstration of the various steps of the algorithm in \figref{suffices-algo-diagram}
+The algorithm $\fwdAlg{G}$ builds a subgraph of the original dependence graph,
+similar to $\demandsAlg{}$. In the main subroutine, $\fwdEdges{}$, we consider
+the subgraph under construction $G$, the subgraph of pending nodes $H$, and
+the current set of edges under consideration $E$. For efficiency, the algorithm
+proceeds in a manner which allows it to only traverse each edge in the graph once.
+When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
+adding it to $H$.
+If doing so causes the neighbours of $\alpha$ in $H$ to be equal
+to its neighbours in $\hat{G}$, then we can remove $\alpha$ from $H$, and add it
+to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E$.
+
+Because the edges in the parent graph $G$ all point in the direction of inputs to
+outputs, computing the inward neighbours of a node is inefficient in the adjacency
+map. We therefore perform the check related to input neighbors of a node on the
+opposite adjacency map.  
+
+Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
+The algorithm terminates when there are no more edges to be considered (\ruleName{$\fwdEdges{}$-pending}).
+When this happens, it is possible that $H$ is non-empty. This implies that during
+the algorithms execution, we have traversed at least one node without traversing
+all of its in-edges. Thus, $H$ forms a sort of front of nodes for which the
+input nodes only provide partial information.
+
 \input{fig/conjugate/suffices-algo-explanation}
+
+We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In
+this diagram, green nodes are the nodes in $G'$ that we have found sufficient
+inputs for, the blue nodes are unvisited, and the orange nodes are the nodes in
+$H$. Dashed edges are edges in the current edge list, and dotted edges are those
+currently under consideration. Over the eight steps pictured, we add the edges
+$\set{(x_1,x_5),(x_2,x_5),(x_3, x_6),(x_3,x_7)}$ to the set $E$, and traverse
+them one by one, first adding $x_5$ to $H$, then moving it to $G'$. We add $x_6$,
+then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we
+have no new edges to consider, and so halt in the state pictured in step eight.
 
 \begin{proposition}[Forwards Computes Sufficency]
    For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subseteq \sources{G} \subset V$
