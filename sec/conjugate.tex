@@ -379,7 +379,13 @@ which allows it to only traverse each edge in the graph once. When considering
 an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by adding it to $H$.
 If doing causes the neighbors of $\alpha$ in $H$ to be equal to its neighbors in
 $\hat{G}$, then we can remove $\alpha$ from $H$, and add it to $G$ (\ruleName{$\fwdEdges{}$-extend}), before
-adding its outgoing edges to $E$.
+adding its outgoing edges to $E$. Otherwise, we extend the edges in $H$ with
+$(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
+The algorithm terminates when there are no more edges to be considered (\ruleName{$\fwdEdges{}$-pending}).
+When this happens, it is possible that $H$ is non-empty. This implies that during
+the algorithms execution, we have traversed at least one node without traversing
+all of its in-edges. Thus, $H$ forms a sort of front of nodes for which the
+input nodes only provide partial information.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
