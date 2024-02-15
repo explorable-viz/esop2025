@@ -57,14 +57,14 @@ responsibility for gathering this information into the programming language, the
 concern themselves purely with analysis and visualisation, and defer responsibility for transparency
 features to the infrastructure used to implement and host the visualisation.
 - [ ] However, computing the bidirectional dependency information need to realise this idea is costly both in
-  terms of performance and implementation burden. For example, the approach taken by Perera et al to implement
-  the ``related outputs'' analysis required to implement a feature similar to the one shown in Fig 2. requires
-  two separate analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and
-  a forwards ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also
-  need any of that data. Although extensionally each determines the other, these analyses need to be defined
-  separately and each depends on details of the language, imposing a significant burden on the implementor.
-  Moreover each runs over an execution record or trace of the entire computation regardless of whether all of
-  the trace is relevant.
+terms of performance and implementation burden. For example, the approach taken by Perera et al to implement
+the ``related outputs'' analysis required to implement a feature similar to the one shown in Fig 2. requires
+two separate analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and
+a forwards ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also
+need any of that data. Although extensionally each determines the other, these analyses need to be defined
+separately and each depends on details of the language, imposing a significant burden on the implementor.
+Moreover each runs over an execution record or trace of the entire computation regardless of whether all of
+the trace is relevant.
 
 ## Conjugate operators over dependence graphs
 
@@ -78,7 +78,7 @@ G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51}, functions 
 come in reciprocating pairs, turns out to nicely capture these relations of cognacy. Conjugate pairs are
 closely related to Galois connections; if $f$ and $g$ are conjugate, then $f$ and the De Morgan dual of $g$
 form a Galois connection [connecting our approach to the work above]
-- [ ] For this reason, in our setting we technically only require a single operator ▽_G, since its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as ▽_G^{\op}. Extensionally it is well-known that these things determine each other, but here we can also derive a procedure. We do also give a direct language-agnostic implementation of ▲_G which again through De Morgan duality turns out to be useful as the basis of an alternative implementation of △_G which under some circumstances is faster.
+- [ ] For this reason, our setting technically only requires a single operator ▽_G, since its conjugate △_G is readily computed as ▽_G^{\op} and its adjoint ▲_G as ▽_G^{\op}. It is well-known that extensionally these things determine each other, but here we can also derive a procedure. We also give a direct implementation of ▲_G which turns out to be useful as the basis of an alternative implementation of △_G (again through De Morgan duality) which under some circumstances is faster.
 - [ ] Our second contribution is that the graphical setting makes it straightforward to compose reachability in G and its opposite the other way around, producing another provenance query called _related inputs_ (▽△) which allows the user to query the input elements that are ``cognate'' in G to some inputs of interest (i.e.have a common ancestor in $G$).
 - [ ] Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements when they contribute to a common output element (by element we mean some part of the input or output data). Users are able to ask questions of the form ``What outputs use this data element, and what other data element are used along with it?''
 - [ ] Fig 2 illustrates related inputs, again using images from our implementation. [..]
