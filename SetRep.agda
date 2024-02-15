@@ -3,6 +3,7 @@ module SetRep where
 open import Relation.Binary.PropositionalEquality
 open import Data.Empty
 open import Data.Product
+open import Data.Sum
 open import Relation.Unary hiding (U)
 open import Relation.Nullary
 open import Level
@@ -32,6 +33,9 @@ X ᶜ = \x -> ¬ (X x)
 
 _⊗_ : {l : Level} {U V : Set l} -> set U -> set V -> set (U × V)
 (X ⊗ Y) (x , y) = X x × Y y
+
+union : set U -> set U -> set U
+union X Y = \x -> X x ⊎ Y x
 
 -- ## Properties of these constructions
 
