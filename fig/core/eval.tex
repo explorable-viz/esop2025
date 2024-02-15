@@ -1,20 +1,6 @@
 \begin{figure}
    {\small \flushleft \shadebox{$\gamma, e, V \evalS v, G$}%
    \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\evalS$-int}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma, \annInt{n}{\alpha}, V
-         \evalS
-         \annInt{n}{\alpha'},
-         \set{\bind{\alpha'}{\alpha \cons V}}
-      }
-      %
-      \and
       %
       \inferrule*[
       lab={\ruleName{$\evalS$-var}}
@@ -31,6 +17,20 @@
       %
       \and
       %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, \annInt{n}{\alpha}, V
+         \evalS
+         \annInt{n}{\alpha'},
+         \set{\bind{\alpha'}{\alpha \cons V}}
+      }
+      %
+      \and
       \inferrule*[lab={\ruleName{$\evalS$-function}}]
       {
          \strut
