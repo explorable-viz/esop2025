@@ -214,7 +214,13 @@ We now provide some detail on the computation of
 \textit{demands} and \textit{demanded by} on a concrete dependence graph.
 Whilst one can view a graph abstractly as a collection of vertices and edges, we
 will define it  as a finite map of pairs $(v : \seq{u})$ denoting that a vertex $v$ has outgoing edges to all vertices in $\seq{u}$.
-
+\begin{definition}[In and Out Edges]
+   For a graph $G=(V,E)$, and a node $\alpha \in V$, we define:
+   \begin{itemize}
+      \item $\inE{G}(\alpha) \eqdef \set{(\beta, \alpha) \mid (\beta, \alpha) \in E}$\hfill (in edges)
+      \item $\outE{G}(\alpha) \eqdef \set{(\alpha, \beta) \mid (\alpha, \beta) \in E}$\hfill (out edges)
+   \end{itemize} 
+\end{definition}
 \begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{\seq{u}}}}$,
    where $\bind{v}{\seq{u}} \in M \iff v \in V$ and $(v, u_i) \in E$ for all $u_i \in \seq{u}$
