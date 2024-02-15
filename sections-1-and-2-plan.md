@@ -31,19 +31,18 @@
 
 - [ ] In this paper, we develop the idea of data transparency in two new directions. First we approach the problem in a more language-independent way, using _dynamic dependence graphs_. This separates the problem of defining queries over the I/O dependencies for a particular program, from the problem of generating a dependence graph for that program. Dependence graphs are a proven technique: they have been used extensively for program slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses based on adjoint pairs of operators (such as ▽ and ▲). These approaches (e.g. Ricciotti et al) have to date involved defining a “bidirectional interpreter” that builds an execution record in the form of a \emph{trace} during the forwards analysis, folding that trace back into a program slice during the backwards analysis. This method is quite inefficient and non-trivial to prove correct; a graph-based implementation factors the problem into a (language-specific) graph-building interpreter plus (language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and improves performance compared to approaches based on reverse interpretation.
 
-- [ ] Second, we introduce a new kind of provenance query called _related inputs_, which allows a user to explore relations of cognacy (common ancestry) in the graph […]. In the graphical setting this is an easy thing to compute, since it amounts to reachability in $G$ composed with reachability in the opposite graph.
+- [ ] Second, we introduce a new kind of provenance query called _related inputs_, a relation of mutual relevance which arises between inputs when they contribute to common features of the output. Queries of this form allow readers to ask questions like ``What outputs use this data element, and what other data elements are used along with it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally dual to the ``related outputs'' feature shown in Fig.1 inasmuch as it can be understood as cognacy in $G^{\op}$. In the graphical setting these are both easy to compute, since they amount to the two ways of composing reachability in $G$ with reachability in its opposite.
 
-- [ ] Section 2 presents an overview of our approach and language, and motivates the idea of ``related inputs'' query from an end-user perspective. Our specific contributions are then as follows: [..]
+- [ ] Section 2 presents an overview of our approach and language, and motivates the idea of ``related inputs'' query from an end-user perspective. The rest of the paper is then organised as follows: [..]
 
-  - [ ] We define a new program analysis framework over dynamic dependence graphs (Section 3), introducing the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being conjugate
+  - [ ] Section 3 defines a new program analysis framework over dynamic dependence graphs, introducing the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being conjugate
   is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
   computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$
-  - [ ] We define a core functional language with an operational semantics that pairs every result with a
-  dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
-  - [ ] We compare the performance of our implementation based on graphs and conjugates with an implementation
-  due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
-  vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative
-  implementation burden of the two approaches (\secref{evaluation}).
+  - [ ] \secref{core} defines a core functional language with an operational semantics that pairs every result with a
+  dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent (parts of) values as nodes in the graph.
+  - [ ] \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace   vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two approaches ().
+
+- [ ] Section 6 reviews related work in more detail and Section 7 wraps up with a discussion of some limitations and plans for future work.
 
 # 2. Overview of approach and solution
 
