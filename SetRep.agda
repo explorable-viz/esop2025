@@ -21,11 +21,8 @@ variable
 emptySet : set U
 emptySet _ = ⊥
 
-subset : set U -> set U -> Set
-subset X' X = {x : _} -> X' x -> X x
-
-emptyIsInitial : (X : set U) -> subset emptySet X
-emptyIsInitial X {x} p = ⊥-elim p
+subset : {U : Set} -> set U -> set U -> Set
+subset {U} X' X = {x : U} -> X' x -> X x
 
 power : set U -> (set U) -> Set
 power X Y = subset Y X
@@ -37,6 +34,12 @@ _⊗_ : {l : Level} {U V : Set l} -> set U -> set V -> set (U × V)
 (X ⊗ Y) (x , y) = X x × Y y
 
 -- ## Properties of these constructions
+
+reflexiveSubset : (X : set U) -> subset X X
+reflexiveSubset X = \x -> x
+
+emptyIsInitial : (X : set U) -> subset emptySet X
+emptyIsInitial X {x} p = ⊥-elim p
 
 selfInPower : (X : set U) -> (power X) X
 selfInPower X z = z

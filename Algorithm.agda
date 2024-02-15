@@ -9,6 +9,8 @@ open import Level
 
 open import SetRep
 
+-- # Graphs
+
 postulate
   Label : Set
 
@@ -22,17 +24,20 @@ Graph : Set₁
 Graph = Σ Vertices (\V -> Edges V)
 
 emptyGraph : Graph
-emptyGraph = (λ u → ⊥) , (λ x → ⊥)
+emptyGraph = emptySet , emptySet
 
 subgraph : Graph -> Graph -> Set
-subgraph (V , E) (V' , E') = Σ (subset V V') (\sub -> subedges sub E E')
-  where
-    subedges : (sub : {x : Label} -> V x -> V' x) -> Edges V -> Edges V' -> Set
-    subedges sub e e' = {a b : Label} -> (v1 : V a) -> (v2 : V b) -> E (v1 , v2) -> E' (sub {a} v1 , sub {b} v2)
+subgraph (V , E) (V' , E') =
+  Σ (subset V V') (\sub -> {a b : Label} -> (v1 : V a) -> (v2 : V b) -> E (v1 , v2) -> E' (sub {a} v1 , sub {b} v2))
 
 -- properties
 emptyGraphIsInitial : (G : Graph) -> subgraph emptyGraph G
-emptyGraphIsInitial (V , E) = (emptyIsInitial V) , (λ v1 v2 x → {!!})
+emptyGraphIsInitial (V , E) = (emptyIsInitial V) , aux
+  where
+    aux : {a b : Label} (v1 : emptySet a) (v2 : emptySet b)
+         -> emptySet (v1 , v2)
+         ->  E {a} {b} (emptyIsInitial V v1 , emptyIsInitial V v2)
+    aux _ _ e = ⊥-elim e
 
 reflexiveSubgraph : (G : Graph) -> subgraph G G
 reflexiveSubgraph (V , E) = (λ x → x) , (λ v1 v2 x → x)
@@ -50,9 +55,17 @@ mutual
 
   data Reaches (G : Graph) : (V : Vertices) -> (V' : Vertices)
                -> (prf1 : subset V (S G)) -> (prf2 : subset V' (T G)) -> Set where
+
      reaches : {V : Vertices}
                -> ReachesV G emptyGraph V G (emptyGraphIsInitial G) (reflexiveSubgraph G)
-               -> Reaches G V (T G) {!!} {!!}
+               -> Reaches G V (T G) {!!} (reflexiveSubset (T G))
 
   data ReachesV (G'' : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph)
                -> subgraph G G' -> subgraph G' G'' -> Set where
+
+     reachesV-done : {G : Graph} -> ReachesV G'' G emptySet G (reflexiveSubgraph G) {!!}
+
+     -- reachesV-skip
+
+     -- reachesV-extend
+
