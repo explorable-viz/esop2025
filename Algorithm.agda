@@ -108,11 +108,21 @@ Demands = {!!}
 -----------
 -- Reaches computes demanded by
 
-theoremReaachesDemands : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
+theoremReaachesDemands1 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (prf : subset X' (S (V , E)))
                          -- -> subset (S (V , E)) V -- need strictness
                          -> (forall (G' : Graph)
-                            -> Reaches (V , E) X' (T G') {!prf!} {!!}
+                          -> Σ (subset (T G') (T (V , E)))
+                                 (\prf' -> Reaches (V , E) X' (T G') prf prf')
                             -> ({a : Label} -> Demands (V , E) X' a ≡ T G' a))
 
-theoremReaachesDemands = {!!}
+theoremReaachesDemands1 = {!!}
+
+theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
+                         -> (prf : subset X' (S (V , E)))
+                         -- -> subset (S (V , E)) V -- need strictness
+                         -> (forall (G' : Graph)
+                           -> ({a : Label} -> Demands (V , E) X' a ≡ T G' a)
+                          -> Reaches (V , E) X' (T G') {!prf!} {!!})
+
+theoremReaachesDemands2 = {!!}
