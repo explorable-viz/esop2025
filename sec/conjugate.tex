@@ -271,11 +271,10 @@ To calculate a related input query, the first step is to select
 the input of interest, $X' \subseteq \sources{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR(X')$.
 
-We calculate this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
-This algorithm simply computes the set of nodes we can reach from the set $X'$,
-in the form of a graph $G'$ which is a subgraph of $G$ containing only the nodes
-$X'$ and the nodes reachable from $X'$ in $G$.
-$\demandsAlg{}$ works by taking a set of nodes and accumulating their neighbors.
+We compute this set by the algorithm $\demandsAlg{}$ detailed in \figref{conjugate:algorithms:demands}.
+The algorithm computes reachability by incrementally building a subgraph $G'$, 
+consisting of all nodes and edges that can be traversed from the initial starting set.
+$\demandsAlg{}$ begins by taking a set of nodes and accumulating their neighbors.
 Everytime a new node is reached by traversing an edge, we enqueue its own
 neighbors, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
 If we traverse an edge and reach a node we've already met, we simply skip it
