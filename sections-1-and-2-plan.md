@@ -95,7 +95,7 @@ initiated the query in the first place.)
 - [ ] The result of a related inputs query can be thought of as a unit of comprehension, or perhaps reuse. It picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
 does so by identifying the common, or mediating, output elements that explain why the inputs are related. Sometimes a single input is used in many different outputs, or different aspects of a single output, resulting in a rather ``noisy'' query (lots of inputs are related); in \secref{} we also show how selectively projecting away irrelevant parts of the mediating output to obtain a refined query context in which more precise answers can be obtained. (The same approach can be used to discard irrelevant mediating inputs in a related outputs query to obtain more precise results.)
 
-## \OurLang: A Data-Transparent Programming Language
+## 2.3 \OurLang: A Data-Transparent Programming Language
 
 - [ ] We implement the abstract framework outlined above in a programming language called \OurLang, which [...].
 - [ ] Example of scatter plot from Fig. 2
