@@ -77,29 +77,29 @@ T (V , E) a = (v1 : V a) -> ((b : Label) -> (v2 : V b) -> ¬ E (v1 , v2))
 -- Computation of demands/demanded by
 mutual
 
-  data Reaches (G : Graph) : (V : Vertices) -> (V' : Vertices)
-               -> (prf1 : subset V (S G)) -> (prf2 : subset V' (T G)) -> Set₁ where
+  data Reaches (G0 : Graph) : (V : Vertices) -> (V' : Vertices)
+               -> (prf1 : subset V (S G0)) -> (prf2 : subset V' (T G0)) -> Set₁ where
 
-     reaches : {V : Vertices}
-               -> ReachesV G emptyGraph V G (emptyGraphIsInitial G) (reflexiveSubgraph G)
-               -> Reaches G V (T G) {!!} (reflexiveSubset (T G))
+     reaches : {V : Vertices} {G : Graph}
+               -> ReachesV G0 emptyGraph V G (emptyGraphIsInitial G) {!!}
+               -> Reaches G0 V (T G) {!!} {!!}
 
-  data ReachesV (G'' : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph)
-               -> subgraph G G' -> subgraph G' G'' -> Set₁ where
+  data ReachesV (G0 : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph)
+               -> subgraph G G' -> subgraph G' G0 -> Set₁ where
 
-     reachesV-done : {G : Graph} {prf : subgraph G G''}
-                  -> ReachesV G'' G emptySet G (reflexiveSubgraph G) prf
+     reachesV-done : {G : Graph} {prf : subgraph G G0}
+                  -> ReachesV G0 G emptySet G (reflexiveSubgraph G) prf
 
-     reachesV-skip : {G G' : Graph} {V : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G''}
-                     -> ReachesV G'' G V G' prf1 prf2
+     reachesV-skip : {G G' : Graph} {V : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G0}
+                     -> ReachesV G0 G V G' prf1 prf2
                      -> (a : Label)
                      -- a in vertices of G
-                     -> ReachesV G'' G (cons a V) G' prf1 prf2
+                     -> ReachesV G0 G (cons a V) G' prf1 prf2
 
-     reachesV-extend : {G G' : Graph} {V V' : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G''}
+     reachesV-extend : {G G' : Graph} {V V' : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G0}
                      -> (a : Label)
-                     -> ReachesV G'' (graphUnion G (toGraph a V')) (union V' V) G' {!!} prf2
-                     -> ReachesV G'' G (cons a V) G'  {!!} prf2
+                     -> ReachesV G0 (graphUnion G (toGraph a V')) (union V' V) G' {!!} prf2
+                     -> ReachesV G0 G (cons a V) G'  {!!} prf2
 ------
 
 Demands : Graph -> Vertices -> set Label
