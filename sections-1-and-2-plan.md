@@ -73,7 +73,7 @@ Moreover, certain problems are much easier to formulate in the graphical setting
 outputs'' simply amounts to computing common ancestry, or _cognacy_, in G^{\op}, which in turn simply amounts
 to computing reachability in G^{\op} and composing that with reachability in G. The concept of ``conjugate''
 operators~\cite{jonsson51} between Boolean algebras turns out to nicely capture these relations of cognacy.
-- [ ] Definition
+- [ ] Definition: f and g are _conjugate_ := f(X) \cap Y \neq \emptyset \iff X \cap g(Y) \neq \emptyset
 - [ ] Intuitively, this says that if a set of outputs Y demands a set of inputs X, then any set of inputs X' that overlaps with X is demanded by a set of outputs that overlaps with Y. The canonical example of a conjugate pair are the image and preimage functions for a relation R \subset
 X \times Y. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then
 $f$ and the De Morgan dual of $g$ form a Galois connection.
