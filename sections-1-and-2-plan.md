@@ -68,12 +68,11 @@ entire computation regardless of whether all of the trace is relevant.
 ## 2.1 Conjugate operators over dependence graphs
 
 - [ ] Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic
-foundation for data transparency that both improves performance and reduces the implementation burden. Moreover,
-certain problems are much easier to formulate in the graphical setting. For example ``related outputs''
-simply amounts to computing _cognacy_ (common ancestry) in G^{\op}, or common
-descendancy in G, which in turn simply amounts to computing backwards reachability in G and composing that
-with backwards reachability in G^{\op} (or equivalently, reachability in G^{\op} composed with reachability in
-G) (△▽). The concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras turns out to nicely capture these relations of cognacy.
+foundation for data transparency that both improves performance and reduces the implementation burden.
+Moreover, certain problems are much easier to formulate in the graphical setting. For example ``related
+outputs'' simply amounts to computing common ancestry, or _cognacy_, in G^{\op}, which in turn simply amounts
+to computing reachability in G^{\op} and composing that with reachability in G. The concept of ``conjugate''
+operators~\cite{jonsson51} between Boolean algebras turns out to nicely capture these relations of cognacy.
 - [ ] Definition
 - [ ] Intuitively, this says that if a set of outputs Y demands a set of inputs X, then any set of inputs X' that overlaps with X is demanded by a set of outputs that overlaps with Y. The canonical example of a conjugate pair are the image and preimage functions for a relation R \subset
 X \times Y. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then
