@@ -40,12 +40,11 @@ and some of it bespoke.
 \end{notation*}
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-  For sets $X$, $Y$ with $\dom{X} \cap \dom{Y} = \emptyset$ \cd{do we need \dom?}, we define $X \disjunion Y = X \cup Y$.
-  \cd{this reads as if disjoint union is only defined when the sets are disjoint, which I find confusing}
+  For sets $X$, $Y$  we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$.
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
-\begin{notation*}[Set, complement set]\label{def:set-complement}
+\begin{notation*}[Complement and Set Minus]\label{def:set-complement}
    For a set $X$,  write $\compl{X}$ to denote it's complement.\\
    For two sets, $X, Y$, we write $X \setminus Y \eqdef X \cap \compl{Y}$ for the relative complement
    of $Y$, the set of elements of $X$ that are not in $Y$.
@@ -141,25 +140,8 @@ evaluating the expression on their own. We make the observation that
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-
-\cd{unintuitive that we would even expect them to be a galois connection. Move this together with the later discussion on galois connections?}
-We note that these two functions do not always form a Galois connection, since
-the composition of the two functions is not necessarily monotonic, contradicting
-a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
-In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1, x_2}$, and find
-$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
-neither a superset, nor a subset of the originally selected set. Since the composite function
-$\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
-cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
-We can read the green set as unused inputs, or free outputs. The light blue sets are the
-elements we have "discovered" via applying the two functions one after another.
-We can think of the darker blue sets as the values about which we discover nothing new
-when applying the two functions.
-
-\input{fig/conjugate/relations-not-galois}
-
-Instead of a Galois connection, we shall instead see that these two functions are
-\textit{conjugate}, in the sense of \citet{jonsson51}:
+These two functions satisfy the property of being a
+\textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
@@ -187,6 +169,21 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
 \begin{proof}
    \todo{Proof can proceed by an argument related to sets}
 \end{proof}
+
+We note that these two functions do not always form a Galois connection, since
+the composition of the two functions is not necessarily monotonic, contradicting
+a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
+In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1, x_2}$, and find
+$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
+neither a superset, nor a subset of the originally selected set. Since the composite function
+$\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
+cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
+We can read the green set as unused inputs, or free outputs. The light blue sets are the
+elements we have "discovered" via applying the two functions one after another.
+We can think of the darker blue sets as the values about which we discover nothing new
+when applying the two functions.
+
+\input{fig/conjugate/relations-not-galois}
 
 We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are
 no inputs which are unused, then $\demandR$ will preserve $\bot$, ie $\demandR(\emptyset) = \emptyset$.
@@ -247,9 +244,9 @@ edges of the graph, where we use the standard understanding of the reachability 
 %% \end{notation}
 %
 
-   \cd{where exactly is the following used?}
-   When considering a graph $G$ and its opposite $G^{-1}$,
-we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
+%    \cd{where exactly is the following used?}
+%    When considering a graph $G$ and its opposite $G^{-1}$,
+% we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
 
 Now, we can define \textit{demands}
 and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we refer to the dependence $G$:
@@ -264,15 +261,14 @@ and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we r
       \DOnote{Provide the types here?}
 \end{definition}
 
-\cd{I'm confused by the order of composed functions below.}
 In \secref{example}, we introduced the notions of related inputs and related outputs.
 Now, we can provide a formal account for them. %Defining these two functions on the reachability relation now lets us give
 %a formal account of related inputs and related outputs queries.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
-      \item $\relInput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related inputs)
-      \item $\relOutput_{G} \eqdef \demandR_{G} \after \demandByR_{G}$\hfill (related outputs)
+      \item $\relInput_{G} \eqdef \demandR_{G} \after \demandByR_{G}$\hfill (related inputs)
+      \item $\relOutput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
