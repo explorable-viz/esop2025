@@ -140,25 +140,8 @@ evaluating the expression on their own. We make the observation that
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-
-\cd{unintuitive that we would even expect them to be a galois connection. Move this together with the later discussion on galois connections?}
-We note that these two functions do not always form a Galois connection, since
-the composition of the two functions is not necessarily monotonic, contradicting
-a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
-In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1, x_2}$, and find
-$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
-neither a superset, nor a subset of the originally selected set. Since the composite function
-$\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
-cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
-We can read the green set as unused inputs, or free outputs. The light blue sets are the
-elements we have "discovered" via applying the two functions one after another.
-We can think of the darker blue sets as the values about which we discover nothing new
-when applying the two functions.
-
-\input{fig/conjugate/relations-not-galois}
-
-Instead of a Galois connection, we shall instead see that these two functions are
-\textit{conjugate}, in the sense of \citet{jonsson51}:
+These two functions satisfy the property of being a
+\textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
@@ -186,6 +169,21 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
 \begin{proof}
    \todo{Proof can proceed by an argument related to sets}
 \end{proof}
+
+We note that these two functions do not always form a Galois connection, since
+the composition of the two functions is not necessarily monotonic, contradicting
+a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
+In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1, x_2}$, and find
+$\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
+neither a superset, nor a subset of the originally selected set. Since the composite function
+$\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
+cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
+We can read the green set as unused inputs, or free outputs. The light blue sets are the
+elements we have "discovered" via applying the two functions one after another.
+We can think of the darker blue sets as the values about which we discover nothing new
+when applying the two functions.
+
+\input{fig/conjugate/relations-not-galois}
 
 We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are
 no inputs which are unused, then $\demandR$ will preserve $\bot$, ie $\demandR(\emptyset) = \emptyset$.
