@@ -10,13 +10,16 @@ an implementation of the prior state of the art in this field.
 \subsection{Qualitative Evaluation Of Graphical Approach}
 \todo{No Need to define backwards semantics}
 A key benefit of our approach is in avoiding the need to define a backwards
-evaluation scheme. In prior work in this area -- such as \citet{perera22} -- the
-developer was forced to implement a separate backwards evaluation semantics, which
-propagated selection information upwards through the execution trace until reaching
-the program inputs. This approach was laborious. In contrast, whilst evaluating
-a program to a dynamic dependence graph allowed us to use a simple procedure to
+evaluation function. In prior work in this area -- such as \citet{perera22} -- a
+program produced an execution trace. To perform a backwards analysis such as
+$\demandR_D$, the developer was forced to implement a separate backwards evaluation
+semantics using the execution trace until reaching the program inputs. This approach was laborious, and intimately tied the analysis to the language itself. In contrast,
+evaluating a program to a dynamic dependence graph allows us to use a simple procedure to
 compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
-developer implement the desired dynamic dependence graph. 
+developer implement the desired dynamic dependence graph once, in the forward
+evaluation function. 
+
+
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
 we provide the core technical details of the approach without having to mention
@@ -33,7 +36,7 @@ entirely reimplement the forward and backward semantics of evaluation.
 In order to test the performance of our dependency analyses, we implemented the
 approach in the language described in \secref{core} in Purescript as a 
 language called \OurLang. Benchmarks were run on a commercial laptop, with an
-Intel Core i7-10850H clocked at 2.70GHz and !6Gb of RAM. The benchmarks were run
+Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
 on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
 
 We tested the performance of our implementation against the approach employed in
