@@ -89,29 +89,32 @@ reachability V E {a'} {b'} (va , vb) =
 -- Computation of demands/demanded by
 mutual
 
-  data Reaches (G0 : Graph) : (V : Vertices) -> (V' : Vertices)
-               -> (prf1 : subset V (S G0)) -> (prf2 : subset V' (T G0)) -> Set₁ where
+  data Reaches (G0 : Graph) : (V : Vertices) -> (V' : Vertices) -> Set₁ where
 
      reaches : {V : Vertices} {G : Graph}
-               -> ReachesV G0 emptyGraph V G (emptyGraphIsInitial G) {!!}
-               -> Reaches G0 V (T G) {!!} {!!}
+               -> (prf1 : subset V (S G0))
+               -- -> (prf2 : subset V' (T G0))
+               -> ReachesV G0 emptyGraph V G
+               -> Reaches G0 V (T G)
 
-  data ReachesV (G0 : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph)
-               -> subgraph G G' -> subgraph G' G0 -> Set₁ where
+  data ReachesV (G0 : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph) -> Set₁ where
+-- -> subgraph G G' -> subgraph G' G0
+               
+     reachesV-done : {G : Graph}
+                  -> (prf : subgraph G G0)
+                  -> ReachesV G0 G emptySet G
 
-     reachesV-done : {G : Graph} {prf : subgraph G G0}
-                  -> ReachesV G0 G emptySet G (reflexiveSubgraph G) prf
-
-     reachesV-skip : {G G' : Graph} {V : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G0}
-                     -> ReachesV G0 G V G' prf1 prf2
+     reachesV-skip : {G G' : Graph} {V : Vertices}
+                     -> ReachesV G0 G V G'
                      -> (a : Label)
                      -- a in vertices of G
-                     -> ReachesV G0 G (cons a V) G' prf1 prf2
+                     -> (proj₁ G) a
+                     -> ReachesV G0 G (cons a V) G'
 
-     reachesV-extend : {G G' : Graph} {V V' : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G0}
+     reachesV-extend : {G G' : Graph} {V V' : Vertices}
                      -> (a : Label)
-                     -> ReachesV G0 (graphUnion G (toGraph a V')) (union V' V) G' {!!} prf2
-                     -> ReachesV G0 G (cons a V) G'  {!!} prf2
+                     -> ReachesV G0 (graphUnion G (toGraph a V')) (union V' V) G'
+                     -> ReachesV G0 G (cons a V) G'
 ------
 
 edgesToRelST : (V : Vertices) -> Edges V -> (set (Label × Label))
@@ -132,17 +135,15 @@ theoremReaachesDemands1 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (prf : subset X' (S (V , E)))
                          -- -> subset (S (V , E)) V -- need strictness
                          -> (forall (G' : Graph)
-                          -> Σ (subset (T G') (T (V , E)))
-                                 (\prf' -> Reaches (V , E) X' (T G') prf prf')
+                          -> Reaches (V , E) X' (T G')
                             -> ({a : Label} -> Demands V E X' prf a ≡ T G' a))
+theoremReaachesDemands1 V E X' prf k reach = {!reach!}
 
-theoremReaachesDemands1 V E X' prf G' (prf' , reach) {a} = {!!}
 
 theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (prf : subset X' (S (V , E)))
                          -- -> subset (S (V , E)) V -- need strictness
                          -> (forall (G' : Graph)
-                           -> ({a : Label} -> Demands V E X' {!!} a ≡ T G' a)
-                          -> Reaches (V , E) X' (T G') prf {!!})
-
+                           -> ({a : Label} -> Demands V E X' prf a ≡ T G' a)
+                          -> Reaches (V , E) X' (T G'))
 theoremReaachesDemands2 = {!!}
