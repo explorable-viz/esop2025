@@ -1,162 +1,54 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-Our approach is implemented as a language called \OurLang, implemented in PureScript. All benchmarks were run
-on a Dell Latitude 5411, with an Intel Core i7-10850H at 2.70GHz and 16Gb of RAM. We ran our benchmarks on
-Google Chome 118.0.5993.117, running Javascript V8 11.8.172.16.
+We shall now present a critical evaluation of our approach. Firstly we shall
+consider the qualitative benefits of the approach in terms of conceptual
+simplicity, and the relative ease of implementation. Secondly, we shall provide
+an evaluation of our implementations performance compared to
+an implementation of the prior state of the art in this field.
 
-We assess the benefits of our solution by answering the following three research questions:
+\subsection{Qualitative Evaluation Of Graphical Approach}
+\todo{No Need to define backwards semantics}
+A key benefit of our approach is in avoiding the need to define a backwards
+evaluation scheme. In prior work in this area -- such as \citet{perera22} -- the
+developer was forced to implement a separate backwards evaluation semantics, which
+propagated selection information upwards through the execution trace until reaching
+the program inputs. This approach was laborious. In contrast, whilst evaluating
+a program to a dynamic dependence graph allowed us to use a simple procedure to
+compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
+developer implement the desired dynamic dependence graph. 
+\todo{Language Agnostic Approach}
+The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
+we provide the core technical details of the approach without having to mention
+the details of the language, or the specific choice of dependency relation.
+\todo{Separation of concerns}
+Continuing the previous point of discussion, the separation of concerns is also
+a benefit. The dependency relation only needs to be implemented once, as part of
+program evaluation, leading to a more modular system. If a languages evaluation
+function is parameterised by the dependency relation, then it becomes possible
+to work with a variety of dependency relations without forcing the developer to
+entirely reimplement the forward and backward semantics of evaluation.
+\subsection{Benchmarking}
+
+In order to test the performance of our dependency analyses, we implemented the
+approach in the language described in \secref{core} in Purescript as a 
+language called \OurLang. Benchmarks were run on a commercial laptop, with an
+Intel Core i7-10850H clocked at 2.70GHz and !6Gb of RAM. The benchmarks were run
+on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
+
+We tested the performance of our implementation against the approach employed in
+the state of the art in this area. Our benchmarks were designed to answer the
+following three research questions:
 \begin{itemize}
-    \item RQ1: How much does slicing performance improve in the graphical approach?
-    \item RQ2: How much overhead does the construction of the graph introduce?
-    \item RQ3: How do the equivalent slicing implementations compare to each other?
+   \item RQ1: What is the overhead graph construction versus trace construction?
+   \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
+   \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
 \end{itemize}
 
-\subsection{Benchmarks} \label{sec:benchmarks}
-We have a selection of 67 benchmarks, ranging from toy programs to more complex
-algorithms from computer science literature, \todo{which we manually translated to Fluid?}.
-%Since we have written our own language, we needed to construct our own benchmarks.
-All the times presented in this
-section are measured in milliseconds. We present the full suite of benchmarks in
-Table \ref{table:all-benches}.
-\todo{Need to further describe the range of benchmarks, and what they represent}
+In light of the simplicity of the graphical approach, we consider performance
+evaluation a success if our performance is at least competitive with the state
+of the art. We expect the construction of a dependence graph to be somewhat more
+expensive than constructing a trace, but that our dependency analyses to be more
+efficient.
 
-\subsection{RQ1: How much does slicing performance improve in the graphical approach?}
-%\subsection{Slicing Performance}
-
-Compared to the Galois slicing approach of \citet{perera22} based on running adjoint analyses over an
-execution trace, our approach factors the analyis into two components: an operational semantics that evaluates
-a program to a DDG, and a pair of slicing operators for computing reachability and its adjoint over the graph.
-We show here that although the overhead of producing a DDG is comparable to that of producing a trace, the
-slicing algorithms run on average much faster than their trace-based counterparts, making them suitable for
-interactive applcations like the related inputs and related outputs queries discussed in \secref{example}. We
-have already established in \secref{graph} that slicing in the graphical setting is much simplified
-algorithmically. Since we are targeting interactive systems, we therefore feel the gain in slicing speed is
-worth the loss of performance in evaluation.
-
-\todo{performance in evaluation?}
-
-Our metric for the improvement to slicing speed is based on a well-known set of
-criteria proposed in \cite{nielsen93}, which we paraphrase here:
-
-\begin{itemize}
-    \item \textbf{0.1 seconds} or less feels instantaneous to the user
-    \item \textbf{1.0 seconds} is the limit before the users flow of thought feels
-    interrupted
-    \item \textbf{10.0 seconds} is the limit for keeping the users attention. Anything longer
-    than this and the user will shift their focus to other tasks
-\end{itemize}
-
-As we report results in measurements of milliseconds, then slicing benchmark results
-of 100 or less constitute near-instantaneous interaction with the system.
-
-In Table \ref{table:slicing-speedups}, we see that in general we do reach
-the performance guideline specified by Nielsen. Even in our worst cases - the
-benchmarks prefixed with \textit{graphics/} - we do not ever tip over the one
-second mark. The performance on those cases is still worse than other benchmarks
-but still within an acceptable range.
-
-One important point of discussion is the range in slicing speedups we observe.
-\todo{This description of some of the benchmarks needs to go to sec~\ref{sec:benchmarks}.}
-For example, in the cases prefixed \textit{slicing/convolution} we implement
-some classic convolutional filters from computer vision literature, an edge
-detection filter, and an embossing filter. We see that these cases produce the
-most impressive speedup numbers, with forward slicing speeding up by between
-160 and 380 times, and backward slicing speeding up between 100 and 120 times.
-
-Contrast this with the benchmark case \textit{slicing/dtw/compute-dtw}, the
-example we presented earlier in the paper. This is one of the largest programs
-we have tested, and we see that the speedup in both forward and backward slicing
-is approximately a factor of eight.
-
-We believe that the disparity in performance improvements is due to an inherent
-data-parallelism of certain examples. In an image convolution, there are a large
-number of cells in an output image which do not share any cells of the input.
-
-Contrast this with the Dynamic Time Warp algorithm, which is inherently more
-sequential. We therefore propose that our method is more suited to the efficient
-program slicing of algorithms - or steps of algorithms - which exhibit a high
-degree of data-independence.
-\todo{sure if this should come before or
-after the bit where we discuss the competing implementations we need.}
-
-{\tiny\input{fig/performance/slicing-speedup.tex}}
-
-\subsection{RQ2: How much overhead does the construction of the graph introduce?}
-%\subsection{Overhead}
-
-\todo{This is confusing because the RQ talks about graph construction, whereas in the actual section, you talk about evaluation (this also relates to one of my comments above).}
-
-In both the trace-based and graphical approaches, we construct an auxiliary data
-structure during evaluation. In the trace-based approach, we construct what is
-in essence a simplified version of the AST of the program, only representing
-things such as the branch of a pattern match or conditional expression which
-was taken.
-
-In contrast, the graphical evaluation approach works by annotating values with
-vertices, and building sets of neighbors. We collect the sets of vertices and
-edges produced at the end of evaluation, and only afterward construct the actual
-representation of the graph.
-
-We can see in Table \ref{table:eval-speedups} that across our test-cases, trace
-based evaluation takes about $54\%$ of the time that graph evaluation takes. We
-believe that this is an acceptable level of performance loss, given the gains we
-make in slicing performance, which we discuss next.
-\todo{I need to move/reformat the table because it currently takes up a whole page}
-{\tiny\input{fig/performance/eval-speedup.tex}}
-
-\subsection{RQ3: How do the equivalent slicing implementations compare to each other?}
-%\subsection{Equivalent Implementations}
-As we have discussed earlier, if one is careful about the definition of inputs
-and outputs on a given Dynamic Dependence Graph, then we have multiple ways to
-implement equivalent operators. As part of our testing, we compared equivalent
-implementations.
-
-First, we considered implementing forward slicing as the De Morgan dual of backward
-slicing on the opposite graph. This is identified in our benchmarks as \NaiveFwd.
-We also implemented the more direct algorithm described in \secref{graph}, which
-is what we marked as \GraphFwd. We also implement twin implementations of the
-duals of slicing. One (pair of) implementations, that of complementing, running the slicing
-operation, then complementing again, is denoted as \GraphBwdCmp, and \GraphFwdCmp,
-for the duals ofbackward and forward slicing respectively. The implementations
-using the opposite slicing procedure on the opposite graph are denoted as
-\GraphBwdOp, and \GraphFwdOp.
-
-In our implementation, the operation for taking a graph's opposite is much
-cheaper than that of complementation. This is reflected in our performance
-results where we see that the implementation using the opposite graph is much
-quicker generally than the implementation using complements. Results for these
-comparisons are contained in \tableref{equivalent-impls}.
-
-{\tiny\input{fig/performance/equivalent-impls}}
-
-\subsection{Discussion}
-\todo{I think we still want to include some finishing discussion, but unsure if
-this is appropriate. Could be a conclusion?}
-We can see that whilst the graphical slicing paradigm can improve the performance
-of program slicing dramatically, the increase in performance is varied. It
-initially appeared that speedup in slicing time was inherently tied to the
-size of the dynamic dependence graph and equivalent trace, but this is not true.
-
-Instead the computational speedup is more closely tied to the structural
-properties of the program of interest, and it's resultant dependence graph
-We have tested on several non-toy programs, and we note that there is a
-high variance in speedup of both forward and backward slicing time. We see that
-some examples - such as Dynamic Time Warping - experience approximately an
-eighttimes performance increase in both forward and backward slicing, whereas
-our convolution examples demonstrate speed increases on the order of 100s.
-
-The reason for this disparity is the inherent data-parallelism of certain
-computations. A single iteration of a convolution creates very "local" dependency
-structure. A cell in the top left of the output matrix only depends on a small
-section of the input image. We therefore expect that the graph produced
-in evaluation has lots of inputs which do not cooperate.
-
-In contrast, the Dynamic Time Warping algorithms output matching
-requires traversing the entire cost matrix computed in evaluation, and a cell in
-the cost matrix relies on the computation of it's left, upward, and diagonal
-neighbors. The implication of this is that the data depdendency through the
-the computation is in a sense more sequential than that of, for example
-convolution.
-{\tiny\todo{Need to move this to appendix}
-\input{fig/performance/all-benches.tex}}
+Still have the general question of how we can motivate the inclusion of suffices.
