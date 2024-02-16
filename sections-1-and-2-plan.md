@@ -1,19 +1,5 @@
 # 1. Introduction: Towards Transparent Research Outputs
 
-- [ ] Whether formulating a national policy or [..], we increasingly rely on [..] created by scientists and journalists. Interpreting these visual and textual summaries is essential to making informed decisions.
-- [ ] However, most of the artefacts we encounter are \emph{opaque}: unable to reveal anything about how they relate to the data they were derived from.
-- [ ] While one could in principle try to use the source code and data sources to reverse engineer some of these relationships, this requires substantial expertise, as well as valuable time spent away from the “comprehension context” in which we encountered the output in question.
-- [ ] These difficulties are only compounded when the information presented draws on multiple data sources, such as [...]
-- [ ] Even professional reviewers may lack the resources or inclination to get too involved. Perhaps more often than we would like, we end up taking things on trust.
-
-## Paragraph
-
-- [ ] With traditional print media, there is not much we can do about this ``disconnect'' between outputs like chart and figures and the underlying data. For digital media, other options are open to us.
-- [ ] One way to improve things is to engineer visual artefacts to be more ``self-explanatory'', so they can reveal to an interested user the relationship to the underlying data.
-- [ ] Consider the histogram in Fig. 1, which shows urban population growth in Asia from [..]. Ignore for a moment the pop-up showing information about Chiang Mai, and consider just the histogram. There are many questions a reader might have about what the chart “represents” – in other words how visual elements map to underlying data. Whether the points represent individual cities, what the colour scheme indicates, which of the points represents large cities or small cities, etc.
-- [ ] Sometimes legends and other text can help, but ambiguities inevitably remain. These do not necessarily reflect a problem with the visualisation. The entire value proposition of a summary, after all, is exactly that it presents the ``big picture'' at the expense of detail.
-- [ ] Bremer implemented her charts in a way that allowed a user to explore some of these questions themselves _in situ_, that is to say without leaving the context of the chart, via additional interactions. For example, by selecting the red dot shown, they are able to bring up a view of the data that the dot ``represents`` (was calculated from).
-
 ## Automated data transparency
 
 - [ ] These features are valuable comprehension aids, but are also laborious to implement. They also require the author to anticipate the kinds of query a user might have. The supported interactions don't naturally generalise: for example Bremer's visualisation only allows the user to select more than one of the circles at a time.

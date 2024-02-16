@@ -5,17 +5,6 @@ Whether formulating a national policy or simply deciding what groceries to buy, 
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions. However, most of the artefacts we encounter are \emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from. While one could in principle try to use the source code and data sources to reverse engineer some of these relationships, this requires substantial expertise, as well as valuable time spent away from the ``comprehension context'' in which we encountered the output in question.  These difficulties are only compounded when the information presented draws on multiple data sources, such as medical meta-analyses~\citep{dersimonian86}, ensemble models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination to get too involved. Perhaps more often than we would like, we end up taking things on trust.
 
-\hrule
-STILL TO INCORPORATE
-\hrule
-
-With traditional print media, a ``disconnect'' between chart and figures and the underlying data is to be
-expected, but for digital media, other options are open to us. In this paper, we introduce a new program
-analysis framework which supports interactive exploration of input-output relationships directly via visual
-outputs such as charts or tables. While this idea is not entirely new, our framework supports a novel form of
-provenance query which we call \emph{related inputs}, as well as lending itself to an easier implementation than
-prior work.
-
 \begin{wrapfigure}{r}{0.52\textwidth}
    \centering
    \includegraphics[width=0.49\textwidth]{fig/example/bremer.png}
@@ -23,6 +12,32 @@ prior work.
    \caption{Hand-crafted data-transparent visualisation}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
+
+With traditional print media, there is not much we can do about this ``disconnect'' between outputs like chart
+and figures and the underlying data. For digital media, other options are open to us. One way to improve
+things is to engineer visual artefacts to be more ``self-explanatory'', so they can reveal to an interested
+user the relationship to the underlying data. Consider the histogram in \figref{introduction:bremer} by
+\cite{bremer15}, showing urban population growth in Asia over a 10 year period. Ignore for a moment the pop-up
+about Chiang Mai and consider just the histogram. There are many questions a reader might
+have about what this chart ``represents'' --- in other words, how visual elements map to underlying data. For
+example, do the points represent individual cities? What does the colour scheme indicate? Which of the points
+represent large cities or small cities? Sometimes legends and other text can help, but ambiguities inevitably
+remain, and do not necessarily reflect a problem with the visualisation. The entire value proposition of a
+summary, after all, is exactly that it presents the ``big picture'' at the expense of detail.
+
+\citeauthor{bremer15} implemented their charts in a way that allowed a user to explore some of these questions
+themselves \emph{in situ}, that is to say without leaving the context of the chart, via additional
+interactions. For example, by selecting the red dot shown, they are able to bring up a view of the data that
+the dot ``represents'' (was calculated from).
+
+\vspace{2mm}
+\hrule
+\vspace{2mm}
+
+In this paper, we introduce a new program analysis framework which supports interactive exploration of
+input-output relationships directly via visual outputs such as charts or tables. While this idea is not
+entirely new, our framework supports a novel form of provenance query which we call \emph{related inputs}, as
+well as lending itself to an easier implementation than prior work.
 
 Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements
 when they contribute to a common output element (by element we mean some part of the input or output data).
