@@ -93,6 +93,7 @@ mutual
      reachesV-skip : {G G' : Graph} {V : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G''}
                      -> ReachesV G'' G V G' prf1 prf2
                      -> (a : Label)
+                     -- a in vertices of G
                      -> ReachesV G'' G (cons a V) G' prf1 prf2
 
      reachesV-extend : {G G' : Graph} {V V' : Vertices} {prf1 : subgraph G G'} {prf2 : subgraph G' G''}
