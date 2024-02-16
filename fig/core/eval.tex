@@ -24,10 +24,10 @@
          \strut
       }
       {
-         \gamma, \annInt{n}{\alpha}, V
+         \gamma, n, V
          \evalS
-         \annInt{n}{\alpha'},
-         \set{\bind{\alpha'}{\alpha \cons V}}
+         \annInt{n}{\alpha},
+         \set{\bind{\alpha}{V}}
       }
       %
       \and
@@ -49,10 +49,10 @@
          \gamma, \seq{e}, V \evalS \seq{v}, G
       }
       {
-         \gamma, \annRec{\seq{\bind{x}{e}}}{\alpha}, V
+         \gamma, \exRec{\seq{\bind{x}{e}}}, V
          \evalS
-         \annRec{\seq{\bind{x}{v}}}{\alpha'},
-         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}}
+         \annRec{\seq{\bind{x}{v}}}{\alpha},
+         G \disjunion \set{\bind{\alpha}{V}}
       }
       %
       \and
@@ -63,10 +63,10 @@
          \gamma, \seq{e}, V \evalS \seq{v}, G
       }
       {
-         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
+         \gamma, \exConstr{c}{\seq{e}}, V
          \evalS
-         \annConstr{c}{\seq{v}}{\alpha'},
-         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+         \annConstr{c}{\seq{v}}{\alpha},
+         G \disjunion \set{\bind{\alpha}{V}},
       }
       %
       \and
