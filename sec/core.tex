@@ -7,7 +7,7 @@ This section shows how we implement that graphical abstraction for \OurLang -- a
 big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
 dependence graph for the evaluation of that term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
 
-\subsection{Syntax and graph terms}
+\subsection{Syntax and terms}
 \label{sec:core:syntax}
 
 \input{fig/core/syntax}
@@ -15,24 +15,19 @@ dependence graph for the evaluation of that term (\secref{core:semantics}); we a
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines the \emph{terms} $e$ of the language mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
-%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
-
-
-Raw terms $\raw{e}$ include variables ranged over by $x, y, f$%
+\figref{syntax} defines the \emph{terms} $e$ of the language, which include: variables ranged over by $x, y, f$%
 ; integer constants ranged over by $n, m$%
 ; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
 ; and record projection $\exRecProj{e}{x}$. % for accessing variable $x$ in record $e$
 We also have constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors and is fully
 saturated by arguments $\seq{e}$; we write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
-
 Application comes in two forms:  standard application $\exApp{e}{e'}$, and \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions which are explained in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
 The language is parameterised by a finite map $\Phi(f) = n$ from variables $f$ to the arities $n \in \Nat$ of the
-foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). A crucial specification of foreign functions, for the graph semantics later, is that each provides an interpretation that computes both the function's result and a suitable dependence graph.
+foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). A crucial specification of foreign functions, for the graph semantics later, is that each provides an interpretation that computes both that function's result and a suitable dependence graph.
 
 Foreign functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
 i.e.~$\length{\seq{e}} = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment
@@ -58,19 +53,31 @@ $\seq{c}$, where each $\sigma$ specifies how the arguments to  $c$  will be matc
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$, records  $\exRecord{\seq{x \mapsto v}}$ and constructor values
+For \emph{values} $v$, we define these mutually inductively with \emph{raw values} $\raw{v}$ that are paired with an address $\alpha$. These addresses, explained in \secref{core:addresses}, will (later) form the vertices of the graphs that we build in the graph semantics.
+%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
+
+
+Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
 environment is defined as a finite~map.
 
-\input{fig/core/match}
-\input{fig/core/close-defs}
-\input{fig/core/eval}
+% mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
+%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
 
+\subsubsection{Addresses as vertices}
+\label{sec:core:addresses}
+\MNnote{this is a rough placeholder, please change and add to as desired:} The addresses $\alpha$ that annotate values act as identifiers, uniquely corresponding those values to specific vertices in a dependence graph. There are many plausible ways of assigning addresses (our particular implementation uses an integer counter to generate new ones) as long as some freshness condition is satisfied, ensuring that there are no unwanted address collisions in a given value i.e. graph. For succinctness, our presentation of the graph semantics (next) assumes this condition is met whenever a new address $\alpha$ is introduced.
+
+% The point of the disjointness conditions on graph union was intended to achieve this, and does at least ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t much better than just saying this in plain English outside of the definition).
 
 \subsection{Evaluation and graph construction}
 \label{sec:core:semantics}
+
+\input{fig/core/match}
+\input{fig/core/eval}
+\input{fig/core/close-defs}
 
 \subsubsection{Pattern matching}
 \label{sec:core:semantics:pattern-matching}
@@ -78,7 +85,7 @@ environment is defined as a finite~map.
 Rather than matching a single value $v$ against an eliminator $\sigma$, the judgement matches a ``{stack}'' of values $\seq{v}$ against a continuation $\kappa$.
 It then returns the selected branch $e$, an environment $\gamma$ providing bindings for the free variables in $e$, and a set $V$ of vertices found in the matched portions of $\seq{v}$.
 
-The $\match$-done rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected in $\sigma$.
+The \ruleName{$\match$-done} rule expresses exactly when using a \emph{term} $e$ as the continuation may succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected in $\sigma$.
 
 A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns no vertices, reflecting the fact that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The eliminator $\elimRecord{\seq{y}}{\kappa}$
 only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the variables
@@ -89,7 +96,9 @@ only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$
 
 % \subsubsection{Mutual recursion}
 % \label{sec:core:semantics:mutual-recursion}
-% To handle mutual recursion, \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$, which promotes an environment of recursive definitions $\rho$ to an environment of closures $\gamma'$
+% \MNnote{to complete}
+% \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$ used later to evaluate terms involving mutual recursion, and promotes an environment  $\rho$ of recursive definitions to a value environment $\gamma'$ of closures. This is done by enumerating over each definition $\rho(x_i) \in \rho$ and lifting it into its own closure $(\gamma_1, \rho, \rho(x_i))_{\alpha_i}$ as a fresh vertex ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma_1$; the graph produced by
+% $\closeDefs$ is then the disjoint union of dependencies for each of these new closures.
 
 % First we obtain the recursive definitions $\rho$ from the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$
 % computed by function $e$, before using the auxiliary relation $\closeDefs$ (bot. \figref{core:eval}) to
@@ -100,40 +109,27 @@ only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$
 
 \subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language,
-stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs.
+stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs. When adding new graph fragments (dependencies) to the overall graph $G$ being constructed, for convenience, we will write fragment $\bind{\alpha}{V}$ as shorthand for the ``star graph''  $(\set{\alpha}, \set{(\alpha, \beta) \, | \, \beta \in V})$ -- denoting that vertex $\alpha$ depends on vertices in~$V$.
 
+The rule for evaluating \emph{variables}  is standard, and the returned dependence graph is empty -- that is, no new vertices are constructed
+as a result of simply looking up values. For the other evaluation rules, there are two recurring patterns often followed which we find useful to point out.
 
-The other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ is similar but for a sequence of
-terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$,
-and constructs a dependence graph that is the disjoint union of
-graphs produced by each individual evaluation.
+A first pattern is that, any ``introduction'' rules that create new values have no choice but to assign to them new vertices, with this creation being dependent on  ambient vertices $V$ i.e. the input values consumed by the active function call. These cases include \emph{integers}, \emph{functions}, \emph{records}, and \emph{constructors}. For example, evaluating an integer $n$ returns its value form $n_{\alpha}$ assigned a fresh vertex $\alpha$; the resulting dependence graph is then $\set{\bind{\alpha}{V}}$, denoting that evaluating to  $n_\alpha$ depended on any inputs that were found in $V$.
+Likewise, evaluating an anonymous function $\exFun{\sigma}$ constructs the closure
+$\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ annotated by a new vertex $\alpha$, and captures the current environment $\gamma$ and
+using $\envEmpty$ as the set of associated mutually recursive definitions. The exception to this pattern is \emph{record projection} $e.y$, which first evaluates the entire
+record $e$ to $\annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}$ before returning the value $u$ belonging to field $y$; while this indeed assigns a new vertex $\alpha$ to the record value created, the structure of the record goes unused, and so $\alpha$ is omitted in the dependence graph.
 
-For convenience, the evaluation rules reuse the ``star'' graph notation $\bind{\alpha}{V}$  from
-\secref{conjugate:dependence-graph-algos}
- --- denoting that vertex $\alpha$ depends on vertices in $V$ ---  for specifying the new graph
-fragments that are added to the overall graph under construction.
+A second pattern is that, for any rule that involves evaluating many subterms (in a term), the corresponding subgraphs that are constructed must be disjoint (reflecting that the collective set of their vertices $\alpha$ are unique), and the dependence graph of the overall term is the union of these subgraphs.  This general principle is captured by the \emph{second evaluation relation}, $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bot. \figref{core:eval}), which is for evaluating a sequence of terms $\seq{e}$: its single rule evaluates each term $e_i \in \seq{e}$ to a value $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and builds the dependence graph $\textstyle{\bigdisjunion} \seq{G}$. We make use of this rule for \emph{records} $\exRec{\seq{\bind{x}{e}}}$, \emph{constructors} $c(\seq{e})$, and \emph{foreign function calls} $f(\seq{e})$, which all involve evaluating a sequence $\seq{e}$ of subterms and combining their resulting subgraphs. In the last two cases, we must also coincide the arity of constructor $c$ or foreign function $f$ with the number of arguments in $\seq{e}$; and for foreign calls, $\hat{f}$ is the
+foreign implementation that provides a way to evaluate a call to $f$ to a graph and value, as we required in~\secref{core:foreign}.
+Evaluation of \emph{let-binding}s $\exLet{x}{e}{e'}$ is standard, and here, we need union the graphs of only subterms $e$ and  $e'$.
 
-Variable
-evaluation is standard, and the returned dependence graph is empty due to no new vertices being constructed
-from simply looking up values.
-The rule for integers $n_\alpha$ simply returns their value form $n_{\alpha'}$ but as a fresh vertex
-$\alpha'$. The resulting dependence graph $\set{\bind{\alpha'}{\alpha \cons V}}$ then contains a vertex
-$\alpha'$ with outgoing edges to all vertices in $\alpha \cons V$, expressing that evaluating to  $n_\alpha'$
-depended on the original term $n_\alpha$ alongside any other inputs that were found in $V$.
-Evaluation of an anonymous function $\exFun{\sigma}$ constructs the closure
-$\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ as a new vertex, capturing the current environment $\gamma$ and
-using $\envEmpty$ as the set of associated mutually recursive definitions.
+% is similar to that of records evaluates the sequence of terms $\seq{e}$ associated
+% with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha}$ as a fresh vertex
+% $\alpha$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of
+% $\annRec{\seq{\bind{x}{v}}}{\alpha}$.
 
-The rule for records $\annRec{\seq{\bind{x}{e}}}{\alpha}$ evaluates the sequence of terms $\seq{e}$ associated
-with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha'}$ as a fresh vertex
-$\alpha'$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of
-$\annRec{\seq{\bind{x}{v}}}{\alpha'}$. Record projection $e.y$ uses the previous rule to evaluate the entire
-record $e$ before looking up the value for $y$; as the record value as a whole structure goes unused, its
-vertex is omitted in the dependence graph. Evaluation of constructor expressions $c(\seq{e})_\alpha$ and
-foreign function calls $f(\seq{e})$ is similar to that of records, but also coincides the
-arity of $c$ or $f$ with the number of arguments in $\seq{e}$. For foreign calls, $\hat{f}$ is the
-foreign implementation that provides a way to evaluate the calling of  $f$ to a graph and value, as we required  in \secref{core:foreign}.
-
+Before considering the last two rules, application and recursive let-bindings, $\ldots$ \MNnote{to finish}
 
 Application $\exApp{e}{e'}$ is more involved, dealing with both mutual recursion and pattern-matching. First
 we obtain the recursive definitions $\rho$ from the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$
@@ -148,8 +144,7 @@ the vertices $V'$ which arriving at  $e^\twoPrime$ depended on. The last premise
 final value, where its input set of vertices $\alpha \cons V'$ denotes a dependency on the original closure
 and the value(s) that were matched. As usual, the overall dependence graph is the combination of the ones
 constructed by each intermediate step.
-
-Finally, the rule for regular let-bindings $\exLet{x}{e}{e'}$ is standard and graph construction is simply the disjoint union of graphs of $e$ and  $e'$. The case for recursive let-bindings $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$ is the same except requiring $\closeDefs$ to evaluate the  mutually recursive definitions $\seq{\bind{x}{\sigma}}$, as was explained for~application.
+The case for recursive let-bindings $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$ is the same except requiring $\closeDefs$ to evaluate the  mutually recursive definitions $\seq{\bind{x}{\sigma}}$, as was explained for~application.
 
 % \subsubsection{Products of Projections of Views}
 % Consider the situation where we have two input tables, say $A$ and $B$, which
