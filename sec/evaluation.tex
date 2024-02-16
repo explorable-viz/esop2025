@@ -19,18 +19,17 @@ compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
 developer implement the desired dynamic dependence graph once, in the forward
 evaluation function. 
 
-
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
-we provide the core technical details of the approach without having to mention
-the details of the language, or the specific choice of dependency relation.
-\todo{Separation of concerns}
-Continuing the previous point of discussion, the separation of concerns is also
-a benefit. The dependency relation only needs to be implemented once, as part of
-program evaluation, leading to a more modular system. If a languages evaluation
-function is parameterised by the dependency relation, then it becomes possible
-to work with a variety of dependency relations without forcing the developer to
-entirely reimplement the forward and backward semantics of evaluation.
+we were able to give the core technical details of the approach without having to
+mention the details of the language, or the specific choice of dependency relation.
+We contrast this with the previously mentioned point regarding related work,
+implementing the approach for a new language, or replacing the dependency relation
+requires only modifying one part of a language -- its evaluator -- rather than 
+building two functions, and being forced to verify that the forwards and backwards
+evaluation functions agree. Instead, once the developr has confirmed that their
+implementation of the graph algorithms is correct, they can move on.
+
 \subsection{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
