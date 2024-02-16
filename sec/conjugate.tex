@@ -124,9 +124,6 @@ finding the set of inputs which are necessary for the elements of $Y'$.
 Similarly, the image of $X'$ under the dependency relation, $\demandByR_{D}(X')$, can be viewed as the set of outputs that $X'$ is necessary
 for.
 %
-Accordingly, in the rest of the paper,
-when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
-and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
 ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. 
@@ -136,12 +133,13 @@ A related question we may come across in data analysis tasks is that of \textit{
 $x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
-evaluating the expression on their own. We make the observation that
-the set of outputs that a set of inputs is necessary for is a superset of the
+evaluating the expression on their own. Notably, the set of outputs a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-These two functions satisfy the property of being a
+
+We observe that the image and preimage of a relation form  a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
+
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
@@ -157,10 +155,6 @@ These two functions satisfy the property of being a
    $$
 \end{definition}
 
-This makes sense as a condition for \textit{demands} and
-\textit{demanded by}: if for some subsets $X',Y'$, we find that the output values
-$X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
-of input values that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
@@ -169,6 +163,12 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
 \begin{proof}
    \todo{Proof can proceed by an argument related to sets}
 \end{proof}
+
+This makes sense as a condition for  \textit{demands} and
+\textit{demanded by}: for some subsets $X',Y'$, if the output values
+$X'$ is demanded by has an empty intersection with $Y'$, then we would expect the set
+of input values that $Y'$ demands to have an empty intersection with $X'$.
+
 
 We note that these two functions do not always form a Galois connection, since
 the composition of the two functions is not necessarily monotonic, contradicting
@@ -205,11 +205,11 @@ do form a(n antitone) Galois connection. This is useful to know, since we may be
 working in a context where we wish to consider a filtered view of the data, where
 the user is shown only the data used by the original program. \cd{does this become relevant in any of the benchmarks?}
 
-As an aside, in the case when $D$ is itself a function, then all of inputs need
-to be used, and each input can only be used once. If that
-is the case, then taking the image and preimage of the function doesn't just create
-a conjugate pair, but instead creates the usual image/preimage Galois connection for
-a function.
+%% As an aside, in the case when $D$ is itself a function, then all of inputs need
+%% to be used, and each input can only be used once. If that
+%% is the case, then taking the image and preimage of the function doesn't just create
+%% a conjugate pair, but instead creates the usual image/preimage Galois connection for
+%% a function.
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
