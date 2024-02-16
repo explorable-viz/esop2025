@@ -59,5 +59,26 @@ rel X Y R = subset R (X ⊗ Y)
 image : {X : set U} {Y : set V} -> (R : set (U × V)) -> (u : U) -> set V
 image {X} {Y} R x y = R (x , y)
 
+----------
+
+preimage' : {U : Set} {V : Set} {X : set U} {Y : set V}
+          -> (D : set (U × V))
+          -> (X' : set U)
+          -> subset X' X
+          -> set V
+preimage' {U} {V} {X} {Y} D X' sub y = Σ U (\x -> X' x × D (x , y))
+
+{-
+preimage : {U : Set} {V : Set} {X : set U} {Y : set V}
+          -> (D : set (U × V)) -> {rel : rel X Y D}
+          -> (X' : set U)
+          -> power X X'
+          -> Σ (set V) (\Y' -> power Y Y')
+preimage {U} {V} {X} {Y} D {rel} X' sub = pre , λ x → {!!}
+  where
+    pre : set V
+    pre y = Σ U (\x -> X' x × D (x , y))
+-}
+
 -- func : (X : set U) -> (Y : set V) -> (R : set (U × V)) -> Set
 -- func X Y F = subset F (X ⊗ Y) ×

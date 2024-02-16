@@ -68,11 +68,23 @@ reflexiveSubgraph (V , E) = (λ x → x) , (λ v1 v2 x → x)
 
 -- sources
 S : Graph -> Vertices
-S (V , E) a = (v1 : V a) -> ((a' : Label) -> (v0 : V a') -> ¬ E (v0 , v1))
+S (V , E) a = Σ (V a) (\v1 -> ((a' : Label) -> (v0 : V a') -> ¬ E (v0 , v1)))
+
+sinkSub : (V : Vertices) -> (E : Edges V) -> (X : Vertices) -> subset X (S (V , E)) -> subset X V
+sinkSub V E X sub {a} va = let v = sub {a} va in proj₁ v
 
 -- sinks
 T : Graph -> Vertices
-T (V , E) a = (v1 : V a) -> ((b : Label) -> (v2 : V b) -> ¬ E (v1 , v2))
+T (V , E) a = Σ (V a) (\v1 -> ((b : Label) -> (v2 : V b) -> ¬ E (v1 , v2)))
+
+-- TODO: there may be a better way than this...
+-- can do this by composing the edges relation with itself n times where n is the number
+-- of vertices.
+-- reachability
+{-# TERMINATING #-}
+reachability : (V : Vertices) -> (E : Edges V) -> Edges V
+reachability V E {a'} {b'} (va , vb) =
+  (a' ≡ b') ⊎ (Σ Label (\c -> (vc : V c) -> E (va , vc) × reachability V E (vc , vb)))
 
 -- Computation of demands/demanded by
 mutual
@@ -102,9 +114,16 @@ mutual
                      -> ReachesV G0 G (cons a V) G'  {!!} prf2
 ------
 
-Demands : Graph -> Vertices -> set Label
-Demands = {!!}
+edgesToRelST : (V : Vertices) -> Edges V -> (set (Label × Label))
+edgesToRelST V E (a , b) = Σ ((S (V , E)) a) (\isVa -> Σ ((T (V , E)) b) (\isVb -> E {a} {b} (proj₁ isVa , proj₁ isVb)))
 
+Demands : (V : Vertices) -> (E : Edges V) -> (X : Vertices) -> subset X (S (V , E)) -> set Label
+Demands V E X sub a =
+  let r = reachability V E
+      g' = (V , r)
+  in preimage' {Label} {Label} {V} {V} (edgesToRelST V r) X (sinkSub V E X sub) a
+
+-- preimage i.e. Triang_D(X') = {y in Y | exists x in X' (x, y) in D}
 
 -----------
 -- Reaches computes demanded by
@@ -115,15 +134,15 @@ theoremReaachesDemands1 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (forall (G' : Graph)
                           -> Σ (subset (T G') (T (V , E)))
                                  (\prf' -> Reaches (V , E) X' (T G') prf prf')
-                            -> ({a : Label} -> Demands (V , E) X' a ≡ T G' a))
+                            -> ({a : Label} -> Demands V E X' prf a ≡ T G' a))
 
-theoremReaachesDemands1 = {!!}
+theoremReaachesDemands1 V E X' prf G' (prf' , reach) {a} = {!!}
 
 theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (prf : subset X' (S (V , E)))
                          -- -> subset (S (V , E)) V -- need strictness
                          -> (forall (G' : Graph)
-                           -> ({a : Label} -> Demands (V , E) X' a ≡ T G' a)
-                          -> Reaches (V , E) X' (T G') {!prf!} {!!})
+                           -> ({a : Label} -> Demands V E X' {!!} a ≡ T G' a)
+                          -> Reaches (V , E) X' (T G') prf {!!})
 
 theoremReaachesDemands2 = {!!}
