@@ -1,20 +1,6 @@
 \begin{figure}
    {\small \flushleft \shadebox{$\gamma, e, V \evalS v, G$}%
    \begin{smathpar}
-      \inferrule*[
-         lab={\ruleName{$\evalS$-int}}
-      ]
-      {
-         \strut
-      }
-      {
-         \gamma, \annInt{n}{\alpha}, V
-         \evalS
-         \annInt{n}{\alpha'},
-         \set{\bind{\alpha'}{\alpha \cons V}}
-      }
-      %
-      \and
       %
       \inferrule*[
       lab={\ruleName{$\evalS$-var}}
@@ -31,6 +17,20 @@
       %
       \and
       %
+      \inferrule*[
+         lab={\ruleName{$\evalS$-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, \annInt{n}{\alpha}, V
+         \evalS
+         \annInt{n}{\alpha'},
+         \set{\bind{\alpha'}{\alpha \cons V}}
+      }
+      %
+      \and
       \inferrule*[lab={\ruleName{$\evalS$-function}}]
       {
          \strut
@@ -176,26 +176,6 @@
       \and
       %
    \end{smathpar}}
-   \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs \gamma', G$}
-    \hfill\textit{ with }$\dom{\gamma'} = \dom{\rho}$%
-   \begin{smathpar}
-      \inferrule*[]
-      {
-         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
-         \\
-         G_i = \set{\bind{\alpha_i}{V}}
-         \quad
-         (\forall i \numleq \length{\seq{x}})
-      }
-      {
-         \gamma, \rho, V
-         \closeDefs
-         \set{\seq{\bind{x}{v}}},
-         \textstyle{\bigdisjunion}\seq{G}
-      }
-   \end{smathpar}
-   }
    \vspace{-0.5cm}
    \caption{Operational semantics: evaluation and graph construction}
    \label{fig:core:eval}
