@@ -100,16 +100,15 @@ only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$
 
 \subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language,
-stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs.
-
-
-The other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ is similar but for a sequence of
-terms $\seq{e}$. Its single rule demonstrates an important recurring pattern for any rule that involves evaluating many subterms (here, $e_i \in \seq{e}$) to construct many subgraphs (here, $G_i \in \seq{G}$): that these subgraphs must be disjoint, and that unioning them constructs the dependence graph of the overall term.
-
-For convenience, the evaluation rules reuse the ``star'' graph notation $\bind{\alpha}{V}$  from
+stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs. For convenience, we will use the ``star graph'' notation $\bind{\alpha}{V}$  from
 \secref{conjugate:dependence-graph-algos}
  --- denoting that vertex $\alpha$ depends on vertices in $V$ ---  for specifying the new graph
 fragments that are added to the overall graph under construction.
+
+There are some general recurring patterns that the evaluation rules follow, which we find useful to point out. First, for any rule that involves evaluating many subterms, their corresponding subgraphs that are generated must be disjoint, and the union of these subgraphs is the dependence graph of the overall term. This is demonstrated by other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bot. \figref{core:eval}) for evaluating a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and builds the dependence graph $\textstyle{\bigdisjunion} \seq{G}$.
+
+Second, any rules that construct new values have no choice but to assign new vertices to these values, with these depending on the ambient set of input vertices $V$ (the inputs to the current function call).
+
 
 Variable evaluation is standard, and the returned dependence graph is empty -- that is, no new vertices are constructed
 as a result of simply looking up values.
