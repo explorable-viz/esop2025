@@ -104,9 +104,7 @@ stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluat
 
 
 The other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ is similar but for a sequence of
-terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value in $v_i \in \seq{v}$,
-and constructs a dependence graph that is the disjoint union of
-graphs produced by each individual evaluation.
+terms $\seq{e}$. Its single rule demonstrates an important recurring pattern for any rule that involves evaluating many subterms (here, $e_i \in \seq{e}$) to construct many subgraphs (here, $G_i \in \seq{G}$): that these subgraphs must be disjoint, and that unioning them constructs the dependence graph of the overall term.
 
 For convenience, the evaluation rules reuse the ``star'' graph notation $\bind{\alpha}{V}$  from
 \secref{conjugate:dependence-graph-algos}
