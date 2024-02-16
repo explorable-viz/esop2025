@@ -40,7 +40,8 @@ and some of it bespoke.
 \end{notation*}
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-   For sets $X$, $Y$ with $\dom{X} \cap \dom{Y} = \emptyset$, we define $X \disjunion Y = X \cup Y$.
+  For sets $X$, $Y$ with $\dom{X} \cap \dom{Y} = \emptyset$ \cd{do we need \dom?}, we define $X \disjunion Y = X \cup Y$.
+  \cd{this reads as if disjoint union is only defined when the sets are disjoint, which I find confusing}
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
@@ -102,15 +103,15 @@ graph has the effect of swapping the sets of sources and sinks.
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
 characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
 can be read as $x$ is \textit{demanded by} $y$.
+%
+(As opposed to a function) the dependency relation allows scenarios where inputs are not demanded by any
+output, or inputs are demanded by multiple outputs. These properties are nice
+to have, since in data analysis tasks, we often do not need to make use of all 
+the inputs to the program, and we may reuse data for multiple different outputs.
 
-With a dependency relation, there can be inputs which are not demanded by any
-output, and inputs can be demanded by multiple outputs. These properties are nice
-to have, since in data analysis tasks, we often do not need to make use of the entire
-set of inputs to the program, and we may reuse data for multiple different outputs.
-
-Since we wish to consider the relationships between sets of inputs and sets of outputs,
-we must lift the dependency relation to sets of inputs and sets of outputs.
-We do this by constructing the \textit{image} and \textit{preimage functions} of the relation:
+Motivated by data analysis tasks, we wish to consider the relationships between sets of inputs and sets of outputs.
+Thus, we lift the dependency relation to sets of inputs and sets of outputs by
+constructing the \textit{image} and \textit{preimage functions} of the relation:
 \begin{definition}[Image and Preimage of a Relation]
    For a relation $D \subseteq X \times Y$, we define $\demandByR_D: \powerset{X} \to \powerset{Y}$
    and $\demandR_D : \powerset{Y} \to \powerset{X}$ as:
@@ -119,10 +120,20 @@ We do this by constructing the \textit{image} and \textit{preimage functions} of
       \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-In this setting, we can view the preimage $\demandR_{D}(Y')$ as
+In our setting, we can view the preimage of a set $Y'$ under the dependency relation, $\demandR_{D}(Y')$, as
 finding the set of inputs which are necessary for the elements of $Y'$.
-We can also view $\demandByR_{D}(X')$ as the set of outputs that $X'$ is necessary
-for. For the values in $X'$ to be \textit{sufficient} for some output, $y \in Y$, we need
+Similarly, the image of $X'$ under the dependency relation, $\demandByR_{D}(X')$, can be viewed as the set of outputs that $X'$ is necessary
+for.
+%
+Accordingly, in the rest of the paper,
+when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
+and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
+We shall make use of the fact that the image of $X'$ under a relation
+is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
+ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. 
+
+\cd{improve motivation for sufficiency?}
+A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
 $x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
@@ -130,18 +141,14 @@ evaluating the expression on their own. We make the observation that
 the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-We shall make use of the fact that the image of $X'$ under a relation
-is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. For the rest of the paper,
-when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
-and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 
+\cd{unintuitive that we would even expect them to be a galois connection. Move this together with the later discussion on galois connections?}
 We note that these two functions do not always form a Galois connection, since
 the composition of the two functions is not necessarily monotonic, contradicting
 a basic fact of Galois connections, which we picture in \figref{relation-not-galois}.
-In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to the $\set{x_1, x_2}$, and find
+In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1, x_2}$, and find
 $\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$, which is
-neither a superset or subset of the originally selected set. Since the composite function
+neither a superset, nor a subset of the originally selected set. Since the composite function
 $\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions
 cannot form a Galois connection. We picture the same scenario reversed in \figref{relation-not-galois-2}.
 We can read the green set as unused inputs, or free outputs. The light blue sets are the
@@ -196,10 +203,10 @@ be increasing.
    If $\demandR_D(\emptyset) = \emptyset$, then $\demandByR \after \demandR$ is
    increasing.
 \end{lemma}
-As a corollary, if both of the above lemma's are true, then $\demandR$ and $\demandByR$ actually
+As a corollary, if both of the above lemmas are true, then $\demandR$ and $\demandByR$ actually
 do form a(n antitone) Galois connection. This is useful to know, since we may be
 working in a context where we wish to consider a filtered view of the data, where
-the user is shown only the data used by the original program.
+the user is shown only the data used by the original program. \cd{does this become relevant in any of the benchmarks?}
 
 As an aside, in the case when $D$ is itself a function, then all of inputs need
 to be used, and each input can only be used once. If that
@@ -232,31 +239,35 @@ We will often refer to a graph without explicitly referring to its representatio
 as a map, or a pair of sets.
 Once a graph has been constructed, the set of nodes that a value is demanded by
 can be represented by the set of nodes which are reachable by traversing the
-edges of the graph.
+edges of the graph, where we use the standard understanding of the reachability relation $R_G$ for  $G=(V,E)$ as the reflexive transitive
+   closure of $E$.
+%
+%% \begin{notation}[Reachability]
+%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}. 
+%% \end{notation}
+%
 
-\begin{notation}[Reachability]
-   For a graph $G=(V,E)$, the \textit{reachability relation} $R_G$ is the \textit{reflexive transitive
-   closure} of $E$.
-\end{notation}
+   \cd{where exactly is the following used?}
+   When considering a graph $G$ and its opposite $G^{-1}$,
+we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
 
-When we are considering a graph $G$ and its opposite $G^{-1}$,
-we will abuse the notation for the preimage and image of $R$,
-since $R_G^{-1} = R_{G^{-1}}$. For convenience when define \textit{demands}
-and \textit{demanded by} in terms of $R_G$, we refer to the dependence $G$:
+Now, we can define \textit{demands}
+and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
-   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$,
-   let us write $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$, the restriction
-   of $R_G$ to the sources and sinks of $G$. We write
-
+   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
+   of $R_G$ to the sources and sinks of $G$, we have:
    \begin{itemize}
       \item $\demandR_G(X) \eqdef \demandR_{R'_G} (X)$ \hfill (demands)
       \item $\demandByR_G(Y) \eqdef \demandByR_{R'_G} (Y)$ \hfill (demanded by)
    \end{itemize}
+      \DOnote{Provide the types here?}
 \end{definition}
 
-Defining these two functions on the reachability relation now lets us give
-a formal account of related inputs and related outputs queries.
+\cd{I'm confused by the order of composed functions below.}
+In \secref{example}, we introduced the notions of related inputs and related outputs.
+Now, we can provide a formal account for them. %Defining these two functions on the reachability relation now lets us give
+%a formal account of related inputs and related outputs queries.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
@@ -292,8 +303,10 @@ graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
    For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
    the following holds:
    $$
-      X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
-   $$
+    \forall G' .\  X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+    $$
+          \DOnote{We are potentially missing something here on the right, the validity of $\mathsf{reaches}$
+        means that we also need to know $T(G') \subseteq T(G)$}
 \end{proposition}
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
@@ -304,7 +317,7 @@ on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
    The following holds:
    $$
-      Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
+     \forall G' .\ Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
    $$
 \end{proposition}
 \begin{proof}
@@ -316,6 +329,7 @@ but we begin by considering the set of outputs we're interested in, $Y'$, and
 run $\demandsAlg{}$ on the opposite graph $G^{-1}$.
 
 \subsection{Relationship to Galois Slicing}
+\todo{This is conceptually I think correct, but needs work in the wording}
 We mentioned earlier that $\demandByR_D(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
@@ -342,7 +356,7 @@ sufficiency into $\demandByR_D$, using the De Morgan Dual.
    \dual{f} \eqdef \neg_B \after f \after \neg_A
    $$
 \end{definition}
-
+\todo{I think we could do with a little narrative improvement here and around the lemma}
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
    Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$.
    The following statements are equivalent:
@@ -373,7 +387,7 @@ proceeds in a manner which allows it to only traverse each edge in the graph onc
 When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
 adding it to $H$.
 If doing so causes the neighbours of $\alpha$ in $H$ to be equal
-to its neighbours in $\hat{G}$, then we can remove $\alpha$ from $H$, and add it
+to its neighbours in $G_0$ (the base dependency graph), then we can remove $\alpha$ from $H$, and add it
 to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E$.
 
 Because the edges in the parent graph $G$ all point in the direction of inputs to
