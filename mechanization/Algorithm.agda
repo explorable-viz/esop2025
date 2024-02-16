@@ -95,11 +95,13 @@ mutual
                -> (prf1 : subset V (S G0))
                -- -> (prf2 : subset V' (T G0))
                -> ReachesV G0 emptyGraph V G
-               -> Reaches G0 V (T G)
+               -- ford
+               -> forall (V' : Vertices) -> V' ≡ T G
+               -> Reaches G0 V V'
 
   data ReachesV (G0 : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph) -> Set₁ where
 -- -> subgraph G G' -> subgraph G' G0
-               
+
      reachesV-done : {G : Graph}
                   -> (prf : subgraph G G0)
                   -> ReachesV G0 G emptySet G
@@ -137,7 +139,10 @@ theoremReaachesDemands1 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
                          -> (forall (G' : Graph)
                           -> Reaches (V , E) X' (T G')
                             -> ({a : Label} -> Demands V E X' prf a ≡ T G' a))
-theoremReaachesDemands1 V E X' prf k reach = {!reach!}
+theoremReaachesDemands1 V E .emptySet prf k (reaches prf1 (reachesV-done prf₁) .(T k) fprf)
+  = {!!}
+theoremReaachesDemands1 V E .(cons a _) prf k (reaches prf1 (reachesV-extend a x) .(T k) fprf)
+  = {!!}
 
 
 theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
