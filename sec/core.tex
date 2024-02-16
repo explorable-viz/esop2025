@@ -15,24 +15,19 @@ dependence graph for the evaluation of that term (\secref{core:semantics}); we a
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines the \emph{terms} $e$ of the language mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
-%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
-
-
-Raw terms $\raw{e}$ include variables ranged over by $x, y, f$%
+\figref{syntax} defines the \emph{terms} $e$ of the language, which include: variables ranged over by $x, y, f$%
 ; integer constants ranged over by $n, m$%
 ; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
 ; and record projection $\exRecProj{e}{x}$. % for accessing variable $x$ in record $e$
 We also have constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors and is fully
 saturated by arguments $\seq{e}$; we write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
-
 Application comes in two forms:  standard application $\exApp{e}{e'}$, and \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions which are explained in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
 The language is parameterised by a finite map $\Phi(f) = n$ from variables $f$ to the arities $n \in \Nat$ of the
-foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). A crucial specification of foreign functions, for the graph semantics later, is that each provides an interpretation that computes both the function's result and a suitable dependence graph.
+foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). A crucial specification of foreign functions, for the graph semantics later, is that each provides an interpretation that computes both that function's result and a suitable dependence graph.
 
 Foreign functions \emph{per se} are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated,
 i.e.~$\length{\seq{e}} = \Phi{(f)}$. First-class foreign functions are provided via a top-level environment
@@ -58,11 +53,18 @@ $\seq{c}$, where each $\sigma$ specifies how the arguments to  $c$  will be matc
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-Values $v$ include integers $n, m$, records  $\exRecord{\seq{x \mapsto v}}$ and constructor values
+For \emph{values} $v$, we define these mutually inductively with \emph{raw values} $\raw{v}$ that are paired with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
+%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
+
+
+Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
 environment is defined as a finite~map.
+
+% mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
+%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
 
 \input{fig/core/match}
 \input{fig/core/close-defs}
