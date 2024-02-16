@@ -107,7 +107,7 @@ fragments that are added to the overall graph under construction.
 
 There are some general recurring patterns that the evaluation rules follow, which we find useful to point out. First, for any rule that involves evaluating many subterms, their corresponding subgraphs that are generated must be disjoint, and the union of these subgraphs is the dependence graph of the overall term. This is demonstrated by other evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bot. \figref{core:eval}) for evaluating a sequence of terms $\seq{e}$; its single rule evaluates each term $e_i \in \seq{e}$ to a value $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and builds the dependence graph $\textstyle{\bigdisjunion} \seq{G}$.
 
-Second, any rules that construct new values have no choice but to assign new vertices to these values, with these depending on the ambient set of input vertices $V$ (the inputs to the current function call).
+Second, any rules that construct new values have no choice but to assign new vertices to these values, with these depending on the ambient vertices $V$ i.e. the inputs consumed by the active function call.
 
 
 Variable evaluation is standard, and the returned dependence graph is empty -- that is, no new vertices are constructed
