@@ -57,6 +57,20 @@
       %
       \and
       %
+      \inferrule*[lab={\ruleName{$\evalS$-constr}}
+      , right={$\Sigma(c) = |\seq{e}|$}]
+      {
+         \gamma, \seq{e}, V \evalS \seq{v}, G
+      }
+      {
+         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
+         \evalS
+         \annConstr{c}{\seq{v}}{\alpha'},
+         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
+      }
+      %
+      \and
+      %
       \inferrule*[
          lab={\ruleName{$\evalS$-record-project}}
       ]
@@ -68,20 +82,6 @@
          \evalS
          u,
          G
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\evalS$-constr}}
-      , right={$\Sigma(c) = |\seq{e}|$}]
-      {
-         \gamma, \seq{e}, V \evalS \seq{v}, G
-      }
-      {
-         \gamma, \annConstr{c}{\seq{e}}{\alpha}, V
-         \evalS
-         \annConstr{c}{\seq{v}}{\alpha'},
-         G \disjunion \set{\bind{\alpha'}{\alpha \cons V}},
       }
       %
       \and
