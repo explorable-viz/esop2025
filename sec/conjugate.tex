@@ -302,8 +302,10 @@ graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
    For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
    the following holds:
    $$
-      X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
-   $$
+    \forall G' .\  X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+    $$
+          \DOnote{We are potentially missing something here on the right, the validity of $\mathsf{reaches}$
+        means that we also need to know $T(G') \subseteq T(G)$}
 \end{proposition}
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
@@ -314,7 +316,7 @@ on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
    The following holds:
    $$
-      Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
+     \forall G' .\ Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
    $$
 \end{proposition}
 \begin{proof}
@@ -384,7 +386,7 @@ proceeds in a manner which allows it to only traverse each edge in the graph onc
 When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
 adding it to $H$.
 If doing so causes the neighbours of $\alpha$ in $H$ to be equal
-to its neighbours in $\hat{G}$, then we can remove $\alpha$ from $H$, and add it
+to its neighbours in $G_0$ (the base dependency graph), then we can remove $\alpha$ from $H$, and add it
 to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E$.
 
 Because the edges in the parent graph $G$ all point in the direction of inputs to
