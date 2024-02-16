@@ -40,13 +40,11 @@ and some of it bespoke.
 \end{notation*}
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-  For sets $X$, $Y$  we define $X \disjunion Y = X \cup Y$.
+  For sets $X$, $Y$  we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$.
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
-We employ this notation in situations where we expect two already know that two
-or more sets are disjoint.
 
-\begin{notation*}[Set, complement set]\label{def:set-complement}
+\begin{notation*}[Complement and Set Minus]\label{def:set-complement}
    For a set $X$,  write $\compl{X}$ to denote it's complement.\\
    For two sets, $X, Y$, we write $X \setminus Y \eqdef X \cap \compl{Y}$ for the relative complement
    of $Y$, the set of elements of $X$ that are not in $Y$.
@@ -248,9 +246,9 @@ edges of the graph, where we use the standard understanding of the reachability 
 %% \end{notation}
 %
 
-   \cd{where exactly is the following used?}
-   When considering a graph $G$ and its opposite $G^{-1}$,
-we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
+%    \cd{where exactly is the following used?}
+%    When considering a graph $G$ and its opposite $G^{-1}$,
+% we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
 
 Now, we can define \textit{demands}
 and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we refer to the dependence $G$:
@@ -264,15 +262,14 @@ and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we r
    \end{itemize}
 \end{definition}
 
-\cd{I'm confused by the order of composed functions below.}
 In \secref{example}, we introduced the notions of related inputs and related outputs.
 Now, we can provide a formal account for them. %Defining these two functions on the reachability relation now lets us give
 %a formal account of related inputs and related outputs queries.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
-      \item $\relOutput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related outputs)
       \item $\relInput_{G} \eqdef \demandR_{G} \after \demandByR_{G}$\hfill (related inputs)
+      \item $\relOutput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
 A related input query can now be phrased as "what else can reach the nodes I can
