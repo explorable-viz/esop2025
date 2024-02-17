@@ -94,19 +94,6 @@ in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associa
 only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$  constructed by $c$, and returns the vertex $\alpha$ associated with that particular instance of $c$.
 
 
-% \subsubsection{Mutual recursion}
-% \label{sec:core:semantics:mutual-recursion}
-% \MNnote{to complete}
-% \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$ used later to evaluate terms involving mutual recursion, and promotes an environment  $\rho$ of recursive definitions to a value environment $\gamma'$ of closures. This is done by enumerating over each definition $\rho(x_i) \in \rho$ and lifting it into its own closure $(\gamma_1, \rho, \rho(x_i))_{\alpha_i}$ as a fresh vertex ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma_1$; the graph produced by
-% $\closeDefs$ is then the disjoint union of dependencies for each of these new closures.
-
-% First we obtain the recursive definitions $\rho$ from the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$
-% computed by function $e$, before using the auxiliary relation $\closeDefs$ (bot. \figref{core:eval}) to
-% promote $\rho$ to an environment of closures. This is done by enumerating over each definition $\rho(x_i) \in
-% \rho$ and lifting it into its own closure $(\gamma_1, \rho, \rho(x_i))_{\alpha_i}$ as a fresh vertex
-% ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma_1$; the graph produced by
-% $\closeDefs$ is then the disjoint union of dependencies for each of these new closures.
-
 \subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language,
 stating that term $e$, under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The input set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being evaluated, and can be thought of as the ``ambient'' set of  dependencies; this is initially empty for a top-level term, and may grow whenever a function is applied to an argument and pattern-matching ($\match$) occurs. The output graph $G$ is built by specifying new graph fragments (i.e. dependencies) and then combining them; for convenience, we will write $\set{\bind{\alpha}{V}}$ as shorthand for the fragment  $(\set{\alpha}, \set{(\alpha, \beta) \, | \, \beta \in V})$ -- denoting the ``star graph'' where vertex $\alpha$ depends on vertices in~$V$.
@@ -129,7 +116,20 @@ The rule for \emph{let-binding}s $\exLet{x}{e}{e'}$ is standard and unions the g
 % $\alpha$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of
 % $\annRec{\seq{\bind{x}{v}}}{\alpha}$.
 
-Before considering the last two rules, application and recursive let-bindings, $\ldots$ \MNnote{to finish}
+The last two rules, application and recursive let-bindings, involve mutual recursion. To explain them, we first introduce in \figref{core:close-defs} the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$ they use. This takes an environment  $\rho$ of recursive definitions and promotes it to a value environment $\gamma'$ of closures, while also building a dependence graph $G$ that has each closure depend on ambient inputs $V$ (like for evaluation). In particular, its single rule does this by enumerating over each function $\rho(x_i) \in \rho$ and lifting it into its own closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$ as a new vertex ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma$; the overall dependence graph is the disjoint union of ones for each new closure (also like for evaluation).
+
+% \subsubsection{Mutual recursion}
+% \label{sec:core:semantics:mutual-recursion}
+% \MNnote{to complete}
+% \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$ used later to evaluate terms involving mutual recursion, and promotes an environment  $\rho$ of recursive definitions to a value environment $\gamma'$ of closures. This is done by enumerating over each definition $\rho(x_i) \in \rho$ and lifting it into its own closure $(\gamma_1, \rho, \rho(x_i))_{\alpha_i}$ as a fresh vertex ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma_1$; the graph produced by
+% $\closeDefs$ is then the disjoint union of dependencies for each of these new closures.
+
+% First we obtain the recursive definitions $\rho$ from the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$
+% computed by function $e$, before using the auxiliary relation $\closeDefs$ (bot. \figref{core:eval}) to
+% promote $\rho$ to an environment of closures. This is done by enumerating over each definition $\rho(x_i) \in
+% \rho$ and lifting it into its own closure $(\gamma_1, \rho, \rho(x_i))_{\alpha_i}$ as a fresh vertex
+% ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma_1$; the graph produced by
+% $\closeDefs$ is then the disjoint union of dependencies for each of these new closures.
 
 Application $\exApp{e}{e'}$ is more involved, dealing with both mutual recursion and pattern-matching. First
 we obtain the recursive definitions $\rho$ from the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$
