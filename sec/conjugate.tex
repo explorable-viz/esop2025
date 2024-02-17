@@ -36,11 +36,11 @@ and some of it bespoke.
 
 \begin{notation*}[Finite maps]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$
-   whose domain $\dom{\set{\seq{\bind{k}{x}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
+   where keys $k_i$  are pairwise unique.
 \end{notation*}
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-  For sets $X$, $Y$  we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$.
+  For sets $X$, $Y$  we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$. \MNnote{We need to define this specifically for finite maps as well; please check/improve the following sentence I've added:} For finite maps specifically, we intend $\disjunion$ to mean that only their keys need be disjoint.
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
@@ -105,7 +105,7 @@ can be read as $x$ is \textit{demanded by} $y$.
 %
 (As opposed to a function) the dependency relation allows scenarios where inputs are not demanded by any
 output, or inputs are demanded by multiple outputs. These properties are nice
-to have, since in data analysis tasks, we often do not need to make use of all 
+to have, since in data analysis tasks, we often do not need to make use of all
 the inputs to the program, and we may reuse data for multiple different outputs.
 
 Motivated by data analysis tasks, we wish to consider the relationships between sets of inputs and sets of outputs.
@@ -126,7 +126,7 @@ for.
 %
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. 
+ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
 
 \cd{improve motivation for sufficiency?}
 A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
@@ -240,7 +240,7 @@ edges of the graph, where we use the standard understanding of the reachability 
    closure of $E$.
 %
 %% \begin{notation}[Reachability]
-%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}. 
+%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}.
 %% \end{notation}
 %
 
