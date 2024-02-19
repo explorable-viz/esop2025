@@ -28,6 +28,8 @@ def decompose_benchmarks():
     graphics = pd.concat([graphics, graphics_means])
     all_summaries = pd.concat([matrices, graphics])
     evals = eval_speedup(all_summaries)
+    demands = demands_speedup(all_summaries)
+    equivs = equiv_implementations(all_summaries)
     print(evals)
 
 
@@ -40,23 +42,24 @@ def eval_speedup(df):
     return out
 
 def equiv_implementations(df):
-    out = df[['G-Fwd', 'Naive-Fwd','G-BwdDlCmp', 'G-BwdDlFwdOp', 'G-FwdDlCmp', 'G-FwdDlBwdOp']]
+    out = df[['G-DemandedBy', 'G-Suff-Dual','T-DemandedBy']]
     tex_file = open('fig/performance/equivalent-impls.tex', 'w')
-    #tex_file.write(out.to_latex(float_format="%.2f", caption = "Equivalent implementations of the De Morgan dual", label='table:equivalent-impls', longtable=True))
-    #tex_file.close()
+    tex_file.write(out.to_latex(float_format="%.2f", caption = "Equivalent implementations of Demanded By", label='table:equivalent-impls', longtable=True))
+    tex_file.close()
+    return out
 
-def slicing_times(df):
-    df['Bwd-Speedup'] = df['T-Bwd'] / df['G-Bwd']
-    df['Fwd-Speedup'] = df['T-Fwd'] / df['G-Fwd']
-    out = df[['T-Fwd','G-Fwd','Fwd-Speedup','T-Bwd','G-Bwd','Bwd-Speedup']]
-    #tex_file = open('fig/performance/slicing-speedup.tex', 'w')
-    #tex_file.write(out.to_latex(float_format="%.2f", caption="Slicing times and average speedups", label='table:slicing-speedups', longtable=True))
+def demands_speedup(df):
+    df['Bwd-Speedup'] = df['T-Demands'] / df['G-Demands']
+    out = df[['T-Demands','G-Demands','Bwd-Speedup']]
+    tex_file = open('fig/performance/demands-speedup.tex', 'w')
+    tex_file.write(out.to_latex(float_format="%.2f", caption="Demands Times Traces Versus Graphs", label='table:demands-speedups', longtable=True))
+    tex_file.close()
     return out
 
 def speedups(df):
     df['Eval-Speedup'] = df['T-Eval'] / df['G-Eval']
-    df['Bwd-Speedup'] = df['T-Bwd'] / df['G-Bwd']
-    df['Fwd-Speedup'] = df['T-Fwd'] / df['G-Fwd']
+    df['Bwd-Speedup'] = df['T-Demands'] / df['G-Demands']
+    df['Fwd-Speedup'] = df['T-Suffices'] / df['G-Suffices']
     out = df.replace([np.inf], np.nan, inplace=False)
     return out
 decompose_benchmarks()
