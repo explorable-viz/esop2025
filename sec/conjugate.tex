@@ -30,24 +30,24 @@ and some of it bespoke.
 % the source vertices in a graph, and $\sinks{G}$ for the sinks.
 
 \begin{notation*}[Finite sequences]\label{def:list}
-   Write ${\seq{x}}$ to denote a finite sequence of elements $\seqRange{x_1}{x_n}$.\\ We also write $x \cons \seq{x}$ for
+   Write ${\seq{x}}$ to denote a finite sequence of elements $\seqRange{x_1}{x_n}$. We also write $x \cons \seq{x}$ for
    cons (prepend)  and $\seq{x} \cons x$ for snoc (append).
 \end{notation*}
 
 \begin{notation*}[Finite maps]\label{def:finite-map}
    Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$
-   whose domain $\dom{\set{\seq{\bind{k}{x}}}} = \set{\seqRange{k_1}{k_n}}$ contains keys that are pairwise unique.
+   where keys $k_i$  are pairwise unique.
 \end{notation*}
 
 \begin{notation*}[Disjoint union]\label{def:disjoint-union}
-  For sets $X$, $Y$  we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$.
+  For sets $X$, $Y$, we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$; for finite maps specifically, we intend $\disjunion$ to mean that only their keys need be disjoint.
    We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 \end{notation*}
 
 \begin{notation*}[Complement and Set Minus]\label{def:set-complement}
-   For a set $X$,  write $\compl{X}$ to denote it's complement.\\
-   For two sets, $X, Y$, we write $X \setminus Y \eqdef X \cap \compl{Y}$ for the relative complement
-   of $Y$, the set of elements of $X$ that are not in $Y$.
+   For a set $X$, we write $\compl{X}$ to denote it's complement.
+   For sets $X, Y$, we write $X \setminus Y \eqdef X \cap \compl{Y}$ for the relative complement
+   of $Y$ i.e. the set of elements of $X$ that are not in $Y$.
 \end{notation*}
 
 \begin{notation*}[Relation, inverse relation]\label{def:inverse-relation}
@@ -105,7 +105,7 @@ can be read as $x$ is \textit{demanded by} $y$.
 %
 (As opposed to a function) the dependency relation allows scenarios where inputs are not demanded by any
 output, or inputs are demanded by multiple outputs. These properties are nice
-to have, since in data analysis tasks, we often do not need to make use of all 
+to have, since in data analysis tasks, we often do not need to make use of all
 the inputs to the program, and we may reuse data for multiple different outputs.
 
 Motivated by data analysis tasks, we wish to consider the relationships between sets of inputs and sets of outputs.
@@ -124,24 +124,22 @@ finding the set of inputs which are necessary for the elements of $Y'$.
 Similarly, the image of $X'$ under the dependency relation, $\demandByR_{D}(X')$, can be viewed as the set of outputs that $X'$ is necessary
 for.
 %
-Accordingly, in the rest of the paper,
-when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
-and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. 
+ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
 
 \cd{improve motivation for sufficiency?}
 A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
 $x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
-evaluating the expression on their own. We make the observation that
-the set of outputs that a set of inputs is necessary for is a superset of the
+evaluating the expression on their own. Notably, the set of outputs a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
-These two functions satisfy the property of being a
+
+We observe that the image and preimage of a relation form  a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
+
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
@@ -157,10 +155,6 @@ These two functions satisfy the property of being a
    $$
 \end{definition}
 
-This makes sense as a condition for \textit{demands} and
-\textit{demanded by}: if for some subsets $X',Y'$, we find that the output values
-$X'$ is demanded by has an empty intersection with $Y'$, we would expect the set
-of input values that $Y'$ demands to have an empty intersection with $X'$.
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
@@ -169,6 +163,12 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
 \begin{proof}
    \todo{Proof can proceed by an argument related to sets}
 \end{proof}
+
+This makes sense as a condition for  \textit{demands} and
+\textit{demanded by}: for some subsets $X',Y'$, if the output values
+$X'$ is demanded by has an empty intersection with $Y'$, then we would expect the set
+of input values that $Y'$ demands to have an empty intersection with $X'$.
+
 
 We note that these two functions do not always form a Galois connection, since
 the composition of the two functions is not necessarily monotonic, contradicting
@@ -205,11 +205,11 @@ do form a(n antitone) Galois connection. This is useful to know, since we may be
 working in a context where we wish to consider a filtered view of the data, where
 the user is shown only the data used by the original program. \cd{does this become relevant in any of the benchmarks?}
 
-As an aside, in the case when $D$ is itself a function, then all of inputs need
-to be used, and each input can only be used once. If that
-is the case, then taking the image and preimage of the function doesn't just create
-a conjugate pair, but instead creates the usual image/preimage Galois connection for
-a function.
+%% As an aside, in the case when $D$ is itself a function, then all of inputs need
+%% to be used, and each input can only be used once. If that
+%% is the case, then taking the image and preimage of the function doesn't just create
+%% a conjugate pair, but instead creates the usual image/preimage Galois connection for
+%% a function.
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
@@ -240,7 +240,7 @@ edges of the graph, where we use the standard understanding of the reachability 
    closure of $E$.
 %
 %% \begin{notation}[Reachability]
-%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}. 
+%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}.
 %% \end{notation}
 %
 
