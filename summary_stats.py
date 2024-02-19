@@ -9,19 +9,26 @@ matrix_cases = [
     "slicing/convolution/gaussian"
 ]
 
+graphics_cases = [
+    "graphics/background",
+    "graphics/grouped-bar-chart",
+    "graphics/line-chart",
+    "graphics/stacked-bar-chart"
+]
+
 def decompose_benchmarks():
     benchmarks = pd.read_csv('../fluid/Benchmarks/benchmarks.csv', skipinitialspace=True, delimiter=',', index_col='Test-Name')
-    slicing = benchmarks.filter(like='slicing', axis='index')
-    graphics = benchmarks.filter(like='graphics', axis='index')
-    desugar = benchmarks.filter(like='desugar', axis='index')
-    misc = benchmarks.drop(pd.concat([slicing, graphics, desugar]).index, inplace=False)
-    print("All Benchmarks: ")
-    eval_ratios = eval_speedup(benchmarks)
-    print(eval_ratios.to_string())
-    print(eval_ratios.mean())
-    slicing_times(benchmarks)
-    equiv_implementations(benchmarks)
-    #     print(spedup.mean())
+    matrices = benchmarks.loc[matrix_cases]
+    matrix_means = matrices.mean().to_frame().T
+    matrix_means.index = ['Matrix-Avg']
+    matrices = pd.concat([matrices, matrix_means])
+    graphics = benchmarks.loc[graphics_cases]
+    graphics_means = graphics.mean().to_frame().T
+    graphics_means.index = ['Graphics-Avg']
+    graphics = pd.concat([graphics, graphics_means])
+    print(matrices)
+    print(graphics)
+
 
 def eval_speedup(df):
     df['Eval-Speedup'] = df['T-Eval'] / df['G-Eval']
