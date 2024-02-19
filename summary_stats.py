@@ -26,16 +26,17 @@ def decompose_benchmarks():
     graphics_means = graphics.mean().to_frame().T
     graphics_means.index = ['Graphics-Avg']
     graphics = pd.concat([graphics, graphics_means])
-    print(matrices)
-    print(graphics)
+    all_summaries = pd.concat([matrices, graphics])
+    evals = eval_speedup(all_summaries)
+    print(evals)
 
 
 def eval_speedup(df):
     df['Eval-Speedup'] = df['T-Eval'] / df['G-Eval']
     out = df[['T-Eval', 'G-Eval', 'Eval-Speedup']]
-    #tex_file = open('fig/performance/eval-speedup.tex', 'w')
-    #tex_file.write(out.to_latex(float_format="%.2f", caption = "Slicing test-case evaluation times and average speedup", label='table:eval-speedups', longtable=True))
-    #tex_file.close()
+    tex_file = open('fig/performance/eval-speedup.tex', 'w')
+    tex_file.write(out.to_latex(float_format="%.2f", caption = "Evaluation Time of Traces Versus Graphs (ms)", label='table:eval-speedups', longtable=True))
+    tex_file.close()
     return out
 
 def equiv_implementations(df):
