@@ -29,6 +29,20 @@ bring up a view showing the data that point was calculated from. In this case th
 data for Chiang Mai and the plotted value of 10.9\% was derived from an increase in population density from
 4,416 to 5,010 people per sq.~km.
 
+\subsection{Data transparency as PL infrastructure}
+
+Features like these are valuable comprehension aids, but are also laborious to implement by hand. They also
+require the author to anticipate the kinds of query a user might have and don't readily generalise: for
+example Bremer's visualisation only allows the user to select one point at a time.
+
+For the reasons, there has been recent interest in treating this as a programming language infrastructure
+problem: baking dependency metadata directly into outputs so that these sorts of interactive queries can be
+supported automatically. The promise of this approach (to the content consumer) is to offer them the best of
+both worlds: the high-level perspective offered by the visual summary, with the option to explore detail as
+they want on an as-needed basis. The relationship to data can be ``incrementally discoverable'', revealed as
+the user interacts with the parts of the output they care about, ideally with some kind of formal guarantee
+that the revealed data is in some sense ``minimal and sufficient''.
+
 \vspace{2mm}
 \hrule
 \vspace{2mm}
