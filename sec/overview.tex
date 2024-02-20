@@ -27,37 +27,58 @@ Our insight in this paper is that dependence graphs provide an alternative, more
 for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
 problems are much easier to formulate in the graphical setting. For example ``related outputs'' simply amounts
 to computing common ancestry, or \emph{cognacy}, in $G^{\op}$, which turns out to be nicely captured by the
-concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Formally, $f$ and $g$ are \emph{
-conjugate} iff:
-
+concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Again, switching to the concrete
+setting of powersets, $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$ are
+\emph{conjugate} iff:
 \[f(X) \cap Y \neq \emptyset \iff X \cap g(Y) \neq \emptyset\]
 
-The canonical example of conjugate operations are the image functions for a relation $R \subseteq X \times Y$
-and its converse $R^{-1} \subseteq Y \times X$: if the image in $R^{-1}$ of $Y' \subseteq Y$ has at least one
-element in common with $X' \subseteq X$, then the image in $R$ of $X'$ has at least one element in common with
-Y' (and vice versa). Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are
-conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection.
+The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
+$\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
+overlaps with $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y' \subseteq Y$, and vice
+versa. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then $f$
+and the De Morgan dual of $g$ form a Galois connection.
 
 If we now take $R$ to be reachability in $G$, then our setting technically only requires a single operator
-$\demandR_R$, since its adjoint $\sufficientR_R$ is readily computed as $\demandR_{R^{-1}}$ and its conjugate
-$\demandByR_R$ as the De Morgan dual of $\demandR_{R^{-1}}$. In particular related outputs is simply
-$\demandR_{R \relcomp R^{-1}}$. It is well-known that extensionally these things determine each other, but in
-the graph setting we can also derive efficient procedures for all of these in terms of reachability. Since
-going via the De Morgan dual can be inefficient, we also give a direct implementation of $\sufficientR_R$
-which improves on the derived version in those cases.
+$\demandR_R$ to support all the required queries. Its adjoint $\sufficientR_R$ is readily computed as
+$\demandR_{R^{-1}}$ and its conjugate $\demandByR_R$ as the De Morgan dual of $\demandR_{R^{-1}}$. It is
+well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
+can also get the benefit of efficient procedures for all of them in terms of reachability. In particular
+relatedm outputs is simply $\demandR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
+inefficient, we also give a direct implementation of $\sufficientR_R$ which improves on the derived version in
+those cases.
 
-\vspace{2mm}
-\hrule
-\vspace{2mm}
+\subsection{Related Inputs}
+
+Our second insight in this paper is that the graphical setting makes it straightforward to compose
+reachability in $G$ and with its converse the other way around, producing another provenance query called
+\emph{related inputs} ($\relInput$). \figref{overview:related-inputs} illustrates related inputs, again using
+our implementation. Here the user starts from one of the input data sets, expressing interest in the bioenergy
+capacity of China for 2018 by moving their mouse over the appropriate cell in the table
+(\figref{overview:related-inputs} step 1, green selection). The system generates two further selections in
+response. First, any scatter plot elements that demand the selected input are given a similar green highlight;
+here just one point is highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). We
+call this output selection the \emph{mediating output} because of its role in establishing a link between
+otherwise unrelated inputs.
+
+Finally, any other inputs demanded by the mediating output (i.e.~that were needed to compute the $y$
+coordinate of that point) are highlighted in grey (steps 3a and 3b). (The grey is used to visually distinguish
+the \emph{answer} to the query from the selection that initiated the query in the first place.) The result of
+a related inputs query can be thought of as a unit of comprehension or unit of reuse. It picks out all the
+relevant data needed to understand or make use of the original selected input, and does so in a way that
+identifies the common output elements that explain why the inputs are related. Sometimes a single input is
+used in many different outputs, or different features of a single output, in which case the query result can
+be quite noisy (because lots of inputs turn out to be related); in \secref{conjugate} we also show how
+selectively projecting away irrelevant parts of the mediating output can refine the query and produce a more
+precise answer. The same approach can be used to discard irrelevant mediating inputs to obtain more precise
+results in a related outputs query.
 
 \begin{figure}
    \centering
    \includegraphics[width=0.8\textwidth]{fig/example/linked-inputs-with-tooltip.png}
    \vspace{-2mm}
    \caption{Related inputs are \emph{cognate} (have a common output dependency)}
-   \label{fig:related-inputs-main}
+   \label{fig:overview:related-inputs}
 \end{figure}
-
 
 \subsection{\OurLang: A Data-Transparent Programming Language}
 
@@ -99,12 +120,3 @@ picks out all of the relevant data needed to understand how the original selecte
 does so by identifying the common, or mediating, output elements that explain why the inputs are related.
 
 \todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart? Corresponding notion of ``mediating input''.}
-
-\subsection{Focused queries}
-
-With any dependency analysis, there are situations where a given output depends on many inputs (perhaps when
-computing aggregates such as sums or averages). Sometimes many outputs depend on the same input (perhaps with
-global constants or multiple views of the same data). A challenge in either situation is how to obtain
-informative answers in the presence of such noisy dependency information. In \secref{conjugate} we show how
-related inputs queries can be made more precise by specifying which \emph{parts} of the output we want to use
-to mediate between the inputs, and dually how more fine-grained related outputs queries can be asked by restricting the mediating inputs to exclude problematic inputs.
