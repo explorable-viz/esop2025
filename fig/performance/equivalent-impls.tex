@@ -1,85 +1,28 @@
-\begin{longtable}{lrrrrrr}
-\caption{Equivalent implementations of the De Morgan dual} \label{table:equivalent-impls} \\
+\begin{longtable}{lrrrrr}
+\caption{Equivalent implementations of Demanded By} \label{table:equivalent-impls} \\
 \toprule
- & G-Fwd & Naive-Fwd & G-BwdDlCmp & G-BwdDlFwdOp & G-FwdDlCmp & G-FwdDlBwdOp \\
-Test-Name &  &  &  &  &  &  \\
+ & G-DemandedBy & G-Suff-Dual & T-DemandedBy & DemBy-Speedup & Suff-Dual-Speedup \\
 \midrule
 \endfirsthead
-\caption[]{Equivalent implementations of the De Morgan dual} \\
+\caption[]{Equivalent implementations of Demanded By} \\
 \toprule
- & G-Fwd & Naive-Fwd & G-BwdDlCmp & G-BwdDlFwdOp & G-FwdDlCmp & G-FwdDlBwdOp \\
-Test-Name &  &  &  &  &  &  \\
+ & G-DemandedBy & G-Suff-Dual & T-DemandedBy & DemBy-Speedup & Suff-Dual-Speedup \\
 \midrule
 \endhead
 \midrule
-\multicolumn{7}{r}{Continued on next page} \\
+\multicolumn{6}{r}{Continued on next page} \\
 \midrule
 \endfoot
 \bottomrule
 \endlastfoot
-arithmetic & 0.02 & 1.51 & 0.09 & 0.01 & 0.96 & 0.01 \\
-array & 0.05 & 1.42 & 0.09 & 0.01 & 1.19 & 0.01 \\
-compose & 0.01 & 1.21 & 0.05 & 0.01 & 0.98 & 0.00 \\
-dicts & 0.27 & 1.27 & 0.47 & 0.02 & 1.06 & 0.00 \\
-div-mod-quot-rem & 0.84 & 1.38 & 1.32 & 0.01 & 1.28 & 0.01 \\
-factorial & 0.01 & 1.34 & 0.36 & 0.00 & 1.43 & 0.01 \\
-filter & 0.03 & 1.11 & 0.11 & 0.00 & 0.92 & 0.01 \\
-first-class-constr & 0.08 & 1.06 & 0.28 & 0.01 & 1.06 & 0.02 \\
-flatten & 0.12 & 1.25 & 0.34 & 0.00 & 1.26 & 0.01 \\
-foldr-sumSquares & 0.01 & 1.38 & 0.07 & 0.01 & 1.29 & 0.00 \\
-lexicalScoping & 0.01 & 1.43 & 0.04 & 0.01 & 1.05 & 0.01 \\
-length & 0.01 & 1.29 & 0.10 & 0.00 & 1.19 & 0.00 \\
-lookup & 0.02 & 1.80 & 0.19 & 0.00 & 1.79 & 0.01 \\
-map & 0.11 & 1.71 & 0.59 & 0.01 & 1.63 & 0.00 \\
-mergeSort & 0.04 & 1.73 & 0.24 & 0.01 & 1.86 & 0.00 \\
-normalise & 0.02 & 1.47 & 0.08 & 0.01 & 1.14 & 0.01 \\
-pattern-match & 0.01 & 1.51 & 0.29 & 0.01 & 1.49 & 0.01 \\
-range & 0.11 & 1.98 & 0.39 & 0.00 & 2.47 & 0.01 \\
-records & 0.04 & 1.64 & 0.18 & 0.02 & 1.55 & 0.01 \\
-reverse & 0.03 & 1.26 & 0.09 & 0.02 & 0.98 & 0.01 \\
-desugar/list-comp-1 & 0.13 & 2.15 & 0.64 & 0.02 & 3.07 & 0.01 \\
-desugar/list-comp-2 & 0.95 & 4.87 & 2.47 & 0.01 & 8.46 & 0.01 \\
-desugar/list-comp-3 & 0.03 & 2.17 & 0.16 & 0.02 & 2.88 & 0.00 \\
-desugar/list-comp-4 & 0.03 & 1.61 & 0.21 & 0.01 & 1.62 & 0.00 \\
-desugar/list-comp-5 & 0.04 & 1.56 & 0.16 & 0.02 & 1.35 & 0.00 \\
-desugar/list-comp-6 & 0.02 & 1.24 & 0.09 & 0.00 & 0.83 & 0.00 \\
-desugar/list-comp-7 & 0.02 & 1.41 & 0.07 & 0.01 & 1.62 & 0.00 \\
-desugar/list-enum & 0.07 & 1.41 & 0.33 & 0.00 & 1.27 & 0.01 \\
-slicing/add & 0.14 & 1.24 & 0.00 & 0.04 & 0.98 & 0.04 \\
-slicing/array/lookup & 0.05 & 3.67 & 0.01 & 0.02 & 5.36 & 0.02 \\
-slicing/array/dims & 0.30 & 1.76 & 0.03 & 0.06 & 1.40 & 0.14 \\
-slicing/convolution/edgeDetect & 4.22 & 182.02 & 3.96 & 0.25 & 274.91 & 46.09 \\
-slicing/convolution/emboss & 1.85 & 143.04 & 3.04 & 0.12 & 204.86 & 39.70 \\
-slicing/convolution/gaussian & 1.71 & 135.89 & 3.05 & 0.10 & 194.60 & 38.95 \\
-slicing/dict/create & 0.06 & 0.95 & 0.03 & 0.06 & 0.73 & 0.03 \\
-slicing/dict/difference & 0.07 & 1.66 & 0.04 & 0.08 & 1.03 & 0.03 \\
-slicing/dict/disjointUnion & 0.11 & 1.47 & 0.08 & 0.03 & 1.11 & 0.03 \\
-slicing/dict/foldl & 0.07 & 1.48 & 0.01 & 0.04 & 1.39 & 0.04 \\
-slicing/dict/intersectionWith & 0.15 & 1.16 & 0.07 & 0.11 & 0.99 & 0.08 \\
-slicing/dict/fromRecord & 0.11 & 1.22 & 0.07 & 0.01 & 0.96 & 0.03 \\
-slicing/dict/get & 0.05 & 1.18 & 0.01 & 0.04 & 1.10 & 0.03 \\
-slicing/dict/map & 0.11 & 1.34 & 0.01 & 0.09 & 1.11 & 0.05 \\
-slicing/divide & 0.08 & 1.18 & 0.01 & 0.06 & 0.93 & 0.03 \\
-slicing/filter & 0.29 & 1.21 & 0.11 & 0.06 & 0.85 & 0.16 \\
-slicing/intersperse & 0.21 & 1.00 & 0.22 & 0.03 & 0.72 & 0.18 \\
-slicing/intersperse & 0.33 & 1.16 & 0.34 & 0.03 & 0.87 & 0.17 \\
-slicing/length & 0.29 & 0.94 & 0.01 & 0.18 & 0.88 & 0.12 \\
-slicing/list-comp & 0.98 & 2.26 & 0.24 & 0.10 & 2.60 & 0.57 \\
-slicing/list-comp & 0.93 & 2.21 & 0.29 & 0.07 & 2.49 & 0.58 \\
-slicing/lookup & 0.46 & 1.29 & 0.03 & 0.15 & 0.99 & 0.30 \\
-slicing/map & 0.18 & 1.10 & 0.10 & 0.11 & 0.89 & 0.10 \\
-slicing/multiply & 0.06 & 1.09 & 0.01 & 0.04 & 0.87 & 0.02 \\
-slicing/nth & 0.04 & 1.32 & 0.02 & 0.02 & 1.04 & 0.02 \\
-slicing/section-5-example & 1.04 & 2.26 & 0.35 & 0.15 & 2.41 & 0.79 \\
-slicing/section-5-example & 0.41 & 2.49 & 0.42 & 0.05 & 2.85 & 0.52 \\
-slicing/section-5-example & 0.58 & 2.60 & 0.44 & 0.06 & 3.09 & 0.63 \\
-slicing/zeros & 0.27 & 0.98 & 0.05 & 0.09 & 0.78 & 0.13 \\
-slicing/zeros & 0.18 & 1.60 & 0.10 & 0.04 & 1.16 & 0.11 \\
-slicing/zipWith & 0.40 & 1.41 & 0.37 & 0.14 & 1.11 & 0.38 \\
-slicing/matrix-update & 0.34 & 8.71 & 0.48 & 0.01 & 14.84 & 0.02 \\
-slicing/dtw/compute-dtw & 14.09 & 29.10 & 2.92 & 0.07 & 34.25 & 16.22 \\
-graphics/background & 0.70 & 4.30 & 0.85 & 0.01 & 3.49 & 0.01 \\
-graphics/grouped-bar-chart & 125.64 & 17.03 & 134.58 & 0.01 & 27.78 & 0.01 \\
-graphics/line-chart & 409.60 & 26.19 & 420.83 & 0.01 & 46.17 & 0.03 \\
-graphics/stacked-bar-chart & 74.08 & 11.47 & 78.48 & 0.01 & 16.12 & 0.01 \\
+slicing/dtw/compute-dtw & 5697.73 & 73.77 & 62.53 & 0.01 & 0.85 \\
+slicing/convolution/edgeDetect & 123.63 & 343.57 & 300.47 & 2.43 & 0.87 \\
+slicing/convolution/emboss & 118.03 & 230.40 & 260.60 & 2.21 & 1.13 \\
+slicing/convolution/gaussian & 115.77 & 244.00 & 260.27 & 2.25 & 1.07 \\
+Matrix-Avg & 1513.79 & 222.93 & 220.97 & 0.15 & 0.99 \\
+graphics/background & 0.07 & 1.27 & 0.13 & 2.00 & 0.11 \\
+graphics/grouped-bar-chart & 2.27 & 1154.17 & 32.73 & 14.44 & 0.03 \\
+graphics/line-chart & 1.70 & 435.27 & 48.67 & 28.63 & 0.11 \\
+graphics/stacked-bar-chart & 1.93 & 597.40 & 20.40 & 10.55 & 0.03 \\
+Graphics-Avg & 1.49 & 547.03 & 25.48 & 17.08 & 0.05 \\
 \end{longtable}
