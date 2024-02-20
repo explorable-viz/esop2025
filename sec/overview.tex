@@ -58,6 +58,27 @@ which improves on the derived version in those cases.
    \label{fig:related-inputs-main}
 \end{figure}
 
+
+\subsection{\OurLang: A Data-Transparent Programming Language}
+
+We implement the abstract framework outlined above in a programming language called \OurLang, which [...].
+\figref{overview:energy-query} shows the source code for the scatter plot example
+\figref{introduction:scatterplot}. The key point here is that the author of the visualisation just expresses
+their output as a pure function of the inputs, and the various transparency features provided for the user
+come for free. We provide a d3.js front end and a set of data types for common visualisations, and then enrich
+the d3.js renderings of the outputs with (a) selection information, and (b) additional interactions that [...]
+
+In the rest of the paper, we set out the formal graph framework (\secref{conjugate}), show how our Fluid
+interpreter implements the graph framework (\secref{core}) and then [performance] (\secref{evaluation}). Our
+implementation is open source and available at [...], which also has several interactive demos.
+
+\begin{figure}
+   \small
+   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
+   \caption{Source code for scatter plot in \figref{related-inputs-main}}
+   \label{fig:overview:energy-query}
+\end{figure}
+
 \subsection{Related Inputs and Related Outputs}
 
 \todo{It turns out that ``demanded by'' is actually most useful if composed with ``demands'': then we can use
@@ -87,10 +108,3 @@ global constants or multiple views of the same data). A challenge in either situ
 informative answers in the presence of such noisy dependency information. In \secref{conjugate} we show how
 related inputs queries can be made more precise by specifying which \emph{parts} of the output we want to use
 to mediate between the inputs, and dually how more fine-grained related outputs queries can be asked by restricting the mediating inputs to exclude problematic inputs.
-
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{related-inputs-main}}
-   \label{fig:energy-query}
-\end{figure}

@@ -17,9 +17,3 @@ selectively projecting away irrelevant parts of the mediating output can refine 
 precise answer. (The same approach can be used to discard irrelevant mediating inputs in a related outputs
 query to obtain more precise results.)
 
-## 2.3 \OurLang: A Data-Transparent Programming Language
-
-- [ ] We implement the abstract framework outlined above in a programming language called \OurLang, which [...].
-- [ ] Example of scatter plot from Fig. 2
-- [ ] Key point is that the author of the visualisation just expresses their output as a pure function of the inputs -- all the transparency features come for free. We provide a d3.js front end and a set of data types for common visualisations, and then enrich the d3.js renderings of the outputs with (a) selection information, and (b) additional interactions that [...]
-- [ ] In the rest of the paper, we set out the formal graph framework (\secref{conjugate}), show how our Fluid interpreter implements the graph framework (\secref{core}) and then [performance] (\secref{evaluation}). Our implementation is open source and available at [...], which also has several interactive demos.
