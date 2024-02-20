@@ -127,59 +127,49 @@ Second, we introduce a new kind of provenance query called \emph{related inputs}
 relevance which arises between inputs when they contribute to common features of the output. Users are able to
 formulate queries like ``What outputs use this data element, and what other data elements are used along with
 it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
-dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot} inasmuch as it can be
-understood as cognacy in $G^{\op}$. In the graphical setting these are both easy to compute, since they amount
-to the two ways of composing reachability in $G$ with its relational converse.
+dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot}, which can be understood as
+cognacy in $G^{\op}$. In the graphical setting these are both easy to compute, since they amount to the two
+ways of composing reachability in $G$ with its relational converse.
 
 \secref{overview} presents an overview of our approach and language, and motivates the idea of a ``related
 inputs'' query from an end-user perspective. The rest of the paper is then organised as follows:
 
-- \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing the
+\begin{itemize}[leftmargin=*]
+\item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing the
   cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two
   components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s
   notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator
   $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being
   conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures
-  for computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$
-- \secref{core} defines a core functional language with an operational semantics that pairs every result with
-  a dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent
-  (parts of) values as nodes in the graph. - [ ] \secref{evaluation} compares the performance of our
-  implementation based on graphs and conjugates with an implementation due to \citet{perera22} based on traces
-  and Galois connections, contrasting the overhead of building trace   vs.~building dependence graphs,
-  computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two
-  approaches (). - [ ] Section 6 reviews related work in more detail, including program slicing and DDGs.
+  for computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
+\item \secref{core} defines a core functional language with an operational semantics that pairs every result
+  with a dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent
+  (parts of) values as vertices in the graph.
+\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
+  implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
+  building trace vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the
+  relative implementation burden of the two approaches.
+\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
+\end{itemize}
 
-\secref{conclusion}} wraps up with a discussion of some limitations and plans for future work. In particular, the sort of transparency infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of how output parts are related to input parts. We discuss extending this to more ``intensional'' forms transparency and propose some other ways of improving on the present system.
+\secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
+infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
+how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
+transparency and propose some other ways in which the present system could be improved.
 
 \vspace{2mm}
 \hrule
 \vspace{2mm}
 
-Our key insight is that two inputs are related in this sense if they are \emph{cognate}, i.e.~have a common
-ancestor in the program's dependence graph $G$. This leads to a formalisation of related inputs in terms of
-the composite relation $R^{-1} \relcomp R$ where $R$ is reachability in $G$, and we give a procedure for
-computing related inputs over $G$. The concept of ``conjugate'' operators~\cite{jonsson51}, functions between
-Boolean algebras which come in reciprocating pairs, turns out to nicely capture these relations of cognacy.
-
-Conjugate pairs are closely related to \emph{Galois connections}, pairs of functions which are each other's
-closest approximation to a reciprocal and which lend themselves to bidirectional reasoning about resource
-consumption. If $f$ and $g$ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection.
-This relates our approach to work by~\citet{perera22} based on Galois connections and execution traces that
-addressed the problem of \emph{brushing and linking} in data visualisation. In our framework, the flipped
-composite $R \relcomp R^{-1}$ gives rise to a dual cognacy relation between output features which compete for
-common input data; composing related outputs with suitable projections at either end recovers the brushing and
-linking approach of the earlier work. However, our graphical approach is language-agnostic, easier to
-implement, and also fast enough to support the kind of interactive scenarios we have in mind.
+composing related outputs with suitable projections at either end recovers the brushing and linking approach
+of the earlier work. However, our graphical approach is language-agnostic, easier to implement, and also fast
+enough to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
 The specific contributions of the paper are as follows:
 \begin{itemize}[leftmargin=*]
-\item We motivate the novel cognacy operator $\relInput$ (``related inputs'') from an end-user perspective
-(\secref{example}). We unpack the intuitive relationship between its two components $\demandR$ (``demands'')
-and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugacy and also introduce
-the dual cognacy operator $\relOutput$ (``related outputs'').
 \item We introduce the formal setting of conjugate operators between Boolean algebras (\secref{conjugate}). We
 explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
 $\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
@@ -187,10 +177,6 @@ is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. 
 computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
 \item We define a core functional language with an operational semantics that pairs every result with a
 dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
-\item We compare the performance of our implementation based on graphs and conjugates with an implementation
-due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
-vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative
-implementation burden of the two approaches (\secref{evaluation}).
 \end{itemize}
 
 \noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with

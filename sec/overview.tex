@@ -1,0 +1,76 @@
+\section{Overview of Approach and Solution}
+\label{sec:overview}
+
+In traditional media like hardcopy journals, the trail of information relating data sources to charts or
+figures is long gone by the time the article reaches a reader, so this sort of opacity is unavoidable. Formats
+like Portable Document Format (PDF) that emulate paper fare little better. But with truly digital formats we
+should be able to do things differently. Ideally we would be able to enrich the artefact itself with
+interactions that allow the user to query relationships between data sources and visualisations and other
+computed content \emph{in situ}. \todo{Example to show basic idea of selecting some part of the output and
+seeing the demanded data.} Although this sort of fine-grained extensional query, which here we call \emph{data
+transparency}, falls short of being a full explanation of how the input selection was used to compute the
+output selection --- revealing only \emph{what} data is relevant, rather than anything about why --- it does
+move us substantially closer to research outputs self-contained enough to be able to ``explain themselves'' to
+an interested reader.
+
+Crucially, we want to make this feature automatic. Certainly one could try implementing something similar on a
+bespoke basis for a specific visualisation (see \citet{bremer15} for an elegant example), but that would be
+difficult and error-prone. We would have to explicitly embedding knowledge of the relationship between visual
+outputs and inputs --- normally implicit in how the former is computed from the latter --- back into the
+program, making it fragile in the presence of changes to the visualisation logic. By putting this into a
+programming language instead, the author of the visualisation can concern themselves purely with communication
+and visualisation, and defer responsibility for transparency features to the infrastructure used to implement
+and host the visualisation.
+
+\begin{figure}
+   \centering
+   \includegraphics[width=0.8\textwidth]{fig/example/linked-inputs-with-tooltip.png}
+   \vspace{-2mm}
+   \caption{Related inputs are \emph{cognate} (have a common output dependency)}
+   \label{fig:related-inputs-main}
+\end{figure}
+
+\subsection{Related Inputs and Related Outputs}
+
+\todo{It turns out that ``demanded by'' is actually most useful if composed with ``demands'': then we can use
+it to discover other inputs that are related to a given input in the sense of being demanded by something
+which demands the input of interest.} In the scatter plot example, suppose the user were to express interest
+in the bioenergy capacity of China for 2018. They do so by moving their mouse over the appropriate cell in the
+table (\figref{related-inputs-main} step 1), which turns green. In response the system generates two further
+selections automatically. First, any scatter plot elements that demand the selected input are given a similar
+green highlight; here just one point is highlighted, and in fact only the $y$ coordinate of that point (step
+2, tooltip). We call this output selection the \emph{mediating output} because of their role in establishing a
+connection between otherwise unrelated inputs. Finally, any other inputs demanded by the mediating output
+(that were needed to compute the $y$ coordinate of that point) are highlighted in grey (steps 3a and 3b). (We
+use a different colour to visually distinguish the \emph{answer} to the query from the selection that
+initiated the query in the first place.)
+
+The result of a related inputs query is in a sense a unit of comprehension (or perhaps reuse) inasmuch as it
+picks out all of the relevant data needed to understand how the original selected input is used. Moreover it
+does so by identifying the common, or mediating, output elements that explain why the inputs are related.
+
+\todo{Now introduce the idea of composing ``demands'' and ``demanded by'' the other way around to compute related outputs. Perhaps easiest to show related outputs within single chart? Corresponding notion of ``mediating input''.}
+
+\subsection{Focused queries}
+
+With any dependency analysis, there are situations where a given output depends on many inputs (perhaps when
+computing aggregates such as sums or averages). Sometimes many outputs depend on the same input (perhaps with
+global constants or multiple views of the same data). A challenge in either situation is how to obtain
+informative answers in the presence of such noisy dependency information. In \secref{conjugate} we show how
+related inputs queries can be made more precise by specifying which \emph{parts} of the output we want to use
+to mediate between the inputs, and dually how more fine-grained related outputs queries can be asked by restricting the mediating inputs to exclude problematic inputs.
+
+\subsection{Transparency by construction}
+
+%When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
+%then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
+%$$
+%   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
+%$$
+
+\begin{figure}
+   \small
+   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
+   \caption{Source code for scatter plot in \figref{related-inputs-main}}
+   \label{fig:energy-query}
+\end{figure}
