@@ -1,64 +1,156 @@
-\section{Introduction}
+\section{Introduction: Towards Transparent Research Outputs}
 \label{sec:introduction}
 
 Whether formulating a national policy or simply deciding what groceries to buy, we increasingly rely on the
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
-summaries is essential to making informed decisions, but such artefacts are \emph{opaque} in the sense of
-being unable to reveal anything about how they relate to the data they were derived from. If we have the
-appropriate skills, as well as access to the source code and data sets, we may be able to reverse engineer
-some of these relationships for fact-checking or comprehension purposes. But this is unlikely to be easy, and
-more often than not we have to take things on trust. These difficulties are further compounded when the
-information presented draws on multiple data sources, such as medical meta-analyses~\citep{dersimonian86},
-ensemble models~\citep{murphy04}, or queries that span multiple database tables~\citep{selinger79}.
+summaries is essential to making informed decisions. However, most of the artefacts we encounter are
+\emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
+While one could in principle try to use the source code and data sources to reverse engineer some of these
+relationships, this requires substantial expertise, as well as valuable time spent away from the
+``comprehension context'' in which we encountered the output in question.  These difficulties are only
+compounded when the information presented draws on multiple data sources, such as medical
+meta-analyses~\citep{dersimonian86}, ensemble models~\citep{murphy04}, or queries that span multiple database
+tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination to embark on such
+an activity. Perhaps more often than we would like, we end up taking things on trust.
 
-With traditional print media, a ``disconnect'' between chart and figures and the underlying data is to be
-expected, but for digital media, other options are open to us. In this paper, we introduce a new program
-analysis framework which supports interactive exploration of input-output relationships directly via visual
-outputs such as charts or tables. While this idea is not entirely new, our framework supports a novel form of
-provenance query which we call \emph{related inputs}, as well as lending itself to an easier implementation than
-prior work.
+\begin{wrapfigure}{r}{0.52\textwidth}
+   \centering
+   \includegraphics[width=0.49\textwidth]{fig/example/bremer.png}
+   \vspace{-2mm}
+   \caption{Hand-crafted data-transparent visualisation}
+   \label{fig:introduction:bremer}
+\end{wrapfigure}
 
-Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements
-when they contribute to a common output element (by element we mean some part of the input or output data).
-Users are able to ask questions of the form ``What outputs use this data element, and what other data elements
-are used along with it?'' To answer such questions, we make use of \emph{dynamic dependence graphs} (DDGs), an
-execution record used in the program slicing literature for analysing imperative programs~\cite{ferrante87}.
-Our key insight is that two inputs are related in this sense if they are \emph{cognate}, i.e.~have a common
-ancestor in the program's dependence graph $G$. This leads to a formalisation of related inputs in terms of
-the composite relation $R^{-1} \relcomp R$ where $R$ is reachability in $G$, and we give a procedure for
-computing related inputs over $G$. The concept of ``conjugate'' operators~\cite{jonsson51}, functions between
-Boolean algebras which come in reciprocating pairs, turns out to nicely capture these relations of cognacy.
+With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For digital
+media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
+``self-explanatory'' so they can reveal the relationship to the underlying data to an interested user.
+Consider the histogram in \figref{introduction:bremer} showing urban population growth in Asia over a 10-year
+period \cite{bremer15}. There are many questions a reader might have about what this chart ``represents'' ---
+in other words, how visual elements map to underlying data. Do the points represent individual cities? What
+does the colour scheme indicate? Which of the points represent large cities or small cities? Legends and other
+accompanying text can help, but some ambiguities inevitably remain. The entire value proposition of a summary
+after all is that it presents the big picture at the expense of certain detail.
 
-Conjugate pairs are closely related to \emph{Galois connections}, pairs of functions which are each other's
-closest approximation to a reciprocal and which lend themselves to bidirectional reasoning about resource
-consumption. If $f$ and $g$ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection.
-This relates our approach to work by~\citet{perera22} based on Galois connections and execution traces that
-addressed the problem of \emph{brushing and linking} in data visualisation. In our framework, the flipped
-composite $R \relcomp R^{-1}$ gives rise to a dual cognacy relation between output features which compete for
-common input data; composing related outputs with suitable projections at either end recovers the brushing and
-linking approach of the earlier work. However, our graphical approach is language-agnostic, easier to
-implement, and also fast enough to support the kind of interactive scenarios we have in mind.
+\citeauthor{bremer15} implemented an interactive feature that allow a user to explore some of these questions
+themselves \emph{in situ}, i.e.~directly from the chart. By selecting an individual point, they are able to
+bring up a view showing the data that point was calculated from. In this case the highlighted dot represents
+data for Chiang Mai and the plotted value of 10.9\% was derived from an increase in population density from
+4,416 to 5,010 people per sq.~km.
+
+\subsection{Data transparency as PL infrastructure}
+
+Features like these are valuable comprehension aids but are laborious to implement by hand. They also require
+the author to anticipate the queries a user might have and don't readily generalise: for example
+\citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
+
+For these reasons, there has been recent interest in treating this as a programming language infrastructure
+problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
+supported automatically. The author of the content no longer has to concern themselves with these tricky
+features, and the consumer of the content now has the best of both worlds: the ability to explore detail on an
+as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
+to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
+care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
+sufficient''.
+
+In data visualisation it has long been recognised that when users interact with visual elements by clicking or
+lassoing, the intention is typically to manipulate the underlying data; this has lead to various techniques
+for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
+\citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
+relational visualisation language, they describe how to ``backward trace'' from output selections to input
+selections, and then ``forward trace'' to find related output selections in other views, to support a popular
+feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
+functional language using a pair of dependency-tracking operators, written here as $\demandR$ (demands) and
+$\sufficientR$ (suffices for), linking specific output selections to input selections. The formal guarantee
+that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandR$ and
+$\sufficientR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
+mutual reciprocality:
+\[\demandR(Y) \leq X \iff Y \leq \sufficientR(X)\]
+
+\noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if a set of
+outputs $Y$ demands a set of inputs $X$, then $X$ is the smallest set of inputs which suffices for outputs
+which include $Y$; and conversely that if a set of inputs $X$ suffices for $Y$, then $Y$ is the greatest set
+of outputs whose demand lies within $Y$. (A Galois connection in this sense simply relaxes the usual
+isomorphism laws to inequalities.) Galois connections lend themselves well to bidirectional reasoning about
+resource consumption because the $\sufficientR$ direction (sufficiency) can be interpreted in terms of
+(fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one)
+is in fact sufficient to reproduce a particular feature of a complex output.
+
+\begin{figure}
+   \centering
+   \includegraphics[width=0.9\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
+   \vspace{-2mm}
+   \caption{Data-transparent visualisations associate visual selections with demanded data}
+   \label{fig:introduction:scatterplot}
+\end{figure}
+
+We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
+illustrate this in \figref{introduction:scatterplot} using our implementation, which builds on these
+provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
+are many questions even a domain expert might have about these charts. For example, in renewable energy one
+must be careful not to confuse \emph{capacity} with \emph{output} -- which of these is being shown in the bar
+chart? What kinds of energy count as ``non-renewable''? In the scatter plot, the label on the x-axis suggests
+that it represents some kind of part-to-whole ratio (renewables to total energy capacity, perhaps), whereas
+the y-axis purports to represent the ``capacity factor'' of clean energy sources. But these labels are little
+more than informal commentary. Moreover there are \emph{two} outputs here and so the question of if and how
+they might be related also arises.
+
+A system with automated data transparency allows the user to investigate questions like these by interacting
+directly with the artefacts. By selecting an interesting part of the output, they can obtain a view of the
+relevant data. On the left the bar segments highlighted with a dark border indicate such a selection; the
+table underneath shows the demanded data (computed using our version of the $\demandR$ operator) and we are
+also able to automatically select any outputs in the other chart which demand any of the same data using an
+other operator $\demandByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
+input}, is highlighted in [...] Perera et al defined such a $\demandByR$ operator as the De Morgan dual of the
+``suffices for'' operator $\sufficientR$; one of our contributions is to show that $\demandByR$ can be
+computed in a more direct fashion using dependence graphs.
 
 \subsection{Contributions}
+\label{sec:introduction:contributions}
 
-The specific contributions of the paper are as follows:
+In this paper, we develop the idea of data transparency in two new directions. First we approach the problem
+in a more language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
+queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
+for that program. Dependence graphs are a proven technique which have been used extensively for program
+slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
+based on adjoint pairs of operators (such as $\demandR$ and $\sufficientR$). These approaches
+(e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
+in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
+a backwards execution. This method is quite inefficient and non-trivial to prove correct; a graph-based
+approach factors the problem into a (language-specific) graph-building interpreter plus (language-agnostic)
+adjoint analyses over the graph. This partitioning reduces the implementation burden and improves performance
+compared to approaches based on bidirectional interpretation.
+
+Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
+relevance which arises between inputs when they contribute to common features of the output. Users are able to
+formulate queries like ``What outputs use this data element, and what other data elements are used along with
+it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
+dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot}, which can be understood as
+cognacy in $G^{\op}$. In the graphical setting these are both easy to compute, since they amount to the two
+ways of composing reachability in $G$ with its relational converse.
+
+\secref{overview} presents an overview of our approach and language, and motivates the idea of a ``related
+inputs'' query from an end-user perspective. The rest of the paper is then organised as follows:
+
 \begin{itemize}[leftmargin=*]
-\item We motivate the novel cognacy operator $\relInput$ (``related inputs'') from an end-user perspective
-(\secref{example}). We unpack the intuitive relationship between its two components $\demandR$ (``demands'')
-and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugacy and also introduce
-the dual cognacy operator $\relOutput$ (``related outputs'').
-\item We introduce the formal setting of conjugate operators between Boolean algebras (\secref{conjugate}). We
-explain how the image and preimage functions for a relation $D \subseteq X \times Y$ form a conjugate pair
-$\demandByR_{D}$ and $\demandR_{D}$ between the powersets of $X$ and $Y$ and that $f$ and $g$ being conjugate
-is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
-computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
-\item We define a core functional language with an operational semantics that pairs every result with a
-dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$ (\secref{core}). We show how to represent (parts of) values as nodes in the graph.
-\item We compare the performance of our implementation based on graphs and conjugates with an implementation
-due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace
-vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative
-implementation burden of the two approaches (\secref{evaluation}).
+\item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
+  the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its
+  two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+  \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
+  cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$
+  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
+  give procedures for computing $\demandR_{R}$ and $\sufficientR_{R}$ over a directed graph with reachability
+  relation $R$.
+\item \secref{core} defines a core functional language with an operational semantics that pairs every result
+  with a dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent
+  (parts of) values as vertices in the graph.
+\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
+  implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
+  building trace vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the
+  relative implementation burden of the two approaches.
+\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
 \end{itemize}
 
-\noindent \secref{related-work} discusses related work in more detail, and \secref{conclusion} concludes with
-a discussion on some limitations of the present system and how it might be developed further in the future.
+\secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
+infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
+how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
+transparency and propose some other ways in which the present system could be improved.

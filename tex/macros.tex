@@ -43,7 +43,7 @@
 \newcommand*{\inSnd}{\opName{inSnd}}
 
 % Eventually need full set of macros for our stuff
-\newcommand*{\OurLang}{[our language]\xspace}%{Fluid\xspace}
+\newcommand*{\OurLang}{[OurLanguage]\xspace}%{Fluid\xspace}
 \newcommand*{\benchFont}[1]{\textbf{#1}}
 \newcommand*{\TraceEval}{\benchFont{T-Eval}}
 \newcommand*{\TraceFwd}{\benchFont{T-Fwd}}
@@ -65,6 +65,8 @@
 \newcommand*{\compl}[1]{#1^{c}}
 \newcommand*{\dual}[1]{#1^{\circ}}
 \newcommand*{\preim}[1]{#1^{-1}}
+\newcommand*{\imageF}[1]{\image{#1}{\param}}
+\newcommand*{\image}[2]{#1[#2]}
 \newcommand*{\diff}{\setminus}
 \newcommand*{\impl}{\to}
 \newcommand*{\relcomp}{\bbsemi}
@@ -419,15 +421,17 @@
 \let\oldbigmeet\bigmeet
 \renewcommand*{\bigjoin}[1]{{\textstyle{\oldbigjoin}}\hspace{-0.1em}#1}
 \renewcommand*{\bigmeet}[1]{{\textstyle{\oldbigmeet}}\hspace{-0.1em}#1}
-\let\oldleq\leq
-\let\oldgeq\geq
-\newcommand*{\numleq}{\oldleq}
-\newcommand*{\numgeq}{\oldgeq}
+%\let\oldleq\leq
+%\let\oldgeq\geq
+%\newcommand*{\numleq}{\oldleq}
+%\newcommand*{\numgeq}{\oldgeq}
+\newcommand*{\numleq}{\leq}
+\newcommand*{\numgeq}{\geq}
 \newcommand*{\numgt}{>}
 \newcommand*{\numlt}{<}
-\renewcommand*{\leq}{\sqsubseteq}
-\renewcommand*{\geq}{\sqsupseteq}
-\newcommand{\eq}{\doteq}
+%\renewcommand*{\leq}{\sqsubseteq}
+%\renewcommand*{\geq}{\sqsupseteq}
+%\newcommand{\eq}{\doteq}
 \renewcommand{\eqdef}{:=}
 % annotations
 \newcommand*{\addrNull}{\bullet}
@@ -490,25 +494,10 @@
 % \\[0.25em]%
 % }
 \newcommand*{\arity}[1]{\mathSf{arity}(#1)}
-\newcommand*{\opAnd}{\;\opName{and}\;}
-
-% Pretty printing macros
-\newcommand*{\exLayoutAppBeside}[2]{#1\diamond#2}
-\newcommand*{\exLayoutAppATop}[2]{#1\div#2}
-\newcommand*{\exLayoutEmpty}{\varepsilon}
-\newcommand*{\exLayoutText}[1]{\opName{text}(#1)}
-
-% Pretty printing function macros
-\newcommand*{\exPrettyFunction}[1]{\llbracket#1\rrbracket}
-\newcommand*{\exSimpleFunction}[1]{\exPrettyFunction{#1}^S}
-\newcommand*{\exApplicationFunction}[1]{\exPrettyFunction{#1}^A}
-\newcommand*{\exBinaryAppFunction}[1]{\exPrettyFunction{#1}^B}
-\newcommand*{\etypeS}{\kw{S}}
-\newcommand*{\etypeE}{\kw{E}}
-\newcommand*{\ptypePair}{\kw{Pair}}
-\newcommand*{\ptypeList}{\kw{:}}
-\newcommand*{\ptypeOther}{\kw{Other}}
+%\newcommand*{\opAnd}{\;\opName{and}\;}
 
 \theoremstyle{acmdefinition}
 \newtheorem{notation}{Notation}[section] % 1]{\paragraph{Notation (#1)}}{\hfill}
 \newtheorem*{notation*}{Notation}
+
+\newcommand*{\op}{\opName{op}}
