@@ -130,7 +130,7 @@ when we refer to \textit{demands}, we mean $\demandR_{D}(\param)$,
 and when referring to \textit{demanded by}, we mean $\demandByR_{D}(\param)$.
 We shall make use of the fact that the image of $X'$ under a relation
 is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$. 
+ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
 
 \cd{improve motivation for sufficiency?}
 A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
@@ -243,7 +243,7 @@ edges of the graph, where we use the standard understanding of the reachability 
    closure of $E$.
 %
 %% \begin{notation}[Reachability]
-%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}. 
+%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}.
 %% \end{notation}
 %
 
@@ -300,13 +300,11 @@ we filter out any nodes which do not appear as outputs by only considering the
 graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
 \begin{proposition}[Reaches Computes Demanded By]
-   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G} \subset V$
+   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G}$
    the following holds:
    $$
     \forall G' .\  X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
     $$
-          \DOnote{We are potentially missing something here on the right, the validity of $\mathsf{reaches}$
-        means that we also need to know $T(G') \subseteq T(G)$}
 \end{proposition}
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
@@ -314,7 +312,7 @@ set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
 on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
 \input{fig/conjugate/algorithms}
 \begin{proposition}[Reaches Computes Demands]
-   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G} \subset V$
+   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G}$
    The following holds:
    $$
      \forall G' .\ Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
