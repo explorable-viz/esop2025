@@ -37,8 +37,8 @@ the author to anticipate the queries a user might have and don't readily general
 
 For these reasons, there has been recent interest in treating this as a programming language infrastructure
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
-supported automatically. The content author no longer has to concern themselves with implementing these
-features, and the content consumer now has the best of both worlds: the ability to explore detail on an
+supported automatically. The author of the content no longer has to concern themselves with these tricky
+features, and the consumer of the content now has the best of both worlds: the ability to explore detail on an
 as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
@@ -61,11 +61,11 @@ mutual reciprocality:
 \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if a set of
 outputs $Y$ demands a set of inputs $X$, then $X$ is the smallest set of inputs which suffices for outputs
 which include $Y$; and conversely that if a set of inputs $X$ suffices for $Y$, then $Y$ is the greatest set
-of outputs whose demand lies within $Y$. (A Galois connection thus generalises an order isomorphism in the
-sense of relaxing the usual isomorphism laws to inequalities.) Galois connections lend themselves well to
-bidirectional reasoning about resource consumption because the $\sufficientR$ direction (sufficiency) can be
-interpreted in terms of (fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a
-subset of a larger one) is in fact sufficient to reproduce a particular feature of a complex output.
+of outputs whose demand lies within $Y$. (A Galois connection in this sense simply relaxes the usual
+isomorphism laws to inequalities.) Galois connections lend themselves well to bidirectional reasoning about
+resource consumption because the $\sufficientR$ direction (sufficiency) can be interpreted in terms of
+(fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one)
+is in fact sufficient to reproduce a particular feature of a complex output.
 
 % [clarify "generic" reading of GC].
 
