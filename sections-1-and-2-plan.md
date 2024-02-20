@@ -1,19 +1,5 @@
 # 1. Introduction: Towards Transparent Research Outputs
 
-## Contributions
-
-- [ ] Section 2 presents an overview of our approach and language, and motivates the idea of ``related inputs'' query from an end-user perspective. The rest of the paper is then organised as follows: [..]
-
-  - [ ] Section 3 defines a new program analysis framework over dynamic dependence graphs, introducing the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being conjugate
-  is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures for
-  computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$
-  - [ ] \secref{core} defines a core functional language with an operational semantics that pairs every result with a
-  dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent (parts of) values as nodes in the graph.
-  - [ ] \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of building trace   vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the relative implementation burden of the two approaches ().
-  - [ ] Section 6 reviews related work in more detail, including program slicing and DDGs.
-
-- [ ] Section 7 wraps up with a discussion of some limitations and plans for future work. In particular, the sort of transparency infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of how output parts are related to input parts. We discuss extending this to more ``intensional'' forms transparency and propose some other ways of improving on the present system.
-
 # 2. Overview of approach and solution
 
 - [ ] As outlined in \secref{intro}, the aim of data transparency is to enrich the computed content with
