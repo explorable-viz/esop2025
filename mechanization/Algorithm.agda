@@ -45,6 +45,11 @@ graphUnion (V , E) (V' , E') = (union V V' , E'')
     E'' (inj₁ x , inj₂ y) = ⊥
     E'' (inj₂ x , inj₁ y) = ⊥
 
+positivity : {G1 G2 G3 : Graph}
+             -> subgraph (graphUnion G1 G2) G3
+             -> subgraph G1 G3
+positivity {G1} {G2} {G3} (sub , rel) = (λ x → sub {!!}) , {!!}
+
 toGraph : (a : Label) -> Vertices -> Graph
 toGraph a V = (cons a V , E)
   where
@@ -76,6 +81,11 @@ sinkSub V E X sub {a} va = let v = sub {a} va in proj₁ v
 -- sinks
 T : Graph -> Vertices
 T (V , E) a = Σ (V a) (\v1 -> ((b : Label) -> (v2 : V b) -> ¬ E (v1 , v2)))
+
+-- prop
+homomT : (G G' : Graph) -> subgraph G G' -> subset (T G) (T G')
+homomT G G' = {!!}
+
 
 -- TODO: there may be a better way than this...
 -- can do this by composing the edges relation with itself n times where n is the number
@@ -129,6 +139,29 @@ Demands V E X sub a =
   in preimage' {Label} {Label} {V} {V} (edgesToRelST V r) X (sinkSub V E X sub) a
 
 -- preimage i.e. Triang_D(X') = {y in Y | exists x in X' (x, y) in D}
+
+----
+-- properties
+
+relationship : (G0 : Graph) -> (G : Graph) -> (V : Vertices) -> (G' : Graph)
+             -> ReachesV G0 G V G'
+             -> (subgraph G G') × (subgraph G' G0)
+relationship G0 G .emptySet .G (reachesV-done prf) = (reflexiveSubgraph G) , prf
+relationship G0 G .(cons a V) G' (reachesV-skip {V = V} reach a x) =
+ -- induction
+ let (prf1 , prf2) = relationship G0 G V G' reach
+ in prf1 , prf2
+relationship G0 G .(cons a V) G' (reachesV-extend {V = V} {V' = V'} a reach) =
+ -- induction + positivity
+ let (prf1 , prf2) = relationship G0 (graphUnion G (toGraph a V')) (union V' V) G' reach
+ in positivity {G} {toGraph a V'} {G'} prf1 , prf2
+
+relationshipR : (G0 : Graph) -> (V : Vertices) -> (V' : Vertices)
+             -> Reaches G0 V V'
+             -> (subset V (S G0) × (subset V' (T G0)))
+relationshipR G0 V V' (reaches {G = G} prf1 reach .V' eq) rewrite eq =
+  let (prfa , prfb) = relationship G0 emptyGraph V G reach
+  in prf1 , homomT G G0 prfb
 
 -----------
 -- Reaches computes demanded by
