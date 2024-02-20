@@ -55,6 +55,18 @@ efficient.
 
 Still have the general question of how we can motivate the inclusion of suffices.
 
+\subsubsection{Choice of Examples}
+We evaluated our approach on a collection of examples. In order to enable a
+like-for-like comparison with the state of the art approach, we avoided testing
+the performance of linked input examples, since it was not possible to run them
+using the execution trace approach. We aggregate our examples into three groups,
+matrix examples, a graphics library, and some linked outputs examples.
+The matrix examples include the convolution algorithm known from
+computer vision literature and an implementation of the dynamic time warping
+algorithm for the matching of time series data. The example graphics library
+is illustrative of inherently sequential examples. The linked outputs examples.
+\todo{Need to give an account of the linked output examples}
+
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
 We first proceed by comparing the time taken to evaluate a program to its execution
 trace with the time taken to evaluate it to its dynamic dependence graph. We
@@ -73,7 +85,7 @@ in evaluation time over the state of the art approach is a worthy tradeoff.
 \subsubsection{RQ2: Demands Graphs Versus Traces}
 We now compare the performance of the twin implementations in terms of computing
 demands. We observe a significant increase in the performance of demands using
-the graphical approach. In our matrix examples, we observe an average increase
+the graphical approach, shown in \tableref{demands-speedups}. In our matrix examples, we observe an average increase
 of approximately 40 times, whereas in the graphical examples, the speedup
 is approximately 32 times. We note that the inherently sequential algorithm,
 \textit{slicing/dtw/compute-dtw} exhibits a significantly reduced speedup when
