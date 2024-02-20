@@ -43,6 +43,24 @@ offered by the visual summary. The relationship to data can be ``incrementally d
 user interacts with the parts of the output they care about, ideally with some kind of formal guarantee that
 the revealed data is in some sense ``minimal and sufficient''.
 
+As far as we are aware, \citet{psallidas18} were the first to spot that common visual interactions, such as
+selecting a visual element, can be understood in terms of data provenance, sketching out (in a vision paper)
+[..]; \citet{perera22} implemented similar ideas using a pair of dependency-tracking operators, written here
+as $\demandR$ (demands) and $\sufficientR$ (suffices for), linking specific output selections to input
+selections. The formal guarantee that the corresponding input selections are ``minimal and sufficient'' was
+captured by ▽ and ▲ forming a \emph{Galois connection}, a pair of functions related in the following
+near-reciprocal way: [give the 'iff' equation] - [ ] (Here \leq is the inclusion relation over sets of data
+elements.) This says that if a set of outputs Y demands a set of inputs X, then X is the smallest set of
+inputs which suffices for Y [and vice versa]. (A Galois connection thus generalises an order isomorphism in
+the sense of relaxing the usual isomorphism laws to inequalities.) Galois connections lend themselves well to
+bidirectional reasoning about resource consumption because the ▲ direction (sufficiency) can be interpreted in
+terms of (fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a
+larger one) is in fact sufficient to reproduce a particular feature of a complex output [clarify "generic"
+reading of GC].
+
+
+
+
 \vspace{2mm}
 \hrule
 \vspace{2mm}
