@@ -1,26 +1,29 @@
 \section{Overview of Approach and Solution}
 \label{sec:overview}
 
-In traditional media like hardcopy journals, the trail of information relating data sources to charts or
-figures is long gone by the time the article reaches a reader, so this sort of opacity is unavoidable. Formats
-like Portable Document Format (PDF) that emulate paper fare little better. But with truly digital formats we
-should be able to do things differently. Ideally we would be able to enrich the artefact itself with
+As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
 interactions that allow the user to query relationships between data sources and visualisations and other
-computed content \emph{in situ}. \todo{Example to show basic idea of selecting some part of the output and
-seeing the demanded data.} Although this sort of fine-grained extensional query, which here we call \emph{data
-transparency}, falls short of being a full explanation of how the input selection was used to compute the
-output selection --- revealing only \emph{what} data is relevant, rather than anything about why --- it does
-move us substantially closer to research outputs self-contained enough to be able to ``explain themselves'' to
-an interested reader.
+outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
+arise. Crucially, we want to make this feature automatic. Hand-crafted efforts like \citet{bremer15}'s are not
+only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
+and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
+analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+responsibility for gathering this information into the programming language, the author or data scientist can
+concern themselves purely with analysis and visualisation, and defer the provision of these transparency
+features to the infrastructure used to implement and host the visualisation.
 
-Crucially, we want to make this feature automatic. Certainly one could try implementing something similar on a
-bespoke basis for a specific visualisation (see \citet{bremer15} for an elegant example), but that would be
-difficult and error-prone. We would have to explicitly embedding knowledge of the relationship between visual
-outputs and inputs --- normally implicit in how the former is computed from the latter --- back into the
-program, making it fragile in the presence of changes to the visualisation logic. By putting this into a
-programming language instead, the author of the visualisation can concern themselves purely with communication
-and visualisation, and defer responsibility for transparency features to the infrastructure used to implement
-and host the visualisation.
+However, computing the bidirectional dependency information need to realise this idea is costly both in terms
+of performance and implementation burden. For example, the approach taken by \citet{perera22} to implement a
+``related outputs'' analysis like the one shown in \figref{introduction:scatterplot} requires two separate
+analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
+``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
+that data. These analyses need to be defined separately and each depends on details of the language, imposing
+a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire
+computation regardless of whether all of the trace is relevant.
+
+\vspace{2mm}
+\hrule
+\vspace{2mm}
 
 \begin{figure}
    \centering
