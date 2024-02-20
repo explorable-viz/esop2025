@@ -38,20 +38,23 @@ language called \OurLang. Benchmarks were run on a commercial laptop, with an
 Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
 on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
 
-We tested the performance of our implementation against the approach employed in
-the state of the art in this area. Our benchmarks were designed to answer the
-following three research questions:
+
+In an interactive system, performance plays an enormous role in the experience
+of a user. In order for evaluation to be a total success, we cannot allow 
+performance to degrade. It is possible that the dependence graph incurs a greater
+overhead than the creation of an execution trace, as it is a more complex data
+structure. Therefore, we need to compare the overhead of graph construction, and
+trace construction. We also need to investigate the performance of \textit{demands}
+and \textit{demanded by} between the implementation using a trace, and the one
+using a dependence graph. We further need to consider the various implementations
+of \textit{demanded by}, and determine if there is a clear performance difference.
+
+We thus boil down the performance testing to the following three research questions:
 \begin{itemize}
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
    \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
 \end{itemize}
-
-In light of the simplicity of the graphical approach, we consider performance
-evaluation a success if our performance is at least competitive with the state
-of the art. We expect the construction of a dependence graph to be somewhat more
-expensive than constructing a trace, but that our dependency analyses to be more
-efficient.
 
 Still have the general question of how we can motivate the inclusion of suffices.
 
