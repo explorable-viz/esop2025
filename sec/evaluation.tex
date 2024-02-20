@@ -65,9 +65,20 @@ the matrix examples, and a factor of 10 for the graphical examples \jb{These
 numbers are subject to change as Roly makes some implementation updates.}
 \todo{Implement linked examples}
 
+In light of the performance of the dependence analyses, we feel that this increase
+in evaluation time over the state of the art approach is a worthy tradeoff.
+
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
+We now compare the performance of the twin implementations in terms of computing
+demands. We observe a significant increase in the performance of demands using
+the graphical approach. In our matrix examples, we observe an average increase
+of approximately 40 times, whereas in the graphical examples, the speedup
+is approximately 32 times. We note that the inherently sequential algorithm,
+\textit{slicing/dtw/compute-dtw} exhibits a significantly reduced speedup when
+compared to the rest of the examples.
+
 {\tiny\input{fig/performance/demands-speedup.tex}}
 
 \subsubsection{RQ3: Comparison of Equivalent Impls}
