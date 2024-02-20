@@ -21,6 +21,31 @@ that data. These analyses need to be defined separately and each depends on deta
 a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire
 computation regardless of whether all of the trace is relevant.
 
+\subsection{Conjugate Operators over Dependence Graphs}
+
+Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
+for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
+problems are much easier to formulate in the graphical setting. For example ``related outputs'' simply amounts
+to computing common ancestry, or \emph{cognacy}, in $G^{\op}$, which turns out to be nicely captured by the
+concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Formally, $f$ and $g$ are \emph{
+conjugate} iff:
+
+\[f(X) \cap Y \neq \emptyset \iff X \cap g(Y) \neq \emptyset\]
+
+The canonical example of conjugate operations are the image functions for a relation $R \subset X \times Y$ and
+its converse $R^{-1} \subset Y \times X$: if the image in $R^{-1}$ of $Y' \subseteq Y$ has at least one
+element in common with $X' \subset X$, then the image in $R$ of $X'$ has at least one element in common with
+Y' (and vice versa). Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are
+conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection.
+
+If we now take $R$ to be reachability in $G$, then our setting technically only requires a single operator
+$\demandR_R$, since its adjoint $\sufficientR_R$ is readily computed as $\demandR_{R^{-1}}$ and its conjugate
+$\demandByR_R$ as the De Morgan dual of $\demandR_{R^{-1}}$. In particular related outputs is simply
+$\demandR_{R \relcomp R^{-1}}$. It is well-known that extensionally these things determine each other, but in
+the graph setting we can also derive efficient procedures for all of these in terms of reachability. Since
+going via the De Morgan dual can be inefficient, we also give a direct implementation of $\sufficientR_R$
+which improves on the derived version in those cases.
+
 \vspace{2mm}
 \hrule
 \vspace{2mm}
@@ -62,14 +87,6 @@ global constants or multiple views of the same data). A challenge in either situ
 informative answers in the presence of such noisy dependency information. In \secref{conjugate} we show how
 related inputs queries can be made more precise by specifying which \emph{parts} of the output we want to use
 to mediate between the inputs, and dually how more fine-grained related outputs queries can be asked by restricting the mediating inputs to exclude problematic inputs.
-
-\subsection{Transparency by construction}
-
-%When considered as functions from sets of outputs to sets of inputs (resp: sets of inputs to sets of outputs),
-%then they satisfy the property known as \textit{conjugacy}, in the sense of \citet{jonsson51}:
-%$$
-%   A \cap \demands{B} = \emptyset \iff \demandBy{A} \cap B = \emptyset
-%$$
 
 \begin{figure}
    \small

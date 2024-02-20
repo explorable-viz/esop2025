@@ -132,13 +132,14 @@ ways of composing reachability in $G$ with its relational converse.
 inputs'' query from an end-user perspective. The rest of the paper is then organised as follows:
 
 \begin{itemize}[leftmargin=*]
-\item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing the
-  cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its two
-  components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of \citeauthor{jonsson51}'s
-  notion of conjugate operators over Boolean algebras. We also introduce the dual cognacy operator
-  $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$ and $g$ being
-  conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We give procedures
-  for computing $\demandR_{D}$ and $\demandByR_{D}$ over a directed graph with reachability relation $D$.
+\item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
+  the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its
+  two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+  \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
+  cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$
+  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
+  give procedures for computing $\demandR_{R}$ and $\sufficientR_{R}$ over a directed graph with reachability
+  relation $R$.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent
   (parts of) values as vertices in the graph.
