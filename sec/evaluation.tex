@@ -56,6 +56,15 @@ efficient.
 Still have the general question of how we can motivate the inclusion of suffices.
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
+We first proceed by comparing the time taken to evaluate a program to its execution
+trace with the time taken to evaluate it to its dynamic dependence graph. We
+expect to observe evaluating a program to its dependence graph to be a slower
+process than evaluating to an execution trace, since the graph is a more complex
+data structure. In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
+the matrix examples, and a factor of 10 for the graphical examples \jb{These
+numbers are subject to change as Roly makes some implementation updates.}
+\todo{Implement linked examples}
+
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
