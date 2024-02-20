@@ -67,6 +67,36 @@ resource consumption because the $\sufficientR$ direction (sufficiency) can be i
 (fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one)
 is in fact sufficient to reproduce a particular feature of a complex output.
 
+\begin{figure}
+   \centering
+   \includegraphics[width=0.9\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
+   \vspace{-2mm}
+   \caption{Data-transparent visualisations associate visual selections with demanded data}
+   \label{fig:example:scatterplot}
+\end{figure}
+
+We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
+illustrate this in \figref{example:scatterplot} using our implementation, which builds on these
+provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
+are many questions even a domain expert might have about these charts. For example, in renewable energy one
+must be careful not to confuse \emph{capacity} with \emph{output} -- which of these is being shown in the bar
+chart? What kinds of energy count as ``non-renewable''? In the scatter plot, the label on the x-axis suggests
+that it represents some kind of part-to-whole ratio (renewables to total energy capacity, perhaps), whereas
+the y-axis purports to represent the ``capacity factor'' of clean energy sources. But these labels are little
+more than informal commentary. Moreover there are \emph{two} outputs here and so the question of if and how
+they might be related also arises.
+
+A system with automated data transparency allows the user to investigate questions like these by interacting
+directly with the artefacts. By selecting an interesting part of the output, they can obtain a view of the
+relevant data. On the left the bar segments highlighted with a dark border indicate such a selection; the
+table underneath shows the demanded data (computed using our version of the $\demandR$ operator) and we are
+also able to automatically select any outputs in the other chart which demand any of the same data using an
+other operator $\demandByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
+input}, is highlighted in [...] Perera et al defined such a $\demandByR$ operator as the De Morgan dual of the
+``suffices for'' operator $\sufficientR$; one of our contributions (as we shall see in
+\secref{introduction:contributions} below) is to show that $\demandByR$ can be computed in a more direct
+fashion using dependence graphs.
+
 % [clarify "generic" reading of GC].
 
 \vspace{2mm}
@@ -74,9 +104,9 @@ is in fact sufficient to reproduce a particular feature of a complex output.
 \vspace{2mm}
 
 In this paper, we introduce a new program analysis framework which supports interactive exploration of
-input-output relationships directly via visual outputs such as charts or tables. While this idea is not
-entirely new, our framework supports a novel form of provenance query which we call \emph{related inputs}, as
-well as lending itself to an easier implementation than prior work.
+input-output relationships directly via visual outputs such as charts or tables. Our framework supports a
+novel form of provenance query which we call \emph{related inputs}, as well as lending itself to an easier
+implementation than prior work.
 
 Related inputs characterises the relation of \emph{mutual relevance} which arises between two input elements
 when they contribute to a common output element (by element we mean some part of the input or output data).
@@ -100,6 +130,7 @@ linking approach of the earlier work. However, our graphical approach is languag
 implement, and also fast enough to support the kind of interactive scenarios we have in mind.
 
 \subsection{Contributions}
+\label{sec:introduction:contributions}
 
 The specific contributions of the paper are as follows:
 \begin{itemize}[leftmargin=*]
