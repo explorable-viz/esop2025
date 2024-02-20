@@ -299,25 +299,47 @@ Once it has terminated, and we have constructed the subgraph of demanded nodes,
 we filter out any nodes which do not appear as outputs by only considering the
 graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
-\begin{proposition}[Reaches Computes Demanded By]
+\DOnote{The following are details that look like they are needed for the proofs
+  but could be just moved to an appendix as they are not so interesting}
+
+\begin{proposition}[The reaches relation connects sources to sinks]
+  For all graphs $G_0$ and vertex sets $V$ and $V'$ then:
+  %
+  \begin{align*}
+    V \demandsAlg{G_0} V'
+    \implies
+    V \subseteq \sources{G_0} \wedge V' \subseteq \sinks{G_0}
+  \end{align*}
+\end{proposition}
+
+\begin{proposition}[The ReachesV relation implies subgraphing]
+  For all graphs $G$, $G'$ and $G_0$ and vertex set $V$ then:
+    \begin{align*}
+      G, V \demandsVert{G_0} G'
+      \implies
+      G \subseteq G' \subseteq G_0
+    \end{align*}
+\end{proposition}
+
+\begin{lemma}[Reaches Computes Demanded By]
    For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G}$
    the following holds:
    $$
     \forall G' .\  X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
     $$
-\end{proposition}
+\end{lemma}
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
 set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
 on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
 \input{fig/conjugate/algorithms}
-\begin{proposition}[Reaches Computes Demands]
+\begin{lemma}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G}$
    The following holds:
    $$
      \forall G' .\ Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
    $$
-\end{proposition}
+\end{lemma}
 \begin{proof}
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
