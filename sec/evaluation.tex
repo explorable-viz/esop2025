@@ -103,11 +103,21 @@ tradeoff, when we consider the relative performance of implementing
 \subsubsection{RQ2: Demands Graphs Versus Traces}
 We now compare the performance of the twin implementations in terms of computing
 demands. We observe a significant increase in the performance of demands using
-the graphical approach, shown in \tableref{demands-speedups}. In our matrix examples, we observe an average increase
+the graphical approach, shown in \tableref{demands-speedups}. 
+In our matrix examples, we observe an average increase
 of approximately 40 times, whereas in the graphical examples, the speedup
-is approximately 32 times. We note that the inherently sequential algorithm,
-\textit{slicing/dtw/compute-dtw} exhibits a significantly reduced speedup when
-compared to the rest of the examples.
+is approximately 32 times faster. 
+
+We attribute this performance improvement due to the fact that the execution
+trace approach requires the system to completely rewind the execution of the
+original program, in effect evaluating it in reverse. We contrast this with the
+graphical approach, which only needs to traverse the relevant part of the graph.
+Thus in highly data-parallel examples -- like convolution -- we expect and indeed
+observe a greater increase in performance. In contrast the graphics library code
+and the dynamic time warp implementation do not exhibit quite the same level
+of speedup, since they rely on a more sequential flow of data through the program,
+in effect, $\demandR{}$ has to traverse a greater portion of the graph.
+
 
 {\tiny\input{fig/performance/demands-speedup.tex}}
 
