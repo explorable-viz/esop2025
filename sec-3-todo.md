@@ -5,8 +5,14 @@
 - [ ] Def. of DDG isn't a definition but rather an informal intuition, so doesn't belong in a Definition environment. Also mention that our DDGs point from inputs to outputs (which I think is uncommon, but not unheard of).
 - [ ] Do we want a definition of a graph (or perhaps directed graph)?
 - [ ] Taking the opposite of a graph has the effect of swapping: this observation belongs with definition of sinks/sources and opposite graph.
-- [ ] Universally quantified $G'$ doesn't work in theorem
+- [ ] Prop. 3.10: Universally quantified $G'$ doesn't belong here. The condition $\subset V$ is redundant. G doesn't need to be unpacked as (V, E). A "subset of inputs" can just be a "set of inputs". X', Y' can just be X, Y.
+- [ ] Prop. 3.11: it can't be the case that both this and 3.10 hold (the same algorithm over the same graph can't compute two opposite relations).
+- [ ] Prop. 3.16: refers to "forwards". "Sufficiency" should be ▲. Then same points as 3.10 above.
 - [ ] (p.9) "monotonic" should be "inflationary"
+= [ ] Missing definition environments that define reaches and suffices (by reference to the figure). These are needed to explain the form of the judgements. (On p.11 just referring to "reaches" doesn't make it clear what the signature is or arguments are.)
+- [ ] G_0 is longer used in reaches.
+- [ ] Lemma 3.15 talks about "necessity" (see below about terminology). This needs to be stated point-free; the De Morgan dual can only be applied to a function between Boolean algebras, not the result of applying such a function to an element. What is the point of inputs X \subseteq V?
+- [ ] 3.4 Relationship to Galois slicing: goal of this section isn't really to to relate to previous work, but to motivate idea of sufficiency and explain the two implementations (De Morgan dual formulation and "direct" implementation). Give an explicit algorithmic definition of ▲ in terms of the De Morgan dual and reaches (demanded by), so that it's clear exactly what is being benchmarked in section 5. The potential inefficiency of the De Morgan dual version should be explained in terms of the size of the graph that gets traversed after complementing and then computing △, not in terms of set complementation (which we know nothing about and probably has no asymptotic relevance).
 
 ## Notation & terminology
 
@@ -37,7 +43,11 @@
 - [ ] "The set of nodes that a value is demanded by can be represented by": express in terms of inputs/outputs. "can be represented by" -> "is simply". For the "demanded by" direction, make the connection to image in reachability relation. Delete "We use this intuition when defining [...]".
 - [ ] Restriction R'_G: not sure that "restriction" is the right terminology as one typically domain-restricts or range-restricts with respect to a subset of X or Y. Would intersection do here? Maybe introduce a function IO which takes a graph to its "IO relation". Define ▽_G and △_G point-free. Do we need "demands" and "demanded by" on the right here? Shouldn't these names come earlier? Give types of operators in terms of powerset S(G) and T(G).
 - [ ] When explaining related inputs/outputs over a graph, maybe streamline by omitting "selection" as an explicit step. (Instead: "To calculate related inputs for an input selection X \subseteq S(G)..".) No need to prime X', Y' as there is no ambient X, Y.
-- [ ] Does 6a "compute reachability"? Is the notion of "reachable subgraph" relevant? The phrases "accumulating their neighbours" and "its own neighbours" are unclear. Is "enqueue" the right term if V is a set? . Is "reaches" an appropriate term, give that its adjoint is called "suffices" and in the exposition we refer to "demanded"? Why not "demands"?
+- [ ] Does 6a "compute reachability"? Is the notion of "reachable subgraph" relevant? The phrases "accumulating their neighbours" and "its own neighbours" are unclear. Is "enqueue" the right term if V is a set? . Is "reaches" an appropriate term, give that its adjoint is called "suffices" and in the exposition we refer to "demanded"? Why not "demands"? "only considering the sinks" -> "intersecting with the sinks"?
+- [ ] It seems we've switched "reaches" from "demands" to "demanded by". If that's how we want to proceed, then we probably shouldn't explain it as the computations of "demands" as well. (Also the name should match what's being computed; see below.) What do "Demands/Demanded By/Sufficiency" refer to in subfigure captions? We could describe them as computing △ and ▲, but probably better just to gives names of the algorithms. Caption text "Rules which define the algorithms" seems unnecessarily indirect, ok to describe these as algorithms.
+- [ ] "Now we have [...] The next step is to take this set [...]": spurious; delete. Similarly for following paragraph starting "When trying to compute related outputs".
+- [ ] Design question: why compute G if we only care about T(G)?
+- [ ] "In the main subroutine": describe as an "auxiliary definition". Rather than "In [...], we consider", simply "[...] takes". E is a set, not a list; omit commas surrounding E. Say "and then add" rather than "before adding". It's not just α that's added to G, but the entire star graph at α. The "inefficient in the adjacency map" comment could perhaps be restated as: our implementation makes it trivial to flip between G and G^{op} so we can freely make use of both in the algorithm. By the time I get to "Otherwise", it's not clear what condition is being referred to. The second occurrence of suffEdges-pendinng should be suffEdges-done. The sentence containing "sort of front of nodes" is hard to understand. "traversed at least one node" -> "reached at least one node".
 
 ## Minor
 
@@ -59,12 +69,4 @@
 - [ ] Avoid starting sentences with a identifier that starts with a lowercase (e.g. "reaches").
 - [ ] algorithms -> algorithm's
 - [ ] graphs -> graph's
-
-### Language to standardise on
-
-- [ ] relational converse vs. inverse relation (sections 1 & 2 use former)
-- [ ] set minus vs. relative complement
-- [ ] node vs. vertex (maybe ok to use both, though)
-- [ ] R rather than D for abstract relations (to align with reachability rather than demanded by/dependency)?
-- [ ] [Sections 1 and 2] Prefer G^{-1} to G^{op}.
-- [ ] Related input/related output -> Related inputs/related outputs
+- [ ] "snapshot of the algorithm" -> "example run of the algorithm"? Use a colour scheme corresponding to the ones used elsewhere (e.g. turqoise for selected, white for unselected). We can probably managed without giving the vertices names; the visual notation is more informative. When we say "dotted edges are those under consideration", does this mean edges that have been included into H? In step 3, x_5 should be orange not green because it is still in H; it doesn't become part of G' (and thus turn green) until step 4. Arrowheads clash a bit in steps 5, 6 and 7. In step 8, the arrow into x7 is still part of H so should remain dotted (to illustrate your point). In general we need to be careful about referring to H, G' etc as "abstract components of the configuration" vs. actual metavariables that occur in the rules.
