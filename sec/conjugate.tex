@@ -57,9 +57,11 @@ and some of it bespoke.
 
 \begin{notation*}[Graph, opposite graph]\label{def:opposite-graph}
 For a graph $G = (V,E)$, we write $\sources{G}$ for
-the source vertices in $G$ and $\sinks{G}$ for the sinks.
+the source vertices in $G$ (i.e., those which have only out edges)
+and $\sinks{G}$ for the sinks (i.e., those which have only in edges).
 We also write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
 where $\param^{-1}$ denotes the inverse of an edge.
+We sometimes refer to vertices as nodes.
 \end{notation*}
 
 \begin{notation*}[In and out edges]
@@ -80,7 +82,7 @@ For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
 ordered by set inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is
 the whole set $X$, meet and join are given by intersection ($\cap$) and union ($\cup$)
-respectively, and negation is $\compl{X'}$.
+respectively, and negation is via complementation $\compl{X'}$.
 
 
 \subsection{Dependence Graphs}
@@ -104,9 +106,9 @@ This definition diverges somewhat from traditional approaches to dynamic depende
 graphs since we only consider one type of edge -- a data dependency -- in contrast
 to separately defining data and control-flow edges as in \citet{agrawal90}.
 
-In each graph, we mark out a subset of the nodes, $X \subset V$, which represent
-the inputs to the program, and a subset of nodes $Y \subset V$, which represent
-the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. Taking the opposite
+In each graph, we mark out a subset of the nodes $X \subset V$ which represent
+program inputs and a subset of nodes $Y \subset V$, which represent
+the outputs. Usually, $X = \sources{G}$ (the sources) and $Y = \sinks{G}$ (the sinks). Taking the opposite
 graph has the effect of swapping the sets of sources and sinks.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
@@ -114,8 +116,7 @@ characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
 can be read as $x$ is \textit{demanded by} $y$.
 %
 (As opposed to a function) the dependency relation allows scenarios where inputs are not demanded by any
-output, or inputs are demanded by multiple outputs. These properties are nice
-to have, since in data analysis tasks, we often do not need to make use of all
+output, or inputs are demanded by multiple outputs. These properties are useful, since in data analysis tasks, we often do not need to make use of all
 the inputs to the program, and we may reuse data for multiple different outputs.
 
 Motivated by data analysis tasks, we wish to consider the relationships between sets of inputs and sets of outputs.
@@ -143,7 +144,7 @@ A related question we may come across in data analysis tasks is that of \textit{
 $x_i \in X'$ for every $(x_i, y) \in D$.
 As a simple example, consider the expression $3 + 4$, neither
 of the subexpressions $3$ or $4$ are sufficient to produce the result of
-evaluating the expression on their own. Notably, the set of outputs a set of inputs is necessary for is a superset of the
+evaluating the expression on their own. Notably, the set of outputs that a set of inputs is necessary for is a superset of the
 outputs it is sufficient for.
 
 
