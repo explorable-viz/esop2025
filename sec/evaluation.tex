@@ -80,17 +80,23 @@ The linked outputs examples.
 \todo{Need to give an account of the linked output examples}
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
-We first proceed by comparing the time taken to evaluate a program to its execution
-trace with the time taken to evaluate it to its dynamic dependence graph. We
-expect to observe evaluating a program to its dependence graph to be a slower
-process than evaluating to an execution trace, since the graph is a more complex
-data structure. In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
+We first proceed by comparing the time taken to evaluate a program in the
+execution trace approach with the time taken to evaluate a program with with the
+dependence graph approach.
+Since the graph is a more complex data structure to build compared to the trace
+we expect an increased overhead when evaluating a program and building the graph
+compared to evaluating and building the trace.
+
+In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
 the matrix examples, and a factor of 10 for the graphical examples \jb{These
 numbers are subject to change as Roly makes some implementation updates.}
 \todo{Implement linked examples}
 
-In light of the performance of the dependence analyses, we feel that this increase
-in evaluation time over the state of the art approach is a worthy tradeoff.
+We consider the primary focus of the evaluation to be in the types of interactions
+that we can support, rather than the performance of the initial program evaluation.
+We therefore consider the increase in evaluation overhead to be a worthwhile
+tradeoff, when we consider the relative performance of implementing
+\textit{demands} and \textit{demanded by}.
 
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
