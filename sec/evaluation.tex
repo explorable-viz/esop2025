@@ -60,16 +60,15 @@ Still have the general question of how we can motivate the inclusion of suffices
 
 \subsubsection{Choice of Examples}
 
-In order to enable a like-for-like comparison with the state of the art approach,
-we avoided testing the performance of linked input examples, since it was not possible to run them
-using the execution trace approach, instead we can get a good picture of the performance
-by looking at the amount of time that elapses in the various tests of \textit{demands}
-and \textit{demanded by}. We also wanted the examples to cover a range of program
-structures, in order to examine the variation in performance depending
-on the shape or the size of their graphs. \jb{I think this might be fluff.}
+Since we desired a like-for-like comparison with the state of the art approach,
+we were unable to directly test the performance of linked-input examples. Instead
+we directly measured the performance of the main components of the system.
 
-We aggregated our examples into three groups,
+We also wanted our test cases to represent a range of data analysis tasks, with
+some programs making use of data-parallelism, and some being more sequential in
+nature. We aggregated these examples into three groups,
 matrix examples, a graphics library, and some linked outputs examples.
+
 The matrix examples include the convolution algorithm known from
 computer vision literature and an implementation of the dynamic time warping
 algorithm for the matching of time series data. The example graphics library
