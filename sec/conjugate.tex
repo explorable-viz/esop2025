@@ -82,7 +82,7 @@ For the rest of this section, when we refer to Boolean algebras, we usually mean
 the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
 ordered by set inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is
 the whole set $X$, meet and join are given by intersection ($\cap$) and union ($\cup$)
-respectively, and negation is $\compl{X'}$.
+respectively, and negation is via complementation $\compl{X'}$.
 
 
 \subsection{Dependence Graphs}
@@ -106,9 +106,9 @@ This definition diverges somewhat from traditional approaches to dynamic depende
 graphs since we only consider one type of edge -- a data dependency -- in contrast
 to separately defining data and control-flow edges as in \citet{agrawal90}.
 
-In each graph, we mark out a subset of the nodes, $X \subset V$, which represent
-the inputs to the program, and a subset of nodes $Y \subset V$, which represent
-the outputs. Usually, $X = \sources{G}$, and $Y = \sinks{G}$. Taking the opposite
+In each graph, we mark out a subset of the nodes $X \subset V$ which represent
+program inputs and a subset of nodes $Y \subset V$, which represent
+the outputs. Usually, $X = \sources{G}$ (the sources) and $Y = \sinks{G}$ (the sinks). Taking the opposite
 graph has the effect of swapping the sets of sources and sinks.
 
 In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
