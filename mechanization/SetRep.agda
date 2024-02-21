@@ -7,6 +7,7 @@ open import Data.Sum
 open import Relation.Unary hiding (U)
 open import Relation.Nullary
 open import Level
+open import Data.Nat hiding (suc)
 
 -- # Set construction
 
@@ -56,17 +57,69 @@ emptyInPower X z = ⊥-elim z
 rel : (X : set U) -> (Y : set V) -> (R : set (U × V)) -> Set
 rel X Y R = subset R (X ⊗ Y)
 
-image : {X : set U} {Y : set V} -> (R : set (U × V)) -> (u : U) -> set V
-image {X} {Y} R x y = R (x , y)
+invR : {X : set U} {Y : set V} -> (x : U) -> (y : V) -> (X ⊗ Y) (x , y) -> Y y
+invR {X} {Y} x y (fst , snd) = snd
+
+--image : {X : set U} {Y : set V} -> (R : set (U × V)) -> (u : U) -> set V
+--image {X} {Y} R x y = R (x , y)
 
 ----------
 
-preimage' : {U : Set} {V : Set} {X : set U} {Y : set V}
+image : {U : Set} {V : Set} {X : set U} {Y : set V}
           -> (D : set (U × V))
           -> (X' : set U)
           -> subset X' X
           -> set V
-preimage' {U} {V} {X} {Y} D X' sub y = Σ U (\x -> X' x × D (x , y))
+image {U} {V} {X} {Y} D X' sub y = Σ U (\x -> X' x × D (x , y))
+
+
+image' : {U : Set} {V : Set} {X : set U} {Y : set V}
+          -> (D : set (U × V))
+          -> (rel : rel X Y D)
+          -> (X' : set U)
+          -> power X X'
+          -> Σ (set V) (\Y' -> power Y Y')
+image' {U} {V} {X} {Y} D rel X' p = (\y -> Σ U (\x -> X' x × Y y × D (x , y))) , prf
+  where
+    prf : subset (\y -> Σ U (\x -> X' x × Y y × D (x , y))) Y
+    prf {y} (x , xmem , ymem , drel) = let r = rel drel  in  invR {U} {V} {X} {Y} x y r
+
+postulate
+  emptyImage' : {U V : Set} {X : set U} {Y : set V}
+              -> (D : set (U × V))
+              -> (rel : rel X Y D)
+              -> image' {U} {V} {X} {Y} D rel emptySet (emptyIsInitial X) ≡ (emptySet , emptyInPower Y)
+-- image' D rel emptySet (emptyIsInitial X)
+-- = 
+-- emptyImage {U} {V} {X} {Y} D rel = {!!}
+-- \Sigma U (\x -> emptySet x × D (x, y))
+
+emptyImageIso : {U V : Set} {X : set U} {Y : set V}
+              -> (D : set (U × V))
+              -> (y : V)
+              -> (image {U} {V} {X} {Y} D emptySet (emptyIsInitial X)) y -> emptySet y
+emptyImageIso {U} {V} {X} {Y} D y ()
+
+emptyImageIso' : {U V : Set} {X : set U} {Y : set V}
+              -> (D : set (U × V))
+              -> (y : V)
+              -> emptySet y -> (image {U} {V} {X} {Y} D emptySet (emptyIsInitial X)) y
+emptyImageIso' {U} {V} {X} {Y} D y ()
+
+postulate
+  isoSetIsEq : {U : Set} {X X' : set U}
+             -> ((x : U) -> X x -> X' x)
+             -> ((x : U) -> X' x -> X x)
+             -> X ≡ X'
+
+emptyImage : {U V : Set} {X : set U} {Y : set V}
+              -> (D : set (U × V))
+              -> image {U} {V} {X} {Y} D emptySet (emptyIsInitial X) ≡ emptySet
+emptyImage {U} {V} {X} {Y} D = isoSetIsEq (\y -> emptyImageIso {U} {V} {X} {Y} D y) (\y -> emptyImageIso' {U} {V} {X} {Y} D y)
+
+{-with image {U} {V} {X} {Y} D emptySet (emptyIsInitial X) a | inspect (image {U} {V} {X} {Y} D emptySet (emptyIsInitial X)) a
+... | sub | [ prf ] = {!!}
+-}
 
 {-
 preimage : {U : Set} {V : Set} {X : set U} {Y : set V}
