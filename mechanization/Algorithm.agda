@@ -7,7 +7,8 @@ open import Data.Sum
 open import Data.Product
 open import Relation.Unary hiding (U)
 open import Relation.Nullary
-open import Level
+open import Level hiding (suc)
+open import Data.Nat
 
 open import SetRep
 
@@ -82,19 +83,30 @@ sinkSub V E X sub {a} va = let v = sub {a} va in proj₁ v
 T : Graph -> Vertices
 T (V , E) a = Σ (V a) (\v1 -> ((b : Label) -> (v2 : V b) -> ¬ E (v1 , v2)))
 
+--
+Tempty : T emptyGraph ≡ emptySet
+Tempty = isoSetIsEq TemptyIso TemptyIso'
+  where
+    TemptyIso : (a : Label) -> T emptyGraph a -> emptySet a
+    TemptyIso a ()
+
+    TemptyIso' : (a : Label) -> emptySet a -> T emptyGraph a
+    TemptyIso' a ()
+
+
 -- prop
 homomT : (G G' : Graph) -> subgraph G G' -> subset (T G) (T G')
 homomT G G' = {!!}
-
 
 -- TODO: there may be a better way than this...
 -- can do this by composing the edges relation with itself n times where n is the number
 -- of vertices.
 -- reachability
-{-# TERMINATING #-}
-reachability : (V : Vertices) -> (E : Edges V) -> Edges V
-reachability V E {a'} {b'} (va , vb) =
-  (a' ≡ b') ⊎ (Σ Label (\c -> (vc : V c) -> E (va , vc) × reachability V E (vc , vb)))
+
+reachability : (V : Vertices) -> (E : Edges V) -> ℕ -> Edges V
+reachability V E zero {a'} {b'} (va , vb) = E (va , vb)
+reachability V E (suc n) {a'} {b'} (va , vb) =
+  (a' ≡ b') ⊎ (Σ Label (\c -> (vc : V c) -> E (va , vc) × reachability V E n (vc , vb)))
 
 -- Computation of demands/demanded by
 mutual
@@ -129,19 +141,7 @@ mutual
                      -> ReachesV G0 G (cons a V) G'
 ------
 
-edgesToRelST : (V : Vertices) -> Edges V -> (set (Label × Label))
-edgesToRelST V E (a , b) = Σ ((S (V , E)) a) (\isVa -> Σ ((T (V , E)) b) (\isVb -> E {a} {b} (proj₁ isVa , proj₁ isVb)))
-
-Demands : (V : Vertices) -> (E : Edges V) -> (X : Vertices) -> subset X (S (V , E)) -> set Label
-Demands V E X sub a =
-  let r = reachability V E
-      g' = (V , r)
-  in preimage' {Label} {Label} {V} {V} (edgesToRelST V r) X (sinkSub V E X sub) a
-
--- preimage i.e. Triang_D(X') = {y in Y | exists x in X' (x, y) in D}
-
-----
--- properties
+-- ##  Properties on Reaches
 
 relationship : (G0 : Graph) -> (G : Graph) -> (V : Vertices) -> (G' : Graph)
              -> ReachesV G0 G V G'
@@ -156,6 +156,8 @@ relationship G0 G .(cons a V) G' (reachesV-extend {V = V} {V' = V'} a reach) =
  let (prf1 , prf2) = relationship G0 (graphUnion G (toGraph a V')) (union V' V) G' reach
  in positivity {G} {toGraph a V'} {G'} prf1 , prf2
 
+---
+
 relationshipR : (G0 : Graph) -> (V : Vertices) -> (V' : Vertices)
              -> Reaches G0 V V'
              -> (subset V (S G0) × (subset V' (T G0)))
@@ -163,25 +165,40 @@ relationshipR G0 V V' (reaches {G = G} prf1 reach .V' eq) rewrite eq =
   let (prfa , prfb) = relationship G0 emptyGraph V G reach
   in prf1 , homomT G G0 prfb
 
+-----
+
+edgesToRelST : (V : Vertices) -> Edges V -> (set (Label × Label))
+edgesToRelST V E (a , b) = Σ ((S (V , E)) a) (\isVa -> Σ ((T (V , E)) b) (\isVb -> E {a} {b} (proj₁ isVa , proj₁ isVb)))
+
+Demands : (V : Vertices) -> (E : Edges V) -> (size : ℕ) -> (X' : Vertices) -> subset X' (S (V , E)) -> set Label
+Demands V E n X' sub a =
+  let r = reachability V E n
+  in image {Label} {Label} {V} {V} (edgesToRelST V r) X' (sinkSub V E X' sub) a
+
+emptyDemands : (V : Vertices) -> (E : Edges V) -> (size : ℕ)
+            -> {a : Label} -> Demands V E size emptySet (emptyIsInitial (S (V , E))) a ≡ emptySet a
+emptyDemands V E size = {!!}            
+
 -----------
 -- Reaches computes demanded by
 
-theoremReaachesDemands1 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
+theoremReaachesDemands1i : (V : Vertices) -> (E : Edges V) -> (size : ℕ) -> (X' : Vertices)
+                         -> (prf : subset X' (S (V , E)))
+                         -- -> subset (S (V , E)) V -- need strictness
+                         -> (forall (V' : Vertices)
+                          -> Reaches (V , E) X' V'
+                            -> ({a : Label} -> Demands V E size X' prf a -> V' a))
+theoremReaachesDemands1i V E n .emptySet prf V' (reaches prf1 (reachesV-done prf₁) .V' fprf) {a} ()
+
+theoremReaachesDemands1i V E n .(cons a _) prf V' (reaches  prf1 (reachesV-extend {V = V0} {V' = V1} a x) .V' fprf) {b} demands with demands
+... | y , inj₁ y-is-a , yreach , zreach = {!!}
+... | y , inj₂ yinV0 , fst₂ , snd = {!!}
+
+
+theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (size : ℕ) -> (X' : Vertices)
                          -> (prf : subset X' (S (V , E)))
                          -- -> subset (S (V , E)) V -- need strictness
                          -> (forall (G' : Graph)
-                          -> Reaches (V , E) X' (T G')
-                            -> ({a : Label} -> Demands V E X' prf a ≡ T G' a))
-theoremReaachesDemands1 V E .emptySet prf k (reaches prf1 (reachesV-done prf₁) .(T k) fprf)
-  = {!!}
-theoremReaachesDemands1 V E .(cons a _) prf k (reaches prf1 (reachesV-extend a x) .(T k) fprf)
-  = {!!}
-
-
-theoremReaachesDemands2 : (V : Vertices) -> (E : Edges V) -> (X' : Vertices)
-                         -> (prf : subset X' (S (V , E)))
-                         -- -> subset (S (V , E)) V -- need strictness
-                         -> (forall (G' : Graph)
-                           -> ({a : Label} -> Demands V E X' prf a ≡ T G' a)
+                           -> ({a : Label} -> Demands V E size X' prf a ≡ T G' a)
                           -> Reaches (V , E) X' (T G'))
 theoremReaachesDemands2 = {!!}
