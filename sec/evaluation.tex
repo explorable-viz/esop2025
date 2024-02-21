@@ -13,11 +13,17 @@ A key benefit of our approach is in avoiding the need to define a backwards
 evaluation function. In prior work in this area -- such as \citet{perera22} -- a
 program produced an execution trace. To perform a backwards analysis such as
 $\demandR_D$, the developer was forced to implement a separate backwards evaluation
-semantics using the execution trace until reaching the program inputs. This approach was laborious, and intimately tied the analysis to the language itself. In contrast,
-evaluating a program to a dynamic dependence graph allows us to use a simple procedure to
+semantics using the execution trace until reaching the program inputs. This approach was laborious since
+it can required the forwards and backwards evaluation functions to agree with
+respect to the dependency analysis.
+
+In contrast, by evaluating a program to a dynamic dependence graph
+and deferring the specific dependency queries until the graph has been computed.
+This allows us to use a simple procedure to
 compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
 developer implement the desired dynamic dependence graph once, in the forward
-evaluation function. 
+evaluation function, since the graph itself is what facilitates the two 
+directions of the approach. 
 
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
