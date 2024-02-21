@@ -13,23 +13,31 @@ A key benefit of our approach is in avoiding the need to define a backwards
 evaluation function. In prior work in this area -- such as \citet{perera22} -- a
 program produced an execution trace. To perform a backwards analysis such as
 $\demandR_D$, the developer was forced to implement a separate backwards evaluation
-semantics using the execution trace until reaching the program inputs. This approach was laborious, and intimately tied the analysis to the language itself. In contrast,
-evaluating a program to a dynamic dependence graph allows us to use a simple procedure to
+semantics using the execution trace until reaching the program inputs. This approach was laborious since
+it can required the forwards and backwards evaluation functions to agree with
+respect to the dependency analysis.
+
+In contrast, by evaluating a program to a dynamic dependence graph
+and deferring the specific dependency queries until the graph has been computed.
+This allows us to use a simple procedure to
 compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
 developer implement the desired dynamic dependence graph once, in the forward
-evaluation function. 
+evaluation function, since the graph itself is what facilitates the two 
+directions of the approach. 
 
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
 we were able to give the core technical details of the approach without having to
 mention the details of the language, or the specific choice of dependency relation.
-We contrast this with the previously mentioned point regarding related work,
-implementing the approach for a new language, or replacing the dependency relation
-requires only modifying one part of a language -- its evaluator -- rather than 
-building two functions, and being forced to verify that the forwards and backwards
-evaluation functions agree. Instead, once the developr has confirmed that their
-implementation of the graph algorithms is correct, they can move on.
 
+We contrast this with the fact that alternate approaches do not compute and cache
+the dependency structure -- as we do with the dependence graph -- but instead
+the analyses are computed as part of evaluating a program, or un-evaluating an
+execution trace. Thus, any changes to the dependency relation or to the language
+itself need to be implemented multiple times. In contrast, with our approach
+the developer only needs to implement the analysis once, and any changes to the
+language or dependency relation used only require modification to a single 
+evaluation function.
 \subsection{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
@@ -60,47 +68,73 @@ Still have the general question of how we can motivate the inclusion of suffices
 
 \subsubsection{Choice of Examples}
 
-In order to enable a like-for-like comparison with the state of the art approach,
-we avoided testing the performance of linked input examples, since it was not possible to run them
-using the execution trace approach, instead we can get a good picture of the performance
-by looking at the amount of time that elapses in the various tests of \textit{demands}
-and \textit{demanded by}. We also wanted the examples to cover a range of program
-structures, in order to examine the variation in performance depending
-on the shape or the size of their graphs. \jb{I think this might be fluff.}
+Since we desired a like-for-like comparison with the state of the art approach,
+we were unable to directly test the performance of linked-input examples. Instead
+we directly measured the performance of the main components of the system.
 
-We aggregated our examples into three groups,
+We also wanted our test cases to represent a range of data analysis tasks, with
+some programs making use of data-parallelism, and some being more sequential in
+nature. We aggregated these examples into three groups,
 matrix examples, a graphics library, and some linked outputs examples.
-The matrix examples include the convolution algorithm known from
-computer vision literature and an implementation of the dynamic time warping
-algorithm for the matching of time series data. The example graphics library
-is illustrative of inherently sequential examples. The linked outputs examples.
+
+The matrix examples include several convolution examples, which make use of a
+high degree of parallelism in the data, and an implementation of dynamic time
+warping, which is representative of a more sequential stateful algorithm.
+
+The graphics library is illustrative of the kind of visualization code that we
+expect to benefit from, implementing visual objects like grouped and stacked bar
+charts, line charts and charts for categorical data.
+The linked outputs examples.
 \todo{Need to give an account of the linked output examples}
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
-We first proceed by comparing the time taken to evaluate a program to its execution
-trace with the time taken to evaluate it to its dynamic dependence graph. We
-expect to observe evaluating a program to its dependence graph to be a slower
-process than evaluating to an execution trace, since the graph is a more complex
-data structure. In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
+We first proceed by comparing the time taken to evaluate a program in the
+execution trace approach with the time taken to evaluate a program with with the
+dependence graph approach.
+Since the graph is a more complex data structure to build compared to the trace
+we expect an increased overhead when evaluating a program and building the graph
+compared to evaluating and building the trace.
+
+In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
 the matrix examples, and a factor of 10 for the graphical examples \jb{These
 numbers are subject to change as Roly makes some implementation updates.}
 \todo{Implement linked examples}
 
-In light of the performance of the dependence analyses, we feel that this increase
-in evaluation time over the state of the art approach is a worthy tradeoff.
+We consider the primary focus of the evaluation to be in the types of interactions
+that we can support, rather than the performance of the initial program evaluation.
+We therefore consider the increase in evaluation overhead to be a worthwhile
+tradeoff, when we consider the relative performance of implementing
+\textit{demands} and \textit{demanded by}.
 
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
 We now compare the performance of the twin implementations in terms of computing
 demands. We observe a significant increase in the performance of demands using
-the graphical approach, shown in \tableref{demands-speedups}. In our matrix examples, we observe an average increase
+the graphical approach, shown in \tableref{demands-speedups}. 
+In our matrix examples, we observe an average increase
 of approximately 40 times, whereas in the graphical examples, the speedup
-is approximately 32 times. We note that the inherently sequential algorithm,
-\textit{slicing/dtw/compute-dtw} exhibits a significantly reduced speedup when
-compared to the rest of the examples.
+is approximately 32 times faster. 
+
+We attribute this performance improvement due to the fact that the execution
+trace approach requires the system to completely rewind the execution of the
+original program, in effect evaluating it in reverse. We contrast this with the
+graphical approach, which only needs to traverse the relevant part of the graph.
+Thus in highly data-parallel examples -- like convolution -- we expect and indeed
+observe a greater increase in performance. In contrast the graphics library code
+and the dynamic time warp implementation do not exhibit quite the same level
+of speedup, since they rely on a more sequential flow of data through the program,
+in effect, $\demandR{}$ has to traverse a greater portion of the graph.
+
 
 {\tiny\input{fig/performance/demands-speedup.tex}}
 
 \subsubsection{RQ3: Comparison of Equivalent Impls}
+\jb{Notes on this part: We have 3 equivalent implementations to test, the trace
+based demanded by approach, and the 2 graphical approaches -- directly applying
+reaches on the opposite graph, and composing suffices with its complements -- at
+the moment, compute-dtw seems to be very inefficient, but it also seems to be our
+best example that the dual of suffices might actually be more efficient in some
+cases. This is really the one question we have here, and we need to investigate
+why this example performs so badly}
 {\tiny\input{fig/performance/equivalent-impls.tex}}
