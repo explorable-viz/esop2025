@@ -23,13 +23,15 @@ evaluation function.
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
 we were able to give the core technical details of the approach without having to
 mention the details of the language, or the specific choice of dependency relation.
-We contrast this with the previously mentioned point regarding related work,
-implementing the approach for a new language, or replacing the dependency relation
-requires only modifying one part of a language -- its evaluator -- rather than 
-building two functions, and being forced to verify that the forwards and backwards
-evaluation functions agree. Instead, once the developr has confirmed that their
-implementation of the graph algorithms is correct, they can move on.
 
+We contrast this with the fact that alternate approaches do not compute and cache
+the dependency structure -- as we do with the dependence graph -- but instead
+the analyses are computed as part of evaluating a program, or un-evaluating an
+execution trace. Thus, any changes to the dependency relation or to the language
+itself need to be implemented multiple times. In contrast, with our approach
+the developer only needs to implement the analysis once, and any changes to the
+language or dependency relation used only require modification to a single 
+evaluation function.
 \subsection{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
