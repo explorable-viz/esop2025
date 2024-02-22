@@ -51,20 +51,11 @@ relative complement, so that $\neg X' = X \setminus X'$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-As mentioned earlier in the paper, we make use of dynamic dependence graphs.
-%We shall give an account of how we can compute related input and output queries
-%efficiently, using dynamic dependence graphs.
-Whilst we defer the details of how we arrive at a specific dependence graph
-until \secref{core}, we shall introduce the intuition behind them here.
-
-
-\begin{definition}[Dynamic Dependence Graph]
-   A dynamic dependence graph $G = (V,E)$ is a graph where a node $\alpha \in V$
-   represents an input to the original program or a value produced during execution,
-   and an edge $(\alpha, \alpha') \in E$ exists if, in the evaluation of the program,
-   the value associated to $\alpha'$
-   \textit{depends} on the value associated to $\alpha$.
-\end{definition}
+We defer the details of how we arrive at a specific dependence graph until \secref{core}, and here just
+introduce the basic notion. A \emph{dynamic dependence graph} is a graph $G = (V,E)$ where nodes $\alpha \in
+V$ represents parts of values, either values supplied to a program as inputs, or produced during execution,
+and edge $(\alpha, \beta) \in E$ exists if, in the evaluation of the program, the partial value associated to
+$\beta$ \textit{depends on} on the partial value associated to $\alpha$.
 
 This definition diverges somewhat from traditional approaches to dynamic dependence
 graphs since we only consider one type of edge -- a data dependency -- in contrast
@@ -383,7 +374,7 @@ proceeds in a manner which allows it to only traverse each edge in the graph onc
 When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
 adding it to $H$.
 If doing so causes the neighbours of $\alpha$ in $H$ to be equal
-to its neighbours in $G_0$ (the base dependency graph), then we can remove $\alpha$ from $H$, and add it
+to its neighbours in $G_0$ (the base dependence graph), then we can remove $\alpha$ from $H$, and add it
 to $G$ (\ruleName{$\fwdEdges{}$-extend}), before adding its outgoing edges to $E$.
 
 Because the edges in the parent graph $G$ all point in the direction of inputs to
