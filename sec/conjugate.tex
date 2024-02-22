@@ -67,6 +67,11 @@ Define $\opGraph{G} \eqdef (V,E^{-1})$ to be the \emph{opposite} graph of $G$, w
 relational converse.
 \end{definition}
 
+\begin{definition}[Reachability relation]
+Define the \emph{reachability relation} $R_G$ for a graph $G=(V,E)$ to be the reflexive transitive closure of
+$E$.
+\end{definition}
+
 \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
 We can think of the reachability relation $R$ between the sources and sinks of $G$ as constituting an ``IO''
@@ -191,11 +196,12 @@ by picking the one that simplifies the formalisation.
 %We will often refer to a graph without explicitly referring to its representation
 %as a map, or a pair of sets.
 
-Once a graph has been constructed, the set of nodes that a value is demanded by
-can be represented by the set of nodes that are reachable by traversing the
-edges of the graph (where we use the standard understanding of the reachability relation $R_G$ for  $G=(V,E)$ as the reflexive transitive
-closure of $E$). Conversely, the set of nodes that a node demands is represented by the nodes reachable from this node when traversing the edges of the graph in the opposite direction, i.e. making use of the preimage of reachability. We use this intuition when defining \textit{demands}
-and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we refer to the dependence $G$:
+Once a graph has been constructed, the set of nodes that a value is demanded by can be represented by the set
+of nodes that are reachable by traversing the edges of the graph. Conversely, the set of nodes that a node
+demands is represented by the nodes reachable from this node when traversing the edges of the graph in the
+opposite direction, i.e. making use of the preimage of reachability. We use this intuition when defining
+\textit{demands} and \textit{demanded by} over the dependence graph $G$:
+%in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
