@@ -62,39 +62,37 @@ For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.
 in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
 \end{definition}
 
-\begin{definition}[Opposite graph]
-Define $\opGraph{G} \eqdef (V,E^{-1})$ to be the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes
-relational converse.
-\end{definition}
-
 \begin{definition}[Reachability relation]
 Define the \emph{reachability relation} $R_G$ for a graph $G=(V,E)$ to be the reflexive transitive closure of
 $E$.
+\end{definition}
+
+\begin{definition}[Opposite graph]
+For a graph $G$ define the \emph{opposite} graph $\opGraph{G} \eqdef (V,E^{-1})$, where $\param^{-1}$ denotes
+relational converse.
 \end{definition}
 
 \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
 We can think of the reachability relation $R$ between the sources and sinks of $G$ as constituting an ``IO''
 dependency relation for $G$, specifying how specific ``inputs'' (sources) are demanded by specific ``output''
-(sinks). (So that $(x, y) \in R$ can be read as ``$x$ is \textit{demanded by} $y$''.) And since we are
-actually interested in the relationship between \emph{input selections} (sets of inputs) and \emph{output
-selections} (sets of outputs), we lift this IO relation to powersets via the \textit{image} and
-\textit{preimage functions} of an arbitrary relation:
+(sinks). (So that $(x, y) \in R$ can be read as ``$x$ is \textit{demanded by} $y$''.) Since we are
+actually interested in the relationship between input and outputs \emph{selections} (i.e.~sets of inputs and
+outputs), we lift this IO relation to sets via the \textit{image} and \textit{preimage functions} of an
+arbitrary relation, which here we denote using $\demandByR$ and $\demandR$:
 \begin{definition}[Image and Preimage of a Relation]
-   For a relation $R \subseteq X \times Y$, define $\demandByR_D: \powerset{X} \to \powerset{Y}$ and
-   $\demandR_D : \powerset{Y} \to \powerset{X}$ as:
+   For a relation $R \subseteq X \times Y$, define $\demandByR_R: \powerset{X} \to \powerset{Y}$ and
+   $\demandR_R : \powerset{Y} \to \powerset{X}$ as:
    \begin{itemize}
-      \item $\demandByR_{D}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
-      \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
+      \item $\demandByR_{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in R}$ \hfill (image)
+      \item $\demandR_{R}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in R}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
 
-\noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandR_{D}(Y')$ as the set of
-inputs demanded by the elements of $Y'$, and the image $\demandByR_{D}(X')$ as the set of outputs that the
-elements of $X'$ are demanded by.
-
-We make use of the fact that the image of $X'$ under a relation is equal to the preimage of $X'$ under
-the converse relation $D^{-1}$, i.e.~$\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
+\noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandR_{R}(Y')$ as the
+set of inputs demanded by the elements of $Y'$, and the image $\demandByR_{R}(X')$ as the set of outputs that
+the elements of $X'$ are demanded by. A trivial but important observation is that the image function for $R$
+is the preimage function for its converse, i.e.~$\demandByR_{R} = \demandR_{R^{-1}}$.
 
 \cd{improve motivation for sufficiency?}
 A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
@@ -126,7 +124,7 @@ We observe that the image and preimage of a relation form  a
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim}
    For a relation $D \subseteq X \times Y$, and subsets $X' \subseteq X, Y' \subseteq Y$,
-   $\demandByR_{D}(\param)$ and $\demandR_{D}(\param)$ are conjugate.
+   $\demandByR_{R}$ and $\demandR_{R}$ are conjugate.
 \end{lemma}
 \begin{proof}
    \todo{Proof can proceed by an argument related to sets}
@@ -140,10 +138,10 @@ of input values that $Y'$ demands to have an empty intersection with $X'$.
 
 We note that these two functions do not always form a Galois connection, since the composition of the two
 functions is not necessarily inflationary, contradicting a basic fact of Galois connections, which we picture
-in \figref{relation-not-galois}. In \figref{relation-not-galois-1}, we apply $\demandByR_D$ to $\set{x_1,
+in \figref{relation-not-galois}. In \figref{relation-not-galois-1}, we apply $\demandByR_R$ to $\set{x_1,
 x_2}$, and find $\set{y_1, y_2}$. We then apply $\demandR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$,
 which is neither a superset, nor a subset of the originally selected set. Since the composite function
-$\demandR_D \after \demandByR_D$ is neither increasing or decreasing, the functions cannot form a Galois
+$\demandR_R \after \demandByR_R$ is neither increasing or decreasing, the functions cannot form a Galois
 connection. We picture the same scenario reversed in \figref{relation-not-galois-2}. We can read the green set
 as unused inputs, or free outputs. The light blue sets are the elements we have "discovered" via applying the
 two functions one after another. We can think of the darker blue sets as the values about which we discover
@@ -156,15 +154,15 @@ no inputs which are unused, then $\demandR$ will preserve $\bot$, i.e.~$\demandR
 This means that applying $\demandByR$ after $\demandR$, we will not lose any of
 the originally selected inputs.
 \begin{lemma}
-   If $\demandByR_D(\emptyset) = \emptyset$, then $\demandR \after \demandByR$ is
-   increasing.
+   If $\demandByR_R(\emptyset) = \emptyset$, then $\demandR_R \after \demandByR_R$ is
+   inflationary.
 \end{lemma}
 Similarly, if we have no outputs which are free, then $\demandByR$ will also
 preserve $\bot$, and composing the functions in the opposite way will also
 be increasing.
 \begin{lemma}
-   If $\demandR_D(\emptyset) = \emptyset$, then $\demandByR \after \demandR$ is
-   increasing.
+   If $\demandR_R(\emptyset) = \emptyset$, then $\demandByR_R \after \demandR_R$ is
+   inflationary.
 \end{lemma}
 As a corollary, if both of the above lemmas are true, then $\demandR$ and $\demandByR$ actually
 do form a(n antitone) Galois connection. This is useful to know, since we may be
@@ -305,8 +303,8 @@ When trying to compute related outputs, we perform effectively the same process,
 the set of outputs we're interested in, $Y'$, and run $\demandsAlg{}$ on the opposite graph $\opGraph{G}$.
 
 \subsection{Relationship to Galois Slicing}
-\todo{This is conceptually I think correct, but needs work in the wording}
-We mentioned earlier that $\demandByR_D(X')$ can be read as asking "What is $X'$
+
+We mentioned earlier that $\demandByR_R(X')$ can be read as asking "What is $X'$
 necessary for?" Asking this question naturally leads us to ask how we can
 adapt this analyis to answer the question "what is $X'$ \textit{sufficient} for?"
 In fact, we can use the notion of sufficiency as a test of correctness. If we
@@ -321,10 +319,11 @@ to define the following \textit{sufficiency} analysis.
       \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandR_G (y) \subseteq X' }$ \hfill (sufficiency)
    \end{itemize}
 \end{definition}
-This definition looks remarkably similar to $\demandByR_D$, albeit the
-definition of $\sufficientR_D$ needs every ancestor to be in the input set,
-rather than any ancestor to be in the input set. We can, in fact, turn this query on
-sufficiency into $\demandByR_D$, using the De Morgan Dual.
+
+This definition looks remarkably similar to $\demandByR_R$, albeit the definition of $\sufficientR_R$ needs
+every ancestor to be in the input set, rather than any ancestor to be in the input set. We can, in fact, turn
+this query on sufficiency into $\demandByR_R$, using the De Morgan Dual.
+
 \begin{definition}[De Morgan Dual]
    For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
    \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
