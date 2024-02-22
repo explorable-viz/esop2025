@@ -243,14 +243,7 @@ considering the graph's set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
    \[X \demandsAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{lemma}
 
-Now we have $\demandedByR(X) \subseteq \sinks{G}$. The next step is to take this
-set and apply $\demandsR(\param)$. We can compute this be reusing $\demandsAlg{}$
-on the opposite graph, since $\demandsR_G$ = $\demandedByR_{\opGraph{G}}$.
-
 \input{fig/conjugate/algorithms}
-
-When trying to compute related outputs, we perform effectively the same process, but we begin by considering
-the set of outputs we're interested in, $Y'$, and run $\demandsAlg{}$ on the opposite graph $\opGraph{G}$.
 
 \subsection{Relationship to Galois Slicing}
 
