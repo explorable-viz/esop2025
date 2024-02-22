@@ -112,8 +112,7 @@ We observe that the image and preimage of a relation form  a
    $$
 \end{definition}
 
-\noindent (\citeauthor{jonsson51} prefer a contrapositive formulation of the above, but we find this
-definition to be more intuitive.)
+\noindent (\citeauthor{jonsson51} prefer a contrapositive formulation but we find this to be more intuitive.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim} For a relation $D \subseteq
    X \times Y$, $\demandByR_{R}$ and $\demandR_{R}$ are conjugate.
@@ -143,20 +142,17 @@ no inputs which are unused, then $\demandR$ will preserve $\bot$, i.e.~$\demandR
 This means that applying $\demandByR$ after $\demandR$, we will not lose any of
 the originally selected inputs.
 \begin{lemma}
-   If $\demandByR_R(\emptyset) = \emptyset$, then $\demandR_R \after \demandByR_R$ is
-   inflationary.
+   \item If $\demandByR_R(\emptyset) = \emptyset$, then $\demandR_R \after \demandByR_R$ is inflationary.
+   \item If $\demandR_R(\emptyset) = \emptyset$, then $\demandByR_R \after \demandR_R$ is inflationary.
 \end{lemma}
 Similarly, if we have no outputs which are free, then $\demandByR$ will also
 preserve $\bot$, and composing the functions in the opposite way will also
 be increasing.
-\begin{lemma}
-   If $\demandR_R(\emptyset) = \emptyset$, then $\demandByR_R \after \demandR_R$ is
-   inflationary.
-\end{lemma}
-As a corollary, if both of the above lemmas are true, then $\demandR$ and $\demandByR$ actually
-do form a(n antitone) Galois connection. This is useful to know, since we may be
-working in a context where we wish to consider a filtered view of the data, where
-the user is shown only the data used by the original program. \cd{does this become relevant in any of the benchmarks?}
+
+As an easy corollary, if $\demandR$ and $\demandByR$ preserve $\emptyset$, then they actually do form a Galois
+connection, albeit an antitone one. This is useful to know, since we may be working in a context where we wish
+to consider a filtered view of the data, where the user is shown only the data used by the original program.
+\cd{does this become relevant in any of the benchmarks?}
 
 %% As an aside, in the case when $D$ is itself a function, then all of inputs need
 %% to be used, and each input can only be used once. If that
@@ -166,12 +162,11 @@ the user is shown only the data used by the original program. \cd{does this beco
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
-We now provide some detail on the computation of
-\textit{demands} and \textit{demanded by} on a concrete dependence graph.
-Whilst one can view a graph as a collection of vertices and edges, we give an alternative definition
-as a finite map $\set{\seq{\bind{v}{U}}}$, where $\bind{v}{U}$ denotes that a vertex $v$ has
-outgoing edges to all vertices in $U \subseteq V$. In the rest of the paper, we use the two graph definitions interchangeably,
-by picking the one that simplifies the formalisation.
+We now show how to compute $\demandByR_{R_G}$ and $\demandR_{R_G}$ for the reachability relation $R_G$ of a
+dependence graph $G$. Whilst one can view a graph as a collection of vertices and edges, we give an
+alternative definition as a finite map $\set{\seq{\bind{v}{U}}}$, where $\bind{v}{U}$ denotes that a vertex
+$v$ has outgoing edges to all vertices in $U \subseteq V$. In the rest of the paper, we use the two graph
+definitions interchangeably, by picking the one that simplifies the formalisation.
 
 \begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{U}}}$,
