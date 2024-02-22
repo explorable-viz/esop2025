@@ -46,9 +46,9 @@ def eval_speedup(df):
     return out
 
 def equiv_implementations(df):
-    df['DemBy-Speedup'] = df['T-DemandedBy'] / df['G-DemandedBy-Dir']
-    df['DemandedBy-Suff-Speedup'] = df['T-DemandedBy'] / df['G-DemandedBy-Suff']
-    out = df[['G-DemandedBy-Dir', 'G-DemandedBy-Suff','T-DemandedBy', 'DemBy-Speedup', 'DemandedBy-Suff-Speedup']]
+    df['DemBy-Dir-Speedup'] = df['T-DemBy'] / df['G-DemBy-Dir']
+    df['DemBy-Suff-Speedup'] = df['T-DemBy'] / df['G-DemBy-Suff']
+    out = df[['T-DemBy','G-DemBy-Dir', 'DemBy-Dir-Speedup', 'G-DemBy-Suff', 'DemBy-Suff-Speedup']]
 
     tex_file = open('fig/performance/equivalent-impls.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption = "Equivalent implementations of Demanded By", label='table:equivalent-impls', longtable=True))
