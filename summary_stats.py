@@ -6,11 +6,12 @@ matrix_cases = [
     "slicing/dtw/compute-dtw",
     "slicing/convolution/edgeDetect",
     "slicing/convolution/emboss",
-    "slicing/convolution/gaussian"
+    "slicing/convolution/gaussian",
+    "slicing/linked-outputs/bar-chart-line-chart",
+    "slicing/linked-outputs/stacked-bar-chart-scatter-plot"
 ]
 
 graphics_cases = [
-    "graphics/background",
     "graphics/grouped-bar-chart",
     "graphics/line-chart",
     "graphics/stacked-bar-chart"
@@ -19,14 +20,17 @@ graphics_cases = [
 def decompose_benchmarks():
     benchmarks = pd.read_csv('../fluid/Benchmarks/benchmarks.csv', skipinitialspace=True, delimiter=',', index_col='Test-Name')
     matrices = benchmarks.loc[matrix_cases]
-    matrix_means = matrices.mean().to_frame().T
-    matrix_means.index = ['Matrix-Avg']
-    matrices = pd.concat([matrices, matrix_means])
+    # matrix_means = matrices.mean().to_frame().T
+    # matrix_means.index = ['Matrix-Avg']
+    # matrices = pd.concat([matrices, matrix_means])
     graphics = benchmarks.loc[graphics_cases]
-    graphics_means = graphics.mean().to_frame().T
-    graphics_means.index = ['Graphics-Avg']
-    graphics = pd.concat([graphics, graphics_means])
+    # graphics_means = graphics.mean().to_frame().T
+    # graphics_means.index = ['Graphics-Avg']
+    # graphics = pd.concat([graphics, graphics_means])
     all_summaries = pd.concat([matrices, graphics])
+    means = all_summaries.mean().to_frame().T
+    means.index = ['Average']
+    all_summaries = pd.concat([all_summaries, means])
     evals = eval_speedup(all_summaries)
     demands = demands_speedup(all_summaries)
     equivs = equiv_implementations(all_summaries)
@@ -42,9 +46,9 @@ def eval_speedup(df):
     return out
 
 def equiv_implementations(df):
-    df['DemBy-Speedup'] = df['T-DemandedBy'] / df['G-DemandedBy']
-    df['Suff-Dual-Speedup'] = df['T-DemandedBy'] / df['G-Suff-Dual']
-    out = df[['G-DemandedBy', 'G-Suff-Dual','T-DemandedBy', 'DemBy-Speedup', 'Suff-Dual-Speedup']]
+    df['DemBy-Dir-Speedup'] = df['T-DemBy'] / df['G-DemBy-Dir']
+    df['DemBy-Suff-Speedup'] = df['T-DemBy'] / df['G-DemBy-Suff']
+    out = df[['T-DemBy','G-DemBy-Dir', 'DemBy-Dir-Speedup', 'G-DemBy-Suff', 'DemBy-Suff-Speedup']]
 
     tex_file = open('fig/performance/equivalent-impls.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption = "Equivalent implementations of Demanded By", label='table:equivalent-impls', longtable=True))
