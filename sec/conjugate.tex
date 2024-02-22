@@ -40,9 +40,9 @@ whose carrier is the set of subsets $X' \subseteq X$ ordered by set inclusion $\
 set $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by
 relative complement, so that $\neg X' = X \setminus X'$.
 
-\subsection{Dependence Graphs}
+\subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-We explain how we arrive at a specific dependence graph until \secref{core}; here we just introduce the basic
+We explain how we arrive at specific dependence graphs until \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed graph $G = (V,E)$ with a set $V$ of
 \emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph for a
 particular program, nodes $\alpha \in V$ represents parts of values (either supplied to a program as inputs or
@@ -53,8 +53,8 @@ edge (data dependency) rather than separate data and control dependencies; moreo
 direction of dependent nodes. (In the literature the other direction is somewhat more common.)
 
 \begin{definition}[In-edges and out-edges]
-For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges and out-edges of
-$\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges.
+For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
+and $\outE{G}(\alpha)$ for its out-edges.
 \end{definition}
 
 \begin{definition}[Sources and sinks]
@@ -83,12 +83,12 @@ selections} (sets of outputs), we lift this IO relation to powersets via the \te
       \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
    \end{itemize}
 \end{definition}
-In our setting, we can view the preimage of a set $Y'$ under the dependency relation, $\demandR_{D}(Y')$, as
-finding the set of inputs which are necessary for the elements of $Y'$.
-Similarly, the image of $X'$ under the dependency relation, $\demandByR_{D}(X')$, can be viewed as the set of outputs that $X'$ is necessary
-for.
-%
-We shall make use of the fact that the image of $X'$ under a relation is equal to the preimage of $X'$ under
+
+\noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandR_{D}(Y')$ as the set of
+inputs demanded by the elements of $Y'$, and the image $\demandByR_{D}(X')$ as the set of outputs that the
+elements of $X'$ are demanded by.
+
+We make use of the fact that the image of $X'$ under a relation is equal to the preimage of $X'$ under
 the converse relation $D^{-1}$, i.e.~$\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
 
 \cd{improve motivation for sufficiency?}
