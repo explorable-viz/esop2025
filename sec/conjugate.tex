@@ -162,11 +162,11 @@ to consider a filtered view of the data, where the user is shown only the data u
 
 \subsection{Computing Demands and Demanded By over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
-We now show how to compute $\demandByR_{R_G}$ and $\demandR_{R_G}$ for the reachability relation $R_G$ of a
-dependence graph $G$. Whilst one can view a graph as a collection of vertices and edges, we give an
-alternative definition as a finite map $\set{\seq{\bind{v}{U}}}$, where $\bind{v}{U}$ denotes that a vertex
-$v$ has outgoing edges to all vertices in $U \subseteq V$. In the rest of the paper, we use the two graph
-definitions interchangeably, by picking the one that simplifies the formalisation.
+We now show how to compute $\demandByR_{R}$ and $\demandR_{R}$ for the reachability relation $R$ of a
+dependence graph. Whilst one can view a graph as a collection of vertices and edges, we give an alternative
+definition as a finite map $\set{\seq{\bind{v}{U}}}$, where $\bind{v}{U}$ denotes that a vertex $v$ has
+outgoing edges to all vertices in $U \subseteq V$. In the rest of the paper, we use the two graph definitions
+interchangeably, by picking the one that simplifies the formalisation.
 
 \begin{definition}[Graphs as finite maps]
    A graph $G =(V,E)$ is a finite map $G_M \eqdef \set{\seq{\bind{v}{U}}}$,
@@ -178,11 +178,11 @@ definitions interchangeably, by picking the one that simplifies the formalisatio
 %We will often refer to a graph without explicitly referring to its representation
 %as a map, or a pair of sets.
 
-Once a graph has been constructed, the set of nodes that a value is demanded by can be represented by the set
-of nodes that are reachable by traversing the edges of the graph. Conversely, the set of nodes that a node
-demands is represented by the nodes reachable from this node when traversing the edges of the graph in the
-opposite direction, i.e. making use of the preimage of reachability. We use this intuition when defining
-\textit{demands} and \textit{demanded by} over the dependence graph $G$:
+The set of nodes that a value is demanded by can be represented by the set of nodes that are reachable by
+traversing the edges of the graph. Conversely, the set of nodes that a node demands is represented by the
+nodes reachable from this node when traversing the edges of the graph in the opposite direction, i.e. making
+use of the preimage of reachability. We use this intuition when defining \textit{demands} and \textit{demanded
+by} over the dependence graph $G$:
 %in terms of $R_G$, we refer to the dependence $G$:
 
 \begin{definition}[Demands and Demanded By on a graph]
