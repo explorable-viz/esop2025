@@ -95,39 +95,29 @@ the elements of $X'$ are demanded by. A trivial but important observation is tha
 is the preimage function for its converse, i.e.~$\demandByR_{R} = \demandR_{R^{-1}}$.
 
 \cd{improve motivation for sufficiency?}
-A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
-$x_i \in X'$ for every $(x_i, y) \in D$.
-As a simple example, consider the expression $3 + 4$, neither
-of the subexpressions $3$ or $4$ are sufficient to produce the result of
-evaluating the expression on their own. Notably, the set of outputs that a set of inputs is necessary for is a superset of the
-outputs it is sufficient for.
-
+A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values
+in $X'$ to be sufficient for some output, $y \in Y$, we need $x_i \in X'$ for every $(x_i, y) \in D$. As a
+simple example, consider the expression $3 + 4$, neither of the subexpressions $3$ or $4$ are sufficient to
+produce the result of evaluating the expression on their own. Notably, the set of outputs that a set of inputs
+is necessary for is a superset of the outputs it is sufficient for.
 
 We observe that the image and preimage of a relation form  a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
-
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras, $\powerset{X}$, and $\powerset{Y}$, functions $f: \powerset{X} \to \powerset{Y}$
-   and $g: \powerset{Y} \to \powerset{X}$, and subsets $X' \subseteq X$ and $Y' \subseteq Y$,
-   we say that $f, g$ form a \textit{conjugate pair}
-   if the following holds:
+   For Boolean algebras $\mathcal{X}$, $\mathcal{Y}$ and functions $f: \mathcal{X} \to \mathcal{Y}$
+   and $g: \mathcal{Y} \to \mathcal{X}$, we say that $f, g$ form a \textit{conjugate pair}
+   iff:
    $$
-   f(X') \cap Y' = \emptyset \iff X' \cap g(Y') = \emptyset
-   $$
-   Or equivalently:
-   $$
-   f(X') \cap Y' \neq \emptyset \iff X' \cap g(Y') \neq \emptyset
+   f(x) \meet y \neq \bot \iff x \meet g(y) \neq \bot
    $$
 \end{definition}
 
+(\noident \citeauthor{jonsson51} use the contrapositive version of the above, but we find this definition to be more intuitive.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim} For a relation $D \subseteq
    X \times Y$, $\demandByR_{R}$ and $\demandR_{R}$ are conjugate.
 \end{lemma}
-\begin{proof}
-   \todo{Proof can proceed by an argument related to sets}
-\end{proof}
 
 This makes sense as a condition for  \textit{demands} and
 \textit{demanded by}: for some subsets $X',Y'$, if the output values
