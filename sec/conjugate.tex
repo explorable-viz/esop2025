@@ -238,12 +238,9 @@ considering the graph's set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
     \end{align*}
 \end{proposition}
 
-\begin{lemma}[Reaches Computes Demanded By]
-   For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G}$
-   the following holds:
-   $$
-    \forall V' .\  X' \demandsAlg{G} V' \iff \demandedByR_G(X') = V'
-    $$
+\begin{lemma}[Algorithm $\demandsAlg{}$ Computes $\demandedByR$]
+   For any dependence graph $G = (V,E)$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
+   \[X \demandsAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{lemma}
 
 Now we have $\demandedByR(X) \subseteq \sinks{G}$. The next step is to take this
@@ -353,7 +350,7 @@ have no new edges to consider, and so halt in the state pictured in step eight.
 
 \begin{proposition}[Algorithm $\sufficesAlg{}$ Computes $\sufficesR$]
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
-   \[X \sufficesAlg{G} Y \iff \sufficesR(X) = V\]
+   \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
 \end{proposition}
 \begin{proof}
    \todo{Also unsure if we put this here or in an appendix}
