@@ -246,17 +246,8 @@ considering the graph's set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 Now we have $\demandedByR(X) \subseteq \sinks{G}$. The next step is to take this
 set and apply $\demandsR(\param)$. We can compute this be reusing $\demandsAlg{}$
 on the opposite graph, since $\demandsR_G$ = $\demandedByR_{\opGraph{G}}$.
+
 \input{fig/conjugate/algorithms}
-\begin{lemma}[Reaches Computes Demands]
-   For a graph $G = (V,E)$ and a subset of the outputs $Y' \subseteq \sinks{G}$
-   The following holds:
-   $$
-     \forall V' .\ Y' \demandsAlg{G} V' \iff \demandsR_G(Y') = V'
-   $$
-\end{lemma}
-\begin{proof}
-   \todo{Not sure if we include this here or in an appendix}
-\end{proof}
 
 When trying to compute related outputs, we perform effectively the same process, but we begin by considering
 the set of outputs we're interested in, $Y'$, and run $\demandsAlg{}$ on the opposite graph $\opGraph{G}$.
