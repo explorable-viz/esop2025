@@ -269,7 +269,7 @@ Every time a new node is reached by traversing an edge, we enqueue its own
 neighbours, and add it to the graph we are constructing (\ruleName{$\demandsVert{}$-extend}).
 If we traverse an edge and reach a node we've already met, we simply skip it
 (\ruleName{$\demandsVert{}$-skip})
-At the algorithms termination (\ruleName{$\demandsVert{}$-done}), we have traversed every
+At the algorithm's termination (\ruleName{$\demandsVert{}$-done}), we have traversed every
 edge and node reachable from the input set.
 Once it has terminated, and we have constructed the subgraph of demanded nodes,
 we filter out any nodes which do not appear as outputs by only considering the
@@ -394,7 +394,7 @@ opposite adjacency map.
 Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\fwdEdges{}$-pending}).
 The algorithm terminates when there are no more edges to be considered (\ruleName{$\fwdEdges{}$-pending}).
 When this happens, it is possible that $H$ is non-empty. This implies that during
-the algorithms execution, we have traversed at least one node without traversing
+the algorithm's execution, we have traversed at least one node without traversing
 all of its in-edges. Thus, $H$ forms a sort of front of nodes for which the
 input nodes only provide partial information.
 
