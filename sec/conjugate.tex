@@ -27,24 +27,14 @@ $X$ that are not in $Y$.
 For a relation $R \subseteq X \times Y$, write $R^{-1} \subseteq Y \times X$ to denote the \emph{converse}
 relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
-\begin{notation*}[Graph, opposite graph]\label{def:opposite-graph}
-For a graph $G = (V,E)$, we write $\sources{G}$ for
-the source vertices in $G$ (i.e., those which have only out edges)
-and $\sinks{G}$ for the sinks (i.e., those which have only in edges).
-We also write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
-where $\param^{-1}$ denotes the inverse of an edge.
-We sometimes refer to vertices as nodes.
-\end{notation*}
+\paragraph{In- and out-edges}
+For a graph $G=(V,E)$ and node $\alpha \in V$, write $\inE{G}(\alpha)$ and $\outE{G}(\alpha)$ for the in-edges and out-edges of $\alpha$ in $G$.
 
-\begin{notation*}[In and out edges]
-  For a graph $G=(V,E)$, and a node $\alpha \in V$, we write $\inE{G}(\alpha)$ for the in edges of node $\alpha$ in graph $G$. Correspondingly, we write
-  $\outE{G}(\alpha)$ for the out edges of node $\alpha$ in graph $G$.
-  % \begin{itemize}
-   %   \item $\inE{G}(\alpha) \eqdef \set{(\beta, \alpha) \mid (\beta, \alpha) \in E}$\hfill (in edges)
-    %  \item $\outE{G}(\alpha) \eqdef \set{(\alpha, \beta) \mid (\alpha, \beta) \in E}$\hfill (out edges)
-  % \end{itemize}
-\end{notation*}
-
+\paragraph[Sources, sinks, opposite graph]
+For a graph $G = (V,E)$, we write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices which have
+no in edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those which have no out edges edges). Write $G^{-1}
+\eqdef (V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse. We
+sometimes refer to vertices as nodes.
 
 We use the standard notion of Boolean algebra as a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$
 with distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$)
