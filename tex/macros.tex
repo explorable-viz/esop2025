@@ -25,11 +25,6 @@
 \newcommand*{\fatsearrow}{\rotatebox[origin=c]{-45}{$\Rightarrow$}}
 
 % These need to be reorganized
-\newcommand*{\demands}[1]{demands(#1)}
-\newcommand*{\demandsR}{\triangledown}
-\newcommand*{\demandedBy}[1]{demandedBy(#1)}
-\newcommand*{\demandedByR}{\triangle}
-\newcommand*{\sufficientR}{\blacktriangle}
 \newcommand*{\restrict}[2]{#1\hspace{-0.3em}\mid_{#2}}
 \newcommand*{\funProd}[2]{\langle#1,#2\rangle}
 \newcommand*{\padArg}[2]{\hspace{-#2}#1\hspace{#2}}
@@ -389,14 +384,17 @@
 \newcommand*{\orElse}{\rightharpoonup}
 
 % slicing
+\newcommand*{\demandsR}{\triangledown}
+\newcommand*{\demandedByR}{\triangle}
+\newcommand*{\sufficientR}{\blacktriangle}
 \newcommand*{\bwdS}{\scalebox{0.8}{$\vartriangleleft$}}
 \newcommand*{\bwdDualS}{\scalebox{0.8}{$\blacktriangleleft$}}
 \newcommand*{\fwdS}{\scalebox{0.8}{$\vartriangleright$}}
 \newcommand*{\fwdDualS}{\scalebox{0.8}{$\blacktriangleright$}}
-\newcommand*{\demandsVert}[1]{\mathrel{\opName{reachesV}_{#1}}}
-\newcommand*{\demandsAlg}[1]{\mathrel{\opName{reaches}_{#1}}}
-\newcommand*{\fwdEdges}[1]{\mathrel{\opName{suffEdges}_{#1}}}
-\newcommand*{\fwdAlg}[1]{\mathrel{\opName{suffices}_{#1}}}
+\newcommand*{\demandsV}[1]{\mathrel{\opName{demandsV}_{#1}}}
+\newcommand*{\demandsAlg}[1]{\mathrel{\opName{demands}_{#1}}}
+\newcommand*{\sufficesE}[1]{\mathrel{\opName{sufficesE}_{#1}}}
+\newcommand*{\sufficesAlg}[1]{\mathrel{\opName{suffices}_{#1}}}
 \newcommand*{\relatedOutputsF}[1]{{\bwdS}{\fwdDualS}_{#1}}
 \newcommand*{\relatedInputsF}[1]{{\fwdDualS}{\bwdS}_{#1}}
 
