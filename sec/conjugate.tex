@@ -212,8 +212,7 @@ and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we r
 \cd{Explain the purpose of the rechability restriction, $R'_G$.}
 
 In \secref{overview}, we introduced the notions of related inputs and related outputs.
-Now, we can provide a formal account for them. %Defining these two functions on the reachability relation now lets us give
-%a formal account of related inputs and related outputs queries.
+Now, we can provide a formal account for them.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
@@ -221,20 +220,20 @@ Now, we can provide a formal account for them. %Defining these two functions on 
       \item $\relOutput_{G} \eqdef \demandByR_{G} \after \demandR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
-A related input query can now be phrased as "what else can reach the nodes I can
-reach in the graph?", and a related output query can be phrased as "what else can
+A related inputs query can now be phrased as "what else can reach the nodes I can
+reach in the graph?", and a related outputs query can be phrased as "what else can
 be reached by the things that reach me?".
-To calculate a related input query, the first step is to select
+To calculate a related inputs query, the first step is to select
 the input of interest, $X' \subseteq \sources{G}$. We proceed by finding all nodes
 in the output that our selected input nodes are demanded by, $\demandByR_{G}(X')$.
 Then, we compute all the input nodes that the output nodes demand, i.e. $\demandR_{G}(\demandByR_{G}(X'))$.
-Conversely, we calculate a related output query by first selecting
+Conversely, we calculate a related outputs query by first selecting
 the output of interest, $Y' \subseteq \sinks{G}$. Then, we compute all nodes
 in the input that our selected output nodes demand, $\demandR_{G}(Y')$, and, lastly,
 all the output nodes that the input nodes $\demandR_{G}(Y')$ demand, $\demandByR_{G}(\demandR_{G}(Y'))$.
 
 
-Intuitively, we can think of related inputs and related output as similar
+Intuitively, we can think of related inputs and related outputs as similar
 to the notion of "cognacy" in natural languages: for related outputs we are finding nodes with
 common ancestors, and for related inputs we are finding nodes with common descendants.
 
