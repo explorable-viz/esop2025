@@ -10,7 +10,6 @@ matrix_cases = [
 ]
 
 graphics_cases = [
-    "graphics/background",
     "graphics/grouped-bar-chart",
     "graphics/line-chart",
     "graphics/stacked-bar-chart"
@@ -19,14 +18,17 @@ graphics_cases = [
 def decompose_benchmarks():
     benchmarks = pd.read_csv('../fluid/Benchmarks/benchmarks.csv', skipinitialspace=True, delimiter=',', index_col='Test-Name')
     matrices = benchmarks.loc[matrix_cases]
-    matrix_means = matrices.mean().to_frame().T
-    matrix_means.index = ['Matrix-Avg']
-    matrices = pd.concat([matrices, matrix_means])
+    # matrix_means = matrices.mean().to_frame().T
+    # matrix_means.index = ['Matrix-Avg']
+    # matrices = pd.concat([matrices, matrix_means])
     graphics = benchmarks.loc[graphics_cases]
-    graphics_means = graphics.mean().to_frame().T
-    graphics_means.index = ['Graphics-Avg']
-    graphics = pd.concat([graphics, graphics_means])
+    # graphics_means = graphics.mean().to_frame().T
+    # graphics_means.index = ['Graphics-Avg']
+    # graphics = pd.concat([graphics, graphics_means])
     all_summaries = pd.concat([matrices, graphics])
+    means = all_summaries.mean().to_frame().T
+    means.index = ['Average']
+    all_summaries = pd.concat([all_summaries, means])
     evals = eval_speedup(all_summaries)
     demands = demands_speedup(all_summaries)
     equivs = equiv_implementations(all_summaries)
