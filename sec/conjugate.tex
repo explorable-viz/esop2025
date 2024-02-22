@@ -4,7 +4,7 @@ We introduce some preliminary notation (\secref{conjugate:notation}), before bui
 to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read
 the algorithms that compute them (\secref{conjugate:dependence-graph-algos}).
 
-\subsection{Background notions and notation}
+\subsection{Preliminaries}
 \label{sec:conjugate:notation}
 We give some notation used in the rest of the paper. $X, Y$ range over finite sets.
 
@@ -29,16 +29,16 @@ relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
 \subsubsection{Boolean algebras}
 
-A \emph{Boolean algebra} (or Boolean lattice) is a 6-tuple $(X, \meet, \join, \bot, \top, \neg)$ with carrier
-$X$, distinguished elements bottom ($\bot$) and top ($\top$), commutative operations meet ($\meet$) and join
-($\join$) with $\top$ and $\bot$ as their respective units, and a unary operation negate ($\neg$) satisfying
-$x \join \neg x = \top$ and $x \meet \neg x = \bot$. The operations $\meet$ and $\join$ distribute over each
-other and induce a partial order $\leq$ over $X$.
+A \emph{Boolean algebra} (or Boolean lattice) is a 6-tuple $X = (X, \meet, \join, \bot, \top, \neg)$ with
+carrier $X$, distinguished elements bottom ($\bot$) and top ($\top$), commutative operations meet ($\meet$)
+and join ($\join$) with $\top$ and $\bot$ as their respective units, and a unary operation negate ($\neg$)
+satisfying $x \join \neg x = \top$ and $x \meet \neg x = \bot$. The operations $\meet$ and $\join$ distribute
+over each other and induce a partial order $\leq$ over $X$.
 
-Mostly we will work in the setting of a specific finite Boolean algebra, namely the powerset $\powerset{X}$,
-whose carrier is the set of subsets $X' \subseteq X$ ordered by set inclusion $\subseteq$. Bottom is the empty
-set $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by
-relative complement, so that $\neg X' = X \setminus X'$.
+Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
+carrier is the set of subsets $X' \subseteq X$ ordered by set inclusion $\subseteq$. Bottom is the empty set
+$\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
+complement, so that $\neg X' = X \setminus X'$.
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -105,15 +105,15 @@ We observe that the image and preimage of a relation form  a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras $\mathcal{X}$, $\mathcal{Y}$ and functions $f: \mathcal{X} \to \mathcal{Y}$
-   and $g: \mathcal{Y} \to \mathcal{X}$, we say that $f, g$ form a \textit{conjugate pair}
-   iff:
+   For Boolean algebras $X$, $Y$ and functions $f: X \to Y$ and $g: Y \to X$, we say that $f, g$ form a
+   \textit{conjugate pair} iff:
    $$
    f(x) \meet y \neq \bot \iff x \meet g(y) \neq \bot
    $$
 \end{definition}
 
-(\noident \citeauthor{jonsson51} use the contrapositive version of the above, but we find this definition to be more intuitive.)
+\noindent (\citeauthor{jonsson51} prefer a contrapositive formulation of the above, but we find this
+definition to be more intuitive.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]\label{lem:im-preim} For a relation $D \subseteq
    X \times Y$, $\demandByR_{R}$ and $\demandR_{R}$ are conjugate.
