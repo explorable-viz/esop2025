@@ -27,25 +27,25 @@ $X$ that are not in $Y$.
 For a relation $R \subseteq X \times Y$, write $R^{-1} \subseteq Y \times X$ to denote the \emph{converse}
 relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
-\paragraph{In- and out-edges}
-For a graph $G=(V,E)$ and node $\alpha \in V$, write $\inE{G}(\alpha)$ and $\outE{G}(\alpha)$ for the in-edges and out-edges of $\alpha$ in $G$.
+\paragraph{In-edges and out-edges}
+For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges and out-edges of
+$\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges. We sometimes refer to vertices as nodes.
 
-\paragraph[Sources, sinks, opposite graph]
-For a graph $G = (V,E)$, we write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices which have
-no in edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those which have no out edges edges). Write $G^{-1}
-\eqdef (V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse. We
-sometimes refer to vertices as nodes.
+\paragraph{Sources, sinks, opposite graph}
+For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no in
+edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out edges edges). Write $G^{-1} \eqdef
+(V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
 
-We use the standard notion of Boolean algebra as a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$
-with distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$)
-and join ($\vee$) which distribute over each other, and a unary operation negate ($\neg$).
-%
-For the rest of this section, when we refer to Boolean algebras, we usually mean
-the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
-ordered by set inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is
-the whole set $X$, meet and join are given by intersection ($\cap$) and union ($\cup$)
-respectively, and negation is via complementation $\compl{X'}$.
+\subsubsection{Boolean algebras}
 
+A \emph{Boolean algebra} (or Boolean lattice) is a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$ with
+distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$) and join ($\vee$)
+which distribute over each other, and a unary operation negate ($\neg$).
+
+For the rest of this section, when we refer to Boolean algebras, we usually mean the powerset lattice
+$\powerset{X}$, where the elements are subsets $X' \subseteq X$, ordered by set inclusion $\subseteq$. Bottom
+is the empty set $\emptyset$, top is the whole set $X$, meet and join are given by intersection ($\cap$) and
+union ($\cup$) respectively, and negation is via complementation $\compl{X'}$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -97,9 +97,8 @@ finding the set of inputs which are necessary for the elements of $Y'$.
 Similarly, the image of $X'$ under the dependency relation, $\demandByR_{D}(X')$, can be viewed as the set of outputs that $X'$ is necessary
 for.
 %
-We shall make use of the fact that the image of $X'$ under a relation
-is equal to the preimage of $X'$ under the inverse relation $D^{-1}$,
-ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
+We shall make use of the fact that the image of $X'$ under a relation is equal to the preimage of $X'$ under
+the converse relation $D^{-1}$, ie $\demandByR_{D}(X') = \demandR_{D^{-1}}(X')$.
 
 \cd{improve motivation for sufficiency?}
 A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need
