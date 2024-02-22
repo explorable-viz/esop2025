@@ -27,15 +27,6 @@ $X$ that are not in $Y$.
 For a relation $R \subseteq X \times Y$, write $R^{-1} \subseteq Y \times X$ to denote the \emph{converse}
 relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
-\paragraph{In-edges and out-edges}
-For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges and out-edges of
-$\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges. We sometimes refer to vertices as nodes.
-
-\paragraph{Sources, sinks, opposite graph}
-For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
-in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Write $G^{-1} \eqdef
-(V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
-
 \subsubsection{Boolean algebras}
 
 A \emph{Boolean algebra} (or Boolean lattice) is a 6-tuple $(X, \meet, \join, \bot, \top, \neg)$ with carrier
@@ -51,15 +42,26 @@ relative complement, so that $\neg X' = X \setminus X'$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-We defer the details of how we arrive at a specific dependence graph until \secref{core}, and here just
-introduce the basic notion. A \emph{dynamic dependence graph} is a graph $G = (V,E)$ where nodes $\alpha \in
-V$ represents parts of values, either values supplied to a program as inputs, or produced during execution,
-and edge $(\alpha, \beta) \in E$ exists if, in the evaluation of the program, the partial value associated to
-$\beta$ \textit{depends on} on the partial value associated to $\alpha$.
+We explain how we arrive at a specific dependence graph until \secref{core}; here we just introduce the basic
+notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed graph $G = (V,E)$ with a set $V$ of
+\emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph for a
+particular program, nodes $\alpha \in V$ represents parts of values (either supplied to a program as inputs or
+produced during execution) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the program,
+the partial value associated to $\beta$ \textit{depends on} on the partial value associated to $\alpha$. This
+diverges somewhat from traditional approaches to dynamic dependence graphs in only considering one type of
+edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
+direction of dependent nodes. (In the literature the other direction is somewhat more common.)
 
-This definition diverges somewhat from traditional approaches to dynamic dependence
-graphs since we only consider one type of edge -- a data dependency -- in contrast
-to separately defining data and control-flow edges as in \citet{agrawal90}.
+\begin{definition}[In-edges and out-edges]
+For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges and out-edges of
+$\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges.
+\end{definition}
+
+\begin{definition}[Sources, sinks, opposite graph]
+For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Write $G^{-1} \eqdef
+(V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
+\end{definition}
 
 In each graph, we mark out a subset of the nodes $X \subset V$ which represent
 program inputs and a subset of nodes $Y \subset V$, which represent
