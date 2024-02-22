@@ -62,18 +62,18 @@ relational visualisation language, they describe how to ``backward trace'' from 
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficientR$ (suffices for), linking specific output selections to input selections. The formal guarantee
+$\sufficesR$ (suffices for), linking specific output selections to input selections. The formal guarantee
 that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandsR$ and
-$\sufficientR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
+$\sufficesR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
 mutual reciprocality:
-\[\demandsR(Y) \leq X \iff Y \leq \sufficientR(X)\]
+\[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
 \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if a set of
 outputs $Y$ demands a set of inputs $X$, then $X$ is the smallest set of inputs which suffices for outputs
 which include $Y$; and conversely that if a set of inputs $X$ suffices for $Y$, then $Y$ is the greatest set
 of outputs whose demand lies within $Y$. (A Galois connection in this sense simply relaxes the usual
 isomorphism laws to inequalities.) Galois connections lend themselves well to bidirectional reasoning about
-resource consumption because the $\sufficientR$ direction (sufficiency) can be interpreted in terms of
+resource consumption because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of
 (fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one)
 is in fact sufficient to reproduce a particular feature of a complex output.
 
@@ -103,7 +103,7 @@ table underneath shows the demanded data (computed using our version of the $\de
 also able to automatically select any outputs in the other chart which demand any of the same data using an
 other operator $\demandedByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
 input}, is highlighted in \todo{todo}. Perera et al defined such a $\demandedByR$ operator as the De Morgan dual
-of the ``suffices for'' operator $\sufficientR$; one of our contributions is to show that $\demandedByR$ can be
+of the ``suffices for'' operator $\sufficesR$; one of our contributions is to show that $\demandedByR$ can be
 computed in a more direct fashion using dependence graphs.
 
 \subsection{Contributions}
@@ -114,7 +114,7 @@ in a more language-independent way, using \emph{dynamic dependence graphs}. This
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
 slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
-based on adjoint pairs of operators (such as $\demandsR$ and $\sufficientR$). These approaches
+based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These approaches
 (e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
 in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
 a backwards execution. This method is quite inefficient and non-trivial to prove correct; a graph-based
@@ -135,12 +135,12 @@ inputs'' query from an end-user perspective. The rest of the paper is then organ
 
 \begin{itemize}[leftmargin=*]
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
-  the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its
+  the cognacy operator $\relInputR$ (``related inputs'') and unpacking the intuitive relationship between its
   two components $\demandsR$ (``demands'') and $\demandedByR$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
-  cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$
+  cognacy operator $\relOutputR$ (``related outputs'') and explain the relationship to Galois connections: $f$
   and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
-  give procedures for computing $\demandsR_{R}$ and $\sufficientR_{R}$ over a directed graph with reachability
+  give procedures for computing $\demandsR_{R}$ and $\sufficesR_{R}$ over a directed graph with reachability
   relation $R$.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent

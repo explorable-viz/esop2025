@@ -142,8 +142,11 @@ no inputs which are unused, then $\demandsR$ will preserve $\bot$, i.e.~$\demand
 This means that applying $\demandedByR$ after $\demandsR$, we will not lose any of
 the originally selected inputs.
 \begin{lemma}
+\item
+\begin{enumerate}
    \item If $\demandedByR_R(\emptyset) = \emptyset$, then $\demandsR_R \after \demandedByR_R$ is inflationary.
    \item If $\demandsR_R(\emptyset) = \emptyset$, then $\demandedByR_R \after \demandsR_R$ is inflationary.
+\end{enumerate}
 \end{lemma}
 Similarly, if we have no outputs which are free, then $\demandedByR$ will also
 preserve $\bot$, and composing the functions in the opposite way will also
@@ -158,9 +161,7 @@ to consider a filtered view of the data, where the user is shown only the data u
 \label{sec:conjugate:dependence-graph-algos}
 We now show how to compute $\demandedByR_{R}$ and $\demandsR_{R}$ for the reachability relation $R$ of a
 dependence graph. Whilst one can view a graph as a collection of vertices and edges, we give an alternative
-definition as a finite map $\set{\seq{\bind{v}{U}}}$, where $\bind{v}{U}$ denotes that a vertex $v$ has
-outgoing edges to all vertices in $U \subseteq V$. In the rest of the paper, we use the two graph definitions
-interchangeably, by picking the one that simplifies the formalisation.
+presentation as an adjacency map which is useful in some situations.
 
 \begin{definition}[Graphs as adjacency maps]
    A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
@@ -191,8 +192,8 @@ Now, we can provide a formal account for them.
 \begin{definition}[Related Inputs and Outputs]
    For $G = (V,E)$, define:
    \begin{enumerate}
-      \item $\relInput_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (related inputs)
-      \item $\relOutput_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
+      \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (related inputs)
+      \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
 Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
@@ -277,11 +278,11 @@ to define the following \textit{sufficiency} analysis.
    For a graph $G=(V,E)$ with inputs $X \subseteq V$, outputs $Y \subseteq V$ we define,
    and a subset of the inputs $X' \subseteq X$
    \begin{itemize}
-      \item $\sufficientR_G(X') \eqdef \set{y \in Y \mid \demandsR_G (y) \subseteq X' }$ \hfill (sufficiency)
+      \item $\sufficesR_G(X') \eqdef \set{y \in Y \mid \demandsR_G (y) \subseteq X' }$ \hfill (sufficiency)
    \end{itemize}
 \end{definition}
 
-This definition looks remarkably similar to $\demandedByR_R$, albeit the definition of $\sufficientR_R$ needs
+This definition looks remarkably similar to $\demandedByR_R$, albeit the definition of $\sufficesR_R$ needs
 every ancestor to be in the input set, rather than any ancestor to be in the input set. We can, in fact, turn
 this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
 
@@ -305,7 +306,7 @@ this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
 \begin{lemma}[Sufficiency is the dual of necessity]
    For a graph $G = (V,E)$ with inputs $X \subseteq V$ and a subset of the inputs $X' \subseteq X$
    the following holds:
-   $$\dual{\demandedByR_G(X')} = \sufficientR_G(X')$$
+   $$\dual{\demandedByR_G(X')} = \sufficesR_G(X')$$
 \end{lemma}
 
 Because of the lemma above, we could reuse $\demandsAlg{}$ in order to compute
@@ -350,12 +351,9 @@ them one by one, first adding $x_5$ to $H$, then moving it to $G'$. We add $x_6$
 then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we
 have no new edges to consider, and so halt in the state pictured in step eight.
 
-\begin{proposition}[Forwards Computes Sufficency]
-   For a dependence graph $G= (V,E)$, and a subset of the inputs $X' \subseteq \sources{G} \subset V$
-   the following holds:
-   $$
-       X' \sufficesAlg{G} \sinks{G'} \iff \sufficientR(X') = \sinks{G'}
-   $$
+\begin{proposition}[Algorithm $\sufficesAlg{}$ Computes $\sufficesR$]
+   For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
+   \[X \sufficesAlg{G} Y \iff \sufficesR(X) = V\]
 \end{proposition}
 \begin{proof}
    \todo{Also unsure if we put this here or in an appendix}
