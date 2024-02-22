@@ -57,31 +57,27 @@ For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the
 $\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges.
 \end{definition}
 
-\begin{definition}[Sources, sinks, opposite graph]
+\begin{definition}[Sources and sinks]
 For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
-in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Define $\opGraph{G} \eqdef
-(V,E^{-1})$ to be the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
 \end{definition}
 
-In each graph, we mark out a subset of the nodes $X \subset V$ which represent
-program inputs and a subset of nodes $Y \subset V$, which represent
-the outputs. Usually, $X = \sources{G}$ (the sources) and $Y = \sinks{G}$ (the sinks). Taking the opposite
-graph has the effect of swapping the sets of sources and sinks.
+\begin{definition}[Opposite graph]
+Define $\opGraph{G} \eqdef (V,E^{-1})$ to be the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes
+relational converse.
+\end{definition}
 
-In general, a dependency analysis from inputs $X$ to outputs $Y$ can be
-characterized by a relation $D \subseteq X \times Y$, where $(x, y) \in D$
-can be read as $x$ is \textit{demanded by} $y$.
-%
-(As opposed to a function) the dependency relation allows scenarios where inputs are not demanded by any
-output, or inputs are demanded by multiple outputs. These properties are useful, since in data analysis tasks, we often do not need to make use of all
-the inputs to the program, and we may reuse data for multiple different outputs.
+\noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
-Motivated by data analysis tasks, we wish to consider the relationships between sets of inputs and sets of outputs.
-Thus, we lift the dependency relation to sets of inputs and sets of outputs by
-constructing the \textit{image} and \textit{preimage functions} of the relation:
+We can think of the reachability relation $R$ between the sources and sinks of $G$ as constituting an ``IO''
+dependency relation for $G$, specifying how specific ``inputs'' (sources) are demanded by specific ``output''
+(sinks). (So that $(x, y) \in R$ can be read as ``$x$ is \textit{demanded by} $y$''.) And since we are
+actually interested in the relationship between \emph{input selections} (sets of inputs) and \emph{output
+selections} (sets of outputs), we lift this IO relation to powersets via the \textit{image} and
+\textit{preimage functions} of an arbitrary relation:
 \begin{definition}[Image and Preimage of a Relation]
-   For a relation $D \subseteq X \times Y$, we define $\demandByR_D: \powerset{X} \to \powerset{Y}$
-   and $\demandR_D : \powerset{Y} \to \powerset{X}$ as:
+   For a relation $R \subseteq X \times Y$, define $\demandByR_D: \powerset{X} \to \powerset{Y}$ and
+   $\demandR_D : \powerset{Y} \to \powerset{X}$ as:
    \begin{itemize}
       \item $\demandByR_{D}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in D}$ \hfill (image)
       \item $\demandR_{D}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in D}$ \hfill (preimage)
