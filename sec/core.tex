@@ -1,7 +1,7 @@
 \section{A Core Language with Graphical Syntax and Semantics}
 \label{sec:core}
 
-In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators \emph{demands} ($\demandR$) and \emph{demanded by} ($\demandByR$) over such graphs.
+In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$) over such graphs.
 We now implement that graphical abstraction for  \OurLang -- an untyped, pure functional programming language. This core calculus we go on to describe is what underlies the surface-language programs such as \figref{overview:related-inputs}, used to generate and analyse the scatter plots from earlier. We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a
 big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
 dependence graph for the evaluation of that term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
@@ -141,7 +141,7 @@ Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetR
 % decompose these relationships.
 
 % For example, if $A' \subseteq A$ is related to $B' \subseteq B$, by $C$,
-% and related to $B'' \subseteq B$ by $D$, then running $\relInput(A) = B' \cup B''$.
+% and related to $B'' \subseteq B$ by $D$, then running $\relInputR(A) = B' \cup B''$.
 % If we are only interested in the way $A$ and $B$ are related via $C$, we are
 % able to clamp down demand induced by $D$, sending it to bottom.
 

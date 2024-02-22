@@ -63,65 +63,65 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V \fwdAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sinks{\hat{G}}$ and $V' \subseteq \sources{\hat{G}}$}}
+   {\small \flushleft \shadebox{$V \sufficesAlg{\hat{G}} V'$}\hfill\textit{where $V \subseteq \sinks{\hat{G}}$ and $V' \subseteq \sources{\hat{G}}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      \inferrule*[lab={\ruleName{$\sufficesAlg{}$}}]
       {
          (V, \emptyset),
          \emptyset,
          \inE{\hat{G}}(V)
-         \fwdEdges{\hat{G}}
+         \sufficesE{\hat{G}}
          G, H
       }
       {
-         V \fwdAlg{\hat{G}} \sources{G}
+         V \sufficesAlg{\hat{G}} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, E \fwdEdges{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \sufficesE{\hat{G}} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq \hat{G}$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
+      \inferrule*[lab={\ruleName{$\sufficesE{}$-done}}]
       {
          \strut
       }
       {
-         G, H, \emptyset \fwdEdges{\hat{G}} G, H
+         G, H, \emptyset \sufficesE{\hat{G}} G, H
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdEdges{}$-pending}},
+         lab={\ruleName{$\sufficesE{}$-pending}},
          right={$\hat{H} = H \cup \set{\bind{\alpha}{\set{\beta}}}$}
       ]
       {
          \hat{H}(\alpha) \subset \hat{G}(\alpha)
          \\
          G, \hat{H}, E
-         \fwdEdges{\hat{G}}
+         \sufficesE{\hat{G}}
          G', H'
       }
       {
          G, H, (\alpha, \beta) \cons E
-         \fwdEdges{\hat{G}}
+         \sufficesE{\hat{G}}
          G', H'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdEdges{}$-extend}},
+         lab={\ruleName{$\sufficesE{}$-extend}},
          right={$\hat{H} = H \cup \set{\bind{\alpha}{\set{\beta}}}$}
       ]
       {
          \hat{H}(\alpha) = \hat{G}(\alpha)
          \\
          G \disjunion \hat{G}(\alpha), H \setminus \set{\alpha}, \inE{\hat{G}}(\alpha) \cup E
-         \fwdEdges{\hat{G}}
+         \sufficesE{\hat{G}}
          G', H'
       }
       {
          G, H, (\alpha, \beta) \cons E
-         \fwdEdges{\hat{G}}
+         \sufficesE{\hat{G}}
          G', H'
       }
    \end{smathpar}

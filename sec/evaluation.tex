@@ -12,7 +12,7 @@ an implementation of the prior state of the art in this field.
 A key benefit of our approach is in avoiding the need to define a backwards
 evaluation function. In prior work in this area -- such as \citet{perera22} -- a
 program produced an execution trace. To perform a backwards analysis such as
-$\demandR_D$, the developer was forced to implement a separate backwards evaluation
+$\demandsR_D$, the developer was forced to implement a separate backwards evaluation
 semantics using the execution trace until reaching the program inputs. This approach was laborious since
 it can required the forwards and backwards evaluation functions to agree with
 respect to the dependency analysis.
@@ -20,10 +20,10 @@ respect to the dependency analysis.
 In contrast, by evaluating a program to a dynamic dependence graph
 and deferring the specific dependency queries until the graph has been computed.
 This allows us to use a simple procedure to
-compute both $\demandR_D$ and $\demandByR_D$, whilst only requiring that the
+compute both $\demandsR_D$ and $\demandedByR_D$, whilst only requiring that the
 developer implement the desired dynamic dependence graph once, in the forward
-evaluation function, since the graph itself is what facilitates the two 
-directions of the approach. 
+evaluation function, since the graph itself is what facilitates the two
+directions of the approach.
 
 \todo{Language Agnostic Approach}
 The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
@@ -36,19 +36,19 @@ the analyses are computed as part of evaluating a program, or un-evaluating an
 execution trace. Thus, any changes to the dependency relation or to the language
 itself need to be implemented multiple times. In contrast, with our approach
 the developer only needs to implement the analysis once, and any changes to the
-language or dependency relation used only require modification to a single 
+language or dependency relation used only require modification to a single
 evaluation function.
 \subsection{Benchmarking}
 
 In order to test the performance of our dependency analyses, we implemented the
-approach in the language described in \secref{core} in Purescript as a 
+approach in the language described in \secref{core} in Purescript as a
 language called \OurLang. Benchmarks were run on a commercial laptop, with an
 Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
 on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
 
 
 In an interactive system, performance plays an enormous role in the experience
-of a user. In order for evaluation to be a total success, we cannot allow 
+of a user. In order for evaluation to be a total success, we cannot allow
 performance to degrade. It is possible that the dependence graph incurs a greater
 overhead than the creation of an execution trace, as it is a more complex data
 structure. Therefore, we need to compare the overhead of graph construction, and
@@ -111,10 +111,10 @@ tradeoff, when we consider the relative performance of implementing
 \subsubsection{RQ2: Demands Graphs Versus Traces}
 We now compare the performance of the twin implementations in terms of computing
 demands. We observe a significant increase in the performance of demands using
-the graphical approach, shown in \tableref{demands-speedups}. 
+the graphical approach, shown in \tableref{demands-speedups}.
 In our matrix examples, we observe an average increase
 of approximately 40 times, whereas in the graphical examples, the speedup
-is approximately 32 times faster. 
+is approximately 32 times faster.
 
 We attribute this performance improvement due to the fact that the execution
 trace approach requires the system to completely rewind the execution of the
@@ -124,7 +124,7 @@ Thus in highly data-parallel examples -- like convolution -- we expect and indee
 observe a greater increase in performance. In contrast the graphics library code
 and the dynamic time warp implementation do not exhibit quite the same level
 of speedup, since they rely on a more sequential flow of data through the program,
-in effect, $\demandR{}$ has to traverse a greater portion of the graph.
+in effect, $\demandsR{}$ has to traverse a greater portion of the graph.
 
 
 {\tiny\input{fig/performance/demands-speedup.tex}}
