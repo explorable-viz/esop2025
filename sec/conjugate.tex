@@ -6,7 +6,7 @@ the algorithms that compute them (\secref{conjugate:dependence-graph-algos}).
 
 \subsection{Background notions and notation}
 \label{sec:conjugate:notation}
-We give some notation used in the rest of the paper. $X, Y$ range over sets.
+We give some notation used in the rest of the paper. $X, Y$ range over finite sets.
 
 \paragraph{Finite sequences}
 Write to ${\seq{x}}$ denote a finite sequence of elements $\seqRange{x_1}{x_n}$. We also write $x \cons
@@ -32,20 +32,22 @@ For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the
 $\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges. We sometimes refer to vertices as nodes.
 
 \paragraph{Sources, sinks, opposite graph}
-For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no in
-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out edges edges). Write $G^{-1} \eqdef
+For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Write $G^{-1} \eqdef
 (V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
 
 \subsubsection{Boolean algebras}
 
-A \emph{Boolean algebra} (or Boolean lattice) is a 6-Tuple $(X, \wedge, \vee, \bot, \top, \neg)$ with
-distinguished elements bottom ($\bot$) and top ($\top$), binary operations meet ($\wedge$) and join ($\vee$)
-which distribute over each other, and a unary operation negate ($\neg$).
+A \emph{Boolean algebra} (or Boolean lattice) is a 6-tuple $(X, \meet, \join, \bot, \top, \neg)$ with carrier
+$X$, distinguished elements bottom ($\bot$) and top ($\top$), commutative operations meet ($\meet$) and join
+($\join$) with $\top$ and $\bot$ as their respective units, and a unary operation negate ($\neg$) satisfying
+$x \join \neg x = \top$ and $x \meet \neg x = \bot$. The operations $\meet$ and $\join$ distribute over each
+other and induce a partial order $\leq$ over $X$.
 
-For the rest of this section, when we refer to Boolean algebras, we usually mean the powerset lattice
-$\powerset{X}$, where the elements are subsets $X' \subseteq X$, ordered by set inclusion $\subseteq$. Bottom
-is the empty set $\emptyset$, top is the whole set $X$, meet and join are given by intersection ($\cap$) and
-union ($\cup$) respectively, and negation is via complementation $\compl{X'}$.
+Mostly we will work in the setting of a specific finite Boolean algebra, namely the powerset $\powerset{X}$,
+whose carrier is the set of subsets $X' \subseteq X$ ordered by set inclusion $\subseteq$. Bottom is the empty
+set $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by
+relative complement, so that $\neg X' = X \setminus X'$.
 
 \subsection{Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
