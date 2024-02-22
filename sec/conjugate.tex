@@ -338,7 +338,7 @@ graphs set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
    For a graph $G = (V,E)$, a subset of inputs $X' \subseteq \sources{G}$
    the following holds:
    $$
-    \forall G' .\  X' \demandsAlg{G} \sinks{G'} \iff \demandByR_G(X') = \sinks{G'}
+    \forall V' .\  X' \demandsAlg{G} V' \iff \demandByR_G(X') = V'
     $$
 \end{lemma}
 
@@ -347,10 +347,10 @@ set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
 on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
 \input{fig/conjugate/algorithms}
 \begin{lemma}[Reaches Computes Demands]
-   For a graph $G = (V,E)$ and a subset of the outputs $Y \subseteq \sinks{G}$
+   For a graph $G = (V,E)$ and a subset of the outputs $Y' \subseteq \sinks{G}$
    The following holds:
    $$
-     \forall G' .\ Y \demandsAlg{G} \sources{G'} \iff \demandR_G(Y) = \sources{G'}
+     \forall V' .\ Y' \demandsAlg{G} V' \iff \demandR_G(Y') = V'
    $$
 \end{lemma}
 \begin{proof}
