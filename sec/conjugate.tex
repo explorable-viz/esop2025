@@ -1,59 +1,31 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
-We shall introduce some preliminary notions (\secref{conjugate:notation}), before building up the intuition
-needed to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read the
-algorithms that compute them (\secref{conjugate:dependence-graph-algos}). Then, we will describe the
-connection to the state-of-the-art in this area.
+We introduce some preliminary notation (\secref{conjugate:notation}), before building up the intuition needed
+to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read
+the algorithms that compute them (\secref{conjugate:dependence-graph-algos}).
 
 \subsection{Background notions and notation}
 \label{sec:conjugate:notation}
-We give some notation used throughout the rest of the paper, some of it standard,
-and some of it bespoke.
-% For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
-% denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
+We give some notation used in the rest of the paper. $X, Y$ range over sets.
 
-% For a set $X$, we write $\compl{X}$ to denote it's complement.
-% For two sets, $A, B$, we write $A \setminus B \eqdef A \wedge \compl{B}$ for the relative complement
-% of $B$ within $A$.
-% \newline
-% We use the standard notion of Boolean algebra as a lattice $(X, \leq)$, where the operations of meet ($\wedge$)
-% and join ($\vee$) distribute over each other, and for each element $x \in X$,
-% there is a complement element $\compl{x} \in X$.
-% %
-% For the rest of this section, when we refer to Boolean algebras, we usually mean
-% the powerset lattice $\powerset{X}$, where the elements are subsets $X' \subseteq X$,
-% the order is set inclusion $\subseteq$, and meet and join are given by intersection ($\cap$)
-% and union ($\cup$), respectively.
+\paragraph{Finite sequences}
+Write to ${\seq{x}}$ denote a finite sequence of elements $\seqRange{x_1}{x_n}$. We also write $x \cons
+\seq{x}$ for cons (prepend)  and $\seq{x} \cons x$ for snoc (append).
 
-% For a graph $G = (V,E)$, we write $G^{-1} \eqdef (V,E^{-1})$ for the opposite graph,
-% where $\param^{-1}$ denotes the inverse of an edge. Also, we write $\sources{G}$ for
-% the source vertices in a graph, and $\sinks{G}$ for the sinks.
+\paragraph{Finite maps}
+Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where
+keys $k_i$ are pairwise unique.
 
-\begin{notation*}[Finite sequences]\label{def:list}
-   Write ${\seq{x}}$ to denote a finite sequence of elements $\seqRange{x_1}{x_n}$. We also write $x \cons \seq{x}$ for
-   cons (prepend)  and $\seq{x} \cons x$ for snoc (append).
-\end{notation*}
+\paragraph{Disjoint union}
+Write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint. For finite maps $\phi, \psi$ write $\phi \disjunion \psi$ to mean $\phi \cup \psi$ where $\dom{\phi}$ and $\dom{\psi}$ are disjoint. Also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
 
-\begin{notation*}[Finite maps]\label{def:finite-map}
-   Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$
-   where keys $k_i$  are pairwise unique.
-\end{notation*}
+\paragraph{Relative complement}
+Write $X \setminus Y$ for the relative complement of $Y$ in $X$, i.e.~the set of elements of
+$X$ that are not in $Y$.
 
-\begin{notation*}[Disjoint union]\label{def:disjoint-union}
-  For sets $X$, $Y$, we write $X \disjunion Y$ for the disjoint union of $X$ and $Y$; for finite maps specifically, we intend $\disjunion$ to mean that only their keys need be disjoint.
-   We also write $x \cdot X$ or $X \cdot x$ to mean $X \disjunion \set{x}$.
-\end{notation*}
-
-\begin{notation*}[Complement and Set Minus]\label{def:set-complement}
-   For a set $X$, we write $\compl{X}$ to denote it's complement.
-   For sets $X, Y$, we write $X \setminus Y \eqdef X \cap \compl{Y}$ for the relative complement
-   of $Y$ i.e. the set of elements of $X$ that are not in $Y$.
-\end{notation*}
-
-\begin{notation*}[Relation, inverse relation]\label{def:inverse-relation}
-   For a relation $D \subseteq X \times Y$, we write $D^{-1} \subseteq Y \times X$ to
-   denote the inverse relation, where $(y,x) \in D^{-1} \iff (x,y) \in D$.
-\end{notation*}
+\paragraph{Relational converse}
+For a relation $R \subseteq X \times Y$, write $R^{-1} \subseteq Y \times X$ to denote the \emph{converse}
+relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
 \begin{notation*}[Graph, opposite graph]\label{def:opposite-graph}
 For a graph $G = (V,E)$, we write $\sources{G}$ for
