@@ -81,14 +81,14 @@ We now define some standard graph-theoretic notions for a $G = (V, E)$ with vert
 edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
 
 \begin{definition}[Opposite graph]
-   If $G = (V,E)$, define $G^{-1} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
+   If $G = (V,E)$, define $\opGraph{G} \eqdef (V, E^{-1})$ where $\param^{-1}$ denotes relational inverse.
 \end{definition}
 
 \begin{definition}[Neighbours]
    Define the following functions of type $\V(G) \to \powerset{\V(G)}$:
    \begin{itemize}
       \item $\outN{G}(\alpha) \eqdef \set{\beta \in \V(G) \mid (\alpha, \beta) \in \E(G)}$ \hfill (out neighbours)
-      \item $\inN{G} \eqdef \outN{G^{-1}}$ \hfill (in neighbours)
+      \item $\inN{G} \eqdef \outN{\opGraph{G}}$ \hfill (in neighbours)
    \end{itemize}
 \end{definition}
 
@@ -96,7 +96,7 @@ edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
    Define the following functions of type $\V(G) \to \powerset{\E(G)}$:
    \begin{itemize}
       \item $\outE{G}(\alpha) \eqdef \set{\alpha} \times \outN{G}(\alpha)$
-      \item $\inE{G}(\alpha) \eqdef \outN{G^{-1}}(\alpha)$
+      \item $\inE{G}(\alpha) \eqdef \outN{\opGraph{G}}(\alpha)$
    \end{itemize}
 \end{definition}
 
@@ -120,7 +120,7 @@ edges $(\alpha, \beta) \in E$. For the following definitions fix a graph $G$.
    Define:
    \begin{itemize}
       \item $\sources{G} \eqdef \set{\alpha \in \V(G) \mid \inN{G}(\alpha) = \emptyset}$ \hfill (sources)
-      \item $\sinks{G} \eqdef \sources{G^{-1}}$ \hfill (sinks)
+      \item $\sinks{G} \eqdef \sources{\opGraph{G}}$ \hfill (sinks)
    \end{itemize}
 \end{definition}
 

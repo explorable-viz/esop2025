@@ -59,7 +59,7 @@ $\alpha$ in $G$ and $\outE{G}(\alpha)$ for its out-edges.
 
 \begin{definition}[Sources, sinks, opposite graph]
 For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
-in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Write $G^{-1} \eqdef
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges). Write $\opGraph{G} \eqdef
 (V,E^{-1})$ for the \emph{opposite} graph of $G$, where $\param^{-1}$ denotes relational converse.
 \end{definition}
 
@@ -203,17 +203,6 @@ edges of the graph (where we use the standard understanding of the reachability 
 closure of $E$). Conversely, the set of nodes that a node demands is represented by the nodes reachable from this node when traversing the edges of the graph in the opposite direction, i.e. making use of the preimage of reachability. We use this intuition when defining \textit{demands}
 and \textit{demanded by} over the dependence graph $G$: %in terms of $R_G$, we refer to the dependence $G$:
 
-%
-%% \begin{notation}[Reachability]
-%%    For a graph $G=(V,E)$, we write $R_G$ for the \textit{reachability relation}.
-%% \end{notation}
-%
-
-%    \cd{where exactly is the following used?}
-%    When considering a graph $G$ and its opposite $G^{-1}$,
-% we abuse the notation for the preimage and image of $R$ given that $R_G^{-1} = R_{G^{-1}}$.
-
-
 \begin{definition}[Demands and Demanded By on a graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
    of $R_G$ to the sources and sinks of $G$, we have:
@@ -300,7 +289,7 @@ graph's set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
 Now we have $\demandByR(X) \subseteq \sinks{G}$. The next step is to take this
 set and apply $\demandR(\param)$. We can compute this be reusing $\demandsAlg{}$
-on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
+on the opposite graph, since $\demandR_G$ = $\demandByR_{\opGraph{G}}$.
 \input{fig/conjugate/algorithms}
 \begin{lemma}[Reaches Computes Demands]
    For a graph $G = (V,E)$ and a subset of the outputs $Y' \subseteq \sinks{G}$
@@ -313,9 +302,8 @@ on the opposite graph, since $\demandR_G$ = $\demandByR_{G^{-1}}$.
    \todo{Not sure if we include this here or in an appendix}
 \end{proof}
 
-When trying to compute related outputs, we perform effectively the same process,
-but we begin by considering the set of outputs we're interested in, $Y'$, and
-run $\demandsAlg{}$ on the opposite graph $G^{-1}$.
+When trying to compute related outputs, we perform effectively the same process, but we begin by considering
+the set of outputs we're interested in, $Y'$, and run $\demandsAlg{}$ on the opposite graph $\opGraph{G}$.
 
 \subsection{Relationship to Galois Slicing}
 \todo{This is conceptually I think correct, but needs work in the wording}
