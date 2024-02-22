@@ -6,7 +6,9 @@ matrix_cases = [
     "slicing/dtw/compute-dtw",
     "slicing/convolution/edgeDetect",
     "slicing/convolution/emboss",
-    "slicing/convolution/gaussian"
+    "slicing/convolution/gaussian",
+    "slicing/linked-outputs/bar-chart-line-chart",
+    "slicing/linked-outputs/stacked-bar-chart-scatter-plot"
 ]
 
 graphics_cases = [
