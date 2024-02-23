@@ -48,13 +48,13 @@ complement, so that $\neg X' = X \setminus X'$.
 
 We explain how we arrive at specific dependence graphs until \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
-$V$ of \emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph
-for a particular program, nodes $\alpha \in V$ represents parts of values (either supplied to a program as
+$V$ of \emph{vertices} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph
+for a particular program, vertices $\alpha \in V$ represents parts of values (either supplied to a program as
 inputs or produced during execution) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the
 program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
 $\alpha$. This diverges somewhat from traditional approaches to dynamic dependence graphs in only considering
 one type of edge (data dependency) rather than separate data and control dependencies; moreover our edges
-point in the direction of dependent nodes. (In the literature the other direction is somewhat more common.)
+point in the direction of dependent vertices. (In the literature the other direction is somewhat more common.)
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -236,8 +236,8 @@ Now, we can provide a formal account for them.
 \end{definition}
 Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
 $\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what else can
-reach the nodes X can reach in the graph?'', and first finds all outputs $\demandedByR_{G}(X')$ that our
-selected inputs are demanded by, and then computes the inputs that those outputs demand,
+reach the vertices that X can reach?'', and first finds all outputs $\demandedByR_{G}(X')$ that
+our selected inputs are demanded by, and then computes the inputs that those outputs demand,
 i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, related outputs asks
 ``what else can be reached by the things that reach Y?'', and first finds all inputs $\demandsR_{G}(Y')$ that
 our selected outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y')$ demand,
@@ -255,19 +255,19 @@ presentation of graphs in terms of adjacency maps is useful notationally.
    \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
 
-\begin{definition}[$\demandedByAlg{G}$]
-\figref{conjugate:algorithms:demands} defines the relation $\demandedByAlg{G}$.
+\begin{definition}[$\demandedByAlg{}$]
+\figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{}$.
 \end{definition}
 
 For a dependence graph $G_0$ and inputs $X \subseteq \sources{G_0}$, the judgement $X\;
-\smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. The judgement delegates
-to an auxiliary definition $\demandedByV{}$ which builds the \emph{reachable subgraph} $G \subseteq G_0$
-consisting of all nodes reachable from $X$ and all edges between them. If $X$ is empty (\ruleName{done}) the
-reachable subgraph $G$ is complete and can be returned. Otherwise we select an arbitrary vertex from $X$. If
-$\alpha$ is already in $G$ (\ruleName{skip}), there is nothing to do at this step. Otherwise, we add the
-out-star at $\alpha$ to $G$ and the out-neighbours to the pending vertices (\ruleName{extend}). When
-$\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the accumulator by intersecting with
-$\sinks{G}$.
+\smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. It makes use of an
+auxiliary definition $\demandedByV{G_0}$ which maintains a set of vertices still to process and builds the
+subgraph $G \subseteq G_0$ consisting of all vertices reachable from the initial set and all edges between them.
+If $X$ is empty (\ruleName{done}) the reachable subgraph $G$ is complete and can be returned. Otherwise we
+select an arbitrary vertex $\alpha$ from $X$. If $\alpha$ is already in $G$ (\ruleName{skip}), there is
+nothing to do at this step. Otherwise, we add the out-star at $\alpha$ to $G$ and the out-neighbours to the
+pending vertices (\ruleName{extend}). When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output
+set from the accumulator by intersecting with $\sinks{G}$.
 
 % \RPnote{Roughly speaking, these are now informal observations which are part of the explanation of the
 % judgement above.}
@@ -298,32 +298,30 @@ $\sinks{G}$.
 
 \input{fig/conjugate/algorithms}
 
-We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This could in some situations be more efficient because less graph is traversed than would be otherwise. Moreover, We therefore provide a more efficient implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
+We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This is potentially more
+efficient in situations where less graph is traversed than it would be otherwise. We therefore provide a more
+efficient implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a subgraph of the original dependence graph, similar to $\demandsAlg{}$. In the
 main subroutine, $\sufficesE{}$, we consider the subgraph under construction $G$, the subgraph of pending
-nodes $H$, and the current set of edges under consideration $E$. For efficiency, the algorithm proceeds in a
+vertices $H$, and the current set of edges under consideration $E$. For efficiency, the algorithm proceeds in a
 manner which allows it to only traverse each edge in the graph once. When considering an edge $(\alpha,
 \beta)$ in the edge list, $E$, we proceed by adding it to $H$. If doing so causes the neighbours of $\alpha$
 in $H$ to be equal to its neighbours in $G_0$ (the base dependence graph), then we can remove $\alpha$ from
 $H$, and add it to $G$ (\ruleName{$\sufficesE{}$-extend}), before adding its outgoing edges to $E$.
 
-Because the edges in the parent graph $G$ all point in the direction of inputs to outputs, computing the
-inward neighbours of a node is inefficient in the adjacency map. We therefore perform the check related to
-input neighbors of a node on the opposite adjacency map.
-
 Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\sufficesE{}$-pending}).
 The algorithm terminates when there are no more edges to be considered (\ruleName{$\sufficesE{}$-pending}).
 When this happens, it is possible that $H$ is non-empty. This implies that during the algorithm's execution,
-we have traversed at least one node without traversing all of its in-edges. Thus, $H$ forms a sort of front of
-nodes for which the input nodes only provide partial information.
+we have traversed at least one vertex without traversing all of its in-edges. Thus, $H$ forms a sort of front of
+vertices for which the input vertices only provide partial information.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
-We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In this diagram, green nodes are the
-nodes in $G'$ that we have found sufficient inputs for, the blue nodes are unvisited, and the orange nodes are
-the nodes in $H$. Dashed edges are edges in the current edge list, and dotted edges are those currently under
+We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In this diagram, green vertices are the
+vertices in $G'$ that we have found sufficient inputs for, the blue vertices are unvisited, and the orange vertices are
+the vertices in $H$. Dashed edges are edges in the current edge list, and dotted edges are those currently under
 consideration. Over the eight steps pictured, we add the edges $\set{(x_1,x_5),(x_2,x_5),(x_3,
 x_6),(x_3,x_7)}$ to the set $E$, and traverse them one by one, first adding $x_5$ to $H$, then moving it to
 $G'$. We add $x_6$, then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we have no
