@@ -307,24 +307,26 @@ algorithm.
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a subgraph of $G_0$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
-takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G_0$, and the current set of
-edges under consideration $E$. For efficiency, the algorithm proceeds in a manner which allows it to only
-traverse each edge in the graph at most once. At each step we choose an edge $(\alpha, \beta)$ from the edge
-list $E$ and add it to $H$. If the neighbours of $\alpha$ in $H$ are now equal to its neighbours in $G_0$, we
-move that in-star from $H$ to $G$ (\ruleName{$\sufficesE{}$-extend}), and then add its out-edges to $E$.
-
-Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\sufficesE{}$-pending}).
-The algorithm terminates when there are no more edges to be considered (\ruleName{$\sufficesE{}$-done}). Any
-vertices still pending in $H$ (as in step 8) represent the presence of only partially sufficient inputs.
-
-\input{fig/conjugate/suffices-algo-explanation}
+takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G_0$ with $\sources{H}
+\subseteq \sinks{G}$, and the current set of edges under consideration $E$. For efficiency, the algorithm
+traverses each edge in the graph at most once.
 
 \figref{suffices-algo-diagram} shows an example run of the algorithm. Green indicates a vertex in $G$ that we
 have sufficient inputs for; blue vertices are unvisited; orange vertices are ``pending'' in $H$, with at least
-one of their in-edges. Dashed edges are edges in the current edge list; dotted edges are those which have
-moved from the edge list into $H$ but not yet into the accumulating subgraph $G$. Once $H$ contains all
-in-edges associated with a vertex in $G_0$ (as in step 3), that in-star is moved to $G$ (as in step 4). Edges
-are chosen non-deterministically from the edge list until the list is empty, when the algorithm terminates.
+one of their in-edges. Dashed edges are edges in the current edge set $E$. At each step we
+non-deterministically choose an edge $(\alpha, \beta)$ from the edge set and add it to $H$ (dotted edges). If
+the neighbours of $\alpha$ in $H$ are now equal to its neighbours in $G_0$ (as in step 3), we move that
+in-star from $H$ to $G$ and add its out-edges to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4).
+
+Otherwise, there is nothing more to do at this step and we continue with the remaining edges (\ruleName{$\sufficesE{}$-pending}). The algorithm terminates when there are no more edges to be considered
+(\ruleName{$\sufficesE{}$-done}). Any vertices still pending in $H$ (as in step 8) represent the presence of
+only partially sufficient inputs.
+
+\input{fig/conjugate/suffices-algo-explanation}
+
+Once $H$ contains all in-edges associated with a vertex in $G_0$ (as in step 3), that in-star is moved to
+$G$ (as in step 4). Edges are chosen non-deterministically from the edge list until the list is empty, when
+the algorithm terminates.
 
 \begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
