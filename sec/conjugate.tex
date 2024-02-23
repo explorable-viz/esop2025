@@ -118,11 +118,9 @@ We observe that the image and preimage of a relation form  a
    X \times Y$, $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
 \end{lemma}
 
-This makes sense as a condition for  \textit{demands} and
-\textit{demanded by}: for some subsets $X',Y'$, if the output values
-$X'$ is demanded by has an empty intersection with $Y'$, then we would expect the set
-of input values that $Y'$ demands to have an empty intersection with $X'$.
-
+This makes sense as a condition for  \textit{demands} and \textit{demanded by}: for some subsets $X',Y'$, if
+the output values $X'$ is demanded by has an empty intersection with $Y'$, then we would expect the set of
+input values that $Y'$ demands to have an empty intersection with $X'$.
 
 We note that these two functions do not always form a Galois connection, since the composition of the two
 functions is not necessarily inflationary, contradicting a basic fact of Galois connections, which we picture
@@ -137,10 +135,10 @@ nothing new when applying the two functions.
 
 \input{fig/conjugate/relations-not-galois}
 
-We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are
-no inputs which are unused, then $\demandsR$ will preserve $\bot$, i.e.~$\demandsR(\emptyset) = \emptyset$.
-This means that applying $\demandedByR$ after $\demandsR$, we will not lose any of
-the originally selected inputs.
+We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are no
+inputs which are unused, then $\demandsR$ will preserve $\bot$, i.e.~$\demandsR(\emptyset) = \emptyset$. This
+means that applying $\demandedByR$ after $\demandsR$, we will not lose any of the originally selected inputs.
+
 \begin{lemma}
 \item
 \begin{enumerate}
@@ -148,34 +146,33 @@ the originally selected inputs.
    \item If $\demandsR_R(\emptyset) = \emptyset$, then $\demandedByR_R \after \demandsR_R$ is inflationary.
 \end{enumerate}
 \end{lemma}
-Similarly, if we have no outputs which are free, then $\demandedByR$ will also
-preserve $\bot$, and composing the functions in the opposite way will also
-be increasing.
 
-As an easy corollary, if $\demandsR$ and $\demandedByR$ preserve $\emptyset$, then they actually do form a Galois
+Similarly, if we have no outputs which are free, then $\demandedByR$ will also preserve $\bot$, and composing
+the functions in the opposite way will also be increasing.
+
+As an easy corollary, if $\demandsR$ and $\demandedByR$ both preserve $\emptyset$ then they do form a Galois
 connection, albeit an antitone one. This is useful to know, since we may be working in a context where we wish
 to consider a filtered view of the data, where the user is shown only the data used by the original program.
-\cd{does this become relevant in any of the benchmarks?}
 
 \subsection{Computing $\demandsR$ and $\demandedByR$ over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
+
 We now show how to compute $\demandedByR_{R}$ and $\demandsR_{R}$ for the reachability relation $R$ of a
 dependence graph. Whilst one can view a graph as a collection of vertices and edges, we give an alternative
-presentation as an adjacency map which is useful in some situations.
+presentation as an adjacency map which can be useful notationally.
 
 \begin{definition}[Graphs as adjacency maps]
    A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
    neighbours, where $G(\alpha) = V' \iff \alpha \in V$ and $(\alpha, \beta) \in E$ for all $\beta \in V'$.
 \end{definition}
 
-The set of nodes that a value is demanded by can be represented by the set of nodes that are reachable by
-traversing the edges of the graph. Conversely, the set of nodes that a node demands is represented by the
-nodes reachable from this node when traversing the edges of the graph in the opposite direction, i.e. making
-use of the preimage of reachability. We use this intuition when defining \textit{demands} and \textit{demanded
-by} over the dependence graph $G$:
-%in terms of $R_G$, we refer to the dependence $G$:
+With respect to a graph $G$, the set of outputs demanded by some inputs $X$ is simply the subset of the
+outputs of $G$ that are reachable from $X$, i.e.~the intersection of $\demandsR_{R}(X)$ with $\sources{G}$.
+Conversely, the set of inputs that some outputs $Y$ demands is simply the subset of the inputs of $G$
+reachable from the output by traversing the edges of the graph in the opposite direction, i.e.~the
+intersection of $\demandedByR_{R}$ with $\sinks{G}$. This leads to the following definition:
 
-\begin{definition}[Demands and Demanded By on a graph]
+\begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
    of $R_G$ to the sources and sinks of $G$, we have:
    \begin{itemize}
@@ -184,8 +181,6 @@ by} over the dependence graph $G$:
    \end{itemize}
       \DOnote{Provide the types here?}
 \end{definition}
-
-\cd{Explain the purpose of the rechability restriction, $R'_G$.}
 
 In \secref{overview}, we introduced the notions of related inputs and related outputs.
 Now, we can provide a formal account for them.
