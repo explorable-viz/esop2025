@@ -1,4 +1,4 @@
-\begin{figure}
+\begin{figure}[H]
   {\small \flushleft \shadebox{$\gamma, e, V \evalS v, G$}%
   \begin{smathpar}
      %
@@ -158,28 +158,6 @@
         G \disjunion G'
      }
   \end{smathpar}}
-  \\[2mm]
-  {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS \seq{v}, G$}%
-  \begin{smathpar}
-     \inferrule*[
-        lab={\ruleName{$\evalS$-seq}}
-     ]
-     {
-        \gamma, e_i, V \evalS v_i, G_i
-        \\
-        (\forall i \numleq \length{\seq{e}})
-     }
-     {
-        \gamma, \seq{e}, V
-        \evalS
-        \seq{v},
-        \textstyle{\bigdisjunion} \seq{G}
-     }
-     %
-     \and
-     %
-  \end{smathpar}}
-  \vspace{-0.5cm}
-  \caption{Operational semantics: evaluation and graph construction, for (selectively) annotated expressions $e_\alpha$}
+  \caption{Operational semantics: evaluation and graph construction for (selectively) annotated expressions $e_\alpha$}
   \label{fig:core:eval-ann-expr}
 \end{figure}
