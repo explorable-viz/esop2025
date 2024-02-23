@@ -210,9 +210,9 @@ presentation of graphs in terms of adjacency maps is useful notationally.
 by $Y$.
 \end{definition}
 
-The $\demandsAlg{}$ algorithm computes reachability by incrementally building a subgraph $G'$, consisting of
-all nodes and edges that can be traversed from the initial starting set. The algorithm begins by taking a set
-of nodes and accumulating their neighbours. Every time a new node is reached by traversing an edge, we enqueue
+The $\demandsAlg{G_0}$ algorithm first builds the \emph{reachable subgraph} $G' \subseteq G_0$ consisting of
+all nodes reachable from the starting set and all edges between them. The algorithm begins by taking a set of
+nodes and accumulating their neighbours. Every time a new node is reached by traversing an edge, we enqueue
 its own neighbours, and add it to the graph we are constructing (\ruleName{$\demandsV{}$-extend}). If we
 traverse an edge and reach a node we've already met, we simply skip it (\ruleName{$\demandsV{}$-skip}) At the
 algorithm's termination (\ruleName{$\demandsV{}$-done}), we have traversed every edge and node reachable from
