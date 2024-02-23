@@ -1,5 +1,6 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
+
 We introduce some preliminary notation (\secref{conjugate:notation}), before building up the intuition needed
 to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read
 the algorithms that compute them (\secref{conjugate:dependence-graph-algos}).
@@ -119,8 +120,8 @@ We observe that the image and preimage of a relation form  a
 \end{lemma}
 
 If we interpret $R$ as meaning ``demanded by'', this makes intuitive sense: for some inputs $X' \subseteq X$
-and outputs $Y' \subseteq Y$, if the outputs $X'$ is demanded by shares at least one element with $Y'$, then
-we would expect the inputs that $Y'$ demands to also share at least one element with $X'$.
+and outputs $Y' \subseteq Y$, if the outputs $X'$ is demanded by include at least one element from $Y'$, then
+we would expect the inputs that $Y'$ demands to include at least one element from $X'$, and vice versa.
 
 We note that these two functions do not always form a Galois connection, since the composition of the two
 functions is not necessarily inflationary, contradicting a basic fact of Galois connections, which we picture
@@ -195,15 +196,15 @@ i.e.~$\demandedByR_{G}(\demandsR_{G}(Y'))$.
 \label{sec:conjugate:dependence-graph-algos}
 
 We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ for a dependence graph $G$. An alternative
-presentation of graphs in terms of adjacency maps will be useful notationally.
+presentation of graphs in terms of adjacency maps is useful notationally.
 
-\begin{definition}[Graphs as adjacency maps]
+\begin{definition}[Graph as adjacency map]
    A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
    neighbours, where
    \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
 
-\begin{definition}[$\demandsAlg{G}$]
+\begin{definition}[$\demandedByAlg{G}$]
 \figref{conjugate:algorithms:demands} defines the $\demandedByAlg{}$ procedure. The judgement $X
 \demandedByAlg{G} Y$ for any $X \subseteq \sources{G}$ and $Y \subseteq \sinks{G}$ means that $X$ is demanded
 by $Y$.
