@@ -134,7 +134,7 @@ it demands to also be sufficient to reconstruct it. This leads us to define the 
    For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
    \begin{itemize}
       \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
-      \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \forall (x, y) \in R.y \in Y'}$ \hfill (dual preimage)
+      \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill (dual preimage)
    \end{itemize}
 \end{definition}
 
@@ -159,8 +159,12 @@ into $\demandedByR_R$, using the De Morgan Dual.
    \end{itemize}
 \end{proposition}
 
-\begin{lemma}[Duality of $\demandedByR$ and $\sufficesR$]
-   $\dual{\demandedByR_R} = \sufficesR_R$.
+\begin{lemma}[Duality of image and preimage functions]
+   \item
+   \begin{enumerate}
+      \item $\dual{\demandedByR_R} = \sufficesR_R$
+      \item $\dual{\demandsR_R} = \preimageDualR_R$
+   \end{enumerate}
 \end{lemma}
 
 \todo{Substantial rework needed} We note that these two functions do not always form a Galois connection,
