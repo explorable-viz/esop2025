@@ -118,9 +118,9 @@ We observe that the image and preimage of a relation form  a
    X \times Y$, $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
 \end{lemma}
 
-This makes sense as a condition for  \textit{demands} and \textit{demanded by}: for some subsets $X',Y'$, if
-the output values $X'$ is demanded by has an empty intersection with $Y'$, then we would expect the set of
-input values that $Y'$ demands to have an empty intersection with $X'$.
+If we interpret $R$ as meaning ``demanded by'', this makes intuitive sense: for some inputs $X' \subseteq X$
+and outputs $Y' \subseteq Y$, if the outputs $X'$ is demanded by shares at least one element with $Y'$, then
+we would expect the inputs that $Y'$ demands to also share at least one element with $X'$.
 
 We note that these two functions do not always form a Galois connection, since the composition of the two
 functions is not necessarily inflationary, contradicting a basic fact of Galois connections, which we picture
@@ -154,23 +154,14 @@ As an easy corollary, if $\demandsR$ and $\demandedByR$ both preserve $\emptyset
 connection, albeit an antitone one. This is useful to know, since we may be working in a context where we wish
 to consider a filtered view of the data, where the user is shown only the data used by the original program.
 
-\subsection{Computing $\demandsR$ and $\demandedByR$ over Dependence Graphs}
-\label{sec:conjugate:dependence-graph-algos}
+\subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
 
-We now show how to compute $\demandedByR_{R}$ and $\demandsR_{R}$ for the reachability relation $R$ of a
-dependence graph. Whilst one can view a graph as a collection of vertices and edges, we give an alternative
-presentation as an adjacency map which can be useful notationally.
-
-\begin{definition}[Graphs as adjacency maps]
-   A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
-   neighbours, where $G(\alpha) = V' \iff \alpha \in V$ and $(\alpha, \beta) \in E$ for all $\beta \in V'$.
-\end{definition}
-
-With respect to a graph $G$, the set of outputs demanded by some inputs $X$ is simply the subset of the
-outputs of $G$ that are reachable from $X$, i.e.~the intersection of $\demandsR_{R}(X)$ with $\sources{G}$.
-Conversely, the set of inputs that some outputs $Y$ demands is simply the subset of the inputs of $G$
-reachable from the output by traversing the edges of the graph in the opposite direction, i.e.~the
-intersection of $\demandedByR_{R}$ with $\sinks{G}$. This leads to the following definition:
+We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its reachability
+relation. The set of outputs demanded by some inputs $X$ is simply the subset of the outputs of $G$ reachable
+from $X$, i.e.~the intersection of $\demandsR_{R}(X)$ with $\sources{G}$. Conversely, the set of inputs that
+some outputs $Y$ demands is simply the subset of the inputs of $G$ reachable from $Y$ by traversing the graph
+in the opposite direction, i.e.~the intersection of $\demandedByR_{R}$ with $\sinks{G}$. This leads to the
+following definition:
 
 \begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
    For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
@@ -199,6 +190,18 @@ i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \s
 ``what else can be reached by the things that reach Y?'', and first finds all inputs $\demandsR_{G}(Y')$ that
 our selected outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y')$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y'))$.
+
+\subsection{Computing $\demandsR_G$ and $\demandedByR_G$}
+\label{sec:conjugate:dependence-graph-algos}
+
+We now show how to compute $\demandedByR_{R}$ and $\demandsR_{R}$ for the reachability relation $R$ of a
+dependence graph. An alternative presentation of graphs in terms of adjacency maps will be useful
+notationally.
+
+\begin{definition}[Graphs as adjacency maps]
+   A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
+   neighbours, where $G(\alpha) = V' \iff \alpha \in V$ and $(\alpha, \beta) \in E$ for all $\beta \in V'$.
+\end{definition}
 
 We compute $\demandedByR_G$ using the algorithm $\demandsAlg{}$ detailed in
 \figref{conjugate:algorithms:demands}. The algorithm computes reachability by incrementally building a
