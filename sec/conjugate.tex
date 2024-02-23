@@ -166,10 +166,9 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
    For a graph $G = (V,E)$ with reachability relation $R$ and IO relation $R' \eqdef R \cap (\sources{G}
    \times \sinks{G}$), define:
    \begin{itemize}
-      \item $\demandsR_G \eqdef \demandsR_{R'}$ \hfill (demands)
-      \item $\demandedByR_G \eqdef \demandedByR_{R}'$ \hfill (demanded by)
+      \item $\demandedByR_G \eqdef \demandedByR_{R}': \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
+      \item $\demandsR_G \eqdef \demandsR_{R'}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{itemize}
-      \DOnote{Provide the types here?}
 \end{definition}
 
 In \secref{overview}, we introduced the notions of related inputs and related outputs.
