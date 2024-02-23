@@ -1,9 +1,10 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
-We introduce some preliminary notation (\secref{conjugate:notation}), before building up the intuition needed
-to formally define \textit{demands} and \textit{demanded by} (\secref{conjugate:dependence-graphs}), and read
-the algorithms that compute them (\secref{conjugate:dependence-graph-algos}).
+In this section we introduce some preliminary concepts and notation, including Boolean algebras
+(\secref{conjugate:notation}); dynamic dependence graphs (\secref{conjugate:dependence-graphs}, image and
+preimage functions for a relation and the ideas of conjugates, duals and adjoints between
+Boolean algebras (\secref{image-preimage}). We then give algorithms for computing a dual pair of analyses for the reachability relation of a dependence graph (\secref{conjugate:dependence-graph-algos}).
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -43,6 +44,7 @@ complement, so that $\neg X' = X \setminus X'$.
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
+
 We explain how we arrive at specific dependence graphs until \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
 $V$ of \emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph
@@ -80,6 +82,9 @@ dependency relation for $G$, specifying how specific ``inputs'' (sources) are de
 actually interested in the relationship between input and outputs \emph{selections} (i.e.~sets of inputs and
 outputs), we lift this IO relation to sets via the \textit{image} and \textit{preimage functions} of an
 arbitrary relation, which here we denote using $\demandedByR$ and $\demandsR$:
+
+\subsection{Conjugate Image and Preimage Functions}
+\label{sec:conjugate:image-preimage}
 
 \begin{definition}[Image and Preimage Functions for a Relation]
    For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
