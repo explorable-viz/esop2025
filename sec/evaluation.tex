@@ -62,30 +62,23 @@ We thus boil down the performance testing to the following three research questi
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
    \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
+   \item RQ4: How does the performance vary in the size of the program input? \jb{not sure about this one}
 \end{itemize}
 
 Still have the general question of how we can motivate the inclusion of suffices.
 
 \subsubsection{Choice of Examples}
 
-Since we desired a like-for-like comparison with the state of the art approach,
-we were unable to directly test the performance of linked-input examples. Instead
-we directly measured the performance of the main components of the system.
-
-We also wanted our test cases to represent a range of data analysis tasks, with
-some programs making use of data-parallelism, and some being more sequential in
-nature. We aggregated these examples into three groups,
-matrix examples, a graphics library, and some linked outputs examples.
-
-The matrix examples include several convolution examples, which make use of a
-high degree of parallelism in the data, and an implementation of dynamic time
-warping, which is representative of a more sequential stateful algorithm.
-
-The graphics library is illustrative of the kind of visualization code that we
-expect to benefit from, implementing visual objects like grouped and stacked bar
-charts, line charts and charts for categorical data.
-The linked outputs examples.
-\todo{Need to give an account of the linked output examples}
+We tested our system on a range of examples constituting the larger programs we
+implemented in \OurLang. These programs represent a range of components a data
+scientist may find useful in an exploratory data analysis scenario. Firstly,
+we have implemented and tested performance on some matrix convolutions. Different
+filter matrices create subtly different dependency structures, hence we have
+implemented a few different filters. Secondly, we have an example of a more
+sequential algorithmic program, an implementation of dynamic time warping,
+known from time series analyis. Third, we have developed a prototype of a graphics
+library, to demonstrate performance on bespoke visualization code. Finally,
+we have tested some of the linked examples from \secref{overview}.
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
 We first proceed by comparing the time taken to evaluate a program in the
@@ -95,10 +88,10 @@ Since the graph is a more complex data structure to build compared to the trace
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
-In \tableref{eval-speedups}, we see a slowdown of a factor of 3 for
-the matrix examples, and a factor of 10 for the graphical examples \jb{These
-numbers are subject to change as Roly makes some implementation updates.}
-\todo{Implement linked examples}
+In \tableref{eval-speedups}, we see that, as expected, the evaluation of programs
+to their dynamic dependence graph does incur some increased overhead, ranging from
+3 to 10 times slower than their trace based counterparts. \jb{Still subject to a
+change}
 
 We consider the primary focus of the evaluation to be in the types of interactions
 that we can support, rather than the performance of the initial program evaluation.
@@ -109,12 +102,15 @@ tradeoff, when we consider the relative performance of implementing
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
-We now compare the performance of the twin implementations in terms of computing
-demands. We observe a significant increase in the performance of demands using
-the graphical approach, shown in \tableref{demands-speedups}.
-In our matrix examples, we observe an average increase
-of approximately 40 times, whereas in the graphical examples, the speedup
-is approximately 32 times faster.
+We now compare the performance of the twin implementations when it comes to the
+computation of demands. We observe a significant increase in the performance of
+demands using the graphical approach, shown in \tableref{demands-speedups}. 
+
+This increased performance for computing \textit{demands} varies across the
+examples, with some examples exhibiting a speedup of more than 50, and the lowest
+-- the stateful dynamic time warp example -- closer to 12 times speedup.
+This is still a significant improvement in performance across all of our tested
+examples.
 
 We attribute this performance improvement due to the fact that the execution
 trace approach requires the system to completely rewind the execution of the
@@ -124,7 +120,7 @@ Thus in highly data-parallel examples -- like convolution -- we expect and indee
 observe a greater increase in performance. In contrast the graphics library code
 and the dynamic time warp implementation do not exhibit quite the same level
 of speedup, since they rely on a more sequential flow of data through the program,
-in effect, $\demandsR{}$ has to traverse a greater portion of the graph.
+which has the effect of forcing $\demandR{}$ to traverse a greater portion of the graph.
 
 
 {\tiny\input{fig/performance/demands-speedup.tex}}
