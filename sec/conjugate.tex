@@ -234,6 +234,7 @@ Now, we can provide a formal account for them.
       \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
    \end{enumerate}
 \end{definition}
+
 Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
 $\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what else can
 reach the vertices that X can reach?'', and first finds all outputs $\demandedByR_{G}(X')$ that
@@ -262,12 +263,12 @@ presentation of graphs in terms of adjacency maps is useful notationally.
 For a dependence graph $G_0$ and inputs $X \subseteq \sources{G_0}$, the judgement $X\;
 \smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. It makes use of an
 auxiliary definition $\demandedByV{G_0}$ which maintains a set of vertices still to process and builds the
-subgraph $G \subseteq G_0$ consisting of all vertices reachable from the initial set and all edges between them.
-If $X$ is empty (\ruleName{done}) the reachable subgraph $G$ is complete and can be returned. Otherwise we
-select an arbitrary vertex $\alpha$ from $X$. If $\alpha$ is already in $G$ (\ruleName{skip}), there is
-nothing to do at this step. Otherwise, we add the out-star at $\alpha$ to $G$ and the out-neighbours to the
-pending vertices (\ruleName{extend}). When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output
-set from the accumulator by intersecting with $\sinks{G}$.
+subgraph $G \subseteq G_0$ consisting of all vertices reachable from the initial set and all edges between
+them. If $X$ is empty (\ruleName{done}) the reachable subgraph $G$ is complete and can be returned. Otherwise
+we select an arbitrary vertex $\alpha$ from $X$. If $\alpha$ is already in $G$ (\ruleName{skip}), there is
+nothing to do at this step and we continue with the remaining vertices. Otherwise, we add the out-star at
+$\alpha$ to $G$ and the out-neighbours to the pending vertices (\ruleName{extend}). When $\demandedByV{}$ is
+done, $\demandedByAlg{}$ extracts the output set from the accumulator by intersecting with $\sinks{G}$.
 
 % \RPnote{Roughly speaking, these are now informal observations which are part of the explanation of the
 % judgement above.}
@@ -300,7 +301,9 @@ set from the accumulator by intersecting with $\sinks{G}$.
 
 We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This is potentially more
 efficient in situations where less graph is traversed than it would be otherwise. We therefore provide a more
-efficient implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
+efficient implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}. Our
+implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we free make use of both in the
+algorithm.
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a subgraph of the original dependence graph, similar to $\demandsAlg{}$. In the
