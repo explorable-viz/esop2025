@@ -62,6 +62,7 @@ We thus boil down the performance testing to the following three research questi
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
    \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
+   \item RQ4: How does the performance vary in the size of the program input? \jb{not sure about this one}
 \end{itemize}
 
 Still have the general question of how we can motivate the inclusion of suffices.
@@ -101,12 +102,15 @@ tradeoff, when we consider the relative performance of implementing
 {\tiny\input{fig/performance/eval-speedup.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
-We now compare the performance of the twin implementations in terms of computing
-demands. We observe a significant increase in the performance of demands using
-the graphical approach, shown in \tableref{demands-speedups}. 
-In our matrix examples, we observe an average increase
-of approximately 40 times, whereas in the graphical examples, the speedup
-is approximately 32 times faster. 
+We now compare the performance of the twin implementations when it comes to the
+computation of demands. We observe a significant increase in the performance of
+demands using the graphical approach, shown in \tableref{demands-speedups}. 
+
+This increased performance for computing \textit{demands} varies across the
+examples, with some examples exhibiting a speedup of more than 50, and the lowest
+-- the stateful dynamic time warp example -- closer to 12 times speedup.
+This is still a significant improvement in performance across all of our tested
+examples.
 
 We attribute this performance improvement due to the fact that the execution
 trace approach requires the system to completely rewind the execution of the
@@ -116,7 +120,7 @@ Thus in highly data-parallel examples -- like convolution -- we expect and indee
 observe a greater increase in performance. In contrast the graphics library code
 and the dynamic time warp implementation do not exhibit quite the same level
 of speedup, since they rely on a more sequential flow of data through the program,
-in effect, $\demandR{}$ has to traverse a greater portion of the graph.
+which has the effect of forcing $\demandR{}$ to traverse a greater portion of the graph.
 
 
 {\tiny\input{fig/performance/demands-speedup.tex}}
