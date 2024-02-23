@@ -31,8 +31,8 @@ def decompose_benchmarks():
 
 
 def eval_SpdUp(df):
-    df['Eval-SpdUp'] = df['T-Eval'] / df['G-Eval']
-    out = df[['T-Eval', 'G-Eval', 'Eval-SpdUp']]
+    df['Eval-Slowdown'] = df['G-Eval'] / df['T-Eval']
+    out = df[['T-Eval', 'G-Eval', 'Eval-Slowdown']]
     tex_file = open('fig/performance/eval-SpdUp.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption = "Evaluation Time of Traces Versus Graphs (ms)", label='table:eval-SpdUps', longtable=True))
     tex_file.close()
