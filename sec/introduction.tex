@@ -1,6 +1,8 @@
 \section{Introduction: Towards Transparent Research Outputs}
 \label{sec:introduction}
 
+\todo{This section still WIP}
+
 Whether formulating a national policy or simply deciding what groceries to buy, we increasingly rely on the
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions. However, most of the artefacts we encounter are
@@ -59,19 +61,19 @@ for inverting selections in visual space to obtain selections in the input data 
 relational visualisation language, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
-functional language using a pair of dependency-tracking operators, written here as $\demandR$ (demands) and
-$\sufficientR$ (suffices for), linking specific output selections to input selections. The formal guarantee
-that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandR$ and
-$\sufficientR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
+functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
+$\sufficesR$ (suffices for), linking specific output selections to input selections. The formal guarantee
+that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandsR$ and
+$\sufficesR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
 mutual reciprocality:
-\[\demandR(Y) \leq X \iff Y \leq \sufficientR(X)\]
+\[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
 \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if a set of
 outputs $Y$ demands a set of inputs $X$, then $X$ is the smallest set of inputs which suffices for outputs
 which include $Y$; and conversely that if a set of inputs $X$ suffices for $Y$, then $Y$ is the greatest set
 of outputs whose demand lies within $Y$. (A Galois connection in this sense simply relaxes the usual
 isomorphism laws to inequalities.) Galois connections lend themselves well to bidirectional reasoning about
-resource consumption because the $\sufficientR$ direction (sufficiency) can be interpreted in terms of
+resource consumption because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of
 (fine-grained) reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one)
 is in fact sufficient to reproduce a particular feature of a complex output.
 
@@ -97,11 +99,11 @@ they might be related also arises.
 A system with automated data transparency allows the user to investigate questions like these by interacting
 directly with the artefacts. By selecting an interesting part of the output, they can obtain a view of the
 relevant data. On the left the bar segments highlighted with a dark border indicate such a selection; the
-table underneath shows the demanded data (computed using our version of the $\demandR$ operator) and we are
+table underneath shows the demanded data (computed using our version of the $\demandsR$ operator) and we are
 also able to automatically select any outputs in the other chart which demand any of the same data using an
-other operator $\demandByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
-input}, is highlighted in [...] Perera et al defined such a $\demandByR$ operator as the De Morgan dual of the
-``suffices for'' operator $\sufficientR$; one of our contributions is to show that $\demandByR$ can be
+other operator $\demandedByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
+input}, is highlighted in \todo{todo}. Perera et al defined such a $\demandedByR$ operator as the De Morgan dual
+of the ``suffices for'' operator $\sufficesR$; one of our contributions is to show that $\demandedByR$ can be
 computed in a more direct fashion using dependence graphs.
 
 \subsection{Contributions}
@@ -112,7 +114,7 @@ in a more language-independent way, using \emph{dynamic dependence graphs}. This
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
 slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
-based on adjoint pairs of operators (such as $\demandR$ and $\sufficientR$). These approaches
+based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These approaches
 (e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
 in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
 a backwards execution. This method is quite inefficient and non-trivial to prove correct; a graph-based
@@ -125,7 +127,7 @@ relevance which arises between inputs when they contribute to common features of
 formulate queries like ``What outputs use this data element, and what other data elements are used along with
 it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
 dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot}, which can be understood as
-cognacy in $G^{\op}$. In the graphical setting these are both easy to compute, since they amount to the two
+cognacy in $\opGraph{G}$. In the graphical setting these are both easy to compute, since they amount to the two
 ways of composing reachability in $G$ with its relational converse.
 
 \secref{overview} presents an overview of our approach and language, and motivates the idea of a ``related
@@ -133,19 +135,19 @@ inputs'' query from an end-user perspective. The rest of the paper is then organ
 
 \begin{itemize}[leftmargin=*]
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
-  the cognacy operator $\relInput$ (``related inputs'') and unpacking the intuitive relationship between its
-  two components $\demandR$ (``demands'') and $\demandByR$ (``demanded by'') in terms of
+  the cognacy operator $\relInputR$ (``related inputs'') and unpacking the intuitive relationship between its
+  two components $\demandsR$ (``demands'') and $\demandedByR$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
-  cognacy operator $\relOutput$ (``related outputs'') and explain the relationship to Galois connections: $f$
+  cognacy operator $\relOutputR$ (``related outputs'') and explain the relationship to Galois connections: $f$
   and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
-  give procedures for computing $\demandR_{R}$ and $\sufficientR_{R}$ over a directed graph with reachability
+  give procedures for computing $\demandsR_{R}$ and $\sufficesR_{R}$ over a directed graph with reachability
   relation $R$.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
-  with a dynamic dependence graph suitable for computing $\demandR$ and $\demandByR$. We show how to represent
+  with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
   (parts of) values as vertices in the graph.
 \item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
   implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
-  building trace vs.~building dependence graphs, computing $\demandR$ and $\demandByR$ over each, and the
+  building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
   relative implementation burden of the two approaches.
 \item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
 \end{itemize}

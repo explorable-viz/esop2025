@@ -1,135 +1,135 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \demandsAlg{G_0} V'$}
+      {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
          \begin{smathpar}
             \inferrule*[
-              lab={\ruleName{$\demandsAlg{}$}},
+              lab={\ruleName{$\demandedByAlg{}$}},
               right={$V \subseteq \sources{G_0}$}
             ]
             {
                (\emptyset, \emptyset), V
-               \demandsVert{G_0}
+               \demandedByV{G_0}
                G
             }
             {
-               V \demandsAlg{G_0} \sinks{G}
+               V \demandedByAlg{G_0} \sinks{G}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, V \demandsVert{G_0} G'$}
+         {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{$\demandsVert{}$-done}},
+           lab={\ruleName{$\demandedByV{}$-done}},
            right=$G \subseteq G_0$
          ]
          {
             \strut
          }
          {
-            G, \emptyset \demandsVert{G_0} G
+            G, \emptyset \demandedByV{G_0} G
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandsVert{}$-skip}},
+            lab={\ruleName{$\demandedByV{}$-skip}},
             right={$\alpha \in \V(G)$}
          ]
          {
             G, V
-            \demandsVert{G_0}
+            \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandsVert{G_0} G'
+            G, \alpha \cons V \demandedByV{G_0} G'
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandsVert{}$-extend}},
+            lab={\ruleName{$\demandedByV{}$-extend}},
             right={$H = \set{\bind{\alpha}{V'}}$}
          ]
          {
             G \disjunion H, V' \disjunion V
-            \demandsVert{G_0}
+            \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandsVert{G_0} G'
+            G, \alpha \cons V \demandedByV{G_0} G'
          }
          \end{smathpar}}
-         \caption{Computation of Demands/Demanded By}
+         \caption{$\demandedByAlg{}$ algorithm}
          \label{fig:conjugate:algorithms:demands}
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V \fwdAlg{G_0} V'$}\hfill\textit{where $V \subseteq \sinks{G_0}$ and $V' \subseteq \sources{G_0}$}}
+   {\small \flushleft \shadebox{$V \sufficesAlg{G_0} V'$}\hfill\textit{where $V \subseteq \sinks{G_0}$ and $V' \subseteq \sources{G_0}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdAlg{}$}}]
+      \inferrule*[lab={\ruleName{$\sufficesAlg{}$}}]
       {
          (V, \emptyset),
          \emptyset,
          \outE{G_0}(V)
-         \fwdEdges{G_0}
+         \sufficesE{G_0}
          G, H
       }
       {
-         V \fwdAlg{G_0} \sources{G}
+         V \sufficesAlg{G_0} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, E \fwdEdges{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\fwdEdges{}$-done}}]
+      \inferrule*[lab={\ruleName{$\sufficesE{}$-done}}]
       {
          \strut
       }
       {
-         G, H, \emptyset \fwdEdges{G_0} G, H
+         G, H, \emptyset \sufficesE{G_0} G, H
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdEdges{}$-pending}},
+         lab={\ruleName{$\sufficesE{}$-pending}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
          \preim{H_0}(\alpha) \subset \preim{G_0}(\alpha)
          \\
          G, H_0, E
-         \fwdEdges{G_0}
+         \sufficesE{G_0}
          G', H'
       }
       {
          G, H, (\alpha, \beta) \cons E
-         \fwdEdges{G_0}
+         \sufficesE{G_0}
          G', H'
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\fwdEdges{}$-extend}},
+         lab={\ruleName{$\sufficesE{}$-extend}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
          \preim{H_0}(\alpha) = \preim{G_0}(\alpha)
          \\
          G \disjunion G_0(\alpha), H \setminus \set{\alpha}, \outE{G_0}(\alpha) \cup E
-         \fwdEdges{G_0}
+         \sufficesE{G_0}
          G', H'
       }
       {
          G, H, (\alpha, \beta) \cons E
-         \fwdEdges{G_0}
+         \sufficesE{G_0}
          G', H'
       }
    \end{smathpar}
-   \caption{Computation of Sufficiency}
+   \caption{$\sufficesAlg{}$ algorithm}
    \label{fig:conjugate:slicing:forward}
    \end{subfigure}
-   \caption{Rules which define the algorithms \opName{reaches} and \opName{suffices}}
+   \caption{Dual dependency analyses over graphs}
    \label{fig:conjugate:algorithms}
 \end{figure}

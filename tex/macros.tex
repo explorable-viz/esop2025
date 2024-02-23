@@ -25,18 +25,9 @@
 \newcommand*{\fatsearrow}{\rotatebox[origin=c]{-45}{$\Rightarrow$}}
 
 % These need to be reorganized
-\newcommand*{\demands}[1]{demands(#1)}
-\newcommand*{\demandR}{\triangledown}
-\newcommand*{\demandBy}[1]{demandedBy(#1)}
-\newcommand*{\demandByR}{\triangle}
-\newcommand*{\sufficientR}{\blacktriangle}
 \newcommand*{\restrict}[2]{#1\hspace{-0.3em}\mid_{#2}}
 \newcommand*{\funProd}[2]{\langle#1,#2\rangle}
 \newcommand*{\padArg}[2]{\hspace{-#2}#1\hspace{#2}}
-\newcommand*{\relOutput}{{\demandByR}\!{\demandR}}
-\newcommand*{\relInput}{{\demandR}\!{\demandByR}}
-\newcommand*{\bwd}[1]{#1_{\demandR}}
-\newcommand*{\fwd}[1]{#1_{\demandByR}}
 \newcommand*{\joinF}{\opName{join}}
 \newcommand*{\meetF}{\opName{meet}}
 \newcommand*{\inFst}{\opName{inFst}}
@@ -129,7 +120,7 @@
 \newcommand{\partialGCto}{\rightleftharpoons}
 
 % sequences, maps
-\newcommand{\seqEmpty}{\varepsilon}
+\newcommand{\seqEmpty}{\epsilon}
 \newcommand{\bind}[2]{{#1}:{#2}}
 
 % contexts
@@ -391,28 +382,17 @@
 \newcommand*{\orElse}{\rightharpoonup}
 
 % slicing
-\newcommand*{\bwdS}{\scalebox{0.8}{$\vartriangleleft$}}
-\newcommand*{\bwdDualS}{\scalebox{0.8}{$\blacktriangleleft$}}
-\newcommand*{\fwdS}{\scalebox{0.8}{$\vartriangleright$}}
-\newcommand*{\fwdDualS}{\scalebox{0.8}{$\blacktriangleright$}}
-\newcommand*{\consumesAlgS}{\mathrel{\opName{bwd}}}
-\newcommand*{\consumesAlgR}[1]{\consumesAlgS_{#1}}
-\newcommand*{\bwdEdges}[1]{\mathrel{{\bwdS}\opName{edges}_{#1}}}
-\newcommand*{\bwdVertices}[1]{\mathrel{{\bwdS}\opName{vertices}_{#1}}}
-\newcommand*{\demandsVert}[1]{\mathrel{\opName{reachesV}_{#1}}}
-\newcommand*{\bwdAlg}[1]{\mathrel{{\bwdS}\opName{alg}_{#1}}}
-\newcommand*{\demandsAlg}[1]{\mathrel{\opName{reaches}_{#1}}}
-\newcommand*{\fwdEdge}[1]{\mathrel{{\fwdS}\opName{edge}_{#1}}}
-\newcommand*{\fwdEdges}[1]{\mathrel{\opName{suffEdges}_{#1}}}
-\newcommand*{\fwdVertex}[1]{\mathrel{{\fwdS}\opName{vertex}_{#1}}}
-\newcommand*{\fwdVertices}[1]{\mathrel{{\fwdS}\opName{vertices}_{#1}}}
-\newcommand*{\fwdAlg}[1]{\mathrel{\opName{suffices}_{#1}}}
-\newcommand*{\consumesF}[1]{\bwdS_{#1}}
-\newcommand*{\consumesDualF}[1]{\bwdDualS_{#1}}
-\newcommand*{\producesF}[1]{\fwdS_{#1}}
-\newcommand*{\producesDualF}[1]{\fwdDualS_{#1}}
-\newcommand*{\relatedOutputsF}[1]{{\bwdS}{\fwdDualS}_{#1}}
-\newcommand*{\relatedInputsF}[1]{{\fwdDualS}{\bwdS}_{#1}}
+\newcommand*{\demandsR}{\triangledown}
+\newcommand*{\demandedByR}{\triangle}
+\newcommand*{\sufficesR}{\blacktriangle}
+\newcommand*{\relOutputR}{{\demandedByR}\!{\demandsR}}
+\newcommand*{\relInputR}{{\demandsR}\!{\demandedByR}}
+\newcommand*{\demandsV}[1]{\mathrel{\opName{demandsV}_{#1}}}
+\newcommand*{\demandsAlg}[1]{\mathrel{\opName{demands}_{#1}}}
+\newcommand*{\demandedByV}[1]{\mathrel{\opName{demandedByV}_{#1}}}
+\newcommand*{\demandedByAlg}[1]{\mathrel{\opName{demandedBy}_{#1}}}
+\newcommand*{\sufficesE}[1]{\mathrel{\opName{sufficesE}_{#1}}}
+\newcommand*{\sufficesAlg}[1]{\mathrel{\opName{suffices}_{#1}}}
 
 % lattices
 \newcommand*{\disjjoin}{\mathbin{\ooalign{$\join$\cr%
@@ -494,10 +474,5 @@
 % \\[0.25em]%
 % }
 \newcommand*{\arity}[1]{\mathSf{arity}(#1)}
-%\newcommand*{\opAnd}{\;\opName{and}\;}
 
-\theoremstyle{acmdefinition}
-\newtheorem{notation}{Notation}[section] % 1]{\paragraph{Notation (#1)}}{\hfill}
-\newtheorem*{notation*}{Notation}
-
-\newcommand*{\op}{\opName{op}}
+\newcommand*{\opGraph}[1]{#1^{-1}}
