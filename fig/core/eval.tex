@@ -87,7 +87,7 @@
       \and
       %
       \inferrule*[ lab={\ruleName{$\evalS$-foreign-app}}
-      , right={$\Sigma(f) = |\seq{e}|$}]
+      , right={$\Phi(f) = |\seq{e}|$}]
       {
          \gamma, \seq{e}, V \evalS \seq{v}, G
          \\
@@ -149,7 +149,7 @@
          \hspace{0.5cm}
          v', \sigma \match \gamma_3, e^\twoPrime, V'
          \hspace{0.5cm}
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\twoPrime, \alpha \cons V' \evalS u, G_4
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\twoPrime,  V' \disjunion \set{\alpha} \evalS u, G_4
       }
       {
          \gamma, \exApp{e}{e'}, V
