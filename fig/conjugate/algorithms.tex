@@ -3,7 +3,7 @@
       {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
          \begin{smathpar}
             \inferrule*[
-              lab={\ruleName{$\demandedByAlg{}$}},
+%              lab={\ruleName{$\demandedByAlg{}$}},
               right={$V \subseteq \sources{G_0}$}
             ]
             {
@@ -20,7 +20,7 @@
          {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{$\demandedByV{}$-done}},
+           lab={\ruleName{done}},% $\demandedByV{}$-done}},
            right=$G \subseteq G_0$
          ]
          {
@@ -33,7 +33,7 @@
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandedByV{}$-skip}},
+            lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
             right={$\alpha \in \V(G)$}
          ]
          {
@@ -48,7 +48,7 @@
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandedByV{}$-extend}},
+            lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
             right={$H = \set{\bind{\alpha}{V'}}$}
          ]
          {
