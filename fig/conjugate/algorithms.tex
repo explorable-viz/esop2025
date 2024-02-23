@@ -1,66 +1,66 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \demandsAlg{G_0} V'$}
+      {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
          \begin{smathpar}
             \inferrule*[
-              lab={\ruleName{$\demandsAlg{}$}},
+              lab={\ruleName{$\demandedByAlg{}$}},
               right={$V \subseteq \sources{G_0}$}
             ]
             {
                (\emptyset, \emptyset), V
-               \demandsV{G_0}
+               \demandedByV{G_0}
                G
             }
             {
-               V \demandsAlg{G_0} \sinks{G}
+               V \demandedByAlg{G_0} \sinks{G}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, V \demandsV{G_0} G'$}
+         {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{$\demandsV{}$-done}},
+           lab={\ruleName{$\demandedByV{}$-done}},
            right=$G \subseteq G_0$
          ]
          {
             \strut
          }
          {
-            G, \emptyset \demandsV{G_0} G
+            G, \emptyset \demandedByV{G_0} G
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandsV{}$-skip}},
+            lab={\ruleName{$\demandedByV{}$-skip}},
             right={$\alpha \in \V(G)$}
          ]
          {
             G, V
-            \demandsV{G_0}
+            \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandsV{G_0} G'
+            G, \alpha \cons V \demandedByV{G_0} G'
          }
          %
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandsV{}$-extend}},
+            lab={\ruleName{$\demandedByV{}$-extend}},
             right={$H = \set{\bind{\alpha}{V'}}$}
          ]
          {
             G \disjunion H, V' \disjunion V
-            \demandsV{G_0}
+            \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandsV{G_0} G'
+            G, \alpha \cons V \demandedByV{G_0} G'
          }
          \end{smathpar}}
-         \caption{Computation of Demands/Demanded By}
+         \caption{$\demandedByAlg{}$ algorithm}
          \label{fig:conjugate:algorithms:demands}
    \end{subfigure}
    \\[3mm]
@@ -127,9 +127,9 @@
          G', H'
       }
    \end{smathpar}
-   \caption{Computation of Sufficiency}
+   \caption{$\sufficesAlg{}$ algorithm}
    \label{fig:conjugate:slicing:forward}
    \end{subfigure}
-   \caption{Rules which define the algorithms \opName{reaches} and \opName{suffices}}
+   \caption{Dual dependency analyses over graphs}
    \label{fig:conjugate:algorithms}
 \end{figure}
