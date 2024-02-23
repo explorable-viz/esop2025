@@ -1,0 +1,39 @@
+let coords (Group gs) = Point 0 0;
+    coords (Rect x y _ _ _) = Point x y;
+    coords (Text x y _ _ _) = Point x y;
+    coords (Viewport x y _ _ _ _ _ _ _) = Point x y;
+let get_x g = let Point x _ = coords g in x;
+let get_y g = let Point _ y = coords g in x;
+let set_x x (Group gs) = error "Group has immutable coordinates";
+    set_x x (Rect _ y w h fill) = Rect x y w h fill;
+    set_x x (Text _ y str anchor baseline) = Text x y str anchor baseline;
+    set_x x (Viewport _ y w h fill margin scale translate g) = Viewport x y w h fill margin scale translate g;
+let dimensions2 (Point x1 y1, Point x2 y2) = Point (max x1 x2) (max y1 y2);
+let dimensions (Group gs) = foldl (curry dimensions2) (Point 0 0) (map (coords_op) gs);
+    dimensions (Polyline ps _ _) = foldl (curry dimensions2) (Point 0 0) ps;
+    dimensions (Rect _ _ w h _) = Point w h;
+    dimensions (Text _ _ _ _ _) = Point 0 0; -- treat text like markers; scale-invariant
+    dimensions (Viewport _ _ w h _ _ _ _ _) = Point w h;
+let coords_op g =
+        let (Point x y, Point w h) = prod coords dimensions g in
+        Point (x + w) (y + h);
+let width g = let Point w _ = dimensions g in w;
+let height g = let Point _ h = dimensions g in h;
+let spaceRight z sep gs =
+   zipWith set_x (iterate (length gs) ((+) sep) z) gs;
+let colours1 = [ "#66c2a5", "#a6d854", "#ffd92f", "#e5c494"
+               , "#fc8d62", "#b3b3b3", "#8da0cb", "#e78ac3"];
+let colours2 = [ "#e41a1c", "#377eb8", "#4daf4a", "#984ea3"
+               , "#ff7f00", "#ffff33", "#a65628", "#f781bf"];
+let scaleToWidth w (Rect x y _ h fill) = Rect x y w h fill;
+    scaleToWidth w (Viewport x y w0 h fill margin (Scale x_scale y_scale) translate g) =
+      let scale = Scale (x_scale * w / w0) y_scale in
+      Viewport x y w h fill margin scale translate g;
+let stackRight sep gs =
+   map (scaleToWidth (1 - sep)) (spaceRight (sep / 2) 1 gs);
+let groupRight sep gs =
+   Viewport 0 0 (length gs) (maximum (map height gs)) "none" 0 (Scale 1 1)
+           (Translate 0 0) (Group (stackRight sep gs));
+let tickEvery n =
+   let m = floor (logBase 10 n) in
+   if n <= 2 * 10 ** m then 2 * 10 ** (m - 1) else 10 ** m;
