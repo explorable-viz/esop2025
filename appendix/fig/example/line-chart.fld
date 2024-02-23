@@ -1,0 +1,10 @@
+let year1 = head data;
+let addTotal kvs =
+   ("Total", sum (map snd kvs)) : kvs;
+let countryData country =
+   map (second (compose addTotal (lookup country))) data in
+(fun country ->
+   caption country
+      (lineChart True ("black" : colours1) (fst year1)
+         (countryData country)))
+"China"
