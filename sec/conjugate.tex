@@ -267,16 +267,16 @@ every ancestor to be in the input set, rather than any ancestor to be in the inp
 this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
 
 \begin{definition}[De Morgan Dual]
-   For Boolean algebras $A, B$, and a function $f: A \to B$, we define the
-   \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
+   Suppose Boolean algebras $A, B$ and function $f: A \to B$. Define the \textit{De Morgan Dual} $\dual{f}: A
+   \to B$ of $f$ as:
    $$
    \dual{f} \eqdef \neg_B \after f \after \neg_A
    $$
 \end{definition}
 
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   Let $A,B$ be Boolean algebras, $f: A \to B$ and $g: B \to A$.
-   The following statements are equivalent:
+   Suppose Boolean algebras $A,B$ and functions $f: A \to B$ and $g: B \to A$. The following statements are
+   equivalent:
    \begin{itemize}
       \item $f$ and $g$ form a conjugate pair
       \item $f$ and $\dual{g}$ form a Galois connection
@@ -284,7 +284,7 @@ this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
 \end{proposition}
 
 \begin{lemma}[Duality of $\demandedByR$ and $\sufficesR$]
-   For any dependence graph $G$ we have that $\dual{\demandedByR_G} = \sufficesR_G$.
+   For any dependence graph $G$ we have $\dual{\demandedByR_G} = \sufficesR_G$.
 \end{lemma}
 
 Because of the lemma above, we could reuse $\demandsAlg{}$ to compute this, by taking the complements of the
@@ -314,15 +314,13 @@ input nodes only provide partial information.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
-We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In
-this diagram, green nodes are the nodes in $G'$ that we have found sufficient
-inputs for, the blue nodes are unvisited, and the orange nodes are the nodes in
-$H$. Dashed edges are edges in the current edge list, and dotted edges are those
-currently under consideration. Over the eight steps pictured, we add the edges
-$\set{(x_1,x_5),(x_2,x_5),(x_3, x_6),(x_3,x_7)}$ to the set $E$, and traverse
-them one by one, first adding $x_5$ to $H$, then moving it to $G'$. We add $x_6$,
-then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we
-have no new edges to consider, and so halt in the state pictured in step eight.
+We provide a snapshot of the algorithm in \figref{suffices-algo-diagram}. In this diagram, green nodes are the
+nodes in $G'$ that we have found sufficient inputs for, the blue nodes are unvisited, and the orange nodes are
+the nodes in $H$. Dashed edges are edges in the current edge list, and dotted edges are those currently under
+consideration. Over the eight steps pictured, we add the edges $\set{(x_1,x_5),(x_2,x_5),(x_3,
+x_6),(x_3,x_7)}$ to the set $E$, and traverse them one by one, first adding $x_5$ to $H$, then moving it to
+$G'$. We add $x_6$, then $x_7$ to $H$, and finish by moving $x_6$ from $H$ to $G'$. At that point we have no
+new edges to consider, and so halt in the state pictured in step eight.
 
 \begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
