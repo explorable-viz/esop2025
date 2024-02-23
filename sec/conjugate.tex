@@ -212,12 +212,13 @@ by $Y$.
 
 The $\demandsAlg{G_0}$ algorithm first builds the \emph{reachable subgraph} $G' \subseteq G_0$ consisting of
 all nodes reachable from the starting set and all edges between them. The algorithm begins by taking a set of
-nodes and accumulating their neighbours. Every time a new node is reached by traversing an edge, we enqueue
-its own neighbours, and add it to the graph we are constructing (\ruleName{$\demandsV{}$-extend}). If we
-traverse an edge and reach a node we've already met, we simply skip it (\ruleName{$\demandsV{}$-skip}) At the
-algorithm's termination (\ruleName{$\demandsV{}$-done}), we have traversed every edge and node reachable from
-the input set. Once it has terminated, and we have constructed the subgraph of demanded nodes, we filter out
-any nodes which are not outputs by intersecting with $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
+nodes and accumulating their neighbours. Every time a new node is reached by traversing an edge, we add its
+neighbours to the pending vertices, and add it and its out-edges to the reachable subgraph
+(\ruleName{$\demandsV{}$-extend}). If we encounter a node we've already met, we simply skip it
+(\ruleName{$\demandsV{}$-skip}). At the algorithm's termination (\ruleName{$\demandsV{}$-done}), we have
+traversed every edge and node reachable from the input set. Once it has terminated, and we have constructed
+the subgraph of demanded nodes, we filter out any nodes which are not outputs by intersecting with
+$\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
 
 \DOnote{The following are details that look like they are needed for the proofs
   but could be just moved to an appendix as they are not so interesting}
