@@ -84,10 +84,10 @@ arbitrary relation, which here we denote using $\demandedByR$ and $\demandsR$:
 \begin{definition}[Image and Preimage Functions for a Relation]
    For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
    $\demandsR_R : \powerset{Y} \to \powerset{X}$ as:
-   \begin{itemize}
+   \begin{enumerate}
       \item $\demandedByR_{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in R}$ \hfill (image)
       \item $\demandsR_{R}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in R}$ \hfill (preimage)
-   \end{itemize}
+   \end{enumerate}
 \end{definition}
 
 \noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandsR_{R}(Y')$ as the
@@ -132,10 +132,10 @@ it demands to also be sufficient to reconstruct it. This leads us to define the 
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
    For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
-   \begin{itemize}
+   \begin{enumerate}
       \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
       \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill (dual preimage)
-   \end{itemize}
+   \end{enumerate}
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
@@ -210,10 +210,10 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
 \begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
    For a graph $G = (V,E)$ with reachability relation $R$ and IO relation $R' \eqdef R \cap (\sources{G}
    \times \sinks{G}$), define:
-   \begin{itemize}
+   \begin{enumerate}
       \item $\demandedByR_G \eqdef \demandedByR_{R}': \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
       \item $\demandsR_G \eqdef \demandsR_{R'}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
-   \end{itemize}
+   \end{enumerate}
 \end{definition}
 
 In \secref{overview}, we introduced the notions of related inputs and related outputs.
