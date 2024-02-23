@@ -203,16 +203,20 @@ presentation of graphs in terms of adjacency maps will be useful notationally.
    \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
 
-We compute $\demandedByR_G$ using the algorithm $\demandsAlg{}$ detailed in
-\figref{conjugate:algorithms:demands}. The algorithm computes reachability by incrementally building a
-subgraph $G'$, consisting of all nodes and edges that can be traversed from the initial starting set. The
-algorithm begins by taking a set of nodes and accumulating their neighbours. Every time a new node is reached
-by traversing an edge, we enqueue its own neighbours, and add it to the graph we are constructing
-(\ruleName{$\demandsV{}$-extend}). If we traverse an edge and reach a node we've already met, we simply
-skip it (\ruleName{$\demandsV{}$-skip}) At the algorithm's termination (\ruleName{$\demandsV{}$-done}),
-we have traversed every edge and node reachable from the input set. Once it has terminated, and we have
-constructed the subgraph of demanded nodes, we filter out any nodes which do not appear as outputs by only
-considering the graph's set of sinks, $\sinks{G'}$ (\ruleName{$\demandsAlg{}$}).
+\begin{definition}[$\demandsAlg{G}$]
+\figref{conjugate:algorithms:demands} defines the $\demandsAlg{}$ procedure. The judgement $X \demandsAlg{G}
+Y$ for any $X \subseteq \sources{G}$ and $Y \subseteq \sinks{G}$ means that $X$ is demanded by $Y$.
+\end{definition}
+
+The $\demandsAlg{}$ algorithm computes reachability by incrementally building a subgraph $G'$, consisting of
+all nodes and edges that can be traversed from the initial starting set. The algorithm begins by taking a set
+of nodes and accumulating their neighbours. Every time a new node is reached by traversing an edge, we enqueue
+its own neighbours, and add it to the graph we are constructing (\ruleName{$\demandsV{}$-extend}). If we
+traverse an edge and reach a node we've already met, we simply skip it (\ruleName{$\demandsV{}$-skip}) At the
+algorithm's termination (\ruleName{$\demandsV{}$-done}), we have traversed every edge and node reachable from
+the input set. Once it has terminated, and we have constructed the subgraph of demanded nodes, we filter out
+any nodes which do not appear as outputs by only considering the graph's set of sinks, $\sinks{G'}$
+(\ruleName{$\demandsAlg{}$}).
 
 \DOnote{The following are details that look like they are needed for the proofs
   but could be just moved to an appendix as they are not so interesting}
