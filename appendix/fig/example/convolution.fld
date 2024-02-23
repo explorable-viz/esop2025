@@ -1,6 +1,5 @@
 let zero n = const n;
     extend n = min (max n 1);
-
 let convolve image kernel method =
     let ((m, n), (i, j)) = (dims image, dims kernel);
         (half_i, half_j) = (i `quot` 2, j `quot` 2);
@@ -13,7 +12,6 @@ let convolve image kernel method =
              x >= 1, x <= m, y >= 1, y <= n
          ] in weightedSum `quot` area
          | (m', n') in (m, n) |];
-
 let input_image =
    let image = [[15, 13,  6, 9, 16],
                  [12,  5, 15, 4, 13],

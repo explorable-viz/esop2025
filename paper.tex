@@ -27,23 +27,25 @@
 
 \title[Conjugate operators for transparent, explorable research outputs]{Conjugate operators for transparent, explorable\\research outputs}
 \input{tex/authors}
-\input{sec/abstract}
-\maketitle
-\input{sec/introduction}
-\input{sec/overview}
-\input{sec/conjugate}
-\input{sec/core}
-\input{sec/evaluation}
-\input{sec/related-work}
-\input{sec/conclusion}
 
-\bibliography{tex-common/bib}
+\ifmain
+  \input{sec/abstract}
+  \maketitle
+  \input{sec/introduction}
+  \input{sec/overview}
+  \input{sec/conjugate}
+  \input{sec/core}
+  \input{sec/evaluation}
+  \input{sec/related-work}
+  \input{sec/conclusion}
+  \bibliography{tex-common/bib}
+\fi
 
-% \ifappendices
-%    \clearpage
+\ifappendices
+   \clearpage
    \appendix
    \input{appendix/sec/core}
    \input{appendix/sec/evaluation}
-% \fi
+\fi
 
 \end{document}
