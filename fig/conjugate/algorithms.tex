@@ -3,7 +3,7 @@
       {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
          \begin{smathpar}
             \inferrule*[
-              lab={\ruleName{$\demandedByAlg{}$}},
+%              lab={\ruleName{$\demandedByAlg{}$}},
               right={$V \subseteq \sources{G_0}$}
             ]
             {
@@ -20,7 +20,7 @@
          {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{$\demandedByV{}$-done}},
+           lab={\ruleName{done}},% $\demandedByV{}$-done}},
            right=$G \subseteq G_0$
          ]
          {
@@ -33,7 +33,7 @@
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandedByV{}$-skip}},
+            lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
             right={$\alpha \in \V(G)$}
          ]
          {
@@ -48,7 +48,7 @@
          \and
          %
          \inferrule*[
-            lab={\ruleName{$\demandedByV{}$-extend}},
+            lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
             right={$H = \set{\bind{\alpha}{V'}}$}
          ]
          {
@@ -67,7 +67,7 @@
    \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$V \sufficesAlg{G_0} V'$}\hfill\textit{where $V \subseteq \sinks{G_0}$ and $V' \subseteq \sources{G_0}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\sufficesAlg{}$}}]
+      \inferrule*%[lab={\ruleName{$\sufficesAlg{}$}}]
       {
          (V, \emptyset),
          \emptyset,
@@ -81,7 +81,7 @@
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\sufficesE{}$-done}}]
+      \inferrule*[lab={\ruleName{done}}]%$\sufficesE{}$-done}}]
       {
          \strut
       }
@@ -92,11 +92,11 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\sufficesE{}$-pending}},
+         lab={\ruleName{pending}},% $\sufficesE{}$-pending}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \preim{H_0}(\alpha) \subset \preim{G_0}(\alpha)
+         \opGraph{H_0}(\alpha) \subset \opGraph{G_0}(\alpha)
          \\
          G, H_0, E
          \sufficesE{G_0}
@@ -111,11 +111,11 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\sufficesE{}$-extend}},
+         lab={\ruleName{extend}},% $\sufficesE{}$-extend}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \preim{H_0}(\alpha) = \preim{G_0}(\alpha)
+         \opGraph{H_0}(\alpha) = \opGraph{G_0}(\alpha)
          \\
          G \disjunion G_0(\alpha), H \setminus \set{\alpha}, \outE{G_0}(\alpha) \cup E
          \sufficesE{G_0}
