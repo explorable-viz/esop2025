@@ -306,13 +306,12 @@ implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we free ma
 algorithm.
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
-$\sufficesE{}$ which builds a subgraph of the original dependence graph, similar to $\demandsAlg{}$. In the
-main subroutine, $\sufficesE{}$, we consider the subgraph under construction $G$, the subgraph of pending
-vertices $H$, and the current set of edges under consideration $E$. For efficiency, the algorithm proceeds in
-a manner which allows it to only traverse each edge in the graph once. When considering an edge $(\alpha,
-\beta)$ in the edge list, $E$, we proceed by adding it to $H$. If doing so causes the neighbours of $\alpha$
-in $H$ to be equal to its neighbours in $G_0$, we remove that in-star from $H$ and add it to $G$
-(\ruleName{$\sufficesE{}$-extend}), and then adding its out-edges to $E$.
+$\sufficesE{}$ which builds a subgraph of $G_0$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
+takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G_0$, and the current set of
+edges under consideration $E$. For efficiency, the algorithm proceeds in a manner which allows it to only
+traverse each edge in the graph at most once. At each step we choose an edge $(\alpha, \beta)$ from the edge
+list $E$ and add it to $H$. If the neighbours of $\alpha$ in $H$ are now equal to its neighbours in $G_0$, we
+move that in-star from $H$ to $G$ (\ruleName{$\sufficesE{}$-extend}), and then add its out-edges to $E$.
 
 Otherwise, we extend the edges in $H$ with $(\alpha, \beta)$, and proceed (\ruleName{$\sufficesE{}$-pending}).
 The algorithm terminates when there are no more edges to be considered (\ruleName{$\sufficesE{}$-pending}).
