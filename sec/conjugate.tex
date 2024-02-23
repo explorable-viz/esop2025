@@ -283,12 +283,9 @@ this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
    For any dependence graph $G$ we have that $\dual{\demandedByR_G} = \sufficesR_G$.
 \end{lemma}
 
-Because of the lemma above, we could reuse $\demandsAlg{}$ in order to compute
-this, by taking the complements of the input sets, running $\demandsAlg{}$, and
-then complementing the output, however this could in practise be inefficient,
-since taking complements of large sets can be an expensive operation. We therefore
-provide a more efficient implementation of the sufficiency analyis, detailed in
-\figref{conjugate:slicing:forward}.
+Because of the lemma above, we could reuse $\demandsAlg{}$ to compute this, by taking the complements of the
+input sets, running $\demandsAlg{}$, and then complementing the output. This could in some situations be inefficient because more graph is traversed than technically necessary. We therefore provide a more efficient
+implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
 
 The algorithm $\sufficesAlg{G}$ builds a subgraph of the original dependence graph,
 similar to $\demandsAlg{}$. In the main subroutine, $\sufficesE{}$, we consider
