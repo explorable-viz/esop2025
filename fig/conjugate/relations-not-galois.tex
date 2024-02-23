@@ -15,8 +15,8 @@
          \node[set name] at (3.5, -1.4) {Outputs};
 
          \node (X') at (-0.5, 1.5) {$X'$};
-         \node (X'') at (-1.5, -0.5) {$\demandsR_{D}(\demandedByR_D(X'))$};
-         \node (DX') at (4.85, 0.6) {$\demandedByR_D(X')$};
+         \node (X'') at (-1.5, -0.5) {$\demandsR_{R}(\demandedByR_{R}(X'))$};
+         \node (DX') at (4.85, 0.6) {$\demandedByR_{R}(X')$};
 
          \begin{scope}[blend mode=difference]
             \draw[rounded corners, fill=cyan, fill opacity= 0.75] (-0.2, 1.2) rectangle (1.2, -2.2);
@@ -36,7 +36,7 @@
             \draw (x3.east) -- (y1);
          \end{scope}
       \end{tikzpicture}
-      \caption{Composition of Demanded By followed by Demands}
+      \caption{$\relInputR_{R}$}
       \label{fig:relation-not-galois-1}
    \end{subfigure}
    \hfill
@@ -54,8 +54,8 @@
          \node[set name] at (3.5, -2.5) {Outputs};
 
          \node (Y') at (4.5, 1.5) {$Y'$};
-         \node (Y'') at (5.45, -0.5) {$\demandedByR_{D}(\demandsR_D(Y'))$};
-         \node (DY') at (-1.0, 0.6) {$\demandsR_D(Y')$};
+         \node (Y'') at (5.45, -0.5) {$\demandedByR_{R}(\demandsR_{R}(Y'))$};
+         \node (DY') at (-1.0, 0.6) {$\demandsR_{R}(Y')$};
          \begin{scope}[blend mode=difference]
             \filldraw[rounded corners, fill=cyan, fill opacity=0.75] (2.8, 1.2) rectangle (4.2, -2.2);
             \filldraw[rounded corners, fill=green, fill opacity=0.75] (2.8, 3.2) rectangle (4.2, -0.2);
@@ -73,10 +73,9 @@
             \draw (x2.east) -- (y2);
          \end{scope}
       \end{tikzpicture}
-      \caption{Composition of Demands then Demanded By}
+      \caption{$\relOutputR_{R}$}
       \label{fig:relation-not-galois-2}
    \end{subfigure}
-   \caption{In these figures, we see how the composition of Demands and Demanded
-            By does not necessarily grow or shrink the originally selected set}
+   \caption{In general neither $\relInputR_{R}$ nor $\relOutputR_{R}$ is inflationary}
    \label{fig:relation-not-galois}
 \end{figure}
