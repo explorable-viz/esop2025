@@ -311,22 +311,18 @@ takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G
 \subseteq \sinks{G}$, and the current set of edges under consideration $E$. For efficiency, the algorithm
 traverses each edge in the graph at most once.
 
-\figref{suffices-algo-diagram} shows an example run of the algorithm. Green indicates a vertex in $G$ that we
-have sufficient inputs for; blue vertices are unvisited; orange vertices are ``pending'' in $H$, with at least
-one of their in-edges. Dashed edges are edges in the current edge set $E$. At each step we
-non-deterministically choose an edge $(\alpha, \beta)$ from the edge set and add it to $H$ (dotted edges). If
-the neighbours of $\alpha$ in $H$ are now equal to its neighbours in $G_0$ (as in step 3), we move that
-in-star from $H$ to $G$ and add its out-edges to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4).
-
-Otherwise, there is nothing more to do at this step and we continue with the remaining edges (\ruleName{$\sufficesE{}$-pending}). The algorithm terminates when there are no more edges to be considered
-(\ruleName{$\sufficesE{}$-done}). Any vertices still pending in $H$ (as in step 8) represent the presence of
-only partially sufficient inputs.
+\figref{suffices-algo-diagram} shows an example run of the algorithm. Green indicates included into $G$
+because we have found sufficient inputs for them; blue vertices are unvisited; orange vertices are ``pending''
+in $H$ with at least one of their in-edges from $G_0$. Dashed edges indicate the current edge set $E$. At each
+step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and add it to $H$ (dotted edges in
+steps 2 and 3). If the in-neighbours of $\beta$ in $H$ are now equal to its neighbours in $G_0$ (as in step
+3), we move that in-star from $H$ to $G$ and add its out-edges to $E$ (\ruleName{$\sufficesE{}$-extend}, step
+4). Otherwise, there is nothing more to do at this step and we continue with the remaining edges in $E$
+(\ruleName{$\sufficesE{}$-pending}). The algorithm terminates when $E$ is empty
+(\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$ (as in step 8) are vertices had only
+partially sufficient inputs.
 
 \input{fig/conjugate/suffices-algo-explanation}
-
-Once $H$ contains all in-edges associated with a vertex in $G_0$ (as in step 3), that in-star is moved to
-$G$ (as in step 4). Edges are chosen non-deterministically from the edge list until the list is empty, when
-the algorithm terminates.
 
 \begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
