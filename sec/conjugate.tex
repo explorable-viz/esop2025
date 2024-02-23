@@ -131,9 +131,10 @@ sufficiency as a test of correctness. If we begin by selecting an output of inte
 it demands to also be sufficient to reconstruct it. This leads us to define the following pair of functions, which also form a conjugate pair.
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
-   For any relation $R \subset X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\todo{todo}: \powerset{Y} \to \powerset{X}$ as:
+   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
    \begin{itemize}
-      \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \forall (x, y) \in R.x \in X'}$ \hfill (dual image)
+      \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
+      \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \forall (x, y) \in R.y \in Y'}$ \hfill (dual preimage)
    \end{itemize}
 \end{definition}
 
