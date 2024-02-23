@@ -80,7 +80,8 @@ dependency relation for $G$, specifying how specific ``inputs'' (sources) are de
 actually interested in the relationship between input and outputs \emph{selections} (i.e.~sets of inputs and
 outputs), we lift this IO relation to sets via the \textit{image} and \textit{preimage functions} of an
 arbitrary relation, which here we denote using $\demandedByR$ and $\demandsR$:
-\begin{definition}[Image and Preimage of a Relation]
+
+\begin{definition}[Image and Preimage Functions for a Relation]
    For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
    $\demandsR_R : \powerset{Y} \to \powerset{X}$ as:
    \begin{itemize}
@@ -94,12 +95,12 @@ set of inputs demanded by the elements of $Y'$, and the image $\demandedByR_{R}(
 the elements of $X'$ are demanded by. A trivial but important observation is that the image function for $R$
 is the preimage function for its converse, i.e.~$\demandedByR_{R} = \demandsR_{R^{-1}}$.
 
-\cd{improve motivation for sufficiency?}
-A related question we may come across in data analysis tasks is that of \textit{sufficiency}. For the values
-in $X'$ to be sufficient for some output, $y \in Y$, we need $x_i \in X'$ for every $(x_i, y) \in D$. As a
-simple example, consider the expression $3 + 4$, neither of the subexpressions $3$ or $4$ are sufficient to
-produce the result of evaluating the expression on their own. Notably, the set of outputs that a set of inputs
-is necessary for is a superset of the outputs it is sufficient for.
+[\todo{Integrate into appropriate place.} A related question we may come across in data analysis tasks is that
+of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need $x_i \in
+X'$ for every $(x_i, y) \in D$. As a simple example, consider the expression $3 + 4$, neither of the
+subexpressions $3$ or $4$ are sufficient to produce the result of evaluating the expression on their own.
+Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
+sufficient for.]
 
 We observe that the image and preimage of a relation form  a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
@@ -122,16 +123,55 @@ If we interpret $R$ as meaning ``demanded by'', this makes intuitive sense: for 
 and outputs $Y' \subseteq Y$, if the outputs $X'$ is demanded by include at least one element from $Y'$, then
 we would expect the inputs that $Y'$ demands to include at least one element from $X'$, and vice versa.
 
-We note that these two functions do not always form a Galois connection, since the composition of the two
-functions is not necessarily inflationary, contradicting a basic fact of Galois connections, which we picture
-in \figref{relation-not-galois}. In \figref{relation-not-galois-1}, we apply $\demandedByR_R$ to $\set{x_1,
-x_2}$, and find $\set{y_1, y_2}$. We then apply $\demandsR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$,
-which is neither a superset, nor a subset of the originally selected set. Since the composite function
-$\demandsR_R \after \demandedByR_R$ is neither increasing or decreasing, the functions cannot form a Galois
-connection. We picture the same scenario reversed in \figref{relation-not-galois-2}. We can read the green set
-as unused inputs, or free outputs. The light blue sets are the elements we have "discovered" via applying the
-two functions one after another. We can think of the darker blue sets as the values about which we discover
-nothing new when applying the two functions.
+\subsubsection{Dual Image and Preimage Functions}
+
+If $R$ is a dependency relation, then $\demandedByR_R(X)$ effectively asks ``what is $X$ necessary for?'' This
+naturally leads to the question ``what is $X$ \emph{sufficient} for?'' In fact, we can use the notion of
+sufficiency as a test of correctness. If we begin by selecting an output of interest, we would expect the data
+it demands to also be sufficient to reconstruct it. This leads us to define the following pair of functions, which also form a conjugate pair.
+
+\begin{definition}[Dual Image and Preimage Functions for a Relation]
+   For any relation $R \subset X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\todo{todo}: \powerset{Y} \to \powerset{X}$ as:
+   \begin{itemize}
+      \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \forall (x, y) \in R.x \in X'}$ \hfill (dual image)
+   \end{itemize}
+\end{definition}
+
+This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
+input set, rather than any ancestor to be in the input set. We can, in fact, turn this query on sufficiency
+into $\demandedByR_R$, using the De Morgan Dual.
+
+\begin{definition}[De Morgan Dual]
+   Suppose Boolean algebras $A, B$ and function $f: A \to B$. Define the \textit{De Morgan Dual} $\dual{f}: A
+   \to B$ of $f$ as:
+   $$
+   \dual{f} \eqdef \neg_B \after f \after \neg_A
+   $$
+\end{definition}
+
+\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
+   Suppose Boolean algebras $A,B$ and functions $f: A \to B$ and $g: B \to A$. The following statements are
+   equivalent:
+   \begin{itemize}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $\dual{g}$ form a Galois connection
+   \end{itemize}
+\end{proposition}
+
+\begin{lemma}[Duality of $\demandedByR$ and $\sufficesR$]
+   $\dual{\demandedByR_R} = \sufficesR_R$.
+\end{lemma}
+
+\todo{Substantial rework needed} We note that these two functions do not always form a Galois connection,
+since the composition of the two functions is not necessarily inflationary, contradicting a basic fact of
+Galois connections, which we picture in \figref{relation-not-galois}. In \figref{relation-not-galois-1}, we
+apply $\demandedByR_R$ to $\set{x_1, x_2}$, and find $\set{y_1, y_2}$. We then apply $\demandsR$ to $\set{y_1,
+y_2}$, and get $\set{x_2, x_3}$, which is neither a superset, nor a subset of the originally selected set.
+Since the composite function $\demandsR_R \after \demandedByR_R$ is neither increasing or decreasing, the
+functions cannot form a Galois connection. We picture the same scenario reversed in
+\figref{relation-not-galois-2}. We can read the green set as unused inputs, or free outputs. The light blue
+sets are the elements we have "discovered" via applying the two functions one after another. We can think of
+the darker blue sets as the values about which we discover nothing new when applying the two functions.
 
 \input{fig/conjugate/relations-not-galois}
 
@@ -237,57 +277,14 @@ $\sinks{G}$.
 %    \end{align*}
 %\end{proposition}
 
-\begin{lemma}[$\demandsAlg{}$ Computes $\demandedByR$]
+\begin{lemma}[$\demandedByAlg{}$ Computes $\demandedByR$]
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
-   \[X \demandsAlg{G} Y \iff \demandedByR_G(X) = Y\]
+   \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{lemma}
 
 \input{fig/conjugate/algorithms}
 
-\subsection{Sufficiency as dual to demanded by}
-
-One interpretation of $\demandedByR_R(X)$ is as asking ``what is $X$ necessary for?'' This naturally leads to
-whether we can adapt this analyis to answer the question ``what is $X$ \emph{sufficient} for?'' In fact, we
-can use the notion of sufficiency as a test of correctness. If we begin by selecting an output of interest, we
-would expect the data it demands to also be sufficient to reconstruct it. This leads us to define the
-following \textit{sufficiency} analysis.
-
-\begin{definition}[Sufficiency]
-   For a graph $G=(V,E)$ with inputs $X \subseteq V$, outputs $Y \subseteq V$ we define,
-   and a subset of the inputs $X' \subseteq X$
-   \begin{itemize}
-      \item $\sufficesR_G(X') \eqdef \set{y \in Y \mid \demandsR_G (y) \subseteq X' }$ \hfill (sufficiency)
-   \end{itemize}
-\end{definition}
-
-This definition looks remarkably similar to $\demandedByR_R$, albeit the definition of $\sufficesR_R$ needs
-every ancestor to be in the input set, rather than any ancestor to be in the input set. We can, in fact, turn
-this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
-
-\begin{definition}[De Morgan Dual]
-   Suppose Boolean algebras $A, B$ and function $f: A \to B$. Define the \textit{De Morgan Dual} $\dual{f}: A
-   \to B$ of $f$ as:
-   $$
-   \dual{f} \eqdef \neg_B \after f \after \neg_A
-   $$
-\end{definition}
-
-\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   Suppose Boolean algebras $A,B$ and functions $f: A \to B$ and $g: B \to A$. The following statements are
-   equivalent:
-   \begin{itemize}
-      \item $f$ and $g$ form a conjugate pair
-      \item $f$ and $\dual{g}$ form a Galois connection
-   \end{itemize}
-\end{proposition}
-
-\begin{lemma}[Duality of $\demandedByR$ and $\sufficesR$]
-   For any dependence graph $G$ we have $\dual{\demandedByR_G} = \sufficesR_G$.
-\end{lemma}
-
-Because of the lemma above, we could reuse $\demandsAlg{}$ to compute this, by taking the complements of the
-input sets, running $\demandsAlg{}$, and then complementing the output. This could in some situations be inefficient because more graph is traversed than technically necessary. We therefore provide a more efficient
-implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
+We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This could in some situations be more efficient because less graph is traversed than would be otherwise. Moreover, We therefore provide a more efficient implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a subgraph of the original dependence graph, similar to $\demandsAlg{}$. In the
