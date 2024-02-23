@@ -64,8 +64,7 @@ in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
 \end{definition}
 
 \begin{definition}[Reachability relation]
-Define the \emph{reachability relation} $R_G$ for a graph $G=(V,E)$ to be the reflexive transitive closure of
-$E$.
+Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
 \end{definition}
 
 \begin{definition}[Opposite graph]
@@ -158,18 +157,17 @@ to consider a filtered view of the data, where the user is shown only the data u
 \subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
 
 We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its reachability
-relation. The set of outputs demanded by some inputs $X$ is simply the subset of the outputs of $G$ reachable
-from $X$, i.e.~the intersection of $\demandsR_{R}(X)$ with $\sources{G}$. Conversely, the set of inputs that
-some outputs $Y$ demands is simply the subset of the inputs of $G$ reachable from $Y$ by traversing the graph
-in the opposite direction, i.e.~the intersection of $\demandedByR_{R}$ with $\sinks{G}$. This leads to the
-following definition:
+relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
+reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
+inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
+traversing the graph in the opposite direction, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
 
 \begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
-   For a graph $G = (V,E)$ with reachability relation $R_G \subseteq V \times V$, and the restriction $R'_G \eqdef R_G|_{\sources{G} \times \sinks{G}}$
-   of $R_G$ to the sources and sinks of $G$, we have:
+   For a graph $G = (V,E)$ with reachability relation $R$ and IO relation $R' \eqdef R \cap (\sources{G}
+   \times \sinks{G}$), define:
    \begin{itemize}
-      \item $\demandsR_G(X) \eqdef \demandsR_{R'_G} (X)$ \hfill (demands)
-      \item $\demandedByR_G(Y) \eqdef \demandedByR_{R'_G} (Y)$ \hfill (demanded by)
+      \item $\demandsR_G \eqdef \demandsR_{R'}$ \hfill (demands)
+      \item $\demandedByR_G \eqdef \demandedByR_{R}'$ \hfill (demanded by)
    \end{itemize}
       \DOnote{Provide the types here?}
 \end{definition}
