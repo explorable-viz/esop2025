@@ -1,10 +1,11 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
-In this section we introduce some preliminary concepts and notation, including Boolean algebras
-(\secref{conjugate:notation}); dynamic dependence graphs (\secref{conjugate:dependence-graphs}, image and
-preimage functions for a relation and the ideas of conjugates, duals and adjoints between
-Boolean algebras (\secref{image-preimage}). We then give algorithms for computing a dual pair of analyses for the reachability relation of a dependence graph (\secref{conjugate:dependence-graph-algos}).
+In this section we introduce Boolean algebras and other preliminaries (\secref{conjugate:notation}); dynamic
+dependence graphs (\secref{conjugate:dependence-graphs}), and the image and preimage functions for a relation
+and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
+graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation, and give algorithms for computing
+them over a given graph (\secref{conjugate:dependence-graph-algos}).
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -96,10 +97,10 @@ $\demandsR$.
    \end{enumerate}
 \end{definition}
 
-\noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandsR_{R}(Y')$ as the
-set of inputs demanded by the elements of $Y'$, and the image $\demandedByR_{R}(X')$ as the set of outputs that
-the elements of $X'$ are demanded by. A trivial but important observation is that the image function for $R$
-is the preimage function for its converse, i.e.~$\demandedByR_{R} = \demandsR_{R^{-1}}$.
+\noindent When thinking of $R$ as a dependency relation, we can view the preimage $\demandsR_{R}(Y')$ as those
+inputs demanded by the elements of $Y'$, and the image $\demandedByR_{R}(X')$ as those outputs that the
+elements of $X'$ are demanded by. A trivial but important observation is that the image function for $R$ is
+the preimage function for its converse, i.e.~$\demandedByR_{R} = \demandsR_{R^{-1}}$.
 
 [\todo{Integrate into appropriate place.} A related question we may come across in data analysis tasks is that
 of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need $x_i \in
@@ -206,6 +207,7 @@ connection, albeit an antitone one. This is useful to know, since we may be work
 to consider a filtered view of the data, where the user is shown only the data used by the original program.
 
 \subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
+\label{sec:conjugate:dependence-graph-functions}
 
 We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its reachability
 relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
