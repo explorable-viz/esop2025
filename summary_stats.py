@@ -14,6 +14,12 @@ cases = [
     "graphics/stacked-bar-chart"
 ]
 
+def parse_cell(cell_str):
+    cell_list = cell_str.replace(':',' ').replace('(',' ').replace(')', ' ').split()
+    cell_avg = cell_list[0]
+    cell_err = cell_list[1]
+    return (float('%.2f'%float(cell_avg)), float('%.2f'%float(cell_err)))
+
 def map_ind(index_str):
     return index_str.split("/")[-1]
 
@@ -23,15 +29,20 @@ def decompose_benchmarks():
     # means = all_summaries.mean().to_frame().T
     # means.index = ['Average']
     all_summaries.index = map(map_ind, all_summaries.index)
-    # all_summaries = pd.concat([all_summaries, means])
+    all_summaries = all_summaries.map(parse_cell)
+    # print(all_summaries.map(parse_cell))
+    # print(all_summaries.apply(lambda row: float(row.loc['G-Eval'][0]) / float(row.loc['T-Eval'][0]), axis=1))
+
+    # # all_summaries = pd.concat([all_summaries, means])
     evals = eval_SpdUp(all_summaries)
     demands = demands_SpdUp(all_summaries)
     equivs = equiv_implementations(all_summaries)
     print(evals)
+    print(demands)
 
 
 def eval_SpdUp(df):
-    df['Eval-Slowdown'] = df['G-Eval'] / df['T-Eval']
+    df['Eval-Slowdown'] = df.apply(lambda row: float(row.loc['G-Eval'][0]) / float(row.loc['T-Eval'][0]), axis=1) # df['G-Eval'] / df['T-Eval']
     out = df[['T-Eval', 'G-Eval', 'Eval-Slowdown']]
     tex_file = open('fig/performance/eval-SpdUp.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption = "Evaluation Time of Traces Versus Graphs (ms)", label='table:eval-SpdUps', longtable=True))
@@ -39,8 +50,8 @@ def eval_SpdUp(df):
     return out
 
 def equiv_implementations(df):
-    df['Dir-SpdUp'] = df['T-DemBy'] / df['G-DemBy-Dir']
-    df['Suff-SpdUp'] = df['T-DemBy'] / df['G-DemBy-Suff']
+    df['Dir-SpdUp'] = df.apply(lambda row: float(row.loc['T-DemBy'][0]) / float(row.loc['G-DemBy-Dir'][0]), axis=1) # df['T-DemBy'] / df['G-DemBy-Dir']
+    df['Suff-SpdUp'] = df.apply(lambda row: float(row.loc['T-DemBy'][0]) / float(row.loc['G-DemBy-Suff'][0]), axis=1) # df['T-DemBy'] / df['G-DemBy-Suff']
     out = df[['T-DemBy','G-DemBy-Dir', 'Dir-SpdUp', 'G-DemBy-Suff', 'Suff-SpdUp']]
 
     tex_file = open('fig/performance/equivalent-impls.tex', 'w')
@@ -49,7 +60,7 @@ def equiv_implementations(df):
     return out
 
 def demands_SpdUp(df):
-    df['Bwd-SpdUp'] = df['T-Demands'] / df['G-Demands']
+    df['Bwd-SpdUp'] = df.apply(lambda row: float(row.loc['T-Demands'][0]) / float(row.loc['G-Demands'][0]), axis=1) # df['T-Demands'] / df['G-Demands']
     out = df[['T-Demands','G-Demands','Bwd-SpdUp']]
     tex_file = open('fig/performance/demands-SpdUp.tex', 'w')
     tex_file.write(out.to_latex(float_format="%.2f", caption="Demands Times Traces Versus Graphs", label='table:demands-SpdUps', longtable=True))
