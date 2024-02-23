@@ -205,40 +205,40 @@ presentation of graphs in terms of adjacency maps is useful notationally.
 \figref{conjugate:algorithms:demands} defines the relation $\demandedByAlg{G}$.
 \end{definition}
 
-For a dependence graph $G_0$ and inputs $X \subseteq \sources{G_0}$, the judgement $X
-\smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. The definition
-delegates to an auxiliary definition $\demandedByV{}$ which builds the \emph{reachable subgraph} $G \subseteq
-G_0$ consisting of all nodes reachable from $X$ and all edges between them. If $X$ is empty (\ruleName{done})
-the reachable subgraph $G$ is complete and can be returned. Otherwise we select an arbitrary vertex from $X$.
-If $\alpha$ is already in $G$ (\ruleName{skip}), there is nothing to do at this step. Otherwise, we add the
+For a dependence graph $G_0$ and inputs $X \subseteq \sources{G_0}$, the judgement $X\;
+\smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. The judgement delegates
+to an auxiliary definition $\demandedByV{}$ which builds the \emph{reachable subgraph} $G \subseteq G_0$
+consisting of all nodes reachable from $X$ and all edges between them. If $X$ is empty (\ruleName{done}) the
+reachable subgraph $G$ is complete and can be returned. Otherwise we select an arbitrary vertex from $X$. If
+$\alpha$ is already in $G$ (\ruleName{skip}), there is nothing to do at this step. Otherwise, we add the
 out-star at $\alpha$ to $G$ and the out-neighbours to the pending vertices (\ruleName{extend}). When
 $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the accumulator by intersecting with
 $\sinks{G}$.
 
-\DOnote{The following are details that look like they are needed for the proofs
-  but could be just moved to an appendix as they are not so interesting}
+% \RPnote{I think these can be turned into informal observations as part of the explanation of the judgement
+% above. Also some design issues surrounding these, see #218}
 
-\begin{proposition}[The reaches relation connects sources to sinks]
-  For all graphs $G_0$ and vertex sets $V$ and $V'$ then:
-  %
-  \begin{align*}
-    V \demandsAlg{G_0} V'
-    \implies
-    V \subseteq \sources{G_0} \wedge V' \subseteq \sinks{G_0}
-  \end{align*}
-\end{proposition}
+%\begin{proposition}[The reaches relation connects sources to sinks]
+%  For all graphs $G_0$ and vertex sets $V$ and $V'$ then:
+%  %
+%  \begin{align*}
+%    V \demandsAlg{G_0} V'
+%    \implies
+%    V \subseteq \sources{G_0} \wedge V' \subseteq \sinks{G_0}
+%  \end{align*}
+%\end{proposition}
 
-\begin{proposition}[The ReachesV relation implies subgraphing]
-  For all graphs $G$, $G'$ and $G_0$ and vertex set $V$ then:
-    \begin{align*}
-      G, V \demandsV{G_0} G'
-      \implies
-      G \subseteq G' \subseteq G_0
-    \end{align*}
-\end{proposition}
+%\begin{proposition}[The ReachesV relation implies subgraphing]
+%  For all graphs $G$, $G'$ and $G_0$ and vertex set $V$ then:
+%    \begin{align*}
+%      G, V \demandsV{G_0} G'
+%      \implies
+%      G \subseteq G' \subseteq G_0
+%    \end{align*}
+%\end{proposition}
 
 \begin{lemma}[$\demandsAlg{}$ Computes $\demandedByR$]
-   For any dependence graph $G = (V,E)$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
+   For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandsAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{lemma}
 
