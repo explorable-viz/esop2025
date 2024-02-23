@@ -44,14 +44,14 @@ complement, so that $\neg X' = X \setminus X'$.
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
 We explain how we arrive at specific dependence graphs until \secref{core}, and here just introduce the basic
-notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed graph $G = (V,E)$ with a set $V$ of
-\emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph for a
-particular program, nodes $\alpha \in V$ represents parts of values (either supplied to a program as inputs or
-produced during execution) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the program,
-the partial value associated to $\beta$ \textit{depends on} on the partial value associated to $\alpha$. This
-diverges somewhat from traditional approaches to dynamic dependence graphs in only considering one type of
-edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
-direction of dependent nodes. (In the literature the other direction is somewhat more common.)
+notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
+$V$ of \emph{nodes} (or \emph{vertices}) and a set $E \subseteq V \times V$ of edges. In the dependence graph
+for a particular program, nodes $\alpha \in V$ represents parts of values (either supplied to a program as
+inputs or produced during execution) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the
+program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
+$\alpha$. This diverges somewhat from traditional approaches to dynamic dependence graphs in only considering
+one type of edge (data dependency) rather than separate data and control dependencies; moreover our edges
+point in the direction of dependent nodes. (In the literature the other direction is somewhat more common.)
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -295,16 +295,14 @@ Because of the lemma above, we could reuse $\demandsAlg{}$ to compute this, by t
 input sets, running $\demandsAlg{}$, and then complementing the output. This could in some situations be inefficient because more graph is traversed than technically necessary. We therefore provide a more efficient
 implementation of the sufficiency analyis, detailed in \figref{conjugate:slicing:forward}.
 
-The algorithm $\sufficesAlg{G}$ builds a subgraph of the original dependence graph,
-similar to $\demandsAlg{}$. In the main subroutine, $\sufficesE{}$, we consider
-the subgraph under construction $G$, the subgraph of pending nodes $H$, and
-the current set of edges under consideration $E$. For efficiency, the algorithm
-proceeds in a manner which allows it to only traverse each edge in the graph once.
-When considering an edge $(\alpha, \beta)$ in the edge list, $E$, we proceed by
-adding it to $H$.
-If doing so causes the neighbours of $\alpha$ in $H$ to be equal
-to its neighbours in $G_0$ (the base dependence graph), then we can remove $\alpha$ from $H$, and add it
-to $G$ (\ruleName{$\sufficesE{}$-extend}), before adding its outgoing edges to $E$.
+For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
+$\sufficesE{}$ which builds a subgraph of the original dependence graph, similar to $\demandsAlg{}$. In the
+main subroutine, $\sufficesE{}$, we consider the subgraph under construction $G$, the subgraph of pending
+nodes $H$, and the current set of edges under consideration $E$. For efficiency, the algorithm proceeds in a
+manner which allows it to only traverse each edge in the graph once. When considering an edge $(\alpha,
+\beta)$ in the edge list, $E$, we proceed by adding it to $H$. If doing so causes the neighbours of $\alpha$
+in $H$ to be equal to its neighbours in $G_0$ (the base dependence graph), then we can remove $\alpha$ from
+$H$, and add it to $G$ (\ruleName{$\sufficesE{}$-extend}), before adding its outgoing edges to $E$.
 
 Because the edges in the parent graph $G$ all point in the direction of inputs to
 outputs, computing the inward neighbours of a node is inefficient in the adjacency
