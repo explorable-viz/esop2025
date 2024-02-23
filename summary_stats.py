@@ -2,35 +2,28 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-matrix_cases = [
+cases = [
     "slicing/dtw/compute-dtw",
     "slicing/convolution/edgeDetect",
     "slicing/convolution/emboss",
     "slicing/convolution/gaussian",
     "slicing/linked-outputs/bar-chart-line-chart",
-    "slicing/linked-outputs/stacked-bar-chart-scatter-plot"
-]
-
-graphics_cases = [
+    "slicing/linked-outputs/stacked-bar-chart-scatter-plot",
     "graphics/grouped-bar-chart",
     "graphics/line-chart",
     "graphics/stacked-bar-chart"
 ]
 
+def map_ind(index_str):
+    return index_str.split("/")[-1]
+
 def decompose_benchmarks():
     benchmarks = pd.read_csv('../fluid/Benchmarks/benchmarks.csv', skipinitialspace=True, delimiter=',', index_col='Test-Name')
-    matrices = benchmarks.loc[matrix_cases]
-    # matrix_means = matrices.mean().to_frame().T
-    # matrix_means.index = ['Matrix-Avg']
-    # matrices = pd.concat([matrices, matrix_means])
-    graphics = benchmarks.loc[graphics_cases]
-    # graphics_means = graphics.mean().to_frame().T
-    # graphics_means.index = ['Graphics-Avg']
-    # graphics = pd.concat([graphics, graphics_means])
-    all_summaries = pd.concat([matrices, graphics])
-    means = all_summaries.mean().to_frame().T
-    means.index = ['Average']
-    all_summaries = pd.concat([all_summaries, means])
+    all_summaries = benchmarks.loc[cases]
+    # means = all_summaries.mean().to_frame().T
+    # means.index = ['Average']
+    all_summaries.index = map(map_ind, all_summaries.index)
+    # all_summaries = pd.concat([all_summaries, means])
     evals = eval_speedup(all_summaries)
     demands = demands_speedup(all_summaries)
     equivs = equiv_implementations(all_summaries)
