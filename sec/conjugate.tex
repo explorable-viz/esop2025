@@ -194,13 +194,13 @@ i.e.~$\demandedByR_{G}(\demandsR_{G}(Y'))$.
 \subsection{Computing $\demandsR_G$ and $\demandedByR_G$}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandedByR_{R}$ and $\demandsR_{R}$ for the reachability relation $R$ of a
-dependence graph. An alternative presentation of graphs in terms of adjacency maps will be useful
-notationally.
+We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ for a dependence graph $G$. An alternative
+presentation of graphs in terms of adjacency maps will be useful notationally.
 
 \begin{definition}[Graphs as adjacency maps]
    A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G$ from vertices to sets of out
-   neighbours, where $G(\alpha) = V' \iff \alpha \in V$ and $(\alpha, \beta) \in E$ for all $\beta \in V'$.
+   neighbours, where
+   \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
 
 We compute $\demandedByR_G$ using the algorithm $\demandsAlg{}$ detailed in
