@@ -31,6 +31,7 @@ we were able to give the core technical details of the approach without having t
 mention the details of the language, or the specific choice of dependency relation.
 
 \cd{While I think I undertand what you mean, this paragraph is unclear. You want to say that the approach is language agnostic, but you say that something needs to be implemented several times vs. once.}
+\jb{I will fix this paragraph on Monday since it is mostly fluff}
 We contrast this with the fact that alternative approaches do not compute and cache
 the dependency structure -- as we do with the dependence graph -- but instead
 the analyses are computed as part of evaluating a program, or un-evaluating an
@@ -39,12 +40,13 @@ itself need to be implemented multiple times. In contrast, with our approach
 the developer only needs to implement the analysis once, and any changes to the
 language or dependency relation used only require modification to a single
 evaluation function.
-\subsection{Benchmarking} \cd{``Experimental Evaluation?''}
+\subsection{Experimental Evaluation}
 
 
 In order to test the performance of our dependency analyses, we implemented the
-approach in the language described in \secref{core} in Purescript as a
-language called \OurLang \cd{sentence very difficult to parse}. Benchmarks were run on a commercial laptop, with an
+approach described in \secref{core} as a language called \OurLang. The language
+was implemented in Purescript. \jb{I want to cut out the repetition here but feel
+that I need to list all of the thinsg below.} Benchmarks were run on a commercial laptop, with an
 Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
 on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
 
@@ -64,7 +66,6 @@ We thus boil down the performance testing to the following three research questi
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
    \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
-   \item RQ4: How does the performance vary in the size of the program input? \jb{not sure about this one}
 \end{itemize}
 
 Still have the general question of how we can motivate the inclusion of suffices.
