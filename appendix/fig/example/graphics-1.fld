@@ -7,12 +7,13 @@ let get_y g = let Point _ y = coords g in x;
 let set_x x (Group gs) = error "Group has immutable coordinates";
     set_x x (Rect _ y w h fill) = Rect x y w h fill;
     set_x x (Text _ y str anchor baseline) = Text x y str anchor baseline;
-    set_x x (Viewport _ y w h fill margin scale translate g) = Viewport x y w h fill margin scale translate g;
+    set_x x (Viewport _ y w h fill margin scale translate g) =
+                Viewport x y w h fill margin scale translate g;
 let dimensions2 (Point x1 y1, Point x2 y2) = Point (max x1 x2) (max y1 y2);
 let dimensions (Group gs) = foldl (curry dimensions2) (Point 0 0) (map (coords_op) gs);
     dimensions (Polyline ps _ _) = foldl (curry dimensions2) (Point 0 0) ps;
     dimensions (Rect _ _ w h _) = Point w h;
-    dimensions (Text _ _ _ _ _) = Point 0 0; -- treat text like markers; scale-invariant
+    dimensions (Text _ _ _ _ _) = Point 0 0;
     dimensions (Viewport _ _ w h _ _ _ _ _) = Point w h;
 let coords_op g =
         let (Point x y, Point w h) = prod coords dimensions g in
