@@ -52,16 +52,9 @@ on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
 
 \cd{I think this paragraph can be simplified. Maybe you can just say that we need to compare the performance of the current approach with that of the trace based approach without detailing every aspect, as they will be clarified by the RQs?}
 In an interactive system, performance plays an enormous role in the experience
-of a user. In order for evaluation to be a total success, we cannot allow
-performance to degrade. It is possible that the dependence graph incurs a greater
-overhead than the creation of an execution trace, as it is a more complex data
-structure. Therefore, we need to compare the overhead of graph construction, and
-trace construction. We also need to investigate the performance of \textit{demands}
-and \textit{demanded by} between the implementation using a trace, and the one
-using a dependence graph. We further need to consider the various implementations
-of \textit{demanded by}, and determine if there is a clear performance difference.
+of a user. We have to test the performance of the three main components of the
+system.We boil down the performance testing to the following three research questions:
 
-We thus boil down the performance testing to the following three research questions:
 \begin{itemize}
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
