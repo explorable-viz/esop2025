@@ -6,7 +6,7 @@ We now implement that graphical abstraction for  \OurLang -- an untyped, pure fu
 big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
 dependence graph for the evaluation of that term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
 
-\subsection{Syntax and terms}
+\subsection{Syntax and Terms}
 \label{sec:core:syntax}
 
 \input{fig/core/syntax}
@@ -70,7 +70,7 @@ environment is defined as a finite~map.
 
 % The point of the disjointness conditions on graph union was intended to achieve this, and does at least ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t much better than just saying this in plain English outside of the definition).
 
-\subsection{Evaluation and graph construction}
+\subsection{Evaluation and Graph Construction}
 \label{sec:core:semantics}
 
 \input{fig/core/match}
