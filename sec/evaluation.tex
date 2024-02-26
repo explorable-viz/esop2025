@@ -107,10 +107,10 @@ tradeoff, when we consider the relative performance of implementing
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
-\cd{I would just say which implementations, rather than call them ``twin''.}
-We now compare the performance of the twin implementations when it comes to the
-computation of demands. We observe a significant increase in the performance of
-demands using the graphical approach, shown in \tableref{demands-speedups}.
+We now compare the performance of the graphical and trace based implementations
+when it comes to the computation of demands. We observe a significant increase
+in the performance of demands using the graphical approach, shown in
+\tableref{demands-speedups}.
 
 This increased performance for computing \textit{demands} varies across the
 examples, with some examples exhibiting a speedup of more than 50, and the lowest
@@ -134,11 +134,22 @@ which has the effect of forcing $\demandsR{}$ to traverse a greater portion of t
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
 \subsubsection{RQ3: Comparison of Equivalent Impls}
-\jb{Notes on this part: We have 3 equivalent implementations to test, the trace
-based demanded by approach, and the 2 graphical approaches -- directly applying
-reaches on the opposite graph, and composing suffices with its complements -- at
-the moment, compute-dtw seems to be very inefficient, but it also seems to be our
-best example that the dual of suffices might actually be more efficient in some
-cases. This is really the one question we have here, and we need to investigate
-why this example performs so badly}
+
+We must finally investigate the performance of \textit{demanded by}. We must
+compare the trace based approach with the graphical approach implemented by
+using $\demandsAlg{}$, which we present in \tableref{equivalent-impls} as the
+columns \textbf{T-DemBy} for the trace implementation, \textbf{G-DemBy-Dir}
+for the graphical implementation using $\demandsAlg{}$, and comparing
+relative performance in \textbf{Dir-SpdUp}.
+
+We can also recover \textit{demanded by} from $\sufficesAlg{}$ by taking the
+De Morgan Dual, which we also tested. This is presented in \textbf{G-DemBy-Suff}
+and we compare its performance against the trace approach in \textbf{Suff-SpdUp}.
+
+In all test cases apart from \textit{compute-dtw} we observe that at least one
+of the two possible implementations in the graphical approach performs better
+than the trace-based approach.
+
 {\small\input{fig/performance/equivalent-impls.tex}}
+
+\subsubsection{Discussion}
