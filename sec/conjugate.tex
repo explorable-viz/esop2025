@@ -308,7 +308,9 @@ definition of the $\demandedByAlg{}$ relation since it is actually a function
 with its left-most argument $V$ and index $G_0$ as inputs.\footnote{Any choice between \ruleName{skip} and \ruleName{extend} is
 made deterministic by the disjointness of $G$ and $H$ in \ruleName{extend} implying the opposite
 side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with termination implied by eventual
-saturation of the first argument (left-most) by all the edges leading from the vertices in second argument.}
+saturation of the first argument (left-most) by all of the edges in the indexing graph
+leading from the vertices in second argument, after
+which a finite sequence of \ruleName{skip} can be applied to reach the base case of \ruleName{done}.}
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a subgraph of $G_0$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
