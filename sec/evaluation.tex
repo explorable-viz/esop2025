@@ -80,19 +80,23 @@ Finally, we have tested some linked examples,
 particularly \figref{introduction:scatteprlot} from \secref{overview} (stacked-bar-chart-scatter-plot,38 LoC)
 and another linking example, (bar-chart-line-chart, 26 LoC).
 
+Each benchmark is run 10 times, and we report both the sample mean and standard
+error for each benchmark.
+
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
 We first proceed by comparing the time taken to evaluate a program in the
-execution trace approach with the time taken to evaluate a program with the
-dependence graph approach.
+execution trace approach (\textbf{T-Eval}) with the time taken to evaluate a program with the
+dependence graph approach (\textbf{G-Eval}).
 Since the graph is a more complex data structure to build compared to the trace,
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
 In \tableref{eval-speedups}, we see that, as expected, the evaluation of programs
 to their dynamic dependence graph does incur some increased overhead, ranging from
-3 to 10 times slower than their trace based counterparts. \jb{Still subject to a
-change}
+3 to 14 times slower than their trace based counterparts. We report the ratio
+of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}).
 
+\jb{Can maybe cut this since we cover similar ground in discussion}
 We consider the primary focus of the evaluation to be in the types of interactions
 that we can support, rather than the performance of the initial program evaluation.
 This is because the evaluation only occurs once, and the overhead may disappear
