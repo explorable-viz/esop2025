@@ -96,19 +96,19 @@
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H_0(\beta) \subset \opGraph{G_0}(\beta)
+         \opGraph{G_0}(\beta) \supset H'(\beta)
          \\
-         G, H_0, E
+         G, H', E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       {
          G, H, (\alpha, \beta) \cons E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       %
       \and
@@ -126,7 +126,7 @@
          G', H'
       }
       {
-         G, H \uplus \set{\bind{\beta}{X}}, (\alpha, \beta) \cons E
+         G, H \disjunion \set{\bind{\beta}{X}}, (\alpha, \beta) \cons E
          \sufficesE{G_0}
          G', H'
       }
