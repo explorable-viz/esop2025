@@ -20,26 +20,18 @@ respect to the dependency analysis.
 Conversely, we evaluate a program to a dynamic dependence graph
 and defer the specific dependency queries until the graph has been computed.
 The developer needs to implement the desired dynamic dependence graph only once,
-in the forward evaluation direction. Then, we use a simple procedure to
+as part of their languages evaluation function. Then they can use a simple procedure to
 compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
-%, whilst only requiring that  since the graph itself is what facilitates the two
-% directions of the approach.
 
-An indirect result of the above is how the approach is less directly tied to
-the language being implemented. In \secref{conjugate},
-we were able to give the underlying formalism without having to
+In \secref{conjugate}, we were able to give the underlying formalism without having to
 mention any implementation details, or the specific choice of dependency relation.
-Combine this with the fact that a developer only needs to provide a single
-implementation of the approach, and we feel that the graphical approach
-has the distinct advantage of being easier to port to a new language, and 
-is more easily adaptable to changes in the implemented language. In the graphical
-approach, adding new constructs to the implementation or modifying language
-features does not incur excessive overhead, since the developer only needs to
-modify the evaluation function, a function which they would need to modify
-anyway. \jb{Trying to explain that the graphical approach makes changing
-your language easier, since the only place you need to take it into account
-is the evaluation function you would already need to modify when adding new
-features.}
+Our ability to do so, combined with the prior remark regarding the need to implement
+only a single construction of the graph contributes to ease of use. We suggest that the graphical approach
+has the distinct advantage of being less sensitive to changes in the semantics
+of the language. By removing the need for a pair of evaluation functions which
+"agree", adding new constructs to a language is significantly easier, since the
+only part of the language which is affected is the evaluation function which
+the developer would already be forced to modify.
 
 
 \subsection{Experimental Evaluation}
