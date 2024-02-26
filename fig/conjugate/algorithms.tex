@@ -1,23 +1,23 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
+      {\small \flushleft \shadebox{$X \demandedByAlg{G_0} Y$}
          \begin{smathpar}
             \inferrule*[
 %              lab={\ruleName{$\demandedByAlg{}$}},
-              right={$V \subseteq \sources{G_0}$}
+              right={$X \subseteq \sources{G_0}$}
             ]
             {
-               (\emptyset, \emptyset), V
+               (\emptyset, \emptyset), X
                \demandedByV{G_0}
                G
             }
             {
-               V \demandedByAlg{G_0} \sinks{G}
+               X \demandedByAlg{G_0} \sinks{G}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
+         {\small \flushleft \shadebox{$G, X \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
@@ -37,27 +37,27 @@
             right={$\alpha \in \V(G)$}
          ]
          {
-            G, V
+            G, X
             \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandedByV{G_0} G'
+            G, \alpha \cons X \demandedByV{G_0} G'
          }
          %
          \and
          %
          \inferrule*[
             lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
-            right={$H = \set{\bind{\alpha}{V'}}$}
+            right={$H = \set{\bind{\alpha}{Y}}$}
          ]
          {
-            G \disjunion H, V' \disjunion V
+            G \disjunion H, Y \disjunion X
             \demandedByV{G_0 \uplus H}
             G'
          }
          {
-            G, \alpha \cons V \demandedByV{G_0 \uplus H} G'
+            G, \alpha \cons X \demandedByV{G_0 \uplus H} G'
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
@@ -65,23 +65,26 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V \sufficesAlg{G_0} V'$}\hfill\textit{where $V \subseteq \sinks{G_0}$ and $V' \subseteq \sources{G_0}$}}
+   {\small \flushleft \shadebox{$X \sufficesAlg{G_0} U$}}
    \begin{smathpar}
-      \inferrule*%[lab={\ruleName{$\sufficesAlg{}$}}]
+      \inferrule*
       {
-         (V, \emptyset),
+         (X, \emptyset),
          \emptyset,
-         \outE{G_0}(V)
+         \set{(\alpha, \beta) \in \outE{G_0}(\alpha') \mid \alpha' \in X}
          \sufficesE{G_0}
          G, H
       }
       {
-         V \sufficesAlg{G_0} \sources{G}
+         X \sufficesAlg{G_0} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{done}}]%$\sufficesE{}$-done}}]
+      \inferrule*[
+         lab={\ruleName{done}},
+         right={$G \subseteq G_0$}
+      ]
       {
          \strut
       }
@@ -92,39 +95,41 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{pending}},% $\sufficesE{}$-pending}},
-         right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         lab={\ruleName{pending}},
+         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \opGraph{H_0}(\alpha) \subset \opGraph{G_0}(\alpha)
+         H'(\beta) \subset \opGraph{G_0}(\beta)
          \\
-         G, H_0, E
+         G, H', E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       {
          G, H, (\alpha, \beta) \cons E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{extend}},% $\sufficesE{}$-extend}},
-         right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         lab={\ruleName{extend}},
+         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \opGraph{H_0}(\alpha) = \opGraph{G_0}(\alpha)
+         H'(\beta) = \opGraph{G_0}(\beta)
          \\
-         G \disjunion G_0(\alpha), H \setminus \set{\alpha}, \outE{G_0}(\alpha) \cup E
+         G \disjunion \opGraph{\set{\bind{\beta}{H'(\beta)}}},
+         H \setminus \set{\beta},
+         \outE{G_0}(\beta) \disjunion E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       {
          G, H, (\alpha, \beta) \cons E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
