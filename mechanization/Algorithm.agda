@@ -18,6 +18,11 @@ open import Data.Bool hiding (T)
 
 open import SetRep
 
+-- # Aux
+
+consEqInv : {A : Set} {x x' : A} {xs xs' : List A} -> x ∷ xs ≡ x' ∷ xs' -> x ≡ x'
+consEqInv refl = refl
+
 -- # Graphs
 
 postulate
@@ -172,27 +177,87 @@ postulate
   convIso : {V : Vertices} -> listToVertices (verticesToList V) ≡ V
   convCons : {a : Label} {V : List Label} -> listToVertices (a ∷ V) ≡ cons a (listToVertices V)
 
+  graphToList : Graph -> List (Label × List Label)
+  listToGraph : List (Label × List Label) -> Graph
+  convGIso : {G : Graph} -> G ≡ listToGraph (graphToList G)
+  convConsG : {a : Label} {V' : List Label} {G0' : List (Label × List Label)}
+            -> (listToGraph ((a , V') ∷ G0')) ≡ (graphUnion (listToGraph G0') (toGraph a (listToVertices V')))
+
+  subVertexSplitOutRel
+            : (a : Label) -> (V' : List Label) -> (G0 : List (Label × List Label))
+           -> (G0' : List (Label × (List Label)))
+           -> (V : List Label)
+           -> (a , V') ∷ G0' ≡ G0
+           -> subset (listToVertices V) (S (listToGraph G0))
+           -> Σ (List Label) (\V'' -> a ∷ V'' ≡ V)
+
+  unionCatHomom : {V1 V2 : List Label}
+                -> union (listToVertices V1) (listToVertices V2) ≡ listToVertices (V1 ++ V2)
+
+   --               listToGraph G0 ≡ graphUnion (listTOGraph G0') (toGrap a (listToVertices V'))
+
+--  subsetProp : subgraph G (listToGraph G0)
+--               -> subset (listToVertices (a' ∷ Vrest)) (S (listToGraph G0))
+
+  prop : {G : Graph} {a' : Label} {V' : List Label}
+         {G0' : List (Label × (List Label))}
+      -> subgraph G (listToGraph ((a' , V') ∷ G0'))
+      -> subgraph (graphUnion G (toGraph a' (listToVertices V'))) (listToGraph ((a' , V') ∷ G0'))
+
+
+  prop2 : {G0' : List (Label × List Label)}
+          {a' : Label}
+          {V' : List Label}
+          -> (\x -> proj₁ (listToGraph G0') x ⊎ a' ≡ x ⊎ listToVertices V' a') ≡ (proj₁ (listToGraph ((a' , V') ∷ G0')))
+
+  listEmptyEmptyGraph : listToGraph [] ≡ emptyGraph
+  convIn : {a : Label} {V : List Label} -> listToVertices (a ∷ V) a
+
+  mprop : {a' : Label}
+          {V' : List Label}
+          {G0' : List (Label × List Label)}
+       -> (listToGraph ((a' , V') ∷ G0'))
+        ≡ (graphUnion (listToGraph G0') (toGraph a' (listToVertices V'))) 
+  
 -- Proof that these relations are actually functions
 
-reachesVIsAFunction : (G0 : Graph) -> (G : Graph) -> (V : List Label) -> subgraph G G0 -> Σ Graph (\G' -> ReachesV G0 G (listToVertices V) G')
-reachesVIsAFunction G0 G (a ∷ Vrest) prf with isIn a G
-reachesVIsAFunction G0 G (a ∷ Vrest) prf | yes p' rewrite convCons {a} {Vrest} =
- let (G' , demands) = reachesVIsAFunction G0 G Vrest prf
+reachesVIsAFunction : (G0 : List (Label × List Label)) -> (G : Graph) -> (V : List Label)
+                   -> (subset (listToVertices V) (S (listToGraph G0)))
+                   -> subgraph G (listToGraph G0)
+                   -> Σ Graph (\G' -> ReachesV (listToGraph G0) G (listToVertices V) G')
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) with isIn a G
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) | yes p' rewrite convCons {a} {Vrest} =
+ let (G' , demands) = reachesVIsAFunction G0 G Vrest {!!} (prfV , prfE)
  in G' , reachesV-skip demands a p' 
-reachesVIsAFunction G0 G (a ∷ Vrest) prf | no p' with splitOut a G0 {!!}
-... | (V' , G0' , prf2) = 
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) | no p' with G0 | inspect (\x -> x) G0
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) | no p' | (a' , V') ∷ G0' | [ eq ]  with subVertexSplitOutRel a V' G0 G0' (a' ∷ Vrest) {!!} {!!}
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) | no p' | (a' , V') ∷ G0' | [ eq  ] | (V'' , prf2) rewrite convCons {a} {Vrest} | convConsG {a'} {V'} {G0'}  | (consEqInv prf2) =
 
- -- rewrite convCons {a} {Vrest} =
+  let H = toGraph a' (listToVertices V')
+      prop' = prop {G} {a'} {V'} {G0'} isEq
+      (G' , demands) = reachesVIsAFunction ((a' , V') ∷ G0') (graphUnion G H) (V' ++ Vrest) (conv prf0is) prop'      
+      demands' = subst (\h -> ReachesV (listToGraph ((a' , V') ∷ G0')) (graphUnion G H) h G') (sym (unionCatHomom {V'} {Vrest})) demands
+      demands'' = subst (\h -> ReachesV h (graphUnion G H)  (union (listToVertices V') (listToVertices Vrest)) G') (mprop {a'} {V'} {G0'}) demands'
+  in G' , reachesV-extend {listToGraph G0'} {G} {G'} {listToVertices Vrest} {listToVertices V'} a' demands''
+    where
+      isEq : subgraph G (listToGraph ((a' , V') ∷ G0'))
+      isEq  = {!prfV!} , {!!}
 
-  let H = toGraph a V'
-      (G' , demands) = reachesVIsAFunction (graphUnion G0 H) (graphUnion G H) (verticesToList V' ++ Vrest) (subGraphHomom {G} {G0} {H} prf)
-  in G' , {!!}
-reachesVIsAFunction G0 G [] prf rewrite emptyListVertices = G  , reachesV-done prf
+      prf0is : (subset (listToVertices (a' ∷ Vrest)) (S (listToGraph ((a' , V') ∷ G0'))))
+      prf0is = {!prf0!}
+
+      conv : (subset (listToVertices (a' ∷ Vrest)) (S (listToGraph ((a' , V') ∷ G0'))))
+         ->  subset (listToVertices (V' ++ Vrest)) (S (listToGraph ((a' , V') ∷ G0')))
+      conv = {!!}
+
+reachesVIsAFunction G0 G (a ∷ Vrest) prf0 (prfV , prfE) | no p' | [] | [ eq ] with prf0 {a} (convIn {a} {Vrest})
+... | fst , snd rewrite listEmptyEmptyGraph = ⊥-elim fst
+reachesVIsAFunction G0 G [] prf0 prf rewrite emptyListVertices = G  , reachesV-done prf
 
 reachesIsAFunction : (G0 : Graph) -> (V : Vertices) -> (subset V (S G0)) 
                    -> Σ Vertices (\V' -> Reaches G0 V V')
-reachesIsAFunction G0 V prf rewrite sym (convIso {V}) =
-  let (G , reachesV) = reachesVIsAFunction G0 emptyGraph (verticesToList V) (emptyGraphIsInitial G0) 
+reachesIsAFunction G0 V prf rewrite convGIso {G0} | sym (convIso {V}) =
+  let (G , reachesV) = reachesVIsAFunction (graphToList G0) emptyGraph (verticesToList V) prf (subst (\h -> subgraph emptyGraph h) (convGIso {G0}) (emptyGraphIsInitial G0)) -- (emptyGraphIsInitial G0) 
   in T G , reaches prf reachesV (T G) refl
 
 -- ##  Properties on Reaches
@@ -207,7 +272,8 @@ relationship G0 G .(cons a V) G' (reachesV-skip {V = V} reach a aInV) =
  in prf1 , prf2
 relationship G0 G .(cons a V) G' (reachesV-extend {V = V} {V' = V'} a reach) =
  -- induction + positivity
- let (prf1 , prf2) = relationship G0 (graphUnion G (toGraph a V')) (union V' V) G' reach
+ -- TODO - redo this part
+ let (prf1 , prf2) = relationship G0 (graphUnion G (toGraph a V')) (union V' V) G' {!!}
  in positivity {G} {toGraph a V'} {G'} prf1 , prf2
 
 ---

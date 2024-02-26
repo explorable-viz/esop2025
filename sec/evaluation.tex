@@ -8,7 +8,6 @@ an experimental comparison of the performance of our implementation and
 that of the state of the art in the field.
 
 \subsection{Qualitative Evaluation Of the Graphical Approach}
-\todo{No Need to define backwards semantics}
 A key benefit of our approach is avoiding the need to define a backwards
 evaluation function. In prior work in this area -- such as \citet{perera22} -- a
 program produced an execution trace. Consequently, in order to perform a backwards analysis such as
@@ -25,34 +24,32 @@ compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
 %, whilst only requiring that  since the graph itself is what facilitates the two
 % directions of the approach.
 
-\todo{Language Agnostic Approach}
-The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
-we were able to give the core technical details of the approach without having to
-mention the details of the language, or the specific choice of dependency relation.
+An indirect result of the above is how the approach is less directly tied to
+the language being implemented. In \secref{conjugate},
+we were able to give the underlying formalism without having to
+mention any implementation details, or the specific choice of dependency relation.
+Combine this with the fact that a developer only needs to provide a single
+implementation of the approach, and we feel that the graphical approach
+has the distinct advantage of being easier to port to a new language, and 
+is more easily adaptable to changes in the implemented language. In the graphical
+approach, adding new constructs to the implementation or modifying language
+features does not incur excessive overhead, since the developer only needs to
+modify the evaluation function, a function which they would need to modify
+anyway. \jb{Trying to explain that the graphical approach makes changing
+your language easier, since the only place you need to take it into account
+is the evaluation function you would already need to modify when adding new
+features.}
 
-\cd{While I think I undertand what you mean, this paragraph is unclear. You want to say that the approach is language agnostic, but you say that something needs to be implemented several times vs. once.}
-\jb{I will fix this paragraph on Monday since it is mostly fluff}
-We contrast this with the fact that alternative approaches do not compute and cache
-the dependency structure -- as we do with the dependence graph -- but instead
-the analyses are computed as part of evaluating a program, or un-evaluating an
-execution trace. Thus, any changes to the dependency relation or to the language
-itself need to be implemented multiple times. In contrast, with our approach
-the developer only needs to implement the analysis once, and any changes to the
-language or dependency relation used only require modification to a single
-evaluation function.
+
 \subsection{Experimental Evaluation}
-
-
-In order to test the performance of our dependency analyses, we implemented the
-approach described in \secref{core} as a language called \OurLang. The language
-was implemented in Purescript. \jb{I want to cut out the repetition here but feel
-that I need to list all of the thinsg below.} Benchmarks were run on a commercial laptop, with an
-Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
-on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
-\MNnote{rough starter suggestion:
-In order to test the performance of our approach, we implemented our language from \secref{core} on top of Purescript, using this to write a selection of non-trivial examples that reflect realistic targets of dependency analyses (\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
+In order to test the performance of our approach, we implemented our language
+from \secref{core} on top of Purescript, which we used to write a selection of
+non-trivial examples that reflect realistic targets of dependency analyses
+(\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
-using Google Chrome 121.0.6167.160 and Javascript runtime V8 12.1.285.28.}
+using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. We
+also implemented a variant of prior approaches that use execution traces, in
+order to enable a like-for-like performance comparison.
 
 
 In an interactive system, performance plays an enormous role in the experience
@@ -74,28 +71,33 @@ We tested our system on a range of examples %constituting the larger programs we
 implemented in \OurLang. These programs, given fully in \apdxsecref{sec:evaluation-src-code},
 represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
-we considered matrix convolution (18 LoC). Different
+we considered matrix convolution (edgeDetect, emboss, gaussian, 18 LoC). Different
 filter matrices create subtly different dependency structures, hence we 
 implemented a few different filters. Second, we have an example of a more
 sequential algorithmic program, namely an implementation of dynamic time warping,
-known from the time series analyis (76 LoC). Third, we developed a prototype of a graphics
-library, to demonstrate the performance on bespoke visualization code (220 Loc).
-Finally, we have tested some of the linked examples from \secref{overview}, 
-particularly \figref{introduction:scatteprlot} (38 LoC).
+known from the time series analyis (compute-dtw, 76 LoC). Third, we developed a prototype of a graphics
+library, to demonstrate the performance on bespoke visualization code (grouped-bar-chart, line-chart, stacked-bar-chart, 220 Loc).
+Finally, we have tested some linked examples, 
+particularly \figref{introduction:scatteprlot} from \secref{overview} (stacked-bar-chart-scatter-plot,38 LoC)
+and another linking example, (bar-chart-line-chart, 26 LoC).
+
+Each benchmark is run 10 times, and we report both the sample mean and standard
+error for each benchmark.
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
 We first proceed by comparing the time taken to evaluate a program in the
-execution trace approach with the time taken to evaluate a program with the
-dependence graph approach.
+execution trace approach (\textbf{T-Eval}) with the time taken to evaluate a program with the
+dependence graph approach (\textbf{G-Eval}).
 Since the graph is a more complex data structure to build compared to the trace,
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
 In \tableref{eval-speedups}, we see that, as expected, the evaluation of programs
 to their dynamic dependence graph does incur some increased overhead, ranging from
-3 to 10 times slower than their trace based counterparts. \jb{Still subject to a
-change}
+3 to 14 times slower than their trace based counterparts. We report the ratio
+of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}).
 
+\jb{Can maybe cut this since we cover similar ground in discussion}
 We consider the primary focus of the evaluation to be in the types of interactions
 that we can support, rather than the performance of the initial program evaluation.
 This is because the evaluation only occurs once, and the overhead may disappear
@@ -110,11 +112,14 @@ tradeoff, when we consider the relative performance of implementing
 We now compare the performance of the graphical and trace based implementations
 when it comes to the computation of demands. We observe a significant increase
 in the performance of demands using the graphical approach, shown in
-\tableref{demands-speedups}.
+\tableref{demands-speedups}. We report time taken to compute demands
+with the trace and graph in \textbf{T-Demands} and \textbf{G-Demands}
+respectively.
 
 This increased performance for computing \textit{demands} varies across the
-examples, with some examples exhibiting a speedup of more than 50, and the lowest
--- the stateful dynamic time warp example -- closer to 12 times speedup.
+examples, with some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
+\textbf{stacked-bar-scatter-plot} -- exhibiting a speedup of more than 50, and the lowest
+-- the stateful dynamic time warp example (\textbf{compute-dtw}) -- close to a 16 times speedup.
 This is still a significant improvement in performance across all of our tested
 examples.
 
@@ -123,13 +128,11 @@ trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. We contrast this with the
 current approach, which only needs to traverse the relevant part of the graph.
 
-\cd{The explanation is hard to understand because it's not clear which programs in the table you are referring to (you either make it explicit here, or you do this in sec 5.2.1). Also, if my guess of programs is correct, your explanation doesn't seem true, e.g. graphics/stacked-bar-chart}
-Thus, in highly data-parallel examples -- like convolution --, we expect and indeed
-observe a greater increase in performance. In contrast the graphics library code
-and the dynamic time warp implementation do not exhibit quite the same level
-of speedup, since they rely on a more sequential flow of data through the program,
-which has the effect of forcing $\demandsR{}$ to traverse a greater portion of the graph.
-
+The impact of the shape of the graph on the performance of \textit{demands}
+remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
+and \textbf{gaussian} involve a large number of parallel data dependencies, 
+but do not on the whole exhibit dramatically higher performance than the graphical
+cases like \textbf{line-chart}.  
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
