@@ -114,7 +114,8 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{extend}}
+         lab={\ruleName{extend}},
+         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
          \opGraph{G_0}(\beta) = X \cons \alpha
@@ -123,12 +124,12 @@
          H,
          \outE{G_0}(\beta) \disjunion E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
       {
          G, H \disjunion \set{\bind{\beta}{X}}, (\alpha, \beta) \cons E
          \sufficesE{G_0}
-         G', H'
+         G', H^\twoPrime
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
