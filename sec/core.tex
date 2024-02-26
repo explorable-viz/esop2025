@@ -64,9 +64,14 @@ environment is defined as a finite~map.
 % mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
 %, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
 
-\subsubsection{Vertex addresses}
+\subsubsection{Addresses for partial values}
 \label{sec:core:addresses}
-\MNnote{Rough placeholder. Please add to and improve as needed.} The addresses $\alpha$ that annotate values act as identifiers, uniquely corresponding those values to specific vertices in a dependence graph. There are many sensible ways of assigning addresses (our particular implementation uses an integer counter to generate new ones) as long as some freshness condition is satisfied -- ensuring that there are no unwanted address collisions in a given value i.e. graph. For simplicity, we elide this side-condition in the graph semantics (next) and assume it is met whenever a new address $\alpha$ is introduced.
+The addresses $\alpha$ that annotate values act as identifiers, uniquely corresponding those values to
+specific vertices in a dependence graph. There are many sensible ways of assigning addresses (our particular
+implementation uses an integer counter to generate new ones) as long as some freshness condition is satisfied
+-- ensuring that there are no unwanted address collisions in a given value i.e. graph. For simplicity, we
+elide this side-condition in the graph semantics (next) and assume it is met whenever a new address $\alpha$
+is introduced.
 
 % The point of the disjointness conditions on graph union was intended to achieve this, and does at least ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t much better than just saying this in plain English outside of the definition).
 
