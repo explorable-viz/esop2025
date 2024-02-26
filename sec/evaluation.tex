@@ -127,13 +127,11 @@ trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. We contrast this with the
 current approach, which only needs to traverse the relevant part of the graph.
 
-\cd{The explanation is hard to understand because it's not clear which programs in the table you are referring to (you either make it explicit here, or you do this in sec 5.2.1). Also, if my guess of programs is correct, your explanation doesn't seem true, e.g. graphics/stacked-bar-chart}
-Thus, in highly data-parallel examples -- like convolution --, we expect and indeed
-observe a greater increase in performance. In contrast the graphics library code
-and the dynamic time warp implementation do not exhibit quite the same level
-of speedup, since they rely on a more sequential flow of data through the program,
-which has the effect of forcing $\demandsR{}$ to traverse a greater portion of the graph.
-
+The impact of the shape of the graph on the performance of \textit{demands}
+remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
+and \textbf{gaussian} involve a large number of parallel data dependencies, 
+but do not on the whole exhibit dramatically higher performance than the graphical
+cases like \textbf{line-chart}.  
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
