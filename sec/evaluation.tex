@@ -153,3 +153,26 @@ than the trace-based approach.
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion}
+We shall now consider the qualitative benefits and the performance results in
+conjunction. The performance of evaluation is reduced due to the construction of
+the graph being more complex than constructing an execution trace. We weigh that
+against the relative ease of implementation, and the fact that evaluation now 
+only needs to occur once. The performance gains in computing \textit{demands}
+are significant. We argue that the user would only need to perform two or three
+interactions with a program output in the graphical approach for the performance
+gains to be realized. 
+
+The performance change of \textit{demanded by} is less clear. Despite the fact
+that the direct implementation uses the same underlying procedure as \textit{demands},
+we do not see as consistent of a performance increase, and indeed in some cases
+actually see a refression in performance. The implementation which uses the dual
+of \textit{suffices} is somewhat more consistent, but with generall worse performance.
+It remains to be seen exactly why this is the case, we conjecture that the structure
+of the graph constructed during program evaluation significantly impacts the performance
+of an implementation of \textit{demanded by}.
+
+We overall consider our results to be positive, since we find a major performance
+benefit in one part of the system, as well as an improvement in the simplicity of
+the implementation itself. The mixed performance results of \textit{demanded by}
+suggest further research is needed on how the structure of the graph affects the
+system performance.
