@@ -77,6 +77,14 @@ toGraph a V = (cons a V , E)
     -- Nothing else is connected
     E {a'} {b'} (inj₂ _ , _)         = ⊥
 
+postulate
+  splitOut : (a : Label)
+          -> (G : Graph)
+          -> proj₁ G a
+          -> Σ Vertices (\V' ->
+               Σ Graph (\G0 -> G ≡ graphUnion G0 (toGraph a V')))
+
+
 -- properties
 emptyGraphIsInitial : (G : Graph) -> subgraph emptyGraph G
 emptyGraphIsInitial (V , E) = (emptyIsInitial V) , aux
@@ -171,11 +179,14 @@ reachesVIsAFunction G0 G (a ∷ Vrest) prf with isIn a G
 reachesVIsAFunction G0 G (a ∷ Vrest) prf | yes p' rewrite convCons {a} {Vrest} =
  let (G' , demands) = reachesVIsAFunction G0 G Vrest prf
  in G' , reachesV-skip demands a p' 
-reachesVIsAFunction G0 G (a ∷ Vrest) prf | no p' =
-  let V' = {!!}
-      H = toGraph a V'
+reachesVIsAFunction G0 G (a ∷ Vrest) prf | no p' with splitOut a G0 {!!}
+... | (V' , G0' , prf2) = 
+
+ -- rewrite convCons {a} {Vrest} =
+
+  let H = toGraph a V'
       (G' , demands) = reachesVIsAFunction (graphUnion G0 H) (graphUnion G H) (verticesToList V' ++ Vrest) (subGraphHomom {G} {G0} {H} prf)
-  in {!!}
+  in G' , {!!}
 reachesVIsAFunction G0 G [] prf rewrite emptyListVertices = G  , reachesV-done prf
 
 reachesIsAFunction : (G0 : Graph) -> (V : Vertices) -> (subset V (S G0)) 
