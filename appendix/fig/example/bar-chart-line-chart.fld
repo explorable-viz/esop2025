@@ -1,10 +1,10 @@
 MultiPlot {|
    "bar-chart" :=
       let totalFor c rows =
-         sum [ row.output | row <- rows, row.country == c ];
-      let data2015 = [ row | row <- renewables, row.year == 2015 ];
+         sum [ row.output | row $\leftarrow$ rows, row.country == c ];
+      let data2015 = [ row | row $\leftarrow$ renewables, row.year == 2015 ];
          countryData = [ { x: c, bars: [ { y: "output", z: totalFor c data2015 } ] }
-                        | c <- ["China", "USA", "Germany"] ]
+                        | c $\leftarrow$ ["China", "USA", "Germany"] ]
       in BarChart {
          caption: "Total output by country",
          data: countryData
@@ -12,14 +12,14 @@ MultiPlot {|
    "line-chart" :=
       let series type country = [
          { x: row.year, y: row.output }
-         | year <- [2013..2018], row <- renewables,
+         | year $\leftarrow$ [2013..2018], row $\leftarrow$ renewables,
          row.year == year, row.energyType == type, row.country == country
       ] in LineChart {
          caption: "Output of USA relative to China",
          plots: [
             LinePlot { name: type, data: plot }
-            | type <- ["Bio", "Hydro", "Solar", "Wind"],
-            let plot = zipWith (fun p1 p2 -> { x: p1.x, y: p1.y / p2.y })
+            | type $\leftarrow$ ["Bio", "Hydro", "Solar", "Wind"],
+            let plot = zipWith (fun p1 p2 $\rightarrow$ { x: p1.x, y: p1.y / p2.y })
                                (series type "USA") (series type "China")
          ]
       }
