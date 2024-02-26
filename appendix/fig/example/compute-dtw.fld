@@ -19,13 +19,12 @@ let localMinUpdate seq1 seq2 cost (costmatrix, indmatrix) (i, j) =
         dist = cost iEntr jEntr;
         (ip, jp) = (i + 1, j + 1);
         (im1, jm1) = (costmatrix!(i , jp), costmatrix!(ip, j));
-        im1jm1 = costmatrix!(i, j);
-        (prev, FNum minim) = minAndPrev (i, j) im1 jm1 im1jm1;
+        ijm1 = costmatrix!(i, j);
+        (prev, FNum minim) = minAndPrev (i, j) im1 jm1 ijm1;
         newVal = FNum (dist + minim)
     in (matrixUpdate costmatrix (ip, jp) newVal, matrixUpdate indmatrix (ip, jp) prev);
 let computeDTW seq1 seq2 cost window =
-  let n = length seq1;
-      m = length seq2;
+  let (n, m) = (length seq1, length seq2);
       initD = costMatrixInit (n + 1) (m + 1) window;
       initI = $\llbracket$ 0 | (i,j) in (n + 1, m + 1)$\rrbracket$;
       indexing = nextIndices n m window;
