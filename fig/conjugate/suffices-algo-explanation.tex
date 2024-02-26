@@ -47,7 +47,7 @@
          \node[circle, draw = black](step) at (4.25, 3.0) {2};
 
          \begin{scope}[arrow]
-            \draw[dotted, thick] (x1.east) -- (x5);
+            \draw[dotted, thick] (x5.west) -- (x1);
             \draw[dashed] (x2.east) -- (x5);
             \draw[dashed] (x3.east) -- (x6);
             \draw[dashed] (x3.east) -- (x7);
@@ -74,8 +74,8 @@
          \node[circle, draw = black](step) at (4.25, 3.0) {3};
 
          \begin{scope}[arrow]
-            \draw[dotted, thick] (x1.east) -- (x5);
-            \draw[dotted, thick] (x2.east) -- (x5);
+            \draw[dotted, thick] (x5.west) -- (x1);
+            \draw[dotted, thick] (x5.west) -- (x2);
             \draw[dashed] (x3.east) -- (x6);
             \draw[dashed] (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
@@ -130,7 +130,7 @@
          \begin{scope}[arrow]
             \draw (x1.east) -- (x5);
             \draw (x2.east) -- (x5);
-            \draw[dotted, thick] (x3.east) -- (x6);
+            \draw[dotted, thick] (x6.west) -- (x3);
             \draw[dashed] (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
             \draw[dashed] (x5.east) -- (x6);
@@ -157,8 +157,8 @@
          \begin{scope}[arrow]
             \draw (x1.east) -- (x5);
             \draw (x2.east) -- (x5);
-            \draw[dotted, thick] (x3.east) -- (x6);
-            \draw[dotted, thick] (x3.east) -- (x7);
+            \draw[dotted, thick] (x6.west) -- (x3);
+            \draw[dotted, thick] (x7.west) -- (x3);
             \draw (x4.east) -- (x7);
             \draw[dashed] (x5.east) -- (x6);
          \end{scope}
@@ -184,10 +184,10 @@
          \begin{scope}[arrow]
             \draw (x1.east) -- (x5);
             \draw (x2.east) -- (x5);
-            \draw[dotted, thick] (x3.east) -- (x6);
-            \draw[dotted, thick] (x3.east) -- (x7);
+            \draw[dotted, thick] (x6.west) -- (x3);
+            \draw[dotted, thick] (x7.west) -- (x3);
             \draw (x4.east) -- (x7);
-            \draw[dotted, thick] (x5.east) -- (x6);
+            \draw[dotted, thick] (x6.west) -- (x5);
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}
@@ -218,6 +218,6 @@
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}
-   \caption{Step by step breakdown of the operation of $\sufficesAlg{}$}
+   \caption{Run of $\sufficesAlg{}$ with $G$ and $H$ superimposed on $G_0$}
    \label{fig:suffices-algo-diagram}
 \end{figure}
