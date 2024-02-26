@@ -9,36 +9,29 @@ that of the state of the art in the field.
 
 \subsection{Qualitative Evaluation Of the Graphical Approach}
 A key benefit of our approach is avoiding the need to define a backwards
-evaluation function. In prior work in this area -- such as \citet{perera22} -- a
-program produced an execution trace. Consequently, in order to perform a backwards analysis such as
-$\demandsR_D$, the developer had to implement a separate backwards evaluation
-semantics using the execution trace until reaching the program inputs. This approach was laborious since
+evaluation function. In state of the art work in this area -- such as \citet{perera22} -- a
+program produced an execution trace which was rewound in order to perform a backwards analysis such as
+$\demandsR_D$. Consequently the developer had to implement a separate backwards evaluation
+semantics using the execution trace, propagating a selection from the output backwards
+until reaching the program inputs. This approach was laborious since
 it required the forwards and backwards evaluation functions to agree with
 respect to the dependency analysis.
 
 Conversely, we evaluate a program to a dynamic dependence graph
 and defer the specific dependency queries until the graph has been computed.
 The developer needs to implement the desired dynamic dependence graph only once,
-in the forward evaluation direction. Then, we use a simple procedure to
+as part of their languages evaluation function. Then they can use a simple procedure to
 compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
-%, whilst only requiring that  since the graph itself is what facilitates the two
-% directions of the approach.
 
-An indirect result of the above is how the approach is less directly tied to
-the language being implemented. In \secref{conjugate},
-we were able to give the underlying formalism without having to
+In \secref{conjugate}, we were able to give the underlying formalism without having to
 mention any implementation details, or the specific choice of dependency relation.
-Combine this with the fact that a developer only needs to provide a single
-implementation of the approach, and we feel that the graphical approach
-has the distinct advantage of being easier to port to a new language, and 
-is more easily adaptable to changes in the implemented language. In the graphical
-approach, adding new constructs to the implementation or modifying language
-features does not incur excessive overhead, since the developer only needs to
-modify the evaluation function, a function which they would need to modify
-anyway. \jb{Trying to explain that the graphical approach makes changing
-your language easier, since the only place you need to take it into account
-is the evaluation function you would already need to modify when adding new
-features.}
+Our ability to do so, combined with the prior remark regarding the need to implement
+only a single construction of the graph contributes to ease of use. We suggest that the graphical approach
+has the distinct advantage of being less sensitive to changes in the semantics
+of the language. By removing the need for a pair of evaluation functions which
+"agree", adding new constructs to a language is significantly easier, since the
+only part of the language which is affected is the evaluation function which
+the developer would already be forced to modify.
 
 
 \subsection{Experimental Evaluation}
@@ -54,35 +47,46 @@ order to enable a like-for-like performance comparison.
 
 In an interactive system, performance plays an enormous role in the experience
 of a user. We have to test the performance of the three main components of the
-system.We boil down the performance testing to the following three research questions:
+system which we boil down to the following three research questions:
 
 \begin{itemize}
    \item RQ1: What is the overhead graph construction versus trace construction?
    \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
-   \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation, or the dual of \opName{suffices}, compare in performance?
+   \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation using $\demandsAlg{}$, and the dual of $\sufficesAlg{}$, compare in performance?
 \end{itemize}
-
-Still have the general question of how we can motivate the inclusion of suffices.
 
 \subsubsection{Choice of Examples}
 \label{sec:evaluation:choice-of-examples}
 
 We tested our system on a range of examples %constituting the larger programs we
-implemented in \OurLang. These programs, given fully in \apdxsecref{sec:evaluation-src-code},
-represent a range of components a data
+implemented in \OurLang. These programs represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
-we considered matrix convolution (edgeDetect, emboss, gaussian, 18 LoC). Different
+we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 LoC each + 21 shared). Different
 filter matrices create subtly different dependency structures, hence we 
 implemented a few different filters. Second, we have an example of a more
 sequential algorithmic program, namely an implementation of dynamic time warping,
-known from the time series analyis (compute-dtw, 76 LoC). Third, we developed a prototype of a graphics
-library, to demonstrate the performance on bespoke visualization code (grouped-bar-chart, line-chart, stacked-bar-chart, 220 Loc).
+known from the time series analyis (\textbf{compute-dtw}, 39 LoC). 
+We provide a view of this program in \figref{dtw-source}.
+Third, we developed a prototype of a graphics
+library, to demonstrate the performance on bespoke visualization code (\textbf{grouped-bar-chart}, \textbf{line-chart}, \textbf{stacked-bar-chart}, 133 shared Loc).
 Finally, we have tested some linked examples, 
-particularly \figref{introduction:scatteprlot} from \secref{overview} (stacked-bar-chart-scatter-plot,38 LoC)
-and another linking example, (bar-chart-line-chart, 26 LoC).
+particularly \figref{introduction:scatterplot} from \secref{overview} (\textbf{stacked-bar-scatter-plot}, 38 LoC)
+and another linking example, (\textbf{bar-chart-line-chart}, 26 LoC).
+Other than \textbf{compute-dtw}, we present the code for the rest of the benchmark
+programs in \apdxsecref{evaluation-src-code}
 
-Each benchmark is run 10 times, and we report both the sample mean and standard
-error for each benchmark.
+Each benchmark is run 10 times. For each collection of benchmark runs,
+we report the mean elapsed time, and the standard error of this sample.
+Timing results are reported in milliseconds. When we refer to \textit{speedup}
+or \textit{slowdown} with reference to a pair of implementations, we are
+referring to the ratio of elapsed time on a given benchmark.
+
+\begin{figure}
+   \small
+   {\lstinputlisting[language=Fluid]{appendix/fig/example/compute-dtw.fld}}
+   \caption{Source code: \lstinline{slicing/dtw/compute-dtw}}
+   \label{fig:dtw-source}
+\end{figure}
 
 \subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
 We first proceed by comparing the time taken to evaluate a program in the
@@ -92,27 +96,18 @@ Since the graph is a more complex data structure to build compared to the trace,
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
-In \tableref{eval-speedups}, we see that, as expected, the evaluation of programs
+In \tableref{eval-SpdUps}, we see that, as expected, the evaluation of programs
 to their dynamic dependence graph does incur some increased overhead, ranging from
 3 to 14 times slower than their trace based counterparts. We report the ratio
 of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}).
-
-\jb{Can maybe cut this since we cover similar ground in discussion}
-We consider the primary focus of the evaluation to be in the types of interactions
-that we can support, rather than the performance of the initial program evaluation.
-This is because the evaluation only occurs once, and the overhead may disappear
-over the course of several interactions.
-We therefore consider the increase in evaluation overhead to be a worthwhile
-tradeoff, when we consider the relative performance of implementing
-\textit{demands} and \textit{demanded by}. 
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
 \subsubsection{RQ2: Demands Graphs Versus Traces}
 We now compare the performance of the graphical and trace based implementations
-when it comes to the computation of demands. We observe a significant increase
-in the performance of demands using the graphical approach, shown in
-\tableref{demands-speedups}. We report time taken to compute demands
+when it comes to the computation of \textit{demands}. We observe a significant increase
+in the performance of \textit{demands} using the graphical approach, shown in
+\tableref{demands-SpdUps}. We report time taken to compute \textit{demands}
 with the trace and graph in \textbf{T-Demands} and \textbf{G-Demands}
 respectively.
 
@@ -128,6 +123,7 @@ trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. We contrast this with the
 current approach, which only needs to traverse the relevant part of the graph.
 
+\jb{To be moved to discussion}
 The impact of the shape of the graph on the performance of \textit{demands}
 remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
 and \textbf{gaussian} involve a large number of parallel data dependencies, 
@@ -136,7 +132,7 @@ cases like \textbf{line-chart}.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{RQ3: Comparison of Equivalent Impls}
+\subsubsection{RQ3: Implementations of Demanded By}
 
 We must finally investigate the performance of \textit{demanded by}. We must
 compare the trace based approach with the graphical approach implemented by
