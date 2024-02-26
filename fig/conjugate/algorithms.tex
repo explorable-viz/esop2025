@@ -99,7 +99,7 @@
          right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \opGraph{G_0}(\beta) \supset H'(\beta)
+         H'(\beta) \subset \opGraph{G_0}(\beta)
          \\
          G, H', E
          \sufficesE{G_0}
@@ -118,16 +118,16 @@
          right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \opGraph{G_0}(\beta) = X \cons \alpha
+         H'(\beta) = \opGraph{G_0}(\beta)
          \\
-         G \disjunion \opGraph{\set{\bind{\beta}{X \cons \alpha}}},
-         H,
+         G \disjunion \opGraph{\set{\bind{\beta}{H'(\beta)}}},
+         H \setminus \set{\beta},
          \outE{G_0}(\beta) \disjunion E
          \sufficesE{G_0}
          G', H^\twoPrime
       }
       {
-         G, H \disjunion \set{\bind{\beta}{X}}, (\alpha, \beta) \cons E
+         G, H, (\alpha, \beta) \cons E
          \sufficesE{G_0}
          G', H^\twoPrime
       }
