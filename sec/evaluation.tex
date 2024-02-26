@@ -41,18 +41,14 @@ the developer only needs to implement the analysis once, and any changes to the
 language or dependency relation used only require modification to a single
 evaluation function.
 \subsection{Experimental Evaluation}
-
-
-In order to test the performance of our dependency analyses, we implemented the
-approach described in \secref{core} as a language called \OurLang. The language
-was implemented in Purescript. \jb{I want to cut out the repetition here but feel
-that I need to list all of the thinsg below.} Benchmarks were run on a commercial laptop, with an
-Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
-on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
-\MNnote{rough starter suggestion:
-In order to test the performance of our approach, we implemented our language from \secref{core} on top of Purescript, using this to write a selection of non-trivial examples that reflect realistic targets of dependency analyses (\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
+In order to test the performance of our approach, we implemented our language
+from \secref{core} on top of Purescript, which we used to write a selection of
+non-trivial examples that reflect realistic targets of dependency analyses
+(\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
-using Google Chrome 121.0.6167.160 and Javascript runtime V8 12.1.285.28.}
+using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. We
+also implemented a variant of prior approaches that use execution traces, in
+order to enable a like-for-like performance comparison.
 
 
 In an interactive system, performance plays an enormous role in the experience
