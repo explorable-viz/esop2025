@@ -7,7 +7,7 @@ Whether formulating a national policy or simply deciding what groceries to buy, 
 charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions. However, most of the artefacts we encounter are
 \emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
-While one could in principle try to use the source code and data sources to reverse engineer some of these
+Whilst one could in principle try to use the source code and data sources to reverse engineer some of these
 relationships, this requires substantial expertise, as well as valuable time spent away from the
 ``comprehension context'' in which we encountered the output in question.  These difficulties are only
 compounded when the information presented draws on multiple data sources, such as medical
@@ -19,7 +19,7 @@ an activity. Perhaps more often than we would like, we end up taking things on t
    \centering
    \includegraphics[width=0.49\textwidth]{fig/example/bremer.png}
    \vspace{-2mm}
-   \caption{Hand-crafted data-transparent visualisation}
+   \caption{Hand-crafted data-transparent visualisation~\cite{bremer15}}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
 
@@ -27,14 +27,14 @@ With traditional print media, a ``disconnect'' between outputs and underlying da
 media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
 ``self-explanatory'' so they can reveal the relationship to the underlying data to an interested user.
 Consider the histogram in \figref{introduction:bremer} showing urban population growth in Asia over a 10-year
-period \cite{bremer15}. There are many questions a reader might have about what this chart ``represents'' ---
+period \cite{bremer15}. There are many questions a reader might have about what this chart ``represents''\DOnote{does this need to be in quotes?} ---
 in other words, how visual elements map to underlying data. Do the points represent individual cities? What
 does the colour scheme indicate? Which of the points represent large cities or small cities? Legends and other
 accompanying text can help, but some ambiguities inevitably remain. The entire value proposition of a summary
 after all is that it presents the big picture at the expense of certain detail.
 
 \citeauthor{bremer15} implemented an interactive feature that allow a user to explore some of these questions
-themselves \emph{in situ}, i.e.~directly from the chart. By selecting an individual point, they are able to
+themselves \emph{in situ}, i.e., directly from the chart. By selecting an individual point, they are able to
 bring up a view showing the data that point was calculated from. In this case the highlighted dot represents
 data for Chiang Mai and the plotted value of 10.9\% was derived from an increase in population density from
 4,416 to 5,010 people per sq.~km.
@@ -42,10 +42,10 @@ data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
 \subsection{Data transparency as PL infrastructure}
 
 Features like these are valuable comprehension aids but are laborious to implement by hand. They also require
-the author to anticipate the queries a user might have and don't readily generalise: for example
+the author to anticipate the queries a user might have and do not readily generalise: for example
 \citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
 
-For these reasons, there has been recent interest in treating this as a programming language infrastructure
+For these reasons, there has been recent interest in treating data transparency and exploration as a programming language infrastructure
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
 supported automatically. The author of the content no longer has to concern themselves with these tricky
 features, and the consumer of the content now has the best of both worlds: the ability to explore detail on an
@@ -62,13 +62,13 @@ relational visualisation language, they describe how to ``backward trace'' from 
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficesR$ (suffices for), linking specific output selections to input selections. The formal guarantee
+$\sufficesR$ (suffices for), linking specific output selections to input selections\DOnote{should we be saying that suffices links inputs to outputs?}. The formal guarantee
 that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandsR$ and
 $\sufficesR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
 mutual reciprocality:
 \[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
-\noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if a set of
+\noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) \DOnote{not sure the following is so intuitive for the Galois connection relation; ordering sounds wrong.}This says that if a set of
 outputs $Y$ demands a set of inputs $X$, then $X$ is the smallest set of inputs which suffices for outputs
 which include $Y$; and conversely that if a set of inputs $X$ suffices for $Y$, then $Y$ is the greatest set
 of outputs whose demand lies within $Y$. (A Galois connection in this sense simply relaxes the usual
