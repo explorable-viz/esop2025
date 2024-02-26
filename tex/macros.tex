@@ -1,4 +1,10 @@
 \renewcommand*{\secref}[1]{\S~\ref{sec:#1}}
+\newcommand*{\apdxsecref}[1]{
+   \ifappendices
+      \secref{1}%
+   \else
+      the appendix%
+   \fi}
 
 % Inline commentary
 \newcommand*{\CDnote}[1]{\todo{CD: #1}}

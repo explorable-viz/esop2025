@@ -1,10 +1,10 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We now present a critical evaluation of our approach. Firstly, we 
+We now present a critical evaluation of our approach. Firstly, we
 consider the qualitative benefits of the approach in terms of conceptual
 simplicity, and the relative ease of implementation. Secondly, we provide
-an experimental comparison of the performance of our implementation and 
+an experimental comparison of the performance of our implementation and
 that of the state of the art in the field.
 
 \subsection{Qualitative Evaluation Of the Graphical Approach}
@@ -20,7 +20,7 @@ respect to the dependency analysis.
 Conversely, we evaluate a program to a dynamic dependence graph
 and defer the specific dependency queries until the graph has been computed.
 The developer needs to implement the desired dynamic dependence graph only once,
-in the forward evaluation direction. Then, we use a simple procedure to 
+in the forward evaluation direction. Then, we use a simple procedure to
 compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
 %, whilst only requiring that  since the graph itself is what facilitates the two
 % directions of the approach.
@@ -39,7 +39,7 @@ itself need to be implemented multiple times. In contrast, with our approach
 the developer only needs to implement the analysis once, and any changes to the
 language or dependency relation used only require modification to a single
 evaluation function.
-\subsection{Benchmarking} \cd{``Experimental Evaluation?''}
+\subsection{Benchmarking \cd{``Experimental Evaluation?''}}
 
 
 In order to test the performance of our dependency analyses, we implemented the
@@ -47,6 +47,11 @@ approach in the language described in \secref{core} in Purescript as a
 language called \OurLang \cd{sentence very difficult to parse}. Benchmarks were run on a commercial laptop, with an
 Intel Core i7-10850H clocked at 2.70GHz and 16Gb of RAM. The benchmarks were run
 on Google Chrome version 121.0.6167.160 and Javascript runtime V8 12.1.285.28.
+\MNnote{rough starter suggestion:
+In order to test the performance of our approach, we implemented our language from \secref{core} on top of Purescript, using this to write a selection of non-trivial examples that reflect realistic targets of dependency analyses (\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
+Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
+using Google Chrome 121.0.6167.160 and Javascript runtime V8 12.1.285.28.}
+
 
 \cd{I think this paragraph can be simplified. Maybe you can just say that we need to compare the performance of the current approach with that of the trace based approach without detailing every aspect, as they will be clarified by the RQs?}
 In an interactive system, performance plays an enormous role in the experience
@@ -70,13 +75,15 @@ We thus boil down the performance testing to the following three research questi
 Still have the general question of how we can motivate the inclusion of suffices.
 
 \subsubsection{Choice of Examples}
+\label{sec:evaluation:choice-of-examples}
 
 \cd{When you describe the programs, maybe say explicitly  which ones are in which category?}
 We tested our system on a range of examples %constituting the larger programs we
-implemented in \OurLang. These programs represent a range of components a data
+implemented in \OurLang. These programs, given fully in \apdxsecref{sec:evaluation-src-code},
+represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
 we considered matrix convolution. Different
-filter matrices create subtly different dependency structures, hence we 
+filter matrices create subtly different dependency structures, hence we
 implemented a few different filters. Second, we have an example of a more
 sequential algorithmic program, namely an implementation of dynamic time warping,
 known from the time series analyis. Third, we developed a prototype of a graphics
@@ -109,7 +116,7 @@ tradeoff, when we consider the relative performance of implementing
 \cd{I would just say which implementations, rather than call them ``twin''.}
 We now compare the performance of the twin implementations when it comes to the
 computation of demands. We observe a significant increase in the performance of
-demands using the graphical approach, shown in \tableref{demands-speedups}. 
+demands using the graphical approach, shown in \tableref{demands-speedups}.
 
 This increased performance for computing \textit{demands} varies across the
 examples, with some examples exhibiting a speedup of more than 50, and the lowest
