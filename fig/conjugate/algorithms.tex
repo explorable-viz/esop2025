@@ -1,23 +1,23 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$V \demandedByAlg{G_0} V'$}
+      {\small \flushleft \shadebox{$X \demandedByAlg{G_0} Y$}
          \begin{smathpar}
             \inferrule*[
 %              lab={\ruleName{$\demandedByAlg{}$}},
-              right={$V \subseteq \sources{G_0}$}
+              right={$X \subseteq \sources{G_0}$}
             ]
             {
-               (\emptyset, \emptyset), V
+               (\emptyset, \emptyset), X
                \demandedByV{G_0}
                G
             }
             {
-               V \demandedByAlg{G_0} \sinks{G}
+               X \demandedByAlg{G_0} \sinks{G}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, V \demandedByV{G_0} G'$}
+         {\small \flushleft \shadebox{$G, X \demandedByV{G_0} G'$}
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
@@ -37,12 +37,12 @@
             right={$\alpha \in \V(G)$}
          ]
          {
-            G, V
+            G, X
             \demandedByV{G_0}
             G'
          }
          {
-            G, \alpha \cons V \demandedByV{G_0} G'
+            G, \alpha \cons X \demandedByV{G_0} G'
          }
          %
          \and
