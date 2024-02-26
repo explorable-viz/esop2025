@@ -1,14 +1,20 @@
+{-# OPTIONS --allow-unsolved-metas #-}
+
 module Algorithm where
 
 open import Relation.Binary.PropositionalEquality
 open import Data.Empty
 open import Data.Unit
 open import Data.Sum
+open import Data.List
 open import Data.Product
 open import Relation.Unary hiding (U)
 open import Relation.Nullary
 open import Level hiding (suc)
 open import Data.Nat
+open import Relation.Nullary.Decidable
+
+open import Data.Bool hiding (T)
 
 open import SetRep
 
@@ -27,6 +33,11 @@ Edges V = {a b : Label} -> (V a × V b) -> Set
 Graph : Set₁
 Graph = Σ Vertices (\V -> Edges V)
 
+isIn : (a : Label) -> (G : Graph) -> Dec (proj₁ G a)
+isIn a G with proj₁ G a | inspect (\x -> proj₁ x a) G
+... | p | [ eq ] = {!p!}
+
+
 emptyGraph : Graph
 emptyGraph = emptySet , emptySet
 
@@ -36,6 +47,9 @@ subgraph (V , E) (V' , E') =
 
 cons : (a : Label) ->  Vertices -> Vertices
 cons a V = \a' -> (a ≡ a') ⊎ V a
+
+postulate
+  headAndTail : (V : Vertices) -> Σ Label (\a -> Σ Vertices (\V' -> cons a V' ≡ V))
 
 graphUnion : Graph -> Graph -> Graph
 graphUnion (V , E) (V' , E') = (union V V' , E'')
@@ -51,6 +65,9 @@ positivity : {G1 G2 G3 : Graph}
              -> subgraph G1 G3
 positivity {G1} {G2} {G3} (sub , rel) = (λ x → sub {!!}) , {!!}
 
+subGraphHomom : {G0 G1 G : Graph} -> subgraph G0 G1 -> subgraph (graphUnion G0 G) (graphUnion G1 G)
+subGraphHomom {G0} {G1} (fst , snd) = (λ x → {!!}) , {!!}
+
 toGraph : (a : Label) -> Vertices -> Graph
 toGraph a V = (cons a V , E)
   where
@@ -59,6 +76,14 @@ toGraph a V = (cons a V , E)
     E {.a} {b'} (inj₁ refl , inj₂ y) = ⊤
     -- Nothing else is connected
     E {a'} {b'} (inj₂ _ , _)         = ⊥
+
+postulate
+  splitOut : (a : Label)
+          -> (G : Graph)
+          -> proj₁ G a
+          -> Σ Vertices (\V' ->
+               Σ Graph (\G0 -> G ≡ graphUnion G0 (toGraph a V')))
+
 
 -- properties
 emptyGraphIsInitial : (G : Graph) -> subgraph emptyGraph G
@@ -121,25 +146,54 @@ mutual
                -> forall (V' : Vertices) -> V' ≡ T G
                -> Reaches G0 V V'
 
-  data ReachesV (G0 : Graph) : (G : Graph) -> (V : Vertices) -> (G' : Graph) -> Set₁ where
+  data ReachesV : (G0 : Graph)  -> (G : Graph) -> (V : Vertices) -> (G' : Graph) -> Set₁ where
 -- -> subgraph G G' -> subgraph G' G0
 
-     reachesV-done : {G : Graph}
+     reachesV-done : {G0 G : Graph}
                   -> (prf : subgraph G G0)
                   -> ReachesV G0 G emptySet G
 
-     reachesV-skip : {G G' : Graph} {V : Vertices}
+     reachesV-skip : {G0 G G' : Graph} {V : Vertices}
                      -> ReachesV G0 G V G'
                      -> (a : Label)
-                     -- a in vertices of G
-                     -> (proj₁ G) a
+                     -> (ainV : proj₁ G a)
                      -> ReachesV G0 G (cons a V) G'
 
-     reachesV-extend : {G G' : Graph} {V V' : Vertices}
+     reachesV-extend : {G0 G G' : Graph} {V V' : Vertices}
                      -> (a : Label)
-                     -> ReachesV G0 (graphUnion G (toGraph a V')) (union V' V) G'
-                     -> ReachesV G0 G (cons a V) G'
+                     -> ReachesV (graphUnion G0 (toGraph a V')) (graphUnion G (toGraph a V')) (union V' V) G'
+                     -> ReachesV (graphUnion G0 (toGraph a V')) G (cons a V) G'
 ------
+
+postulate
+  verticesToList : Vertices -> List Label
+  listToVertices : List Label -> Vertices
+  emptyListVertices : listToVertices [] ≡ emptySet
+  convIso : {V : Vertices} -> listToVertices (verticesToList V) ≡ V
+  convCons : {a : Label} {V : List Label} -> listToVertices (a ∷ V) ≡ cons a (listToVertices V)
+
+-- Proof that these relations are actually functions
+
+reachesVIsAFunction : (G0 : Graph) -> (G : Graph) -> (V : List Label) -> subgraph G G0 -> Σ Graph (\G' -> ReachesV G0 G (listToVertices V) G')
+reachesVIsAFunction G0 G (a ∷ Vrest) prf with isIn a G
+reachesVIsAFunction G0 G (a ∷ Vrest) prf | yes p' rewrite convCons {a} {Vrest} =
+ let (G' , demands) = reachesVIsAFunction G0 G Vrest prf
+ in G' , reachesV-skip demands a p' 
+reachesVIsAFunction G0 G (a ∷ Vrest) prf | no p' with splitOut a G0 {!!}
+... | (V' , G0' , prf2) = 
+
+ -- rewrite convCons {a} {Vrest} =
+
+  let H = toGraph a V'
+      (G' , demands) = reachesVIsAFunction (graphUnion G0 H) (graphUnion G H) (verticesToList V' ++ Vrest) (subGraphHomom {G} {G0} {H} prf)
+  in G' , {!!}
+reachesVIsAFunction G0 G [] prf rewrite emptyListVertices = G  , reachesV-done prf
+
+reachesIsAFunction : (G0 : Graph) -> (V : Vertices) -> (subset V (S G0)) 
+                   -> Σ Vertices (\V' -> Reaches G0 V V')
+reachesIsAFunction G0 V prf rewrite sym (convIso {V}) =
+  let (G , reachesV) = reachesVIsAFunction G0 emptyGraph (verticesToList V) (emptyGraphIsInitial G0) 
+  in T G , reaches prf reachesV (T G) refl
 
 -- ##  Properties on Reaches
 
@@ -147,7 +201,7 @@ relationship : (G0 : Graph) -> (G : Graph) -> (V : Vertices) -> (G' : Graph)
              -> ReachesV G0 G V G'
              -> (subgraph G G') × (subgraph G' G0)
 relationship G0 G .emptySet .G (reachesV-done prf) = (reflexiveSubgraph G) , prf
-relationship G0 G .(cons a V) G' (reachesV-skip {V = V} reach a x) =
+relationship G0 G .(cons a V) G' (reachesV-skip {V = V} reach a aInV) =
  -- induction
  let (prf1 , prf2) = relationship G0 G V G' reach
  in prf1 , prf2
