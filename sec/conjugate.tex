@@ -109,23 +109,22 @@ they form a \textit{conjugate pair}, in the sense of \citet{jonsson51}:
 %sufficient for.
 
 \begin{definition}[Conjugate Functions]
-   For Boolean algebras $A$, $B$ and functions $f: A \to B$ and $g: B \to A$, we say that $f, g$ form a
-   \textit{conjugate pair} iff:
+   For Boolean algebras $A$, $B$, functions $f: A \to B$ and $g: B \to A$ form a \textit{conjugate pair} iff:
    $$
-   f(x) \meet y \neq \bot \iff x \meet g(y) \neq \bot
+   f(x) \meet y = \bot \iff x \meet g(y) = \bot
    $$
 \end{definition}
 
-\noindent (\citeauthor{jonsson51} use a contrapositive formulation but we prefer this version.)
+\noindent (\citeauthor{jonsson51} consider only endofunctions; here we extend to maps between Boolean
+algebras.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]
 For any relation $R \subseteq X \times Y$ we have that $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
 \end{lemma}
 
 This makes intuitive sense: for any subsets $X' \subseteq X$ and $Y' \subseteq Y$, if the elements ``on the
-right'' that $X'$ is related include at least one element from $Y'$, then there is at least one edge of $R$
-from $X'$ to $Y'$; and in virtue that, the elements ``on the left'' to which $Y'$ is related must include at
-least one element from $X'$.
+right'' that $X'$ is related is disjoint from $Y'$, then there are no edges of $R$ from $X'$ to $Y'$; and in
+virtue that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
 \subsubsection{Dual Image and Preimage Functions}
 
