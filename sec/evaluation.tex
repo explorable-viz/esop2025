@@ -70,7 +70,7 @@ We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
 library, to demonstrate the performance on bespoke visualization code (\textbf{grouped-bar-chart}, \textbf{line-chart}, \textbf{stacked-bar-chart}, 133 shared Loc).
 Finally, we have tested some linked examples, 
-particularly \figref{introduction:scatteprlot} from \secref{overview} (\textbf{stacked-bar-scatter-plot}, 38 LoC)
+particularly \figref{introduction:scatterplot} from \secref{overview} (\textbf{stacked-bar-scatter-plot}, 38 LoC)
 and another linking example, (\textbf{bar-chart-line-chart}, 26 LoC).
 Other than \textbf{compute-dtw}, we present the code for the rest of the benchmark
 programs in \apdxsecref{evaluation-src-code}
@@ -96,7 +96,7 @@ Since the graph is a more complex data structure to build compared to the trace,
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
-In \tableref{eval-speedups}, we see that, as expected, the evaluation of programs
+In \tableref{eval-SpdUps}, we see that, as expected, the evaluation of programs
 to their dynamic dependence graph does incur some increased overhead, ranging from
 3 to 14 times slower than their trace based counterparts. We report the ratio
 of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}).
@@ -107,7 +107,7 @@ of graph evaluation time to trace evaluation time in the third column (\textbf{E
 We now compare the performance of the graphical and trace based implementations
 when it comes to the computation of \textit{demands}. We observe a significant increase
 in the performance of \textit{demands} using the graphical approach, shown in
-\tableref{demands-speedups}. We report time taken to compute \textit{demands}
+\tableref{demands-SpdUps}. We report time taken to compute \textit{demands}
 with the trace and graph in \textbf{T-Demands} and \textbf{G-Demands}
 respectively.
 
@@ -132,7 +132,7 @@ cases like \textbf{line-chart}.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{RQ3: Comparison of Equivalent Impls}
+\subsubsection{RQ3: Implementations of Demanded By}
 
 We must finally investigate the performance of \textit{demanded by}. We must
 compare the trace based approach with the graphical approach implemented by
