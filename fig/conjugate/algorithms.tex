@@ -65,18 +65,18 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$V \sufficesAlg{G_0} V'$}\hfill\textit{where $V \subseteq \sinks{G_0}$ and $V' \subseteq \sources{G_0}$}}
+   {\small \flushleft \shadebox{$X \sufficesAlg{G_0} U$}\hfill\textit{where $X \subseteq \sinks{G_0}$ and $Y \subseteq \sources{G_0}$}}
    \begin{smathpar}
       \inferrule*%[lab={\ruleName{$\sufficesAlg{}$}}]
       {
-         (V, \emptyset),
+         (X, \emptyset),
          \emptyset,
-         \outE{G_0}(V)
+         \set{(\alpha, \beta) \in \outE{G_0}(\alpha') \mid \alpha' \in X}
          \sufficesE{G_0}
          G, H
       }
       {
-         V \sufficesAlg{G_0} \sources{G}
+         X \sufficesAlg{G_0} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
