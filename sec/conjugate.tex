@@ -98,21 +98,14 @@ $\demandedByR$ and $\demandsR$.
    \end{enumerate}
 \end{definition}
 
-\noindent These functions can of course be considered for an arbitrary relation, but when thinking of $R$ as a
-dependency relation, we can view the image $\demandedByR_{R}(X')$ as those outputs that the elements of $X'$
-are demanded by, and the preimage $\demandsR_{R}(Y')$ as those inputs demanded by the elements of $Y'$. A
-trivial but important observation is that the image function for $R$ is the preimage function for its
-converse, i.e.~$\demandedByR_{R} = \demandsR_{R^{-1}}$.
-
-[\todo{Integrate into appropriate place.} A related question we may come across in data analysis tasks is that
-of \textit{sufficiency}. For the values in $X'$ to be sufficient for some output, $y \in Y$, we need $x_i \in
-X'$ for every $(x_i, y) \in D$. As a simple example, consider the expression $3 + 4$, neither of the
-subexpressions $3$ or $4$ are sufficient to produce the result of evaluating the expression on their own.
-Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
-sufficient for.]
-
-We observe that the image and preimage of a relation form  a
+\noindent Clearly the image function for $R$ is the preimage function for its converse, i.e.~$\demandedByR_{R}
+= \demandsR_{R^{-1}}$. When thinking of $R$ as a dependency relation, the image $\demandedByR_{R}(X')$
+consists of all the outputs that any element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$
+consists of all the inputs demanded by any element of $Y'$. The image and preimage functions for a
 \textit{conjugate pair}, in the sense of \citet{jonsson51}:
+
+%Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
+%sufficient for.
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras $A$, $B$ and functions $f: A \to B$ and $g: B \to A$, we say that $f, g$ form a
