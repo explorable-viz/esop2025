@@ -65,9 +65,9 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$X \sufficesAlg{G_0} U$}\hfill\textit{where $X \subseteq \sinks{G_0}$ and $Y \subseteq \sources{G_0}$}}
+   {\small \flushleft \shadebox{$X \sufficesAlg{G_0} U$}}
    \begin{smathpar}
-      \inferrule*%[lab={\ruleName{$\sufficesAlg{}$}}]
+      \inferrule*
       {
          (X, \emptyset),
          \emptyset,
@@ -79,9 +79,12 @@
          X \sufficesAlg{G_0} \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}\hfill\textit{where $G \subseteq G' \subseteq G_0$ and $\ran{E} \subseteq \sources{G}$}}
+   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{done}}]%$\sufficesE{}$-done}}]
+      \inferrule*[
+         lab={\ruleName{done}},
+         right={$G \subseteq G_0$}
+      ]
       {
          \strut
       }
@@ -92,7 +95,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{pending}},% $\sufficesE{}$-pending}},
+         lab={\ruleName{pending}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
@@ -111,7 +114,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{extend}},% $\sufficesE{}$-extend}},
+         lab={\ruleName{extend}},
          right={$H_0 = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
