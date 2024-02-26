@@ -8,7 +8,6 @@ an experimental comparison of the performance of our implementation and
 that of the state of the art in the field.
 
 \subsection{Qualitative Evaluation Of the Graphical Approach}
-\todo{No Need to define backwards semantics}
 A key benefit of our approach is avoiding the need to define a backwards
 evaluation function. In prior work in this area -- such as \citet{perera22} -- a
 program produced an execution trace. Consequently, in order to perform a backwards analysis such as
@@ -25,21 +24,23 @@ compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
 %, whilst only requiring that  since the graph itself is what facilitates the two
 % directions of the approach.
 
-\todo{Language Agnostic Approach}
-The framework we have set up in this paper is language-agnostic. In \secref{conjugate},
-we were able to give the core technical details of the approach without having to
-mention the details of the language, or the specific choice of dependency relation.
+An indirect result of the above is how the approach is less directly tied to
+the language being implemented. In \secref{conjugate},
+we were able to give the underlying formalism without having to
+mention any implementation details, or the specific choice of dependency relation.
+Combine this with the fact that a developer only needs to provide a single
+implementation of the approach, and we feel that the graphical approach
+has the distinct advantage of being easier to port to a new language, and 
+is more easily adaptable to changes in the implemented language. In the graphical
+approach, adding new constructs to the implementation or modifying language
+features does not incur excessive overhead, since the developer only needs to
+modify the evaluation function, a function which they would need to modify
+anyway. \jb{Trying to explain that the graphical approach makes changing
+your language easier, since the only place you need to take it into account
+is the evaluation function you would already need to modify when adding new
+features.}
 
-\cd{While I think I undertand what you mean, this paragraph is unclear. You want to say that the approach is language agnostic, but you say that something needs to be implemented several times vs. once.}
-\jb{I will fix this paragraph on Monday since it is mostly fluff}
-We contrast this with the fact that alternative approaches do not compute and cache
-the dependency structure -- as we do with the dependence graph -- but instead
-the analyses are computed as part of evaluating a program, or un-evaluating an
-execution trace. Thus, any changes to the dependency relation or to the language
-itself need to be implemented multiple times. In contrast, with our approach
-the developer only needs to implement the analysis once, and any changes to the
-language or dependency relation used only require modification to a single
-evaluation function.
+
 \subsection{Experimental Evaluation}
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of Purescript, which we used to write a selection of
