@@ -1,3 +1,5 @@
+{-# OPTIONS --allow-unsolved-metas #-}
+
 module SetRep where
 
 open import Relation.Binary.PropositionalEquality
@@ -8,6 +10,9 @@ open import Relation.Unary hiding (U)
 open import Relation.Nullary
 open import Level
 open import Data.Nat hiding (suc)
+open import Data.Bool
+
+open import Relation.Nullary.Decidable
 
 -- # Set construction
 
@@ -22,6 +27,10 @@ variable
 
 emptySet : set U
 emptySet _ = ⊥
+
+isEmptySet : (X : set U) -> Dec (X ≡ emptySet)
+isEmptySet X with X {!!}
+... | p = {!p!}
 
 subset : {U : Set} -> set U -> set U -> Set
 subset {U} X' X = {x : U} -> X' x -> X x
