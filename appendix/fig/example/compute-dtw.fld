@@ -1,10 +1,10 @@
 let nextIndices n m window =
-  [(i, j) | i <- [1 .. n], j <- [max 1 (i - window) .. min m (i + window)]];
+  [(i, j) | i $\leftarrow$ [1 .. n], j $\leftarrow$ [max 1 (i - window) .. min m (i + window)]];
 let costMatrixInit rows cols window =
-    [| let initV = if ((n == 1) `and` (m == 1)) `or` ((abs n m <= window)
+    $\llbracket$ let initV = if ((n == 1) `and` (m == 1)) `or` ((abs n m <= window)
                                 `and` not ((n == 1) `or` (m == 1)))
                    then FNum 0  else Infty
-        in initV | (n, m) in (rows, cols) |];
+        in initV | (n, m) in (rows, cols) $\rrbracket$;
 let minAndPrev (i, j) im1 jm1 ijm1 =
   let minim = minimal [im1, jm1, ijm1] in
       if minim `eq` im1 then ((i, j + 1), minim)
@@ -30,7 +30,7 @@ let computeDTW seq1 seq2 cost window =
   let n = length seq1;
       m = length seq2;
       initD = costMatrixInit (n + 1) (m + 1) window;
-      initI = [| 0 | (i,j) in (n + 1, m + 1)|];
+      initI = $\llbracket$ 0 | (i,j) in (n + 1, m + 1)$\rrbracket$;
       indexing = nextIndices n m window;
       (finished, indices) = foldl (localMinUpdate seq1 seq2 cost) (initD, initI) indexing
   in (finished, extractPath indices (n + 1, m + 1));

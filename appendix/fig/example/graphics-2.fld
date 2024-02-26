@@ -19,12 +19,12 @@ let axis orient x start end =
        n = floor ((end - firstTick) / tickSp) + 1;
        ys = iterate n ((+) tickSp) firstTick;
        ys = match firstTick > start as {
-          True -> start : ys;
-          False -> ys
+          True $\rightarrow$ start : ys;
+          False $\rightarrow$ ys
        };
        ys = match lastTick > end as {
-          True -> concat2 ys [lastTick];
-          False -> ys
+          True $\rightarrow$ concat2 ys [lastTick];
+          False $\rightarrow$ ys
        };
        ps = map (mkPoint orient x) ys;
        ax = Group [
@@ -39,6 +39,6 @@ let catAxis orient x catValues =
    in Group [
       Line (head ps) (last ps) axisColour axisStrokeWidth,
       Polymarkers (tail ps) (map (const (tick orient axisColour tickLength)) catValues),
-      Polymarkers (flip map (tail ps) (fun (Point x y) -> Point (x - 0.5) y))
+      Polymarkers (flip map (tail ps) (fun (Point x y) $\rightarrow$ Point (x - 0.5) y))
                   (map (label orient -0.5 0) catValues)
    ];

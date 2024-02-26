@@ -8,7 +8,7 @@ cases = [
     "slicing/convolution/emboss",
     "slicing/convolution/gaussian",
     "slicing/linked-outputs/bar-chart-line-chart",
-    "slicing/linked-outputs/stacked-bar-chart-scatter-plot",
+    "slicing/linked-outputs/stacked-bar-scatter-plot",
     "graphics/grouped-bar-chart",
     "graphics/line-chart",
     "graphics/stacked-bar-chart"
