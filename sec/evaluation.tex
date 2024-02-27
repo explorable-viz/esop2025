@@ -8,13 +8,17 @@ an experimental comparison of the performance of our implementation and
 that of \citet{perera22}.
 
 \subsection{Qualitative Evaluation of Our Approach}
-A key benefit of our approach is avoiding the need to define a backwards
+
+Here, we consider the relative implementation burden of the current graph approach compared to the trace approach in \citet{perera22}.
+As explained below, we hypothesise that our approach is easier to implement and maintain compared to the trace approach. 
+
+Firstly, a key benefit of the graph approach is avoiding the need to implement a backwards
 evaluation function. By contrast, in \citet{perera22}, a
-program produces an execution trace which is rewound in order to perform a backwards analysis such as
+program produces an execution trace that is rewound in order to perform a backwards analysis such as
 $\demandsR$. Consequently, the developer has to implement a separate backwards evaluation
 semantics using the execution trace, which propagates a selected output backwards
-until reaching the program inputs. This approach is burdensome since
-it requires the forwards and backwards evaluation functions to agree with
+to the program inputs. This approach is burdensome since
+it requires the forwards and backwards evaluation functions to ``agree'' with
 respect to the dependency analysis.
 Conversely, in our approach, once the dependence graph has been computed, the same procedure
 can be used to compute both $\demandsR$ and $\demandedByR$ over the graph.
@@ -25,17 +29,16 @@ can be used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 %% as part of their languages evaluation function. Then they can use the same procedure to
 %% compute both $\demandsR$ and $\demandedByR$ over the graph.
 
-\cd{Next sentence seems to say that out approach is language agnostic, but the rest says that we are less sensistive to changes in the language than others.}
-In \secref{conjugate}, we were able to give the underlying formalism without having to
-mention any implementation details, or the specific choice of dependency relation.
+%\cd{Next sentence seems to say that out approach is language agnostic, but the rest says that we are less sensistive to changes in the language than others.}
+%In \secref{conjugate}, we were able to give the underlying formalism without having to
+%mention any implementation details, or the specific choice of dependency relation.
 %Our ability to do so, combined with the prior remark regarding the need to implement
 %only a single construction of the graph contributes to ease of use.
-Moreover, we hypothesise that our approach is less sensitive to changes in the semantics
-of the language than existing approaches. By removing the need for a pair of evaluation functions which
-"agree", adding new constructs to a language is significantly easier. The is due to the fact that the
-only part of the language which is affected is the evaluation function, which
-the developer would already be forced to modify.
-
+Secondly, our approach is less sensitive to changes in the semantics
+of the language than \citet{perera22}. By removing the need for a pair of evaluation functions which
+"agree", adding new constructs to a language is significantly easier: the 
+only part of the language that is affected is the evaluation function, which
+the developer would anyway have to modify.
 
 \subsection{Experimental Evaluation}
 In order to test the performance of our approach, we implemented our language
@@ -47,13 +50,13 @@ using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. Further
 in order to enable a performance comparison, we also implemented the approach in \citet{perera22}, which uses execution traces.
 \cd{Do we have to say that we implemented this? Isn't it publicly available?}
 
-In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our dependence graph-based approach
-with the trace-based approach in \citet{perera22}, which boils down to the following three research questions:
+In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our graph based approach
+with the trace based approach in \citet{perera22}, which boils down to the following three research questions:
 
 \begin{itemize}
    \item RQ1: What is the overhead of the graph construction versus the trace construction?
-   \item RQ2: How does the performance of dependence graph-based \textit{demands} compare against the performance of trace-based \textit{demands}?
-   \item RQ3: How do the various implementations of \textit{demanded by} (i.e. trace-based, dependence graph-based using $\demandsAlg{}$, and dependence graph-based using the dual of $\sufficesAlg{}$) compare in performance?
+   \item RQ2: How does the performance of graph based \textit{demands} compare against the performance of trace based \textit{demands}?
+   \item RQ3: How does the performance of the various implementations of \textit{demanded by} (i.e. trace based, graph based using $\demandsAlg{}$, and graph based using the dual of $\sufficesAlg{}$) compare?
 \end{itemize}
 
 \subsubsection{Choice of Examples}
@@ -75,7 +78,7 @@ Finally, we test two linked examples
 With the exception of \textbf{compute-dtw}, the code for all the benchmarks can be found 
 in \apdxsecref{evaluation-src-code}.
 
-In all our experiments, each benchmark is run 10 times, and we report the mean elapsed time and the standard error.
+In all our experiments, each benchmark is run 10 times, and we report the mean runtime and the standard error.
 Runtimes are reported in milliseconds. When we refer to \textit{speedup}
 or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
@@ -87,15 +90,16 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 \end{figure}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
-We first proceed by comparing the time taken to evaluate a program in the
-execution trace approach (\textbf{T-Eval}) with the time taken to evaluate a program with the
-dependence graph approach (\textbf{G-Eval}).
+In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
+dependence graph approach (\textbf{G-Eval}) with the time taken to evaluate a program with the
+trace approach (\textbf{T-Eval}). As previously explained,
+the graph and trace are being build as part of the respective program evaluations.
 Since the graph is a more complex data structure to build compared to the trace,
 we expect an increased overhead when evaluating a program and building the graph
 compared to evaluating and building the trace.
 
-In \tableref{eval-SpdUps}, we see that, as expected, the evaluation of programs
-to their dynamic dependence graph does incur some increased overhead, ranging from
+We see that, as expected, the evaluation of programs
+to their dynamic dependence graph does incur an overhead, being from
 3 to 14 times slower than their trace based counterparts. We report the ratio
 of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}).
 
