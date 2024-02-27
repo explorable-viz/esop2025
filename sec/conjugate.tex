@@ -271,11 +271,13 @@ pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorith:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorith:suffices}), allowing
-us to compute the other two operators via the opposite graph, rather than relying on the De Morgan dual
-construction. Both procedures factor through an auxiliary operation that computes a ``slice'' of the original
-graph. While it is technically possible to compute the desired image/preimage of the IO relation without
-creating this intermediate graph, we anticipate many use cases which will make use of the graph slice; these
-are discussed in more detail in \secref{conclusion}.
+us to compute the other two operators via the opposite graph; this is in some situations more efficient than
+relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
+procedures factor through an auxiliary operation that computes a ``slice'' of the original graph. While it is
+technically possible to compute the desired image/preimage of the IO relation without creating this
+intermediate graph, we anticipate many use cases which will make use of the graph slice; these are discussed
+in more detail in \secref{conclusion}. Our implementation makes it easy to flip between $G$ and $\opGraph{G}$
+so we freely make use of both in the algorithms to access out-neighbours and in-neighbours.
 
 An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
@@ -338,17 +340,12 @@ the graph slice by intersecting with $\sinks{G}$.
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for any dependence graph $G$.
 \end{definition}
 
-We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This is potentially more
-efficient in situations where less graph is traversed than it would be otherwise. We therefore provide a more
-efficient implementation of the sufficiency analysis, detailed in \figref{conjugate:slicing:forward}. Our
-implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we free make use of both in the
-algorithm. Note, it is also possible to read an algorithm directly from the inductive
-definition of the $\demandedByAlg{}$ relation since it is actually a function
-with its left-most argument $V$ and index $G_0$ as inputs.\footnote{Any choice between \ruleName{skip} and \ruleName{extend} is
-made deterministic by the disjointness of $G$ and $H$ in \ruleName{extend} implying the opposite
-side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with termination implied by eventual
-saturation of the first argument (left-most) by all of the edges in the indexing graph
-leading from the vertices in second argument, after
+Note, it is also possible to read an algorithm directly from the inductive definition of the
+$\demandedByAlg{}$ relation since it is actually a function with its left-most argument $V$ and index $G_0$ as
+inputs.\footnote{Any choice between \ruleName{skip} and \ruleName{extend} is made deterministic by the
+disjointness of $G$ and $H$ in \ruleName{extend} implying the opposite side condition to \ruleName{skip}
+($\alpha \not\in \V(G)$), and with termination implied by eventual saturation of the first argument
+(left-most) by all of the edges in the indexing graph leading from the vertices in second argument, after
 which a finite sequence of \ruleName{skip} can be applied to reach the base case of \ruleName{done}.}
 
 For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
