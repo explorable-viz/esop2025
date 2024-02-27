@@ -1,33 +1,33 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-      {\small \flushleft \shadebox{$X \demandedByAlg{G_0} Y$}
+      {\small \flushleft \shadebox{$X \demandedByAlg{G} Y$}
          \begin{smathpar}
             \inferrule*[
 %              lab={\ruleName{$\demandedByAlg{}$}},
-              right={$X \subseteq \sources{G_0}$}
+              right={$X \subseteq \sources{G}$}
             ]
             {
                (\emptyset, \emptyset), X
-               \demandedByV{G_0}
-               G
+               \demandedByV{G}
+               G'
             }
             {
-               X \demandedByAlg{G_0} \sinks{G}
+               X \demandedByAlg{G} \sinks{G'}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G, X \demandedByV{G_0} G'$}
+         {\small \flushleft \shadebox{$G', X \demandedByV{G} G^\twoPrime$}
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
-           right=$G \subseteq G_0$
+           right=$G' \subseteq G$
          ]
          {
             \strut
          }
          {
-            G, \emptyset \demandedByV{G_0} G
+            G', \emptyset \demandedByV{G} G'
          }
          %
          \and
@@ -37,12 +37,12 @@
             right={$\alpha \in \V(G)$}
          ]
          {
-            G, X
-            \demandedByV{G_0}
-            G'
+            G', X
+            \demandedByV{G}
+            G^\twoPrime
          }
          {
-            G, \alpha \cons X \demandedByV{G_0} G'
+            G', \alpha \cons X \demandedByV{G} G^\twoPrime
          }
          %
          \and
@@ -52,12 +52,12 @@
             right={$H = \set{\bind{\alpha}{Y}}$}
          ]
          {
-            G \disjunion H, Y \disjunion X
-            \demandedByV{G_0 \uplus H}
-            G'
+            G' \disjunion H, Y \disjunion X
+            \demandedByV{G \uplus H}
+            G^\twoPrime
          }
          {
-            G, \alpha \cons X \demandedByV{G_0 \uplus H} G'
+            G', \alpha \cons X \demandedByV{G \uplus H} G^\twoPrime
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
