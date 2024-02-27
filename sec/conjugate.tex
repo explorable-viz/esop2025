@@ -296,21 +296,19 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
 
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
 Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read an algorithm directly from the
-inductive definition since it is actually a function with its first argument $V$ and index $G_0$ as
-inputs.\footnote{Any choice between \ruleName{skip} and \ruleName{extend} is made deterministic by the
-disjointness of $G$ and $H$ in \ruleName{extend} implying the opposite side condition to \ruleName{skip}
-($\alpha \not\in \V(G)$), and with termination implied by eventual saturation of the first argument by all of
-the edges in the indexing graph leading from the vertices in second argument, after which a finite sequence of
-\ruleName{skip} can be applied to reach the base case of \ruleName{done}.}
-
-The auxiliary definition $G \demandedByV{G}$
-maintains a set of vertices still to process and builds the graph slice $G' \subseteq G$ consisting of all
-vertices reachable from the initial set and all edges between them. If $X$ is empty (\ruleName{done}) the
-graph slice $G'$ is complete and can be returned. Otherwise we select an arbitrary vertex $\alpha$ from $X$.
-If $\alpha$ is already in $G'$ (\ruleName{skip}), there is nothing to do at this step and we continue with the
-remaining vertices. Otherwise, we add the out-star at $\alpha$ to $G'$ and the out-neighbours to the pending
-vertices (\ruleName{extend}). When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from
-the graph slice by intersecting with $\sinks{G}$.
+inductive definition, treating it as a function with $V$ and index $G$ as inputs.\footnote{Any choice between
+\ruleName{skip} and \ruleName{extend} is made deterministic by the disjointness of $G$ and $H$ in
+\ruleName{extend} implying the opposite side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with
+termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
+leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
+to reach the base case of \ruleName{done}.} The auxiliary operation $G \demandedByV{G}$ maintains a set of
+vertices still to process and builds the graph slice $G' \subseteq G$ consisting of all vertices reachable
+from the initial set and all edges between them. If $X$ is empty (\ruleName{done}) the graph slice $G'$ is
+complete and can be returned. Otherwise we select an arbitrary vertex $\alpha$ from $X$. If $\alpha$ is
+already in $G'$ (\ruleName{skip}), there is nothing to do at this step and we continue with the remaining
+vertices. Otherwise, we add the out-star at $\alpha$ to $G'$ and the out-neighbours to the pending vertices
+(\ruleName{extend}). When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the graph
+slice by intersecting with $\sinks{G}$.
 
 % \RPnote{Roughly speaking, these are now informal observations which are part of the explanation of the
 % judgement above.}

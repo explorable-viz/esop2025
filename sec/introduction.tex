@@ -96,27 +96,27 @@ they might be related also arises.
 
 A system with automated data transparency allows the user to investigate questions like these by interacting
 directly with the artefacts. By selecting an interesting part of the output, they can obtain a view of the
-relevant data. On the left the bar segments highlighted with a dark border indicate such a selection; the
+relevant data. On the left, the three bar segments highlighted with a dark border indicate such a selection; the
 table underneath shows the demanded data (computed using our version of the $\demandsR$ operator) and we are
 also able to automatically select any outputs in the other chart which demand any of the same data using an
 other operator $\demandedByR$ (``demanded by''). The overlapping demand, which we call the \emph{mediating
 input}, is highlighted in \todo{todo}. Perera et al defined such a $\demandedByR$ operator as the De Morgan dual
-of the ``suffices for'' operator $\sufficesR$; one of our contributions is to show that $\demandedByR$ can be
+of the ``suffices for'' operator $\sufficesR$; one of our contributions here is to show that $\demandedByR$ can be
 computed in a more direct fashion using dependence graphs.
 
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
 In this paper, we develop the idea of data transparency in two new directions. First we approach the problem
-in a more language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
+in a more\DOnote{more than what?} language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
 slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
-based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These approaches
+based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These approaches\DOnote{which approaches?}
 (e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
 in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
-a backwards execution. This method is quite inefficient and non-trivial to prove correct; a graph-based
-approach factors the problem into a (language-specific) graph-building interpreter plus (language-agnostic)
+a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show that
+a graph-based approach factors the problem into a (language-specific) graph-building interpreter plus (language-agnostic)
 adjoint analyses over the graph. This partitioning reduces the implementation burden and improves performance
 compared to approaches based on bidirectional interpretation.
 
@@ -125,11 +125,11 @@ relevance which arises between inputs when they contribute to common features of
 formulate queries like ``What outputs use this data element, and what other data elements are used along with
 it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
 dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot}, which can be understood as
-cognacy in $\opGraph{G}$. In the graphical setting these are both easy to compute, since they amount to the two
+cognacy in $\opGraph{G}$. In the graphical setting, these are both easy to compute, since they amount to the two
 ways of composing reachability in $G$ with its relational converse.
 
-\secref{overview} presents an overview of our approach and language, and motivates the idea of a ``related
-inputs'' query from an end-user perspective. The rest of the paper is then organised as follows:
+\paragraph{Roadmap} \secref{overview} presents an overview of our approach and language, and motivates the idea of ``related
+inputs'' queries from an end-user perspective. The rest of the paper is organised as follows:
 
 \begin{itemize}[leftmargin=*]
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
@@ -148,9 +148,9 @@ inputs'' query from an end-user perspective. The rest of the paper is then organ
   building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
   relative implementation burden of the two approaches.
 \item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
-\end{itemize}
-
-\secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
+\item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
 how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
 transparency and propose some other ways in which the present system could be improved.
+
+\end{itemize}
