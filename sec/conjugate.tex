@@ -77,13 +77,20 @@ relational converse.
 
 \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
-We will think of the reachability relation $R$ between the sources and sinks of $G$ as constituting an ``IO''
-dependency relation for $G$, specifying how specific inputs (sources) are demanded by specific outputs
-(sinks). (Thus we will interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.) Since we are in fact
-interested in the relationship between input and outputs \emph{selections} (namely sets of inputs and
-outputs), we now consider how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and
-$\powerset{Y}$ via the \textit{image} and \textit{preimage} functions for $R$, which we will denote using
-$\demandedByR$ and $\demandsR$.
+\subsubsection{IO Relation for a Graph}
+
+Reachability in $G$ induces a relation just between sources and sinks, which we call the \emph{IO} relation of
+$G$.
+
+\begin{definition}[IO relation]
+For any dependence graph $G$ with reachability relation $R$, define the \emph{IO} relation of $G$ to be $R \cap (\sources{G} \times \sinks{G})$.
+\end{definition}
+
+The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks). (Thus we
+will interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.) Since we are in fact interested in the
+relationship between input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider
+how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image}
+and \textit{preimage} functions for $R$, which we will denote using $\demandedByR$ and $\demandsR$.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -209,23 +216,22 @@ to consider a filtered view of the data, where the user is shown only the data u
 \subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
 
-We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its reachability
+We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its IO
 relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
 reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
 inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
 traversing the graph in the opposite direction, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
 
 \begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
-   For a graph $G = (V,E)$ with reachability relation $R$ and IO relation $R' \eqdef R \cap (\sources{G}
-   \times \sinks{G}$), define:
+   For a graph $G$ with IO relation $R$, define:
    \begin{enumerate}
       \item $\demandedByR_G \eqdef \demandedByR_{R}': \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
       \item $\demandsR_G \eqdef \demandsR_{R'}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
 
-In \secref{overview}, we introduced the notions of related inputs and related outputs.
-Now, we can provide a formal account for them.
+In \secref{overview}, we introduced the notions of related inputs and related outputs. Now we can provide a
+formal account of them.
 \begin{definition}[Related Inputs and Outputs]
    For a dependence graph $G$ define:
    \begin{enumerate}
