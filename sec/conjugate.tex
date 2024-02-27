@@ -231,8 +231,9 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
    \end{enumerate}
 \end{definition}
 
-In \secref{overview}, we introduced the notions of related inputs and related outputs. Now we can provide a
-formal account of them.
+Now we can provide a formal account of the notions of related inputs and related outputs introduced in
+\secref{overview}.
+
 \begin{definition}[Related Inputs and Outputs]
    For a dependence graph $G$ define:
    \begin{enumerate}
@@ -242,11 +243,11 @@ formal account of them.
 \end{definition}
 
 Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
-$\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what else can
-reach the vertices that X can reach?'', and first finds all outputs $\demandedByR_{G}(X')$ that
+$\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what other
+inputs are demanded by the outputs which demand X?'', and first finds all outputs $\demandedByR_{G}(X')$ that
 our selected inputs are demanded by, and then computes the inputs that those outputs demand,
 i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, related outputs asks
-``what else can be reached by the things that reach Y?'', and first finds all inputs $\demandsR_{G}(Y')$ that
+``what other outputs demand the inputs that Y demands'', and first finds all inputs $\demandsR_{G}(Y')$ that
 our selected outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y')$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y'))$.
 
