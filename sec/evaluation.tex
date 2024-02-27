@@ -123,13 +123,6 @@ trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. We contrast this with the
 current approach, which only needs to traverse the relevant part of the graph.
 
-\jb{To be moved to discussion}
-The impact of the shape of the graph on the performance of \textit{demands}
-remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
-and \textbf{gaussian} involve a large number of parallel data dependencies, 
-but do not on the whole exhibit dramatically higher performance than the graphical
-cases like \textbf{line-chart}.  
-
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
 \subsubsection{RQ3: Implementations of Demanded By}
@@ -161,6 +154,12 @@ are significant. We argue that the user would only need to perform two or three
 interactions with a program output in the graphical approach for the performance
 gains to be realized. 
 
+The impact of the shape of the graph on the performance of \textit{demands}
+remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
+and \textbf{gaussian} involve a large number of parallel data dependencies, 
+but do not on the whole exhibit dramatically higher performance than the graphical
+cases like \textbf{line-chart}.  
+
 The performance change of \textit{demanded by} is less clear. Despite the fact
 that the direct implementation uses the same underlying procedure as \textit{demands},
 we do not see as consistent of a performance increase, and indeed in some cases
@@ -175,3 +174,5 @@ benefit in one part of the system, as well as an improvement in the simplicity o
 the implementation itself. The mixed performance results of \textit{demanded by}
 suggest further research is needed on how the structure of the graph affects the
 system performance.
+
+
