@@ -141,14 +141,14 @@ For all benchmarks apart from \textit{compute-dtw}, we observe that the graph ap
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion}
-The performance results of the system are mixed. Across each of the three performance
-tests, we find that the results can vary quite wildly. First consider the
-performance of evaluating a program to build its dynamic dependence graph. Whilst
-we expected a loss of performance -- due to the inherently complicated task of
-building the graph -- we see that this loss of performance can vary. Some of our
-test programs exhibit a relatively small slowdown of 2.4 to 3 times slower than
-trace based evaluation. On the other hand, some of the graphics programs exhibit
-a dramatic loss in performance.
+When comparing the performance of the graph and trace approaches (illustrated by
+\textit{RQ1, RQ2} and \textit{RQ3}), we observe that the only consistent performance
+loss is the increased cost of evaluating a program to a graph versus evaluating
+it to a trace. We argue that this is a reasonable overhead, since the graph only
+needs to be constructed once, and the cost does not impact subsequent interactions
+veteween the user and the system. On the contrary, the fast response times of
+\textit{demands} and \textit{demanded by} translate into quick responses to user queries,
+which is critical for the interactive exploration of digital media.
 
 We see that generally, the performance of $\demandsR(\param)$ is much improved by
 the graphical structure, but again there is a wide range of results for the amount
@@ -185,9 +185,7 @@ future work.
 When looking at the overall performance comparison for the graph approach and the trace approach (as illustrated by \textit{RQ1, RQ2} and \textit{RQ3}), 
 the construction of the graph is the only one that takes consistently more than the construction of a trace.
 We argue that this is reasonable given that the graph is only constructed once, at the beginning, 
-and it doesn't impact the subsequent interaction between the user and the system. On the contrary, the fast response time of
-\textit{demands} and \textit{demanded by} translates into quick responses to user queries,
-which is critical for the interactive exploration of digital media.
+and it doesn't impact the subsequent interaction between the user and the system. 
 
 %% We shall now consider the qualitative benefits and the performance results in
 %% conjunction. The performance of evaluation is reduced due to the construction of
