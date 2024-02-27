@@ -173,10 +173,18 @@ Using the dual of $\sufficesAlg{}$, we see that generally the performance is no
 better than the trace based approach and in some cases -- notably \textbf{grouped-bar-chart}
 -- is significantly worse.
 
-The impact of the shape of the graph on the performance remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
-and \textbf{gaussian} involve a large number of parallel data dependencies, 
-but do not on the whole exhibit dramatically higher performance than the graphical
-cases like \textbf{line-chart}.  
+The impact of the shape of the graph on the performance remains to be seen. The
+convolution examples, \textbf{edgeDetect}, \textbf{emboss} and \textbf{gaussian}
+involve a large number of parallel data dependencies. We would expect the parallel
+dependencies to mean that $\demandsR(\param)$ and $\demandedByR(\param)$ exhibit
+the greatest degree of performance improvement, since the algorithms would need
+to traverse a relatively small portion of the graph. Despite this, we do not see
+these examples showing a consistently higher degree of performance improvement
+than the other cases. Similarly, we do not have a clear picture as to why some
+examples -- \textbf{compute-dtw} --  perform poorly using the $\demandsAlg{}$
+implementation of $\demandedByR(\param)$, and some perform poorly using the
+$\sufficesAlg{}$ implementation. We shall touch on this in the discussion of
+future work.
 
 We overall consider our results to be positive, since we find a major performance
 benefit in one part of the system, as well as an improvement in the simplicity of
