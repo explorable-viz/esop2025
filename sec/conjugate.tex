@@ -263,13 +263,18 @@ i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 \label{sec:conjugate:dependence-graph-algos}
 
 We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and their duals $\sufficesR_{G}$ and
-$\preimageDualR_{G}$ for a dependence graph $G$. One advantage over the approach of \citet{perera22} is that
-one procedure is sufficient to compute all 4 operators; given a procedure for $\demandedByR_{G}$, for example,
-we can compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by
-\lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by pre- and post-composing with
-negation (\defref{conjugate:de-morgan-dual}). For efficiency, we give a direct procedure both for
-$\demandedByR_{G}$ and $\sufficesR_{G}$, allowing us to compute the other two operators via the opposite graph
-and avoiding the De Morgan dual.
+$\preimageDualR_{G}$ for a dependence graph $G$. One advantage of graphs over the trace-based approach of
+\citet{perera22} is that a single algorithm can be readily adapted to compute all 4 operators; given a
+procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as
+$\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
+pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
+
+For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$ and $\sufficesR_{G}$, allowing
+us to compute the other two operators via the opposite graph, rather than relying on the De Morgan dual
+construction. Both procedures factor through an auxiliary operation that computes a ``slice'' of the original
+graph. While it is technically possible to compute the desired image/preimage of the IO relation without
+creating this intermediate graph, we anticipate many use cases which will make use of the graph slice; these
+are discussed in more detail in \secref{conclusion}.
 
 An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
