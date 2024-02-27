@@ -129,20 +129,14 @@ approach, one only needs to traverse the relevant part of the graph.
 
 \subsubsection{RQ3: Implementations of Demanded By}
 
-We must finally investigate the performance of \textit{demanded by}. We must
-compare the trace based approach with the graphical approach implemented by
-using $\demandsAlg{}$, which we present in \tableref{equivalent-impls} as the
-columns \textbf{T-DemBy} for the trace implementation, \textbf{G-DemBy-Dir}
-for the graphical implementation using $\demandsAlg{}$, and comparing
-relative performance in \textbf{Dir-SpdUp}.
+In \tableref{equivalent-impls}, we investigate the performance of \textit{demanded by} in different settings:
+column \textbf{T-DemBy} provides the results for the trace implementation,
+column \textbf{G-DemBy} contains the results for the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands},
+and column \textbf{G-DemBy-Suff} contains the results obtained when computing \textit{demanded by} by taking the De Morgan dual of $\sufficesAlg{}$ from \figref{conjugate:slicing:forward}.
+Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-DemBy} compared to \textbf{T-DemBy}, 
+and in column \textbf{Speedup-Suff}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
-We can also recover \textit{demanded by} from $\sufficesAlg{}$ by taking the
-De Morgan Dual, which we also tested. This is presented in \textbf{G-DemBy-Suff}
-and we compare its performance against the trace approach in \textbf{Suff-SpdUp}.
-
-In all test cases apart from \textit{compute-dtw} we observe that at least one
-of the two possible implementations in the graphical approach performs better
-than the trace-based approach.
+For all benchmarks apart from \textit{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
