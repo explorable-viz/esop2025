@@ -154,7 +154,12 @@ Outside of evaluation, we generally see a consistent improvement to performance.
 The graph implementation of demands shows significant speedup on all examples,
 ranging from a 16 times speedup in the worst case -- \textbf{compute-dtw} --
 to over 70 times faster in the case of the \textbf{gaussian} convolution and
-\textbf{line-chart}. 
+\textbf{line-chart}. Most of our example programs also exhibit a great deal of
+speedup in the time it takes to compute \textit{demanded by} with one exception.
+Interestingly, despite making use of somewhat expensive set complementation
+operations there are cases where the implementation of \textit{demanded by} using
+the dual of the $\sufficesAlg{}$ algorithm are just as fast or slightly faster
+than the trace approach.
 
 The impact of the shape of the graph on the performance remains to be seen. The
 convolution examples, \textbf{edgeDetect}, \textbf{emboss} and \textbf{gaussian}
