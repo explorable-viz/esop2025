@@ -27,8 +27,8 @@ Write $X \setminus Y$ for the relative complement of $Y$ in $X$, i.e.~the set of
 $X$ that are not in $Y$.
 
 \paragraph{Relational converse}
-For a relation $R \subseteq X \times Y$, write $R^{-1} \subseteq Y \times X$ to denote the \emph{converse}
-relation where $(y,x) \in R^{-1} \iff (x,y) \in R$.
+Write ${\param}^{-1}$ for the involutive operation that takes a relation $R \subseteq X \times Y$ to its
+\emph{converse} $R^{-1} \subseteq Y \times X$ where $(y,x) \in R^{-1} \iff (x,y) \in R$.
 
 \subsubsection{Boolean algebras}
 
@@ -104,12 +104,18 @@ and \textit{preimage} functions for $R$, which we will denote using $\demandedBy
    \end{enumerate}
 \end{definition}
 
-\noindent Clearly the image function for $R$ is the preimage function for its converse, i.e.~$\demandedByR_{R}
-= \demandsR_{R^{-1}}$. When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of
-all outputs that any element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all
-inputs demanded by any element of $Y'$. If $R$ happens to be a function, the image and preimage functions form
-a \emph{Galois connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a
-\textit{conjugate pair}, in the sense of \citet{jonsson51}:
+\noindent Clearly the image function for $R$ is the preimage function for its converse; this is important enough to state as a lemma:
+
+\begin{lemma}
+\label{lem:conjugate:image-preimage-converse}
+$\demandedByR_{R} = \demandsR_{R^{-1}}$
+\end{lemma}
+
+When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
+element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
+element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
+connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
+pair}, in the sense of \citet{jonsson51}:
 
 %Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
 %sufficient for.
@@ -251,11 +257,13 @@ i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \s
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
-\subsection{Computing $\demandsR_G$ and $\demandedByR_G$}
+\subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ for a dependence graph $G$. An alternative
-presentation of graphs in terms of adjacency maps is useful notationally.
+We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and their duals $\sufficesR_{G}$ and
+$\preimageDualR_{G}$ for a dependence graph $G$. One advantage over prior work is that one procedure is sufficient to compute all 4 operators; given a procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by \lemref{}).
+
+An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
 \begin{definition}[Graph as adjacency map]
    A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G: V \to \powerset{V}$ from vertices
