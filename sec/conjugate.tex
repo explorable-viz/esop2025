@@ -86,11 +86,12 @@ $G$.
 For any dependence graph $G$ with reachability relation $R$, define the \emph{IO} relation of $G$ to be $R \cap (\sources{G} \times \sinks{G})$.
 \end{definition}
 
-The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks). (Thus we
-will interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.) Since we are in fact interested in the
-relationship between input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider
-how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image}
-and \textit{preimage} functions for $R$, which we will denote using $\demandedByR$ and $\demandsR$.
+The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
+interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''. Clearly the IO relation of $G$ is the
+converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
+input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation
+$R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
+\textit{preimage} functions for $R$, which we will denote using $\demandedByR$ and $\demandsR$.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -159,6 +160,7 @@ input set, rather than any ancestor to be in the input set. We can, in fact, tur
 into $\demandedByR_R$, using the De Morgan Dual.
 
 \begin{definition}[De Morgan Dual]
+   \label{def:conjugate:de-morgan-dual}
    Suppose a function $f: A \to B$ between Boolean algebras. Define the \textit{De Morgan Dual} $\dual{f}: A
    \to B$ of $f$ as:
    \[ \dual{f} \eqdef \neg_B \after f \after \neg_A \]
@@ -261,7 +263,11 @@ i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 \label{sec:conjugate:dependence-graph-algos}
 
 We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and their duals $\sufficesR_{G}$ and
-$\preimageDualR_{G}$ for a dependence graph $G$. One advantage over prior work is that one procedure is sufficient to compute all 4 operators; given a procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by \lemref{}).
+$\preimageDualR_{G}$ for a dependence graph $G$. One advantage over the approach of \citet{perera22} is that
+one procedure is sufficient to compute all 4 operators; given a procedure for $\demandedByR_{G}$, for example,
+we can compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by
+\lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by pre- and post-composing with
+negation (\defref{conjugate:de-morgan-dual}).
 
 An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
