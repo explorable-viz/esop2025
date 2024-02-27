@@ -145,14 +145,33 @@ than the trace-based approach.
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion}
-We shall now consider the qualitative benefits and the performance results in
-conjunction. The performance of evaluation is reduced due to the construction of
-the graph being more complex than constructing an execution trace. We weigh that
-against the relative ease of implementation, and the fact that evaluation now 
-only needs to occur once. The performance gains in computing \textit{demands}
-are significant. We argue that the user would only need to perform two or three
-interactions with a program output in the graphical approach for the performance
-gains to be realized. 
+The performance results of the system are mixed. Across each of the three performance
+tests, we find that the results can vary quite wildly. First consider the
+performance of evaluating a program to build its dynamic dependence graph. Whilst
+we expected a loss of performance -- due to the inherently complicated task of
+building the graph -- we see that this loss of performance can vary. Some of our
+test programs exhibit a relatively small slowdown of 2.4 to 3 times slower than
+trace based evaluation. On the other hand, some of the graphics programs exhibit
+a dramatic loss in performance.
+
+We see that generally, the performance of $\demandsR(\param)$ is much improved by
+the graphical structure, but again there is a wide range of results for the amount
+of speedup exhibited. The example \textbf{compute-dtw} shows the smallest degree
+of performance improvement, but still averages out to 16 times faster than the
+trace based approach. Some other examples -- notably the \textbf{gaussian} filter
+convolution example, and the \textbf{line-chart} -- show a speedup of more than 70.
+
+Finally we see an even wider range of performance results when we tested the three
+implementations of $\demandedByR(\param)$. In the case of \textbf{compute-dtw}, we
+observe a large loss of performance when using the direct implementation of 
+$\demandedByR$, but the implementation which uses double complements and the
+algorithm $\sufficesAlg{}$ takes approximately the same time as the trace approach.
+On the other hand for every other test program the implementation using 
+$\demandedByAlg{}$ is more performant. The speedup ranges from twice as fast in
+the case of the convolutions to as much as a 100 times for \textbf{bar-chart-line-chart}. 
+Using the dual of $\sufficesAlg{}$, we see that generally the performance is no
+better than the trace based approach and in some cases -- notably \textbf{grouped-bar-chart}
+-- is significantly worse.
 
 The impact of the shape of the graph on the performance of \textit{demands}
 remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
