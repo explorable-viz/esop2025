@@ -1,36 +1,39 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We now present a critical evaluation of our approach. Firstly, we
-consider the qualitative benefits of the approach in terms of conceptual
-simplicity, and the relative ease of implementation. Secondly, we provide
+We now present a critical evaluation of our approach. We start by
+considering its qualitative advantage in terms of conceptual
+simplicity and ease of implementation with respect to the state of the art in the field, \citet{perera22}. Then, we provide
 an experimental comparison of the performance of our implementation and
-that of the state of the art in the field.
+that of \citet{perera22}.
 
-\subsection{Qualitative Evaluation Of the Graphical Approach}
+\subsection{Qualitative Evaluation of Our Approach}
 A key benefit of our approach is avoiding the need to define a backwards
-evaluation function. In state of the art work in this area -- such as \citet{perera22} -- a
-program produced an execution trace which was rewound in order to perform a backwards analysis such as
-$\demandsR_D$. Consequently the developer had to implement a separate backwards evaluation
-semantics using the execution trace, propagating a selection from the output backwards
-until reaching the program inputs. This approach was laborious since
-it required the forwards and backwards evaluation functions to agree with
+evaluation function. By contrast, in \citet{perera22}, a
+program produces an execution trace which is rewound in order to perform a backwards analysis such as
+$\demandsR$. Consequently, the developer has to implement a separate backwards evaluation
+semantics using the execution trace, which propagates a selected output backwards
+until reaching the program inputs. This approach is burdensome since
+it requires the forwards and backwards evaluation functions to agree with
 respect to the dependency analysis.
+Conversely, in our approach, once the dependence graph has been computed, the same procedure
+can be used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 
-Conversely, we evaluate a program to a dynamic dependence graph
-and defer the specific dependency queries until the graph has been computed.
-The developer needs to implement the desired dynamic dependence graph only once,
-as part of their languages evaluation function. Then they can use a simple procedure to
-compute both $\demandsR_D$ and $\demandedByR_D$ over this graph.
+%% we evaluate a program to a dynamic dependence graph
+%% and defer the specific dependency queries until the graph has been computed.
+%% The developer needs to implement the desired dynamic dependence graph only once,
+%% as part of their languages evaluation function. Then they can use the same procedure to
+%% compute both $\demandsR$ and $\demandedByR$ over the graph.
 
+\cd{Next sentence seems to say that out approach is language agnostic, but the rest says that we are less sensistive to changes in the language than others.}
 In \secref{conjugate}, we were able to give the underlying formalism without having to
 mention any implementation details, or the specific choice of dependency relation.
-Our ability to do so, combined with the prior remark regarding the need to implement
-only a single construction of the graph contributes to ease of use. We suggest that the graphical approach
-has the distinct advantage of being less sensitive to changes in the semantics
-of the language. By removing the need for a pair of evaluation functions which
-"agree", adding new constructs to a language is significantly easier, since the
-only part of the language which is affected is the evaluation function which
+%Our ability to do so, combined with the prior remark regarding the need to implement
+%only a single construction of the graph contributes to ease of use.
+Moreover, we hypothesise that our approach is less sensitive to changes in the semantics
+of the language than existing approaches. By removing the need for a pair of evaluation functions which
+"agree", adding new constructs to a language is significantly easier. The is due to the fact that the
+only part of the language which is affected is the evaluation function, which
 the developer would already be forced to modify.
 
 
@@ -40,19 +43,17 @@ from \secref{core} on top of Purescript, which we used to write a selection of
 non-trivial examples that reflect realistic targets of dependency analyses
 (\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
-using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. We
-also implemented a variant of prior approaches that use execution traces, in
-order to enable a like-for-like performance comparison.
+using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. Furthermore,
+in order to enable a performance comparison, we also implemented the approach in \citet{perera22}, which uses execution traces.
+\cd{Do we have to say that we implemented this? Isn't it publicly available?}
 
-
-In an interactive system, performance plays an enormous role in the experience
-of a user. We have to test the performance of the three main components of the
-system which we boil down to the following three research questions:
+In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our dependence graph-based approach
+with the trace-based approach in \citet{perera22}, which boils down to the following three research questions:
 
 \begin{itemize}
-   \item RQ1: What is the overhead graph construction versus trace construction?
-   \item RQ2: How does the performance of \textit{demands} compare when run using the graph or the execution trace?
-   \item RQ3: How do the various implementations of \textit{demanded by}, the use of a trace, the direct graph implementation using $\demandsAlg{}$, and the dual of $\sufficesAlg{}$, compare in performance?
+   \item RQ1: What is the overhead of the graph construction versus the trace construction?
+   \item RQ2: How does the performance of dependence graph-based \textit{demands} compare against the performance of trace-based \textit{demands}?
+   \item RQ3: How do the various implementations of \textit{demanded by} (i.e. trace-based, dependence graph-based using $\demandsAlg{}$, and dependence graph-based using the dual of $\sufficesAlg{}$) compare in performance?
 \end{itemize}
 
 \subsubsection{Choice of Examples}
@@ -61,25 +62,22 @@ system which we boil down to the following three research questions:
 We tested our system on a range of examples %constituting the larger programs we
 implemented in \OurLang. These programs represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
-we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 LoC each + 21 shared). Different
-filter matrices create subtly different dependency structures, hence we 
+we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 LoC each + 21 shared). Given that different
+filter matrices create subtly different dependency structures, we 
 implemented a few different filters. Second, we have an example of a more
 sequential algorithmic program, namely an implementation of dynamic time warping,
 known from the time series analyis (\textbf{compute-dtw}, 39 LoC). 
 We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
-library, to demonstrate the performance on bespoke visualization code (\textbf{grouped-bar-chart}, \textbf{line-chart}, \textbf{stacked-bar-chart}, 133 shared Loc).
-Finally, we have tested some linked examples, 
-particularly \figref{introduction:scatterplot} from \secref{overview} (\textbf{stacked-bar-scatter-plot}, 38 LoC)
-and another linking example, (\textbf{bar-chart-line-chart}, 26 LoC).
-Other than \textbf{compute-dtw}, we present the code for the rest of the benchmark
-programs in \apdxsecref{evaluation-src-code}
+library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, \textbf{line-chart}, \textbf{stacked-bar-chart}, 133 shared Loc \cd{how can all code be shared? Do you mean in total?}).
+Finally, we test two linked examples
+(\textbf{stacked-bar-scatter-plot}, corresponding to \figref{introduction:scatterplot} from \secref{overview}, and \textbf{bar-chart-line-chart}, 26 LoC and 38 LoC, respectively).
+With the exception of \textbf{compute-dtw}, the code for all the benchmarks can be found 
+in \apdxsecref{evaluation-src-code}.
 
-Each benchmark is run 10 times. For each collection of benchmark runs,
-we report the mean elapsed time, and the standard error of this sample.
-Timing results are reported in milliseconds. When we refer to \textit{speedup}
-or \textit{slowdown} with reference to a pair of implementations, we are
-referring to the ratio of elapsed time on a given benchmark.
+In all our experiments, each benchmark is run 10 times, and we report the mean elapsed time and the standard error.
+Runtimes are reported in milliseconds. When we refer to \textit{speedup}
+or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
 \begin{figure}
    \small
@@ -88,7 +86,7 @@ referring to the ratio of elapsed time on a given benchmark.
    \label{fig:dtw-source}
 \end{figure}
 
-\subsubsection{RQ1: Overhead of Graph Construction Versus Traces}
+\subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 We first proceed by comparing the time taken to evaluate a program in the
 execution trace approach (\textbf{T-Eval}) with the time taken to evaluate a program with the
 dependence graph approach (\textbf{G-Eval}).
@@ -103,7 +101,7 @@ of graph evaluation time to trace evaluation time in the third column (\textbf{E
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
-\subsubsection{RQ2: Demands Graphs Versus Traces}
+\subsubsection{RQ2: Graps-based demands vs. trace-based demands}
 We now compare the performance of the graphical and trace based implementations
 when it comes to the computation of \textit{demands}. We observe a significant increase
 in the performance of \textit{demands} using the graphical approach, shown in
