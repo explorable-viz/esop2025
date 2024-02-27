@@ -16,12 +16,12 @@ Firstly, a key benefit of the graph approach is avoiding the need to implement a
 evaluation function. By contrast, in \citet{perera22}, a
 program produces an execution trace that is rewound in order to perform a backwards analysis such as
 $\demandsR$. Consequently, the developer has to implement a separate backwards evaluation
-semantics using the execution trace, which propagates a selected output backwards
+semantics using the execution trace, which propagates a selected output back
 to the program inputs. This approach is burdensome since
 it requires the forwards and backwards evaluation functions to ``agree'' with
 respect to the dependency analysis.
-Conversely, in our approach, once the dependence graph has been computed, the same procedure
-can be used to compute both $\demandsR$ and $\demandedByR$ over the graph.
+Conversely, in our approach, once the dependence graph has been computed, forward evaluation is 
+used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 
 %% we evaluate a program to a dynamic dependence graph
 %% and defer the specific dependency queries until the graph has been computed.
@@ -29,16 +29,21 @@ can be used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 %% as part of their languages evaluation function. Then they can use the same procedure to
 %% compute both $\demandsR$ and $\demandedByR$ over the graph.
 
-%\cd{Next sentence seems to say that out approach is language agnostic, but the rest says that we are less sensistive to changes in the language than others.}
 %In \secref{conjugate}, we were able to give the underlying formalism without having to
 %mention any implementation details, or the specific choice of dependency relation.
 %Our ability to do so, combined with the prior remark regarding the need to implement
 %only a single construction of the graph contributes to ease of use.
-Secondly, our approach is less sensitive to changes in the semantics
-of the language than \citet{perera22}. By removing the need for a pair of evaluation functions which
-"agree", adding new constructs to a language is significantly easier: the 
-only part of the language that is affected is the evaluation function, which
-the developer would anyway have to modify.
+%% Secondly, our approach is less sensitive to changes in the semantics
+%% of the language than \citet{perera22}. By removing the need for a pair of evaluation functions which
+%% "agree", adding new constructs to a language is significantly easier: the 
+%% only part of the language that is affected is the evaluation function, which
+%% the developer would anyway have to modify.
+
+Secondly, our algorithm for computing $\demandsR$ and
+$\demandedByR$ is language-agnostic (as described in
+\secref{conjugate}), meaning that it is not affected by changes in the
+semantics of the language. Thus, as opposed to \citet{perera22}, it
+only needs to be implemented once.
 
 \subsection{Experimental Evaluation}
 In order to test the performance of our approach, we implemented our language
@@ -146,10 +151,11 @@ When comparing the performance of the graph and trace approaches (illustrated by
 loss is the increased cost of evaluating a program to a graph versus evaluating
 it to a trace. We argue that this is a reasonable overhead, since the graph only
 needs to be constructed once, and the cost does not impact subsequent interactions
-veteween the user and the system. On the contrary, the fast response times of
-\textit{demands} and \textit{demanded by} translate into quick responses to user queries,
-which is critical for the interactive exploration of digital media.
+veteween the user and the system. Additionally, the fast response times for
+\textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ1 and RQ2),
+translates into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
+\cd{I don't think this paragraph brings any new insights, potentially more questions.}
 Outside of evaluation, we generally see a consistent improvement to performance.
 The graph implementation of demands shows significant speedup on all examples,
 ranging from a 16 times speedup in the worst case -- \textbf{compute-dtw} --
@@ -163,7 +169,8 @@ operations there are cases where the implementation of \textit{demanded by} usin
 the dual of the $\sufficesAlg{}$ algorithm are just as fast or slightly faster
 than the trace approach.
 
-Amongst our benchmarked programs, we find that \textbf{compute-dtw} has the worst
+\cd{Maybe the explanation can use the ``graph slice'' that Roly is adding in sec 3.}
+Amongst our benchmarks, we find that \textbf{compute-dtw} has the worst
 performance for both \textit{demands} and \textit{demanded by} (although \textit{demands}
 still shows a considerable speedup when compared to the trace approach).
 We hypothesize that this is due to the way the inputs of the program are used,
@@ -173,12 +180,13 @@ the input sequences is compared against multiple elements of the other input seq
 multiple times, meaning certain data dependencies may be created and traversed 
 multiple times \jb{a little fluffy but getting close to describing what's happening}
 
-In general, the impact of the shape of the graph on the performance remains to be seen. 
-For example, in a convolution example, a pixel of the input image is only related
+\cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
+The impact of the shape of the graph on performance needs to be further investigated.
+For example, in the convolution examples, a pixel of the input image is only related
 to its immediate neighborhood, and so the algorithms only traverse a small portion
-of the dependence graph. Despite this, the graph approachs do not show the convolution
-examples to be significantly more performant than others. 
+of the dependence graph. Despite this, the graph approach is not significantly more performant for these benchmarks than for others.
 
+\cd{I'd say that the first paragraph already covers this}
 We overall consider our results to be positive, since we find consistent performance
 benefits in two parts of the system -- barring one example -- as well as an improvement in the simplicity of
 the implementation itself. In our view, the loss of performance in evaluation is
