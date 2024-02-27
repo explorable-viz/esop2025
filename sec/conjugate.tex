@@ -105,11 +105,11 @@ and \textit{preimage} functions for $R$, which we will denote using $\demandedBy
 \end{definition}
 
 \noindent Clearly the image function for $R$ is the preimage function for its converse, i.e.~$\demandedByR_{R}
-= \demandsR_{R^{-1}}$. When thinking of $R$ as a dependency relation, the image $\demandedByR_{R}(X')$
-consists of all outputs that any element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists
-of all inputs demanded by any element of $Y'$. If $R$ happens to be a function, the image and preimage
-functions form a \emph{Galois connection} (\defref{conjugate:galois-connection} below); for a proper relation
-they form a \textit{conjugate pair}, in the sense of \citet{jonsson51}:
+= \demandsR_{R^{-1}}$. When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of
+all outputs that any element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all
+inputs demanded by any element of $Y'$. If $R$ happens to be a function, the image and preimage functions form
+a \emph{Galois connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a
+\textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
 %Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
 %sufficient for.
@@ -134,10 +134,11 @@ and in virtue of that, the elements ``on the left'' to which $Y'$ is related mus
 
 \subsubsection{Dual Image and Preimage Functions}
 
-If $R$ is a dependency relation, then $\demandedByR_R(X)$ effectively asks ``what is $X$ necessary for?'' This
+If $R$ is an IO relation, then $\demandedByR_R(X)$ effectively asks ``what is $X$ necessary for?'' This
 naturally leads to the question ``what is $X$ \emph{sufficient} for?'' In fact, we can use the notion of
 sufficiency as a test of correctness. If we begin by selecting an output of interest, we would expect the data
-it demands to also be sufficient to reconstruct it. This leads us to define the following pair of functions, which also form a conjugate pair.
+it demands to also be sufficient to reconstruct it. This leads us to define the following pair of functions,
+which also form a conjugate pair.
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
    For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
