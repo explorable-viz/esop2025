@@ -91,7 +91,7 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
-dependence graph approach (\textbf{G-Eval}) with the time taken to evaluate a program with the
+graph approach (\textbf{G-Eval}) with the time taken to evaluate a program with the
 trace approach (\textbf{T-Eval}). As previously explained,
 the graph and trace are being build as part of the respective program evaluations.
 Since the graph is a more complex data structure to build compared to the trace,
@@ -106,31 +106,24 @@ of graph evaluation time to trace evaluation time in the third column (\textbf{E
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
 \subsubsection{RQ2: Graps-based demands vs. trace-based demands}
-We now compare the performance of the graphical and trace based implementations
-when it comes to the computation of \textit{demands}. We observe a significant increase
-in the performance of \textit{demands} using the graphical approach, shown in
-\tableref{demands-SpdUps}. We report time taken to compute \textit{demands}
-with the trace and graph in \textbf{T-Demands} and \textbf{G-Demands}
-respectively.
+%We now compare the performance of the graph and trace based implementations
+%when it comes to the computation of \textit{demands}.
+In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} provide the time taken to compute \textit{demands}
+with the trace and graph approaches, respectively.
+%
+Overall, we observe a significant speedup
+in the performance of \textit{demands} using the graph approach,
+ranging from more than 70 for
+%some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
+%\textbf{stacked-bar-scatter-plot} --
+\textbf{gaussian} and \textbf{line-chart} to 16 for the stateful dynamic time warp example, \textbf{compute-dtw}.
+%This is still a significant improvement in performance across all of our tested examples.
 
-This increased performance for computing \textit{demands} varies across the
-examples, with some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
-\textbf{stacked-bar-scatter-plot} -- exhibiting a speedup of more than 50, and the lowest
--- the stateful dynamic time warp example (\textbf{compute-dtw}) -- close to a 16 times speedup.
-This is still a significant improvement in performance across all of our tested
-examples.
-
-We attribute this performance improvement to the fact that the execution
+We attribute this performance improvement to the fact that the
 trace approach requires the system to completely rewind the execution of the
-original program, in effect evaluating it in reverse. We contrast this with the
-current approach, which only needs to traverse the relevant part of the graph.
+original program, in effect evaluating it in reverse. By contrast, in the current graph
+approach, one only needs to traverse the relevant part of the graph.
 
-\jb{To be moved to discussion}
-The impact of the shape of the graph on the performance of \textit{demands}
-remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
-and \textbf{gaussian} involve a large number of parallel data dependencies, 
-but do not on the whole exhibit dramatically higher performance than the graphical
-cases like \textbf{line-chart}.  
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
@@ -177,3 +170,10 @@ benefit in one part of the system, as well as an improvement in the simplicity o
 the implementation itself. The mixed performance results of \textit{demanded by}
 suggest further research is needed on how the structure of the graph affects the
 system performance.
+
+\jb{To be moved to discussion}
+The impact of the shape of the graph on the performance of \textit{demands}
+remains to be seen. The convolution examples, \textbf{edgeDetect}, \textbf{emboss}
+and \textbf{gaussian} involve a large number of parallel data dependencies, 
+but do not on the whole exhibit dramatically higher performance than the graphical
+cases like \textbf{line-chart}.  
