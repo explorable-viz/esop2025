@@ -14,7 +14,7 @@ responsibility for gathering this information into the programming language, the
 concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 features to the infrastructure used to implement and host the visualisation.
 
-However, computing the bidirectional dependency information need to realise this idea is costly both in terms
+However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
 of performance and implementation burden. For example, the approach taken by \citet{perera22} to implement a
 ``related outputs'' analysis like the one shown in \figref{introduction:scatterplot} requires two separate
 analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
@@ -28,17 +28,18 @@ computation regardless of whether all of the trace is relevant.
 Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
 for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
 problems are much easier to formulate in the graphical setting. For example ``related outputs'' simply amounts
-to computing common ancestry, or \emph{cognacy}, in $\opGraph{G}$, which turns out to be nicely captured by
-the concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Again, switching to the
+to computing common ancestry, or \emph{cognacy}, in $\opGraph{G}$\DOnote{wait, but isn't it common ancestry in $G$ to work out related outputs?}, which turns out to be nicely captured by
+the concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Switching to the
 concrete setting of powersets, $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$ are
 \emph{conjugate} iff:
+%
 \[f(X) \cap Y \neq \emptyset \iff X \cap g(Y) \neq \emptyset\]
-
+%
 The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
 $\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
-overlaps with $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y' \subseteq Y$, and vice
+overlaps with $X'$ where $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y'$ where $Y' \subseteq Y$, and vice
 versa. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then $f$
-and the De Morgan dual of $g$ form a Galois connection.
+and the De Morgan dual of $g$ form a Galois connection (which will be explained in more detail in \secref{conjugate}).
 
 \begin{figure}
    \centering
@@ -49,11 +50,11 @@ and the De Morgan dual of $g$ form a Galois connection.
 \end{figure}
 
 If we now take $R$ to be reachability in $G$, then our setting technically only requires a single operator
-$\demandsR_R$ to support all the required queries. Its adjoint $\sufficesR_R$ is readily computed as
+$\demandsR_R$ (a ``demands'' relation) to support all the required queries. Its adjoint $\sufficesR_R$ is readily computed as
 $\demandsR_{R^{-1}}$ and its conjugate $\demandedByR_R$ as the De Morgan dual of $\demandsR_{R^{-1}}$. It is
 well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
 can also get the benefit of efficient procedures for all of them in terms of reachability. In particular
-relatedm outputs is simply $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
+the ``related outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
 inefficient, we also give a direct implementation of $\sufficesR_R$ which improves on the derived version in
 those cases.
 
