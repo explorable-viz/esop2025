@@ -269,7 +269,8 @@ procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\de
 $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
 pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
 
-For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$ and $\sufficesR_{G}$, allowing
+For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
+(\secref{conjugate:algorith:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorith:suffices}), allowing
 us to compute the other two operators via the opposite graph, rather than relying on the De Morgan dual
 construction. Both procedures factor through an auxiliary operation that computes a ``slice'' of the original
 graph. While it is technically possible to compute the desired image/preimage of the IO relation without
@@ -283,6 +284,9 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
    to sets of out neighbours, where
    \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
+
+\subsubsection{Direct algorithm for $\demandedByR_{G}$}
+\label{sec:conjugate:algorith:demandedBy}
 
 \begin{definition}[$\demandedByAlg{}$]
 \figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{}$.
@@ -326,6 +330,9 @@ done, $\demandedByAlg{}$ extracts the output set from the accumulator by interse
 \end{proposition}
 
 \input{fig/conjugate/algorithms}
+
+\subsubsection{Direct algorithm for $\sufficesR_{G}$}
+\label{sec:conjugate:algorith:suffices}
 
 We can also compute $\demandedByR$ using the De Morgan dual of $\sufficesR$. This is potentially more
 efficient in situations where less graph is traversed than it would be otherwise. We therefore provide a more
