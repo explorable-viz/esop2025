@@ -292,15 +292,15 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
 \figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for any dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G_0$ and inputs $X \subseteq \sources{G_0}$, the judgement $X\;
-\smash{\demandedByAlg{G_0}} Y$ says that $X$ is demanded by $Y \subseteq \sinks{G_0}$. It makes use of an
-auxiliary definition $\demandedByV{G_0}$ which maintains a set of vertices still to process and builds the
-subgraph $G \subseteq G_0$ consisting of all vertices reachable from the initial set and all edges between
-them. If $X$ is empty (\ruleName{done}) the reachable subgraph $G$ is complete and can be returned. Otherwise
-we select an arbitrary vertex $\alpha$ from $X$. If $\alpha$ is already in $G$ (\ruleName{skip}), there is
-nothing to do at this step and we continue with the remaining vertices. Otherwise, we add the out-star at
-$\alpha$ to $G$ and the out-neighbours to the pending vertices (\ruleName{extend}). When $\demandedByV{}$ is
-done, $\demandedByAlg{}$ extracts the output set from the accumulator by intersecting with $\sinks{G}$.
+For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
+Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. The auxiliary definition $\demandedByV{G}$ maintains
+a set of vertices still to process and builds the subgraph $G' \subseteq G$ consisting of all vertices
+reachable from the initial set and all edges between them. If $X$ is empty (\ruleName{done}) the reachable
+subgraph $G'$ is complete and can be returned. Otherwise we select an arbitrary vertex $\alpha$ from $X$. If
+$\alpha$ is already in $G'$ (\ruleName{skip}), there is nothing to do at this step and we continue with the
+remaining vertices. Otherwise, we add the out-star at $\alpha$ to $G'$ and the out-neighbours to the pending
+vertices (\ruleName{extend}). When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from
+the graph slice by intersecting with $\sinks{G}$.
 
 % \RPnote{Roughly speaking, these are now informal observations which are part of the explanation of the
 % judgement above.}
