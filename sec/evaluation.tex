@@ -49,11 +49,14 @@ only needs to be implemented once.
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of Purescript, which we used to write a selection of
 non-trivial examples that reflect realistic targets of dependency analyses
-(\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
+(\secref{evaluation:choice-of-examples}). 
+We used Purescript since our focus on visualizations naturally lends itself
+to building web-based interfaces.
+We then benchmarked these programs on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
 using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. Furthermore,
-in order to enable a performance comparison, we also implemented the approach in \citet{perera22}, which uses execution traces.
-\cd{Do we have to say that we implemented this? Isn't it publicly available?}
+using a Purescript implementation enabled a like-for-like comparison with the open-source
+implementation described in \citet{perera22}, which uses execution traces.
 
 In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our graph based approach
 with the trace based approach in \citet{perera22}, which boils down to the following three research questions:
@@ -79,7 +82,7 @@ We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
 library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart} 7 LoC, \textbf{line-chart} 10 LoC, \textbf{stacked-bar-chart} 3 Loc, + 133 shared Loc).
 Finally, we test two linked examples
-(\textbf{stacked-bar-scatter-plot}, corresponding to \figref{introduction:scatterplot} from \secref{overview}, and \textbf{bar-chart-line-chart}, 26 LoC and 38 LoC, respectively).
+(\textbf{stacked-bar-scatter-plot}, corresponding to \figref{introduction:scatterplot} from \secref{overview} 26 LoC, and \textbf{bar-chart-line-chart} 38 LoC).
 With the exception of \textbf{compute-dtw}, the code for all the benchmarks can be found 
 in \apdxsecref{evaluation-src-code}.
 
@@ -100,8 +103,8 @@ graph approach (\textbf{G-Eval}) with the time taken to evaluate a program with 
 trace approach (\textbf{T-Eval}). As previously explained,
 the graph and trace are built as part of the respective program evaluations.
 Since the graph is a more complex data structure to build compared to the trace,
-we expect an increased overhead when evaluating a program and building the graph
-compared to evaluating and building the trace.
+we expect an overhead when evaluating a program to a graph
+compared to evaluating it to a trace.
 
 We see that, as expected, the evaluation of programs
 to their dynamic dependence graph does incur an overhead, being from
@@ -176,8 +179,9 @@ the trace approach).  We hypothesize that this is due to the fact that
 program inputs are often required during the computation of other values in the program 
 (e.g.  inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, as shown in \figref{dtw-source}). Given that each reference to an input
 results in a dependency edge being added, the dependency graph will have  
-many vertices with a high number of in-edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values, as often
-values associated with vertices require many in-vertices to be computed.
+many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
+%as many inputs are shared 
+%computing values associated with vertices requires considering a large number of in-vertices.
 %Essentially, during the construction of the graph slice $G'$ (see section 3.5.1),
 %many vertices need to be explored, slowing down the computation of
 %\textit{demanded by}.
