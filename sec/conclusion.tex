@@ -1,28 +1,48 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
+Our work is motivated by the difficulty and time consuming nature of producing
+interactive data visualizations. Visualizations provide a valuable mechanism for
+communicating scientific findings and exploratory data analysis, but implementations
+are often bespoke for a single visualization. By shifting the burden into a language
+runtime, time and effort can be saved by a visualizations developer, who now only
+need to express the data transformations they wish to perform and the charts they
+will use to communicate their results. Prior work aimed at integrating these
+features with language runtimes suffered due to a reliance on bi-directional
+program evaluation and complex semantics. Decomposing the approach by realizing
+data dependencies into a dependence graph and then applying analyses over that
+graph has the advantage of simplifying the semantics needed to represent data
+dependencies, and easing the burden on implementers, without negatively impacting
+the performance of interactions in most cases.
+
 \subsection{Future work}
 
-The slicing algorithms presented in \secref{conjugate} are neutral with respect to any intensional information
-associated with the dependence graph, in the sense that the Galois connections they induce are determined only
+The analysis algorithms presented in \secref{conjugate} are neutral with respect to any intensional information
+associated with the dependence graph, in the sense that any relationships they discover are determined only
 by the \emph{extension} -- I/O relation -- of the graph, rather than any internal paths. It follows that
 transformations that elide internal nodes but preserve I/O connectivity, such as the classical Y-$\Delta$
 transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. Although we leave
 applications of this observation to future work, we conjecture that it might be used to selectively trade
 intensional information for additional performance improvements.
 
-The fact that our work is neutral with respect to intensional information in the dependence graph raises
-the question of what information the internal nodes represent. The choice of dependency relation
-we represent in the graph is the same as that of \citet{perera22}; here, selections are pushed through
-evaluation if the parts of the values they select are consumed during evaluation - either via
-pattern matching or the specific implementation provided for a primitive.
+In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is the same as that of \citet{perera22};
+here, selections are pushed through evaluation if the parts of the values they select are consumed
+during evaluation - either via pattern matching or the specific implementation provided for a primitive.
 
-One question raised by this is how the structure of the dependence graph would change if a different
-dependency relation were to be implemented. This question suggests a formal treatment of the choice of
-dependency relation $R$ and the information it would allow us to compute about internal nodes in the graph.
-For example, \citet{cheney11b} considers the use of dependency analysis to compute \textit{expression
+Our results in \secref{evaluation} suggest that the structure of the graph plays an important
+role in the performance of our analysis. This raises the question of whether a more appropriate
+dependency analysis should be implemented using this framework, which produces graphs with
+somewhat more desirable structure. For example, rather than representing all dependencies
+as value-to-value dependencies, it may be more useful for edges in the graph to represent
+causal relationships in the program execution. We suggest that a formal treatment of the
+dependency relation could lead to improvements in the scalability of the system, and allow for
+extended functionality to be implemented. 
+
+For example, the fact that our work is neutral with respect to intensional information contained
+within a dynamic dependence graph suggests the question of how we design a dependency relation
+such that internal nodes, edges or subgraphs represent units of information about the original
+program. For example, \citet{cheney11b} considers the use of dependency analysis to compute \textit{expression
 provenance} information about elements of a program. One use of this information is to synthesize a
-sub-expression describing the derivation of a value at a given point. We can ask the question of how to apply
-this at the level of the dependence graph. For example it is natural to ask: can we associate the internal
-nodes of the dependence graph with an  \textit{expression} that describes the provenance information of that
-node.
+sub-expression describing the derivation of a value at a given point. In our setting, one could
+ask the question of taking the slice graph computed by the analyses, and using it to synthesize
+a complete subexpression of the original program that represents some selected output value.
