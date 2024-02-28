@@ -274,12 +274,12 @@ For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorith:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorith:suffices}), allowing
 us to compute the other two operators via the opposite graph; this is in some situations more efficient than
 relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
-procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e., a subgraph.
-While it is
-technically possible to compute the desired image/preimage of the IO relation without creating this
-intermediate graph, we anticipate many use cases which will make use of the graph slice; these are discussed
-in more detail in \secref{conclusion}. Our implementation makes it easy to flip between $G$ and $\opGraph{G}$
-so we freely make use of both in the algorithms to access out-neighbours and in-neighbours.
+procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
+contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
+without creating this intermediate graph, we anticipate many use cases which will make use of the graph slice;
+these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
+$G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+in-neighbours.
 
 An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
