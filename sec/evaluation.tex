@@ -176,8 +176,9 @@ the trace approach).  We hypothesize that this is due to the fact that
 program inputs are often required during the computation of other values in the program 
 (e.g.  inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, as shown in \figref{dtw-source}). Given that each reference to an input
 results in a dependency edge being added, the dependency graph will have  
-many vertices with a high number of in-edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values, as often
-values associated with vertices require many in-vertices to be computed.
+many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
+%as many inputs are shared 
+%computing values associated with vertices requires considering a large number of in-vertices.
 %Essentially, during the construction of the graph slice $G'$ (see section 3.5.1),
 %many vertices need to be explored, slowing down the computation of
 %\textit{demanded by}.
