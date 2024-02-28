@@ -1,7 +1,7 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-Our work is motivated by the difficulty and time consuming nature of producing
+Our work is motivated by the difficulty and time-consuming nature of producing
 interactive data visualizations. Visualizations provide a valuable mechanism for
 communicating research and performing exploratory data analysis, but interactive
 visualizations are often bespoke solutions for a single application. By shifting
@@ -22,8 +22,7 @@ themselves, and separated the framework from the language. % which implements it
 In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is the same as that of \citet{perera22};
 here, selections are pushed through evaluation if the selected parts of values are consumed
 during evaluation - either via pattern matching or the specific implementation provided for a primitive.
-However, the dependency relation used in that paper was not designed for application in a graph
-based setting.
+However, the dependency relation used in that paper was not designed for application in a graph-based setting.
 
 Our results in \secref{evaluation} (in particular for bechmark \textbf{compute-dtw}) suggest that the structure of the graph plays an important
 role in the performance of our analysis. This raises the question of whether a more appropriate
@@ -32,11 +31,11 @@ a somewhat more desirable structure. For example, rather than representing all d
 as value-to-value dependencies, it may be more useful for edges in the graph to represent
 causal relationships between steps in the program evaluation. We suggest that a more semantically
 justified dependency relation could lead to improvements in the scalability of the system, and allow for
-extended functionality to be implemented. 
+extended functionality to be implemented.
 
-The analyses in their current form are only sensitive to the extension -- the I/O relation -- of
-the graph, two graphs which are intensionally different will produce the same conjugate operators
-if their I/O relation is the same. Using the intensional information present within a graph 
+The analyses in their current form are only sensitive to the \emph{extension} -- the I/O relation -- of
+the graph. Two graphs which are \emph{intensionally} different will produce the same conjugate operators
+if their I/O relation is the same. Using the intensional information present within a graph
 may allow us to derive more detailed information about the relationships between inputs and outputs.
 As an example, \citet{cheney11b} considers the use of dependency analysis to compute \textit{expression
 provenance} information about elements of a program. One use of this information is to synthesize a
@@ -47,6 +46,6 @@ a subset of the outputs.
 
 It follows -- if the user is entirely uninterested in the intensional information of their graph -- that
 transformations which elide internal nodes but preserve I/O connectivity, such as the classical Y-$\Delta$
-transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. We 
+transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. We
 conjecture that applying this transform to throw away intensional information may be useful in future
 applications of our work.
