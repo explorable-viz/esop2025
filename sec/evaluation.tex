@@ -50,13 +50,14 @@ In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of PureScript, which we used to write a selection of
 non-trivial examples that reflect realistic targets of dependency analyses
 (\secref{evaluation:choice-of-examples}).
-We used PureScript since our focus on visualizations naturally lends itself
-to building web-based interfaces.
-We then benchmarked these programs on an
+We used PureScript since this is the implementation language used
+by~\citet{perera22} in their open-source implementation of the trace-based
+approach, thus enabling a more fair like-for-like comparison to our work here.
+PureScript is also a natural implementation language for this work as our focus on visualizations naturally lends itself to building web-based interfaces.
+We then benchmarked the implementations on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
-using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. Furthermore,
-using a PureScript implementation enabled a like-for-like comparison with the open-source
-implementation described in \citet{perera22}, which uses execution traces.
+using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16.
+We instrumented both systems in order to extract performance numbers.
 
 In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our graph-based approach
 with the trace-based approach in \citet{perera22}, which boils down to the following three research questions:
