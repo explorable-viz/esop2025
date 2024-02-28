@@ -60,10 +60,9 @@ relational visualisation language, they describe how to ``backward trace'' from 
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficesR$ (suffices for), linking specific output selections to input selections\DOnote{should we be saying that suffices links inputs to outputs?}. The formal guarantee
-that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandsR$ and
-$\sufficesR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
-mutual reciprocality:
+$\sufficesR$ (suffices for), relating specific output and input selections. The formal guarantee that input
+selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
+connection}, meaning they enjoy the following relationship of (near) mutual reciprocality:
 \[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
 \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) \DOnote{not sure the following is so intuitive for the Galois connection relation; ordering sounds wrong.}This says that if a set of
