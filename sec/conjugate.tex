@@ -49,12 +49,13 @@ complement, so that $\neg X' = X \setminus X'$.
 We explain how we arrive at specific dependence graphs in \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
 $V$ of \emph{vertices} and set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
-program, vertices $\alpha, \beta \in V$ represents parts of values \cd{not sure what parts of values mean?} (either supplied to the program as inputs
-or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the
-program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
-$\alpha$. This diverges somewhat from traditional approaches to dynamic dependence graphs in only considering
-one type of edge (data dependency) rather than separate data and control dependencies; moreover our edges
-point in the direction of dependent vertices. (In the literature the other direction is somewhat more common.)
+program, vertices $\alpha, \beta \in V$ represents \emph{parts} of values (either supplied to the program as
+inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of
+the program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
+$\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
+somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
+dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
+dependent vertices, whereas in the literature the other direction is somewhat more common.
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
