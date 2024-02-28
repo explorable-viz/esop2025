@@ -34,8 +34,8 @@ a pattern-matching construct called an \emph{eliminator} detailed further in \se
 \label{sec:core:foreign}
 The language is parameterised by a finite map $\Phi(f) = n$ from variables $f$ to the arities $n \in \Nat$ of
 the foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). For the graph semantics
-that will follow, every foreign function is required to provide an interpretation that computes both that
-function's result and a suitable dependence graph.
+that will follow, every foreign function $f$ is required to provide an interpretation $\interpret{f}$ that
+computes both that function's result and a suitable dependence graph.
 
 Foreign functions in the core language are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are
 saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$. In our implementation, which also provides a surface language
