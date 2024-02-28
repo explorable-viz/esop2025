@@ -49,12 +49,13 @@ complement, so that $\neg X' = X \setminus X'$.
 We explain how we arrive at specific dependence graphs in \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
 $V$ of \emph{vertices} and set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
-program, vertices $\alpha, \beta \in V$ represents parts of values \cd{not sure what parts of values mean?} (either supplied to the program as inputs
-or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the
-program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
-$\alpha$. This diverges somewhat from traditional approaches to dynamic dependence graphs in only considering
-one type of edge (data dependency) rather than separate data and control dependencies; moreover our edges
-point in the direction of dependent vertices. (In the literature the other direction is somewhat more common.)
+program, vertices $\alpha, \beta \in V$ represents \emph{parts} of values (either supplied to the program as
+inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of
+the program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
+$\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
+somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
+dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
+dependent vertices, whereas in the literature the other direction is somewhat more common.
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -159,11 +160,10 @@ This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs 
 input set, rather than any ancestor to be in the input set. We can, in fact, turn this query on sufficiency
 into $\demandedByR_R$, using the De Morgan Dual.
 
-\cd{Do $\neg_B$ and $\neg_A$ require some explanation?}
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
-   Suppose a function $f: A \to B$ between Boolean algebras. Define the \textit{De Morgan Dual} $\dual{f}: A
-   \to B$ of $f$ as:
+   Suppose a function $f: A \to B$ between Boolean algebras with $\neg_A$ and $\neg_B$ the negation operators
+   of $A$ and $B$. Define the \textit{De Morgan Dual} $\dual{f}: A \to B$ of $f$ as:
    \[ \dual{f} \eqdef \neg_B \after f \after \neg_A \]
 \end{definition}
 
@@ -184,6 +184,7 @@ connection} iff
 \end{proposition}
 
 \begin{lemma}[Duality of image and preimage functions]
+   \label{lem:conjugate:image-preimage-duality}
    \item
    \begin{enumerate}
       \item $\dual{\demandedByR_R} = \sufficesR_R$
@@ -271,15 +272,15 @@ $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and
 pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorith:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorith:suffices}), allowing
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), allowing
 us to compute the other two operators via the opposite graph; this is in some situations more efficient than
 relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
-procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e., a subgraph.
-While it is
-technically possible to compute the desired image/preimage of the IO relation without creating this
-intermediate graph, we anticipate many use cases which will make use of the graph slice; these are discussed
-in more detail in \secref{conclusion}. Our implementation makes it easy to flip between $G$ and $\opGraph{G}$
-so we freely make use of both in the algorithms to access out-neighbours and in-neighbours.
+procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
+contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
+without creating this intermediate graph, we anticipate many use cases which will make use of the graph slice;
+these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
+$G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+in-neighbours.
 
 An alternative presentation of graphs in terms of adjacency maps is useful notationally.
 
@@ -290,9 +291,10 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
 \end{definition}
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$}
-\label{sec:conjugate:algorith:demandedBy}
+\label{sec:conjugate:algorithm:demandedBy}
 
 \begin{definition}[$\demandedByAlg{G}$]
+\label{def:conjugate:algorithm:demandedBy}
 \figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for any dependence graph $G$.
 \end{definition}
 
@@ -342,32 +344,56 @@ slice by intersecting with $\sinks{G}$.
 \input{fig/conjugate/algorithms}
 
 \subsubsection{Direct algorithm for $\sufficesR_{G}$}
-\label{sec:conjugate:algorith:suffices}
+\label{sec:conjugate:algorithm:suffices}
 
 \begin{definition}[$\sufficesAlg{G}$]
+\label{def:conjugate:algorithm:suffices}
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for any dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
-$\sufficesE{}$ which builds a subgraph of $G_0$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
-takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G_0$ with $\sources{H}
-\subseteq \sinks{G}$, and the current set of edges under consideration $E$. For efficiency, the algorithm
-traverses each edge in the graph at most once.
+For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
+$\sufficesE{}$ which builds a graph slice $G$', similar to $\demandsAlg{}$ except that the direction of the
+slice is inverted, i.e.~$G' \subseteq \opGraph{G}$. The judgement $\sufficesE{}$ takes the graph slice under
+construction $G'$, a ``pending'' subgraph $H \subseteq G$ with $\sources{H} \subseteq \sinks{G'}$, and the
+current set of edges under consideration $E$. For efficiency, the algorithm traverses each edge in the graph
+at most once.
 
-\figref{suffices-algo-diagram} shows an example run of the algorithm. Green indicates included into $G$
-because we have found sufficient inputs for them; blue vertices are unvisited; orange vertices are ``pending''
-in $H$ with at least one of their in-edges from $G_0$. Dashed edges indicate the current edge set $E$. At each
-step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and add it to $H$ (dotted edges in
-steps 2 and 3). If the in-neighbours of $\beta$ in $H$ are now equal to its neighbours in $G_0$ (as in step
-3), we move that in-star from $H$ to $G$ and add its out-edges to $E$ (\ruleName{$\sufficesE{}$-extend}, step
-4). Otherwise, there is nothing more to do at this step and we continue with the remaining edges in $E$
-(\ruleName{$\sufficesE{}$-pending}). The algorithm terminates when $E$ is empty
-(\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$ (as in step 8) are vertices had only
-partially sufficient inputs.
+\figref{suffices-algo-diagram} shows an example run of the algorithm. Green vertices have been included into
+$G'$ because all of their in-edges in $G$ are out-edges in $G'$; orange vertices are ``pending'', with at
+least one in-edge from $G$ as an out-edge in $H$; blue vertices are unvisited. Dashed edges indicate the
+current edge set $E$. At each step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and add
+the opposite edge $(\beta, \alpha)$ to $H$ (dotted edges in steps 2 and 3). If the out-neighbours of $\beta$
+in $H$ are now equal to its in-neighbours in $G$ (as in step 3), we move that out-star from $H$ to $G$ and add
+the in-edges of $\beta$ in $G$ to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4). Otherwise, there is nothing
+more to do at this step and we continue with the remaining edges in $E$ (\ruleName{$\sufficesE{}$-pending}).
+The algorithm terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$
+(as in step 8) are vertices had only partially sufficient inputs.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
 \begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
+   \label{prop:sufficesAlg-computes-suffices}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
+\end{proposition}
+
+\subsubsection{Alternative algorithm for $\demandedByR_{G}$}
+\label{sec:conjugate:algorithm:demandedBy-suff-dual}
+
+\begin{definition}[$\demandedBySuffDualAlg{G}$]
+\label{def:conjugate:algorithm:demandedBy-alt}
+Define the following family of relations $\demandedBySuffDualAlg{G}$ for any dependence graph $G$:
+\[
+\sources{G} \setminus X \demandedByAlg{G} Y
+\iff
+X \demandedBySuffDualAlg{G} \sinks{G} \setminus Y
+\]
+\end{definition}
+
+The following is then an easy consequence of \propref{sufficesAlg-computes-suffices},
+\lemref{conjugate:image-preimage-duality} and \defref{conjugate:de-morgan-dual}.
+
+\begin{proposition}[$\demandedBySuffDualAlg{}$ Computes $\demandedByR$]
+   For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
+   \[X \demandedBySuffDualAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{proposition}

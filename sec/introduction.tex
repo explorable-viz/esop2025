@@ -60,10 +60,9 @@ relational visualisation language, they describe how to ``backward trace'' from 
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficesR$ (suffices for), linking specific output selections to input selections\DOnote{should we be saying that suffices links inputs to outputs?}. The formal guarantee
-that the corresponding input selections are ``minimal and sufficient'' was captured by $\demandsR$ and
-$\sufficesR$ forming a \emph{Galois connection}, meaning they enjoy the following relationship of (near)
-mutual reciprocality:
+$\sufficesR$ (suffices for), relating specific output and input selections. The formal guarantee that input
+selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
+connection}, meaning they enjoy the following relationship of (near) mutual reciprocality:
 \[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
 \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) \DOnote{not sure the following is so intuitive for the Galois connection relation; ordering sounds wrong.}This says that if a set of
@@ -108,17 +107,17 @@ computed in a more direct fashion using dependence graphs.
 \label{sec:introduction:contributions}
 
 In this paper, we develop the idea of data transparency in two new directions. First we approach the problem
-in a more\DOnote{more than what?} language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
+in a language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
 slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
-based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These approaches\DOnote{which approaches?}
+based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These analyses
 (e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
 in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
-a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show that
-a graph-based approach factors the problem into a (language-specific) graph-building interpreter plus (language-agnostic)
-adjoint analyses over the graph. This partitioning reduces the implementation burden and improves performance
-compared to approaches based on bidirectional interpretation.
+a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show
+that a graph-based approach factors the problem into a (language-specific) graph-building interpreter plus
+(language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and
+improves performance compared to approaches based on bidirectional interpretation.
 
 Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
 relevance which arises between inputs when they contribute to common features of the output. Users are able to
