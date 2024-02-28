@@ -1,5 +1,4 @@
 \begin{figure}
-   \todo{Edges in $G$ point in the wrong direction}
    {\small \flushleft \shadebox{$\gamma, e, V \evalS v, G$}%
    \begin{smathpar}
       %
@@ -28,7 +27,7 @@
          \gamma, n, V
          \evalS
          \annInt{n}{\alpha},
-         \set{\bind{\alpha}{V}}
+         \inStar{V}{\alpha}
       }
       %
       \and
@@ -40,7 +39,7 @@
          \gamma, \exFun{\sigma}, V
          \evalS
          \annClosure{\gamma}{\envEmpty}{\sigma}{\alpha},
-         \set{\bind{\alpha}{V}}
+         \inStar{V}{\alpha}
       }
       %
       \and
@@ -53,7 +52,7 @@
          \gamma, \exRec{\seq{\bind{x}{e}}}, V
          \evalS
          \annRec{\seq{\bind{x}{v}}}{\alpha},
-         G \disjunion \set{\bind{\alpha}{V}}
+         G \disjunion \inStar{V}{\alpha}
       }
       %
       \and
@@ -67,7 +66,7 @@
          \gamma, \exConstr{c}{\seq{e}}, V
          \evalS
          \annConstr{c}{\seq{v}}{\alpha},
-         G \disjunion \set{\bind{\alpha}{V}}
+         G \disjunion \inStar{V}{\alpha}
       }
       %
       \and
