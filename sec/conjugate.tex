@@ -357,14 +357,14 @@ at most once.
 
 \figref{suffices-algo-diagram} shows an example run of the algorithm. Green vertices have been included into
 $G'$ because all of their in-edges in $G$ are out-edges in $G'$; orange vertices are ``pending'', with at
-least one of their in-edges from $G$ as an out-edge in $H$; blue vertices are unvisited. Dashed edges indicate
-the current edge set $E$. At each step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and
-add its opposite to $H$ (dotted edges in steps 2 and 3). If the out-neighbours of $\beta$ in $H$ are now equal
-to its in-neighbours in $G$ (as in step 3), we move that out-star from $H$ to $G$ and add the in-edges of
-$\beta$ in $G$ to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4). Otherwise, there is nothing more to do at
-this step and we continue with the remaining edges in $E$ (\ruleName{$\sufficesE{}$-pending}). The algorithm
-terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$ (as in step
-8) are vertices had only partially sufficient inputs.
+least one in-edge from $G$ as an out-edge in $H$; blue vertices are unvisited. Dashed edges indicate the
+current edge set $E$. At each step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and add
+the opposite edge $(\beta, \alpha)$ to $H$ (dotted edges in steps 2 and 3). If the out-neighbours of $\beta$
+in $H$ are now equal to its in-neighbours in $G$ (as in step 3), we move that out-star from $H$ to $G$ and add
+the in-edges of $\beta$ in $G$ to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4). Otherwise, there is nothing
+more to do at this step and we continue with the remaining edges in $E$ (\ruleName{$\sufficesE{}$-pending}).
+The algorithm terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$
+(as in step 8) are vertices had only partially sufficient inputs.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
