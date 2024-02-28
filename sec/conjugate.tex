@@ -348,22 +348,23 @@ slice by intersecting with $\sinks{G}$.
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for any dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G_0$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
-$\sufficesE{}$ which builds a subgraph of $G_0$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
-takes the subgraph under construction $G$, a ``pending'' subgraph $H \subseteq G_0$ with $\sources{H}
-\subseteq \sinks{G}$, and the current set of edges under consideration $E$. For efficiency, the algorithm
-traverses each edge in the graph at most once.
+For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
+$\sufficesE{}$ which builds a graph slice $G$', similar to $\demandsAlg{}$ except that the direction of the
+slice is inverted, i.e.~$G' \subseteq \opGraph{G}$. The judgement $\sufficesE{}$ takes the graph slice under
+construction $G'$, a ``pending'' subgraph $H \subseteq G$ with $\sources{H} \subseteq \sinks{G'}$, and the
+current set of edges under consideration $E$. For efficiency, the algorithm traverses each edge in the graph
+at most once.
 
-\figref{suffices-algo-diagram} shows an example run of the algorithm. Green indicates included into $G$
-because we have found sufficient inputs for them; blue vertices are unvisited; orange vertices are ``pending''
-in $H$ with at least one of their in-edges from $G_0$. Dashed edges indicate the current edge set $E$. At each
-step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and add it to $H$ (dotted edges in
-steps 2 and 3). If the in-neighbours of $\beta$ in $H$ are now equal to its neighbours in $G_0$ (as in step
-3), we move that in-star from $H$ to $G$ and add its out-edges to $E$ (\ruleName{$\sufficesE{}$-extend}, step
-4). Otherwise, there is nothing more to do at this step and we continue with the remaining edges in $E$
-(\ruleName{$\sufficesE{}$-pending}). The algorithm terminates when $E$ is empty
-(\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$ (as in step 8) are vertices had only
-partially sufficient inputs.
+\figref{suffices-algo-diagram} shows an example run of the algorithm. Green vertices have been included into
+$G'$ because all of their in-edges in $G$ are out-edges in $G'$; orange vertices are ``pending'', with at
+least one of their in-edges from $G$ as an out-edge in $H$; blue vertices are unvisited. Dashed edges indicate
+the current edge set $E$. At each step we non-deterministically choose an edge $(\alpha, \beta)$ from $E$ and
+add its opposite to $H$ (dotted edges in steps 2 and 3). If the out-neighbours of $\beta$ in $H$ are now equal
+to its in-neighbours in $G$ (as in step 3), we move that out-star from $H$ to $G$ and add the in-edges of
+$\beta$ in $G$ to $E$ (\ruleName{$\sufficesE{}$-extend}, step 4). Otherwise, there is nothing more to do at
+this step and we continue with the remaining edges in $E$ (\ruleName{$\sufficesE{}$-pending}). The algorithm
+terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any vertices still pending in $H$ (as in step
+8) are vertices had only partially sufficient inputs.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
