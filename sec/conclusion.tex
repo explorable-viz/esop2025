@@ -14,24 +14,23 @@ Prior work aimed at integrating these features proved to be sensitive to changes
 in the programming language, and made use of bidirectional analyses which were
 difficult to implement.
 By decomposing the system into an evaluator that builds a dependence graph, and a
-pair of graph algorithms, we have simplified the implementation of the analyses
-themselves, and limited the weakened the link between the framework and any
-language which implements it, without negatively impacting the performance
-of interactive visualizations in most cases.
+pair of language agnostic graph algorithms, we simplified the implementation of the analyses
+themselves, and separated the framework from the language. % which implements it, without negatively impacting the performance
+%of interactive visualizations in most cases.
 
 \subsection{Future work}
 In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is the same as that of \citet{perera22};
 here, selections are pushed through evaluation if the selected parts of values are consumed
 during evaluation - either via pattern matching or the specific implementation provided for a primitive.
-The dependency relation used in that paper was not designed for application in a graph
+However, the dependency relation used in that paper was not designed for application in a graph
 based setting.
 
-Our results in \secref{evaluation} suggest that the structure of the graph plays an important
+Our results in \secref{evaluation} (in particular for bechmark \textbf{compute-dtw}) suggest that the structure of the graph plays an important
 role in the performance of our analysis. This raises the question of whether a more appropriate
 dependency analysis should be implemented specifically for use with our framework, which produces graphs with
-somewhat more desirable structure. For example, rather than representing all dependencies
+a somewhat more desirable structure. For example, rather than representing all dependencies
 as value-to-value dependencies, it may be more useful for edges in the graph to represent
-causal relationships between steps in program evaluation. We suggest that a more semantically
+causal relationships between steps in the program evaluation. We suggest that a more semantically
 justified dependency relation could lead to improvements in the scalability of the system, and allow for
 extended functionality to be implemented. 
 
