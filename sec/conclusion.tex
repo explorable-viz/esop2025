@@ -1,10 +1,24 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
+Our work is motivated by the difficulty and time consuming nature of producing
+interactive data visualizations. Visualizations provide a valuable mechanism for
+communicating scientific findings and exploratory data analysis, but implementations
+are often bespoke for a single visualization. By shifting the burden into a language
+runtime, time and effort can be saved by a visualizations developer, who now only
+need to express the data transformations they wish to perform and the charts they
+will use to communicate their results. Prior work aimed at integrating these
+features with language runtimes suffered due to a reliance on bi-directional
+program evaluation and complex semantics. Decomposing the approach by realizing
+data dependencies into a dependence graph and then applying analyses over that
+graph has the advantage of simplifying the semantics needed to represent data
+dependencies, and easing the burden on implementers, without negatively impacting
+the performance of interactions in most cases.
+
 \subsection{Future work}
 
-The slicing algorithms presented in \secref{conjugate} are neutral with respect to any intensional information
-associated with the dependence graph, in the sense that the Galois connections they induce are determined only
+The analysis algorithms presented in \secref{conjugate} are neutral with respect to any intensional information
+associated with the dependence graph, in the sense that any relationships they discover are determined only
 by the \emph{extension} -- I/O relation -- of the graph, rather than any internal paths. It follows that
 transformations that elide internal nodes but preserve I/O connectivity, such as the classical Y-$\Delta$
 transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. Although we leave
