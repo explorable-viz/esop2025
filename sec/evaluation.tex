@@ -45,7 +45,8 @@ $\demandedByR$ is language-agnostic (as described in
 semantics of the language. Thus, as opposed to \citet{perera22}, we
  only need to implement one language-specific algorithm.
 
-\subsection{Experimental Evaluation}
+ \subsection{Experimental Evaluation}
+
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of PureScript, which we used to write a selection of
 non-trivial examples that reflect realistic targets of dependency analyses
@@ -60,7 +61,7 @@ using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16.
 We instrumented both systems in order to extract performance numbers.
 
 In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our graph-based approach
-with the trace-based approach in \citet{perera22}, which boils down to the following three research questions:
+with the trace-based \cite{perera22}, refined to the following three research questions:
 
 \begin{itemize}
    \item RQ1: What is the overhead of the graph construction versus the trace construction?
@@ -71,22 +72,21 @@ with the trace-based approach in \citet{perera22}, which boils down to the follo
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
-We tested our system on a range of examples %constituting the larger programs we
-implemented in \OurLang and in the language of \citet{perera22}. These programs represent a range of components a data
+We tested our system on a range of benchmark examples %constituting the larger programs we
+implemented in \OurLang and in the language of \citet{perera22}.  The benchmark programs represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
-we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 Lines of Code (LoC) each + 21 shared). Given that different
-filter matrices create subtly different dependency structures, we
-implemented a few different filters. Second, we have an example of a more
-sequential algorithmic program, namely an implementation of dynamic time warping~\cite{berndt1994using} known from the time series analysis (\textbf{compute-dtw}, 39 LoC).
+we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 Lines of Code (LoC) each + 21 LoC shared). Given that different
+filter/kernel matrices create subtly different dependency structures, we
+implemented a few different such kernels. Second, we include an example of a more
+involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt1994using} known from the time series analysis (\textbf{compute-dtw}, 39 LoC).
 We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
-library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart} 7 LoC, \textbf{line-chart} 10 LoC, \textbf{stacked-bar-chart} 3 Loc, + 133 shared Loc).
+library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart} 7 LoC, \textbf{line-chart} 10 LoC, \textbf{stacked-bar-chart} 3 LoC, + 133 shared LoC).
 Finally, we test two linked examples
 (\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}) 26 LoC, and \textbf{bar-chart-line-chart} 38 LoC).
-With the exception of \textbf{compute-dtw}, the code for all the benchmarks can be found
-in \apdxsecref{evaluation-src-code}.
+The rest of the benchmark code is listed in~\apdxsecref{evaluation-src-code}.
 
-In all our experiments, each benchmark is run 10 times, and we report the mean runtime and the standard deviation (in results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
+In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
 Runtimes are reported in milliseconds (to 2 decimal places). When we refer to \textit{speedup}
 or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
@@ -107,13 +107,13 @@ we expect a larger overhead when evaluating a program to a graph
 compared to evaluating it to a trace.
 
 We report the ratio
-of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}). We see that, as expected, the evaluation of programs
+of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs
 to their dynamic dependence graph does indeed incur a higher overhead, being from
-3 to 14 times slower than their trace-based counterparts.
+3x to 14x slower than their trace-based counterparts.
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
-\subsubsection{RQ2: Graps-based demands vs. trace-based demands}
+\subsubsection{RQ2: Graph-based demands vs. trace-based demands}
 %We now compare the performance of the graph and trace based implementations
 %when it comes to the computation of \textit{demands}.
 In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} provide the time taken to compute \textit{demands}
@@ -121,16 +121,18 @@ with the trace and graph approaches, respectively.
 %
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
-ranging from more than 80 for
+ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
+to more than 80x for \textbf{gaussian}, show in
+column \textbf{Eval-Slowdown}.
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
-\textbf{gaussian} to around 14.6 for the dynamic time warp example, \textbf{compute-dtw}.
+
 %This is still a significant improvement in performance across all of our tested examples.
 
 We attribute this performance improvement to the fact that the
 trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. By contrast, in the current graph
-approach, one only needs to traverse the relevant part of the graph.
+approach, one only needs to traverse the relevant part of the already-computed graph.
 
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
