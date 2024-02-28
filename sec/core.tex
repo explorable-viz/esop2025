@@ -1,10 +1,14 @@
 \section{A Core Language with Graphical Syntax and Semantics}
 \label{sec:core}
 
-In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$) over such graphs.
-We now implement that graphical abstraction for  \OurLang -- an untyped, pure functional programming language. This core calculus we go on to describe is what underlies the surface-language programs such as \figref{overview:energy-query}, used to generate and analyse the scatter plots from earlier. We first introduce the syntax of our core language constructs (\secref{core:syntax}). Then we define a
-big-step operational semantics that simultaneously (i) evaluates a term to a value and (ii) constructs an accompanying
-dependence graph for the evaluation of that term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
+In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators
+\emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$) over such graphs. We now implement that
+graphical abstraction for \OurLang, an untyped, pure functional programming language. This core calculus we
+go on to describe is what underlies the surface-language programs such as \figref{overview:energy-query}, used
+to generate and analyse the scatter plots from earlier. We first introduce the syntax of our core language
+constructs (\secref{core:syntax}). Then we define a big-step operational semantics that simultaneously (i)
+evaluates a term to a value and (ii) constructs an accompanying dependence graph for the evaluation of that
+term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
 
 \subsection{Syntax and Terms}
 \label{sec:core:syntax}
@@ -14,14 +18,17 @@ dependence graph for the evaluation of that term (\secref{core:semantics}); we a
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines the \emph{terms} $e$ of the language, which include: variables ranged over by $x, y, f$%
-; integer constants ranged over by $n, m$%
+\figref{syntax} defines the \emph{terms} $e$ of the language, which include variables $x, y, f$%
+; integer constants $n, m$%
 ; let-bindings $\exLet{x}{e}{e'}$%
-; record construction $\exRec{\seq{\bind{x}{e}}}$%, using the notation of \defref{finite-map}% for mapping variables to terms
-; and record projection $\exRecProj{e}{x}$. % for accessing variable $x$ in record $e$
-We also have constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors and is fully
-saturated by arguments $\seq{e}$; we write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments.
-Application comes in two forms:  standard application $\exApp{e}{e'}$, and \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions which are explained in \secref{core:foreign}. The last two terms define anonymous functions $\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
+; record construction $\exRec{\seq{\bind{x}{e}}}$%
+; and record projection $\exRecProj{e}{x}$. We also have constructor expressions $\exConstr{c}{\seq{e}}$,
+where $c$ ranges over data constructors and is fully saturated by arguments $\seq{e}$; we write $\datatype{c}
+= n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments. Application comes in two forms: standard
+application $\exApp{e}{e'}$, and \emph{foreign application} $\exForeignApp{f}{\seq{e}}$ for calling foreign
+functions which are explained in \secref{core:foreign}. The last two terms define anonymous functions
+$\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is
+a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}

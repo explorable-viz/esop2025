@@ -1,8 +1,6 @@
 \section{Overview of Approach and Solution}
 \label{sec:overview}
 
-\todo{This section still WIP}
-
 As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
 interactions that allow the user to query relationships between data sources and visualisations and other
 outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
@@ -28,18 +26,18 @@ computation regardless of whether all of the trace is relevant.
 Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
 for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
 problems are much easier to formulate in the graphical setting. For example ``related outputs'' simply amounts
-to computing common ancestry, or \emph{cognacy}, in $\opGraph{G}$\DOnote{wait, but isn't it common ancestry in $G$ to work out related outputs?}, which turns out to be nicely captured by
-the concept of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Switching to the
-concrete setting of powersets, $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$ are
-\emph{conjugate} iff:
+to computing common ancestry, or \emph{cognacy}, in $G$, which turns out to be nicely captured by the concept
+of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Switching to the concrete setting of
+powersets, $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$ are \emph{conjugate} iff:
 %
-\[f(X) \cap Y \neq \emptyset \iff X \cap g(Y) \neq \emptyset\]
+\[f(X) \cap Y = \emptyset \iff X \cap g(Y) = \emptyset\]
 %
 The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
 $\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
-overlaps with $X'$ where $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y'$ where $Y' \subseteq Y$, and vice
-versa. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$ are conjugate, then $f$
-and the De Morgan dual of $g$ form a Galois connection (which will be explained in more detail in \secref{conjugate}).
+overlaps with $X'$ where $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y'$ where $Y'
+\subseteq Y$, and vice versa. Conjugate pairs are also closely related to Galois connections; if $f$ and $g$
+are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection (which will be explained in
+more detail in \secref{conjugate}).
 
 \begin{figure}
    \centering
@@ -92,13 +90,16 @@ results in a related outputs query.
 
 \subsection{\OurLang: A Data-Transparent Programming Language}
 
-We implement the abstract framework outlined above in a programming language called \OurLang, which
-\todo{todo}. \figref{overview:energy-query} shows the source code for the scatter plot example
-\figref{introduction:scatterplot}. The key point here is that the author of the visualisation just expresses
-their output as a pure function of the inputs, and the various transparency features provided for the user
-come for free. We provide a d3.js front end and a set of data types for common visualisations, and then enrich
-the d3.js renderings of the outputs with (a) selection information, and (b) additional interactions that \todo{todo}
+We implement the abstract framework outlined above in a programming language called \OurLang, a pure
+functional language with a runtime implementing conjugate dependency operators. From the programmer's
+perspective the language is unremarkable; \figref{overview:energy-query} shows the source code for the scatter
+plot example from \figref{introduction:scatterplot}. The distinguishing feature of the language is a special
+semantics that interprets a program not as a plain output but as an output with a built-in query engine
+supporting the transparency features shown above. The author of a visualisation just expresses their chart as
+a pure function of the inputs, via a set of data types for common visualisations; a d3.js front end
+automatically enriches the rendered outputs with support for visual selection and various selection-based
+queries.
 
-In the rest of the paper, we set out the formal graph framework (\secref{conjugate}), show how our Fluid
-interpreter implements the graph framework (\secref{core}) and then [performance] (\secref{evaluation}). Our
-implementation is open source and available at \todo{todo}, which also has several interactive demos.
+In \secref{conjugate} we set out the formal graph framework and in \secref{core} show how the \OurLang
+interpreter implements that abstract framework. Our implementation is open source and available at [anonymised],
+which also has several interactive demos.
