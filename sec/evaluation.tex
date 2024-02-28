@@ -77,13 +77,13 @@ sequential algorithmic program, namely an implementation of dynamic time warping
 known from the time series analyis (\textbf{compute-dtw}, 39 LoC). 
 We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
-library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, \textbf{line-chart}, \textbf{stacked-bar-chart}, 133 shared Loc \cd{how can all code be shared? Do you mean in total?}).
+library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart} 7 LoC, \textbf{line-chart} 10 LoC, \textbf{stacked-bar-chart} 3 Loc, + 133 shared Loc).
 Finally, we test two linked examples
 (\textbf{stacked-bar-scatter-plot}, corresponding to \figref{introduction:scatterplot} from \secref{overview}, and \textbf{bar-chart-line-chart}, 26 LoC and 38 LoC, respectively).
 With the exception of \textbf{compute-dtw}, the code for all the benchmarks can be found 
 in \apdxsecref{evaluation-src-code}.
 
-In all our experiments, each benchmark is run 10 times, and we report the mean runtime and the standard error (in each table, they appear in brackets, separated by ``,'').
+In all our experiments, each benchmark is run 10 times, and we report the mean runtime and the standard deviation (in each table, they appear in brackets, separated by ``,'').
 Runtimes are reported in milliseconds. When we refer to \textit{speedup}
 or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
@@ -118,10 +118,10 @@ with the trace and graph approaches, respectively.
 %
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
-ranging from more than 70 for
+ranging from more than 80 for
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
-\textbf{gaussian} and \textbf{line-chart} to 16 for the dynamic time warp example, \textbf{compute-dtw}.
+\textbf{gaussian} to around 14.6 for the dynamic time warp example, \textbf{compute-dtw}.
 %This is still a significant improvement in performance across all of our tested examples.
 
 We attribute this performance improvement to the fact that the
@@ -154,41 +154,46 @@ between the user and the system. Additionally, the fast response times for
 \textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
 translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
-\cd{I don't think this paragraph brings any new insights, potentially more questions.}
-Outside of evaluation, we generally see a consistent improvement to performance.
-The graph implementation of demands shows significant speedup on all examples,
-ranging from a 16 times speedup in the worst case -- \textbf{compute-dtw} --
-to over 70 times faster in the case of the \textbf{gaussian} convolution and
-\textbf{line-chart}. Most of our example programs also exhibit a great deal of
-speedup in the time it takes to compute \textit{demanded by} with one exception.
-We see that our linked examples -- \textbf{bar-chart-line-chart} and \textbf{stacked-bar-scatter-plot} --
-exhibit the greatest improvement when using the graph approach for \textit{demanded by}.
-Interestingly, despite making use of somewhat expensive set complementation
-operations there are cases where the implementation of \textit{demanded by} using
-the dual of the $\sufficesAlg{}$ algorithm are just as fast or slightly faster
-than the trace approach.
+%% \cd{I don't think this paragraph brings any new insights, potentially more questions.}
+%% Outside of evaluation, we generally see a consistent improvement to performance.
+%% The graph implementation of demands shows significant speedup on all examples,
+%% ranging from a 16 times speedup in the worst case -- \textbf{compute-dtw} --
+%% to over 70 times faster in the case of the \textbf{gaussian} convolution and
+%% \textbf{line-chart}. Most of our example programs also exhibit a great deal of
+%% speedup in the time it takes to compute \textit{demanded by} with one exception.
+%% We see that our linked examples -- \textbf{bar-chart-line-chart} and \textbf{stacked-bar-scatter-plot} --
+%% exhibit the greatest improvement when using the graph approach for \textit{demanded by}.
+%% Interestingly, despite making use of somewhat expensive set complementation
+%% operations there are cases where the implementation of \textit{demanded by} using
+%% the dual of the $\sufficesAlg{}$ algorithm are just as fast or slightly faster
+%% than the trace approach.
 
-\cd{Maybe the explanation can use the ``graph slice'' that Roly is adding in sec 3.}
-Amongst our benchmarks, we find that \textbf{compute-dtw} has the worst
-performance for both \textit{demands} and \textit{demanded by} (although \textit{demands}
-still shows a considerable speedup when compared to the trace approach).
-We hypothesize that this is due to the way the inputs of the program are used,
-source code provided in \figref{dtw-source}. In particular, there is not a ``nice''
-collection of independent data flowing through the program, an element of one of
-the input sequences is compared against multiple elements of the other input sequence
-multiple times, meaning certain data dependencies may be created and traversed 
-multiple times \jb{a little fluffy but getting close to describing what's happening}
+%\cd{Maybe the explanation can use the ``graph slice'' that Roly is adding in sec 3.}
+Amongst our benchmarks, \textbf{compute-dtw} has the worst performance
+for both \textit{demands} and \textit{demanded by} (although
+\textit{demands} still shows a considerable speedup when compared to
+the trace approach).  We hypothesize that this is due to the fact that
+program inputs are often required during the computation of other values in the program 
+(e.g.  inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, as shown in \figref{dtw-source}). Given that each reference to an input
+results in a dependency edge being added, the dependency graph will have  
+many vertices with a high number of in-edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values, as often
+values associated with vertices require many in-vertices to be computed.
+%Essentially, during the construction of the graph slice $G'$ (see section 3.5.1),
+%many vertices need to be explored, slowing down the computation of
+%\textit{demanded by}.
+While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
+these experiments show that the shape of the graph may matter for performance. We defer a more detailed discussion on this to \secref{conclusion}.
 
-\cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
-The impact of the shape of the graph on performance needs to be further investigated.
-For example, in the convolution examples, a pixel of the input image is only related
-to its immediate neighborhood, and so the algorithms only traverse a small portion
-of the dependence graph. Despite this, the graph approach is not significantly more performant for these benchmarks than for others.
+%% \cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
+%% The impact of the shape of the graph on performance needs to be further investigated.
+%% For example, in the convolution examples, a pixel of the input image is only related
+%% to its immediate neighborhood, and so the algorithms only traverse a small portion
+%% of the dependence graph. Despite this, the graph approach is not significantly more performant for these benchmarks than for others.
 
-\cd{I'd say that the first paragraph already covers this}
-We overall consider our results to be positive, since we find consistent performance
-benefits in two parts of the system -- barring one example -- as well as an improvement in the simplicity of
-the implementation itself. In our view, the loss of performance in evaluation is
-acceptable, since we generally find that the implementations of $\demandsR(\param)$
-and $\demandedByR(\param)$ are significantly faster, which translates to faster
-interactions with linked-examples
+%% \cd{I'd say that the first paragraph already covers this}
+%% We overall consider our results to be positive, since we find consistent performance
+%% benefits in two parts of the system -- barring one example -- as well as an improvement in the simplicity of
+%% the implementation itself. In our view, the loss of performance in evaluation is
+%% acceptable, since we generally find that the implementations of $\demandsR(\param)$
+%% and $\demandedByR(\param)$ are significantly faster, which translates to faster
+%% interactions with linked-examples
