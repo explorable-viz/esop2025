@@ -192,38 +192,6 @@ connection} iff
    \end{enumerate}
 \end{lemma}
 
-\todo{Substantial rework needed} We note that these two functions do not always form a Galois connection,
-since the composition of the two functions is not necessarily inflationary, contradicting a basic fact of
-Galois connections, which we picture in \figref{relation-not-galois}. In \figref{relation-not-galois-1}, we
-apply $\demandedByR_R$ to $\set{x_1, x_2}$, and find $\set{y_1, y_2}$. We then apply $\demandsR$ to $\set{y_1,
-y_2}$, and get $\set{x_2, x_3}$, which is neither a superset, nor a subset of the originally selected set.
-Since the composite function $\demandsR_R \after \demandedByR_R$ is neither increasing or decreasing, the
-functions cannot form a Galois connection. We picture the same scenario reversed in
-\figref{relation-not-galois-2}. We can read the green set as unused inputs, or free outputs. The light blue
-sets are the elements we have "discovered" via applying the two functions one after another. We can think of
-the darker blue sets as the values about which we discover nothing new when applying the two functions.
-
-\input{fig/conjugate/relations-not-galois}
-
-We observe that if we restrict the set of inputs $X$ and outputs $Y$ in the graph such that there are no
-inputs which are unused, then $\demandsR$ will preserve $\bot$, i.e.~$\demandsR(\emptyset) = \emptyset$. This
-means that applying $\demandedByR$ after $\demandsR$, we will not lose any of the originally selected inputs.
-
-\begin{lemma}
-\item
-\begin{enumerate}
-   \item If $\demandedByR_R(\emptyset) = \emptyset$, then $\demandsR_R \after \demandedByR_R$ is inflationary.
-   \item If $\demandsR_R(\emptyset) = \emptyset$, then $\demandedByR_R \after \demandsR_R$ is inflationary.
-\end{enumerate}
-\end{lemma}
-
-Similarly, if we have no outputs which are free, then $\demandedByR$ will also preserve $\bot$, and composing
-the functions in the opposite way will also be increasing.
-
-As an easy corollary, if $\demandsR$ and $\demandedByR$ both preserve $\emptyset$ then they do form a Galois
-connection, albeit an antitone one. This is useful to know, since we may be working in a context where we wish
-to consider a filtered view of the data, where the user is shown only the data used by the original program.
-
 \subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
 
@@ -240,26 +208,6 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
-
-Now we can provide a formal account of the notions of related inputs and related outputs introduced in
-\secref{overview}.
-
-\begin{definition}[Related Inputs and Outputs]
-   For a dependence graph $G$ define:
-   \begin{enumerate}
-      \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (related inputs)
-      \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
-   \end{enumerate}
-\end{definition}
-
-Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
-$\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what other
-inputs are demanded by the outputs which demand X?'', and first finds all outputs $\demandedByR_{G}(X)$ that
-our inputs are demanded by, and then computes the inputs that those outputs demand,
-i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, related outputs asks
-``what other outputs demand the inputs that Y demands'', and first finds all inputs $\demandsR_{G}(Y')$ that
-our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
-i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
 \subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
 \label{sec:conjugate:dependence-graph-algos}
@@ -397,3 +345,55 @@ The following is then an easy consequence of \propref{sufficesAlg-computes-suffi
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \demandedBySuffDualAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{proposition}
+
+\subsection{$\relInputR$ and $\relOutputR$ over dependence graphs}
+
+Now we can provide a formal account of the notions of related inputs and related outputs introduced in
+\secref{overview}.
+
+\begin{definition}[Related Inputs and Outputs]
+   For a dependence graph $G$ define:
+   \begin{enumerate}
+      \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (related inputs)
+      \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
+   \end{enumerate}
+\end{definition}
+
+Intuitively, related outputs and related inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
+$\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, related inputs asks ``what other
+inputs are demanded by the outputs which demand X?'', and first finds all outputs $\demandedByR_{G}(X)$ that
+our inputs are demanded by, and then computes the inputs that those outputs demand,
+i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, related outputs asks
+``what other outputs demand the inputs that Y demands'', and first finds all inputs $\demandsR_{G}(Y')$ that
+our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
+i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
+
+Neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is necessarily inflationary, as illustrated in
+\figref{relation-not-galois}. In \figref{relation-not-galois-1}, we apply $\demandedByR_R$ to $\set{x_1,
+x_2}$, and find $\set{y_1, y_2}$. We then apply $\demandsR$ to $\set{y_1, y_2}$, and get $\set{x_2, x_3}$,
+which is neither a superset, nor a subset of the originally selected set. Since the composite function
+$\demandsR_R \after \demandedByR_R$ is neither increasing or decreasing, the functions cannot form a Galois
+connection. We picture the same scenario reversed in \figref{relation-not-galois-2}. We can read the green set
+as unused inputs, or free outputs. The light blue sets are the elements we have ``discovered'' via applying
+the two functions one after another. We can think of the darker blue sets as the values about which we
+discover nothing new when applying the two functions.
+
+\input{fig/conjugate/relations-not-galois}
+
+If we constrain things so that there are no inputs which are unused, then $\demandsR$ will preserve $\bot$,
+i.e.~$\demandsR(\emptyset) = \emptyset$, and $\relOutputR_{G}$ will preserve the original output selection.
+Similarly, if we constrain things so that all outputs demand some input, then $\demandedByR$ will also
+preserve $\bot$, and $\relInputR_{G}$ will preserve the original input selection.
+
+\begin{lemma}
+\item
+\begin{enumerate}
+   \item If $\demandedByR_G(\emptyset) = \emptyset$, then $\relInputR_{G}(X) \geq X$ for all $X$
+   \item If $\demandsR_G(\emptyset) = \emptyset$, then $\relOutputR_{G}(Y) \geq Y$ for all $Y$
+\end{enumerate}
+\end{lemma}
+
+As an easy corollary, if $\demandsR$ and $\demandedByR$ both preserve $\emptyset$ then in fact they form an
+antitone Galois connection. In practice these observations are useful: for example it is sometimes convenient
+to consider a filtered view of the data where by default the user only sees data which is actually used
+somewhere, and in such a setup a related inputs query will never cause any selected data to become unselected.
