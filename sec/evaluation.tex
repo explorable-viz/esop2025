@@ -75,15 +75,15 @@ with the trace-based \cite{perera22}, refined to the following three research qu
 We tested our system on a range of benchmark examples %constituting the larger programs we
 implemented in \OurLang and in the language of \citet{perera22}.  The benchmark programs represent a range of components a data
 scientist may find useful in an exploratory data analysis scenario. First,
-we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 6 Lines of Code (LoC) each + 21 LoC shared). Given that different
+we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of Code (LoC) each). Given that different
 filter/kernel matrices create subtly different dependency structures, we
 implemented a few different such kernels. Second, we include an example of a more
 involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt1994using} known from the time series analysis (\textbf{compute-dtw}, 37 LoC).
 We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
-library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart} 7 LoC, \textbf{line-chart} 10 LoC, \textbf{stacked-bar-chart} 3 LoC, + 133 shared LoC).
+library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
 Finally, we test two linked examples
-(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}) 26 LoC, and \textbf{bar-chart-line-chart} 38 LoC).
+(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
 The rest of the benchmark code is listed in~\apdxsecref{evaluation-src-code}.
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
