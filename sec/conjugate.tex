@@ -238,12 +238,12 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
    \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
 \end{definition}
 
-\subsubsection{Direct algorithm for $\demandedByR_{G}$}
+\subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
 
 \begin{definition}[$\demandedByAlg{G}$]
 \label{def:conjugate:algorithm:demandedBy}
-\figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for any dependence graph $G$.
+\figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for dependence graph $G$.
 \end{definition}
 
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
@@ -291,12 +291,12 @@ slice by intersecting with $\sinks{G}$.
 
 \input{fig/conjugate/algorithms}
 
-\subsubsection{Direct algorithm for $\sufficesR_{G}$}
+\subsubsection{Direct algorithm for $\sufficesR_{G}$ (\emph{suffices})}
 \label{sec:conjugate:algorithm:suffices}
 
 \begin{definition}[$\sufficesAlg{G}$]
 \label{def:conjugate:algorithm:suffices}
-\figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for any dependence graph $G$.
+\figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for dependence graph $G$.
 \end{definition}
 
 For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
@@ -380,7 +380,7 @@ round-trip because it does not demand any input.
 If we constrain things so that there are no inputs which are unused, then $\demandsR$ will preserve $\bot$,
 i.e.~$\demandsR(\emptyset) = \emptyset$, and $\relOutputR_{G}$ will preserve the original output selection.
 Similarly, if we constrain things so that all outputs demand some input, then $\demandedByR$ will preserve
-$\bot$, and $\relInputR_{G}$ will preserve the original input selection.
+$\bot$, and $\relInputR_{G}$ will preserve the original input selection:
 
 \begin{lemma}
 \item
