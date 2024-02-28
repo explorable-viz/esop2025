@@ -173,7 +173,7 @@ Amongst our benchmarks, \textbf{compute-dtw} has the worst performance
 for both \textit{demands} and \textit{demanded by} (although
 \textit{demands} still shows a considerable speedup when compared to
 the trace approach).  We hypothesize that this is due to the fact that
-program inputs are often required during computation of values in the program 
+program inputs are often required during the computation of other values in the program 
 (e.g.  inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, as shown in \figref{dtw-source}). Given that each reference to an input
 results in a dependency edge being added, the dependency graph will have  
 many vertices with a high number of in-edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values, as often
@@ -182,7 +182,7 @@ values associated with vertices require many in-vertices to be computed.
 %many vertices need to be explored, slowing down the computation of
 %\textit{demanded by}.
 While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
-these experiments show that the shape of the graph may matter. We defer a more detailed discussion on this to \secref{conclusion}.
+these experiments show that the shape of the graph may matter for performance. We defer a more detailed discussion on this to \secref{conclusion}.
 
 %% \cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
 %% The impact of the shape of the graph on performance needs to be further investigated.
