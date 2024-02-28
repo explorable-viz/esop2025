@@ -49,11 +49,14 @@ only needs to be implemented once.
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of Purescript, which we used to write a selection of
 non-trivial examples that reflect realistic targets of dependency analyses
-(\secref{evaluation:choice-of-examples}). We then benchmarked these programs on an
+(\secref{evaluation:choice-of-examples}). 
+We used Purescript since our focus on visualizations naturally lends itself
+to building web-based interfaces.
+We then benchmarked these programs on an
 Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
 using Google Chrome 121.0.6261.69 and Javascript runtime V8 12.2.281.16. Furthermore,
-in order to enable a performance comparison, we also implemented the approach in \citet{perera22}, which uses execution traces.
-\cd{Do we have to say that we implemented this? Isn't it publicly available?}
+using a Purescript implementation enabled a like-for-like comparison with the open-source
+implementation described in \citet{perera22}, which uses execution traces.
 
 In an interactive system, performance plays a critical role in a user's experience. Thus, we compare the performance of our graph based approach
 with the trace based approach in \citet{perera22}, which boils down to the following three research questions:
