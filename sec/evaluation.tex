@@ -118,17 +118,18 @@ to their dynamic dependence graph does indeed incur a higher overhead, being fro
 %when it comes to the computation of \textit{demands}.
 In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} provide the time taken to compute \textit{demands}
 with the trace and graph approaches, respectively.
-%
+The ratio of their performance (graph-based to trace-based) is given in the last
+column \textbf{Bwd-Speedup}.
+
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
 ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
-to more than 80x for \textbf{gaussian}, show in
-column \textbf{Eval-Slowdown}.
+to more than 80x for \textbf{gaussian}.
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
-
+%
 %This is still a significant improvement in performance across all of our tested examples.
-
+%
 We attribute this performance improvement to the fact that the
 trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. By contrast, in the current graph
