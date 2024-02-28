@@ -65,31 +65,31 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$X \sufficesAlg{G_0} U$}}
+   {\small \flushleft \shadebox{$X \sufficesAlg{G} U$}}
    \begin{smathpar}
       \inferrule*
       {
          (X, \emptyset),
          \emptyset,
-         \set{(\alpha, \beta) \in \outE{G_0}(\alpha') \mid \alpha' \in X}
-         \sufficesE{G_0}
-         G, H
+         \set{(\alpha, \beta) \in \outE{G}(\alpha') \mid \alpha' \in X}
+         \sufficesE{G}
+         G', H
       }
       {
-         X \sufficesAlg{G_0} \sources{G}
+         X \sufficesAlg{G} \V(G') \cap \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G, H, E \sufficesE{G_0} G', H'$}}
+   {\small \flushleft \shadebox{$G', H, E \sufficesE{G} G^\twoPrime, H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
-         right={$G \subseteq G_0^{-1}$}
+         right={$G' \subseteq G^{-1}$}
       ]
       {
          \strut
       }
       {
-         G, H, \emptyset \sufficesE{G_0} G, H
+         G', H, \emptyset \sufficesE{G} G', H
       }
       %
       \and
@@ -99,16 +99,16 @@
          right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) \subset \opGraph{G_0}(\beta)
+         H'(\beta) \subset \opGraph{G}(\beta)
          \\
-         G, H', E
-         \sufficesE{G_0}
-         G', H^\twoPrime
+         G', H', E
+         \sufficesE{G}
+         G^\twoPrime, H^\twoPrime
       }
       {
-         G, H, (\alpha, \beta) \cons E
-         \sufficesE{G_0}
-         G', H^\twoPrime
+         G', H, (\alpha, \beta) \cons E
+         \sufficesE{G}
+         G^\twoPrime, H^\twoPrime
       }
       %
       \and
@@ -118,23 +118,23 @@
          right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) = \opGraph{G_0}(\beta)
+         H'(\beta) = \opGraph{G}(\beta)
          \\
-         G \disjunion \set{\bind{\beta}{H'(\beta)}},
+         G' \disjunion \set{\bind{\beta}{H'(\beta)}},
          H \setminus \set{\beta},
-         \outE{G_0}(\beta) \disjunion E
-         \sufficesE{G_0}
-         G', H^\twoPrime
+         \outE{G}(\beta) \disjunion E
+         \sufficesE{G}
+         G^\twoPrime, H^\twoPrime
       }
       {
-         G, H, (\alpha, \beta) \cons E
-         \sufficesE{G_0}
-         G', H^\twoPrime
+         G', H, (\alpha, \beta) \cons E
+         \sufficesE{G}
+         G^\twoPrime, H^\twoPrime
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
    \label{fig:conjugate:slicing:forward}
    \end{subfigure}
-   \caption{Dual dependency analyses over graphs}
+   \caption{Dual analyses over a dependence graph $G$}
    \label{fig:conjugate:algorithms}
 \end{figure}
