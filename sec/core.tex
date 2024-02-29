@@ -151,6 +151,19 @@ To fully explain the last two rules, \ruleName{$\evalS$-let-rec} and  \ruleName{
 Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$ is then the same as regular let-bindings, except using $\closeDefs$ to evaluate  recursive definitions $\seq{\bind{x}{\sigma}}$. The final rule, \ruleName{$\evalS$-app} for $\exApp{e}{e'}$, is especially important to the graph semantics, as it is during application that we grow the ambient inputs $V$  that a given evaluation step depends on. Here, we compute the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function $e$% (and use ($\closeDefs$) to evaluate $\rho$)
 , and use its eliminator $\sigma$ to pattern-match against the value $v$' of argument $e'$. What is returned includes (i) the \emph{selected branch} $e^\twoPrime$ and (ii) the vertex set $V'$, where $V'$ represents the values in $v'$ consumed by pattern-matching in order to lead to $e^\twoPrime$. The last premise which executes the branch then specifies its ambient dependencies as $V' \disjunion \set{\alpha}$; that is, the (closure of the) function that was applied, $\alpha$, and the (consumed values of the) argument it was applied to, $V'$.
 
+\subsubsection{Surface Language: Matrix and List Comprehensions}
+For convenience, in the surface language presented to a user, we implemented
+matrix and list comprehensions as a layer of syntactic sugar. In the program
+featured in \figref{dtw-source}, we see both of these. Comprehensions use 
+familiar syntax, with differences between matrices and lists. List comprehensions
+are denoted with {\ttfamily $[ fun(\seq{x}) \mid \seq{x \leftarrow s} ]$}, where 
+the elements of the list are populated by functions of the variables generated
+and qualified on the right hand side of the $\mid$ as usual. A matrix comprehension
+{\ttfamily $\llbracket fun(i,j) \mid (i,j)\mathrm{\;in\;(rows,\;cols) }\rrbracket$}
+is similar, but the function on the left hand side of the $\mid$ must be a function
+of the indices of the matrix, rather than being generated from a set of fresh variables.
+In the figure, matrix comprehensions are used to initialize a cost matrix (lines 4-7). 
+
 % \subsubsection{Mutual recursion}
 % \label{sec:core:semantics:mutual-recursion}
 % \MNnote{to complete}
