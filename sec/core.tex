@@ -157,20 +157,14 @@ matrix and list comprehensions as a layer of syntactic sugar. Comprehensions use
 familiar syntax, with differences between matrices and lists. List comprehensions
 are denoted with {\ttfamily $[ fun(\seq{x}) \mid \seq{x \leftarrow s} ]$}, where 
 the elements of the list are populated by functions of the variables generated
-and qualified on the right hand side of the $\mid$ as usual, we present a list
-comprehension in \figref{list-comp}. A matrix comprehension
+and qualified on the right hand side of the $\mid$ as usual, for an example of a list
+comprehension, in \figref{dtw-source} we use a comprehension on line 2 to initialize a list
+of index pairs indicating the order in which we will traverse a matrix. A matrix comprehension
 {\ttfamily $\llbracket fun(i,j) \mid (i,j)\mathrm{\;in\;(rows,\;cols) }\rrbracket$}
 is similar, but the function on the left hand side of the $\mid$ must be a function
 of the indices of the matrix, rather than being generated from a set of fresh variables.
 In \figref{dtw-source}, we use matrix comprehensions to initialize a cost matrix for the
 program on lines 4-7, and another matrix comprehension on line 28. 
-
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/core/list-comp.fld}}
-   \caption{An example of a list comprehension in practice}
-   \label{fig:list-comp}
-\end{figure}
 
 % \subsubsection{Mutual recursion}
 % \label{sec:core:semantics:mutual-recursion}
