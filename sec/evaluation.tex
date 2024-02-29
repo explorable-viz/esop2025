@@ -191,6 +191,16 @@ many vertices with a high number of in-edges, where the inputs are the shared so
 While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
 these experiments show that the shape of the graph may matter for performance. We defer more detailed discussion to \secref{conclusion}.
 
+The secondary point of discussion is the performance of the procedure constructed
+by taking the dual of algorithm $\sufficesAlg{}$ In all cases but \textbf{computeDTW},
+the performance of \textbf{G-DemBy-Suff} is significantly worse than that of 
+\textbf{G-DemBy}. Interestingly, the case where it performs the best is the same
+test case that suffers from the worst performance in \textbf{G-DemBy}. We suspect
+that the generally bad performance is partially caused by the relatively expensive
+set complement operations being performed before and after applying $\sufficesAlg{}$.
+Further investigation in how the shape of the graph impacts performance of $\sufficesAlg{}$
+is left to future work, \secref{future}.
+
 %% \cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
 %% The impact of the shape of the graph on performance needs to be further investigated.
 %% For example, in the convolution examples, a pixel of the input image is only related

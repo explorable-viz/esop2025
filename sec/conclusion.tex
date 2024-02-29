@@ -19,6 +19,7 @@ themselves, and separated the framework from the language. % which implements it
 %of interactive visualizations in most cases.
 
 \subsection{Future work}
+\label{sec:future}
 In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is the same as that of \citet{perera22};
 here, selections are pushed through evaluation if the selected parts of values are consumed
 during evaluation - either via pattern matching or the specific implementation provided for a primitive.
@@ -44,8 +45,15 @@ approach, we suggest that access to intensional information could allow us to ta
 it to synthesize a subexpression of the original program which can be executed to produce
 a subset of the outputs.
 
+A final point of inquiry is presented by the relative difference in performance between
+our two algorithms. It would be interesting to investigate if there are structural properties
+of the dependence graph that determine which of the implementations of \textit{demanded by}
+will be more efficient. If these structural properties exist, it would also be useful
+to know how they can be computed, and if they can be computed efficiently.
+
 It follows -- if the user is entirely uninterested in the intensional information of their graph -- that
 transformations which elide internal nodes but preserve I/O connectivity, such as the classical Y-$\Delta$
 transform \cite{truemper89}, will produce an extensionally equivalent (but faster) analysis. We
 conjecture that applying this transform to throw away intensional information may be useful in future
 applications of our work.
+
