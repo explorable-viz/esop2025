@@ -1,0 +1,10 @@
+let data = [
+    {name: "Berlin", water: 130, country: "Germany"},
+    {name: "Munich", water: 80, country: "Germany"},
+    {name: "Hamburg", water: 60, country: "Germany"},
+    {name: "London", water: 200, country: "UK"},
+    {name: "Sofia", water: 55, country: "Bulgaria"},
+    {name: "Warsaw", water: 65, country: "Poland"},
+] in
+[ row.water | countries $\leftarrow$ ["UK", "Germany"],
+               row $\leftarrow$ data, row.country == countries ]
