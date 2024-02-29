@@ -285,6 +285,7 @@ slice by intersecting with $\sinks{G}$.
 %\end{proposition}
 
 \begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR$]
+   \label{prop:demandedByAlg-computes-demandedBy}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{proposition}
@@ -324,6 +325,15 @@ The algorithm terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
 \end{proposition}
+
+\newpage
+\subsubsection{Derived algorithms}
+
+\proprefTwo{demandedByAlg-computes-demandedBy}{sufficesAlg-computes-suffices} justify treating
+$\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. We can then define the following implementations of
+all the operators.
+
+\input{fig/conjugate/derived-algorithms}
 
 \newpage
 \subsubsection{Alternative algorithm for $\demandedByR_{G}$}
