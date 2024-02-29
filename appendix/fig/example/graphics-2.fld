@@ -18,14 +18,8 @@ let axis orient x start end =
        lastTick = ceilingToNearest end tickSp;
        n = floor ((end - firstTick) / tickSp) + 1;
        ys = iterate n ((+) tickSp) firstTick;
-       ys = match firstTick > start as {
-          True $\rightarrow$ start : ys;
-          False $\rightarrow$ ys
-       };
-       ys = match lastTick > end as {
-          True $\rightarrow$ concat2 ys [lastTick];
-          False $\rightarrow$ ys
-       };
+       ys = if firstTick > start then start : ys else ys;
+       ys = if lastTick > end then concat2 ys [lastTick] else ys;
        ps = map (mkPoint orient x) ys;
        ax = Group [
           Line (head ps) (last ps) axisColour axisStrokeWidth,
