@@ -10,7 +10,7 @@ constructs (\secref{core:syntax}). Then we define a big-step operational semanti
 evaluates a term to a value and (ii) constructs an accompanying dependence graph for the evaluation of that
 term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
 
-\subsection{Syntax and Terms}
+\subsection{Syntax}
 \label{sec:core:syntax}
 
 \input{fig/core/syntax}
@@ -18,7 +18,7 @@ term (\secref{core:semantics}); we also address how we deal with pattern-matchin
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines the \emph{terms} $e$ of the language, which include variables $x, y, f$%
+\figref{syntax} defines the expressions $e$ of the language, which include variables $x, y, f$%
 ; integer constants $n, m$%
 ; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%
@@ -153,9 +153,9 @@ Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetR
 
 \subsubsection{Surface Language: Matrix and List Comprehensions}
 For convenience, in the surface language presented to a user, we implemented
-matrix and list comprehensions as a layer of syntactic sugar. Comprehensions use 
+matrix and list comprehensions as a layer of syntactic sugar. Comprehensions use
 familiar syntax, with differences between matrices and lists. List comprehensions
-are denoted with {\ttfamily $[ fun(\seq{x}) \mid \seq{x \leftarrow s} ]$}, where 
+are denoted with {\ttfamily $[ fun(\seq{x}) \mid \seq{x \leftarrow s} ]$}, where
 the elements of the list are populated by functions of the variables generated
 and qualified on the right hand side of the $\mid$ as usual, for an example of a list
 comprehension, in \figref{dtw-source} we use a comprehension on line 2 to initialize a list
@@ -164,7 +164,7 @@ of index pairs indicating the order in which we will traverse a matrix. A matrix
 is similar, but the function on the left hand side of the $\mid$ must be a function
 of the indices of the matrix, rather than being generated from a set of fresh variables.
 In \figref{dtw-source}, we use matrix comprehensions to initialize a cost matrix for the
-program on lines 4-7, and another matrix comprehension on line 28. 
+program on lines 4-7, and another matrix comprehension on line 28.
 
 % \subsubsection{Mutual recursion}
 % \label{sec:core:semantics:mutual-recursion}

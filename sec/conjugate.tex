@@ -285,6 +285,7 @@ slice by intersecting with $\sinks{G}$.
 %\end{proposition}
 
 \begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR$]
+   \label{prop:demandedByAlg-computes-demandedBy}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{proposition}
@@ -326,31 +327,22 @@ The algorithm terminates when $E$ is empty (\ruleName{$\sufficesE{}$-done}); any
 \end{proposition}
 
 \newpage
-\subsubsection{Alternative algorithm for $\demandedByR_{G}$}
-\label{sec:conjugate:algorithm:demandedBy-suff-dual}
+\subsubsection{Derived algorithms}
 
-\begin{definition}[$\demandedBySuffDualAlg{G}$]
-\label{def:conjugate:algorithm:demandedBy-alt}
-Define the following family of relations $\demandedBySuffDualAlg{G}$ for any dependence graph $G$:
-\[
-\sources{G} \setminus X \demandedByAlg{G} Y
-\iff
-X \demandedBySuffDualAlg{G} \sinks{G} \setminus Y
-\]
-\end{definition}
+\proprefTwo{demandedByAlg-computes-demandedBy}{sufficesAlg-computes-suffices} justify treating
+$\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. Using \lemref{conjugate:image-preimage-duality} we can
+define direct algorithms for $\demandsR_{G}$ and $\preimageDualR_{G}$ from $\demandedByAlg{G}$ and
+$\sufficesAlg{G}$ by simply flipping the graph; using \lemref{conjugate:image-preimage-duality} and
+\defref{conjugate:de-morgan-dual} we can also define alternative algorithms for all 4 operators using the De
+Morgan dual construction. All algorithms are summarised in \figref{conjugate:derivate-algorithms}.
 
-The following is then an easy consequence of \propref{sufficesAlg-computes-suffices},
-\lemref{conjugate:image-preimage-duality} and \defref{conjugate:de-morgan-dual}.
+\input{fig/conjugate/derived-algorithms}
 
-\begin{proposition}[$\demandedBySuffDualAlg{}$ Computes $\demandedByR$]
-   For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
-   \[X \demandedBySuffDualAlg{G} Y \iff \demandedByR_G(X) = Y\]
-\end{proposition}
+\noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations of $\demandedByR_{G}$, which is an essential component of the related inputs and related outputs operators introduced in \secref{overview}.
 
 \subsection{$\relInputR$ and $\relOutputR$ over dependence graphs}
 
-Now we can provide a formal account of the notions of related inputs and related outputs introduced in
-\secref{overview}.
+Now we can provide a formal account of the notions of related inputs and related outputs.
 
 \begin{definition}[Related Inputs and Outputs]
    For a dependence graph $G$ define:
