@@ -3,8 +3,8 @@ default: quick
 quick:
 	pdflatex main.tex
 
-apdx:
-	pdflatex apdx.tex
+appendix:
+	pdflatex appendix.tex
 
 full:
 	pdflatex main.tex
