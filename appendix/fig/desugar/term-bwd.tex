@@ -52,13 +52,19 @@
          lab={\ruleName{$\desugarBwd{}$-clauses-record}}
       ]
       {
-         (\seqRange{\seq{p_1}}{\seq{p_j}}) \clauseWith{\concat} \seq{k} \desugar \kappa
+         (\seqRange{\seq{p'_1}}{\seq{p'_{j'}}}) \clauseWith{\concat} \seq{k'}
+         \desugarBwd{(\seqRange{\seq{p_1}}{\seq{p_j}}) \clauseWith{\concat} \seq{k}}
+         \kappa
       }
       {
-         (\seqRange{\pattRecord{\seq{\bind{x}{p_1}}}}{\pattRecord{\seq{\bind{x}{p_j}}}})
+         (\seqRange{\pattRecord{\seq{\bind{x}{p'_1}}}}{\pattRecord{\seq{\bind{x}{p'_{j'}}}}})
          \clauseWith{\cons}
-         \seq{k}
-         \desugar
+         \seq{k'}
+         \desugarBwd{
+            (\seqRange{\pattRecord{\seq{\bind{x}{p_1}}}}{\pattRecord{\seq{\bind{x}{p_j}}}})
+            \clauseWith{\cons}
+            \seq{k}
+         }
          \elimRecord{\seq{x}}{\kappa}
       }
       %
