@@ -18,14 +18,17 @@
          lab={\ruleName{$\desugarBwd{}$-clauses-curried}}
       ]
       {
-         \seq{(p, \clause{\pi}{s})}
-         \desugar
+         \seq{(p', \clause{\pi'}{s'})}
+         \desugarBwd{\seq{(p, \clause{\pi}{s})}}
          \sigma
       }
       {
-         \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
-                  {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
-         \desugar
+         \seqRange{(\seqEmpty, \clause{p'_1 \cons \pi'_1}{s'_1})}
+                  {(\seqEmpty, \clause{p'_{j'} \cons \pi'_{j'}}{s'_{j'}})}
+         \desugarBwd{
+            \seqRange{(\seqEmpty, \clause{p_1 \cons \pi_1}{s_1})}
+                     {(\seqEmpty, \clause{p_j \cons \pi_j}{s_j})}
+         }
          \exFun{\sigma}
       }
       %
