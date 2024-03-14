@@ -74,16 +74,16 @@
          lab={\ruleName{$\desugarBwd{}$-clauses-constr}}
       ]
       {
-         ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c) \desugar \kappa_c
+         \seq{\pi_c \clauseWith{\concat} k_c}
+         \desugarBwd{((\pi_i \clauseWith{\concat} k_i) \mid c_i = c)}
+         \kappa_c
          \\
-         \datatype{c} = D
-         \quad
-         (\forall c \in \set{\seq{c}})
+         (\forall c \in \set{\seq{c'}})
       }
       {
          \seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}
-         \desugar
-         \elimConstr{\elimBind{c}{\kappa_c} \mid c \in \set{\seq{c}}}
+         \desugarBwd{\seq{\pattConstr{c}{\pi} \clauseWith{\cons} k}}
+         \elimConstr{\seq{\elimBind{c'}{\kappa}}}
       }
    \end{smathpar}
    \caption{Backwards desugaring for function definitions}
