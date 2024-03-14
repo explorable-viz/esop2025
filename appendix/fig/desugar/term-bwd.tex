@@ -3,19 +3,19 @@
    \hfill}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-done}}
+         lab={\ruleName{$\desugarBwd{}$-clauses-done}}
       ]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
       }
       {
-         (\seqEmpty, \clause{\seqEmpty}{s}) \desugar e
+         (\seqEmpty, \clause{\seqEmpty}{s'}) \desugarBwd{(\seqEmpty, \clause{\seqEmpty}{s})} e
       }
       %
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-curried}}
+         lab={\ruleName{$\desugarBwd{}$-clauses-curried}}
       ]
       {
          \seq{(p, \clause{\pi}{s})}
@@ -32,7 +32,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-var}}
+         lab={\ruleName{$\desugarBwd{}$-clauses-var}}
       ]
       {
          \seq{k} \desugar \kappa
@@ -46,7 +46,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-record}}
+         lab={\ruleName{$\desugarBwd{}$-clauses-record}}
       ]
       {
          (\seqRange{\seq{p_1}}{\seq{p_j}}) \clauseWith{\concat} \seq{k} \desugar \kappa
@@ -62,7 +62,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\desugar$-clauses-constr}}
+         lab={\ruleName{$\desugarBwd{}$-clauses-constr}}
       ]
       {
          ((\pi_i \clauseWith{\concat} k_i) \mid c_i = c) \desugar \kappa_c
