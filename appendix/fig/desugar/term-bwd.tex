@@ -38,11 +38,11 @@
          lab={\ruleName{$\desugarBwd{}$-clauses-var}}
       ]
       {
-         \seq{k} \desugar \kappa
+         \seq{k'} \desugarBwd{\seq{k}} \kappa
       }
       {
-         \seqRange{(\pattVar{x} \clauseWith{\cons} k_1)}{(\pattVar{x} \clauseWith{\cons} k_j)}
-         \desugar
+         \seqRange{(\pattVar{x} \clauseWith{\cons} k'_1)}{(\pattVar{x} \clauseWith{\cons} k'_j)}
+         \desugarBwd{\seqRange{(\pattVar{x} \clauseWith{\cons} k_1)}{(\pattVar{x} \clauseWith{\cons} k_j)}}
          \elimVar{x}{\kappa}
       }
       %
