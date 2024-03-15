@@ -16,16 +16,16 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\orElse$-var}}
+         lab={\ruleName{$\orElseBwd{}$-var}}
       ]
       {
-         k, s \orElse \seqRange{k_1}{k_j}
+         k', s' \orElseBwd{k, s} \seqRange{k'_1}{k'_j}
       }
       {
-         \pattVar{x} \clauseWith{\cons} k, s
-         \orElse
-         \seqRange{\pattVar{x} \clauseWith{\cons} k_1}
-                  {\pattVar{x} \clauseWith{\cons} k_j}
+         \pattVar{x} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattVar{x} \clauseWith{\cons} k, s}
+         \seqRange{\pattVar{x} \clauseWith{\cons} k'_1}
+                  {\pattVar{x} \clauseWith{\cons} k'_j}
       }
       %
       \and
