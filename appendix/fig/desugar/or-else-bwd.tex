@@ -1,14 +1,16 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$k, s \orElse \mu$}
+   {\small \flushleft \shadebox{$k', s' \orElseBwd{k, s} \mu$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\orElse$-done}}
+         lab={\ruleName{$\orElseBwd{}$-done}}
       ]
       {
          \strut
       }
       {
-         (\seqEmpty, \clause{\seqEmpty}{s}), s' \orElse \clause{\seqEmpty}{s}
+         (\seqEmpty, \clause{\seqEmpty}{s^\twoPrime}), \bot_{s'}
+         \orElseBwd{(\seqEmpty, \clause{\seqEmpty}{s}), s'}
+         \clause{\seqEmpty}{s^\twoPrime}
       }
       %
       \and
