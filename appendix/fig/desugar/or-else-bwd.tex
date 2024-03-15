@@ -49,27 +49,30 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\orElse$-constr}},
-         right={$\ctrsF(D) = c \cons \set{\seq{c}}$}
+         lab={\ruleName{$\orElseBwd{}$-constr}}
       ]
       {
-         \pi \clauseWith{\concat} k, s
-         \orElse
-         \seq{\pi \clauseWith{\concat} k}
+         \pi \clauseWith{\concat} k^\dagger, s^\dagger
+         \orElseBwd{\pi \clauseWith{\concat} k, s}
+         \seq{\pi \clauseWith{\concat} k'}
          \\
-         \seq{k}' =
-         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s}
-         \mid
-         i \numleq \length{\seq{c}})
+         k^\twoPrime_i =
+         \clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s'_i}
+         \quad
+         (\forall i \numleq \length{\seq{c}})
+         \\
+         \ctrsF(D) \supseteq c \cons \set{\seq{c}}
       }
       {
-         \pattConstr{c}{\pi} \clauseWith{\cons} k, s
-         \orElse
-         (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k_1}
-                   {\pattConstr{c}{\pi_j} \clauseWith{\cons} k_j})
+         \pattConstr{c}{\pi}
+         \clauseWith{\cons}
+         k^\dagger, s^\dagger \bigjoin\set{\seq{s}'}
+         \orElseBwd{\pattConstr{c}{\pi} \clauseWith{\cons} k, s}
+         (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k'_1}
+                   {\pattConstr{c}{\pi_j} \clauseWith{\cons} k'_j})
          \concat
          (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
-         \clauseWith{\cons} k'_i
+         \clauseWith{\cons} k^\twoPrime_i
          \mid i \numleq \length{\seq{c}})
       }
    \end{smathpar}}
