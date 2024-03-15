@@ -31,19 +31,19 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\orElse$-record}}
+         lab={\ruleName{$\orElseBwd{}$-record}}
       ]
       {
-         \seq{p} \clauseWith{\concat} k, s
-         \orElse
-         \seqRange{\seq{p_1} \clauseWith{\concat} k_1}
-                  {\seq{p_j} \clauseWith{\concat} k_j}
+         \seq{p} \clauseWith{\concat} k', s'
+         \orElseBwd{\seq{p} \clauseWith{\concat} k, s}
+         \seqRange{\seq{p_1} \clauseWith{\concat} k'_1}
+                  {\seq{p_j} \clauseWith{\concat} k'_j}
       }
       {
-         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s
-         \orElse
-         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k_1}
-                  {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k_j}
+         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s}
+         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k'_1}
+                  {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k'_j}
       }
       %
       \and
