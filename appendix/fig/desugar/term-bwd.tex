@@ -1,4 +1,22 @@
 \begin{figure}
+   {\flushleft \shadebox{$\mu' \desugarBwd{\mu} \sigma$}
+   \hfill}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\desugar$-fun}}
+      ]
+      {
+         \seq{(p, \clause{\pi}{s'})}
+         \desugarBwd{\seq{(p, \clause{\pi}{s})}}
+         \sigma
+      }
+      {
+         \seq{\clause{p \cons \pi}{s'}}
+         \desugarBwd{\seq{\clause{p \cons \pi}{s}}}
+         \sigma
+      }
+   \end{smathpar}
+   \\[2mm]
    {\flushleft \shadebox{$\seq{k} \desugarBwd{\seq{k}} \kappa$}
    \hfill}
    \begin{smathpar}
@@ -86,6 +104,6 @@
          \elimConstr{\seq{\elimBind{c'}{\kappa}}}
       }
    \end{smathpar}
-   \caption{Backwards desugaring for function definitions}
+   \caption{Desugaring for function definitions (backwards rules)}
    \label{fig:desugar:bwd}
 \end{figure}
