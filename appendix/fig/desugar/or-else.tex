@@ -70,6 +70,22 @@
          \clauseWith{\cons} k'_i
          \mid i \numleq \length{\seq{c}})
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-non-empty-list}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k, s
+         \orElse
+         \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+      }
+      {
+         \pattList{p}{o}
+         \clauseWith{\cons} k, s
+         \orElse
+      }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
 \end{figure}
