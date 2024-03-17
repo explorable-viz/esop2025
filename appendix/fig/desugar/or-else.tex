@@ -56,9 +56,11 @@
          \seq{\pi \clauseWith{\concat} k}
          \\
          \seq{k}' =
-         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s}
+         ((\pattVar{\varAnon} \mid n \numleq \length{\pi'}, \clause{\seqEmpty}{s})
          \mid
          i \numleq \length{\seq{c}})
+         \\
+         k = (\pi', \clause{\seqEmpty}{s'})
       }
       {
          \pattConstr{c}{\pi} \clauseWith{\cons} k, s
