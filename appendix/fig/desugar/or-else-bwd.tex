@@ -116,14 +116,13 @@
       {
          p \clauseWith{\cons} o \clauseWith{\cons} k', s'
          \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
-         \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+         \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         \pattListNext{p}{o}
-         \clauseWith{\cons} k, s
-         \orElse
-         \seqRange{\pattListNext{p_1}{o_1} \clauseWith{\cons} k_1}
-                  {\pattListNext{p_j}{o_j} \clauseWith{\cons} k_j}
+         \pattListNext{p}{o} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattListNext{p}{o} \clauseWith{\cons} k, s}
+         \seqRange{\pattListNext{p'_1}{o'_1} \clauseWith{\cons} k'_1}
+                  {\pattListNext{p'_j}{o'_j} \clauseWith{\cons} k'_j}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value (backwards rules)}
