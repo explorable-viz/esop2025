@@ -75,6 +75,55 @@
          \clauseWith{\cons} k^\twoPrime_i
          \mid i \numleq \length{\seq{c}})
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-non-empty-list}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
+      }
+      {
+         \pattList{p}{o} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k, s}
+         \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
+                  {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-list-end}}
+      ]
+      {
+         k', s' \orElseBwd{k, s} \seq{k}'
+      }
+      {
+         \pattListEnd \clauseWith{\cons} k', s'
+         \orElseBwd{\pattListEnd \clauseWith{\cons} k, s}
+         \seqRange{\pattListEnd \clauseWith{\cons} k'_1}
+                  {\pattListEnd \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-list-cons}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
+      }
+      {
+         \pattListNext{p}{o} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattListNext{p}{o} \clauseWith{\cons} k, s}
+         \seqRange{\pattListNext{p'_1}{o'_1} \clauseWith{\cons} k'_1}
+                  {\pattListNext{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+      }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value (backwards rules)}
 \end{figure}

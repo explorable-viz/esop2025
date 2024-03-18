@@ -56,9 +56,11 @@
          \seq{\pi \clauseWith{\concat} k}
          \\
          \seq{k}' =
-         (\clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s}
+         ((\pattVar{\varAnon} \mid n \numleq \length{\pi'}, \clause{\seqEmpty}{s})
          \mid
          i \numleq \length{\seq{c}})
+         \\
+         k = (\pi', \clause{\seqEmpty}{s'})
       }
       {
          \pattConstr{c}{\pi} \clauseWith{\cons} k, s
@@ -69,6 +71,58 @@
          (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
          \clauseWith{\cons} k'_i
          \mid i \numleq \length{\seq{c}})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-non-empty-list}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k, s
+         \orElse
+         \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+      }
+      {
+         \pattList{p}{o}
+         \clauseWith{\cons} k, s
+         \orElse
+         \seqRange{\pattList{p_1}{o_1} \clauseWith{\cons} k_1}
+                  {\pattList{p_j}{o_j} \clauseWith{\cons} k_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-list-end}}
+      ]
+      {
+         k, s \orElse \seq{k}
+      }
+      {
+         \pattListEnd
+         \clauseWith{\cons} k, s
+         \orElse
+         \seqRange{\pattListEnd \clauseWith{\cons} k_1}
+                  {\pattListEnd \clauseWith{\cons} k_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElse$-list-cons}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k, s
+         \orElse
+         \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+      }
+      {
+         \pattListNext{p}{o}
+         \clauseWith{\cons} k, s
+         \orElse
+         \seqRange{\pattListNext{p_1}{o_1} \clauseWith{\cons} k_1}
+                  {\pattListNext{p_j}{o_j} \clauseWith{\cons} k_j}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value}
