@@ -82,12 +82,12 @@
          lab={\ruleName{$\orElseBwd{}$-non-empty-list}}
       ]
       {
-         p' \clauseWith{\cons} o' \clauseWith{\cons} k', s'
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
          \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
          \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         \pattList{p'}{o'} \clauseWith{\cons} k', s'
+         \pattList{p}{o} \clauseWith{\cons} k', s'
          \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k, s}
          \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
                   {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
@@ -111,11 +111,11 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\orElse$-list-cons}}
+         lab={\ruleName{$\orElseBwd{}$-list-cons}}
       ]
       {
-         p \clauseWith{\cons} o \clauseWith{\cons} k, s
-         \orElse
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
       }
       {
