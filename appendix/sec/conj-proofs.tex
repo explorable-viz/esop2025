@@ -1,0 +1,66 @@
+\section{Section 3 Proofs}
+
+\subsection{\lemref{im-preim-conjugate}}
+For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
+
+\begin{proof}
+   Let $X' \in \powerset{X}$, $Y' \in \powerset{Y}$.
+   \small
+   \newline
+   Case: $\demandedByR_{R}(X') \cap Y' = \emptyset \implies X' \cap \demandsR_{R}(Y') = \emptyset$
+   \begin{flalign}
+      &
+      \demandedByR_{R}(X') \cap Y' = \emptyset
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
+      &
+      \text{def of $\demandedByR_{R}$}
+      \\
+      &
+      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
+      &
+      \text{(4)}
+      \notag
+      \\
+      &
+      \qedLocal
+      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \notag
+      \\
+      &
+      X' \cap \demandsR_{R}(Y') = \emptyset 
+      &
+   \end{flalign}
+   \newline
+   Case: $ X' \cap \demandsR_{R}(Y') = \emptyset \implies \demandedByR_{R}(X') \cap Y' = \emptyset$
+   \begin{flalign}
+      &
+      X' \cap \demandsR_{R}(Y') = \emptyset
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \text{def of $\demandsR_{R}$}
+      \\
+      &
+      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
+      &
+      \\
+      &
+      \qedLocal
+      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
+      &
+      \\
+      &
+      \demandedByR_{R}(X') \cap Y' = \emptyset
+      &
+   \end{flalign}
+\end{proof}
