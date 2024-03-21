@@ -1,0 +1,129 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$k', s' \orElseBwd{k, s} \mu$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-done}}
+      ]
+      {
+         \strut
+      }
+      {
+         (\seqEmpty, \clause{\seqEmpty}{s^\twoPrime}), \bot_{s'}
+         \orElseBwd{(\seqEmpty, \clause{\seqEmpty}{s}), s'}
+         \clause{\seqEmpty}{s^\twoPrime}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-var}}
+      ]
+      {
+         k', s' \orElseBwd{k, s} \seqRange{k'_1}{k'_j}
+      }
+      {
+         \pattVar{x} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattVar{x} \clauseWith{\cons} k, s}
+         \seqRange{\pattVar{x} \clauseWith{\cons} k'_1}
+                  {\pattVar{x} \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-record}}
+      ]
+      {
+         \seq{p} \clauseWith{\concat} k', s'
+         \orElseBwd{\seq{p} \clauseWith{\concat} k, s}
+         \seqRange{\seq{p_1} \clauseWith{\concat} k'_1}
+                  {\seq{p_j} \clauseWith{\concat} k'_j}
+      }
+      {
+         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s}
+         \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k'_1}
+                  {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-constr}}
+      ]
+      {
+         \pi \clauseWith{\concat} k^\dagger, s^\dagger
+         \orElseBwd{\pi \clauseWith{\concat} k, s}
+         \seq{\pi \clauseWith{\concat} k'}
+         \\
+         k^\twoPrime_i =
+         \clause{(\pattVar{\varAnon} \mid n \numleq \length{\pi'})}{s'_i}
+         \quad
+         (\forall i \numleq \length{\seq{c}})
+         \\
+         \ctrsF(D) \supseteq c \cons \set{\seq{c}}
+      }
+      {
+         \pattConstr{c}{\pi}
+         \clauseWith{\cons}
+         k^\dagger, \bigjoin\set{\seq{s}'} \join s^\dagger
+         \orElseBwd{\pattConstr{c}{\pi} \clauseWith{\cons} k, s}
+         (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k'_1}
+                   {\pattConstr{c}{\pi_j} \clauseWith{\cons} k'_j})
+         \concat
+         (\pattConstr{c_i}{\pattVar{\varAnon} \mid n \numleq \arity{c_i}}
+         \clauseWith{\cons} k^\twoPrime_i
+         \mid i \numleq \length{\seq{c}})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-non-empty-list}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
+      }
+      {
+         \pattList{p}{o} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k, s}
+         \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
+                  {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-list-end}}
+      ]
+      {
+         k', s' \orElseBwd{k, s} \seq{k}'
+      }
+      {
+         \pattListEnd \clauseWith{\cons} k', s'
+         \orElseBwd{\pattListEnd \clauseWith{\cons} k, s}
+         \seqRange{\pattListEnd \clauseWith{\cons} k'_1}
+                  {\pattListEnd \clauseWith{\cons} k'_j}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\orElseBwd{}$-list-cons}}
+      ]
+      {
+         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
+      }
+      {
+         \pattListNext{p}{o} \clauseWith{\cons} k', s'
+         \orElseBwd{\pattListNext{p}{o} \clauseWith{\cons} k, s}
+         \seqRange{\pattListNext{p'_1}{o'_1} \clauseWith{\cons} k'_1}
+                  {\pattListNext{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+      }
+   \end{smathpar}}
+   \caption{Completing an (uncurried) clause with a default value (backwards rules)}
+\end{figure}
