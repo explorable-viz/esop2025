@@ -6,18 +6,40 @@ open import Relation.Binary.PropositionalEquality
 open import Data.Empty
 open import Data.Product
 open import Data.Sum
+open import Data.Unit hiding (_≤_)
 open import Relation.Unary hiding (U)
 open import Relation.Nullary
 open import Level
 open import Data.Nat hiding (suc)
-open import Data.Bool
 
 open import Relation.Nullary.Decidable
 
 -- # Set construction
 
+-- Nat      : Set 0
+-- List Nat : Set 0
+-- List     : Set 0 -> Set 0  : Set 1
+
 set : {l : Level} -> Set l -> Set (suc l)
 set {l} U = (u : U) -> Set l
+
+-- ## Example
+
+-- Represent the concrete set {0, 1, 2}
+-- by a constructive classification function:
+data SmallSet : ℕ -> Set where
+  HasZero : SmallSet 0  -- analogous to 0 ∈ SmallSet
+  HasOne  : SmallSet 1  -- ...
+  HasTwo  : SmallSet 2
+
+doesNotHaveThree : ¬ SmallSet 3
+doesNotHaveThree ()
+
+lessThanThree : (n : ℕ) -> SmallSet n -> n ≤ 3
+lessThanThree .0 HasZero = z≤n
+lessThanThree .1 HasOne  = s≤s z≤n
+lessThanThree .2 HasTwo  = s≤s (s≤s z≤n)
+---
 
 variable
   U : Set
@@ -28,12 +50,15 @@ variable
 emptySet : set U
 emptySet _ = ⊥
 
+universalSet : set U
+universalSet _ = ⊤ 
+
 isEmptySet : (X : set U) -> Dec (X ≡ emptySet)
 isEmptySet X with X {!!}
-... | p = {!p!}
+... | p = {!!}
 
-subset : {U : Set} -> set U -> set U -> Set
-subset {U} X' X = {x : U} -> X' x -> X x
+subset : {U : Set} -> (X' : set U) -> (X : set U) -> Set
+subset {U} X' X = {y : U} -> X' y -> X y
 
 power : set U -> (set U) -> Set
 power X Y = subset Y X
