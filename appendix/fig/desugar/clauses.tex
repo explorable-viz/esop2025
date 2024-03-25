@@ -100,7 +100,7 @@
          lab={\ruleName{$\desugar$-clauses-non-empty-list}}
       ]
       {
-         \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+         (\pattConstr{\cCons}{p \cons o} \clauseWith{\cons} k) \cons \seq{k}
          \desugar
          \kappa
       }
@@ -109,7 +109,7 @@
          \cons
          \seq{k}
          \desugar
-         \elimConstr{\elimBind{\cCons}{\kappa}}
+         \kappa
       }
    \end{smathpar}
    \caption{Desugaring for function definitions}
