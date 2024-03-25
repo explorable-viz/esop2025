@@ -111,6 +111,42 @@
          \desugar
          \kappa
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-list-end}}
+      ]
+      {
+         (\cNil \clauseWith{\cons} k) \cons \seq{k}
+         \desugar
+         \kappa
+      }
+      {
+         (\pattListEnd \clauseWith{\cons} k)
+         \cons
+         \seq{k}
+         \desugar
+         \kappa
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\desugar$-list-cons}}
+      ]
+      {
+         (\pattConstr{\cCons}{p \cons o} \clauseWith{\cons} k) \cons \seq{k}
+         \desugar
+         \kappa
+      }
+      {
+         (\pattListNext{p}{o} \clauseWith{\cons} k)
+         \cons
+         \seq{k}
+         \desugar
+         \kappa
+      }
    \end{smathpar}
    \caption{Desugaring for function definitions}
    \label{fig:desugar:clauses}
