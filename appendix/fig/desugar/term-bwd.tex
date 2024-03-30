@@ -145,17 +145,19 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-comp-gen}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-comp-gen}}]
       {
-         s \desugar e
+         s_1' \desugarBwd{s_1} e
          \\
-         (\clause{p}{\exListComp{s'}{\seq{q}}}), \exNil \orElse \mu
+         \exListComp{s_2'}{\seq{q}'}, \exNil
+         \orElseBwd{\clause{p}{\exListComp{s_2}{\seq{q}}}}
+         \mu'
          \\
-         \mu \desugar \sigma
+         \mu' \desugarBwd{\mu} \sigma
       }
       {
-         \exListComp{s'}{\qualGenerator{p}{s} \cons \seq{q}}
-         \desugar
+         \exListComp{s_2'}{\qualGenerator{p}{s_1'} \cons \seq{q}'}
+         \desugarBwd{\exListComp{s_2}{\qualGenerator{p}{s_1} \cons \seq{q}}}
          \exApp{\exApp{\varConcatMap}{\exFun{\sigma}}}{e}
       }
    \end{smathpar}
