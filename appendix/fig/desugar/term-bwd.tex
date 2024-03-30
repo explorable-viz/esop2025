@@ -99,13 +99,13 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-comp-done}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-comp-done}}]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
       }
       {
-         \exListComp{s}{\seqEmpty}
-         \desugar
+         \exListComp{s'}{\seqEmpty}
+         \desugarBwd{\exListComp{s}{\seqEmpty}}
          \exConstr{\cCons}{e, \exNil}
       }
       %
