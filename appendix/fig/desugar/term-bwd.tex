@@ -113,31 +113,33 @@
       %
       \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-comp-guard}}]
       {
-         s \desugarBwd{s_0} e
+         s_1' \desugarBwd{s_1} e
          \\
-         \exListComp{s'}{\seq{q}'}
-         \desugarBwd{\exListComp{s_0'}{\seq{q}}}
+         \exListComp{s_2'}{\seq{q}'}
+         \desugarBwd{\exListComp{s_2}{\seq{q}}}
          e'
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
       }
       {
-         \exListComp{s'}{\qualGuard{s} \cons \seq{q}'}
-         \desugarBwd{\exListComp{s_0'}{\qualGuard{s_0} \cons \seq{q}}}
+         \exListComp{s_2'}{\qualGuard{s_1'} \cons \seq{q}'}
+         \desugarBwd{\exListComp{s_2}{\qualGuard{s_1} \cons \seq{q}}}
          \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-comp-decl}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-comp-decl}}]
       {
-         s \desugar e
+         s_1' \desugarBwd{s_1} e
          \\
-         (\clause{p}{\exListComp{s'}{\seq{q}}}) \desugar \sigma
+         (\clause{p}{\exListComp{s_2'}{\seq{q}'}})
+         \desugarBwd{\clause{p}{\exListComp{s_2}{\seq{q}}}}
+         \sigma
       }
       {
-         \exListComp{s'}{\qualDeclaration{p}{s} \cons \seq{q}}
-         \desugar
+         \exListComp{s_2'}{\qualDeclaration{p}{s_1'} \cons \seq{q}'}
+         \desugarBwd{\exListComp{s_2}{\qualDeclaration{p}{s_1} \cons \seq{q}}}
          \exApp{\exFun{\sigma}}{e}
       }
       %
