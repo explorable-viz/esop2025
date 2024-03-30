@@ -3,37 +3,37 @@
    \begin{smathpar}
       \inferrule*[lab={\ruleName{$\desugarBwd{}$-lambda}}]
       {
-         \mu \desugar \sigma
+         \mu' \desugarBwd{\mu} \sigma
       }
       {
-         \exFun{\mu} \desugar \exFun{\sigma}
+         \exFun{\mu'} \desugarBwd{\exFun{\mu}} \exFun{\sigma}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-binary-apply}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-binary-apply}}]
       {
-         s_1 \desugar e_1
+         s_1' \desugarBwd{s_1} e_1
          \\
-         s_2 \desugar e_2
+         s_2' \desugarBwd{s_2} e_2
       }
       {
-         \exBinaryApp{s_1}{\oplus}{s_2}
-         \desugar
+         \exBinaryApp{s_1'}{\oplus}{s_2'}
+         \desugarBwd{\exBinaryApp{s_1}{\oplus}{s_2}}
          \exForeignApp{\oplus}{e, e'}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-let-rec}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-let-rec}}]
       {
-         \seq{\mu} \desugar \seq{\sigma}
+         \seq{\mu'} \desugarBwd{\seq{\mu}} \seq{\sigma}
          \\
-         s \desugar e
+         s' \desugarBwd{s} e
       }
       {
-         \exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}
-         \desugar
+         \exLetRecPiecewise{\seq{\bind{x}{\mu'}}}{s'}
+         \desugarBwd{\exLetRecPiecewise{\seq{\bind{x}{\mu}}}{s}}
          \exLetRecPiecewise{\seq{\bind{x}{\sigma}}}{e}
       }
       %
