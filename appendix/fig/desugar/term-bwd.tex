@@ -67,33 +67,33 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-if}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-if}}]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
          \\
-         s_1 \desugar e_1
+         s_1' \desugarBwd{s_1} e_1
          \\
-         s_2 \desugar e_2
+         s_2' \desugarBwd{s_2} e_2
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e_1}, \elimBind{\cFalse}{e_2}}
       }
       {
-         \exIfThenElse{s}{s_1}{s_2}
-         \desugar
+         \exIfThenElse{s'}{s_1'}{s_2'}
+         \desugarBwd{\exIfThenElse{s'}{s_1'}{s_2'}}
          \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-enum}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-enum}}]
       {
-         s_1 \desugar e
+         s_1' \desugarBwd{s_1} e
          \\
-         s_2 \desugar e'
+         s_2' \desugarBwd{s_2} e'
       }
       {
-         \exListEnum{s_1}{s_2}
-         \desugar
+         \exListEnum{s_1'}{s_2'}
+         \desugarBwd{\exListEnum{s_1}{s_2}}
          \exApp{\exApp{\varEnumFromTo}{e}}{e'}
       }
       %
