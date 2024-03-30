@@ -111,17 +111,19 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-comp-guard}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-comp-guard}}]
       {
-         s \desugar e
+         s \desugarBwd{s_0} e
          \\
-         \exListComp{s'}{\seq{q}} \desugar e'
+         \exListComp{s'}{\seq{q}'}
+         \desugarBwd{\exListComp{s_0'}{\seq{q}}}
+         e'
          \\
          \sigma = \elimConstr{\elimBind{\cTrue}{e'}, \elimBind{\cFalse}{\exNil}}
       }
       {
-         \exListComp{s'}{\qualGuard{s} \cons \seq{q}}
-         \desugar
+         \exListComp{s'}{\qualGuard{s} \cons \seq{q}'}
+         \desugarBwd{\exListComp{s_0'}{\qualGuard{s_0} \cons \seq{q}}}
          \exApp{\exFun{\sigma}}{e}
       }
       %
