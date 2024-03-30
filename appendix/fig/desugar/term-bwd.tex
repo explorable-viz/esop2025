@@ -156,31 +156,31 @@
       }
    \end{smathpar}
    \\[2mm]
-   {\flushleft \shadebox{$l \desugar e$}
-   \hfill \phantom{blah}}% \textbfit{$l$ desugars to $e$}}
+   {\flushleft \shadebox{$l' \desugarBwd{l} e$}
+   \hfill}
    \begin{smathpar}
-      \inferrule*[lab={\ruleName{$\desugar$-list-rest-nil}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-rest-nil}}]
       {
          \strut
       }
       {
          \exListEnd
-         \desugar
+         \desugarBwd{\exListEnd}
          \exListEnd,
          \exNil
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-list-rest-cons}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-list-rest-cons}}]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
          \\
-         l \desugar e'
+         l' \desugarBwd{l} e'
       }
       {
-         (\exListNext{s}{l})
-         \desugar
+         (\exListNext{s'}{l'})
+         \desugarBwd{\exListNext{s}{l}}
          \exConstr{\cCons}{e, e'}
       }
    \end{smathpar}
