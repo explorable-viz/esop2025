@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$k', s' \orElseBwd{k, s} \mu$}
+   {\small \flushleft \shadebox{$s^\twoPrime, s' \orElseBwd{k, s} \mu$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\orElseBwd{}$-done}}
@@ -8,7 +8,7 @@
          \strut
       }
       {
-         (\seqEmpty, \clause{\seqEmpty}{s^\twoPrime}), \bot_{s'}
+         s^\twoPrime, \bot_{s'}
          \orElseBwd{(\seqEmpty, \clause{\seqEmpty}{s}), s'}
          \clause{\seqEmpty}{s^\twoPrime}
       }
@@ -19,10 +19,10 @@
          lab={\ruleName{$\orElseBwd{}$-var}}
       ]
       {
-         k', s' \orElseBwd{k, s} \seqRange{k'_1}{k'_j}
+         s^\twoPrime, s' \orElseBwd{k, s} \seqRange{k'_1}{k'_j}
       }
       {
-         \pattVar{x} \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\pattVar{x} \clauseWith{\cons} k, s}
          \seqRange{\pattVar{x} \clauseWith{\cons} k'_1}
                   {\pattVar{x} \clauseWith{\cons} k'_j}
@@ -34,13 +34,13 @@
          lab={\ruleName{$\orElseBwd{}$-record}}
       ]
       {
-         \seq{p} \clauseWith{\concat} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\seq{p} \clauseWith{\concat} k, s}
          \seqRange{\seq{p_1} \clauseWith{\concat} k'_1}
                   {\seq{p_j} \clauseWith{\concat} k'_j}
       }
       {
-         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s}
          \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k'_1}
                   {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k'_j}
@@ -82,12 +82,12 @@
          lab={\ruleName{$\orElseBwd{}$-non-empty-list}}
       ]
       {
-         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
          \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         \pattList{p}{o} \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k, s}
          \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
                   {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
@@ -99,10 +99,10 @@
          lab={\ruleName{$\orElseBwd{}$-list-end}}
       ]
       {
-         k', s' \orElseBwd{k, s} \seq{k}'
+         s^\twoPrime, s' \orElseBwd{k, s} \seq{k}'
       }
       {
-         \pattListEnd \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\pattListEnd \clauseWith{\cons} k, s}
          \seqRange{\pattListEnd \clauseWith{\cons} k'_1}
                   {\pattListEnd \clauseWith{\cons} k'_j}
@@ -114,12 +114,12 @@
          lab={\ruleName{$\orElseBwd{}$-list-cons}}
       ]
       {
-         p \clauseWith{\cons} o \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
          \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         \pattListNext{p}{o} \clauseWith{\cons} k', s'
+         s^\twoPrime, s'
          \orElseBwd{\pattListNext{p}{o} \clauseWith{\cons} k, s}
          \seqRange{\pattListNext{p'_1}{o'_1} \clauseWith{\cons} k'_1}
                   {\pattListNext{p'_j}{o'_j} \clauseWith{\cons} k'_j}
