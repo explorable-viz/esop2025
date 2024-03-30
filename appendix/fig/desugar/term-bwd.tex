@@ -39,29 +39,29 @@
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-match}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-match}}]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
          \\
-         \mu \desugar\sigma
+         \mu' \desugarBwd{\mu} \sigma
       }
       {
-         \exMatch{s}{\mu}
-         \desugar
+         \exMatch{s'}{\mu'}
+         \desugarBwd{\exMatch{s}{\mu}}
          \exApp{\exFun{\sigma}}{e}
       }
       %
       \and
       %
-      \inferrule*[lab={\ruleName{$\desugar$-non-empty-list}}]
+      \inferrule*[lab={\ruleName{$\desugarBwd{}$-non-empty-list}}]
       {
-         s \desugar e
+         s' \desugarBwd{s} e
          \\
-         l \desugar e'
+         l' \desugarBwd{l} e'
       }
       {
-         \exList{s}{l}
-         \desugar
+         \exList{s'}{l'}
+         \desugarBwd{\exList{s}{l}}
          \exConstr{\cCons}{e, e'}
       }
       %
