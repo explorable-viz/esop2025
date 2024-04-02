@@ -71,3 +71,42 @@ For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $
 \end{proof}
 
 \subsection{\lemref{conjugate:image-preimage-duality}}
+Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
+equivalent:
+\begin{enumerate}
+   \item $f$ and $g$ form a conjugate pair
+   \item $f$ and $\dual{g}$ form a Galois connection
+\end{enumerate}
+
+\begin{proof}
+   Fix $x \in A$ and $y \in B$.
+   Case: $f, g$ conjugate $\implies$ $f, \dual{g}$ form Galois connection.
+   \begin{flalign}
+      &
+      f(x) \leq_{B} y
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      f(x) \wedge_{B} \neg y = \bot
+      &
+      \locallabel{conj:left}
+      \\
+      &
+      x \wedge_{A} g(\neg y) = \bot
+      &
+      \text{conjugacy, \localref{conj:left}}
+      \notag
+      \\
+      &
+      x \leq_{A} \neg g(\neg y)
+      &
+      \\
+      &
+      \qedLocal
+      x \leq_{A} \dual{g}(y)
+      &
+      \\
+   \end{flalign}
+\end{proof}
