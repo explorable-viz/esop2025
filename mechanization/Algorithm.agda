@@ -13,7 +13,6 @@ open import Relation.Nullary
 open import Level hiding (suc)
 open import Data.Nat
 open import Relation.Nullary.Decidable
-
 open import Data.Bool hiding (T)
 
 open import SetRep
