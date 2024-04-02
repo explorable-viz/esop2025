@@ -142,3 +142,43 @@ equivalent:
       \notag
    \end{flalign}
 \end{proof}
+
+\subsection{\lemref{conjugate:image-preimage-duality}}
+Fix $R \subseteq X \times Y$. We proceed by direct calculation.
+\begin{proof}
+   Case $\dual{\demandedByR_R} = \sufficesR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandedByR_R (X')} = \dual{\set{y \in Y \mid \exists x \in X'.(x,y) \in R}}
+      &
+      \notag
+      \\
+      &
+      \dual{\set{y \in Y \mid \exists x \in X'.(x,y) \in R}} = \compl{\set{y \in Y \mid \exists x \in \compl{(X')}.(x,y) \in R}}
+      &
+      \notag
+      \\
+      &
+      \set{y \in Y \mid \neg (\exists x \in \compl{(X')}. (x, y) \in R)} = \set{y \in Y \mid \nexists x \in (X \setminus X').(x, y) \in R} = \sufficesR_R(X')
+      &
+      \notag
+   \end{flalign}
+   \newline
+   Case $\dual{\demandsR_R} = \preimageDualR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandsR_R (Y')} = \dual{\set{x \in X \mid \exists y \in Y'. (x, y) \in R}}
+      &
+      \notag
+      \\
+      &
+      \dual{\set{x \in X \mid \exists y \in Y'. (x, y) \in R}} = \compl{\set{x \in X \mid \exists y \in \compl{(Y')}. (x, y) \in R}}
+      &
+      \notag
+      \\
+      &
+      \set{x \in X \mid \neg (\exists y \in \compl{(Y')}. (x, y) \in R)} = \set{x \in X \mid \nexists y \in (Y \setminus Y').(x, y) \in R} = \preimageDualR_R(Y')
+      &
+      \notag
+   \end{flalign}
+\end{proof}
