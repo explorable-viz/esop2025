@@ -70,7 +70,7 @@ For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $
    \end{flalign}
 \end{proof}
 
-\subsection{\lemref{conjugate:image-preimage-duality}}
+\subsection{\propref{conj-galois-correspond}}
 Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
 equivalent:
 \begin{enumerate}
@@ -80,6 +80,7 @@ equivalent:
 
 \begin{proof}
    Fix $x \in A$ and $y \in B$.
+   \newline
    Case: $f, g$ conjugate $\implies$ $f, \dual{g}$ form Galois connection.
    \begin{flalign}
       &
@@ -96,7 +97,7 @@ equivalent:
       &
       x \wedge_{A} g(\neg y) = \bot
       &
-      \text{conjugacy, \localref{conj:left}}
+      \text{conjugacy, (\localref{conj:left})}
       \notag
       \\
       &
@@ -106,6 +107,30 @@ equivalent:
       &
       \qedLocal
       x \leq_{A} \dual{g}(y)
+      &
+      \\
+   \end{flalign}
+   \newline
+   Case: $f, \dual{g}$ Galois connection $\implies$ $f, g$ conjugate
+   \begin{flalign}
+      &
+      f(x) \wedge_{B} y = \bot
+      &
+      \\
+      &
+      f(x) \leq_{B} \neg y 
+      &
+      \\
+      &
+      x \leq_{A} \dual{g}(\neg y)
+      &
+      \\
+      &
+      x \leq_{A} \neg g (y)
+      &
+      \\
+      &
+      x \wedge_{A} g(y) = \bot
       &
       \\
    \end{flalign}
