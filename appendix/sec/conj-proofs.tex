@@ -19,22 +19,37 @@ For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $
       \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
       &
       \text{def of $\demandedByR_{R}$}
+      \notag
+      \\
+      &
+      \set{y \in Y' \mid \exists x \in X'.(x,y) \in R} = \emptyset
+      &
+      \text{def of $\cap$}
+      \locallabel{preim-intersection}
       \\
       &
       \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
       &
-      \text{(4)}
+      \text{equivalent to (\localref{preim-intersection})}
+      \locallabel{unintersect}
+      \\
+      &
+      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \text{equivalent to (\localref{unintersect})}
       \notag
       \\
       &
       \qedLocal
       X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
       &
+      \text{def of $\cap$}
       \notag
       \\
       &
       X' \cap \demandsR_{R}(Y') = \emptyset 
       &
+      \text{def of $\demandsR_{R}$}
       \notag
    \end{flalign}
    \newline
@@ -53,19 +68,28 @@ For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $
       \notag
       \\
       &
+      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R}
+      &
+      \text{def of $\cap$}
+      \locallabel{preim-intersect-2}
+      \\
+      &
       \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
       &
-      \notag
+      \text{equivalent to (\localref{preim-intersect-2})}
+      \locallabel{preim-unintersect-2}
       \\
       &
       \qedLocal
       \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
       &
+      \text{equivalent to (\localref{preim-unintersect-2})}
       \notag
       \\
       &
       \demandedByR_{R}(X') \cap Y' = \emptyset
       &
+      \text{def of $\demandedByR_{R}$}
       \notag
    \end{flalign}
 \end{proof}
