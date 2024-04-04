@@ -103,13 +103,16 @@
       ]
       {
          k, \alpha \orElse \seq{k}
+         \\
+         k = (\pi, \clause{\seqEmpty}{s})
       }
       {
          \pattListEnd
          \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattListEnd \clauseWith{\cons} k_1}
-                  {\pattListEnd \clauseWith{\cons} k_j}
+                  {\pattListEnd \clauseWith{\cons} k_j},
+         (\pattListNext{\pattVar{\varAnon}}{\pattVar{\varAnon}}) \cons \pi, \clause{\seqEmpty}{\annot{\exNil}{\alpha}}
       }
       %
       \and
