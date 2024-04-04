@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$k, s \orElse \mu$}
+   {\small \flushleft \shadebox{$k, \alpha \orElse \mu$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\orElse$-done}}
@@ -8,7 +8,9 @@
          \strut
       }
       {
-         (\seqEmpty, \clause{\seqEmpty}{s}), s' \orElse \clause{\seqEmpty}{s}
+         (\seqEmpty, \clause{\seqEmpty}{s}), \alpha
+         \orElse
+         \clause{\seqEmpty}{s}
       }
       %
       \and
@@ -17,10 +19,10 @@
          lab={\ruleName{$\orElse$-var}}
       ]
       {
-         k, s \orElse \seqRange{k_1}{k_j}
+         k, \alpha \orElse \seqRange{k_1}{k_j}
       }
       {
-         \pattVar{x} \clauseWith{\cons} k, s
+         \pattVar{x} \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattVar{x} \clauseWith{\cons} k_1}
                   {\pattVar{x} \clauseWith{\cons} k_j}
@@ -32,13 +34,13 @@
          lab={\ruleName{$\orElse$-record}}
       ]
       {
-         \seq{p} \clauseWith{\concat} k, s
+         \seq{p} \clauseWith{\concat} k, \alpha
          \orElse
          \seqRange{\seq{p_1} \clauseWith{\concat} k_1}
                   {\seq{p_j} \clauseWith{\concat} k_j}
       }
       {
-         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, s
+         \pattRecord{\seq{\bind{x}{p}}} \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattRecord{\seq{\bind{x}{p_1}}} \clauseWith{\cons} k_1}
                   {\pattRecord{\seq{\bind{x}{p_j}}} \clauseWith{\cons} k_j}
@@ -51,19 +53,19 @@
          right={$\ctrsF(D) = c \cons \set{\seq{c}}$}
       ]
       {
-         \pi \clauseWith{\concat} k, s
+         \pi \clauseWith{\concat} k, \alpha
          \orElse
          \seq{\pi \clauseWith{\concat} k}
          \\
          \seq{k}' =
-         ((\pattVar{\varAnon} \mid n \numleq \length{\pi'}, \clause{\seqEmpty}{s})
+         ((\pattVar{\varAnon} \mid n \numleq \length{\pi'}, \clause{\seqEmpty}{\annot{\exNil}{\alpha}})
          \mid
          i \numleq \length{\seq{c}})
          \\
-         k = (\pi', \clause{\seqEmpty}{s'})
+         k = (\pi', \clause{\seqEmpty}{s})
       }
       {
-         \pattConstr{c}{\pi} \clauseWith{\cons} k, s
+         \pattConstr{c}{\pi} \clauseWith{\cons} k, \alpha
          \orElse
          (\seqRange{\pattConstr{c}{\pi_1} \clauseWith{\cons} k_1}
                    {\pattConstr{c}{\pi_j} \clauseWith{\cons} k_j})
@@ -79,13 +81,13 @@
          lab={\ruleName{$\orElse$-non-empty-list}}
       ]
       {
-         p \clauseWith{\cons} o \clauseWith{\cons} k, s
+         p \clauseWith{\cons} o \clauseWith{\cons} k, \alpha
          \orElse
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
       }
       {
          \pattList{p}{o}
-         \clauseWith{\cons} k, s
+         \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattList{p_1}{o_1} \clauseWith{\cons} k_1}
                   {\pattList{p_j}{o_j} \clauseWith{\cons} k_j}
@@ -97,11 +99,11 @@
          lab={\ruleName{$\orElse$-list-end}}
       ]
       {
-         k, s \orElse \seq{k}
+         k, \alpha \orElse \seq{k}
       }
       {
          \pattListEnd
-         \clauseWith{\cons} k, s
+         \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattListEnd \clauseWith{\cons} k_1}
                   {\pattListEnd \clauseWith{\cons} k_j}
@@ -113,17 +115,17 @@
          lab={\ruleName{$\orElse$-list-cons}}
       ]
       {
-         p \clauseWith{\cons} o \clauseWith{\cons} k, s
+         p \clauseWith{\cons} o \clauseWith{\cons} k, \alpha
          \orElse
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
       }
       {
          \pattListNext{p}{o}
-         \clauseWith{\cons} k, s
+         \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattListNext{p_1}{o_1} \clauseWith{\cons} k_1}
                   {\pattListNext{p_j}{o_j} \clauseWith{\cons} k_j}
       }
    \end{smathpar}}
-   \caption{Completing an (uncurried) clause with a default value}
+   \caption{Completing an (uncurried) clause with a default value of $\exNil$}
 \end{figure}
