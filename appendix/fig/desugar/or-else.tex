@@ -124,13 +124,16 @@
          p \clauseWith{\cons} o \clauseWith{\cons} k, \alpha
          \orElse
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+         \\
+         k = (\pi, \clause{\seqEmpty}{s})
       }
       {
          (\pattListNext{p}{o})
          \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{(\pattListNext{p_1}{o_1}) \clauseWith{\cons} k_1}
-                  {(\pattListNext{p_j}{o_j}) \clauseWith{\cons} k_j}
+                  {(\pattListNext{p_j}{o_j}) \clauseWith{\cons} k_j},
+         \pattListEnd \cons \pi, \clause{\seqEmpty}{\annot{\exNil}{\alpha}}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value of $\exNil$}
