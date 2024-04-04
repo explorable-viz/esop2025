@@ -1,0 +1,240 @@
+\section{Section 3 Proofs}
+
+\subsection{\lemref{im-preim-conjugate}}
+For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
+
+\begin{proof}
+   Let $X' \in \powerset{X}$, $Y' \in \powerset{Y}$.
+   \small
+   \newline
+   Case: $\demandedByR_{R}(X') \cap Y' = \emptyset \implies X' \cap \demandsR_{R}(Y') = \emptyset$
+   \begin{flalign}
+      &
+      \demandedByR_{R}(X') \cap Y' = \emptyset
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
+      &
+      \text{def of $\demandedByR_{R}$}
+      \notag
+      \\
+      &
+      \set{y \in Y' \mid \exists x \in X'.(x,y) \in R} = \emptyset
+      &
+      \text{def of $\cap$}
+      \locallabel{preim-intersection}
+      \\
+      &
+      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
+      &
+      \text{equivalent to (\localref{preim-intersection})}
+      \locallabel{unintersect}
+      \\
+      &
+      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \text{equivalent to (\localref{unintersect})}
+      \notag
+      \\
+      &
+      \qedLocal
+      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \text{def of $\cap$}
+      \notag
+      \\
+      &
+      X' \cap \demandsR_{R}(Y') = \emptyset 
+      &
+      \text{def of $\demandsR_{R}$}
+      \notag
+   \end{flalign}
+   \newline
+   Case: $ X' \cap \demandsR_{R}(Y') = \emptyset \implies \demandedByR_{R}(X') \cap Y' = \emptyset$
+   \begin{flalign}
+      &
+      X' \cap \demandsR_{R}(Y') = \emptyset
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
+      &
+      \text{def of $\demandsR_{R}$}
+      \notag
+      \\
+      &
+      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R}
+      &
+      \text{def of $\cap$}
+      \locallabel{preim-intersect-2}
+      \\
+      &
+      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
+      &
+      \text{equivalent to (\localref{preim-intersect-2})}
+      \locallabel{preim-unintersect-2}
+      \\
+      &
+      \qedLocal
+      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
+      &
+      \text{equivalent to (\localref{preim-unintersect-2})}
+      \notag
+      \\
+      &
+      \demandedByR_{R}(X') \cap Y' = \emptyset
+      &
+      \text{def of $\demandedByR_{R}$}
+      \notag
+   \end{flalign}
+\end{proof}
+
+\subsection{\propref{conj-galois-correspond}}
+Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
+equivalent:
+\begin{enumerate}
+   \item $f$ and $g$ form a conjugate pair
+   \item $f$ and $\dual{g}$ form a Galois connection
+\end{enumerate}
+
+\begin{proof}
+   Fix $x \in A$ and $y \in B$.
+   \newline
+   Case: $f, g$ conjugate $\implies$ $f, \dual{g}$ form Galois connection.
+   \begin{flalign}
+      &
+      f(x) \leq_{B} y
+      &
+      \text{(suppose)}
+      \notag
+      \\
+      &
+      f(x) \wedge_{B} \neg y = \bot
+      &
+      \notag
+      \\
+      &
+      x \wedge_{A} g(\neg y) = \bot
+      &
+      \text{(conjugacy)}
+      \notag
+      \\
+      &
+      x \leq_{A} \neg (g(\neg y))
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \leq_{A} \dual{g}(y)
+      &
+      \text{(def of $\dual{\cdot}$)}
+      \notag
+   \end{flalign}
+   \newline
+   Case: $f, \dual{g}$ Galois connection $\implies$ $f, g$ conjugate
+   \begin{flalign}
+      &
+      f(x) \wedge_{B} y = \bot
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      f(x) \leq_{B} \neg y 
+      &
+      \notag
+      \\
+      &
+      x \leq_{A} \dual{g}(\neg y)
+      &
+      \text{(GC)}
+      \notag
+      \\
+      &
+      x \leq_{A} \neg (g (y))
+      &
+      \text{(def of $\dual{\cdot}$)}
+      \notag
+      \\
+      &
+      x \wedge_{A} g(y) = \bot
+      &
+      \notag
+   \end{flalign}
+\end{proof}
+
+\subsection{\lemref{conjugate:image-preimage-duality}}
+Fix $R \subseteq X \times Y$. We proceed by direct calculation.
+\begin{proof}
+   Case $\dual{\demandedByR_R} = \sufficesR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandedByR_R (X')} = \dual{\set{y \in Y \mid \exists x \in X'.(x,y) \in R}}
+      &
+      \text{def of $\demandedByR_R$}
+      \notag
+      \\
+      &
+      = \compl{\set{y \in Y \mid \exists x \in \compl{(X')}.(x,y) \in R}}
+      &
+      \text{def of $\dual{\cdot}$}
+      \notag
+      \\
+      &
+      = \compl{\set{y \in Y \mid \exists x \in (X \setminus X').(x, y) \in R}}
+      &
+      \text{def of $\compl{\cdot}$}
+      \notag
+      \\
+      &
+      = \set{y \in Y \mid \nexists x \in (X \setminus X').(x, y) \in R}
+      &
+      \text{$\compl{\cdot}$ negates predicate}
+      \notag
+      \\
+      &
+      = \sufficesR_R(X')
+      &
+      \text{def of $\sufficesR_R$}
+      \notag
+   \end{flalign}
+   \newline
+   Case $\dual{\demandsR_R} = \preimageDualR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandsR_R (Y')} = \dual{\set{x \in X \mid \exists y \in Y'. (x, y) \in R}}
+      &
+      \text{def of $\dual{\demandsR_R}$}
+      \notag
+      \\
+      &
+       = \compl{\set{x \in X \mid \exists y \in \compl{(Y')}. (x, y) \in R}}
+      &
+      \text{def of $\dual{\cdot}$}
+      \notag
+      \\
+      &
+      = \compl{\set{x \in X \mid \exists y \in (Y \setminus Y'). (x, y) \in R}}
+      &
+      \text{def of $\compl{\cdot}$}
+      \notag
+      \\
+      &
+       = \set{x \in X \mid \nexists y \in (Y \setminus Y').(x, y) \in R}
+      &
+      \text{$\compl{\cdot}$ negates predicate}
+      \notag
+      \\
+      &
+      = \preimageDualR_R(Y')
+      &
+      \text{def of $\preimageDualR_R$}
+      \notag
+   \end{flalign}
+\end{proof}
