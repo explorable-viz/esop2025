@@ -80,13 +80,13 @@
          lab={\ruleName{$\orElseBwd{}$-non-empty-list}}
       ]
       {
-         s^\twoPrime, s'
-         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         s, \alpha
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k}
          \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         s^\twoPrime, s'
-         \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k, s}
+         s, \alpha
+         \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k}
          \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
                   {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
       }
@@ -97,11 +97,11 @@
          lab={\ruleName{$\orElseBwd{}$-list-end}}
       ]
       {
-         s^\twoPrime, s' \orElseBwd{k, s} \seq{k}'
+         s, \alpha \orElseBwd{k} \seq{k}'
       }
       {
-         s^\twoPrime, s'
-         \orElseBwd{\pattListEnd \clauseWith{\cons} k, s}
+         s, \alpha
+         \orElseBwd{\pattListEnd \clauseWith{\cons} k}
          \seqRange{\pattListEnd \clauseWith{\cons} k'_1}
                   {\pattListEnd \clauseWith{\cons} k'_j}
       }
@@ -112,15 +112,15 @@
          lab={\ruleName{$\orElseBwd{}$-list-cons}}
       ]
       {
-         s^\twoPrime, s'
-         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k, s}
+         s, \alpha
+         \orElseBwd{p \clauseWith{\cons} o \clauseWith{\cons} k}
          \seq{p' \clauseWith{\cons} o' \clauseWith{\cons} k'}
       }
       {
-         s^\twoPrime, s'
-         \orElseBwd{\pattListNext{p}{o} \clauseWith{\cons} k, s}
-         \seqRange{\pattListNext{p'_1}{o'_1} \clauseWith{\cons} k'_1}
-                  {\pattListNext{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+         s, \alpha
+         \orElseBwd{(\pattListNext{p}{o}) \clauseWith{\cons} k}
+         \seqRange{(\pattListNext{p'_1}{o'_1}) \clauseWith{\cons} k'_1}
+                  {(\pattListNext{p'_j}{o'_j}) \clauseWith{\cons} k'_j}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value of $\exNil$ (backwards rules)}
