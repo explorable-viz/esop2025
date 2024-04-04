@@ -84,13 +84,16 @@
          p \clauseWith{\cons} o \clauseWith{\cons} k, \alpha
          \orElse
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
+         \\
+         k = (\pi, \clause{\seqEmpty}{s})
       }
       {
          \pattList{p}{o}
          \clauseWith{\cons} k, \alpha
          \orElse
          \seqRange{\pattList{p_1}{o_1} \clauseWith{\cons} k_1}
-                  {\pattList{p_j}{o_j} \clauseWith{\cons} k_j}
+                  {\pattList{p_j}{o_j} \clauseWith{\cons} k_j},
+         \pattNil \cons \pi, \clause{\seqEmpty}{\annot{\exNil}{\alpha}}
       }
       %
       \and
@@ -120,11 +123,11 @@
          \seq{p \clauseWith{\cons} o \clauseWith{\cons} k}
       }
       {
-         \pattListNext{p}{o}
+         (\pattListNext{p}{o})
          \clauseWith{\cons} k, \alpha
          \orElse
-         \seqRange{\pattListNext{p_1}{o_1} \clauseWith{\cons} k_1}
-                  {\pattListNext{p_j}{o_j} \clauseWith{\cons} k_j}
+         \seqRange{(\pattListNext{p_1}{o_1}) \clauseWith{\cons} k_1}
+                  {(\pattListNext{p_j}{o_j}) \clauseWith{\cons} k_j}
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value of $\exNil$}
