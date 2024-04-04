@@ -88,7 +88,8 @@
          s, \alpha
          \orElseBwd{\pattList{p}{o} \clauseWith{\cons} k}
          \seqRange{\pattList{p'_1}{o'_1} \clauseWith{\cons} k'_1}
-                  {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j}
+                  {\pattList{p'_j}{o'_j} \clauseWith{\cons} k'_j},
+         k^\twoPrime
       }
       %
       \and
@@ -103,7 +104,8 @@
          s, \alpha
          \orElseBwd{\pattListEnd \clauseWith{\cons} k}
          \seqRange{\pattListEnd \clauseWith{\cons} k'_1}
-                  {\pattListEnd \clauseWith{\cons} k'_j}
+                  {\pattListEnd \clauseWith{\cons} k'_j},
+         k^\twoPrime
       }
       %
       \and
@@ -120,7 +122,8 @@
          s, \alpha
          \orElseBwd{(\pattListNext{p}{o}) \clauseWith{\cons} k}
          \seqRange{(\pattListNext{p'_1}{o'_1}) \clauseWith{\cons} k'_1}
-                  {(\pattListNext{p'_j}{o'_j}) \clauseWith{\cons} k'_j}
+                  {(\pattListNext{p'_j}{o'_j}) \clauseWith{\cons} k'_j},
+         k^\twoPrime
       }
    \end{smathpar}}
    \caption{Completing an (uncurried) clause with a default value of $\exNil$ (backwards rules)}
