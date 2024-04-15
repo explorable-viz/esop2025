@@ -7,7 +7,7 @@ can only contain a set/sequence of $\exStar{\cdot}{\cdot}$'s, and that
 the $\exStar{\cdot}{\cdot}$ can only contain a $\exForest{\cdot}$ in its
 first position. I think that if this invariant is maintained then every operation
 below is well defined.
-\input{appendix/fig/graphs/algo-rework}
+\input{appendix/fig/graphs/graph-syntax}
 
 We need some auxiliary functions to go with the new syntax:
 \begin{definition}[Vertices]
@@ -56,3 +56,6 @@ We need some auxiliary functions to go with the new syntax:
       \demandsR_{G}(\set{\seq{\alpha}}) \eqdef \opName{Leaves}(\bigcup_{\alpha \in \set{\seq{\alpha}}} \opName{F}(\alpha, G))
    $$
 \end{definition}
+
+We can write the above as a judgement as follows:
+\input{appendix/fig/graphs/demands-inductive}
