@@ -1,4 +1,14 @@
 \section{Inductive Definition of Graphs}
 
 \subsection{Graph Syntax}
+Graphs are defined by the syntax given in \figref{graph-syntax}.
 \input{appendix/fig/graphs/algo-rework}
+
+We need some auxiliary functions to go with the new syntax:
+\begin{definition}[Vertices]
+   For a graph $G$, we define the set $\opName{V}(G)$ to be the vertices of $G$,
+   and define it as:
+   \begin{salign}
+      \opName{V}(\exForest{\set{\seq{G}}}) &= \bigcup_{g\in \set{\seq{G}}} \opName{V}(G)
+   \end{salign}
+\end{definition}
