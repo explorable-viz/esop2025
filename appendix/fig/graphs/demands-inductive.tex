@@ -9,7 +9,7 @@
                \strut
             }
             {
-               \alpha \in \opName{F}_{\exStar{F'}{\alpha}}(\alpha)
+               \alpha \in \opName{F}(\alpha, \exStar{F'}{\alpha})
             }
             %
             \and
@@ -18,22 +18,22 @@
                lab={\ruleName{interior}}
             ]
             {
-               \alpha \in \opName{F}_{\exForest{\set{\seq{G}}}}(\alpha)
+               \alpha \in \opName{F}(\alpha, \exForest{\set{\seq{G}}})
             }
             {
-               \alpha \in \opName{F}_{\exStar{(\exForest{\set{\seq{G}}})}{\beta}}(\alpha)
+               \alpha \in \opName{F}(\alpha, \exStar{(\exForest{\set{\seq{G}}})}{\beta})
             }
             %
             \and
             %
             \inferrule*[
-               lab={\ruleName{not sure yet}}
+               lab={\ruleName{branching}}
             ]
             {
-               \exists G_i \in \set{\seq{G}}. \alpha \in \opName{F}_{G_i}(\alpha)
+               \exists G_i \in \set{\seq{G}}. \alpha \in \opName{F}(\alpha, G_i)
             }
             {
-               \alpha \in \opName{F}_{\exForest{\set{\seq{G}}}}(\alpha)
+               \alpha \in \opName{F}(\alpha, \exForest{\set{\seq{G}}})
             }
          \end{smathpar}
          \vspace{2mm}
@@ -42,7 +42,7 @@
                lab={\ruleName{start}}
             ]
             {
-               \alpha \in \bigcup_{\alpha_i \in \set{\seq{\alpha}}} \opName{Leaves}(\opName{F}_{G}(\alpha_i))
+               \alpha \in \opName{Leaves}(\bigcup_{\alpha_i \in \set{\seq{\alpha}}} \opName{F}_{G}(\alpha_i))
             }
             {
                \alpha \in \demandsR_{G}(\set{\seq{\alpha}})
@@ -50,5 +50,5 @@
          \end{smathpar}
       }
    \end{subfigure}
-   \caption{Test}
+   \caption{First attempt at rewriting the judgement for demands}
 \end{figure}
