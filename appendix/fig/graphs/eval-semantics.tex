@@ -91,6 +91,20 @@
       {
          \gamma, \exLet{x}{e}{e'}, G, G_{1} \evalS v' G_{2} \cup, G_{3}
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-let-rec}}
+      ]
+      {
+         \gamma, \exRecord{\seq{\bind{x}{\sigma}}}, G, G_{1} \closeDefs \gamma', G_{2}
+         \\
+         \gamma \concat \gamma', e, G, G_{1} \evalS v, G_{3}
+      }
+      {
+         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, G, G_{1} \evalS v, G_{2} \cup G_{3} 
+      }
       \end{smathpar}
    }
    \end{subfigure}
