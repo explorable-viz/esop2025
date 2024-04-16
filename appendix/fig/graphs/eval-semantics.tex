@@ -31,12 +31,12 @@
          lab={\ruleName{g-pair}}
       ]
       {
-         \gamma, e, F, F_1 \evalS v, F_{2}
+         \gamma, e, G, G_{1} \evalS v, G_{2}
          \\
-         \gamma, e', F, F_{2} \evalS v', F_{3}
+         \gamma, e', G, G_{2} \evalS v', G_{3}
       }
       {
-         \gamma, (e, e'), F, G \evalS \exPair{v}{v'}_{\alpha},  (\set{F \cdot (\set{\seq{F}} \mapsto \alpha)} \mapsto \emptynode)
+         \gamma, (e, e'), G, G_{1} \evalS \exPair{v}{v'}_{\alpha}, G_{3} \cdot \set{G \mapsto \alpha}
       }
       %
       \and
@@ -58,10 +58,10 @@
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, (\set{\seq{G}'} \mapsto \emptynode)
+         \gamma, \seq{e}, G, G' \evalS \seq{v}, \set{\seq{G \mapsto \alpha}}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, (\set{G \cdot (\set{\seq{G}'} \mapsto \alpha)} \mapsto \emptynode)
+         \gamma, \exConstr{c}{\seq{e}}, G, G' \evalS \exConstr{c}{\seq{v}}_{\alpha}, \set{G \cdot \seq{G \mapsto \alpha}}
       }
       % %
       % \and
@@ -93,7 +93,7 @@
          (\forall i \leq |\seq{e}|)
       }
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, (\set{\bigcup_{i \leq |\seq{e}|} G_i} \mapsto \emptynode)
+         \gamma, \seq{e}, F, G \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
       }
    \end{smathpar}
    }
