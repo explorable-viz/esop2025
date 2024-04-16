@@ -9,7 +9,7 @@
          \strut
       }
       {
-         \gamma, x, F, G \evalS v, G
+         \gamma, x, F, G \evalS v, \emptyset
       }
       %
       \and
@@ -21,7 +21,7 @@
          \strut
       }
       {
-         \gamma, n, F, G \evalS n_{\alpha}, G \cdot (\exStar{F}{\alpha})
+         \gamma, n, F, G \evalS n_{\alpha}, (\exStar{F}{\alpha})
       }
       %
       \and
@@ -36,6 +36,18 @@
       }
       {
          \gamma, (e, e'), F, G \evalS \exPair{v}{v'}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-record}}
+      ]
+      {
+         \gamma, \seq{e}, F, G \evalS \seq{v}, G'
+      }
+      {
+         \gamma, \exRecord{\seq{\bind{x}{e}}}, F, G \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
       }
       %
       \and
