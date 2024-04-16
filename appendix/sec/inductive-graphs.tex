@@ -9,57 +9,57 @@ first position. I think that if this invariant is maintained then every operatio
 below is well defined.
 \input{appendix/fig/graphs/graph-syntax}
 
-We need some auxiliary functions to go with the new syntax:
-\begin{definition}[Vertices]
-   For a graph $G$, we define the set $\opName{V}(G)$ to be the vertices of $G$,
-   and define it as:
-   \begin{salign}
-      \opName{V}(\exForest{\set{\seq{G}}}) &= \bigcup_{g\in \set{\seq{G}}} \opName{V}(G) \\[2mm]
-      \opName{V}(\exStar{F}{\alpha}) &= \set{\alpha} \cup \opName{V}(F) \\
-   \end{salign}
-\end{definition}
+% We need some auxiliary functions to go with the new syntax:
+% \begin{definition}[Vertices]
+%    For a graph $G$, we define the set $\opName{V}(G)$ to be the vertices of $G$,
+%    and define it as:
+%    \begin{salign}
+%       \opName{V}(\exForest{\set{\seq{G}}}) &= \bigcup_{g\in \set{\seq{G}}} \opName{V}(G) \\[2mm]
+%       \opName{V}(\exStar{F}{\alpha}) &= \set{\alpha} \cup \opName{V}(F) \\
+%    \end{salign}
+% \end{definition}
 
-\begin{definition}[Leaves]
-   For a graph $G$, write  $\opName{Leaves}(G)$ to be the 
-   set of leaves in $G$, and define it as:
-   \begin{salign}
-      \opName{Leaves}(\exStar{\emptyset}{\alpha}) &= \set{\alpha} \\
-      \opName{Leaves}(\exStar{F}{\alpha}) &= \opName{Leaves}(F) \\
-      \opName{Leaves}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Leaves}(G)\\
-   \end{salign}
-\end{definition}
+% \begin{definition}[Leaves]
+%    For a graph $G$, write  $\opName{Leaves}(G)$ to be the 
+%    set of leaves in $G$, and define it as:
+%    \begin{salign}
+%       \opName{Leaves}(\exStar{\emptyset}{\alpha}) &= \set{\alpha} \\
+%       \opName{Leaves}(\exStar{F}{\alpha}) &= \opName{Leaves}(F) \\
+%       \opName{Leaves}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Leaves}(G)\\
+%    \end{salign}
+% \end{definition}
 
-\begin{definition}[Roots]
-   For a graph $G$, we write $\opName{Roots}(G)$ for the set
-   of \textit{root nodes} in $G$, and define it as:
-   \begin{salign}
-      \opName{Roots}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Roots}(G) \\
-      \opName{Roots}(\exStar{F}{\alpha}) &= \set{\alpha} \\
-   \end{salign}
-\end{definition}
+% \begin{definition}[Roots]
+%    For a graph $G$, we write $\opName{Roots}(G)$ for the set
+%    of \textit{root nodes} in $G$, and define it as:
+%    \begin{salign}
+%       \opName{Roots}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Roots}(G) \\
+%       \opName{Roots}(\exStar{F}{\alpha}) &= \set{\alpha} \\
+%    \end{salign}
+% \end{definition}
 
-\begin{definition}[Recursive Lookup]
-   For a graph $G$, and a vertex $\alpha$, we write $\opName{F}(\alpha, G)$ for
-   the graph of ancestors of $\alpha$, and define it as:
-   \begin{salign}
-      \opName{F}(\alpha, \exForest{\set{\seq{G}}}) &= \exForest{\bigcup_{G' \in \set{\seq{G}}} \opName{F}(\alpha, G)} \\
-      \opName{F}(\alpha, \exStar{F}{\alpha}) &= \exStar{(\exForest{\bigcup_{G' \in F} \opName{F}(\opName{Roots}(G'), G')})}{\alpha} \\
-      \opName{F}(\alpha, \exStar{F}{\alpha'}) &= \emptyset \\
-   \end{salign}
-\end{definition}
+% \begin{definition}[Recursive Lookup]
+%    For a graph $G$, and a vertex $\alpha$, we write $\opName{F}(\alpha, G)$ for
+%    the graph of ancestors of $\alpha$, and define it as:
+%    \begin{salign}
+%       \opName{F}(\alpha, \exForest{\set{\seq{G}}}) &= \exForest{\bigcup_{G' \in \set{\seq{G}}} \opName{F}(\alpha, G)} \\
+%       \opName{F}(\alpha, \exStar{F}{\alpha}) &= \exStar{(\exForest{\bigcup_{G' \in F} \opName{F}(\opName{Roots}(G'), G')})}{\alpha} \\
+%       \opName{F}(\alpha, \exStar{F}{\alpha'}) &= \emptyset \\
+%    \end{salign}
+% \end{definition}
 
 \input{appendix/fig/graphs/eval-semantics}
 
-\subsection*{Demands and Demanded By}
+% \subsection*{Demands and Demanded By}
 
-\begin{definition}[Demands]
-   For a graph $G$, with some subset of root nodes $\set{\seq{\alpha}}$, we write
-   $\demandsR_G(\set{\seq{\alpha}})$ for the set of leaf nodes which can reach 
-   a member of the set $\set{\seq{\alpha}}$, and define it as:
-   $$
-      \demandsR_{G}(\set{\seq{\alpha}}) \eqdef \opName{Leaves}(\bigcup_{\alpha \in \set{\seq{\alpha}}} \opName{F}(\alpha, G))
-   $$
-\end{definition}
+% \begin{definition}[Demands]
+%    For a graph $G$, with some subset of root nodes $\set{\seq{\alpha}}$, we write
+%    $\demandsR_G(\set{\seq{\alpha}})$ for the set of leaf nodes which can reach 
+%    a member of the set $\set{\seq{\alpha}}$, and define it as:
+%    $$
+%       \demandsR_{G}(\set{\seq{\alpha}}) \eqdef \opName{Leaves}(\bigcup_{\alpha \in \set{\seq{\alpha}}} \opName{F}(\alpha, G))
+%    $$
+% \end{definition}
 
-We can write the above as a judgement as follows:
-\input{appendix/fig/graphs/demands-inductive}
+% We can write the above as a judgement as follows:
+% \input{appendix/fig/graphs/demands-inductive}

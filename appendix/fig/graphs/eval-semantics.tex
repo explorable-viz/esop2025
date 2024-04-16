@@ -58,7 +58,7 @@
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, G'
+         \gamma, \seq{e}, F, G \evalS \seq{v}, F'
       }
       {
          \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
@@ -78,6 +78,24 @@
          \gamma, f(\seq{e}), F, G \evalS u, \exForest{G' \cdot G''}
       }
       \end{smathpar}
+   }
+   \end{subfigure}
+   \\[3mm]
+   \begin{subfigure}{\textwidth}
+   {\small \flushleft \shadebox{$\gamma, \seq{e}. F, G \evalS \seq{v}, F'$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{g-seq}}
+      ]
+      {
+         \gamma, e_i, F, G \evalS v_i, G_i
+         \quad
+         (\forall i \leq |\seq{e}|)
+      }
+      {
+         \gamma, \seq{e}, F, G \evalS \seq{v}, \exForest{\bigcup_{i \leq |\seq{e}|} G_i}
+      }
+   \end{smathpar}
    }
    \end{subfigure}
    \\[3mm]
