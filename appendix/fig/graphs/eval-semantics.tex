@@ -41,42 +41,56 @@
       %
       \and
       %
-      % \inferrule*[
-      %    lab={\ruleName{g-record}}
-      % ]
-      % {
-      %    \gamma, \seq{e}, F, G \evalS \seq{v}, G'
-      % }
-      % {
-      %    \gamma, \exRecord{\seq{\bind{x}{e}}}, F, G \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
-      % }
-      % %
-      % \and
-      % %
+      \inferrule*[
+         lab={\ruleName{g-record}}
+      ]
+      {
+         \gamma, \seq{e}, G, G' \evalS \seq{v}, G''
+      }
+      {
+         \gamma, \exRecord{\seq{\bind{x}{e}}}, G, G' \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G' \cdot (G'' \mapsto \alpha)
+      }
+      %
+      \and
+      %
       \inferrule*[
          lab={\ruleName{g-constr}},
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
-         \gamma, \seq{e}, G, G' \evalS \seq{v}, \set{\seq{G \mapsto \alpha}}
+         \gamma, \seq{e}, G, G' \evalS \seq{v}, G''
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, G, G' \evalS \exConstr{c}{\seq{v}}_{\alpha}, \set{G \cdot \seq{G \mapsto \alpha}}
+         \gamma, \exConstr{c}{\seq{e}}, G, G' \evalS \exConstr{c}{\seq{v}}_{\alpha}, G \cdot \set{G'' \mapsto \alpha}
       }
-      % %
-      % \and
-      % %
-      % \inferrule*[
-      %    lab={\ruleName{g-ForeignApp}}
-      % ]
-      % {
-      %    \gamma, \seq{e}, F, G \evalS \seq{V}, G'
-      %    \\
-      %    \hat{f}(\seq{v}) = \exPair{u}{G''}
-      % }
-      % {
-      %    \gamma, f(\seq{e}), F, G \evalS u, \exForest{G' \cdot G''}
-      % }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-ForeignApp}}
+      ]
+      {
+         \gamma, \seq{e}, G, G_{1} \evalS \seq{V}, G_{2}
+         \\
+         \hat{f}(\seq{v}) = \exPair{u}{G_{3}}
+      }
+      {
+         \gamma, f(\seq{e}), G, G_{1} \evalS u, \set{G_{2} \cdot G_{3}}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-let}}
+      ]
+      {
+         \gamma, e, G, G_{1} \evalS v, G_{2}
+         \\
+         \gamma\cdot(\bind{x}{v}), e', G, G_{1} \evalS v', G_{3}
+      }
+      {
+         \gamma, \exLet{x}{e}{e'}, G, G_{1} \evalS v' G_{2} \cup, G_{3}
+      }
       \end{smathpar}
    }
    \end{subfigure}

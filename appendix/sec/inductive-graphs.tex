@@ -3,10 +3,9 @@
 \subsection{Graph Syntax}
 Graphs are defined by the syntax given in \figref{graph-syntax}.
 For a graph $G = \set{\seq{G}} \mapsto \alpha$ has a single output
-vertex, $\alpha$. A graph $G' = \set{\seq{G}} \mapsto \bot$ has multiple
-outputs, ie $\forall i \leq |\seq{G}|. G_i = \set{\seq{G}}_i \mapsto \alpha_i$.
-We need to maintain this invariant during evaluation.
-We will write $\emptyset_{G} = \emptyset \mapsto \bot$ for the empty graph/forest.
+vertex, $\alpha$. A graph $G' = \set{\seq{G \mapsto \alpha}}$ instead has multiple
+outputs $\seq{\alpha}$. We write for a graph $G$ with $\alpha \in V(G)$ we write $G(\alpha)$
+for the subgraph of $G$ rooted at $\alpha$.
 \input{appendix/fig/graphs/graph-syntax}
 
 % We need some auxiliary functions to go with the new syntax:
