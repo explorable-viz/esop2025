@@ -1,4 +1,5 @@
 \begin{figure}
+   \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$\gamma, e, F, G \evalS v_{\alpha}, G'$}\hfill\textit{where $\alpha \notin V(G)$}
       \begin{smathpar}
       \inferrule*[
@@ -62,7 +63,40 @@
       {
          \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-ForeignApp}}
+      ]
+      {
+         \gamma, \seq{e}, F, G \evalS \seq{V}, G'
+         \\
+         \hat{f}(\seq{v}) = \exPair{u}{G''}
+      }
+      {
+         \gamma, f(\seq{e}), F, G \evalS u, \exForest{G' \cdot G''}
+      }
       \end{smathpar}
    }
+   \end{subfigure}
+   \\[3mm]
+   \begin{subfigure}{\textwidth}
+   {\small \flushleft \shadebox{$v, \sigma, F \match \gamma, \tau, F'$}
+      \begin{smathpar}
+         \inferrule*[
+            lab={\ruleName{g-match-pair}}
+         ]
+         {
+            v, \sigma, F \match \gamma, \tau, F_{1}
+            \\
+            v', \tau, F \match \gamma', \kappa, F_{2}
+         }
+         {
+            \exPair{v}{v'}_{\alpha}, \sigma, F \match \gamma ++ \gamma', \kappa, \exForest{(F_{1} \cup F_{2} \cup (\exStar{F(\alpha)}{\alpha}))}
+         }
+      \end{smathpar}
+   }
+   \end{subfigure}
    \caption{Graph Evaluation}
 \end{figure}
