@@ -1,0 +1,56 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$\gamma, e, F, G \evalS v_{\alpha}, G'$}\hfill\textit{where $\alpha \notin V(G)$}
+      \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{g-var}},
+         right={$\gamma = \gamma' \cons \bind{x}{v}$}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, x, F, G \evalS v, G
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-int}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, n, F, G \evalS n_{\alpha}, G \cdot (\exStar{F}{\alpha})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-pair}}
+      ]
+      {
+         \gamma, e, F, G \evalS v, G_{1}
+         \\
+         \gamma, e', F, G_{1} \evalS v', G'
+      }
+      {
+         \gamma, (e, e'), F, G \evalS \exPair{v}{v'}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-constr}},
+         right={$\Sigma(c) = |\seq{e}|$}
+      ]
+      {
+         \gamma, \seq{e}, F, G \evalS \seq{v}, G'
+      }
+      {
+         \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
+      }
+      \end{smathpar}
+   }
+   \caption{Graph Evaluation}
+\end{figure}
