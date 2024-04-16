@@ -22,7 +22,7 @@
          \strut
       }
       {
-         \gamma, n, (\set{\seq{F}} \mapsto \bot), G \evalS n_{\alpha}, (\set{\seq{F}} \mapsto \alpha)
+         \gamma, n, (\set{\seq{F}} \mapsto \emptynode), G \evalS n_{\alpha}, (\set{\seq{F}} \mapsto \alpha)
       }
       %
       \and
@@ -58,10 +58,10 @@
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, F'
+         \gamma, \seq{e}, F, G \evalS \seq{v}, (\set{\seq{G}'} \mapsto \emptynode)
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, G' \cdot (\exStar{F}{\alpha})
+         \gamma, \exConstr{c}{\seq{e}}, F, G \evalS \exConstr{c}{\seq{v}}_{\alpha}, (\set{G \cdot (\set{\seq{G}'} \mapsto \alpha)} \mapsto \emptynode)
       }
       % %
       % \and
@@ -93,7 +93,7 @@
          (\forall i \leq |\seq{e}|)
       }
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, (\set{\bigcup_{i \leq |\seq{e}|} G_i} \mapsto \bot)
+         \gamma, \seq{e}, F, G \evalS \seq{v}, (\set{\bigcup_{i \leq |\seq{e}|} G_i} \mapsto \emptynode)
       }
    \end{smathpar}
    }
