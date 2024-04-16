@@ -2,11 +2,11 @@
 
 \subsection{Graph Syntax}
 Graphs are defined by the syntax given in \figref{graph-syntax}.
-Note that we make the assumption that the $\exForest{\cdot}$ constructor
-can only contain a set/sequence of $\exStar{\cdot}{\cdot}$'s, and that
-the $\exStar{\cdot}{\cdot}$ can only contain a $\exForest{\cdot}$ in its
-first position. I think that if this invariant is maintained then every operation
-below is well defined.
+For a graph $G = \set{\seq{G}} \mapsto \alpha$ has a single output
+vertex, $\alpha$. A graph $G' = \set{\seq{G}} \mapsto \bot$ has multiple
+outputs, ie $\forall i \leq |\seq{G}|. G_i = \set{\seq{G}}_i \mapsto \alpha_i$.
+We need to maintain this invariant during evaluation.
+We will write $\emptyset_{G} = \emptyset \mapsto \bot$ for the empty graph/forest.
 \input{appendix/fig/graphs/graph-syntax}
 
 % We need some auxiliary functions to go with the new syntax:
