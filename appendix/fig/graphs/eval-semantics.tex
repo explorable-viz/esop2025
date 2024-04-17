@@ -1,6 +1,6 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$\gamma, e, G, G_{1} \evalS v_{\alpha}, G_{2}$}\hfill\textit{where $\alpha \notin V(G)$}
+   {\small \flushleft \shadebox{$\gamma, e, G, G_{1} \evalS v_{\alpha}, G_{2}$}
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalS$-var}},
@@ -16,7 +16,8 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-int}}
+         lab={\ruleName{$\evalS$-int}},
+         right={$\alpha \notin V(G_{1})$},
       ]
       {
          \strut
@@ -28,7 +29,8 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-function}}
+         lab={\ruleName{$\evalS$-function}},
+         right={$\alpha \notin V(G_{1})$},
       ]
       {
          \strut
@@ -40,7 +42,8 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-record}}
+         lab={\ruleName{$\evalS$-record}},
+         right={$\alpha \notin V(G_{1})$},
       ]
       {
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
@@ -53,13 +56,13 @@
       %
       \inferrule*[
          lab={\ruleName{$\evalS$-constr}},
-         right={$\Sigma(c) = |\seq{e}|$}
+         right={$\Sigma(c) = |\seq{e}|, \alpha \notin V(G_{1})$}
       ]
       {
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, G, G_{1} \evalS \exConstr{c}{\seq{v}}_{G \mapsto \alpha}, G_{2} \cdot \set{G_{2} \mapsto \alpha}
+         \gamma, \exConstr{c}{\seq{e}}, G, G_{1} \evalS \exConstr{c}{\seq{v}}_{G \mapsto \alpha}, G_{2} \cdot \set{G \mapsto \alpha}
       }
       %
       \and
@@ -109,6 +112,7 @@
       \inferrule*[
          lab={\ruleName{$\evalS$-app}},
          width=4in,
+         right={$\alpha \notin V(G_{5})$},
       ]
       {
          \gamma, e, G, G_{1} \evalS \exClosure{\gamma_{1}}{\rho}{\sigma}_{G \mapsto \alpha}, G_{2}
