@@ -1,0 +1,18 @@
+\begin{figure}
+   {\small \flushleft \shadebox{$v, \sigma, F \match \gamma, \tau, F'$}
+   \begin{smathpar}
+      \inferrule*[
+         lab={\ruleName{g-match-pair}}
+      ]
+      {
+         v, \sigma, G \match \gamma, \tau, G_{1}
+         \\
+         v', \tau, G \match \gamma', \kappa, G_{2}
+      }
+      {
+         \exPair{v}{v'}_{\alpha}, \sigma, G \match \gamma ++ \gamma', \kappa, G_{1} \cup G_{2} \cup \set{G(\alpha) \mapsto \alpha}
+      }
+   \end{smathpar}
+   }
+   \caption{Pattern Match}
+\end{figure}

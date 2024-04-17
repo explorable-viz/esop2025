@@ -124,7 +124,7 @@
          \gamma_{1} \concat \gamma_{2} \concat \gamma_{3}, e'', G_{5}\cdot\set{\alpha} \evalS u, G_{6}
       }
       {
-         \gamma, \exApp{e}{e'}, G, G' \evalS u, G_{2} \cup G_{3} \cup G_{4} \cup G_{6}
+         \gamma, \exApp{e}{e'}, G, G' \evalS u, G_{6}
       }
       \end{smathpar}
    }
@@ -145,24 +145,6 @@
          \gamma, \seq{e}, F, G \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
       }
    \end{smathpar}
-   }
-   \end{subfigure}
-   \\[3mm]
-   \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$v, \sigma, F \match \gamma, \tau, F'$}
-      \begin{smathpar}
-         \inferrule*[
-            lab={\ruleName{g-match-pair}}
-         ]
-         {
-            v, \sigma, G \match \gamma, \tau, G_{1}
-            \\
-            v', \tau, G \match \gamma', \kappa, G_{2}
-         }
-         {
-            \exPair{v}{v'}_{\alpha}, \sigma, G \match \gamma ++ \gamma', \kappa, G_{1} \cup G_{2} \cup \set{G(\alpha) \mapsto \alpha}
-         }
-      \end{smathpar}
    }
    \end{subfigure}
    \caption{Graph Evaluation}

@@ -1,0 +1,56 @@
+\PassOptionsToClass{anonymous=false,review=false}{acmart}
+\newif\ifmain
+\maintrue
+\newif\ifappendices
+\appendicestrue
+\documentclass[acmsmall,screen]{acmart}
+
+\settopmatter{printacmref=false}
+
+\acmJournal{PACMPL}
+\acmVolume{1}
+%\acmNumber{POPL}
+\acmArticle{1}
+%\acmYear{2021}
+%\acmMonth{1}
+\acmDOI{}
+\startPage{1}
+%\setcopyright{none}
+
+\input{tex/packages}
+\input{tex/layout-tweaks}
+\input{tex-common/macros}
+\input{tex/listings}
+\lstset{language=Fluid}
+\input{tex/macros}
+
+\bibliographystyle{ACM-Reference-Format}
+\citestyle{acmauthoryear}
+\setcitestyle{nosort}
+
+\begin{document}
+
+\title[Conjugate operators for transparent, explorable research outputs]{Conjugate operators for transparent, explorable\\research outputs}
+\input{tex/authors}
+
+\ifmain
+  \input{sec/abstract}
+  \maketitle
+  \input{sec/introduction}
+  \input{sec/overview}
+  \input{sec/conjugate}
+  \input{sec/core}
+  \input{sec/evaluation}
+  \input{sec/related-work}
+  \input{sec/conclusion}
+  \bibliography{tex-common/bib}
+\fi
+
+\ifappendices
+   \clearpage
+   \appendix
+   \input{appendix/sec/evaluation-src-code}
+\fi
+
+\end{document}
+
