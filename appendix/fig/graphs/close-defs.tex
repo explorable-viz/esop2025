@@ -3,12 +3,12 @@
       \begin{smathpar}
          \inferrule*[]
          {
-            v_{i} = \exClosure{\gamma}{\rho}{\rho{x_i}}_{G \mapsto \alpha_{i}}
+            v_{i} = \exClosure{\gamma}{\rho}{\rho(x_i)}_{G \mapsto \alpha_{i}}
             \\
             G_{i} = \set{G \mapsto \alpha_{i}}\;(\forall i \leq |\seq{x}|)
          }
          {
-            \gamma,\rho, G \closeDefs \set{\seq{\bind{x}{v}}}, \set{\seq{G_{i}}}
+            \gamma,\rho, G \closeDefs \set{\seq{\bind{x}{v}}}, \bigcup_{1 \leq i \leq |\seq{x}|} G_{i}
          }
       \end{smathpar}
    }
