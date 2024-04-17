@@ -2,15 +2,51 @@
    {\small \flushleft \shadebox{$v, \sigma, F \match \gamma, \tau, F'$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{g-match-pair}}
+         lab={\ruleName{g-$\match$-done}}
       ]
       {
-         v, \sigma, G \match \gamma, \tau, G_{1}
+         \strut
+      }
+      {
+         \epsilon, e \match \emptyset, e, \emptyset
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-$\match$-var}}
+      ]
+      {
+         \seq{v}, \kappa \match \gamma, \tau, G
+      }
+      {
+         v \cdot \seq{v}, x \mapsto \kappa \match \gamma \cdot (\bind{x}{v}), \tau, G
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-$\match$-pair}}
+      ]
+      {
+         v, \sigma \match \gamma, \tau, G_{1}
          \\
-         v', \tau, G \match \gamma', \kappa, G_{2}
+         v', \tau \match \gamma', \kappa, G_{2}
       }
       {
          \exPair{v}{v'}_{\alpha}, \sigma, G \match \gamma ++ \gamma', \kappa, G_{1} \cup G_{2} \cup \set{G(\alpha) \mapsto \alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-$\match$-constr}}
+      ]
+      {
+         \seq{v} \concat \seq{v}', \kappa \match \gamma, e, G
+      }
+      {
+         \exConstr{c}{\seq{v}}_{\alpha} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}} \match \gamma, e, \set{G} \cup \set{G(\alpha)\mapsto \alpha}
       }
    \end{smathpar}
    }
