@@ -73,7 +73,7 @@
          \hat{f}(\seq{v}) = \exPair{u}{G_{3}}
       }
       {
-         \gamma, f(\seq{e}), G, G_{1} \evalS u, \set{G_{2} \cdot G_{3}}
+         \gamma, f(\seq{e}), G, G_{1} \evalS u, G_{3}
       }
       %
       \and
@@ -129,18 +129,18 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$\gamma, \seq{e}. G, G_{1} \evalS \seq{v}, G_{2}$}
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalS$-seq}}
       ]
       {
-         \gamma, e_i, G, G' \evalS v_i, G_i
+         \gamma, e_i, G, G_{i-1} \evalS v_i, G_i
          \quad
-         (\forall i \leq |\seq{e}|)
+         (\forall i. 1 \leq i \leq |\seq{e}|)
       }
       {
-         \gamma, \seq{e}, G, G' \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
+         \gamma, \seq{e}, G, G_{0} \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
       }
    \end{smathpar}
    }
