@@ -34,7 +34,7 @@
          v', \tau \match \gamma', \kappa, G_{2}
       }
       {
-         \exPair{v}{v'}_{\alpha}, \sigma, G \match \gamma \concat \gamma', \kappa, G_{1} \cup G_{2} \cup \set{G(\alpha) \mapsto \alpha}
+         \exPair{v}{v'}_{\set{H}}, \sigma, G \match \gamma \concat \gamma', \kappa, G_{1} \cup G_{2} \cup \set{H}
       }
       %
       \and
@@ -46,7 +46,7 @@
          \seq{v} \concat \seq{v}', \kappa \match \gamma, e, G
       }
       {
-         \exConstr{c}{\seq{v}}_{\alpha} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}} \match \gamma, e, \set{G} \cup \set{G(\alpha)\mapsto \alpha}
+         \exConstr{c}{\seq{v}}_{\set{H}} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}} \match \gamma, e, G \cup \set{H}
       }
       %
       \and
@@ -60,7 +60,7 @@
          \seq{u} \concat \seq{v}', \kappa \match \gamma, e, G
       }
       {
-         \set{\seq{\bind{x}{v}}}_{\alpha} \cdot \seq{v}', \set{\seq{y}} \mapsto \kappa \match \gamma, e, \set{G} \cup \set{G(\alpha) \mapsto \alpha}
+         \set{\seq{\bind{x}{v}}}_{\set{H}} \cdot \seq{v}', \set{\seq{y}} \mapsto \kappa \match \gamma, e, G \cup \set{H}
       }
    \end{smathpar}
    }
