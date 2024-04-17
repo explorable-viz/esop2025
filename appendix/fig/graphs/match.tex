@@ -48,6 +48,20 @@
       {
          \exConstr{c}{\seq{v}}_{\alpha} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}} \match \gamma, e, \set{G} \cup \set{G(\alpha)\mapsto \alpha}
       }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-$\match$-record}}
+      ]
+      {
+         \set{\seq{\bind{y}{u}}} \subseteq \set{\seq{\bind{x}{v}}}
+         \\
+         \seq{u} \concat \seq{v}', \kappa \match \gamma, e, G
+      }
+      {
+         \set{\seq{\bind{x}{v}}}_{\alpha} \cdot \seq{v}', \set{\seq{y}} \mapsto \kappa \match \gamma, e, \set{G} \cup \set{G(\alpha) \mapsto \alpha}
+      }
    \end{smathpar}
    }
    \caption{Pattern Match}
