@@ -10,7 +10,7 @@
          \strut
       }
       {
-         \gamma, x, G, G' \evalS v, G'
+         \gamma, x, G, G_{1} \evalS v, G_{1}
       }
       %
       \and
@@ -22,7 +22,19 @@
          \strut
       }
       {
-         \gamma, n, G, G' \evalS n_{\alpha}, G' \cdot \set{G \mapsto \alpha}
+         \gamma, n, G, G_{1} \evalS n_{G \mapsto \alpha}, G_{1} \cdot \set{G \mapsto \alpha}
+      }
+      %
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{g-function}}
+      ]
+      {
+         \strut
+      }
+      {
+         \gamma, \exFun{\sigma}, G, G_{1} \evalS \exClosure{\gamma}{\emptyset}{\sigma}_{G \mapsto \alpha}, G_{1} \cdot \set{G \mapsto \alpha}
       }
       %
       \and
@@ -36,7 +48,7 @@
          \gamma, e', G, G_{2} \evalS v', G_{3}
       }
       {
-         \gamma, (e, e'), G, G_{1} \evalS \exPair{v}{v'}_{\alpha}, G_{3} \cdot \set{G \mapsto \alpha}
+         \gamma, (e, e'), G, G_{1} \evalS \exPair{v}{v'}_{G \mapsto \alpha}, G_{3} \cdot \set{G \mapsto \alpha}
       }
       %
       \and
@@ -45,10 +57,10 @@
          lab={\ruleName{g-record}}
       ]
       {
-         \gamma, \seq{e}, G, G' \evalS \seq{v}, G''
+         \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
       }
       {
-         \gamma, \exRecord{\seq{\bind{x}{e}}}, G, G' \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G' \cdot (G'' \mapsto \alpha)
+         \gamma, \exRecord{\seq{\bind{x}{e}}}, G, G_{1} \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G_{2} \cdot (G \mapsto \alpha)
       }
       %
       \and
@@ -58,10 +70,10 @@
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
-         \gamma, \seq{e}, G, G' \evalS \seq{v}, G''
+         \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, G, G' \evalS \exConstr{c}{\seq{v}}_{\alpha}, G \cdot \set{G'' \mapsto \alpha}
+         \gamma, \exConstr{c}{\seq{e}}, G, G_{1} \evalS \exConstr{c}{\seq{v}}_{G \mapsto \alpha}, G_{2} \cdot \set{G_{2} \mapsto \alpha}
       }
       %
       \and
@@ -70,7 +82,7 @@
          lab={\ruleName{g-ForeignApp}}
       ]
       {
-         \gamma, \seq{e}, G, G_{1} \evalS \seq{V}, G_{2}
+         \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
          \\
          \hat{f}(\seq{v}) = \exPair{u}{G_{3}}
       }
@@ -86,10 +98,10 @@
       {
          \gamma, e, G, G_{1} \evalS v, G_{2}
          \\
-         \gamma\cdot(\bind{x}{v}), e', G, G_{1} \evalS v', G_{3}
+         \gamma\cdot(\bind{x}{v}), e', G, G_{2} \evalS v', G_{3}
       }
       {
-         \gamma, \exLet{x}{e}{e'}, G, G_{1} \evalS v' G_{2} \cup, G_{3}
+         \gamma, \exLet{x}{e}{e'}, G, G_{1} \evalS v', G_{3}
       }
       %
       \and
@@ -98,12 +110,12 @@
          lab={\ruleName{g-let-rec}}
       ]
       {
-         \gamma, \exRecord{\seq{\bind{x}{\sigma}}}, G, G_{1} \closeDefs \gamma', G_{2}
+         \gamma, \exRecord{\seq{\bind{x}{\sigma}}}, G_{1} \closeDefs \gamma', G_{2}
          \\
-         \gamma \concat \gamma', e, G, G_{1} \evalS v, G_{3}
+         \gamma \concat \gamma', e, G, G_{2} \evalS v, G_{3}
       }
       {
-         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, G, G_{1} \evalS v, G_{2} \cup G_{3} 
+         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, G, G_{1} \evalS v, G_{3} 
       }
       %
       \and
@@ -115,7 +127,7 @@
       {
          \gamma, e, G, G_{1} \evalS \exClosure{\gamma_{1}}{\rho}{\sigma}, G_{2}
          \\
-         \gamma_{1}, \rho, \set{\alpha}, G_{2} \closeDefs \gamma_2, G_{3}
+         \gamma_{1}, \rho, G_{2} \closeDefs \gamma_2, G_{3}
          \\
          \gamma, e', G, G_{1} \evalS v', G_{4}
          \\
@@ -131,18 +143,18 @@
    \end{subfigure}
    \\[3mm]
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$\gamma, \seq{e}. F, G \evalS \seq{v}, F'$}
+   {\small \flushleft \shadebox{$\gamma, \seq{e}. G, G_{1} \evalS \seq{v}, G_{2}$}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{g-seq}}
       ]
       {
-         \gamma, e_i, F, G \evalS v_i, G_i
+         \gamma, e_i, G, G' \evalS v_i, G_i
          \quad
          (\forall i \leq |\seq{e}|)
       }
       {
-         \gamma, \seq{e}, F, G \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
+         \gamma, \seq{e}, G, G' \evalS \seq{v}, \bigcup_{i \leq |\seq{e}|} G_i
       }
    \end{smathpar}
    }
