@@ -3,7 +3,7 @@
    {\small \flushleft \shadebox{$\gamma, e, G, G_{1} \evalS v_{\alpha}, G_{2}$}\hfill\textit{where $\alpha \notin V(G)$}
       \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{g-var}},
+         lab={\ruleName{$\evalS$-var}},
          right={$\gamma = \gamma' \cons \bind{x}{v}$}
       ]
       {
@@ -16,7 +16,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-int}}
+         lab={\ruleName{$\evalS$-int}}
       ]
       {
          \strut
@@ -28,7 +28,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-function}}
+         lab={\ruleName{$\evalS$-function}}
       ]
       {
          \strut
@@ -40,7 +40,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-record}}
+         lab={\ruleName{$\evalS$-record}}
       ]
       {
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
@@ -52,7 +52,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-constr}},
+         lab={\ruleName{$\evalS$-constr}},
          right={$\Sigma(c) = |\seq{e}|$}
       ]
       {
@@ -65,7 +65,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-ForeignApp}}
+         lab={\ruleName{$\evalS$-ForeignApp}}
       ]
       {
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
@@ -79,7 +79,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-let}}
+         lab={\ruleName{$\evalS$-let}}
       ]
       {
          \gamma, e, G, G_{1} \evalS v, G_{2}
@@ -93,7 +93,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-let-rec}}
+         lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
          \gamma, \exRecord{\seq{\bind{x}{\sigma}}}, G_{1} \closeDefs \gamma', G_{2}
@@ -107,7 +107,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{g-app}},
+         lab={\ruleName{$\evalS$-app}},
          width=4in,
       ]
       {
@@ -132,7 +132,7 @@
    {\small \flushleft \shadebox{$\gamma, \seq{e}. G, G_{1} \evalS \seq{v}, G_{2}$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{g-seq}}
+         lab={\ruleName{$\evalS$-seq}}
       ]
       {
          \gamma, e_i, G, G' \evalS v_i, G_i
