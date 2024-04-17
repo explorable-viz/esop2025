@@ -8,7 +8,7 @@
          \strut
       }
       {
-         \epsilon, e \match \emptyset, e, \emptyset
+         \epsilon, e, G \match \emptyset, e, G
       }
       %
       \and
@@ -17,10 +17,10 @@
          lab={\ruleName{$\match$-var}}
       ]
       {
-         \seq{v}, \kappa \match \gamma, \tau, G
+         \seq{v}, \kappa, G_{1} \match \gamma, \tau, G_{2}
       }
       {
-         v \cdot \seq{v}, x \mapsto \kappa \match \gamma \cdot (\bind{x}{v}), \tau, G
+         v \cdot \seq{v}, x, G_{1} \mapsto \kappa \match \gamma \cdot (\bind{x}{v}), \tau, G_{2}
       }
       %
       \and
@@ -29,10 +29,10 @@
          lab={\ruleName{$\match$-constr}}
       ]
       {
-         \seq{v} \concat \seq{v}', \kappa \match \gamma, e, G
+         \seq{v} \concat \seq{v}', \kappa, G_{1} \match \gamma, e, G_{2}
       }
       {
-         \exConstr{c}{\seq{v}}_{\set{H}} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}} \match \gamma, e, G \cup \set{H}
+         \exConstr{c}{\seq{v}}_{G \mapsto \alpha} \cdot \seq{v}', (c \mapsto \kappa) \cdot\set{\seq{c \mapsto \kappa}}, G_{1} \match \gamma, e, G_{2} \cup \set{G \mapsto \alpha}
       }
       %
       \and
@@ -43,10 +43,10 @@
       {
          \set{\seq{\bind{y}{u}}} \subseteq \set{\seq{\bind{x}{v}}}
          \\
-         \seq{u} \concat \seq{v}', \kappa \match \gamma, e, G
+         \seq{u} \concat \seq{v}', \kappa, G_{1} \match \gamma, e, G_{2}
       }
       {
-         \set{\seq{\bind{x}{v}}}_{\set{H}} \cdot \seq{v}', \set{\seq{y}} \mapsto \kappa \match \gamma, e, G \cup \set{H}
+         \set{\seq{\bind{x}{v}}}_{G \mapsto \alpha} \cdot \seq{v}', \set{\seq{y}} \mapsto \kappa, G_{1} \match \gamma, e, G_{2} \cup \set{G \mapsto \alpha}
       }
    \end{smathpar}
    }
