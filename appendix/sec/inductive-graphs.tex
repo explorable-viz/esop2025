@@ -4,8 +4,7 @@
 Graphs are defined by the syntax given in \figref{graph-syntax}.
 For a graph $G = \set{\seq{G}} \mapsto \alpha$ has a single output
 vertex, $\alpha$. A graph $G' = \set{\seq{G \mapsto \alpha}}$ instead has multiple
-outputs $\seq{\alpha}$. We write for a graph $G$ with $\alpha \in V(G)$ we write $G(\alpha)$
-for the subgraph of $G$ rooted at $\alpha$.
+outputs $\seq{\alpha}$.
 \input{appendix/fig/graphs/graph-syntax}
 
 We need some auxiliary functions to go with the new syntax:
@@ -29,7 +28,10 @@ To find the leaves of a graph, we use a specified version of the vertices functi
    \end{salign}
 \end{definition}
 
-
+We can consider a graph $G$ to be a finite
+map from vertices to subgraphs. For a vertex $\alpha$ if $\alpha \in \opName{V}(G)$
+then $\exists G'$ such that $G = \set{G' \mapsto \alpha} \cup \set{\seq{H}}$, write $G(\alpha) = (G' \mapsto \alpha)$ for
+the subgraph of $G$ rooted at $\alpha$.
 % \begin{definition}[Roots]
 %    For a graph $G$, we write $\opName{Roots}(G)$ for the set
 %    of \textit{root nodes} in $G$, and define it as:
