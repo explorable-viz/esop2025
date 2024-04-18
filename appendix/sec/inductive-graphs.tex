@@ -18,15 +18,15 @@ for the subgraph of $G$ rooted at $\alpha$.
 %    \end{salign}
 % \end{definition}
 
-% \begin{definition}[Leaves]
-%    For a graph $G$, write  $\opName{Leaves}(G)$ to be the 
-%    set of leaves in $G$, and define it as:
-%    \begin{salign}
-%       \opName{Leaves}(\exStar{\emptyset}{\alpha}) &= \set{\alpha} \\
-%       \opName{Leaves}(\exStar{F}{\alpha}) &= \opName{Leaves}(F) \\
-%       \opName{Leaves}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Leaves}(G)\\
-%    \end{salign}
-% \end{definition}
+\begin{definition}[Leaves]
+   For a graph $G$, write  $\opName{Leaves}(G)$ to be the 
+   set of leaves in $G$, and define it as:
+   \begin{salign}
+      \opName{Leaves}((\emptyset \mapsto \alpha) \cdot \set{\seq{H}}) &= \set{\alpha} \cup \opName{Leaves}(\set{\seq{H}}) \\
+      \opName{Leaves}((G \mapsto \alpha) \cdot \set{\seq{H}}) &= \opName{Leaves}(\set{\seq{H}}) \\
+      \opName{Leaves}(\emptyset) &= \emptyset \\
+   \end{salign}
+\end{definition}
 
 % \begin{definition}[Roots]
 %    For a graph $G$, we write $\opName{Roots}(G)$ for the set
