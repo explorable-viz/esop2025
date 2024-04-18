@@ -1,6 +1,6 @@
 \begin{figure}
    \begin{subfigure}{\textwidth}
-   {\small \flushleft \shadebox{$\gamma, e, G, G_{1} \evalS v_{\alpha}, G_{2}$}
+   {\small \flushleft \shadebox{$\gamma, e, G, G_{1} \evalS v, G_{2}$}
       \begin{smathpar}
       \inferrule*[
          lab={\ruleName{$\evalS$-var}},
@@ -68,7 +68,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-ForeignApp}}
+         lab={\ruleName{$\evalS$-foreign-app}}
       ]
       {
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
@@ -112,7 +112,7 @@
       \inferrule*[
          lab={\ruleName{$\evalS$-app}},
          width=4in,
-         right={$\alpha \notin V(G_{5}\cup G_{4})$},
+         right={$\alpha \notin V(G_{4})$},
       ]
       {
          \gamma, e, G, G_{1} \evalS \exClosure{\gamma_{1}}{\rho}{\sigma}_{G \mapsto \alpha}, G_{2}
@@ -123,7 +123,7 @@
          \\
          v', \sigma \match \gamma_{3}, e'', G_{5}
          \\
-         \gamma_{1} \concat \gamma_{2} \concat \gamma_{3}, e'', G_{4} \cup G_{5}\cdot\set{G \mapsto \alpha} \evalS u, G_{6}
+         \gamma_{1} \concat \gamma_{2} \concat \gamma_{3}, e'', G_{4}\cdot\set{G \mapsto \alpha} \evalS u, G_{6}
       }
       {
          \gamma, \exApp{e}{e'}, G, G_{1} \evalS u, G_{6}
@@ -136,7 +136,8 @@
    {\small \flushleft \shadebox{$\gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}$}
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalS$-seq}}
+         lab={\ruleName{$\evalS$-seq}},
+         right={$n = |\seq{e}|$}
       ]
       {
          \gamma, e_i, G, G_{i-1} \evalS v_i, G_i
@@ -144,7 +145,7 @@
          (\forall i. 1 \leq i \leq |\seq{e}|)
       }
       {
-         \gamma, \seq{e}, G, G_{0} \evalS \seq{v}, \set{G_{i} \mid 1 \leq i \leq |\seq{e}|}
+         \gamma, \seq{e}, G, G_{0} \evalS \seq{v}, G_{n}
       }
    \end{smathpar}
    }
