@@ -1,3 +1,8 @@
+\PassOptionsToClass{anonymous=false,review=false}{acmart}
+\newif\ifmain
+\maintrue
+\newif\ifappendices
+\appendicestrue
 \documentclass[acmsmall,screen]{acmart}
 
 \settopmatter{printacmref=false}
@@ -44,12 +49,8 @@
 \ifappendices
    \clearpage
    \appendix
-   \input{appendix/sec/surface}
-   \input{appendix/sec/desugaring}
-   \input{appendix/sec/desugaring-proofs}
-   \input{appendix/sec/conj-proofs}
    \input{appendix/sec/evaluation-src-code}
-   \input{appendix/sec/inductive-graphs}
 \fi
 
 \end{document}
+

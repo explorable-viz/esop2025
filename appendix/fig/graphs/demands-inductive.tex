@@ -1,0 +1,54 @@
+\begin{figure}
+   \begin{subfigure}{\textwidth}
+      {\small
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{Leaf}}
+            ]
+            {
+               \strut
+            }
+            {
+               \alpha \in \opName{F}(\alpha, \exStar{F'}{\alpha})
+            }
+            %
+            \and
+            %
+            \inferrule*[
+               lab={\ruleName{interior}}
+            ]
+            {
+               \alpha \in \opName{F}(\alpha, \exForest{\set{\seq{G}}})
+            }
+            {
+               \alpha \in \opName{F}(\alpha, \exStar{(\exForest{\set{\seq{G}}})}{\beta})
+            }
+            %
+            \and
+            %
+            \inferrule*[
+               lab={\ruleName{branching}}
+            ]
+            {
+               \exists G_i \in \set{\seq{G}}. \alpha \in \opName{F}(\alpha, G_i)
+            }
+            {
+               \alpha \in \opName{F}(\alpha, \exForest{\set{\seq{G}}})
+            }
+         \end{smathpar}
+         \vspace{2mm}
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{start}}
+            ]
+            {
+               \alpha \in \opName{Leaves}(\bigcup_{\alpha_i \in \set{\seq{\alpha}}} \opName{F}_{G}(\alpha_i))
+            }
+            {
+               \alpha \in \demandsR_{G}(\set{\seq{\alpha}})
+            }
+         \end{smathpar}
+      }
+   \end{subfigure}
+   \caption{First attempt at rewriting the judgement for demands}
+\end{figure}
