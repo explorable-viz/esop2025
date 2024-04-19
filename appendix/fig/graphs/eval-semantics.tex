@@ -23,7 +23,7 @@
          \strut
       }
       {
-         \gamma, n, G, G_{1} \evalS n_{G \mapsto \alpha}, G_{1} \cdot \set{G \mapsto \alpha}
+         \gamma, n, G, G_{1} \evalS n_{\alpha \mapsto G}, G_{1} \cdot \set{\alpha \mapsto G}
       }
       %
       \and
@@ -36,7 +36,7 @@
          \strut
       }
       {
-         \gamma, \exFun{\sigma}, G, G_{1} \evalS \exClosure{\gamma}{\emptyset}{\sigma}_{G \mapsto \alpha}, G_{1} \cdot \set{G \mapsto \alpha}
+         \gamma, \exFun{\sigma}, G, G_{1} \evalS \exClosure{\gamma}{\emptyset}{\sigma}_{\alpha \mapsto G}, G_{1} \cdot \set{\alpha \mapsto G}
       }
       %
       \and
@@ -49,7 +49,7 @@
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
       }
       {
-         \gamma, \exRecord{\seq{\bind{x}{e}}}, G, G_{1} \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G_{2} \cdot (G \mapsto \alpha)
+         \gamma, \exRecord{\seq{\bind{x}{e}}}, G, G_{1} \evalS \exRecord{\seq{\bind{x}{v}}}_{\alpha}, G_{2} \cdot (\alpha \mapsto G)
       }
       %
       \and
@@ -62,7 +62,7 @@
          \gamma, \seq{e}, G, G_{1} \evalS \seq{v}, G_{2}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, G, G_{1} \evalS \exConstr{c}{\seq{v}}_{G \mapsto \alpha}, G_{2} \cdot \set{G \mapsto \alpha}
+         \gamma, \exConstr{c}{\seq{e}}, G, G_{1} \evalS \exConstr{c}{\seq{v}}_{\alpha \mapsto G}, G_{2} \cdot \set{\alpha \mapsto G}
       }
       %
       \and
@@ -115,7 +115,7 @@
          right={$\alpha \notin V(G_{4})$},
       ]
       {
-         \gamma, e, G, G_{1} \evalS \exClosure{\gamma_{1}}{\rho}{\sigma}_{G \mapsto \alpha}, G_{2}
+         \gamma, e, G, G_{1} \evalS \exClosure{\gamma_{1}}{\rho}{\sigma}_{\alpha \mapsto G}, G_{2}
          \\
          \gamma_{1}, \rho, G_{2} \closeDefs \gamma_2, G_{3}
          \\
@@ -123,7 +123,7 @@
          \\
          v', \sigma \match \gamma_{3}, e'', G_{5}
          \\
-         \gamma_{1} \concat \gamma_{2} \concat \gamma_{3}, e'', G_{4}\cdot\set{G \mapsto \alpha} \evalS u, G_{6}
+         \gamma_{1} \concat \gamma_{2} \concat \gamma_{3}, e'', G_{4}\cdot\set{\alpha \mapsto G} \evalS u, G_{6}
       }
       {
          \gamma, \exApp{e}{e'}, G, G_{1} \evalS u, G_{6}
