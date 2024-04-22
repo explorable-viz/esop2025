@@ -21,7 +21,7 @@
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
-           right=$G' \subseteq G$
+         %   right=$G' \subseteq G$
          ]
          {
             \strut
@@ -34,7 +34,7 @@
          %
          \inferrule*[
             lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
-            right={$\alpha \in \V(G)$}
+            right={$\alpha \in \V(G')$}
          ]
          {
             G', X
@@ -49,11 +49,11 @@
          %
          \inferrule*[
             lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
-            right={$H = \set{\bind{\alpha}{Y}}$}
+            right={$H = \set{\alpha \mapsfrom Y}$}
          ]
          {
             G' \disjunion H, Y \disjunion X
-            \demandedByV{G \uplus H}
+            \demandedByV{G}
             G^\twoPrime
          }
          {
