@@ -7,8 +7,8 @@
               right={$X \subseteq \sources{G}$}
             ]
             {
-               (\emptyset, \emptyset), X
-               \demandedByV{G}
+               (\emptyset, \emptyset), X, G
+               \demandedByV{}
                G'
             }
             {
@@ -17,97 +17,103 @@
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G', X \demandedByV{G} G^\twoPrime$}
+         {\small \flushleft \shadebox{$G', X, G \demandedByV{} G^\twoPrime$}
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
-           right=$G' \subseteq G$
+         %   right=$G' \subseteq G$
          ]
          {
             \strut
          }
          {
-            G', \emptyset \demandedByV{G} G'
+            G', \emptyset, G \demandedByV{} G'
          }
          %
          \and
          %
+         % \inferrule*[
+         %    lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
+         %    % right={$\alpha \in \V(G')$}
+         % ]
+         % {
+         %    G', X, G
+         %    \demandedByV{}
+         %    G^\twoPrime
+         %    \\
+         %    \alpha \in \V(G')
+         % }
+         % {
+         %    G', \alpha \cons X, G \demandedByV{} G^\twoPrime
+         % }
+         % %
+         % \and
+         % %
          \inferrule*[
-            lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
-            right={$\alpha \in \V(G)$}
+            lab={\ruleName{step}},% $\demandedByV{}$-extend}},
+            % right={$H = \set{\alpha \mapsto Y}$}
          ]
          {
-            G', X
-            \demandedByV{G}
+            G' \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
+            \demandedByV{}
             G^\twoPrime
          }
          {
-            G', \alpha \cons X \demandedByV{G} G^\twoPrime
-         }
-         %
-         \and
-         %
-         \inferrule*[
-            lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
-            right={$H = \set{\bind{\alpha}{Y}}$}
-         ]
-         {
-            G' \disjunion H, Y \disjunion X
-            \demandedByV{G \uplus H}
-            G^\twoPrime
-         }
-         {
-            G', \alpha \cons X \demandedByV{G \uplus H} G^\twoPrime
+            G', \alpha \cons X, G \demandedByV{} G^\twoPrime
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
          \label{fig:conjugate:algorithms:demands}
    \end{subfigure}
-   \\[3mm]
+   \\
    \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$X \sufficesAlg{G} U$}}
    \begin{smathpar}
-      \inferrule*
+      \inferrule*[
+         right=$X \subseteq \sources{G}$
+      ]
       {
          (X, \emptyset),
-         \emptyset,
-         \set{(\alpha, \beta) \in \outE{G}(\alpha') \mid \alpha' \in X}
-         \sufficesE{G}
+         (\emptyset, \emptyset),
+         \set{(\alpha', \beta) \mid \alpha' \in X, \beta \in \outN{G}(\alpha)},
+         G
+         \sufficesE{}
          G', H
       }
       {
-         X \sufficesAlg{G} \V(G') \cap \sources{G}
+         X \sufficesAlg{G} \V(G') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G', H, E \sufficesE{G} G^\twoPrime, H'$}}
+   {\small \flushleft \shadebox{$G', H, E, G \sufficesE{} G^\twoPrime, H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
-         right={$G' \subseteq G^{-1}$}
+         % right={$\dom{G'} \subseteq \dom{G}$}
       ]
       {
-         \strut
+         % \strut
+         \dom{G'} \subseteq \dom{G}
       }
       {
-         G', H, \emptyset \sufficesE{G} G', H
+         G', H, \emptyset, G \sufficesE{} G', H
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) \subset \opGraph{G}(\beta)
+         \inN{G}(\beta) \supset \set{\alpha}
          \\
-         G', H', E
-         \sufficesE{G}
+         G', H \cup \set{\exPair{\alpha}{\beta}}, E, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       {
-         G', H, (\alpha, \beta) \cons E
-         \sufficesE{G}
+         G', H, (\alpha, \beta) \cons E, G
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       %
@@ -115,20 +121,21 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) = \opGraph{G}(\beta)
+         \inN{G}(\beta) = \set{\alpha}
          \\
-         G' \disjunion \set{\bind{\beta}{H'(\beta)}},
-         H \setminus \set{\beta},
-         \outE{G}(\beta) \disjunion E
-         \sufficesE{G}
+         G' \cup \inE{H}(\beta) \cup \set{\exPair{\alpha}{\beta}},
+         H \setminus_{\mathsf{E}} \inE{H}(\beta),
+         \outE{G}(\beta) \cup E,
+         G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       {
-         G', H, (\alpha, \beta) \cons E
-         \sufficesE{G}
+         G', H, (\alpha, \beta) \cons E, G
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
    \end{smathpar}

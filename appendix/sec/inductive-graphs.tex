@@ -2,10 +2,7 @@
 
 \subsection{Graph Syntax}
 Graphs are defined by the syntax given in \figref{graph-syntax}.
-For a graph $G = \set{\seq{G}} \mapsto \alpha$ has a single output
-vertex, $\alpha$. A graph $G' = \set{\seq{G \mapsto \alpha}}$ instead has multiple
-outputs $\seq{\alpha}$. We write for a graph $G$ with $\alpha \in V(G)$ we write $G(\alpha)$
-for the subgraph of $G$ rooted at $\alpha$.
+
 \input{appendix/fig/graphs/graph-syntax}
 
 % We need some auxiliary functions to go with the new syntax:
@@ -13,21 +10,26 @@ for the subgraph of $G$ rooted at $\alpha$.
 %    For a graph $G$, we define the set $\opName{V}(G)$ to be the vertices of $G$,
 %    and define it as:
 %    \begin{salign}
-%       \opName{V}(\exForest{\set{\seq{G}}}) &= \bigcup_{g\in \set{\seq{G}}} \opName{V}(G) \\[2mm]
-%       \opName{V}(\exStar{F}{\alpha}) &= \set{\alpha} \cup \opName{V}(F) \\
+%       \opName{V}((G \mapsto \alpha) \cdot \set{\seq{H}}) &= {\alpha} \cup \opName{V}(\set{\seq{H}})\\
+%       \opName{V}(\emptyset) &= \emptyset\\
 %    \end{salign}
 % \end{definition}
 
+% To find the leaves of a graph, we use a specified version of the vertices function.
 % \begin{definition}[Leaves]
 %    For a graph $G$, write  $\opName{Leaves}(G)$ to be the 
 %    set of leaves in $G$, and define it as:
 %    \begin{salign}
-%       \opName{Leaves}(\exStar{\emptyset}{\alpha}) &= \set{\alpha} \\
-%       \opName{Leaves}(\exStar{F}{\alpha}) &= \opName{Leaves}(F) \\
-%       \opName{Leaves}(\exForest{\set{\seq{G}}}) &= \bigcup_{G \in \set{\seq{G}}} \opName{Leaves}(G)\\
+%       \opName{Leaves}((\emptyset \mapsto \alpha) \cdot \set{\seq{H}}) &= \set{\alpha} \cup \opName{Leaves}(\set{\seq{H}}) \\
+%       \opName{Leaves}((G \mapsto \alpha) \cdot \set{\seq{H}}) &= \opName{Leaves}(\set{\seq{H}}) \\
+%       \opName{Leaves}(\emptyset) &= \emptyset \\
 %    \end{salign}
 % \end{definition}
 
+We can consider a graph $G$ to be a finite
+map from vertices to subgraphs. For a vertex $\alpha$ if $\alpha \in \opName{V}(G)$
+then $\exists G'$ such that $G = \set{\alpha \mapsto G'} \cup \set{\seq{H}}$, write $G(\alpha) = (\alpha \mapsto G')$ for
+the subgraph of $G$ rooted at $\alpha$.
 % \begin{definition}[Roots]
 %    For a graph $G$, we write $\opName{Roots}(G)$ for the set
 %    of \textit{root nodes} in $G$, and define it as:
