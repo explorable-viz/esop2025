@@ -100,9 +100,9 @@
          % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         \inE{G}(\beta) \neq \emptyset
+         \inE{G}(\beta) \supset \set{\exPair{\alpha}{\beta}}
          \\
-         G', H \cup \set{\set{\alpha} \mapsto \beta}, E, G \setminus_{E} \exPair{\alpha}{\beta}
+         G', H \cup \set{\exPair{\alpha}{\beta}}, E, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
          \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
@@ -116,15 +116,15 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) = \opGraph{G}(\beta)
+         \inE{G}(\beta) = \set{\exPair{\alpha}{\beta}}
          \\
-         G' \disjunion \set{\bind{\beta}{H'(\beta)}},
-         H \setminus \set{\beta},
-         \outE{G}(\beta) \disjunion E,
-         G
+         G' \cup \inE{H}(\beta) \cup \set{\exPair{\alpha}{\beta}},
+         H \setminus_{\mathsf{E}} \inE{H}(\beta),
+         \outE{G}(\beta) \cup E,
+         G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
          \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
