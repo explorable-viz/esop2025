@@ -49,15 +49,15 @@
          %
          \inferrule*[
             lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
-            right={$H = \set{\alpha \mapsto Y}$}
+            % right={$H = \set{\alpha \mapsto Y}$}
          ]
          {
-            G' \cup H, X \cup Y, G
+            G' \cup \outE{G}(\beta), X \cup \outN{G}(\beta), G \setminus_{\mathsf{E}} \outE{G}(\beta)
             \demandedByV{}
             G^\twoPrime
          }
          {
-            G', \alpha \cons X, G \cup H \demandedByV{} G^\twoPrime
+            G', \alpha \cons X, G \demandedByV{} G^\twoPrime
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
