@@ -71,15 +71,16 @@
       {
          (X, \emptyset),
          \emptyset,
-         \set{(\alpha, \beta) \in \outE{G}(\alpha') \mid \alpha' \in X}
-         \sufficesE{G}
+         \set{(\alpha, \beta) \in \outE{G}(\alpha') \mid \alpha' \in X},
+         G
+         \sufficesE{}
          G', H
       }
       {
          X \sufficesAlg{G} \V(G') \cap \sources{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G', H, E \sufficesE{G} G^\twoPrime, H'$}}
+   {\small \flushleft \shadebox{$G', H, E, G \sufficesE{} G^\twoPrime, H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
@@ -89,25 +90,25 @@
          \strut
       }
       {
-         G', H, \emptyset \sufficesE{G} G', H
+         G', H, \emptyset, G \sufficesE{} G', H
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
       ]
       {
-         H'(\beta) \subset \opGraph{G}(\beta)
+         \inE{G}(\beta) \neq \emptyset
          \\
-         G', H', E
-         \sufficesE{G}
+         G', H \cup \set{\set{\alpha} \mapsto \beta}, E, G \setminus_{E} \exPair{\alpha}{\beta}
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       {
-         G', H, (\alpha, \beta) \cons E
-         \sufficesE{G}
+         G', H, (\alpha, \beta) \cons E, G
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       %
@@ -122,13 +123,14 @@
          \\
          G' \disjunion \set{\bind{\beta}{H'(\beta)}},
          H \setminus \set{\beta},
-         \outE{G}(\beta) \disjunion E
-         \sufficesE{G}
+         \outE{G}(\beta) \disjunion E,
+         G
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
       {
-         G', H, (\alpha, \beta) \cons E
-         \sufficesE{G}
+         G', H, (\alpha, \beta) \cons E, G
+         \sufficesE{}
          G^\twoPrime, H^\twoPrime
       }
    \end{smathpar}
