@@ -49,10 +49,10 @@
          %
          \inferrule*[
             lab={\ruleName{extend}},% $\demandedByV{}$-extend}},
-            right={$H = \set{Y \mapsto \alpha}$}
+            right={$H = \set{\alpha \mapsto Y}$}
          ]
          {
-            G' \cup H, Y \cup X, G
+            G' \cup H, X \cup Y, G
             \demandedByV{}
             G^\twoPrime
          }
@@ -67,7 +67,9 @@
    \begin{subfigure}{\textwidth}
    {\small \flushleft \shadebox{$X \sufficesAlg{G} U$}}
    \begin{smathpar}
-      \inferrule*
+      \inferrule*[
+         right=$X \subseteq \sources{G}$
+      ]
       {
          (X, \emptyset),
          \emptyset,
@@ -77,17 +79,18 @@
          G', H
       }
       {
-         X \sufficesAlg{G} \V(G') \cap \sources{G}
+         X \sufficesAlg{G} \V(G') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$G', H, E, G \sufficesE{} G^\twoPrime, H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
-         right={$\dom{G'} \subseteq \dom{G}$}
+         % right={$\dom{G'} \subseteq \dom{G}$}
       ]
       {
-         \strut
+         % \strut
+         \dom{G'} \subseteq \dom{G}
       }
       {
          G', H, \emptyset, G \sufficesE{} G', H
