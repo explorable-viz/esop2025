@@ -238,3 +238,24 @@ Fix $R \subseteq X \times Y$. We proceed by direct calculation.
       \notag
    \end{flalign}
 \end{proof}
+
+\subsection*{$\demandedByV{}$ preserves reachability}
+To prove \propref{demandedByAlg-computes-demandedBy}, we need to first prove the
+following proposition:
+
+\begin{proposition}[Reachability in $G^{\twoPrime}$]
+   For a graph $G_{0}$, with $X \subseteq \V(G_{0})$, if $\exPair{\emptyset}{\emptyset}, X, G_{0} \demandedByV{} G^{\twoPrime}$ then the following holds:
+   $$
+    R_{G_{0}}(\alpha,\beta) \iff R_{G^{\twoPrime}}(\alpha, \beta)
+   $$
+\end{proposition}
+
+The above is implied by the following:
+\begin{proposition}
+   For graphs $G, G', G^{\twoPrime}$ and $X \subseteq \V(G)$, if $G', X, G \demandedByV{} G^{\twoPrime}$ then
+   $\forall \alpha \in X, \alpha' \in \V(G'), \beta \in \V(G)$:
+   
+   $$
+      R_{G'}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{G^{\twoPrime}}(\alpha', \alpha) \wedge R_{G^{\twoPrime}}(\alpha, \beta)
+   $$
+\end{proposition}
