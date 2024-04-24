@@ -244,17 +244,20 @@ To prove \propref{demandedByAlg-computes-demandedBy}, we need to first prove the
 following proposition:
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
+   \label{prop:reachability-in-g''}
    For a graph $G_{0}$, with $X \subseteq \V(G_{0})$, if $\exPair{\emptyset}{\emptyset}, X, G_{0} \demandedByV{} G^{\twoPrime}$ then the following holds:
    $$
     R_{G_{0}}(\alpha,\beta) \iff R_{G^{\twoPrime}}(\alpha, \beta)
    $$
 \end{proposition}
+\propref{reachability-in-g''} implies \propref{demandedByAlg-computes-demandedBy} by
+restricting $X \subseteq \sources{G}$, and requiring that $\beta \in \sinks{G}$.
 
-The above is implied by the following:
+Then, \propref{reachability-in-g''} is implied by the following:
 \begin{proposition}
    For graphs $G, G', G^{\twoPrime}$ and $X \subseteq \V(G)$, if $G', X, G \demandedByV{} G^{\twoPrime}$ then
    $\forall \alpha \in X, \alpha' \in \V(G'), \beta \in \V(G)$:
-   
+
    $$
       R_{G'}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{G^{\twoPrime}}(\alpha', \alpha) \wedge R_{G^{\twoPrime}}(\alpha, \beta)
    $$
