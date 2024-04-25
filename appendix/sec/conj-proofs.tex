@@ -266,9 +266,15 @@ Then, \propref{reachability-in-g''} is implied by the following:
 We will inductively prove the above by directly exhibiting the paths we use to
 establish reachability. Thinking about it now, this version of the proposition
 doesn't imply \propref{reachability-in-g''}, since we cannot define reachability
-in the empty graph we start with.
+in the empty graph we start with. Relational composition doesn't work, since in
+the initial configuration of the system the left-most graph is empty, the reachability
+relation is also empty. This means that composing it with the relation in $G$ creates
+the empty set. Instead what we should begin by doing is initializing $G' \eqdef \exPair{X}{\emptyset}$.
+Then initially the reachability relation on $G'$ will be the identity. We can then compose this with
+the one on $G$, and things work out, in fact we don't even need to compose the relations at that point.
 
-
-We can use \propref{dembyv-preserves-paths} to prove \propref{reachability-in-g''}.
-We may want to modify it to instead consider the relational composition of $R_{G'}$
-and $R_{G^{\twoPrime}}$ on the left.
+We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
+$G$ and $X$. We define a graph ordering on graphs $G, G'$ with $\V(G) = \V(G')$,
+$G \sqsubseteq G' \eqdef \E(G) \subseteq \E(G')$. This is wellfounded so we can use
+it to rank graphs. For $X$ which is always a subset of $\V(G)$, we just use $\subseteq$.
+We can then define a lexicographic ranking function which always decreases.
