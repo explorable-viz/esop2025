@@ -245,9 +245,9 @@ following proposition:
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
-   For a graph $G_{0}$, with $X \subseteq \V(G_{0})$, if $\exPair{\emptyset}{\emptyset}, X, G_{0} \demandedByV{} G^{\twoPrime}$ then the following holds:
+   For a graph $G_{0}$, with $X \subseteq \V(G)$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} G'$ then the following holds:
    $$
-    R_{G_{0}}(\alpha,\beta) \iff R_{G^{\twoPrime}}(\alpha, \beta)
+    \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{G'}(\alpha, \beta)
    $$
 \end{proposition}
 \propref{reachability-in-g''} implies \propref{demandedByAlg-computes-demandedBy} by
@@ -263,15 +263,17 @@ Then, \propref{reachability-in-g''} is implied by the following:
       R_{G'}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{G^{\twoPrime}}(\alpha', \alpha) \wedge R_{G^{\twoPrime}}(\alpha, \beta)
    $$
 \end{proposition}
-We will inductively prove the above by directly exhibiting the paths we use to
-establish reachability. Thinking about it now, this version of the proposition
-doesn't imply \propref{reachability-in-g''}, since we cannot define reachability
-in the empty graph we start with. Relational composition doesn't work, since in
-the initial configuration of the system the left-most graph is empty, the reachability
-relation is also empty. This means that composing it with the relation in $G$ creates
-the empty set. Instead what we should begin by doing is initializing $G' \eqdef \exPair{X}{\emptyset}$.
-Then initially the reachability relation on $G'$ will be the identity. We can then compose this with
-the one on $G$, and things work out, in fact we don't even need to compose the relations at that point.
+We will inductively prove the above by exhibiting the specific paths/vertices needed to
+show these reachability conditions. To make it work, we need to change the def of
+$\demandedByAlg{}$ so that it initializes $G'' \eqdef \exPair{X}{\emptyset}$, rather
+than as the empty graph. Otherwise the bi-implication would be false initially,
+since the reachability relation on the empty graph is empty. Instead, we begin with
+$G'$ containing the appropriate vertices. Then the inductive proof is something like:
+\begin{itemize}
+   \item \textbf{Base case:} \ruleName{$\demandedByV{}$-done}: the condition holds vacuously for the conclusion since $X = \emptyset$
+   \item \textbf{Inductive case: } \ruleName{$\demandedByV{}$-step}: not sure how
+\end{itemize}
+
 
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
 $G$ and $X$. We define a graph ordering on graphs $G, G'$ with $\V(G) = \V(G')$,
