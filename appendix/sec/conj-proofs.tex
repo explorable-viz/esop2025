@@ -275,6 +275,7 @@ the one on $G$, and things work out, in fact we don't even need to compose the r
 
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
 $G$ and $X$. We define a graph ordering on graphs $G, G'$ with $\V(G) = \V(G')$,
-$G \sqsubseteq G' \eqdef \E(G) \subseteq \E(G')$. This is wellfounded so we can use
-it to rank graphs. For $X$ which is always a subset of $\V(G)$, we just use $\subseteq$.
-We can then define a lexicographic ranking function which always decreases.
+$G \sqsubseteq G' \eqdef |G| \leq |G'|$, where $|G| \eqdef |\E(G)|$. This is wellfounded so we can use
+it to rank graphs. For $X$ which is always a subset of $\V(G)$, we use the size of the two sets.
+We can then define a lexicographic ranking function $\opName{Rank}(G, X) \eqdef \exPair{|G|}{|X|}$.
+Then in every step of our algorithm, this measure will decrease.
