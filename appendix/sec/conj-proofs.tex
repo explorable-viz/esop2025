@@ -245,9 +245,9 @@ following proposition:
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
-   For a graph $G$, with $X \subseteq \V(G)$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} G'$ then the following holds:
+   For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
    $$
-    \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{G'}(\alpha, \beta)
+    \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{H}(\alpha, \beta)
    $$
 \end{proposition}
 \propref{reachability-in-g''} implies \propref{demandedByAlg-computes-demandedBy} by
@@ -256,11 +256,11 @@ restricting $X \subseteq \sources{G}$, and requiring that $\beta \in \sinks{G}$.
 Then, \propref{reachability-in-g''} is implied by the following:
 \begin{proposition}
    \label{prop:dembyv-preserves-paths}
-   For graphs $G, G', G^{\twoPrime}$ and $X \subseteq \V(G)$, if $G', X, G \demandedByV{} G^{\twoPrime}$ then
-   $\forall \alpha \in X, \alpha' \in \V(G'), \beta \in \V(G)$:
+   For graphs $G, H, H'$ and $X \subseteq \V(G)$, if $H, X, G \demandedByV{} H'$ then
+   $\forall \alpha \in X, \alpha' \in \V(H), \beta \in \V(G)$:
 
    $$
-      R_{G'}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{G^{\twoPrime}}(\alpha', \alpha) \wedge R_{G^{\twoPrime}}(\alpha, \beta)
+      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
    $$
 \end{proposition}
 % We will inductively prove the above by exhibiting the specific paths/vertices needed to
@@ -270,16 +270,28 @@ Then, \propref{reachability-in-g''} is implied by the following:
 %    \item \textbf{Inductive case: } \ruleName{$\demandedByV{}$-step}: not sure how
 % \end{itemize}
 
+\begin{theorem}
+   \ref{prop:reachability-in-g''} $\implies$ \ref{prop:demandedByAlg-computes-demandedBy}
+\end{theorem}
+\begin{proof}
+   Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
+   \begin{description}
+      \item[Case ($\implies$)]: $X \demandsAlg{G} \V(H) \cap \sinks{G}$. This is derived from $\exPair{X}{\emptyset},X,G \demandedByV{} H$. So $\forall \beta \in \V(H)\cap\sinks{G}$ then $\exists \alpha \in X$ with $R_{H}(\alpha, \beta)$, and by \ref{prop:reachability-in-g''}.  $R_{G}(\alpha, \beta)$. Then $\beta  \in \demandedByR_{G}(X)$  
+      \item[Case ($\impliedby$)]: $\beta \in \demandedByR_{G}(X)$ means that $\exists \alpha \in X$ with $R_{G}(\alpha, \beta)$. If $\exists H$ with $\exPair{X}{\emptyset},X,G \demandedByV{} H$, then by \ref{prop:reachability-in-g''} we have $R_{H}(\alpha, \beta)$ and so $\beta \in \V(H)$. Then we can conclude that $X \demandedByAlg{} \V(H) \cap \sinks{G}$ and $\beta \in \V(H) \cap \sinks{G}$.
+   \end{description}
+\end{proof}
+
 \subsubsection*{Termination}
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
-$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. This
-ranking function induces a lexicographic order on states of the algorithm:
-$$
-   \opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)
-$$
-Then this function decreases on states of the algorithm:
+$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. 
+We then use the lexicographic ordering on these pairs of integers. 
+% $$
+%    \opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)
+% $$
 
+If we consider the rule \ruleName{$\demandedByAlg{}$-step}, we can conclude that the
+ranking function decreases on consecutive states of the algorithm:
 For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
-then $|\E(G \setminus_{E} \outE{G}(|\alpha))| \leq |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
-$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| \leq |\alpha \cdot X|$. In either
+then $|\E(G \setminus_{E} \outE{G}(|\alpha))| < |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
+$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| < |\alpha \cdot X|$. In either
 case, the ranking function of the consecutive state strictly decreases every step.
