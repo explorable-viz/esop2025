@@ -277,7 +277,7 @@ Then, \propref{reachability-in-g''} is implied by the following:
    Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
    \begin{description}
       \item[Case ($\implies$)]: $\exPair{X}{\emptyset},X,G \demandedByV{} H$ holds (since this is how we derive $X \demandedByAlg{} \V(H) \cap \sinks{G}$). So $\forall \beta \in \V(H)\cap\sinks{G}$ then $\exists \alpha \in X$ with $R_{H}(\alpha, \beta)$, and by \ref{prop:reachability-in-g''} we have that $R_{G}(\alpha, \beta)$. Then $\beta  \in \demandedByR_{G}(X)$  
-      \item[Case ($\impliedby$)]: $\beta \in \demandedByR_{G}(X)$ means that $\exists \alpha \in X$ with $R_{G}(\alpha, \beta)$. If $\exists H$ with $\exPair{X}{\emptyset},X,G \demandedByV{} H$, then by \ref{prop:reachability-in-g''} we have $R_{H}(\alpha, \beta)$ and so $\beta \in \V(H)$. Then we can conclude that $X \demandedByAlg{} \V(H) \cap \sinks{G}$ and $\beta \in \V(H) \cap \sinks{G}$.
+      \item[Case ($\impliedby$)]: We start with $\beta \in \demandedByR_{G}(X) \subseteq \sinks{G}$. This means that $\exists \alpha \in X$ with $R_{G}(\alpha, \beta)$. Fix $H$ (does $H$ always exist?) such that $\exPair{X}{\emptyset},X,G \demandedByV{} H$, then by \ref{prop:reachability-in-g''} we have $R_{H}(\alpha, \beta)$ and so $\beta \in \V(H)$ as well. Then we can conclude that $X \demandedByAlg{} \V(H) \cap \sinks{G}$ and so $\forall \beta \in \demandedByR_{G}(X)$ we have that $\beta \in \V(H) \cap \sinks{G}$.
    \end{description}
 \end{proof}
 
