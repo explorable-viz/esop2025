@@ -281,6 +281,12 @@ Then, \propref{reachability-in-g''} is implied by the following:
    \end{description}
 \end{proof}
 
+\begin{theorem}
+   \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
+\end{theorem}
+\begin{proof}
+   Set $H \eqdef \exPair{X}{\emptyset}$. Then $\forall \alpha \in X$, if for some $\beta \in \sinks{G}$ we have $R_{G}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)$ then by \ref{prop:dembyv-preserves-paths} this is equivalent to $R_{H}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)$, and thus we have \ref{prop:reachability-in-g''} by taking the second conjunct in each statement. 
+\end{proof}
 \subsubsection*{Termination}
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
 $G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. 
