@@ -239,13 +239,13 @@ Fix $R \subseteq X \times Y$. We proceed by direct calculation.
    \end{flalign}
 \end{proof}
 
-\subsection*{$\demandedByV{}$ preserves reachability}
+\subsubsection*{$\demandedByV{}$ preserves reachability}
 To prove \propref{demandedByAlg-computes-demandedBy}, we need to first prove the
 following proposition:
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
-   For a graph $G_{0}$, with $X \subseteq \V(G)$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} G'$ then the following holds:
+   For a graph $G$, with $X \subseteq \V(G)$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} G'$ then the following holds:
    $$
     \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{G'}(\alpha, \beta)
    $$
@@ -264,20 +264,20 @@ Then, \propref{reachability-in-g''} is implied by the following:
    $$
 \end{proposition}
 We will inductively prove the above by exhibiting the specific paths/vertices needed to
-show these reachability conditions. To make it work, we need to change the def of
-$\demandedByAlg{}$ so that it initializes $G'' \eqdef \exPair{X}{\emptyset}$, rather
-than as the empty graph. Otherwise the bi-implication would be false initially,
-since the reachability relation on the empty graph is empty. Instead, we begin with
-$G'$ containing the appropriate vertices. Then the inductive proof is something like:
+show these reachability conditions. Then the inductive proof is something like:
 \begin{itemize}
    \item \textbf{Base case:} \ruleName{$\demandedByV{}$-done}: the condition holds vacuously for the conclusion since $X = \emptyset$
    \item \textbf{Inductive case: } \ruleName{$\demandedByV{}$-step}: not sure how
 \end{itemize}
 
-
+\subsubsection*{Termination}
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
-$G$ and $X$. We define a graph ordering on graphs $G, G'$ with $\V(G) = \V(G')$,
-$G \sqsubseteq G' \eqdef |G| \leq |G'|$, where $|G| \eqdef |\E(G)|$. This is wellfounded so we can use
-it to rank graphs. For $X$ which is always a subset of $\V(G)$, we use the size of the two sets.
-We can then define a lexicographic ranking function $\opName{Rank}(G, X) \eqdef \exPair{|G|}{|X|}$.
-Then in every step of our algorithm, this measure will decrease.
+$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. This
+ranking function induces a lexicographic order on states of the algorithm:
+$\opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)$.
+Then this function decreases on states of the algorithm:
+
+For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
+then $|\E(G \setminus_{E} \outE{G}(|alpha))| \leq |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
+$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| \leq |\alpha \cdot X|$. In either
+case, the ranking function of the consecutive state decreases.
