@@ -274,10 +274,12 @@ Then, \propref{reachability-in-g''} is implied by the following:
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
 $G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. This
 ranking function induces a lexicographic order on states of the algorithm:
-$\opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)$.
+$$
+   \opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)
+$$
 Then this function decreases on states of the algorithm:
 
 For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
-then $|\E(G \setminus_{E} \outE{G}(|alpha))| \leq |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
+then $|\E(G \setminus_{E} \outE{G}(|\alpha))| \leq |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
 $G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| \leq |\alpha \cdot X|$. In either
 case, the ranking function of the consecutive state strictly decreases every step.
