@@ -2,7 +2,7 @@
 
 \subsection{\lemref{im-preim-conjugate}}
 For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
-
+\setcounter{equation}{0}
 \begin{proof}
    Let $X' \in \powerset{X}$, $Y' \in \powerset{Y}$.
    \small
@@ -101,7 +101,7 @@ equivalent:
    \item $f$ and $g$ form a conjugate pair
    \item $f$ and $\dual{g}$ form a Galois connection
 \end{enumerate}
-
+\setcounter{equation}{0}
 \begin{proof}
    Fix $x \in A$ and $y \in B$.
    \newline
@@ -168,7 +168,7 @@ equivalent:
       \notag
    \end{flalign}
 \end{proof}
-
+\setcounter{equation}{0}
 \subsection{\lemref{conjugate:image-preimage-duality}}
 Fix $R \subseteq X \times Y$. We proceed by direct calculation.
 \begin{proof}
@@ -284,8 +284,98 @@ Then, \propref{reachability-in-g''} is implied by the following:
 \begin{theorem}
    \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
 \end{theorem}
+\setcounter{equation}{0}
 \begin{proof}
-   Set $H \eqdef \exPair{X}{\emptyset}$. Then $\forall \alpha \in X$, if for some $\beta \in \sinks{G}$ we have $R_{G}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)$ then by \ref{prop:dembyv-preserves-paths} this is equivalent to $R_{H}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)$, and thus we have \ref{prop:reachability-in-g''} by taking the second conjunct in each statement. 
+   Set $H \eqdef \exPair{X}{\emptyset}$. Then $\forall \alpha \in X$, if for some $\beta \in \sinks{G}$ we have $R_{G}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)$ then by \ref{prop:dembyv-preserves-paths} this is equivalent to $R_{H}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)$, and thus we have \ref{prop:reachability-in-g''} by taking the second conjunct in each statement.
+   \begin{flalign}
+      &
+      H, X, G \demandedByAlg{} H'
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+         R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \text{(\ref{prop:dembyv-preserves-paths})}
+      \notag
+      \\
+      &
+      H = \exPair{X}{\emptyset}
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      \caseName{Case $\implies$}
+      &
+      \notag
+      \\
+      &
+      \exists \beta \in \sinks{G}\text{ with } R_{G}(\alpha, \beta)
+      &
+      \text{assume}
+      \locallabel{beta-in-sinks}
+      \\
+      &
+      R_{H}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)
+      &
+      \text{($R_{H}$ reflexive, \localref{beta-in-sinks})}
+      \locallabel{h-g-conjunct}
+      \\
+      &
+      R_{H'}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \text{(\ref{prop:dembyv-preserves-paths}, \localref{h-g-conjunct})}
+      \locallabel{h-conjunct}
+      \\
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \text{(\localref{h-conjunct}, $\wedge$)}
+      \notag
+      \\
+      \qedLocal
+      &
+      R_{G}(\alpha, \beta) \implies  R_{H'}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      \caseName{Case $\impliedby$}
+      &
+      \notag
+      \\
+      &
+      \exists \beta \in \sinks{H'}\text{ with } R_{H'}(\alpha, \beta)
+      &
+      \text{assume}
+      \locallabel{beta-in-h'}
+      \\
+      &
+      R_{H'}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \text{(\localref{beta-in-h'}, $R_{H'}$ reflexive)}
+      \locallabel{h'-conjunct}
+      \\
+      &
+      R_{H}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)
+      &
+      \text{(\ref{prop:dembyv-preserves-paths}, \localref{h'-conjunct})}
+      \locallabel{h-g-conjunct-2}
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      &
+      \text{(\localref{h-g-conjunct-2}, def of $\wedge$)}
+      \notag
+      \\
+      \qedLocal
+      &
+      R_{H'}(\alpha, \beta) \implies R_{G}(\alpha, \beta)
+      &
+      \notag
+   \end{flalign}
 \end{proof}
 \subsubsection*{Termination}
 We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
