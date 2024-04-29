@@ -275,10 +275,160 @@ Then, \propref{reachability-in-g''} is implied by the following:
 \end{theorem}
 \begin{proof}
    Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
-   \begin{description}
-      \item[Case ($\implies$)]: $\exPair{X}{\emptyset},X,G \demandedByV{} H$ holds (since this is how we derive $X \demandedByAlg{} \V(H) \cap \sinks{G}$). So $\forall \beta \in \V(H)\cap\sinks{G}$ then $\exists \alpha \in X$ with $R_{H}(\alpha, \beta)$, and by \ref{prop:reachability-in-g''} we have that $R_{G}(\alpha, \beta)$. Then $\beta  \in \demandedByR_{G}(X)$  
-      \item[Case ($\impliedby$)]: We start with $\beta \in \demandedByR_{G}(X) \subseteq \sinks{G}$. This means that $\exists \alpha \in X$ with $R_{G}(\alpha, \beta)$. Fix $H$ (does $H$ always exist?) such that $\exPair{X}{\emptyset},X,G \demandedByV{} H$, then by \ref{prop:reachability-in-g''} we have $R_{H}(\alpha, \beta)$ and so $\beta \in \V(H)$ as well. Then we can conclude that $X \demandedByAlg{} \V(H) \cap \sinks{G}$ and so $\forall \beta \in \demandedByR_{G}(X)$ we have that $\beta \in \V(H) \cap \sinks{G}$.
-   \end{description}
+   \begin{flalign}
+      &
+      \exPair{X}{\emptyset},X,G \demandedByV{} H \implies (\forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta))
+      &
+      \text{(assume \ref{prop:reachability-in-g''})}
+      \notag
+      \\
+      &
+      \exPair{X}{\emptyset}, X, G \demandedByV{} H
+      \quad
+      (\exists H)
+      &
+      \text{($\demandedByV{}$ terminates)}
+      \locallabel{dembyV-premise}
+      \\
+      &
+      \caseName{Case $\implies$}
+      &
+      \notag
+      \\
+      &
+      X \demandedByAlg{} Y
+      \quad
+      (\exists Y)
+      &
+      \text{(suppose)}
+      \notag
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \exPair{X}{\emptyset}, X, G \demandedByV{} H
+            }
+            {
+               X \demandedByAlg{} \V(H) \cap \sinks{G} \Lowlight{(= Y)}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{(def of $\demandedByAlg{}$)}
+      \notag
+      \\
+      &
+      \text{Want to show: }\demandedByR_{G}(X) = \V(H) \cap \sinks{G}
+      &
+      \notag
+      \\
+      &
+      \caseName{Case: $\supseteq$}
+      &
+      \notag
+      \\
+      &
+      \beta \in \demandedByR_{G}(X)
+      \quad
+      (\forall \beta)
+      &
+      \text{(assume)}
+      \locallabel{beta-in-demanded}
+      \\
+      &
+      \beta \in \sinks{G}
+      &
+      \text{(\localref{beta-in-demanded})}
+      \locallabel{beta-in-sinks-g}
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      \quad
+      (\exists \alpha \in X)
+      &
+      \text{(def of $\demandedByR_{G}$)}
+      \locallabel{alpha-reaches-beta-1}
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \text{(\localref{alpha-reaches-beta-1}, \ref{prop:reachability-in-g''})}
+      \\
+      &
+      \beta \in \V(H)
+      &
+      \text{(Def of $R_{H}$)}
+      \locallabel{beta-in-h-1}
+      \\
+      \qedLocal
+      & 
+      \beta \in \V(H) \cap \sinks{G}
+      &
+      \text{(\localref{beta-in-sinks-g}, \localref{beta-in-h-1})}
+      \locallabel{}
+      \\
+      &
+      \caseName{Case $\subseteq$}
+      &
+      \notag
+      \\
+      &
+      \beta \in \V(H) \cap \sinks{G}
+      &
+      \text{(assume)}
+      \notag
+      \\
+      &
+      \text{Want to show: } \exists \alpha \in \sources{G} \text{ with } R_{G}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      \caseName{Case $\impliedby$}
+      &
+      \notag
+      \\
+      &
+      \beta \in \demandedByR_{G}(X)
+      \quad (\subseteq \sinks{G})
+      &
+      \text{(assume)}
+      \locallabel{beta-in-sinks-2}
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      \quad
+      (\exists \alpha \in X)
+      &
+      \locallabel{a-reachable-source-exists}
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \text{(\localref{a-reachable-source-exists}, \ref{prop:reachability-in-g''})}
+      \locallabel{alpha-reaches-beta-in-H}
+      \\
+      &
+      \beta \in \V(H)
+      &
+      \text{(\localref{alpha-reaches-beta-in-H})}
+      \locallabel{beta-in-vh}
+      \\
+      &
+      X \demandedByAlg{} \V(H) \cap \sinks{G}
+      &
+      \text{(\localref{dembyV-premise})}
+      \notag
+      \\
+      \qedLocal
+      &
+      \beta \in \V(H) \cap \sinks{G}
+      &
+      \text{(\localref{beta-in-sinks-2},\localref{beta-in-vh})}
+      \\
+   \end{flalign}
 \end{proof}
 
 \begin{theorem}
