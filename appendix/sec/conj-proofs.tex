@@ -256,6 +256,15 @@ $G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| < |\alpha \cdot X|
 case, the ranking function of the consecutive state strictly decreases every step.
 
 \subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
+To prove \propref{demandedByAlg-computes-demandedBy}, we begin by noting that
+any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (DAG).
+Given a finite DAG $H$ we have that $\forall \beta \in \V(H)$ $\exists \alpha \in \sources{H}$
+with $R_{H}(\alpha, \beta)$. For a sketch of this fact, fix a $\beta$. If $\beta \in \sources{H}$,
+in which case $R_{H}(\beta, \beta)$ trivially. If $\beta \notin \sources{H}$, then $\exists \alpha$
+with $(\alpha,\beta) \in \E(H)$. Then we can repeeat this check with $\alpha$. Since $H$ is finite
+we eventually reach a source.
+
+
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
    For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
@@ -264,16 +273,6 @@ case, the ranking function of the consecutive state strictly decreases every ste
    $$
 \end{proposition}
 
-Then, \propref{reachability-in-g''} is implied by the following:
-\begin{proposition}
-   \label{prop:dembyv-preserves-paths}
-   For graphs $G, H, H'$ and $X \subseteq \V(G)$, if $H, X, G \demandedByV{} H'$ then
-   $\forall \alpha \in X, \alpha' \in \V(H), \beta \in \V(G)$:
-
-   $$
-      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-   $$
-\end{proposition}
 
 
 \begin{theorem}
@@ -443,6 +442,18 @@ Then, \propref{reachability-in-g''} is implied by the following:
       &
    \end{flalign}
 \end{proof}
+
+We can prove \propref{reachability-in-g''} with the following:
+\begin{proposition}
+   \label{prop:dembyv-preserves-paths}
+   For graphs $G, H, H'$ and $X \subseteq \V(G)$, if $H, X, G \demandedByV{} H'$ then
+   $\forall \alpha \in X, \alpha' \in \V(H), \beta \in \V(G)$:
+
+   $$
+      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+   $$
+\end{proposition}
+
 
 \begin{theorem}
    \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
