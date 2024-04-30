@@ -264,6 +264,8 @@ in which case $R_{H}(\beta, \beta)$ trivially. If $\beta \notin \sources{H}$, th
 with $(\alpha,\beta) \in \E(H)$. Then we can repeeat this check with $\alpha$. Since $H$ is finite
 we eventually reach a source.
 
+We also make use of the fact that in the judgement $H, X, G \demandedByV{} H'$, $H$ is a subgraph
+of $H'$.
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
@@ -433,7 +435,7 @@ we eventually reach a source.
       \notag
       \\
       &
-      \text{Want to show that} \V(H) \cap \sinks{G} = \demandedByR_{G}(X)
+      \text{Want to show that } \V(H) \cap \sinks{G} = \demandedByR_{G}(X)
       &
       \notag
       \\
@@ -506,20 +508,61 @@ We can prove \propref{reachability-in-g''} with the following:
       &
       \\
       &
-      R_{H \cup \outE{G}(\alpha)}(\alpha', \gamma) \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\gamma, \beta)
+      R_{H \cup \outE{G}(\alpha)}(\alpha', \beta') \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\beta', \beta)
       \iff
-      R_{H'}(\alpha', \gamma) \wedge R_{H'}(\gamma, \beta)
+      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
       &
       \text{(IH)}
       \\
       &
-      \qquad\quad (\forall \gamma \in \outN{G}(\alpha) \Lowlight{\subseteq X \cup \outN{G}(\alpha)})
+      \qquad\quad (\forall \beta' \in \outN{G}(\alpha) \Lowlight{\subseteq X \cup \outN{G}(\alpha)})
       &
       \notag
       \\
       &
       \text{want to show: } R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
       &
+      \\
+      &
+      \caseName{Case $\implies$}
+      &
+      \notag
+      \\
+      &
+      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta)
+      &
+      \text{(assume)}
+      \\
+      &
+      ((\alpha, \beta') \in \E(G) )\wedge R_{G}(\beta', \beta)
+      \quad
+      (\exists \beta')
+      &
+      \notag
+      \\
+      &
+      R_{G \setminus_{E} \outE{G}(\alpha)}(\beta',\beta)
+      &
+      \notag
+      \\
+      &
+      (\alpha, \beta') \in \E(H \cup \outE{G}(\alpha))
+      &
+      \notag
+      \\
+      &
+      R_{H \cup \outE{G}(\alpha)}(\alpha, \beta')
+      &
+      \notag
+      \\
+      &
+      R_{H'}(\alpha, \beta') \wedge R_{H'}(\beta', \beta)
+      &
+      \\
+      &
+      \caseName{Case $\impliedby$}
+      &
+      \notag
       \\
    \end{flalign}
 \end{proof}
