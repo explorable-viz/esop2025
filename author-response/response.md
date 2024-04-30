@@ -15,11 +15,13 @@ output and 'I' input). In this setup, f can be composed with (dual g) and (dual 
 composites is a "linked outputs" analysis of type O1 -> O2 or O2 -> O1. For linked inputs, we need to
 formulate f and g as a single Galois connection of type I -> O1 × O2 which can then be composed with its own
 dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I -> I. This
-construction relies on projections having conjugates [expand].
+construction relies on projections having conjugates (so that for example the projection π₁: O1 × O2 -> O1 has
+a conjugate [id , const ⊥] : O1 -> O1 × O2 which supplies the bottom demand for the right view).
 
 ## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and D)
 
-
+Reviewer A asks whether we could formulate a correctness theorem for the DDG, relating it to the big-step
+evaluation in 4 and/or graph operators in 3.
 
 ## Questions raised by Reviewer A
 
