@@ -453,7 +453,76 @@ We can prove \propref{reachability-in-g''} with the following:
       R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
    $$
 \end{proposition}
-
+\setcounter{equation}{0}
+\begin{proof}
+   By induction
+   \begin{flalign}
+      &
+      X \subseteq \V(G)
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      H, X, G \demandedByV{} H'
+      &
+      \text{assume}
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \strut
+            }
+            {
+               H, \emptyset, G \demandedByV{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      \qedLocal
+      &
+      \text{trivially true, since $X=\emptyset$}
+      &
+      \notag
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cons X, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \\
+      &
+      R_{H \cup \outE{G}(\alpha)}(\alpha', \gamma) \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\gamma, \beta)
+      \iff
+      R_{H'}(\alpha', \gamma) \wedge R_{H'}(\gamma, \beta)
+      &
+      \text{(IH)}
+      \\
+      &
+      \qquad\quad (\forall \gamma \in \outN{G}(\alpha) \Lowlight{\subseteq X \cup \outN{G}(\alpha)})
+      &
+      \notag
+      \\
+      &
+      \text{want to show: } R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \\
+   \end{flalign}
+\end{proof}
 
 \begin{theorem}
    \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
