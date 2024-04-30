@@ -1,17 +1,45 @@
-# Overall Thoughts (not to be included in response)
-- None of the reviewers consider themselves to be experts on the material
-- Recurring themes:
-  - Minor delta vis-a-vis POPL 2022 paper
+We thank our four reviewers for their careful and engaged reviews. We respond to comments made by two or more
+reviewers first, and then address remaining questions raised by specific reviewers.
 
-## Reviewer A
-B. OK paper, but I will not champion it
-Y. I am knowledgeable in this area, but not an expert
-2. OK: I have some confidence in my assessment
+# Issues raised by multiple reviewers
+
+## 1. Delta with respect to POPL 2022 paper (Reviewers A and D)
+
+As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is not
+huge. However, we believe the approach proposed provides sufficient benefits to warrant separate study, and we
+have identified some areas in which this could be emphasised.
+
+Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the
+earlier work, because the Galois connections were of types f: O1 -> I and g: O2 -> I (where 'O' indicates
+output and 'I' input). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
+composites is a "linked outputs" analysis of type O1 -> O2 or O2 -> O1. For linked inputs, we need to
+formulate f and g as a single Galois connection of type I -> O1 × O2 which can then be composed with its own
+dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I -> I. This
+construction relies on projections having conjugates [expand].
+
+## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and D)
+
+
+
+## Questions raised by Reviewer A
+
+- Typing rules. These were included in the POPL 2022 work for clarity but omitted here for reasons of space; we will
+  include them in an Appendix.
+
+- Correctness statement on DDG. See our response to issue (2) above.
+
+- Overhead compared to core language without DDG annotations. This is a good question that would be relatively
+  straightforward to answer, without taking up too much space; we will do so.
+
+### List of proposed changes
+
+***
+
+## Review A
 
 **Specific points highlighted for authors' response**
 - Small delta vs. POPL 2022 (shared examples, segment of core language, use of Galois connections)
 - Needs additional connections between Sections 3 and 4. As reviewer notes, more general-purpose graph queries may be possible on of DDG, which is a benefit of keeping them separate, but currently not clear how the two are related
-- Any reason for omitting typing rules (vs. POPL 2022)
 - POPL 2022 establishes a connection between Galois connection and the semantics through theorem 3.10. Is it possible to formulate a correctness statement relating DDG to graph operators?
 - Overhead when comparing against core language without DDG annotations?
 
@@ -23,10 +51,7 @@ Y. I am knowledgeable in this area, but not an expert
 - Is provenance management a form of effect that can be captured through a monad in a Haskell-like style?
 - Some discussion (e.g. in Section 6.3) regarding benefits of a general-purpose functional language vs. Visualization DSL like Vega
 
-# Reviewer B
-B. OK paper, but I will not champion it
-Y. I am knowledgeable in this area, but not an expert
-3. Good: I am reasonably sure of my assessment
+# Review B
 
 **Specific points highlighted for authors' response**
 - Terminology of paper is hard to grasp in the first sections. E.g. intro talks about a Galois connection between minimal $\triangledown$ and sufficient $\blacktriangleup$, but then in Figure 2 you use "demanded by" $\triangleup$. Similarly, "De Morgan dual" is mentioned in intro but never defined or given an intuition
@@ -39,10 +64,7 @@ E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 - Is there a soundness theorem that indicates graph is properly constructed?
 - Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
 
-# Reviewer C
-B. OK paper, but I will not champion it
-Z. I am not an expert; my evaluation is that of an informed outsider
-2. OK: I have some confidence in my assessment
+# Review C
 
 **Specific points to respond to**
 - Why distinction between eliminators and expressions? Why not a "normal" core lambda-calculus?
@@ -51,10 +73,7 @@ Z. I am not an expert; my evaluation is that of an informed outsider
 - **No anonymous supplement provided to play with those visualizations in real time**
 - If program is known statically, you should be able to compute graph along with data before serving it to the client
 
-# Reviewer D
-C. Weak paper, though I will not fight strongly against it
-Z. I am not an expert; my evaluation is that of an informed outsider
-2. OK: I have some confidence in my assessment
+# Review D
 
 **Specific points to respond to**
 - Delta to POPL 2022 may be too small -- Do the above two items correctly characterize the main delta?
