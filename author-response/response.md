@@ -24,15 +24,19 @@ Y. I am knowledgeable in this area, but not an expert
 - Some discussion (e.g. in Section 6.3) regarding benefits of a general-purpose functional language vs. Visualization DSL like Vega
 
 # Reviewer B
-
-## Overall merit
 B. OK paper, but I will not champion it
-
-## Reviewer Expertise
 Y. I am knowledgeable in this area, but not an expert
-
-## Reviewer Confidence
 3. Good: I am reasonably sure of my assessment
+
+**Specific points highlighted for authors' response**
+- Terminology of paper is hard to grasp in the first sections. E.g. intro talks about a Galois connection between minimal $\triangledown$ and sufficient $\blacktriangleup$, but then in Figure 2 you use "demanded by" $\triangleup$. Similarly, "De Morgan dual" is mentioned in intro but never defined or given an intuition
+- Duality connections using conjugate / Galois connection / De Morgan Dual seem to be used; perhaps just mention as an alternative formulation and talk more about case studies or PL part
+- Are you interested in providing evidence that the right pieces of information were considered for the output, or in helping understand potentially poorly designed charts? Please clarify
+- You say dependency graph only considers data dependencies and not control dependencies -- what about branching on content of data?
+- Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
+E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
+- I wish you provided concrete runs of your algorithms.
+- Is there a soundness theorem that indicates that the graph is properly constructed?
 
 # Reviewer C
 B. OK paper, but I will not champion it
