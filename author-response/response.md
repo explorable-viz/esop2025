@@ -37,6 +37,7 @@ Y. I am knowledgeable in this area, but not an expert
 E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 - I wish you provided concrete runs of your algorithms.
 - Is there a soundness theorem that indicates that the graph is properly constructed?
+- Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
 
 # Reviewer C
 B. OK paper, but I will not champion it
@@ -54,3 +55,8 @@ Z. I am not an expert; my evaluation is that of an informed outsider
 C. Weak paper, though I will not fight strongly against it
 Z. I am not an expert; my evaluation is that of an informed outsider
 2. OK: I have some confidence in my assessment
+
+**Specific points to respond to**
+- Delta to POPL 2022 may be too small
+- Better to highlight that underlying idea is quite straightforward
+- Continuations and eliminators irrelevant to subject of paper, just have a regular case statement?
