@@ -59,6 +59,17 @@ Additional points made by Reviewer A
   connection between the world of graphs and conjugate operators and the executions they can be used to reason
   about.
 
+- "Strictness condition" in Lemma 3.22 and provenance tracking as an effect. There is almost certainly a
+  connection between "Galois slicing" and the notion of strictness that arises is denotational semantics; in
+  particular any foreign functions or primitive operations must be _stable_ (in the sense of Berry) in order
+  for the appropriate minima to exist and thus for those operations to "play well" (i.e. compose with the rest
+  of the system). For example, multiplication must be non-strict is one argument or the other (but not both);
+  (⊥ * n = ⊥) or (n * ⊥ = \bot), but not both. may suffice for adjoints; may be worth exploring if this
+  originates from a more fundamental principle. We also think it is possible to model Galois slicing as a kind
+  of effect, using a "lifting" monad similar to the non-termination monad that arises is denotational
+  semantics. Exploring these in more detail will be the topic of another paper, but we will include some
+  discussion in related/future work.
+
 ### List of proposed changes
 
 ***
@@ -66,10 +77,8 @@ Additional points made by Reviewer A
 ## Review A
 
 **Additional points that might warrant commentary**
-- "Strictness condition" in Lemma 3.22 (image of empty set is empty set) may suffice for adjoints; may be worth exploring if this originates from a more fundamental principle
 - Slowdown observed in G-DemBy-Suff (Section 5.1.4) raises some questions, as it's one of the main applications highlighted in the paper
 - Relationship to recent advancements in provenance for aggregates or recursive queries to handling of recursive functions in the core language;conversely, the conjugate operators identified here may hold applications in databases as well
-- Is provenance management a form of effect that can be captured through a monad in a Haskell-like style?
 - Some discussion (e.g. in Section 6.3) regarding benefits of a general-purpose functional language vs. Visualization DSL like Vega
 
 # Review B
