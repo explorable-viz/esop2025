@@ -35,8 +35,8 @@ Y. I am knowledgeable in this area, but not an expert
 - You say dependency graph only considers data dependencies and not control dependencies -- what about branching on content of data?
 - Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
 E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
-- I wish you provided concrete runs of your algorithms.
-- Is there a soundness theorem that indicates that the graph is properly constructed?
+- I wish you provided concrete runs of your algorithms
+- Is there a soundness theorem that indicates graph is properly constructed?
 - Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
 
 # Reviewer C
@@ -57,6 +57,6 @@ Z. I am not an expert; my evaluation is that of an informed outsider
 2. OK: I have some confidence in my assessment
 
 **Specific points to respond to**
-- Delta to POPL 2022 may be too small
+- Delta to POPL 2022 may be too small -- Do the above two items correctly characterize the main delta?
 - Better to highlight that underlying idea is quite straightforward
-- Continuations and eliminators irrelevant to subject of paper, just have a regular case statement?
+- Continuations and eliminators irrelevant to subject of paper. Why doesn't the calculus just have a one-level deep explicit case statement? This would be more standard and remove the need to even talk about eleminators and "trie-like" objects etc.
