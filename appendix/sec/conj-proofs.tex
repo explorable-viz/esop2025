@@ -280,11 +280,6 @@ We will use the following lemma's.
    Then it holds by induction hypothesis
 \end{proof}
 
-\begin{lemma}[Slice is a subgraph of original]
-   If we have graphs $G, H$ and nodes $X \subseteq \sources{G}$, if
-   $(X, \emptyset), X, G \demandedByV{} H$ then $(\alpha, \beta) \in \E(H) \implies (\alpha, \beta) \in \E(G)$
-\end{lemma}
-
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
    For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
@@ -594,30 +589,26 @@ We can prove \propref{reachability-in-g''} with the following:
       &
       \notag
       \\
-      &
-      \caseName{Case $\impliedby$}
-      &
-      \notag
-      \\
-      &
-      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-      &
-      \text{(assume)}
-      \\
-      &
-      ((\alpha, \beta') \in \E(H')) \wedge R_{H'}(\beta',\beta)
-      \quad
-      (\exists \beta')
-      &
-      \\
-      &
-      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
-      &
-      \\
-      &
-      R_{H \cup \outE{G}(\alpha)}(\alpha', \beta') \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\beta', \beta)
-      &
-      \\
+      % &
+      % \caseName{Case $\impliedby$}
+      % &
+      % \notag
+      % \\
+      % &
+      % R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      % &
+      % \text{(assume)}
+      % \\
+      % &
+      % ((\alpha, \beta') \in \E(H')) \wedge R_{H'}(\beta',\beta)
+      % \quad
+      % (\exists \beta' \in \outN{G}(\alpha))
+      % &
+      % \\
+      % &
+      % R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
+      % &
+      % \\
    \end{flalign}
 \end{proof}
 
