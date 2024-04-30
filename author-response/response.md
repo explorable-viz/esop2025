@@ -60,15 +60,14 @@ Additional points made by Reviewer A
   about.
 
 - "Strictness condition" in Lemma 3.22 and provenance tracking as an effect. There is almost certainly a
-  connection between "Galois slicing" and the notion of strictness that arises is denotational semantics; in
-  particular any foreign functions or primitive operations must be _stable_ (in the sense of Berry) in order
-  for the appropriate minima to exist and thus for those operations to "play well" (i.e. compose with the rest
-  of the system). For example, multiplication must be non-strict is one argument or the other (but not both);
-  (⊥ * n = ⊥) or (n * ⊥ = \bot), but not both. may suffice for adjoints; may be worth exploring if this
-  originates from a more fundamental principle. We also think it is possible to model Galois slicing as a kind
-  of effect, using a "lifting" monad similar to the non-termination monad that arises is denotational
-  semantics. Exploring these in more detail will be the topic of another paper, but we will include some
-  discussion in related/future work.
+  connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
+  particular, for foreign functions or primitive operations to "play well" (i.e. compose with) our system,
+  they must be _stable_ (in the sense of Berry 1978) in order for the appropriate minima to exist. For
+  example, multiplication may be non-strict is either one argument or the other, but not both, i.e. may
+  satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
+  slicing as a kind of effect, using a "lifting" monad similar to the non-termination monad that arises in
+  denotational semantics. Exploring these in more detail will be the topic of another paper, but we will
+  include some discussion in related/future work.
 
 ### List of proposed changes
 
