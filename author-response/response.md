@@ -1,5 +1,6 @@
 We thank our four reviewers for their careful and engaged reviews. We respond to comments made by two or more
-reviewers first, and then address remaining questions raised by specific reviewers.
+reviewers first, and then address any remaining questions. At the end we summarise our proposed improvements
+to the paper.
 
 # Issues raised by multiple reviewers
 
@@ -22,10 +23,17 @@ This is an example of how additional generic "graph combinators" for manipulatin
 dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
 the formal development in Section 3 (additional points raised by Reviewer A).
 
-## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and D)
+## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and B)
 
-Reviewer A asks whether we could formulate a correctness theorem for the DDG, relating it to the big-step
-evaluation in 4 and/or graph operators in 3.
+Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
+prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
+similar question: is there a soundness theorem that indicates that the graph is properly constructed?
+
+In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
+backwards analysis over that trace yield a Galois connection between "selections" on the original program and
+selections on the output.
+
+[expand]
 
 ## Questions raised by Reviewer A
 
@@ -39,8 +47,17 @@ evaluation in 4 and/or graph operators in 3.
 
 Additional points made by Reviewer A
 
-- Lack of connection between Sections 3 and 4. This is indeed a weakness of the present paper. We will address
-  this by []
+- Lack of connection between Sections 3 and 4. This is indeed a weakness of the present paper. We will do two
+  things to address this. First (as discussed in (2) above), we will set out how the operators defined in
+  Section 3 (which compute a Galois connection between the sinks and sources of the graph) also determine a
+  Galois connection between selections on the original program and output. Our implementation performs this
+  conversion (mediating from the program to the graph and back again), but we did not explain how this works
+  in the submitted draft. Second, we will explain how general-purpose graph operators (such as the
+  "projections with conjugates" mentioned in (1) above) can be applied to language-level constructs such as
+  environments. Again, our implementation relies on this to allow more focused queries, for example finding
+  outputs that are related via a specific environment variable; showing how this works will further deepen the
+  connection between the world of graphs and conjugate operators and the executions they can be used to reason
+  about.
 
 ### List of proposed changes
 
