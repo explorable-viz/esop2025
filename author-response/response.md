@@ -4,7 +4,7 @@ to the paper.
 
 # Issues raised by multiple reviewers
 
-## 1. Delta with respect to POPL 2022 paper (Reviewers A and D)
+## R1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
 As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is not
 huge. However, we believe the approach proposed provides sufficient benefits to warrant separate study, and we
@@ -23,7 +23,7 @@ This is an example of how additional generic "graph combinators" for manipulatin
 dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
 the formal development in Section 3 (additional points raised by Reviewer A).
 
-## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and B)
+## R2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
 prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
@@ -35,42 +35,63 @@ selections on the output.
 
 [expand]
 
+## 3. Eliminators in core calculus (Reviewers C and D)
+
+Reviewers C and D both ask why the core language has this "eliminators" pattern-matching construct, rather
+than just the one-level case expressions one would have in a lambda-calculus with sums? We agree this would be more standard and
+would remove the need to talk about eliminators/tries, etc.
+
+[expand]
+
 ## Questions raised by Reviewer A
 
-- Typing rules. These were included in the POPL 2022 work for clarity but omitted here for reasons of space; we will
+- _Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space; we will
   include them in an Appendix.
 
-- Correctness statement on DDG. See our response to issue (2) above.
+- _Correctness statement on DDG._ See response (R2) above.
 
-- Overhead compared to core language without DDG annotations. This is a good question that would be relatively
+- _Overhead compared to core language without DDG annotations._ This is a good question that would be relatively
   straightforward to answer, without taking up too much space; we will do so.
 
-Additional points made by Reviewer A
+Additional points made by Reviewer A:
 
-- Lack of connection between Sections 3 and 4. This is indeed a weakness of the present paper. We will do two
-  things to address this. First (as discussed in (2) above), we will set out how the operators defined in
-  Section 3 (which compute a Galois connection between the sinks and sources of the graph) also determine a
-  Galois connection between selections on the original program and output. Our implementation performs this
-  conversion (mediating from the program to the graph and back again), but we did not explain how this works
-  in the submitted draft. Second, we will explain how general-purpose graph operators (such as the
-  "projections with conjugates" mentioned in (1) above) can be applied to language-level constructs such as
-  environments. Again, our implementation relies on this to allow more focused queries, for example finding
-  outputs that are related via a specific environment variable; showing how this works will further deepen the
-  connection between the world of graphs and conjugate operators and the executions they can be used to reason
-  about.
+- _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper. We will do two
+  things to address this:
 
-- "Strictness condition" in Lemma 3.22 and provenance tracking as an effect. There is almost certainly a
+  1. As per (R2) above, we will set out how the operators defined in 3 (which compute a Galois connection
+  between sinks and sources of G) also determine a Galois connection between selections on the original
+  program and output. Our implementation performs this conversion (mediating from the program to the graph and
+  back again), but we did not explain how this works in the submitted draft.
+
+  2. We will explain how general-purpose graph operators (such as the "projections with conjugates" mentioned
+  in (R1) above can be applied to language-level constructs such as environments. Again, our implementation
+  relies on this to allow more focused queries, for example finding outputs that are related via a specific
+  environment variable; showing how this works will further deepen the connection between the world of graphs
+  and conjugate operators and the executions they can be used to reason about.
+
+- _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
   particular, for foreign functions or primitive operations to "play well" (i.e. compose with) our system,
   they must be _stable_ (in the sense of Berry 1978) in order for the appropriate minima to exist. For
   example, multiplication may be non-strict is either one argument or the other, but not both, i.e. may
   satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
-  slicing as a kind of effect, using a "lifting" monad similar to the non-termination monad that arises in
+  slicing as an effect, using a "lifting" monad similar to the non-termination monad that arises in
   denotational semantics. Exploring these in more detail will be the topic of another paper, but we will
   include some discussion in related/future work.
 
-- Slowdown observed in some cases of G-DemBy-Suff (Section 5.2.4) does raise some questions; at the moment it
-  is not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
+- _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
+  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
+
+## Questions raised by Reviewer D
+
+- _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
+  over the graph and its opposite, plus the new notion of "related inputs", correctly characterize the main
+  delta from the prior work. This is correct; these are indeed the main contributions, and each in their own
+  way is straightforward. We address this in (R1) above.
+
+- _Highlight that underlying idea is quite straightforward_.
+
+- _Continuations and eliminators_. We understand the concern and address this in (R3) above.
 
 ### List of proposed changes
 
@@ -96,15 +117,7 @@ E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 # Review C
 
 **Specific points to respond to**
-- Why distinction between eliminators and expressions? Why not a "normal" core lambda-calculus?
 - Why the absence of loops?
 - Why no fixpoint operator?
 - **No anonymous supplement provided to play with those visualizations in real time**
 - If program is known statically, you should be able to compute graph along with data before serving it to the client
-
-# Review D
-
-**Specific points to respond to**
-- Delta to POPL 2022 may be too small -- Do the above two items correctly characterize the main delta?
-- Better to highlight that underlying idea is quite straightforward
-- Continuations and eliminators irrelevant to subject of paper. Why doesn't the calculus just have a one-level deep explicit case statement? This would be more standard and remove the need to even talk about eleminators and "trie-like" objects etc.
