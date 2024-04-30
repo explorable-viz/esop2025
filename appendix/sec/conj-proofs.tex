@@ -258,14 +258,32 @@ case, the ranking function of the consecutive state strictly decreases every ste
 \subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
 To prove \propref{demandedByAlg-computes-demandedBy}, we begin by noting that
 any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (DAG).
-Given a finite DAG $H$ we have that $\forall \beta \in \V(H)$ $\exists \alpha \in \sources{H}$
-with $R_{H}(\alpha, \beta)$. For a sketch of this fact, fix a $\beta$. If $\beta \in \sources{H}$,
-in which case $R_{H}(\beta, \beta)$ trivially. If $\beta \notin \sources{H}$, then $\exists \alpha$
-with $(\alpha,\beta) \in \E(H)$. Then we can repeeat this check with $\alpha$. Since $H$ is finite
-we eventually reach a source.
+We will use the following lemma's.
+\begin{lemma}[Node reachable from a source]
+   Given a finite DAG $H$ we have that $\forall \beta \in \V(H)$ $\exists \alpha \in \sources{H}$ with $R_{H}(\alpha, \beta)$.
+\end{lemma}
+\begin{proof}
+   For a sketch of this fact, fix a $\beta$. If $\beta \in \sources{H}$,
+   in which case $R_{H}(\beta, \beta)$ trivially. If $\beta \notin \sources{H}$, then $\exists \alpha$
+   with $(\alpha,\beta) \in \E(H)$. Then we can repeeat this check with $\alpha$. Since $H$ is finite
+   we eventually reach a source.
+\end{proof}
 
-We also make use of the fact that in the judgement $H, X, G \demandedByV{} H'$, $H$ is a subgraph
-of $H'$.
+
+\begin{lemma}
+   Given graphs $G,H,H'$, and nodes $X \subseteq \sources{G}$ if
+   $H, X, G \demandedByV{} H'$ then $H$ is a subgraph of $H'$.
+\end{lemma}
+\begin{proof}
+   Can proceed by induction on rules. For \ruleName{$\demandedByV{}$-done}, $H = H'$.
+   For \ruleName{$\demandedByV{}$-step}, we have that $H \subseteq H \cup \outE{G}(\alpha)$.
+   Then it holds by induction hypothesis
+\end{proof}
+
+\begin{lemma}[Slice is a subgraph of original]
+   If we have graphs $G, H$ and nodes $X \subseteq \sources{G}$, if
+   $(X, \emptyset), X, G \demandedByV{} H$ then $(\alpha, \beta) \in \E(H) \implies (\alpha, \beta) \in \E(G)$
+\end{lemma}
 
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
@@ -546,7 +564,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      (\alpha, \beta') \in \E(H \cup \outE{G}(\alpha))
+      (\alpha, \beta') \in \E(H \cup \outE{G}(\alpha))\Lowlight{\subseteq \E(H')}
       &
       \notag
       \\
@@ -556,13 +574,49 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      R_{H'}(\alpha, \beta') \wedge R_{H'}(\beta', \beta)
+      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
       &
+      \notag
+      \\
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      R_{H'}(\alpha', \alpha)
+      &
+      \notag
+      \\
+      \qedLocal
+      &
+      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \notag
       \\
       &
       \caseName{Case $\impliedby$}
       &
       \notag
+      \\
+      &
+      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \text{(assume)}
+      \\
+      &
+      ((\alpha, \beta') \in \E(H')) \wedge R_{H'}(\beta',\beta)
+      \quad
+      (\exists \beta')
+      &
+      \\
+      &
+      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
+      &
+      \\
+      &
+      R_{H \cup \outE{G}(\alpha)}(\alpha', \beta') \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\beta', \beta)
+      &
       \\
    \end{flalign}
 \end{proof}
