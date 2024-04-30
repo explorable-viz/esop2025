@@ -239,10 +239,23 @@ Fix $R \subseteq X \times Y$. We proceed by direct calculation.
    \end{flalign}
 \end{proof}
 
-\subsubsection*{$\demandedByV{}$ preserves reachability}
-To prove \propref{demandedByAlg-computes-demandedBy}, we need to first prove the
-following proposition:
+\subsection{Correctness of $\demandedByAlg{}$}
+To prove \propref{demandedByAlg-computes-demandedBy}, we first need to show that
+the procedure $\demandedByAlg{}$ always terminates, and then we need to show that
+when it terminates it does so with the correct result.
+\subsubsection{Termination}
+We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
+$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. 
+We then use the lexicographic ordering on these pairs of integers. 
 
+If we consider the rule \ruleName{$\demandedByAlg{}$-step}, we can conclude that the
+ranking function decreases on consecutive states of the algorithm:
+For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
+then $|\E(G \setminus_{E} \outE{G}(|\alpha))| < |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
+$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| < |\alpha \cdot X|$. In either
+case, the ranking function of the consecutive state strictly decreases every step.
+
+\subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
    For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
@@ -395,13 +408,11 @@ Then, \propref{reachability-in-g''} is implied by the following:
       \\
       &
       \demandedByR_{G}(X) = Y
-      \quad
-      (\exists Y)
       &
       \text{(assume)}
       \\
       &
-      \demandedByR_{G}(X) = \set{\beta \in \sinks{G} \mid \exists \alpha \in X \; R_{G}(\alpha, \beta)}
+      Y = \set{\beta \in \sinks{G} \mid \exists \alpha \in X \; R_{G}(\alpha, \beta)}
       &
       \text{(def of $\demandedByR_{G}$)}
       \notag
@@ -529,17 +540,3 @@ Then, \propref{reachability-in-g''} is implied by the following:
       \notag
    \end{flalign}
 \end{proof}
-\subsubsection*{Termination}
-We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
-$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. 
-We then use the lexicographic ordering on these pairs of integers. 
-% $$
-%    \opName{Rank}\exPair{G}{X} \leq \opName{Rank}\exPair{G'}{X'} \eqdef |\E(G)| \leq |\E(G')| \vee (|\E(G)| = |\E(G')| \wedge |X| \leq |X'|)
-% $$
-
-If we consider the rule \ruleName{$\demandedByAlg{}$-step}, we can conclude that the
-ranking function decreases on consecutive states of the algorithm:
-For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
-then $|\E(G \setminus_{E} \outE{G}(|\alpha))| < |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
-$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| < |\alpha \cdot X|$. In either
-case, the ranking function of the consecutive state strictly decreases every step.
