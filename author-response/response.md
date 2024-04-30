@@ -69,16 +69,16 @@ Additional points made by Reviewer A
   denotational semantics. Exploring these in more detail will be the topic of another paper, but we will
   include some discussion in related/future work.
 
+- Slowdown observed in some cases of G-DemBy-Suff (Section 5.2.4) does raise some questions; at the moment it
+  is not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
+
 ### List of proposed changes
 
+- [Reviewer A] Discuss (e.g. in 6.3) benefits of developing this approach for general-purpose language vs. a visualisation
+  DSL like Vega (Reviewer A)
+- [Reviewer A] Related work: consider relationship to developments in provenance for aggregates or recursive queries; and potential for using the conjugate operators identified here in other settings with negation (e.g. databases).
+
 ***
-
-## Review A
-
-**Additional points that might warrant commentary**
-- Slowdown observed in G-DemBy-Suff (Section 5.1.4) raises some questions, as it's one of the main applications highlighted in the paper
-- Relationship to recent advancements in provenance for aggregates or recursive queries to handling of recursive functions in the core language;conversely, the conjugate operators identified here may hold applications in databases as well
-- Some discussion (e.g. in Section 6.3) regarding benefits of a general-purpose functional language vs. Visualization DSL like Vega
 
 # Review B
 
