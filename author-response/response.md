@@ -37,11 +37,9 @@ selections on the output.
 
 ## 3. Eliminators in core calculus (Reviewers C and D)
 
-Reviewers C and D both ask why the core language has this "eliminators" pattern-matching construct, rather
-than just the one-level case expressions one would have in a lambda-calculus with sums? We agree this would be more standard and
-would remove the need to talk about eliminators/tries, etc.
-
-[expand]
+Reviewers C and D both ask why the core language has the "eliminator" pattern-matching construct, rather than
+the standard non-nested `case`` construct one would have in a lambda-calculus with sums. We agree this would
+be more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
 
 ## Questions raised by Reviewer A
 
@@ -93,11 +91,14 @@ Additional points made by Reviewer A:
 
 - _Continuations and eliminators_. We understand the concern and address this in (R3) above.
 
-### List of proposed changes
+## List of proposed changes
 
-- [Reviewer A] Discuss (e.g. in 6.3) benefits of developing this approach for general-purpose language vs. a visualisation
+
+### Minor discussion points
+
+- Discuss (e.g. in 6.3) benefits of developing this approach for general-purpose language vs. a visualisation
   DSL like Vega (Reviewer A)
-- [Reviewer A] Related work: consider relationship to developments in provenance for aggregates or recursive queries; and potential for using the conjugate operators identified here in other settings with negation (e.g. databases).
+- Related work: consider relationship to developments in provenance for aggregates or recursive queries; and potential for using the conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A).
 
 ***
 
@@ -111,7 +112,6 @@ Additional points made by Reviewer A:
 - Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
 E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 - I wish you provided concrete runs of your algorithms
-- Is there a soundness theorem that indicates graph is properly constructed?
 - Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
 
 # Review C
