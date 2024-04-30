@@ -18,6 +18,10 @@ dual in two different ways, one of which corresponds to a "linked inputs" analys
 construction relies on projections having conjugates (so that for example the projection π₁: O1 × O2 -> O1 has
 a conjugate [id , const ⊥] : O1 -> O1 × O2 which supplies the bottom demand for the right view).
 
+This is an example of how additional generic "graph combinators" for manipulating and reasoning about data
+dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
+the formal development in Section 3 (additional points raised by Reviewer A).
+
 ## 2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and D)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG, relating it to the big-step
@@ -33,20 +37,18 @@ evaluation in 4 and/or graph operators in 3.
 - Overhead compared to core language without DDG annotations. This is a good question that would be relatively
   straightforward to answer, without taking up too much space; we will do so.
 
+Additional points made by Reviewer A
+
+- Lack of connection between Sections 3 and 4. This is indeed a weakness of the present paper. We will address
+  this by []
+
 ### List of proposed changes
 
 ***
 
 ## Review A
 
-**Specific points highlighted for authors' response**
-- Small delta vs. POPL 2022 (shared examples, segment of core language, use of Galois connections)
-- Needs additional connections between Sections 3 and 4. As reviewer notes, more general-purpose graph queries may be possible on of DDG, which is a benefit of keeping them separate, but currently not clear how the two are related
-- POPL 2022 establishes a connection between Galois connection and the semantics through theorem 3.10. Is it possible to formulate a correctness statement relating DDG to graph operators?
-- Overhead when comparing against core language without DDG annotations?
-
 **Additional points that might warrant commentary**
-- Relationship of "brushing and linking" to formal development in Sections 3 and 4
 - "Strictness condition" in Lemma 3.22 (image of empty set is empty set) may suffice for adjoints; may be worth exploring if this originates from a more fundamental principle
 - Slowdown observed in G-DemBy-Suff (Section 5.1.4) raises some questions, as it's one of the main applications highlighted in the paper
 - Relationship to recent advancements in provenance for aggregates or recursive queries to handling of recursive functions in the core language;conversely, the conjugate operators identified here may hold applications in databases as well
