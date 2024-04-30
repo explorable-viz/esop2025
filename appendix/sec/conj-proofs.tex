@@ -250,8 +250,6 @@ following proposition:
     \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{H}(\alpha, \beta)
    $$
 \end{proposition}
-\propref{reachability-in-g''} implies \propref{demandedByAlg-computes-demandedBy} by
-restricting $X \subseteq \sources{G}$, and requiring that $\beta \in \sinks{G}$.
 
 Then, \propref{reachability-in-g''} is implied by the following:
 \begin{proposition}
@@ -263,12 +261,7 @@ Then, \propref{reachability-in-g''} is implied by the following:
       R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
    $$
 \end{proposition}
-% We will inductively prove the above by exhibiting the specific paths/vertices needed to
-% show these reachability conditions. Then the inductive proof is something like:
-% \begin{itemize}
-%    \item \textbf{Base case:} \ruleName{$\demandedByV{}$-done}: the condition holds vacuously for the conclusion since $X = \emptyset$
-%    \item \textbf{Inductive case: } \ruleName{$\demandedByV{}$-step}: not sure how
-% \end{itemize}
+
 
 \begin{theorem}
    \ref{prop:reachability-in-g''} $\implies$ \ref{prop:demandedByAlg-computes-demandedBy}
@@ -277,18 +270,16 @@ Then, \propref{reachability-in-g''} is implied by the following:
    Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
    \begin{flalign}
       &
-      \exPair{X}{\emptyset},X,G \demandedByV{} H \implies (\forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta))
+      \exPair{X}{\emptyset}, X, G \demandedByV{} H
       &
-      \text{(assume \ref{prop:reachability-in-g''})}
-      \notag
+      \text{(assume)}
+      \locallabel{dembyV-premise}
       \\
       &
-      \exPair{X}{\emptyset}, X, G \demandedByV{} H
-      \quad
-      (\exists H)
+      \forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta)
       &
-      \text{($\demandedByV{}$ terminates)}
-      \locallabel{dembyV-premise}
+      \text{(\ref{prop:reachability-in-g''})}
+      \notag
       \\
       &
       \caseName{Case $\implies$}
@@ -381,9 +372,21 @@ Then, \propref{reachability-in-g''} is implied by the following:
       \notag
       \\
       &
-      \text{Want to show: } \exists \alpha \in \sources{G} \text{ with } R_{G}(\alpha, \beta)
+      R_{H}(\alpha, \beta)
+      \quad
+      (\exists \alpha \in \sources{H} \Lowlight{= X})
       &
       \notag
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      &
+      \text{\ref{prop:reachability-in-g''}}
+      \\
+      &
+      \beta \in \demandedByR_{G}(X)
+      &
+      \text{(def of $\demandedByR_{G}$)}
       \\
       &
       \caseName{Case $\impliedby$}
@@ -429,12 +432,6 @@ Then, \propref{reachability-in-g''} is implied by the following:
       &
    \end{flalign}
 \end{proof}
-
-To prove the above, need a final new proposition about $\demandedByV{}$:
-\begin{proposition}
-   If $G,H$ graphs, $X\subseteq \sources{G}$, and $\exPair{X}{\emptyset}, X, G, \demandedByV{} H$ then
-   $\forall \beta \in \V(H)$, $\exists \alpha \in X$ with $R_{H}(\alpha, \beta)$ 
-\end{proposition}
 
 \begin{theorem}
    \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
