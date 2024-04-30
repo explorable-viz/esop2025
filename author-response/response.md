@@ -80,6 +80,17 @@ Additional points made by Reviewer A:
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
   not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
 
+## Questions raised by Reviewer C
+
+- _Eliminators vs. expressions._ See (R3) above.
+- _Loops in surface language_. Our surface and core language are both pure functional languages, so there are
+  no loops as such (only recursion). Other work has looked at Galois slicing in an imperative language with arrays and loops [cite]; in future we plan to look at these features, which we agree would be very natural for scientists to use, and perhaps supporting them either natively (via the FFI) or via an algebraic effects embedding.
+- _Fixpoint operator_. Functions are always named in our calculus, via "recursive definitions" ρ, so there is
+  no need for an explicit fixpoint operator.
+- _Confusing example_. We address this in (R4) above.
+- I thought your choice of example did you a disservice. The presentation of the graphics is really hard to follow and the choice of axes, data grouping, and tables is just... suboptimal. Then, is the point of your toolchain to alleviate poorly-designed data visualizations by helping make sense of them, or does your system shine with well-designed data visualizations, too? Maybe another example or two would've helped.
+- _Anonymised interactive demo_. We are sorry not to have provided an anonymised artefact to allow reviewers to play with the examples in real time. We will address this in time for the corrected version of the paper (May 20).
+
 ## Questions raised by Reviewer D
 
 - _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
@@ -91,8 +102,15 @@ Additional points made by Reviewer A:
 
 - _Continuations and eliminators_. We understand the concern and address this in (R3) above.
 
+Additional points made by Reviewer D:
+
+- _Computing graph along with data before serving to client_. [expand]
+
 ## List of proposed changes
 
+### Significant changes
+
+- We will provide an anonymised web-based artefact to allow reviewers to play with the system for themselves
 
 ### Minor discussion points
 
@@ -113,11 +131,3 @@ Additional points made by Reviewer A:
 E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 - I wish you provided concrete runs of your algorithms
 - Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
-
-# Review C
-
-**Specific points to respond to**
-- Why the absence of loops?
-- Why no fixpoint operator?
-- **No anonymous supplement provided to play with those visualizations in real time**
-- If program is known statically, you should be able to compute graph along with data before serving it to the client
