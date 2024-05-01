@@ -11,14 +11,14 @@ huge. However, we believe the approach proposed provides sufficient benefits to 
 have identified some areas in which this could be emphasised.
 
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the
-earlier work, because the Galois connections were of types f: I -> O1 and g: I -> O2 (where 'I' indicates
+earlier work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates
 input and 'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
-composites is a "linked outputs" analysis of type O1 -> O2 or O2 -> O1. For linked inputs, we need to
-formulate f and g as a single Galois connection of type I -> O1 × O2 which can then be composed with its own
-dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I -> I; the other
-composite (of type O1 × O2 -> O1 × O2) can be used to recover the old approach precisely via projection
-operators which also have conjugates (so that for example the projection π₁: O1 × O2 -> O1 has a conjugate [id
-, const ⊥] : O1 -> O1 × O2 which supplies the bottom demand for the right view). Explaining this will not only
+composites is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to
+formulate f and g as a single Galois connection of type I → O1 × O2 which can then be composed with its own
+dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I → I; the other
+composite (of type O1 × O2 → O1 × O2) can be used to recover the old approach precisely via projection
+operators which also have conjugates (so that for example the projection π₁: O1 × O2 → O1 has a conjugate [id
+, const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view). Explaining this will not only
 clarify the delta from the previous work but will also show how additional general-purpose "combinators" for
 reasoning about data dependencies are easy to derive in the new setting. It will also to provide a formal
 account of "brushing and linking" (both points raised by Reviewer A).
@@ -186,9 +186,11 @@ more significant improvements to the paper.
 
 ### Sections 6 and 7 (Related/Future Work)
 
-- Additional discussion in closing sections
-  - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
-  - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
-    using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
-  - Mention idea of distinguishing information about choices/control flow from "content" and related to
-    intensional explanations (Reviewer B)
+Additional discussion in closing sections
+- Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
+- Relationship to developments in data provenance for aggregates or recursive queries, and potential for
+   using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
+- Mention idea of distinguishing information about choices/control flow from "content" and related to
+   intensional explanations (Reviewer B)
+- Expand discussion on "semantically justified" dependency relation to include a sketch of what a notion like
+  "dependency correctness" might look like in our setting
