@@ -364,6 +364,58 @@ We will use the following lemma's.
    \end{flalign}
 \end{proof}
 
+This is needed but unsure of the best way to prove it
+\begin{lemma}
+   \label{lem:edge-in-slice-not-in-g}
+   For graphs $G, H, H'$ and $X \subseteq \V(G)$ with $H, X, G \demandedByV{} H'$ with $\beta \in X$
+   $(\alpha,\beta) \in \E(H) \implies (\alpha,\beta) \notin \E(G)$
+\end{lemma}
+\begin{proof}
+   Only way we can include an edge $(\alpha, \beta) \in \E(H)$ is by
+   removing it from $\E(G)$. By induction:
+   \begin{flalign}
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \strut
+            }
+            {
+               H, \emptyset, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      \qedLocal
+      &
+      \text{trivial, $X = \emptyset$}
+      &
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outE{G}(\alpha), G \setminus_{E}\outE{G}(\alpha) \demandedByV{} H'
+            }
+            {
+               H, \alpha \cons X, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      \text{TODO}
+      &
+      \notag
+   \end{flalign}
+\end{proof}
+
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
    For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
@@ -549,7 +601,7 @@ We can prove \propref{reachability-in-g''} with the following:
    $\forall \alpha \in X, \alpha' \in \V(H), \beta \in \V(G)$:
 
    $$
-      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      R_{H\cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
    $$
 \end{proposition}
 \setcounter{equation}{0}
@@ -611,11 +663,70 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      R_{H}(\alpha', \beta') \wedge R_{G}(\beta', \beta)
+      R_{H \cup G}(\alpha', \beta') \wedge R_{H \cup G}(\beta', \beta)
       \iff
       R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
       &
       \text{assume IH}
+      \notag
+      \\
+      &
+      \quad
+      (\forall \beta' \in X)
+      &
+      \notag
+      \\
+      &
+      \text{Want to show:} R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
+      \iff
+      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      \caseName{Case $\implies$}
+      &
+      \notag
+      \\
+      &
+      R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      \neg R_{G}(\alpha, \beta)
+      &
+      \text{$\outE{G}(\alpha) = \emptyset$}
+      \locallabel{alpha-cant-reach-beta-in-g}
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \text{(\localref{alpha-cant-reach-beta-in-g}), $R_{H \cup G}(\alpha, \beta)$}
+      \locallabel{alpha-reaches-beta-in-h}
+      \\
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \text{(\localref{alpha-reaches-beta-in-h}), \ref{lem:partial-slice-sub-slice}}
+      \notag
+      \\
+      &
+      \caseName{Case $\impliedby$}
+      &
+      \notag
+      \\
+      &
+      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      &
+      \text{assume}
+      \\
+      \qedLocal
+      &
+      R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
+      &
+      \text{$H' \subseteq H \cup G$}
       \notag
       \\
       &
@@ -647,7 +758,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \text{want to show: } R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      \text{want to show: } R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
       &
       \\
       &
