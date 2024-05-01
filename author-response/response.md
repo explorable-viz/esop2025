@@ -1,12 +1,3 @@
-> - The response should first address the "Questions for authors" section of the reviews and then discuss any
-factual errors or questions listed elsewhere. The program committee will read your response carefully and take
-it into account during the discussion that follows the rebuttal period.
->
-> - Be concise and start your response with the most important information that you wish to convey to
-reviewers While there is no specific word limit, reviewers may not read a long response (> 500 words) in its
-entirety.  You might find it helpful to include in your response a change list of what changes you plan to
-address the reviews.
-
 We thank our four reviewers for their careful reviews and suggestions for improving the paper. We respond to
 comments made by two or more reviewers first, and then address any remaining questions. At the end we
 summarise our proposed improvements to the paper.
@@ -110,11 +101,13 @@ Additional points made by Reviewer A:
 - _Data provenance vs. understanding poorly designed charts_. We clarify this in (R4) above.
 - _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
   content of data, using the pattern-matching rules which identify the (partial) value that was consumed in
-  order to select a branch. [expand[
-
-- Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
-E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
-- I wish you provided concrete runs of your algorithms
+  order to select a branch. [expand]
+- _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
+algorithmic form, but presenting it in this helps in the proof of Proposition 3.18, as you suggest [expand].
+The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
+(V', E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
+- _Concrete runs of algorithms_. Fig. 6 was intended to illustrate a concrete run of `suff`, showing how edges
+  are copied from the original graph to the slice.
 
 ## Questions raised by Reviewer C
 
