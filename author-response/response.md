@@ -1,8 +1,8 @@
-We thank our four reviewers for their careful reviews and suggestions for improving the paper. We respond to
-comments made by two or more reviewers first, and then address any remaining questions. At the end we
+We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We respond to
+questions asked by two or more reviewers first, and then address any remaining questions. At the end we
 summarise our proposed improvements to the paper.
 
-## Issues raised by multiple reviewers
+## 1. Response to Reviewer Questions
 
 ### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
@@ -11,28 +11,28 @@ huge. However, we believe the approach proposed provides sufficient benefits to 
 have identified some areas in which this could be emphasised.
 
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the
-earlier work, because the Galois connections were of types f: O1 -> I and g: O2 -> I (where 'O' indicates
-output and 'I' input). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
+earlier work, because the Galois connections were of types f: I -> O1 and g: I -> O2 (where 'I' indicates
+input and 'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
 composites is a "linked outputs" analysis of type O1 -> O2 or O2 -> O1. For linked inputs, we need to
 formulate f and g as a single Galois connection of type I -> O1 × O2 which can then be composed with its own
-dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I -> I. This
-construction relies on projections having conjugates (so that for example the projection π₁: O1 × O2 -> O1 has
-a conjugate [id , const ⊥] : O1 -> O1 × O2 which supplies the bottom demand for the right view).
-
-This is an example of how additional generic "graph combinators" for manipulating and reasoning about data
-dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
-the formal development in Section 3 (additional points raised by Reviewer A).
+dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I -> I; the other
+composite (of type O1 × O2 -> O1 × O2) can be used to recover the old approach precisely via projection
+operators which also have conjugates (so that for example the projection π₁: O1 × O2 -> O1 has a conjugate [id
+, const ⊥] : O1 -> O1 × O2 which supplies the bottom demand for the right view). Explaining this will not only
+clarify the delta from the previous work but will also show how additional general-purpose "combinators" for
+reasoning about data dependencies are easy to derive in the new setting. It will also to provide a formal
+account of "brushing and linking" (both points raised by Reviewer A).
 
 ### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
-prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
-slightly different but related question: is there a soundness theorem that indicates that the graph is
-properly constructed?
+prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks whether
+there might be a soundness theorem that indicates that the graph is properly constructed.
 
 In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
-selections on the output. [expand]
+selections on the output. In the present paper, there is a similar result from graphs but nothing that relates
+this directly to the original program.
 
 ### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
@@ -153,10 +153,10 @@ Additional points made by Reviewer D:
   (broadly speaking, although it all happens on the client). We evaluate the program once to a graph when the
   page loads, and then any subsequent queries reuse the same graph.
 
-## List of proposed changes
+## 2. List of Proposed Changes
 
-We will implement all the minor corrections provided by the reviewers. In addition we undertake to implement
-the following more significant improvements to the paper.
+We will implement all the minor corrections provided, and in addition undertake to implement the following
+more significant improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
