@@ -281,6 +281,89 @@ We will use the following lemma's.
    Then it holds by induction hypothesis
 \end{proof}
 
+\begin{lemma}
+   \label{lem:full-slice-sub-partial-unexplored}
+   Given graphs $G, H, H'$ and nodes $X \subseteq \V{G}$.
+   If $H, X, G \demandedByV{} H'$ then $H' \subseteq H \cup G$.
+\end{lemma}
+\begin{proof}
+   Induction on rules.
+   \begin{flalign}
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \strut
+            }
+            {
+               H, \emptyset, G \demandedByV{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      \qedLocal
+      &
+      H \subseteq H \cup G
+      &
+      \notag
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{E} \outE{G}(\alpha)
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cons X, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      H' \subseteq (H \cup \outE{G}(\alpha)) \cup (G \setminus_{E} \outE{G}(\alpha))
+      &
+      \text{assume IH}
+      \notag
+      \\
+      &
+      e \in \E(H')
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      e\in G \setminus_{E} \outE{G}(\alpha) \implies e \in G 
+      &
+      \notag
+      \\
+      &
+      e \in \E(H \cup \outE{G}(\alpha)) \implies e \in \E(H) \vee e \in \outE{G}(\alpha)
+      &
+      \\
+      &
+      e \in \E(H) \implies e \in \E(H) 
+      &
+      \\
+      &
+      e \in \outE{G}(\alpha) \implies e \in \E(G) \quad \Lowlight{G = (G \setminus_{E} \outE{G}(\alpha)) \cup \outE{G}(\alpha)}
+      &
+      \\
+      \qedLocal
+      &
+      H' \subseteq H \cup G
+      &
+      \notag
+   \end{flalign}
+\end{proof}
+
 \begin{proposition}[Reachability in $G^{\twoPrime}$]
    \label{prop:reachability-in-g''}
    For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
@@ -503,6 +586,36 @@ We can prove \propref{reachability-in-g''} with the following:
       &
       \text{trivially true, since $X=\emptyset$}
       &
+      \notag
+      \\
+      &
+      \caseName{Case $\outE{G}(\alpha) = \emptyset$}
+      &
+      \notag
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \emptyset, X \cup \emptyset, G \setminus_{E} \emptyset
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cons X, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      R_{H}(\alpha', \beta') \wedge R_{G}(\beta', \beta)
+      \iff
+      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
+      &
+      \text{assume IH}
       \notag
       \\
       &
