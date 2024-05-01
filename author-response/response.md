@@ -2,9 +2,9 @@ We thank our four reviewers for their careful reviews and suggestions for improv
 comments made by two or more reviewers first, and then address any remaining questions. At the end we
 summarise our proposed improvements to the paper.
 
-# Issues raised by multiple reviewers
+## Issues raised by multiple reviewers
 
-## Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
+### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
 As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is not
 huge. However, we believe the approach proposed provides sufficient benefits to warrant separate study, and we
@@ -23,7 +23,7 @@ This is an example of how additional generic "graph combinators" for manipulatin
 dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
 the formal development in Section 3 (additional points raised by Reviewer A).
 
-## Q2. Correctness statements relating graphs/graph operators to big-step evaluation (Reviewers A and B)
+### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
 prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
@@ -34,13 +34,13 @@ In the prior work, a theorem stated that if a computation evaluated to a trace, 
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
 selections on the output. [expand]
 
-## Q3. Eliminators vs. case expressions in core calculus (Reviewers C and D)
+### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
 Reviewers C and D both ask why the core language has the "eliminator" pattern-matching construct, rather than
 the standard non-nested `case` construct one would have in a lambda-calculus with sums. We agree this would be
 more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
 
-## Q4. Data provenance vs. understanding poorly designed charts (Reviewers B and D)
+### Q4. Data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
 Reviewer B points out that we don't clearly distinguish different use cases, such as checking that the right
 data were used in a particular chart, vs. helping understand a potentially poorly designed chart. Reviewer D
@@ -48,7 +48,7 @@ makes a similar point: the main example is hard to follow, with various suboptim
 it's unclear whether our goal is to help make sense of poorly-designed visualisations, or whether
 well-designed visualisations can also benefit? [expand]
 
-## Questions raised by Reviewer A
+### Reviewer A
 
 - _Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
   we will include them in an Appendix.
@@ -87,13 +87,13 @@ Additional points made by Reviewer A:
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
   not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
 
-## Questions raised by Reviewer B
+### Reviewer B
 
 - _Difficult terminology and concepts in first 2 sections._ Introducing the key ideas was a challenge,
   especially given the multiple dimensions of "duality" (conjugates, De Morgan duals, adjoints), and we agree
   that this should be improved. We will give an intuition and definition for the De Morgan dual, but will also
-  try to do a better job of the transition from the "adjoint" setting ($\triangledown$ and $\blacktriangleup$)
-  to the conjugate setting ($\triangledown$ and $\triangleup$, and explain the role of the De Morgan dual in
+  try to do a better job of the transition from the "adjoint" setting (`\triangledown` and `\blacktriangleup`)
+  to the conjugate setting (`\triangledown` and `\triangleup`, and explain the role of the De Morgan dual in
   connecting these two.
 - _Data provenance vs. understanding poorly designed charts_. We clarify this in (Q4) above.
 - _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
@@ -111,7 +111,7 @@ The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H 
   are copied from the original graph to the slice; we will make this clearer (for example by indicating which
   `suff` is being applied in each subfigure).
 
-## Questions raised by Reviewer C
+### Reviewer C
 
 - _Eliminators vs. expressions._ We recognise the concern and address this in (Q3) above.
 - _Loops in surface language_. The surface and core language are both pure functional languages, so there are
@@ -129,7 +129,7 @@ The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H 
   than the one provided in the paper; if it makes sense to include one or two of these into the paper as well
   we will, to help with your point above.
 
-## Questions raised by Reviewer D
+### Reviewer D
 
 - _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
   over the graph and its opposite, plus the new notion of "related inputs", together constitute the main delta
@@ -150,18 +150,29 @@ Additional points made by Reviewer D:
 
 ## List of proposed changes
 
-We will implement all the minor corrections provided by the reviewers. In addition we propose the following
-more significant improvements to the paper.
+We will implement all the minor corrections provided by the reviewers. In addition we undertake to implement
+the following more significant improvements to the paper.
+
+### Sections 1 and 2 (Intro/Overview)
 
 - Sharpen the benefits of the new approach vis-a-vis the previous one (Q1):
   - Explain how the previous approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the prior work precisely in the new
     setting, and support more focused queries. Use this to formally explain brushing-and-linking.
-- Bridge the gap between sections 3 and 4:
+
+### Sections 3 and 4 (Graph Operators/Semantics)
+
+- Bridge gap between sections 3 and 4:
   - Show how Galois connections/conjugate operator pairs on graph give rise to analogous operators on
     environment, program and value selections
+
+### Section 5 (Evaluation)
+
 - Evaluate overhead compared to core language without building DDG or trace
 - Provide an anonymised web-based artefact to allow reviewers to play with the implementation
+
+### Sections 6 and 7 (Related/Future Work)
+
 - Additional discussion in closing sections
   - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
   - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
