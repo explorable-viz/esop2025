@@ -31,8 +31,16 @@ there might be a soundness theorem that indicates that the graph is properly con
 
 In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
-selections on the output. In the present paper, there is a similar result from graphs but nothing that relates
-this directly to the original program.
+selections on the output. In the present paper, there is a similar result for graphs but nothing that relates
+this directly to the original program. Converting between these two formulations of the problem happens in our
+implementation but is not described in the paper; fixing this will serve to relate the two formalisations and
+also tie sections 3 and 4 together better (raised by Reviewer A).
+
+The question of whether there is a soundness theorem for the graph itself is slightly trickier. The intuition
+offered by Reviewer B for such a theorem sounds reasonable (and perhaps related to "dependency correctness"
+from Cheney et al [cite]); we alluded to this in future work ("semantically justified dependency relation")
+and are happy to expand on this to say more precisely what such a property might look like, but this is likely
+to remain out-of-scope for the present paper.
 
 ### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
