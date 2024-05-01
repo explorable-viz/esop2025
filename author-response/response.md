@@ -98,7 +98,11 @@ Additional points made by Reviewer A:
 - _Data provenance vs. understanding poorly designed charts_. We clarify this in (Q4) above.
 - _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
   content of data, using the pattern-matching rules which identify the (partial) value that was consumed in
-  order to select a branch. [expand]
+  order to select a branch, but this is not distinguished from any other kind of dependency. However, as your
+  example program illustrates, distinguishing these two can be useful for explanations -- we do plan to
+  revisit this in future work, as part of exposing "intensional" information to users ("how" in addition to
+  "what"). We will expand that closing discussion to include this point and perhaps a simple example similar
+  to yours.
 - _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
 algorithmic form, but presenting it in this helps in the proof of Proposition 3.18, as you suggest [expand].
 The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
@@ -158,7 +162,9 @@ more significant improvements to the paper.
     environment, program and value selections
 - Evaluate overhead compared to core language without building DDG or trace
 - Provide an anonymised web-based artefact to allow reviewers to play with the implementation
-- Additional discussion in closing sections (Reviewer A)
-  - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega
+- Additional discussion in closing sections
+  - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
   - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
-    using conjugate operators identified here in other settings with negation (e.g. databases)
+    using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
+  - Mention idea of distinguishing information about choices/control flow from "content" and related to
+    intensional explanations (Reviewer B)
