@@ -1,3 +1,12 @@
+> - The response should first address the "Questions for authors" section of the reviews and then discuss any
+factual errors or questions listed elsewhere. The program committee will read your response carefully and take
+it into account during the discussion that follows the rebuttal period.
+>
+> - Be concise and start your response with the most important information that you wish to convey to
+reviewers While there is no specific word limit, reviewers may not read a long response (> 500 words) in its
+entirety.  You might find it helpful to include in your response a change list of what changes you plan to
+address the reviews.
+
 We thank our four reviewers for their careful reviews and suggestions for improving the paper. We respond to
 comments made by two or more reviewers first, and then address any remaining questions. At the end we
 summarise our proposed improvements to the paper.
@@ -41,11 +50,15 @@ Reviewers C and D both ask why the core language has the "eliminator" pattern-ma
 the standard non-nested `case`` construct one would have in a lambda-calculus with sums. We agree this would
 be more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
 
-## R4. Correctness vs. explainability (Reviewers B and D)
+## R4. Data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
-Reviewer D also points out that the main example is hard to follow, with various suboptimal visualisation
-choices, and asks whether our goal is only to help make sense of poorly-designed data visualisations or
-whether well-designed visualisations can also benefit?
+Reviewer B points out that we don't clearly distinguish different use cases, such as checking that the right
+data were used in a particular chart, vs. helping understand a potentially poorly designed chart. Reviewer D
+makes a similar point: the main example is hard to follow, with various suboptimal visualisation choices, and
+it's unclear whether our goal is to help make sense of poorly-designed visualisations, or whether
+well-designed visualisations can also benefit?
+
+[expand]
 
 ## Questions raised by Reviewer A
 
@@ -88,10 +101,17 @@ Additional points made by Reviewer A:
 
 ## Questions raised by Reviewer B
 
-- _Difficult terminology and concepts in first 2 sections._ Introducing the key ideas was a challenge, especially given the multiple dimensions of "duality" (conjugates, De Morgan duals, adjoints), and we agree that this should be improved. We will give an intuition and definition for the De Morgan dual, but will also try to do a better job of the transition from the "adjoint" setting ($\triangledown$ and $\blacktriangleup$) to the conjugate setting ($\triangledown$ and $\triangleup$, and explain the role of the De Morgan dual in connecting these two.
+- _Difficult terminology and concepts in first 2 sections._ Introducing the key ideas was a challenge,
+  especially given the multiple dimensions of "duality" (conjugates, De Morgan duals, adjoints), and we agree
+  that this should be improved. We will give an intuition and definition for the De Morgan dual, but will also
+  try to do a better job of the transition from the "adjoint" setting ($\triangledown$ and $\blacktriangleup$)
+  to the conjugate setting ($\triangledown$ and $\triangleup$, and explain the role of the De Morgan dual in
+  connecting these two.
+- _Data provenance vs. understanding poorly designed charts_. We clarify this in (R4) above.
+- _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
+  content of data, using the pattern-matching rules which identify the (partial) value that was consumed in
+  order to select a branch. [expand[
 
-- Are you interested in providing evidence that the right pieces of information were considered for the output, or in helping understand potentially poorly designed charts? Please clarify
-- You say dependency graph only considers data dependencies and not control dependencies -- what about branching on content of data?
 - Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
 E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
 - I wish you provided concrete runs of your algorithms
