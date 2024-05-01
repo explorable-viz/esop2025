@@ -1,6 +1,6 @@
-We thank our four reviewers for their careful and engaged reviews. We respond to comments made by two or more
-reviewers first, and then address any remaining questions. At the end we summarise our proposed improvements
-to the paper.
+We thank our four reviewers for their careful reviews and suggestions for improving the paper. We respond to
+comments made by two or more reviewers first, and then address any remaining questions. At the end we
+summarise our proposed improvements to the paper.
 
 # Issues raised by multiple reviewers
 
@@ -35,11 +35,17 @@ selections on the output.
 
 [expand]
 
-## 3. Eliminators in core calculus (Reviewers C and D)
+## R3. Eliminators in core calculus (Reviewers C and D)
 
 Reviewers C and D both ask why the core language has the "eliminator" pattern-matching construct, rather than
 the standard non-nested `case`` construct one would have in a lambda-calculus with sums. We agree this would
 be more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
+
+## R4. Correctness vs. explainability (Reviewers B and D)
+
+Reviewer D also points out that the main example is hard to follow, with various suboptimal visualisation
+choices, and asks whether our goal is only to help make sense of poorly-designed data visualisations or
+whether well-designed visualisations can also benefit?
 
 ## Questions raised by Reviewer A
 
@@ -80,16 +86,33 @@ Additional points made by Reviewer A:
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
   not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
 
+## Questions raised by Reviewer B
+
+- _Difficult terminology and concepts in first 2 sections._ Introducing the key ideas was a challenge, especially given the multiple dimensions of "duality" (conjugates, De Morgan duals, adjoints), and we agree that this should be improved. We will give an intuition and definition for the De Morgan dual, but will also try to do a better job of the transition from the "adjoint" setting ($\triangledown$ and $\blacktriangleup$) to the conjugate setting ($\triangledown$ and $\triangleup$, and explain the role of the De Morgan dual in connecting these two.
+
+- Are you interested in providing evidence that the right pieces of information were considered for the output, or in helping understand potentially poorly designed charts? Please clarify
+- You say dependency graph only considers data dependencies and not control dependencies -- what about branching on content of data?
+- Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
+E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
+- I wish you provided concrete runs of your algorithms
+
 ## Questions raised by Reviewer C
 
-- _Eliminators vs. expressions._ See (R3) above.
-- _Loops in surface language_. Our surface and core language are both pure functional languages, so there are
-  no loops as such (only recursion). Other work has looked at Galois slicing in an imperative language with arrays and loops [cite]; in future we plan to look at these features, which we agree would be very natural for scientists to use, and perhaps supporting them either natively (via the FFI) or via an algebraic effects embedding.
-- _Fixpoint operator_. Functions are always named in our calculus, via "recursive definitions" ρ, so there is
-  no need for an explicit fixpoint operator.
-- _Confusing example_. We address this in (R4) above.
-- I thought your choice of example did you a disservice. The presentation of the graphics is really hard to follow and the choice of axes, data grouping, and tables is just... suboptimal. Then, is the point of your toolchain to alleviate poorly-designed data visualizations by helping make sense of them, or does your system shine with well-designed data visualizations, too? Maybe another example or two would've helped.
-- _Anonymised interactive demo_. We are sorry not to have provided an anonymised artefact to allow reviewers to play with the examples in real time. We will address this in time for the corrected version of the paper (May 20).
+- _Eliminators vs. expressions._ We recognise the concern and address this in (R3) above.
+- _Loops in surface language_. The surface and core language are both pure functional languages, so there are
+  no loops as such (only recursion). Other work has looked at Galois slicing in an imperative language with
+  arrays and loops [cite]; in future we also plan to look at these features, because of their importance in
+  data science applications, supporting them either natively (via the FFI) or via an algebraic effects
+  embedding.
+- _Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
+  "recursive definitions" (Fig. X), so there is no need for an explicit fixpoint operator.
+- _Confusing example_. It is a difficult example, to some extent by design; we address this in (R4) above, but
+  also take your point that a simpler example, with a less challenging visualisation, would be useful (see
+  next point).
+- _Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
+  onlione demo in time for the corrected version of the paper (May 20). We will include some simpler examples
+  than the one provided in the paper; if it makes sense to include one or two of these into the paper as well
+  we will, to help with your point above.
 
 ## Questions raised by Reviewer D
 
@@ -104,30 +127,20 @@ Additional points made by Reviewer A:
 
 Additional points made by Reviewer D:
 
-- _Computing graph along with data before serving to client_. [expand]
+- _Computing graph along with data before serving to client_. This is indeed how our implementation works
+  (broadly speaking, although it all happens on the client). We evaluate the program once to a graph when the
+  page loads, and then any subsequent queries reuse the same graph.
 
 ## List of proposed changes
+
+In addition to the minor corrections provided by the reviewers, we propose the following improvements to the paper.
 
 ### Significant changes
 
 - We will provide an anonymised web-based artefact to allow reviewers to play with the system for themselves
 
-### Minor discussion points
+### Additional discussion
 
 - Discuss (e.g. in 6.3) benefits of developing this approach for general-purpose language vs. a visualisation
   DSL like Vega (Reviewer A)
 - Related work: consider relationship to developments in provenance for aggregates or recursive queries; and potential for using the conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A).
-
-***
-
-# Review B
-
-**Specific points highlighted for authors' response**
-- Terminology of paper is hard to grasp in the first sections. E.g. intro talks about a Galois connection between minimal $\triangledown$ and sufficient $\blacktriangleup$, but then in Figure 2 you use "demanded by" $\triangleup$. Similarly, "De Morgan dual" is mentioned in intro but never defined or given an intuition
-- Duality connections using conjugate / Galois connection / De Morgan Dual seem to be used; perhaps just mention as an alternative formulation and talk more about case studies or PL part
-- Are you interested in providing evidence that the right pieces of information were considered for the output, or in helping understand potentially poorly designed charts? Please clarify
-- You say dependency graph only considers data dependencies and not control dependencies -- what about branching on content of data?
-- Can demBy can be implemented as a (forward) breadth-first graph algorithm? Does presenting it in this rule-based way help in the proof of Proposition 3.18? The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' = (V',
-E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
-- I wish you provided concrete runs of your algorithms
-- Line 450, aren't you missing $\exits x \in X' \cdot (x,y) \in R$?
