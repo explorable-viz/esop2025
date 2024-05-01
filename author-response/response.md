@@ -27,7 +27,8 @@ the formal development in Section 3 (additional points raised by Reviewer A).
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
 prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
-similar question: is there a soundness theorem that indicates that the graph is properly constructed?
+slightly different but related question: is there a soundness theorem that indicates that the graph is
+properly constructed?
 
 In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
@@ -49,8 +50,8 @@ well-designed visualisations can also benefit? [expand]
 
 ## Questions raised by Reviewer A
 
-- _Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space; we will
-  include them in an Appendix.
+- _Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
+  we will include them in an Appendix.
 
 - _Correctness statement on DDG._ See response (Q2) above.
 
@@ -127,11 +128,13 @@ The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H 
 ## Questions raised by Reviewer D
 
 - _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
-  over the graph and its opposite, plus the new notion of "related inputs", correctly characterize the main
-  delta from the prior work. This is correct; these are indeed the main contributions, and each in their own
-  way is straightforward. We address this in (Q1) above.
+  over the graph and its opposite, plus the new notion of "related inputs", together constitute the main delta
+  from the prior work. This is correct; these are indeed the main contributions, and each in their own way is
+  straightforward. We address this in (Q1) above.
 
-- _Highlight that underlying idea is quite straightforward_.
+- _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
+  making this clearer. The benefit comes from the factorisation of the previous approach, which eases the
+  implementation burden, improves performance and introduces a cleaner design [expand].
 
 - _Continuations and eliminators_. We understand the concern and address this in (Q3) above.
 
@@ -146,12 +149,16 @@ Additional points made by Reviewer D:
 We will implement all the minor corrections provided by the reviewers. In addition we propose the following
 more significant improvements to the paper.
 
-### Significant changes
-
-- We will provide an anonymised web-based artefact to allow reviewers to play with the system for themselves
-
-### Additional discussion
-
-- Discuss (e.g. in 6.3) benefits of developing this approach for general-purpose language vs. a visualisation
-  DSL like Vega (Reviewer A)
-- Related work: consider relationship to developments in provenance for aggregates or recursive queries; and potential for using the conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A).
+- Sharpen the benefits of the new approach vis-a-vis the previous one (Q1):
+  - Explain how the previous approach doesn't directly support related inputs, and how a simple family of
+    operators (projections with conjugates) can be used both to recover the prior work precisely in the new
+    setting, and support more focused queries. Use this to formally explain brushing-and-linking.
+- Bridge the gap between sections 3 and 4:
+  - Show how Galois connections/conjugate operator pairs on graph give rise to analogous operators on
+    environment, program and value selections
+- Evaluate overhead compared to core language without building DDG or trace
+- Provide an anonymised web-based artefact to allow reviewers to play with the implementation
+- Additional discussion in closing sections (Reviewer A)
+  - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega
+  - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
+    using conjugate operators identified here in other settings with negation (e.g. databases)
