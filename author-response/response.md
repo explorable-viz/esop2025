@@ -36,11 +36,16 @@ selections on the output. [expand]
 
 ### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
-Reviewers C and D both ask why the core language has the "eliminator" pattern-matching construct, rather than
-the standard non-nested `case` construct one would have in a lambda-calculus with sums. We agree this would be
-more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
+Reviewers C and D ask why the core language has the deep pattern-matching construct ("eliminators"), rather
+than the more standard non-nested `case` construct one would have in a lambda calculus with sums. This would
+indeed be more standard, but moving to a lambda calculus with separate sums, products and recursive types
+would make the connection to our implementation less direct (and the formalisation less useful to a potential
+implementor). For our applications, we have found it useful to have records and data types (both with
+pattern-matching) as core constructs and this decision lends itself to the eliminator design. There is
+precedent now (in Peyton-Jones et al 2022) for repurposing tries for pattern-matching, so on balance our
+preference is for better motivating this decision, rather than moving towards a more abstract calculus.
 
-### Q4. Data provenance vs. understanding poorly designed charts (Reviewers B and D)
+### Q4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
 Reviewer B points out that we don't clearly distinguish different use cases, such as checking that the right
 data were used in a particular chart, vs. helping understand a potentially poorly designed chart. Reviewer D
