@@ -23,7 +23,7 @@ This is an example of how additional generic "graph combinators" for manipulatin
 dependencies can be useful, and it also can be used to clarify the relationship of "brushing and linking" to
 the formal development in Section 3 (additional points raised by Reviewer A).
 
-## R2. Correctness statements relating DDG to big-step evaluation and/or graph operators (Reviewers A and B)
+## R2. Correctness statements relating graphs/graph operators to big-step evaluation (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
 prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks a
