@@ -44,11 +44,11 @@ selections on the output.
 
 [expand]
 
-## R3. Eliminators in core calculus (Reviewers C and D)
+## R3. Eliminators vs. case expressions in core calculus (Reviewers C and D)
 
 Reviewers C and D both ask why the core language has the "eliminator" pattern-matching construct, rather than
-the standard non-nested `case`` construct one would have in a lambda-calculus with sums. We agree this would
-be more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
+the standard non-nested `case` construct one would have in a lambda-calculus with sums. We agree this would be
+more standard and would remove the need to talk about eliminators/tries, etc; however [expand].
 
 ## R4. Data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
