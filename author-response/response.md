@@ -6,12 +6,10 @@ summarise our proposed improvements to the paper.
 
 ### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
-As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is not
-huge. However, we believe the approach proposed provides sufficient benefits to warrant separate study, and we
+As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate in the core aims and ideas, but lies instead in the implementation of the concepts. We believe the approach proposed provides sufficient benefits to warrant separate study, and we
 have identified some areas in which this could be emphasised.
 
-Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the
-earlier work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates
+Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates
 input and 'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
 composites is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to
 formulate f and g as a single Galois connection of type I → O1 × O2 which can then be composed with its own
@@ -82,7 +80,7 @@ Additional points made by Reviewer A:
   back again), but we did not explain how this works in the submitted draft.
 
   2. We will explain how general-purpose graph operators (such as the "projections with conjugates" mentioned
-  in (Q1) above can be applied to language-level constructs such as environments. Again, our implementation
+  in (Q1) above) can be applied to language-level constructs such as environments. Again, our implementation
   relies on this to allow more focused queries, for example finding outputs that are related via a specific
   environment variable; showing how this works will further deepen the connection between the world of graphs
   and conjugate operators and the executions they can be used to reason about.
@@ -98,7 +96,7 @@ Additional points made by Reviewer A:
   include some discussion in related/future work.
 
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
-  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`.
+  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`, but instead uses the faster approach of the 'G-DemBy' column.
 
 ### Reviewer B
 
@@ -117,9 +115,9 @@ Additional points made by Reviewer A:
   "what"). We will expand that closing discussion to include this point and perhaps a simple example similar
   to yours.
 - _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
-algorithmic form, but presenting it in this helps in the proof of Proposition 3.18, as you suggest [expand].
-The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
-(V', E')$ but also to a set of vertices $X$, so it does not type-check in my mind.
+algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, as suggested by the reviewer [expand].
+- "The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
+(V', E')$...". $H$ here is a (sub)graph with verties $\alpha$ and $Y$ and with edges from $\alpha$ to every vertex in $Y$. Somehow the explanation of this got swallowed during editing and we will add it back.
 - _Concrete runs of algorithms_. Fig. 6 was intended to illustrate a concrete run of `suff`, showing how edges
   are copied from the original graph to the slice; we will make this clearer (for example by indicating which
   `suff` is being applied in each subfigure).
