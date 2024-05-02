@@ -13,14 +13,14 @@ the following areas in which this could be emphasised.
 
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL
 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates input and
-'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those composites
-is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to formulate f and g as
-a single Galois connection of type I → O1 × O2 which can then be either pre- or post-composed with its own
-dual, one yielding a "linked inputs" analysis of type I → I; the other composite (of type O1 × O2 → O1 × O2)
-can be used to recover the POPL 2022 approach precisely via projection operators which also have conjugates.
-(For example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the
-bottom demand for the right view.) This also provides the formal account of "brushing and linking" requested
-by Reviewer A.
+'O' output). In this setup, f could be composed with (dual g) and (dual f) with g, but each of those
+composites is a "linked outputs" analysis of type O1 → O2 or O2 → O1. To generalise to linked inputs, we need
+to reformulate f and g as a single Galois connection of type I → O1 × O2 which can then be either pre- or
+post-composed with its own dual. One yields a "linked inputs" analysis of type I → I; the other composite (of
+type O1 × O2 → O1 × O2) can then be used to recover the POPL 2022 "linked outputs" approach in the new
+setting, via projection operators which also have conjugates. (For example the projection π₁: O1 × O2 → O1 has
+a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view.) This also
+provides the formal account of "brushing and linking" requested by Reviewer A.
 
 Explaining this will clarify the delta from the POPL 2022 work and show how additional general-purpose
 combinators for reasoning about data dependencies are easy to derive. Our implementation uses the "projections
