@@ -166,7 +166,7 @@ improvements to the paper.
 ### Sections 1 and 2 (Intro/Overview)
 
 - Introduce the basic idea of "data transparency" with a simpler example (where the visualisation choices
-  themselves are not a distraction)
+  themselves are not a distraction) (Reviewer B, Q1 and Reviewer D)
 - Expand on differences between our approach vis-a-vis POPL 2022 paper (R1):
   - Explain why POPL 2022 approach doesn't directly support related inputs, and how the POPL 2022 approach can
     be recovered in the new setting using products with conjugates; show how this formally explains
@@ -174,21 +174,22 @@ improvements to the paper.
   - Show how products-with-conjugates also support more focused queries, using the new simpler example to
     illustrate
 - Improve & simplify presentation of adjoint vs. conjugate setting and make clear the role of the De Morgan
-  dual in connecting these two
+  dual in connecting these two (Reviewer B, Q2)
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
-- Bridge gap between sections 3 and 4:
+- Bridge gap between sections 3 and 4 (Reviewer A):
   - Show how adjoint/conjugate operators on graphs give rise to analogous operators on environment, program
     and value selections
 - Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
-  types
-- Clarify Fig. 6 to indicate which `suff` rule applies to each subfigure
+  types (Reviewers C, Q1 and Reviewer D, Q2)
+- Clarify Fig. 6 to indicate which `suff` rule applies to each subfigure (Reviewer B, Q4)
 
 ### Section 5 (Evaluation)
 
-- Evaluate overhead compared to core language without building DDG or trace
-- Provide anonymised web-based artefact to allow reviewers to experiment with the implementation
+- Evaluate overhead compared to core language without building DDG or trace (Reviewer A, Q3)
+- Provide anonymised web-based artefact to allow reviewers to experiment with the implementation (Reviewer C,
+  Q4)
 
 ### Sections 6 and 7 (Related/Future Work)
 
@@ -196,11 +197,11 @@ improvements to the paper.
 - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
 using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
 - Mention idea of distinguishing information about choices/control flow from "content" and related to
-intensional explanations (Reviewer B)
+intensional explanations (Reviewer B, Q3)
 - Expand discussion on "semantically justified" dependency relation to include a sketch of what a notion like
-"dependency correctness" might look like in our setting
+"dependency correctness" might look like in our setting (Reviewer A, Q2 and Reviewer B, Q5)
 - Briefly discuss relationship to stable functions/strictness in denotational semantics and potential for
-  provenance tracking via a lifting monad
+  provenance tracking via a lifting monad (Reviewer A)
 
 ### Appendix
 
