@@ -14,7 +14,7 @@ the following areas in which this could be emphasised.
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL
 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates input and
 'O' output). In this setup, f could be composed with (dual g) and (dual f) with g, but each of those
-composites is a "linked outputs" analysis of type O1 → O2 or O2 → O1. To generalise to linked inputs, we need
+composites was a "linked outputs" analysis of type O1 → O2 or O2 → O1. To generalise to linked inputs, we need
 to reformulate f and g as a single Galois connection of type I → O1 × O2 which can then be either pre- or
 post-composed with its own dual. One yields a "linked inputs" analysis of type I → I; the other composite (of
 type O1 × O2 → O1 × O2) can then be used to recover the POPL 2022 "linked outputs" approach in the new
