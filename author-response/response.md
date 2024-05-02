@@ -187,6 +187,7 @@ improvements to the paper.
   types
 - Outline soundness property for dependency graph and discuss what changes might be required of our dependency
   relation in order for such a property to hold
+- Clarify Fig. 6 to indicate which `suff` rule applies to each subfigure
 
 ### Section 5 (Evaluation)
 
