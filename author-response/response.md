@@ -16,7 +16,7 @@ Although related inputs is indeed formally dual to related outputs, this was not
 output). In this setup, f could be composed with (dual g) and (dual f) with g, but each of those composites
 was a "linked outputs" analysis of type O1 → O2 or O2 → O1.
 
-To generalise to linked inputs, in our implementation we needed to reformulate f and g as a single Galois
+In our approach, to generalise to linked inputs, we needed to reformulate f and g as a single Galois
 connection of type I → O1 × O2 which can then be either pre- or post-composed with its own dual, although this
 is not yet described in the paper. One of the two composites yields a "linked inputs" analysis of type I → I;
 the other composite (of type O1 × O2 → O1 × O2) can then be used to recover the POPL 2022 "linked outputs"
@@ -24,11 +24,12 @@ approach, via projection operators which also have conjugates. (For example the 
 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view.) We will
 explain this to clarify the delta from the POPL 2022 work and show how additional general-purpose combinators
 for reasoning about data dependencies are easy to derive. We will also show how this provides a formal account
-of "brushing and linking", as requested by Reviewer A. Finally, our implementation also uses
-projections-with-conjugates on language-level constructs such as environments to provide more focused queries
-(e.g. finding outputs that are related via a specific environment variable); we will use this to further
-connect graphs/graph queries (section 3) to programs/executions (section 4), as also highlighted by Reviewer
-A.
+of "brushing and linking", as requested by Reviewer A.
+
+Our implementation also uses projections-with-conjugates on language-level constructs such as environments to
+provide more focused queries (e.g. finding outputs that are related via a specific environment variable); we
+will use this to further connect graphs/graph queries (section 3) to programs/executions (section 4), as also
+highlighted by Reviewer A.
 
 ### R2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
