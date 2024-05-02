@@ -205,6 +205,9 @@ Additional discussion in closing sections
   "dependency correctness" might look like in our setting
 
 [1] https://link.springer.com/chapter/10.1007/3-540-08860-1_7
+
 [2] https://simon.peytonjones.org/triemaps-that-match/
+
 [3] https://doi.org/10.1145/3110258
+
 [4] https://link.springer.com/chapter/10.1007/978-3-540-75987-4_10
