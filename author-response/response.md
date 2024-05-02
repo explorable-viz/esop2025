@@ -17,8 +17,8 @@ Although related inputs is indeed formally dual to related outputs, this was not
 is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to formulate f and g as
 a single Galois connection of type I → O1 × O2 which can then be either pre- or post-composed with its own
 dual, one yielding a "linked inputs" analysis of type I → I; the other composite (of type O1 × O2 → O1 × O2)
-can be used to recover the old approach precisely via projection operators which also have conjugates. (For
-example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the
+can be used to recover the POPL 2022 approach precisely via projection operators which also have conjugates.
+(For example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the
 bottom demand for the right view.) This also provides the formal account of "brushing and linking" requested
 by Reviewer A.
 
@@ -171,11 +171,11 @@ improvements to the paper.
 - Introduce the basic idea of "data transparency" with a simpler example (where the visualisation choices
   themselves are not a distraction
 - Expand on differences between new approach vis-a-vis POPL 2022 approach (R1):
-  - Explain why POPL 2022 approach doesn't directly support related inputs, and how a simple family of
-    operators (projections with conjugates) can be used both to recover the POPL 2022 approach precisely in
-    the new setting and formally explain brushing-and-linking.
-  - Show how projections-with-conjugates (a form of biproduct) support more focused queries, using the new
-    simpler example to illustrate.
+  - Explain why POPL 2022 approach doesn't directly support related inputs, and the POPL 2022 approach can be
+    recovered in the new setting using projections with conjugates. Show how this formally explains
+    brushing-and-linking.
+  - Show how projections-with-conjugates (a form of biproduct) also support more focused queries, using the
+    new simpler example to illustrate.
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
