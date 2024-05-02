@@ -7,9 +7,9 @@ summarise our proposed improvements to the paper.
 ### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
 As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate
-in the core aims and ideas, but lies instead in the implementation of the concepts. We believe the approach
-proposed provides sufficient benefits to warrant separate study, and we have identified some areas in which
-this could be emphasised.
+in the core aims and ideas, but lies instead in a redesigned approach to the implementing the concepts. We
+believe the approach proposed provides sufficient benefits to warrant separate study, and we have identified
+some areas in which this could be emphasised.
 
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL
 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates input and
@@ -38,7 +38,7 @@ implementation but is not described in the paper; fixing this will serve to rela
 also tie sections 3 and 4 together better (raised by Reviewer A).
 
 The question of whether there is a soundness theorem for the graph itself is slightly trickier. The intuition
-offered by Reviewer B for such a theorem sounds reasonable (and perhaps related to "dependency correctness"
+offered by Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness"
 from Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation")
 and are happy to expand on this to say more precisely what such a property might look like, but this is likely
 to remain out-of-scope for the present paper.
@@ -46,20 +46,20 @@ to remain out-of-scope for the present paper.
 ### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
 Reviewers C and D ask why the core language has the deep pattern-matching construct ("eliminators"), rather
-than the more standard non-nested `case` construct one would have in a lambda calculus with sums. Moving to a
-lambda calculus with separate sums, products and recursive types would make the connection to our
-implementation more indirect (and the formalisation less useful to a potential implementor). For data science
-applications, we have found it useful to have records and data types (both with pattern-matching) as core
-constructs and this decision lends itself to the eliminator design. Moreover there is now some precedent (in
-Peyton-Jones et al [2022]) for repurposing tries in this way, so on balance our preference is for better
-motivating this decision rather than moving towards a more abstract calculus.
+than a more standard one-level `case` construct. Moving to a lambda calculus with separate sums, products and
+recursive types would make the connection to our implementation more indirect (and the formalisation less
+useful to a potential implementor). For data science applications, we have found it useful to have records and
+data types (both with pattern-matching) as core constructs and this decision lends itself to the eliminator
+design. Moreover there is now some precedent (Peyton-Jones et al [2022]) for repurposing tries in this way, so
+on balance our preference is for better motivating this decision rather than moving towards a more abstract
+calculus.
 
 ### Q4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
-Reviewer B points out that our intended use cases are a bit unclear, e.g. checking that the right data were
-used in a particular chart vs. helping understand a potentially poorly designed or labelled chart. Reviewer D
-makes a similar point: the main example is hard to follow, with various suboptimal visualisation choices, and
-it's unclear whether our goal is to help make sense of poorly-designed visualisations, or whether
+Reviewer B points out that our intended use cases are a bit unclear, e.g. checking that the appropriate data
+were used in a particular chart vs. helping understand a potentially poorly designed or labelled chart.
+Reviewer D makes a similar point: the main example is hard to follow, with various suboptimal visualisation
+choices, and it's unclear whether our interest is in poorly-designed visualisations in particular, or whether
 well-designed visualisations may also benefit. The tricky example does indeed obfuscate our intentions
 somewhat, but in fact these use cases lie on a continuum; given just a visualisation it's often hard to tell
 whether it is a "correct" view of incorrect data, or an incorrect view of "correct" data (or some other
@@ -172,26 +172,28 @@ Additional points made by Reviewer D:
 
 ## 2. List of Proposed Changes
 
-We will implement all the minor corrections provided, and in addition undertake to implement the following
-more significant improvements to the paper.
+We will implement all the minor corrections provided, and in addition propose the following more significant
+improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
-- Sharpen the benefits of the new approach vis-a-vis the previous one (Q1):
-  - Explain how the previous approach doesn't directly support related inputs, and how a simple family of
+- Sharpen the benefits of the new approach vis-a-vis POPL 2022 approach (Q1):
+  - Explain how previous approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the prior work precisely in the new
-    setting, and support more focused queries. Use this to formally explain brushing-and-linking.
+    setting, support more focused queries, and formally explain brushing-and-linking.
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
 - Bridge gap between sections 3 and 4:
   - Show how Galois connections/conjugate operator pairs on graph give rise to analogous operators on
     environment, program and value selections
+- Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
+  types
 
 ### Section 5 (Evaluation)
 
 - Evaluate overhead compared to core language without building DDG or trace
-- Provide an anonymised web-based artefact to allow reviewers to play with the implementation
+- Provide anonymised web-based artefact to allow reviewers to experiment
 
 ### Sections 6 and 7 (Related/Future Work)
 
