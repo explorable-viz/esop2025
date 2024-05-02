@@ -31,10 +31,10 @@ graphs/graph queries (section 3) to programs/executions (section 4), as also hig
 ### R2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
-prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks whether
+POPL 2022 work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks whether
 there might be a soundness theorem that indicates that the graph is properly constructed.
 
-In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
+In the POPL 2022 paper, a theorem stated that if a computation evaluated to a trace, then the forwards and
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
 selections on the output. In the present paper, there is a similar result for graphs but nothing that relates
 this directly to the original program. Mediating between these two formulations (from program to graph and
@@ -144,8 +144,8 @@ Additional points raised by Reviewer A:
 
 - _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
   over the graph and its opposite, plus the new notion of "related inputs", together constitute the main delta
-  from the prior work. This is correct; these are indeed the main contributions, and each in their own way is
-  straightforward. We address this in (Q1) above.
+  from the POPL 2022 paper. This is correct; these are indeed the main contributions, and each in their own
+  way is straightforward. We address this in (Q1) above.
 
 - _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
   making this clearer. The benefit comes from the factorisation of the POPL 2022 approach, which eases the
@@ -168,8 +168,8 @@ improvements to the paper.
 
 - Expand on differences between new approach vis-a-vis POPL 2022 approach (Q1):
   - Explain why POPL 2022 approach doesn't directly support related inputs, and how a simple family of
-    operators (projections with conjugates) can be used both to recover the prior work precisely in the new
-    setting and formally explain brushing-and-linking.
+    operators (projections with conjugates) can be used both to recover the POPL 2022 approach precisely in
+    the new setting and formally explain brushing-and-linking.
   - Show how projections-with-conjugates (a form of biproduct) support more focused queries, with a new simple
     example.
 
