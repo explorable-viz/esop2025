@@ -183,8 +183,6 @@ improvements to the paper.
     and value selections
 - Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
   types
-- Outline soundness property for dependency graph and discuss what changes might be required of our dependency
-  relation in order for such a property to hold
 - Clarify Fig. 6 to indicate which `suff` rule applies to each subfigure
 
 ### Section 5 (Evaluation)
