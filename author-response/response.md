@@ -19,10 +19,16 @@ a single Galois connection of type I → O1 × O2 which can then be either pre- 
 dual, one yielding a "linked inputs" analysis of type I → I; the other composite (of type O1 × O2 → O1 × O2)
 can be used to recover the old approach precisely via projection operators which also have conjugates. (For
 example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the
-bottom demand for the right view.) Explaining this will not only clarify the delta from the previous work but
-will also show how additional general-purpose "combinators" for reasoning about data dependencies are easy to
-derive in the new setting. It will also provide a formal account of "brushing and linking" (both points raised
-by Reviewer A).
+bottom demand for the right view.) This also provides the formal account of "brushing and linking" requested
+by Reviewer A.
+
+Explaining this aspect of the new approach will clarify the delta from the previous work and also show how
+additional general-purpose "combinators" for reasoning about data dependencies are easy to derive. In
+particular the "projections with conjugates" (a form of biproduct) can also be applied to language-level
+constructs such as environments; our implementation relies on this to allow more focused queries, for example
+finding outputs that are related via a specific environment variable. Showing how this works will further
+deepen the connection between the world of graphs/graph queries the executions they can be used to reason
+about (bringing sections 3 and 4 closer together).
 
 ### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
@@ -33,9 +39,9 @@ there might be a soundness theorem that indicates that the graph is properly con
 In the prior work, a theorem stated that if a computation evaluated to a trace, then the forwards and
 backwards analysis over that trace yield a Galois connection between "selections" on the original program and
 selections on the output. In the present paper, there is a similar result for graphs but nothing that relates
-this directly to the original program. Converting between these two formulations of the problem happens in our
-implementation but is not described in the paper; fixing this will serve to relate the two formalisations and
-also tie sections 3 and 4 together better (raised by Reviewer A).
+this directly to the original program. Mediating between these two formulations (from program to graph and
+back again) happens in our implementation but is not described in the paper; fixing this will serve to relate
+the two formalisations and also tie sections 3 and 4 together better (raised by Reviewer A).
 
 The question of whether there is a soundness theorem for the graph itself is slightly trickier. The intuition
 offered by Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness"
@@ -76,19 +82,8 @@ ones -- but it should be clearer that our approach is intended to support both. 
 
 Additional points made by Reviewer A:
 
-- _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper. We will do
-  two things to address this:
-
-  1. As per (Q2) above, we will set out how the operators defined in 3 (which compute a Galois connection
-  between sinks and sources of G) also determine a Galois connection between selections on the original
-  program and output. Our implementation performs this conversion (mediating from the program to the graph and
-  back again), but we did not explain how this works in the submitted draft.
-
-  2. We will explain how general-purpose graph operators (such as the "projections with conjugates" mentioned
-  in (Q1) above) can be applied to language-level constructs such as environments. Again, our implementation
-  relies on this to allow more focused queries, for example finding outputs that are related via a specific
-  environment variable; showing how this works will further deepen the connection between the world of graphs
-  and conjugate operators and the executions they can be used to reason about.
+- _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper which we
+  respond to in (Q1) and (Q2) above.
 
 - _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
@@ -184,8 +179,8 @@ improvements to the paper.
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
 - Bridge gap between sections 3 and 4:
-  - Show how Galois connections/conjugate operator pairs on graph give rise to analogous operators on
-    environment, program and value selections
+  - Show how adjoint/conjugate operators on graphs give rise to analogous operators on environment, program
+    and value selections
 - Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
   types
 
