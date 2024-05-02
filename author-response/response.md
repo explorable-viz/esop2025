@@ -6,20 +6,23 @@ summarise our proposed improvements to the paper.
 
 ### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
-As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate in the core aims and ideas, but lies instead in the implementation of the concepts. We believe the approach proposed provides sufficient benefits to warrant separate study, and we
-have identified some areas in which this could be emphasised.
+As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate
+in the core aims and ideas, but lies instead in the implementation of the concepts. We believe the approach
+proposed provides sufficient benefits to warrant separate study, and we have identified some areas in which
+this could be emphasised.
 
-Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates
-input and 'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those
-composites is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to
-formulate f and g as a single Galois connection of type I → O1 × O2 which can then be composed with its own
-dual in two different ways, one of which corresponds to a "linked inputs" analysis of type I → I; the other
-composite (of type O1 × O2 → O1 × O2) can be used to recover the old approach precisely via projection
-operators which also have conjugates (so that for example the projection π₁: O1 × O2 → O1 has a conjugate [id
-, const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view). Explaining this will not only
-clarify the delta from the previous work but will also show how additional general-purpose "combinators" for
-reasoning about data dependencies are easy to derive in the new setting. It will also to provide a formal
-account of "brushing and linking" (both points raised by Reviewer A).
+Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL
+2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates input and
+'O' output). In this setup, f can be composed with (dual g) and (dual f) with g, but each of those composites
+is a "linked outputs" analysis of type O1 → O2 or O2 → O1. For linked inputs, we need to formulate f and g as
+a single Galois connection of type I → O1 × O2 which can then be either pre- or post-composed with its own
+dual, one yielding a "linked inputs" analysis of type I → I; the other composite (of type O1 × O2 → O1 × O2)
+can be used to recover the old approach precisely via projection operators which also have conjugates. (For
+example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the
+bottom demand for the right view.) Explaining this will not only clarify the delta from the previous work but
+will also show how additional general-purpose "combinators" for reasoning about data dependencies are easy to
+derive in the new setting. It will also provide a formal account of "brushing and linking" (both points raised
+by Reviewer A).
 
 ### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
@@ -36,28 +39,33 @@ also tie sections 3 and 4 together better (raised by Reviewer A).
 
 The question of whether there is a soundness theorem for the graph itself is slightly trickier. The intuition
 offered by Reviewer B for such a theorem sounds reasonable (and perhaps related to "dependency correctness"
-from Cheney et al [cite]); we alluded to this in future work ("semantically justified dependency relation")
+from Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation")
 and are happy to expand on this to say more precisely what such a property might look like, but this is likely
 to remain out-of-scope for the present paper.
 
 ### Q3. Eliminators vs. case expressions (Reviewers C and D)
 
 Reviewers C and D ask why the core language has the deep pattern-matching construct ("eliminators"), rather
-than the more standard non-nested `case` construct one would have in a lambda calculus with sums. This would
-indeed be more standard, but moving to a lambda calculus with separate sums, products and recursive types
-would make the connection to our implementation less direct (and the formalisation less useful to a potential
-implementor). For our applications, we have found it useful to have records and data types (both with
-pattern-matching) as core constructs and this decision lends itself to the eliminator design. There is
-precedent now (in Peyton-Jones et al 2022) for repurposing tries for pattern-matching, so on balance our
-preference is for better motivating this decision, rather than moving towards a more abstract calculus.
+than the more standard non-nested `case` construct one would have in a lambda calculus with sums. Moving to a
+lambda calculus with separate sums, products and recursive types would make the connection to our
+implementation more indirect (and the formalisation less useful to a potential implementor). For data science
+applications, we have found it useful to have records and data types (both with pattern-matching) as core
+constructs and this decision lends itself to the eliminator design. Moreover there is now some precedent (in
+Peyton-Jones et al [2022]) for repurposing tries in this way, so on balance our preference is for better
+motivating this decision rather than moving towards a more abstract calculus.
 
 ### Q4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
-Reviewer B points out that we don't clearly distinguish different use cases, such as checking that the right
-data were used in a particular chart, vs. helping understand a potentially poorly designed chart. Reviewer D
+Reviewer B points out that our intended use cases are a bit unclear, e.g. checking that the right data were
+used in a particular chart vs. helping understand a potentially poorly designed or labelled chart. Reviewer D
 makes a similar point: the main example is hard to follow, with various suboptimal visualisation choices, and
 it's unclear whether our goal is to help make sense of poorly-designed visualisations, or whether
-well-designed visualisations can also benefit? [expand]
+well-designed visualisations may also benefit. The tricky example does indeed obfuscate our intentions
+somewhat, but in fact these use cases lie on a continuum; given just a visualisation it's often hard to tell
+whether it is a "correct" view of incorrect data, or an incorrect view of "correct" data (or some other
+combination), and this ambiguity is why data transparency is (we would like to argue) such an essential
+feature. We will will make this spectrum of use cases clearer, but we will also try to include a simpler
+example where the visual output is less problematic.
 
 ### Reviewer A
 
@@ -96,7 +104,8 @@ Additional points made by Reviewer A:
   include some discussion in related/future work.
 
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
-  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`, but instead uses the faster approach of the 'G-DemBy' column.
+  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`,
+  but instead uses the faster approach of the 'G-DemBy' column.
 
 ### Reviewer B
 
@@ -115,9 +124,11 @@ Additional points made by Reviewer A:
   "what"). We will expand that closing discussion to include this point and perhaps a simple example similar
   to yours.
 - _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
-algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, as suggested by the reviewer [expand].
+  algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, as suggested
+  by the reviewer [expand].
 - "The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
-(V', E')$...". $H$ here is a (sub)graph with verties $\alpha$ and $Y$ and with edges from $\alpha$ to every vertex in $Y$. Somehow the explanation of this got swallowed during editing and we will add it back.
+  (V', E')$...". $H$ here is a (sub)graph with verties $\alpha$ and $Y$ and with edges from $\alpha$ to every
+  vertex in $Y$. Somehow the explanation of this got swallowed during editing and we will add it back.
 - _Concrete runs of algorithms_. Fig. 6 was intended to illustrate a concrete run of `suff`, showing how edges
   are copied from the original graph to the slice; we will make this clearer (for example by indicating which
   `suff` is being applied in each subfigure).
