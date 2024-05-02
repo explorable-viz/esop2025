@@ -140,9 +140,7 @@ Additional points raised by Reviewer B:
   above, but will also rework the introduction to start with a simpler example, with a less challenging
   visualisation (see next point).
 - _Q4. Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
-  onlione demo in time for the corrected version of the paper (June 11). We will include some simpler examples
-  than the one provided in the paper; if it makes sense to include one or two of these into the paper as well
-  we will, to help with your point above.
+  onlione demo in time for the corrected version of the paper (June 11).
 
 ### Reviewer D
 
