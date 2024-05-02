@@ -9,7 +9,7 @@ the end we summarise our proposed improvements to the paper.
 As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate
 in the core aims and ideas, but lies instead in a redesigned approach to the implementing the concepts. We
 believe the approach proposed provides sufficient benefits to warrant separate study, and we have identified
-some areas in which this could be emphasised.
+the following areas in which this could be emphasised.
 
 Although related inputs is indeed formally dual to related outputs, this was not readily obtained in the POPL
 2022 work, because the Galois connections were of types f: I → O1 and g: I → O2 (where 'I' indicates input and
@@ -41,11 +41,11 @@ this directly to the original program. Mediating between these two formulations 
 back again) happens in our implementation but is not described in the paper; fixing this will serve to relate
 the two formalisations and also tie sections 3 and 4 together better (raised by Reviewer A).
 
-The question of whether there is a soundness theorem for the graph itself is slightly trickier. The intuition
-offered by Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness"
-from Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation")
-and are happy to expand on this to say more precisely what such a property might look like, but this is likely
-to remain out-of-scope for the present paper.
+Regarding the question of whether there is a soundness theorem for the graph itself, the intuition offered by
+Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness" from
+Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation") and are
+happy to expand on this to say more precisely what such a property might look like. We will also investigate
+what changes, if any, would be required of our dependency relation in order for such a property to hold.
 
 ### R3. Eliminators vs. case expressions (Reviewers C and D)
 
@@ -65,8 +65,8 @@ were used vs. understanding a potentially poorly designed or labelled chart. Rev
 the main example is hard to follow because of various suboptimal visualisation choices, and it's unclear
 whether our interest is in such visualisations specifically, or whether well-designed visualisations can also
 benefit. Both use cases -- verifying provenance in "good" visualisations and diagnosing/understanding "bad"
-ones -- but it should be clearer that our approach is intended to support both. Including a simpler example
-(where the visual output is not itself problematic) will help.
+ones -- are important and we will make it clear that our approach is intended to support both by including a
+simpler example where the visual output is not itself problematic.
 
 ### Reviewer A
 
@@ -90,12 +90,11 @@ Additional points raised by Reviewer A:
   example, multiplication may be non-strict is either one argument or the other, but not both, i.e. may
   satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
   slicing as an effect, using a "lifting" monad similar to the non-termination monad that arises in
-  denotational semantics. Exploring these in more detail will be the topic of another paper, but we will
-  include some discussion in related/future work.
+  denotational semantics. We will include some discussion in related/future work.
 
-- _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This does raise some questions, but at the moment is
-  not a pressing concern as our implementation does not use the "dual of `suff`" implementation of `demBy`,
-  but instead uses the faster approach of the 'G-DemBy' column.
+- _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This is a fair observation that requires further
+  investigation; at the moment it is not a pressing concern as our implementation does not use the "dual of
+  `suff`" implementation of `demBy`, but instead uses the faster approach of the 'G-DemBy' column.
 
 ### Reviewer B
 
