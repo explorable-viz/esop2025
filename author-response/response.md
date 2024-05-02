@@ -177,10 +177,12 @@ improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
-- Sharpen the benefits of the new approach vis-a-vis POPL 2022 approach (Q1):
-  - Explain how previous approach doesn't directly support related inputs, and how a simple family of
+- Expand on differences between new approach vis-a-vis POPL 2022 approach (Q1):
+  - Explain why previous approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the prior work precisely in the new
-    setting, support more focused queries, and formally explain brushing-and-linking.
+    setting and formally explain brushing-and-linking.
+  - Show how projections-with-conjugates (a form of biproduct) support more focused queries, with a new simple
+    example.
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
@@ -193,7 +195,7 @@ improvements to the paper.
 ### Section 5 (Evaluation)
 
 - Evaluate overhead compared to core language without building DDG or trace
-- Provide anonymised web-based artefact to allow reviewers to experiment
+- Provide anonymised web-based artefact to allow reviewers to experiment with the implementation
 
 ### Sections 6 and 7 (Related/Future Work)
 
