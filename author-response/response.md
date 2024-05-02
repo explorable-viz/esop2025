@@ -22,13 +22,11 @@ example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] :
 bottom demand for the right view.) This also provides the formal account of "brushing and linking" requested
 by Reviewer A.
 
-Explaining this aspect of the new approach will clarify the delta from the previous work and also show how
-additional general-purpose "combinators" for reasoning about data dependencies are easy to derive. In
-particular the "projections with conjugates" (a form of biproduct) can also be applied to language-level
-constructs such as environments; our implementation relies on this to allow more focused queries, for example
-finding outputs that are related via a specific environment variable. Showing how this works will further
-deepen the connection between the world of graphs/graph queries the executions they can be used to reason
-about (bringing sections 3 and 4 closer together).
+Explaining this will clarify the delta from the previous work and show how additional general-purpose
+combinators for reasoning about data dependencies are easy to derive. Our implementation uses the "projections
+with conjugates" on language-level constructs such as environments to provide more focused queries (e.g.
+finding outputs that are related via a specific environment variable); we will use this to further connect
+graphs/graph queries (section 3) to programs/executions (section 4), as also highlighted by Reviewer A.
 
 ### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
