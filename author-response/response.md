@@ -114,11 +114,10 @@ Additional points made by Reviewer A:
   "what"). We will expand that closing discussion to include this point and perhaps a simple example similar
   to yours.
 - _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
-  algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, as suggested
-  by the reviewer [expand].
-- "The rule extends gave me a hard time, i.e., what does $H = {\alpha: Y}$ mean? H is "added" to a graph $G' =
-  (V', E')$...". $H$ here is a (sub)graph with verties $\alpha$ and $Y$ and with edges from $\alpha$ to every
-  vertex in $Y$. Somehow the explanation of this got swallowed during editing and we will add it back.
+  algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, which
+  proceeds by induction over a derivation in the inference rules.
+- _demBy extends rule_. The $H = {\alpha: Y}$ notation should have instead used the "star graph" notation
+  introduced in 4.2.2.
 - _Concrete runs of algorithms_. Fig. 6 was intended to illustrate a concrete run of `suff`, showing how edges
   are copied from the original graph to the slice; we will make this clearer (for example by indicating which
   `suff` is being applied in each subfigure).
