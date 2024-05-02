@@ -175,6 +175,8 @@ improvements to the paper.
     brushing-and-linking
   - Show how products-with-conjugates also support more focused queries, using the new simpler example to
     illustrate
+- Improve & simplify presentation of adjoint vs. conjugate setting and make clear the role of the De Morgan
+  dual in connecting these two
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
