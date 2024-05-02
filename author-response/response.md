@@ -20,16 +20,16 @@ In our approach, to generalise to linked inputs, we needed to reformulate f and 
 connection of type I → O1 × O2 which can then be either pre- or post-composed with its own dual, although this
 is not yet described in the paper. One of the two composites yields a "linked inputs" analysis of type I → I;
 the other composite (of type O1 × O2 → O1 × O2) can then be used to recover the POPL 2022 "linked outputs"
-approach, via projection operators which also have conjugates. (For example the projection π₁: O1 × O2 → O1
-has a conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view.) We will
-explain this to clarify the delta from the POPL 2022 work and show how additional general-purpose combinators
-for reasoning about data dependencies are easy to derive. We will also show how this provides a formal account
-of "brushing and linking", as requested by Reviewer A.
+approach, via products which also have conjugates. (For example the projection π₁: O1 × O2 → O1 has a
+conjugate [id , const ⊥] : O1 → O1 × O2 which supplies the bottom demand for the right view.) We will explain
+this to clarify the delta from the POPL 2022 work and show how additional general-purpose combinators for
+reasoning about data dependencies are easy to derive. We will also show how this provides a formal account of
+"brushing and linking", as requested by Reviewer A.
 
-Our implementation also uses projections-with-conjugates on language-level constructs such as environments to
-provide more focused queries (e.g. finding outputs that are related via a specific environment variable); we
-will use this to further connect graphs/graph queries (section 3) to programs/executions (section 4), as also
-highlighted by Reviewer A.
+Our implementation also uses products-with-conjugates (a form of biproduct) on language-level constructs such
+as environments to provide more focused queries (e.g. finding outputs that are related via a specific
+environment variable); we will use this to further connect graphs/graph queries (section 3) to
+programs/executions (section 4), as also highlighted by Reviewer A.
 
 ### R2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
@@ -168,13 +168,13 @@ improvements to the paper.
 ### Sections 1 and 2 (Intro/Overview)
 
 - Introduce the basic idea of "data transparency" with a simpler example (where the visualisation choices
-  themselves are not a distraction
-- Expand on differences between new approach vis-a-vis POPL 2022 approach (R1):
-  - Explain why POPL 2022 approach doesn't directly support related inputs, and the POPL 2022 approach can be
-    recovered in the new setting using projections with conjugates. Show how this formally explains
+  themselves are not a distraction)
+- Expand on differences between our approach vis-a-vis POPL 2022 paper (R1):
+  - Explain why POPL 2022 approach doesn't directly support related inputs, and how the POPL 2022 approach can
+    be recovered in the new setting using products with conjugates. Show how this formally explains
     brushing-and-linking.
-  - Show how projections-with-conjugates (a form of biproduct) also support more focused queries, using the
-    new simpler example to illustrate.
+  - Show how products-with-conjugates also support more focused queries, using the new simpler example to
+    illustrate.
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
@@ -183,6 +183,8 @@ improvements to the paper.
     and value selections
 - Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
   types
+- Outline soundness property for dependency graph and discuss what changes might be required of our dependency
+  relation in order for such a property to hold.
 
 ### Section 5 (Evaluation)
 
@@ -191,14 +193,17 @@ improvements to the paper.
 
 ### Sections 6 and 7 (Related/Future Work)
 
-Additional discussion in closing sections
 - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
 - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
-   using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
+using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
 - Mention idea of distinguishing information about choices/control flow from "content" and related to
-   intensional explanations (Reviewer B)
+intensional explanations (Reviewer B)
 - Expand discussion on "semantically justified" dependency relation to include a sketch of what a notion like
-  "dependency correctness" might look like in our setting
+"dependency correctness" might look like in our setting
+
+### Appendix
+
+- Add typing rules
 
 [1] https://link.springer.com/chapter/10.1007/3-540-08860-1_7
 
