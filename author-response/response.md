@@ -125,11 +125,11 @@ Additional points made by Reviewer A:
 ### Reviewer C
 
 - _Eliminators vs. expressions._ We recognise the concern and address this in (Q3) above.
-- _Loops in surface language_. The surface and core language are both pure functional languages, so there are
-  no loops as such (only recursion). Other work has looked at Galois slicing in an imperative language with
-  arrays and loops [cite]; in future we also plan to look at these features, because of their importance in
-  data science applications, supporting them either natively (via the FFI) or via an algebraic effects
-  embedding.
+- _Loops in surface language_. The surface and core language are both pure functional languages, so loops are
+  provided via recursion. Other work has looked at Galois slicing in an imperative language with arrays and an
+  explicit loop construct (Ricciotti et al [2017]); in future we also plan to look at these features, because
+  of their importance in data science applications, supporting them either natively (via the FFI) or via an
+  algebraic effects embedding.
 - _Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
   "recursive definitions" (Fig. X), so there is no need for an explicit fixpoint operator.
 - _Confusing example_. It is a difficult example, to some extent by design; we address this in (Q4) above, but
