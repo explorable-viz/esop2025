@@ -75,9 +75,7 @@ simpler example where the visual output is not itself problematic.
 
 - _Q1. Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
   we will include them in an Appendix.
-
 - _Q2. Correctness statement on DDG._ See response (R2) above.
-
 - _Q3. Overhead compared to core language without DDG annotations._ This is a good question that would be
   relatively straightforward to answer, without taking up too much space; we will do so.
 
@@ -85,7 +83,6 @@ Additional points raised by Reviewer A:
 
 - _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper which we
   respond to in (R1) and (R2) above.
-
 - _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
   particular, for foreign functions or primitive operations to "play well" (i.e. compose with) our system,
@@ -94,7 +91,6 @@ Additional points raised by Reviewer A:
   satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
   slicing as an effect, using a "lifting" monad similar to the non-termination monad that arises in
   denotational semantics. We will include some discussion in related/future work.
-
 - _Slowdown observed in G-DemBy-Suff (Section 5.2.4)_. This is a fair observation that requires further
   investigation; at the moment it is not a pressing concern as our implementation does not use the "dual of
   `suff`" implementation of `demBy`, but instead uses the faster approach of the 'G-DemBy' column.
