@@ -45,7 +45,7 @@ Regarding the question of whether there is a soundness theorem for the graph its
 Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness" from
 Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation") and are
 happy to expand on this to say more precisely what such a property might look like. We will also investigate
-what changes, if any, would be required of our dependency relation in order for such a property to hold.
+what changes, if any, might be required of our dependency relation in order for such a property to hold.
 
 ### R3. Eliminators vs. case expressions (Reviewers C and D)
 
@@ -132,7 +132,7 @@ Additional points raised by Reviewer B:
 - _Q1(a). Eliminators vs. expressions._ We recognise the concern and address this in (R3) above.
 - _Q1(b). Loops in surface language_. The surface and core language are both pure functional languages, so loops are
   provided via recursion. Other work has looked at Galois slicing in an imperative language with arrays and an
-  explicit loop construct (Ricciotti et al [2017]); in future we also plan to look at these features, because
+  explicit loop construct (Ricciotti et al [3]); in future we also plan to look at these features, because
   of their importance in data science applications, supporting them either natively (via the FFI) or via an
   algebraic effects embedding.
 - _Q2. Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
@@ -203,3 +203,4 @@ Additional discussion in closing sections
 
 [1] https://link.springer.com/chapter/10.1007/3-540-08860-1_7
 [2] https://simon.peytonjones.org/triemaps-that-match/
+[3] https://doi.org/10.1145/3110258
