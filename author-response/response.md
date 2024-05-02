@@ -73,7 +73,7 @@ ones -- but it should be clearer that our approach is intended to support both. 
 - _Q1. Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
   we will include them in an Appendix.
 
-- _Q2. Correctness statement on DDG._ See response (Q2) above.
+- _Q2. Correctness statement on DDG._ See response (R2) above.
 
 - _Q3. Overhead compared to core language without DDG annotations._ This is a good question that would be
   relatively straightforward to answer, without taking up too much space; we will do so.
@@ -81,7 +81,7 @@ ones -- but it should be clearer that our approach is intended to support both. 
 Additional points raised by Reviewer A:
 
 - _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper which we
-  respond to in (Q1) and (Q2) above.
+  respond to in (R1) and (R2) above.
 
 - _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
@@ -99,13 +99,12 @@ Additional points raised by Reviewer A:
 
 ### Reviewer B
 
-- _Difficult terminology and concepts in first 2 sections._ Introducing the key ideas was a challenge,
-  especially given the multiple dimensions of "duality" (conjugates, De Morgan duals, adjoints), and we agree
-  that this should be improved. We will give an intuition and definition for the De Morgan dual, but will also
-  try to do a better job of the transition from the "adjoint" setting (`\triangledown` and `\blacktriangleup`)
-  to the conjugate setting (`\triangledown` and `\triangleup`, and explain the role of the De Morgan dual in
-  connecting these two.
-- _Data provenance vs. understanding poorly designed charts_. We clarify this in (Q4) above.
+- _Q1. Data provenance vs. understanding poorly designed charts_. We clarify this in (R4) above.
+- _Q2. Suffices for vs. demanded by_. Introducing the key ideas was a challenge, given the multiple dimensions of
+  "duality" (conjugates, De Morgan duals, adjoints), and we agree this should be improved. We will give an
+  intuition and definition for the De Morgan dual, but will also try to do a better job of the transition from
+  the "adjoint" setting (`\triangledown` and `\blacktriangleup`) to the conjugate setting (`\triangledown` and
+  `\triangleup`, and explain the role of the De Morgan dual in connecting these two.
 - _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
   content of data, using the pattern-matching rules which identify the (partial) value that was consumed in
   order to select a branch, but this is not distinguished from any other kind of dependency. However, as your
@@ -122,9 +121,14 @@ Additional points raised by Reviewer A:
   are copied from the original graph to the slice; we will make this clearer (for example by indicating which
   `suff` is being applied in each subfigure).
 
+Additional points raised by Reviewer B:
+
+- _Difficult terminology and concepts in first 2 sections._ We are sympathetic to this and address in R2
+  above.
+
 ### Reviewer C
 
-- _Eliminators vs. expressions._ We recognise the concern and address this in (Q3) above.
+- _Eliminators vs. expressions._ We recognise the concern and address this in (R3) above.
 - _Loops in surface language_. The surface and core language are both pure functional languages, so loops are
   provided via recursion. Other work has looked at Galois slicing in an imperative language with arrays and an
   explicit loop construct (Ricciotti et al [2017]); in future we also plan to look at these features, because
@@ -132,7 +136,7 @@ Additional points raised by Reviewer A:
   algebraic effects embedding.
 - _Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
   "recursive definitions" (Fig. X), so there is no need for an explicit fixpoint operator.
-- _Confusing example_. It is a difficult example, to some extent by design; we address this in (Q4) above, but
+- _Confusing example_. It is a difficult example, to some extent by design; we address this in (R4) above, but
   also take your point that a simpler example, with a less challenging visualisation, would be useful (see
   next point).
 - _Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
@@ -145,13 +149,13 @@ Additional points raised by Reviewer A:
 - _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
   over the graph and its opposite, plus the new notion of "related inputs", together constitute the main delta
   from the POPL 2022 paper. This is correct; these are indeed the main contributions, and each in their own
-  way is straightforward. We address this in (Q1) above.
+  way is straightforward. We address this in (R1) above.
 
 - _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
   making this clearer. The benefit comes from the factorisation of the POPL 2022 approach, which eases the
   implementation burden, improves performance and introduces a cleaner design [expand].
 
-- _Continuations and eliminators_. We understand the concern and address this in (Q3) above.
+- _Continuations and eliminators_. We understand the concern and address this in (R3) above.
 
 Additional points made by Reviewer D:
 
@@ -166,7 +170,7 @@ improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
-- Expand on differences between new approach vis-a-vis POPL 2022 approach (Q1):
+- Expand on differences between new approach vis-a-vis POPL 2022 approach (R1):
   - Explain why POPL 2022 approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the POPL 2022 approach precisely in
     the new setting and formally explain brushing-and-linking.
