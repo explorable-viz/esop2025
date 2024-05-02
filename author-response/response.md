@@ -171,10 +171,10 @@ improvements to the paper.
   themselves are not a distraction)
 - Expand on differences between our approach vis-a-vis POPL 2022 paper (R1):
   - Explain why POPL 2022 approach doesn't directly support related inputs, and how the POPL 2022 approach can
-    be recovered in the new setting using products with conjugates. Show how this formally explains
-    brushing-and-linking.
+    be recovered in the new setting using products with conjugates; show how this formally explains
+    brushing-and-linking
   - Show how products-with-conjugates also support more focused queries, using the new simpler example to
-    illustrate.
+    illustrate
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
@@ -184,7 +184,7 @@ improvements to the paper.
 - Clear rationale for choice of datatypes + eliminators vs. lambda calculus with sums, products and recursive
   types
 - Outline soundness property for dependency graph and discuss what changes might be required of our dependency
-  relation in order for such a property to hold.
+  relation in order for such a property to hold
 
 ### Section 5 (Evaluation)
 
@@ -200,6 +200,8 @@ using conjugate operators identified here in other settings with negation (e.g. 
 intensional explanations (Reviewer B)
 - Expand discussion on "semantically justified" dependency relation to include a sketch of what a notion like
 "dependency correctness" might look like in our setting
+- Briefly discuss relationship to stable functions/strictness in denotational semantics and potential for
+  provenance tracking via a lifting monad
 
 ### Appendix
 
