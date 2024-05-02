@@ -57,15 +57,12 @@ calculus.
 ### Q4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
 Reviewer B points out that our intended use cases are a bit unclear, e.g. checking that the appropriate data
-were used in a particular chart vs. helping understand a potentially poorly designed or labelled chart.
-Reviewer D makes a similar point: the main example is hard to follow, with various suboptimal visualisation
-choices, and it's unclear whether our interest is in poorly-designed visualisations in particular, or whether
-well-designed visualisations may also benefit. The tricky example does indeed obfuscate our intentions
-somewhat, but in fact these use cases lie on a continuum; given just a visualisation it's often hard to tell
-whether it is a "correct" view of incorrect data, or an incorrect view of "correct" data (or some other
-combination), and this ambiguity is why data transparency is (we would like to argue) such an essential
-feature. We will will make this spectrum of use cases clearer, but we will also try to include a simpler
-example where the visual output is less problematic.
+were used vs. understanding a potentially poorly designed or labelled chart. Reviewer D makes a similar point:
+the main example is hard to follow because of various suboptimal visualisation choices, and it's unclear
+whether our interest is in such visualisations specifically, or whether well-designed visualisations can also
+benefit. Both use cases -- verifying provenance in "good" visualisations and diagnosing/understanding "bad"
+ones -- but it should be clearer that our approach is intended to support both. Including a simpler example
+(where the visual output is not itself problematic) will help.
 
 ### Reviewer A
 
@@ -74,13 +71,13 @@ example where the visual output is less problematic.
 
 - _Correctness statement on DDG._ See response (Q2) above.
 
-- _Overhead compared to core language without DDG annotations._ This is a good question that would be relatively
-  straightforward to answer, without taking up too much space; we will do so.
+- _Overhead compared to core language without DDG annotations._ This is a good question that would be
+  relatively straightforward to answer, without taking up too much space; we will do so.
 
 Additional points made by Reviewer A:
 
-- _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper. We will do two
-  things to address this:
+- _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper. We will do
+  two things to address this:
 
   1. As per (Q2) above, we will set out how the operators defined in 3 (which compute a Galois connection
   between sinks and sources of G) also determine a Galois connection between selections on the original
