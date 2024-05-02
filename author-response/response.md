@@ -105,21 +105,23 @@ Additional points raised by Reviewer A:
   intuition and definition for the De Morgan dual, but will also try to do a better job of the transition from
   the "adjoint" setting (`\triangledown` and `\blacktriangleup`) to the conjugate setting (`\triangledown` and
   `\triangleup`, and explain the role of the De Morgan dual in connecting these two.
-- _Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
+- _Q3. Data dependencies vs. control dependencies_. We stated this a bit misleadingly -- we do track branching on
   content of data, using the pattern-matching rules which identify the (partial) value that was consumed in
   order to select a branch, but this is not distinguished from any other kind of dependency. However, as your
   example program illustrates, distinguishing these two can be useful for explanations -- we do plan to
   revisit this in future work, as part of exposing "intensional" information to users ("how" in addition to
   "what"). We will expand that closing discussion to include this point and perhaps a simple example similar
   to yours.
-- _Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
+- _Q4. Presentation of demBy via inference rules_. Yes, demBy can also be expressed in more traditional
   algorithmic form, but presenting it in this form indeed helps in the proof of Proposition 3.18, which
-  proceeds by induction over a derivation in the inference rules.
-- _demBy extends rule_. The $H = {\alpha: Y}$ notation should have instead used the "star graph" notation
-  introduced in 4.2.2.
-- _Concrete runs of algorithms_. Fig. 6 was intended to illustrate a concrete run of `suff`, showing how edges
-  are copied from the original graph to the slice; we will make this clearer (for example by indicating which
-  `suff` is being applied in each subfigure).
+  proceeds by induction over a derivation in the inference rules. In the _extends_ rule, $H = {\alpha: Y}$
+  should have instead used the "star graph" notation introduced in 4.2.2. Regarding concrete runs, Fig. 6 was
+  intended to illustrate a concrete run of `suff`, showing how edges are copied from the original graph to the
+  slice; we will make this clearer (for example by indicating which `suff` is being applied in each
+  subfigure).
+- _Q5. Soundness of graph construction_. We address this in (R2) above.
+- _Q6. Miscellaneous_. We will implement the corrections given. In a non-linear language the IO relation is
+  typically not a function because multiple outputs can use the same input.
 
 Additional points raised by Reviewer B:
 
@@ -128,37 +130,35 @@ Additional points raised by Reviewer B:
 
 ### Reviewer C
 
-- _Eliminators vs. expressions._ We recognise the concern and address this in (R3) above.
-- _Loops in surface language_. The surface and core language are both pure functional languages, so loops are
+- _Q1(a). Eliminators vs. expressions._ We recognise the concern and address this in (R3) above.
+- _Q1(b). Loops in surface language_. The surface and core language are both pure functional languages, so loops are
   provided via recursion. Other work has looked at Galois slicing in an imperative language with arrays and an
   explicit loop construct (Ricciotti et al [2017]); in future we also plan to look at these features, because
   of their importance in data science applications, supporting them either natively (via the FFI) or via an
   algebraic effects embedding.
-- _Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
+- _Q2. Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
   "recursive definitions" (Fig. X), so there is no need for an explicit fixpoint operator.
-- _Confusing example_. It is a difficult example, to some extent by design; we address this in (R4) above, but
+- _Q3. Confusing example_. It is a difficult example, to some extent by design; we address this in (R4) above, but
   also take your point that a simpler example, with a less challenging visualisation, would be useful (see
   next point).
-- _Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
-  onlione demo in time for the corrected version of the paper (May 20). We will include some simpler examples
+- _Q4. Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
+  onlione demo in time for the corrected version of the paper (June 11). We will include some simpler examples
   than the one provided in the paper; if it makes sense to include one or two of these into the paper as well
   we will, to help with your point above.
 
 ### Reviewer D
 
-- _Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
+- _Q1. Delta compared to POPL 2022._ The reviewer asks whether the choice of moving to a DDG and query operators
   over the graph and its opposite, plus the new notion of "related inputs", together constitute the main delta
   from the POPL 2022 paper. This is correct; these are indeed the main contributions, and each in their own
   way is straightforward. We address this in (R1) above.
+- _Q2. Continuations and eliminators_. We understand the concern and address this in (R3) above.
+
+Additional points made by Reviewer D:
 
 - _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
   making this clearer. The benefit comes from the factorisation of the POPL 2022 approach, which eases the
   implementation burden, improves performance and introduces a cleaner design [expand].
-
-- _Continuations and eliminators_. We understand the concern and address this in (R3) above.
-
-Additional points made by Reviewer D:
-
 - _Computing graph along with data before serving to client_. This is indeed how our implementation works
   (broadly speaking, although it all happens on the client). We evaluate the program once to a graph when the
   page loads, and then any subsequent queries reuse the same graph.
