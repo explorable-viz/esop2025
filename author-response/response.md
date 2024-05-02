@@ -1,10 +1,10 @@
-We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We respond to
-questions asked by two or more reviewers first, and then address any remaining questions. At the end we
-summarise our proposed improvements to the paper.
+We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We respond
+(R1-R4 below) to questions asked by two or more reviewers first, and then address any remaining questions. At
+the end we summarise our proposed improvements to the paper.
 
 ## 1. Response to Reviewer Questions
 
-### Q1. Delta with respect to POPL 2022 paper (Reviewers A and D)
+### R1. Delta with respect to POPL 2022 paper (Reviewers A and D)
 
 As Reviewers A and D point out, the delta from the prior POPL 2022 work on which the paper builds is moderate
 in the core aims and ideas, but lies instead in a redesigned approach to the implementing the concepts. We
@@ -22,13 +22,13 @@ example the projection π₁: O1 × O2 → O1 has a conjugate [id , const ⊥] :
 bottom demand for the right view.) This also provides the formal account of "brushing and linking" requested
 by Reviewer A.
 
-Explaining this will clarify the delta from the previous work and show how additional general-purpose
+Explaining this will clarify the delta from the POPL 2022 work and show how additional general-purpose
 combinators for reasoning about data dependencies are easy to derive. Our implementation uses the "projections
 with conjugates" on language-level constructs such as environments to provide more focused queries (e.g.
 finding outputs that are related via a specific environment variable); we will use this to further connect
 graphs/graph queries (section 3) to programs/executions (section 4), as also highlighted by Reviewer A.
 
-### Q2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
+### R2. Correctness statements relating graphs/graph operators to semantics (Reviewers A and B)
 
 Reviewer A asks whether we could formulate a correctness theorem for the DDG (analogous to Theorem 3.11 in the
 prior work), relating it to the big-step evaluation in 4 and/or graph operators in 3. Reviewer B asks whether
@@ -47,7 +47,7 @@ from Cheney et al [2011]); we alluded to this in future work ("semantically just
 and are happy to expand on this to say more precisely what such a property might look like, but this is likely
 to remain out-of-scope for the present paper.
 
-### Q3. Eliminators vs. case expressions (Reviewers C and D)
+### R3. Eliminators vs. case expressions (Reviewers C and D)
 
 Reviewers C and D ask why the core language has the deep pattern-matching construct ("eliminators"), rather
 than a more standard one-level `case` construct. Moving to a lambda calculus with separate sums, products and
@@ -58,7 +58,7 @@ design. Moreover there is now some precedent (Peyton-Jones et al [2022]) for rep
 on balance our preference is for better motivating this decision rather than moving towards a more abstract
 calculus.
 
-### Q4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
+### R4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
 Reviewer B points out that our intended use cases are a bit unclear, e.g. checking that the appropriate data
 were used vs. understanding a potentially poorly designed or labelled chart. Reviewer D makes a similar point:
@@ -70,15 +70,15 @@ ones -- but it should be clearer that our approach is intended to support both. 
 
 ### Reviewer A
 
-- _Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
+- _Q1. Typing rules._ These were included in the POPL 2022 work for clarity but omitted here for reasons of space;
   we will include them in an Appendix.
 
-- _Correctness statement on DDG._ See response (Q2) above.
+- _Q2. Correctness statement on DDG._ See response (Q2) above.
 
-- _Overhead compared to core language without DDG annotations._ This is a good question that would be
+- _Q3. Overhead compared to core language without DDG annotations._ This is a good question that would be
   relatively straightforward to answer, without taking up too much space; we will do so.
 
-Additional points made by Reviewer A:
+Additional points raised by Reviewer A:
 
 - _Lack of connection between Sections 3 and 4._ This is indeed a weakness of the present paper which we
   respond to in (Q1) and (Q2) above.
@@ -86,7 +86,7 @@ Additional points made by Reviewer A:
 - _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
   particular, for foreign functions or primitive operations to "play well" (i.e. compose with) our system,
-  they must be _stable_ (in the sense of Berry 1978) in order for the appropriate minima to exist. For
+  they must be _stable_ (in the sense of Berry [1978]) in order for the appropriate minima to exist. For
   example, multiplication may be non-strict is either one argument or the other, but not both, i.e. may
   satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
   slicing as an effect, using a "lifting" monad similar to the non-termination monad that arises in
@@ -148,7 +148,7 @@ Additional points made by Reviewer A:
   straightforward. We address this in (Q1) above.
 
 - _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
-  making this clearer. The benefit comes from the factorisation of the previous approach, which eases the
+  making this clearer. The benefit comes from the factorisation of the POPL 2022 approach, which eases the
   implementation burden, improves performance and introduces a cleaner design [expand].
 
 - _Continuations and eliminators_. We understand the concern and address this in (Q3) above.
@@ -167,7 +167,7 @@ improvements to the paper.
 ### Sections 1 and 2 (Intro/Overview)
 
 - Expand on differences between new approach vis-a-vis POPL 2022 approach (Q1):
-  - Explain why previous approach doesn't directly support related inputs, and how a simple family of
+  - Explain why POPL 2022 approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the prior work precisely in the new
     setting and formally explain brushing-and-linking.
   - Show how projections-with-conjugates (a form of biproduct) support more focused queries, with a new simple
