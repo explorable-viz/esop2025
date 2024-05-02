@@ -52,11 +52,11 @@ what changes, if any, would be required of our dependency relation in order for 
 Reviewers C and D ask why the core language has the deep pattern-matching construct ("eliminators"), rather
 than a more standard one-level `case` construct. Moving to a lambda calculus with separate sums, products and
 recursive types would make the connection to our implementation more indirect (and the formalisation less
-useful to a potential implementor). For data science applications, we have found it useful to have records and
-data types (both with pattern-matching) as core constructs and this decision lends itself to the eliminator
-design. Moreover there is now some precedent (Peyton-Jones et al [2022]) for repurposing tries in this way, so
-on balance our preference is for better motivating this decision rather than moving towards a more abstract
-calculus.
+useful to a potential implementor); moreover, for data science applications, we have found it useful to have
+records and data types (both with pattern-matching) as core constructs and this decision lends itself to the
+eliminator design. Moreover there is now some precedent (Peyton-Jones et al [2]) for using tries for
+pattern-matching, so our preference is to make the rationale clearer rather than to move towards a more
+abstract calculus.
 
 ### R4. Verifying data provenance vs. understanding poorly designed charts (Reviewers B and D)
 
@@ -86,7 +86,7 @@ Additional points raised by Reviewer A:
 - _"Strictness condition" in Lemma 3.22 and provenance tracking as an effect._ There is almost certainly a
   connection between Galois slicing and the notion of strictness that arises in denotational semantics; in
   particular, for foreign functions or primitive operations to "play well" (i.e. compose with) our system,
-  they must be _stable_ (in the sense of Berry [1978]) in order for the appropriate minima to exist. For
+  they must be _stable_ (in the sense of Berry [1]) in order for the appropriate minima to exist. For
   example, multiplication may be non-strict is either one argument or the other, but not both, i.e. may
   satisfy at most one of (⊥ * n = ⊥) and (n * ⊥ = ⊥) for non-zero n. We also think it possible to model Galois
   slicing as an effect, using a "lifting" monad similar to the non-termination monad that arises in
@@ -136,10 +136,10 @@ Additional points raised by Reviewer B:
   of their importance in data science applications, supporting them either natively (via the FFI) or via an
   algebraic effects embedding.
 - _Q2. Fixpoint operator_. Functions are always named in our calculus, via the binding environments ρ that we call
-  "recursive definitions" (Fig. X), so there is no need for an explicit fixpoint operator.
-- _Q3. Confusing example_. It is a difficult example, to some extent by design; we address this in (R4) above, but
-  also take your point that a simpler example, with a less challenging visualisation, would be useful (see
-  next point).
+  "recursive definitions" (Fig. 9), so there is no need for an explicit fixpoint operator.
+- _Q3. Confusing example_. You are right that this is a difficult example (by design); we address this in (R4)
+  above, but will also rework the introduction to start with a simpler example, with a less challenging
+  visualisation (see next point).
 - _Q4. Anonymised interactive demo_. We will look into anonymous hosting options and make sure to provide an
   onlione demo in time for the corrected version of the paper (June 11). We will include some simpler examples
   than the one provided in the paper; if it makes sense to include one or two of these into the paper as well
@@ -155,9 +155,8 @@ Additional points raised by Reviewer B:
 
 Additional points made by Reviewer D:
 
-- _Highlight that underlying idea is quite straightforward_. We also feel that the paper would benefit from
-  making this clearer. The benefit comes from the factorisation of the POPL 2022 approach, which eases the
-  implementation burden, improves performance and introduces a cleaner design [expand].
+- _Highlight that underlying idea is quite straightforward_. We agree that the paper would benefit from
+  making this clearer and will do our best to convey this.
 - _Computing graph along with data before serving to client_. This is indeed how our implementation works
   (broadly speaking, although it all happens on the client). We evaluate the program once to a graph when the
   page loads, and then any subsequent queries reuse the same graph.
@@ -169,12 +168,14 @@ improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
+- Introduce the basic idea of "data transparency" with a simpler example (where the visualisation choices
+  themselves are not a distraction
 - Expand on differences between new approach vis-a-vis POPL 2022 approach (R1):
   - Explain why POPL 2022 approach doesn't directly support related inputs, and how a simple family of
     operators (projections with conjugates) can be used both to recover the POPL 2022 approach precisely in
     the new setting and formally explain brushing-and-linking.
-  - Show how projections-with-conjugates (a form of biproduct) support more focused queries, with a new simple
-    example.
+  - Show how projections-with-conjugates (a form of biproduct) support more focused queries, using the new
+    simpler example to illustrate.
 
 ### Sections 3 and 4 (Graph Operators/Semantics)
 
@@ -199,3 +200,6 @@ Additional discussion in closing sections
    intensional explanations (Reviewer B)
 - Expand discussion on "semantically justified" dependency relation to include a sketch of what a notion like
   "dependency correctness" might look like in our setting
+
+[1] https://link.springer.com/chapter/10.1007/3-540-08860-1_7
+[2] https://simon.peytonjones.org/triemaps-that-match/
