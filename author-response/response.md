@@ -43,7 +43,7 @@ the two formalisations and also tie sections 3 and 4 together better (raised by 
 
 Regarding the question of whether there is a soundness theorem for the graph itself, the intuition offered by
 Reviewer B for such a theorem sounds reasonable (and is perhaps related to "dependency correctness" from
-Cheney et al [2011]); we alluded to this in future work ("semantically justified dependency relation") and are
+Cheney et al [4]); we alluded to this in future work ("semantically justified dependency relation") and are
 happy to expand on this to say more precisely what such a property might look like. We will also investigate
 what changes, if any, might be required of our dependency relation in order for such a property to hold.
 
@@ -204,3 +204,4 @@ Additional discussion in closing sections
 [1] https://link.springer.com/chapter/10.1007/3-540-08860-1_7
 [2] https://simon.peytonjones.org/triemaps-that-match/
 [3] https://doi.org/10.1145/3110258
+[4] https://link.springer.com/chapter/10.1007/978-3-540-75987-4_10
