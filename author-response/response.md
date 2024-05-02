@@ -180,11 +180,11 @@ more significant improvements to the paper.
 ### Section 5 (Evaluation)
 
 - Evaluate overhead compared to core language without building DDG or trace
-- Provide an anonymised web-based artefact to allow reviewers to play with the implementation
 
 ### Sections 6 and 7 (Related/Future Work)
 
 Additional discussion in closing sections
+- Explain more clearly the differences with the POPL 2022 paper on Fluid.
 - Benefits of developing approach for general-purpose language vs. visualisation DSL like Vega (Reviewer A)
 - Relationship to developments in data provenance for aggregates or recursive queries, and potential for
    using conjugate operators identified here in other settings with negation (e.g. databases) (Reviewer A)
