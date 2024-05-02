@@ -1,6 +1,6 @@
 We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We respond
-(R1-R4 below) to questions asked by two or more reviewers first, and then address any remaining questions. At
-the end we summarise our proposed improvements to the paper.
+(R1-R4 below) to concerns raised by two or more reviewers first, and then address the specific questions asked
+by each reviewer. At the end we summarise our proposed improvements to the paper.
 
 ## 1. Response to Reviewer Questions
 
