@@ -1,0 +1,74 @@
+\subsection{\propref{conj-galois-correspond}}
+Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
+equivalent:
+\begin{enumerate}
+   \item $f$ and $g$ form a conjugate pair
+   \item $f$ and $\dual{g}$ form a Galois connection
+\end{enumerate}
+\setcounter{equation}{0}
+\begin{proof}
+   Fix $x \in A$ and $y \in B$.
+   \newline
+   Case: $f, g$ conjugate $\implies$ $f, \dual{g}$ form Galois connection.
+   \begin{flalign}
+      &
+      f(x) \leq_{B} y
+      &
+      \text{(suppose)}
+      \notag
+      \\
+      &
+      f(x) \wedge_{B} \neg y = \bot
+      &
+      \notag
+      \\
+      &
+      x \wedge_{A} g(\neg y) = \bot
+      &
+      \text{(conjugacy)}
+      \notag
+      \\
+      &
+      x \leq_{A} \neg (g(\neg y))
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \leq_{A} \dual{g}(y)
+      &
+      \text{(def of $\dual{\cdot}$)}
+      \notag
+   \end{flalign}
+   \newline
+   Case: $f, \dual{g}$ Galois connection $\implies$ $f, g$ conjugate
+   \begin{flalign}
+      &
+      f(x) \wedge_{B} y = \bot
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      f(x) \leq_{B} \neg y 
+      &
+      \notag
+      \\
+      &
+      x \leq_{A} \dual{g}(\neg y)
+      &
+      \text{(GC)}
+      \notag
+      \\
+      &
+      x \leq_{A} \neg (g (y))
+      &
+      \text{(def of $\dual{\cdot}$)}
+      \notag
+      \\
+      &
+      x \wedge_{A} g(y) = \bot
+      &
+      \notag
+   \end{flalign}
+\end{proof}

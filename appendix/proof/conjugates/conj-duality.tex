@@ -1,0 +1,70 @@
+\subsection{\lemref{conjugate:image-preimage-duality}}
+\setcounter{equation}{0}
+Fix $R \subseteq X \times Y$. We proceed by direct calculation.
+\begin{proof}
+   Case $\dual{\demandedByR_R} = \sufficesR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandedByR_R (X')} = \dual{\set{y \in Y \mid \exists x \in X'.(x,y) \in R}}
+      &
+      \text{def of $\demandedByR_R$}
+      \notag
+      \\
+      &
+      = \compl{\set{y \in Y \mid \exists x \in \compl{(X')}.(x,y) \in R}}
+      &
+      \text{def of $\dual{\cdot}$}
+      \notag
+      \\
+      &
+      = \compl{\set{y \in Y \mid \exists x \in (X \setminus X').(x, y) \in R}}
+      &
+      \text{def of $\compl{\cdot}$}
+      \notag
+      \\
+      &
+      = \set{y \in Y \mid \nexists x \in (X \setminus X').(x, y) \in R}
+      &
+      \text{$\compl{\cdot}$ negates predicate}
+      \notag
+      \\
+      &
+      = \sufficesR_R(X')
+      &
+      \text{def of $\sufficesR_R$}
+      \notag
+   \end{flalign}
+   \newline
+   Case $\dual{\demandsR_R} = \preimageDualR_R$:
+   \begin{flalign}
+      &
+      \dual{\demandsR_R (Y')} = \dual{\set{x \in X \mid \exists y \in Y'. (x, y) \in R}}
+      &
+      \text{def of $\dual{\demandsR_R}$}
+      \notag
+      \\
+      &
+       = \compl{\set{x \in X \mid \exists y \in \compl{(Y')}. (x, y) \in R}}
+      &
+      \text{def of $\dual{\cdot}$}
+      \notag
+      \\
+      &
+      = \compl{\set{x \in X \mid \exists y \in (Y \setminus Y'). (x, y) \in R}}
+      &
+      \text{def of $\compl{\cdot}$}
+      \notag
+      \\
+      &
+       = \set{x \in X \mid \nexists y \in (Y \setminus Y').(x, y) \in R}
+      &
+      \text{$\compl{\cdot}$ negates predicate}
+      \notag
+      \\
+      &
+      = \preimageDualR_R(Y')
+      &
+      \text{def of $\preimageDualR_R$}
+      \notag
+   \end{flalign}
+\end{proof}
