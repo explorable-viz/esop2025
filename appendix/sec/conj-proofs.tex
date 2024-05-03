@@ -71,8 +71,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
    $$
 \end{proposition}
 
-
-
+\setcounter{equation}{0}
 \begin{theorem}
    \ref{prop:reachability-in-g''} $\implies$ \ref{prop:demandedByAlg-computes-demandedBy}
 \end{theorem}
@@ -288,7 +287,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \locallabel{H-subgraph-H-cup-G}
       \\
       &
-      \caseName{Case $\impliedby$}
+      \caseName{WTS: } R_{G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
       &
       \notag
       \\
@@ -305,7 +304,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \caseName{Case $\implies$}
+      \caseName{WTS: } R_{G}(\alpha, \beta) \implies R_{H'}(\alpha, \beta)
       &
       \notag
       \\
@@ -350,7 +349,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \locallabel{reachable-IH}
       \\
       &
-      \caseName{Case $\implies$}
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \implies R_{H'}(\alpha, \beta)
       &
       \notag
       \\
@@ -383,7 +382,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \caseName{Case $\impliedby$}
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
       &
       \notag
       \\
@@ -407,7 +406,6 @@ We can prove \propref{reachability-in-g''} with the following:
 \end{theorem}
 \setcounter{equation}{0}
 \begin{proof}
-   % Set $H \eqdef \exPair{X}{\emptyset}$. Then $\forall \alpha \in X$, if for some $\beta \in \sinks{G}$ we have $R_{G}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)$ then by \ref{prop:dembyv-preserves-paths} this is equivalent to $R_{H}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)$, and thus we have \ref{prop:reachability-in-g''} by taking the second conjunct in each statement.
    \begin{flalign}
       &
       H, X, G \demandedByAlg{} H'
@@ -428,7 +426,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \caseName{Case $\implies$}
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \implies  R_{H'}(\alpha, \beta)
       &
       \notag
       \\
@@ -452,7 +450,7 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \caseName{Case $\impliedby$}
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
       &
       \notag
       \\
