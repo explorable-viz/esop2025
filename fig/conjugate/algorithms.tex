@@ -7,7 +7,7 @@
               right={$X \subseteq \sources{G}$}
             ]
             {
-               (X, \emptyset), X, G
+               (X, \emptyset), \outN{G}(X), G
                \demandedByV{}
                G'
             }
@@ -32,25 +32,25 @@
          %
          \and
          %
-         % \inferrule*[
-         %    lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
-         %    % right={$\alpha \in \V(G')$}
-         % ]
-         % {
-         %    G', X, G
-         %    \demandedByV{}
-         %    G^\twoPrime
-         %    \\
-         %    \alpha \in \V(G')
-         % }
-         % {
-         %    G', \alpha \cons X, G \demandedByV{} G^\twoPrime
-         % }
-         % %
-         % \and
-         % %
          \inferrule*[
-            lab={\ruleName{step}},% $\demandedByV{}$-extend}},
+            lab={\ruleName{$\demandedByV{}$-skip}},
+            % right={$\alpha \in \V(H)$}
+         ]
+         {
+            H, X, G
+            \demandedByV{}
+            H'
+            \\
+            \alpha \in \V(H)
+         }
+         {
+            H, \alpha \cons X, G \demandedByV{} H'
+         }
+         %
+         \and
+         %
+         \inferrule*[
+            lab={\ruleName{$\demandedByV{}$-extend}},
             % right={$H = \set{\alpha \mapsto Y}$}
          ]
          {

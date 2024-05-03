@@ -598,10 +598,9 @@ We can prove \propref{reachability-in-g''} with the following:
 \begin{proposition}
    \label{prop:dembyv-preserves-paths}
    For graphs $G, H, H'$ and $X \subseteq \V(G)$, if $H, X, G \demandedByV{} H'$ then
-   $\forall \alpha \in X, \alpha' \in \V(H), \beta \in \V(G)$:
-
+   $\forall \alpha \in \sources{H}, \beta \in \V{H}$:
    $$
-      R_{H\cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      R_{H\cup G}(\alpha, \beta) \iff R_{H'}(\alpha, \beta)
    $$
 \end{proposition}
 \setcounter{equation}{0}
@@ -634,53 +633,26 @@ We can prove \propref{reachability-in-g''} with the following:
       &
       \notag
       \\
+      &
+      H = H \subseteq H \cup G
+      &
+      \locallabel{H-subgraph-H-cup-G}
+      \\
+      &
+      \caseName{Case $\impliedby$}
+      &
+      \notag
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \text{assume}
+      \\
       \qedLocal
       &
-      \text{trivially true, since $X=\emptyset$}
+      R_{H\cup G}(\alpha, \beta)
       &
-      \notag
-      \\
-      &
-      \caseName{Case $\outE{G}(\alpha) = \emptyset$}
-      &
-      \notag
-      \\
-      &
-      \derivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            {
-               H \cup \emptyset, X \cup \emptyset, G \setminus_{E} \emptyset
-               \demandedByV{}
-               H'
-            }
-            {
-               H, \alpha \cons X, G \demandedByV{} H'
-            }
-         \end{smathpar}
-      }
-      &
-      \notag
-      \\
-      &
-      R_{H \cup G}(\alpha', \beta') \wedge R_{H \cup G}(\beta', \beta)
-      \iff
-      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
-      &
-      \text{assume IH}
-      \notag
-      \\
-      &
-      \quad
-      (\forall \beta' \in X)
-      &
-      \notag
-      \\
-      &
-      \text{Want to show:} R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
-      \iff
-      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-      &
+      \text{(\localref{H-subgraph-H-cup-G})}
       \notag
       \\
       &
@@ -689,27 +661,76 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
+      R_{H \cup G}(\alpha, \beta)
+      \quad
+      (\forall \beta \in \V(H). \exists \alpha \in \sources{H})
       &
       \text{assume}
-      \notag
       \\
-      &
-      \neg R_{G}(\alpha, \beta)
-      &
-      \text{$\outE{G}(\alpha) = \emptyset$}
-      \locallabel{alpha-cant-reach-beta-in-g}
-      \\
+      \qedLocal
       &
       R_{H}(\alpha, \beta)
       &
-      \text{(\localref{alpha-cant-reach-beta-in-g}), $R_{H \cup G}(\alpha, \beta)$}
-      \locallabel{alpha-reaches-beta-in-h}
+      \notag
       \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{E} \outE{G}(\alpha)
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cdot X, G
+               \demandedByV{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}(\alpha, \beta)
+      \iff
+      R_{H'}(\alpha, \beta)
+      &
+      \text{assume IH}
+      \locallabel{reachable-IH}
+      \\
+      &
+      \caseName{Case $\implies$}
+      &
+      \notag
+      \\
+      &
+      R_{H \cup G}(\alpha, \beta)
+      &
+      \text{assume}
+      \locallabel{h-cup-g-assumption}
+      \\
+      &
+      (H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha)) = H \cup G
+      &
+      \locallabel{union-equal}
+      \\
+      &
+      R_{H \cup G} = R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}
+      &
+      \text{(\localref{union-equal}, \localref{h-cup-g-assumption})}
+      \notag
+      \\
+      &
+      R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}(\alpha, \beta)
+      &
+      \\
+      \qedLocal
       &
       R_{H'}(\alpha, \beta)
       &
-      \text{(\localref{alpha-reaches-beta-in-h}), \ref{lem:partial-slice-sub-slice}}
+      \text{(\localref{reachable-IH})}
       \notag
       \\
       &
@@ -718,133 +739,17 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-      &
-      \text{assume}
-      \\
-      \qedLocal
-      &
-      R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta)
-      &
-      \text{$H' \subseteq H \cup G$}
-      \notag
-      \\
-      &
-      \caseDerivation{\derivationWidth}{
-         \begin{smathpar}
-            \inferrule*
-            {
-               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
-               \demandedByV{}
-               H'
-            }
-            {
-               H, \alpha \cons X, G \demandedByV{} H'
-            }
-         \end{smathpar}
-      }
-      &
-      \\
-      &
-      R_{H \cup \outE{G}(\alpha)}(\alpha', \beta') \wedge R_{G \setminus_{E} \outE{G}(\alpha)}(\beta', \beta)
-      \iff
-      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
-      &
-      \text{(IH)}
-      \\
-      &
-      \qquad\quad (\forall \beta' \in \outN{G}(\alpha) \Lowlight{\subseteq X \cup \outN{G}(\alpha)})
-      &
-      \notag
-      \\
-      &
-      \text{want to show: } R_{H \cup G}(\alpha', \alpha) \wedge R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-      &
-      \\
-      &
-      \caseName{Case $\implies$}
-      &
-      \notag
-      \\
-      &
-      R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta)
-      &
-      \text{(assume)}
-      \locallabel{implies-assumption}
-      \\
-      &
-      ((\alpha, \beta') \in \E(G) )\wedge R_{G}(\beta', \beta)
-      \quad
-      (\exists \beta')
-      &
-      \notag
-      \\
-      &
-      R_{G \setminus_{E} \outE{G}(\alpha)}(\beta',\beta)
-      &
-      \locallabel{beta'-reaches-beta}
-      \\
-      &
-      (\alpha, \beta') \in \E(H \cup \outE{G}(\alpha))
-      &
-      \locallabel{edge-in-extended-h}
-      \\
-      &
-      (\alpha, \beta') \in \E(H')
-      &
-      \text{(\ref{lem:partial-slice-sub-slice})}
-      \locallabel{alpha-beta-in-slice}
-      \\
-      &
-      R_{H \cup \outE{G}(\alpha)}(\alpha, \beta')
-      &
-      \text{(\localref{edge-in-extended-h}, \localref{implies-assumption})}
-      \locallabel{alpha-reaches-beta'}
-      \\
-      &
-      R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
-      &
-      \text{(\localref{alpha-reaches-beta'}, \localref{beta'-reaches-beta}, IH)}
-      \locallabel{h'-conjunct}
-      \\
-      &
       R_{H'}(\alpha, \beta)
       &
-      \text{(\localref{alpha-beta-in-slice}, \localref{h'-conjunct})}
-      \notag
-      \\
-      &
-      R_{H'}(\alpha', \alpha)
-      &
-      \text{(\ref{lem:partial-slice-sub-slice})}
+      \text{assume}
       \notag
       \\
       \qedLocal
       &
-      R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+      R_{H \cup G}(\alpha, \beta)
       &
+      \text{(\ref{lem:full-slice-sub-partial-unexplored})}
       \notag
-      % \\
-      % &
-      % \caseName{Case $\impliedby$}
-      % &
-      % \notag
-      % \\
-      % &
-      % R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
-      % &
-      % \text{(assume)}
-      % \\
-      % &
-      % ((\alpha, \beta') \in \E(H')) \wedge R_{H'}(\beta',\beta)
-      % \quad
-      % (\exists \beta' \in \outN{G}(\alpha))
-      % &
-      % \\
-      % &
-      % R_{H'}(\alpha', \beta') \wedge R_{H'}(\beta', \beta)
-      % &
-      % \\
    \end{flalign}
 \end{proof}
 
@@ -862,10 +767,10 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-         R_{H}(\alpha', \alpha) \wedge R_{G}(\alpha, \beta) \iff R_{H'}(\alpha', \alpha) \wedge R_{H'}(\alpha, \beta)
+         R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha, \beta)
       &
       \text{(\ref{prop:dembyv-preserves-paths})}
-      \notag
+      \locallabel{assume-iff}
       \\
       &
       H = \exPair{X}{\emptyset}
@@ -879,33 +784,22 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \exists \beta \in \sinks{G}\text{ with } R_{G}(\alpha, \beta)
+      R_{G}(\alpha, \beta)
       &
       \text{assume}
-      \locallabel{beta-in-sinks}
+      \locallabel{assume-g}
       \\
       &
-      R_{H}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)
+      R_{H \cup G}(\alpha, \beta)
       &
-      \text{($R_{H}$ reflexive, \localref{beta-in-sinks})}
-      \locallabel{h-g-conjunct}
-      \\
-      &
-      R_{H'}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)
-      &
-      \text{(\ref{prop:dembyv-preserves-paths}, \localref{h-g-conjunct})}
-      \locallabel{h-conjunct}
-      \\
-      &
-      R_{H'}(\alpha, \beta)
-      &
-      \text{(\localref{h-conjunct}, $\wedge$)}
+      \text{($G \subseteq H \cup G$)}
       \notag
       \\
       \qedLocal
       &
-      R_{G}(\alpha, \beta) \implies  R_{H'}(\alpha, \beta)
+      R_{H'}(\alpha, \beta)
       &
+      \text{(\localref{assume-iff})}
       \notag
       \\
       &
@@ -914,33 +808,22 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
       \\
       &
-      \exists \beta \in \sinks{H'}\text{ with } R_{H'}(\alpha, \beta)
+      R_{H'}(\alpha, \beta)
       &
       \text{assume}
-      \locallabel{beta-in-h'}
+      \locallabel{assume-h-prime}
       \\
       &
-      R_{H'}(\alpha, \alpha) \wedge R_{H'}(\alpha, \beta)
+      R_{H \cup G}(\alpha, \beta)
       &
-      \text{(\localref{beta-in-h'}, $R_{H'}$ reflexive)}
-      \locallabel{h'-conjunct}
-      \\
-      &
-      R_{H}(\alpha, \alpha) \wedge R_{G}(\alpha, \beta)
-      &
-      \text{(\ref{prop:dembyv-preserves-paths}, \localref{h'-conjunct})}
-      \locallabel{h-g-conjunct-2}
-      \\
-      &
-      R_{G}(\alpha, \beta)
-      &
-      \text{(\localref{h-g-conjunct-2}, def of $\wedge$)}
+      \text{(\localref{assume-iff})}
       \notag
       \\
       \qedLocal
       &
-      R_{H'}(\alpha, \beta) \implies R_{G}(\alpha, \beta)
+      R_{G}(\alpha, \beta)
       &
+      \text{$H \cup G = G$}
       \notag
    \end{flalign}
 \end{proof}
