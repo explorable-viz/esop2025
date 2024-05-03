@@ -7,20 +7,6 @@
 \input{appendix/proof/conjugates/conj-duality.tex}
 
 \subsection{Correctness of $\demandedByAlg{}$}
-To prove \propref{demandedByAlg-computes-demandedBy}, we first need to show that
-the procedure $\demandedByAlg{}$ always terminates, and then we need to show that
-when it terminates it does so with the correct result.
-\subsubsection{Termination}
-We can prove termination by defining a ranking function for $\demandedByV{}$ in terms of
-$G$ and $X$. The ranking function $\opName{Rank}(G, X) \eqdef \exPair{|\E(G)|}{|X|}$. 
-We then use the lexicographic ordering on these pairs of integers. 
-
-If we consider the rule \ruleName{$\demandedByAlg{}$-step}, we can conclude that the
-ranking function decreases on consecutive states of the algorithm:
-For an $\alpha \in X$, we remove $\outE{G}(\alpha)$ from $G$. If $|\outE{G}(\alpha)| \geq 1$
-then $|\E(G \setminus_{E} \outE{G}(|\alpha))| < |\E(G)|$. If $|\outE{G}(\alpha)| = 0$ then
-$G$ stays the same size, but $|X \cup \outN{G}(\alpha)| = |X| < |\alpha \cdot X|$. In either
-case, the ranking function of the consecutive state strictly decreases every step.
 
 \subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
 To prove \propref{demandedByAlg-computes-demandedBy}, we begin by noting that
@@ -94,19 +80,13 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
    Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
    \begin{flalign}
       &
-      \exPair{X}{\emptyset}, X, G \demandedByV{} H
-      &
-      \text{(assume)}
-      \locallabel{dembyV-premise}
-      \\
-      &
       \forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta)
       &
       \text{(\ref{prop:reachability-in-g''})}
       \notag
       \\
       &
-      \caseName{Case $\implies$}
+      \caseName{WTS: } R_{G}(\alpha, \beta) \implies R_{H}(\alpha, \beta)
       &
       \notag
       \\
@@ -140,7 +120,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
       \notag
       \\
       &
-      \caseName{Case: $\supseteq$}
+      \caseName{WTS: } \demandedByR_{G}(X) \supseteq (\V(H) \cap \sinks{G})
       &
       \notag
       \\
@@ -185,7 +165,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
       \locallabel{}
       \\
       &
-      \caseName{Case $\subseteq$}
+      \caseName{WTS: }\demandedByR_{G}(X)  \subseteq (\V(H) \cap \sinks{G})
       &
       \notag
       \\
@@ -213,7 +193,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
       \text{(def of $\demandedByR_{G}$)}
       \\
       &
-      \caseName{Case $\impliedby$}
+      \caseName{WTS: } X \demandedByAlg{G} Y \impliedby \demandedByR_{G}(X) = Y
       &
       \notag
       \\
@@ -229,6 +209,14 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
       \notag
       \\
       &
+      (X, \emptyset), X, G \demandedByV{} H
+      \quad
+      (\exists H)
+      &
+      \text{termination}
+      \locallabel{demandedby-terminates}
+      \\
+      &
       \derivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule
@@ -241,7 +229,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
          \end{smathpar}
       }
       &
-      \text{(\localref{dembyV-premise}, def of $\demandedByAlg{}$)}
+      \text{(\localref{demandedby-terminates})}
       \notag
       \\
       &
