@@ -57,12 +57,21 @@ significantly reduces the implementation burden on the developer, since the algo
 are language-agnostic and thus only need to be implemented once.
 
 \subsection{Interactive Visualization}
-
+\JBnote{Start of change}
 We are not the first to consider shifting the burden of interactive visualizations
-into the language runtime. Reactive Vega, introduced in \citet{satyanarayan17},
-presents a system for building interactivity in visualizations. Their work differs
-from ours in that their focus is on building new interactions through declarative
-specifications, as opposed to designing a programming language. 
+into the language runtime. Reactive Vega \citet{satyanarayan17},
+presents a system for building interactivity in visualizations. 
+Vega is a declarative DSL for constructing interactions with visualizations.
+The features of Vega allow for more complicated interactions than our own
+work at present, however these are hampered by requiring the designer to learn
+multiple separate languages. Further, the syntax of Vega for combining these
+interactions is non-obvious to a new user. In contrast, whilst our work provides
+a smaller set of interaction primitives it frees up the developer to focus on
+building their data analysis programs, leaving the burden of implementing selections
+to the language itself. In future work it could be beneficial to provide more
+ways for a Fluid user to combine their selections, such as ranges and marquee
+selections, however we do not consider this to be our primary focus.
+\JBnote{end of change}
 Our linking of visualizations is similar in spirit to the work of \citet{north00}.
 In that work, the authors design a modular system for replacing visualizations of
 databases. Their system is modelled by relational database schema, and is designed
