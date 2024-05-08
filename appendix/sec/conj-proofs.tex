@@ -1,240 +1,478 @@
 \section{Section 3 Proofs}
 
-\subsection{\lemref{im-preim-conjugate}}
-For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
+\input{appendix/proof/conjugates/im-preim-conjugate.tex}
 
+\input{appendix/proof/conjugates/galois-conjugate.tex}
+
+\input{appendix/proof/conjugates/conj-duality.tex}
+
+\subsection{Correctness of $\demandedByAlg{}$}
+
+\subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
+To prove \propref{demandedByAlg-computes-demandedBy}, we begin by noting that
+any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (DAG).
+
+% \begin{lemma}
+%    \label{lem:edge-in-slice-not-in-g}
+%    For graphs $G, H, H'$ and $X \subseteq \V(G)$ with $H, X, G \demandedByV{} H'$ with $\beta \in X$
+%    $(\alpha,\beta) \in \E(H) \implies (\alpha,\beta) \notin \E(G)$
+% \end{lemma}
+% \begin{proof}
+%    Only way we can include an edge $(\alpha, \beta) \in \E(H)$ is by
+%    removing it from $\E(G)$. By induction:
+%    \begin{flalign}
+%       &
+%       \caseDerivation{\derivationWidth}{
+%          \begin{smathpar}
+%             \inferrule*
+%             {
+%                \strut
+%             }
+%             {
+%                H, \emptyset, G \demandedByV{} H'
+%             }
+%          \end{smathpar}
+%       }
+%       &
+%       \notag
+%       \\
+%       \qedLocal
+%       &
+%       \text{trivial, $X = \emptyset$}
+%       &
+%       \\
+%       &
+%       \caseDerivation{\derivationWidth}{
+%          \begin{smathpar}
+%             \inferrule*
+%             {
+%                H \cup \outE{G}(\alpha), X \cup \outE{G}(\alpha), G \setminus_{E}\outE{G}(\alpha) \demandedByV{} H'
+%             }
+%             {
+%                H, \alpha \cons X, G \demandedByV{} H'
+%             }
+%          \end{smathpar}
+%       }
+%       &
+%       \notag
+%       \\
+%       &
+%       \text{TODO}
+%       &
+%       \notag
+%    \end{flalign}
+% \end{proof}
+
+\begin{proposition}[Reachability in $G^{\twoPrime}$]
+   \label{prop:reachability-in-g''}
+   For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
+   $$
+    \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{H}(\alpha, \beta)
+   $$
+\end{proposition}
+
+\setcounter{equation}{0}
+\begin{theorem}
+   \ref{prop:reachability-in-g''} $\implies$ \ref{prop:demandedByAlg-computes-demandedBy}
+\end{theorem}
 \begin{proof}
-   Let $X' \in \powerset{X}$, $Y' \in \powerset{Y}$.
-   \small
-   \newline
-   Case: $\demandedByR_{R}(X') \cap Y' = \emptyset \implies X' \cap \demandsR_{R}(Y') = \emptyset$
+   Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
    \begin{flalign}
       &
-      \demandedByR_{R}(X') \cap Y' = \emptyset
+      \forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta)
       &
-      \text{suppose}
+      \text{(\ref{prop:reachability-in-g''})}
       \notag
       \\
       &
-      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
+      \caseName{WTS: } X \demandedByAlg{G} Y\implies \demandedByR_{G}(X) = Y
       &
-      \text{def of $\demandedByR_{R}$}
       \notag
       \\
       &
-      \set{y \in Y' \mid \exists x \in X'.(x,y) \in R} = \emptyset
-      &
-      \text{def of $\cap$}
-      \locallabel{preim-intersection}
-      \\
-      &
-      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
-      &
-      \text{equivalent to (\localref{preim-intersection})}
-      \locallabel{unintersect}
-      \\
-      &
-      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R} = \emptyset
-      &
-      \text{equivalent to (\localref{unintersect})}
-      \notag
-      \\
-      &
-      \qedLocal
-      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
-      &
-      \text{def of $\cap$}
-      \notag
-      \\
-      &
-      X' \cap \demandsR_{R}(Y') = \emptyset 
-      &
-      \text{def of $\demandsR_{R}$}
-      \notag
-   \end{flalign}
-   \newline
-   Case: $ X' \cap \demandsR_{R}(Y') = \emptyset \implies \demandedByR_{R}(X') \cap Y' = \emptyset$
-   \begin{flalign}
-      &
-      X' \cap \demandsR_{R}(Y') = \emptyset
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      X' \cap \set{x \in X \mid \exists y \in Y'.(x,y) \in R} = \emptyset
-      &
-      \text{def of $\demandsR_{R}$}
-      \notag
-      \\
-      &
-      \set{x \in X' \mid \exists y \in Y'.(x,y) \in R}
-      &
-      \text{def of $\cap$}
-      \locallabel{preim-intersect-2}
-      \\
-      &
-      \forall y \in Y' .\; \forall x \in X'. (x,y) \not\in R
-      &
-      \text{equivalent to (\localref{preim-intersect-2})}
-      \locallabel{preim-unintersect-2}
-      \\
-      &
-      \qedLocal
-      \set{y \in Y \mid \exists x \in X'.(x,y) \in R} \cap Y' = \emptyset
-      &
-      \text{equivalent to (\localref{preim-unintersect-2})}
-      \notag
-      \\
-      &
-      \demandedByR_{R}(X') \cap Y' = \emptyset
-      &
-      \text{def of $\demandedByR_{R}$}
-      \notag
-   \end{flalign}
-\end{proof}
-
-\subsection{\propref{conj-galois-correspond}}
-Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
-equivalent:
-\begin{enumerate}
-   \item $f$ and $g$ form a conjugate pair
-   \item $f$ and $\dual{g}$ form a Galois connection
-\end{enumerate}
-
-\begin{proof}
-   Fix $x \in A$ and $y \in B$.
-   \newline
-   Case: $f, g$ conjugate $\implies$ $f, \dual{g}$ form Galois connection.
-   \begin{flalign}
-      &
-      f(x) \leq_{B} y
+      X \demandedByAlg{} Y
+      \quad
+      (\exists Y)
       &
       \text{(suppose)}
       \notag
       \\
       &
-      f(x) \wedge_{B} \neg y = \bot
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \exPair{X}{\emptyset}, X, G \demandedByV{} H
+            }
+            {
+               X \demandedByAlg{} \V(H) \cap \sinks{G} \Lowlight{(= Y)}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{(def of $\demandedByAlg{}$)}
+      \notag
+      \\
+      &
+      \text{Want to show: }\demandedByR_{G}(X) = \V(H) \cap \sinks{G}
       &
       \notag
       \\
       &
-      x \wedge_{A} g(\neg y) = \bot
-      &
-      \text{(conjugacy)}
-      \notag
-      \\
-      &
-      x \leq_{A} \neg (g(\neg y))
+      \caseName{WTS: } \demandedByR_{G}(X) \subseteq (\V(H) \cap \sinks{G})
       &
       \notag
       \\
       &
+      \beta \in \demandedByR_{G}(X)
+      \quad
+      (\forall \beta)
+      &
+      \text{(assume)}
+      \locallabel{beta-in-demanded}
+      \\
+      &
+      \beta \in \sinks{G}
+      &
+      \text{(\localref{beta-in-demanded})}
+      \locallabel{beta-in-sinks-g}
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      \quad
+      (\exists \alpha \in X)
+      &
+      \text{(def of $\demandedByR_{G}$)}
+      \locallabel{alpha-reaches-beta-1}
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \text{(\localref{alpha-reaches-beta-1}, \ref{prop:reachability-in-g''})}
+      \\
+      &
+      \beta \in \V(H)
+      &
+      \text{(Def of $R_{H}$)}
+      \locallabel{beta-in-h-1}
+      \\
       \qedLocal
-      x \leq_{A} \dual{g}(y)
+      & 
+      \beta \in \V(H) \cap \sinks{G}
       &
-      \text{(def of $\dual{\cdot}$)}
+      \text{(\localref{beta-in-sinks-g}, \localref{beta-in-h-1})}
+      \locallabel{}
+      \\
+      &
+      \caseName{WTS: }\demandedByR_{G}(X)  \supseteq (\V(H) \cap \sinks{G})
+      &
       \notag
+      \\
+      &
+      \beta \in \V(H) \cap \sinks{G}
+      &
+      \text{(assume)}
+      \notag
+      \\
+      &
+      R_{H}(\alpha, \beta)
+      \quad
+      (\exists \alpha \in \sources{H} \Lowlight{= X})
+      &
+      \notag
+      \\
+      &
+      R_{G}(\alpha, \beta)
+      &
+      \text{\ref{prop:reachability-in-g''}}
+      \\
+      &
+      \beta \in \demandedByR_{G}(X)
+      &
+      \text{(def of $\demandedByR_{G}$)}
+      \\
+      &
+      \caseName{WTS: } X \demandedByAlg{G} Y \impliedby \demandedByR_{G}(X) = Y
+      &
+      \notag
+      \\
+      &
+      \demandedByR_{G}(X) = Y
+      &
+      \text{(assume)}
+      \\
+      &
+      Y = \set{\beta \in \sinks{G} \mid \exists \alpha \in X \; R_{G}(\alpha, \beta)}
+      &
+      \text{(def of $\demandedByR_{G}$)}
+      \notag
+      \\
+      &
+      (X, \emptyset), X, G \demandedByV{} H
+      \quad
+      (\exists H)
+      &
+      \text{termination}
+      \locallabel{demandedby-terminates}
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule
+            {
+               \exPair{X}{\emptyset}, X, G \demandedByV{} H
+            }
+            {
+               X \demandedByAlg{} \V(H) \cap \sinks{G}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{(\localref{demandedby-terminates})}
+      \notag
+      \\
+      &
+      \text{Want to show that } \V(H) \cap \sinks{G} = \demandedByR_{G}(X)
+      &
+      \notag
+      \\
+      &
+      \text{Analagous to above.}
+      &
    \end{flalign}
-   \newline
-   Case: $f, \dual{g}$ Galois connection $\implies$ $f, g$ conjugate
+\end{proof}
+
+We can prove \propref{reachability-in-g''} with the following:
+\begin{proposition}
+   \label{prop:dembyv-preserves-paths}
+   For graphs $G, H, H'$ and $X \subseteq \V(G)$, if $H, X, G \demandedByV{} H'$ then
+   $\forall \alpha \in \sources{H}, \beta \in \V{H}$:
+   $$
+      R_{H\cup G}(\alpha, \beta) \iff R_{H'}(\alpha, \beta)
+   $$
+\end{proposition}
+\setcounter{equation}{0}
+\begin{proof}
+   By induction
    \begin{flalign}
       &
-      f(x) \wedge_{B} y = \bot
+      X \subseteq \V(G)
       &
-      \text{suppose}
+      \text{assume}
       \notag
       \\
       &
-      f(x) \leq_{B} \neg y 
+      H, X, G \demandedByV{} H'
+      &
+      \text{assume}
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \strut
+            }
+            {
+               H, \emptyset, G \demandedByV{} H
+            }
+         \end{smathpar}
+      }
       &
       \notag
       \\
       &
-      x \leq_{A} \dual{g}(\neg y)
+      H = H \subseteq H \cup G
       &
-      \text{(GC)}
+      \locallabel{H-subgraph-H-cup-G}
+      \\
+      &
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
+      &
       \notag
       \\
       &
-      x \leq_{A} \neg (g (y))
+      R_{H}(\alpha, \beta)
       &
-      \text{(def of $\dual{\cdot}$)}
+      \text{assume}
+      \\
+      \qedLocal
+      &
+      R_{H\cup G}(\alpha, \beta)
+      &
+      \text{(\localref{H-subgraph-H-cup-G})}
       \notag
       \\
       &
-      x \wedge_{A} g(y) = \bot
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \implies R_{H'}(\alpha, \beta)
       &
+      \notag
+      \\
+      &
+      R_{H \cup G}(\alpha, \beta)
+      \quad
+      (\forall \beta \in \V(H). \exists \alpha \in \sources{H})
+      &
+      \text{assume}
+      \\
+      \qedLocal
+      &
+      R_{H}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{E} \outE{G}(\alpha)
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cdot X, G
+               \demandedByV{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}(\alpha, \beta)
+      \iff
+      R_{H'}(\alpha, \beta)
+      &
+      \text{assume IH}
+      \locallabel{reachable-IH}
+      \\
+      &
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \implies R_{H'}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      R_{H \cup G}(\alpha, \beta)
+      &
+      \text{assume}
+      \locallabel{h-cup-g-assumption}
+      \\
+      &
+      (H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha)) = H \cup G
+      &
+      \locallabel{union-equal}
+      \\
+      &
+      R_{H \cup G} = R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}
+      &
+      \text{(\localref{union-equal}, \localref{h-cup-g-assumption})}
+      \notag
+      \\
+      &
+      R_{(H \cup \outE{G}) \cup (G \setminus_{E} \outE{G}(\alpha))}(\alpha, \beta)
+      &
+      \\
+      \qedLocal
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \text{(\localref{reachable-IH})}
+      \notag
+      \\
+      &
+      \caseName{WTS: } R_{H\cup G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
+      &
+      \notag
+      \\
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \text{assume}
+      \notag
+      \\
+      \qedLocal
+      &
+      R_{H \cup G}(\alpha, \beta)
+      &
+      \text{(\ref{lem:full-slice-sub-partial-unexplored})}
       \notag
    \end{flalign}
 \end{proof}
 
-\subsection{\lemref{conjugate:image-preimage-duality}}
-Fix $R \subseteq X \times Y$. We proceed by direct calculation.
+\begin{theorem}
+   \ref{prop:dembyv-preserves-paths} $\implies$ \ref{prop:reachability-in-g''}
+\end{theorem}
+\setcounter{equation}{0}
 \begin{proof}
-   Case $\dual{\demandedByR_R} = \sufficesR_R$:
    \begin{flalign}
       &
-      \dual{\demandedByR_R (X')} = \dual{\set{y \in Y \mid \exists x \in X'.(x,y) \in R}}
+      H, X, G \demandedByAlg{} H'
       &
-      \text{def of $\demandedByR_R$}
+      \text{assume}
       \notag
       \\
       &
-      = \compl{\set{y \in Y \mid \exists x \in \compl{(X')}.(x,y) \in R}}
+         R_{H \cup G}(\alpha, \beta) \iff R_{H'}(\alpha, \beta)
       &
-      \text{def of $\dual{\cdot}$}
+      \text{(\ref{prop:dembyv-preserves-paths})}
+      \locallabel{assume-iff}
+      \\
+      &
+      H = \exPair{X}{\emptyset}
+      &
+      \text{assume}
       \notag
       \\
       &
-      = \compl{\set{y \in Y \mid \exists x \in (X \setminus X').(x, y) \in R}}
+      \caseName{WTS: } R_{G}(\alpha, \beta) \implies  R_{H'}(\alpha, \beta)
       &
-      \text{def of $\compl{\cdot}$}
       \notag
       \\
       &
-      = \set{y \in Y \mid \nexists x \in (X \setminus X').(x, y) \in R}
+      R_{G}(\alpha, \beta)
       &
-      \text{$\compl{\cdot}$ negates predicate}
+      \text{assume}
+      \locallabel{assume-g}
+      \\
+      &
+      R_{H \cup G}(\alpha, \beta)
+      &
+      \text{($G \subseteq H \cup G$)}
+      \notag
+      \\
+      \qedLocal
+      &
+      R_{H'}(\alpha, \beta)
+      &
+      \text{(\localref{assume-iff})}
       \notag
       \\
       &
-      = \sufficesR_R(X')
+      \caseName{WTS: } R_{G}(\alpha, \beta) \impliedby R_{H'}(\alpha, \beta)
       &
-      \text{def of $\sufficesR_R$}
-      \notag
-   \end{flalign}
-   \newline
-   Case $\dual{\demandsR_R} = \preimageDualR_R$:
-   \begin{flalign}
-      &
-      \dual{\demandsR_R (Y')} = \dual{\set{x \in X \mid \exists y \in Y'. (x, y) \in R}}
-      &
-      \text{def of $\dual{\demandsR_R}$}
       \notag
       \\
       &
-       = \compl{\set{x \in X \mid \exists y \in \compl{(Y')}. (x, y) \in R}}
+      R_{H'}(\alpha, \beta)
       &
-      \text{def of $\dual{\cdot}$}
-      \notag
+      \text{assume}
+      \locallabel{assume-h-prime}
       \\
       &
-      = \compl{\set{x \in X \mid \exists y \in (Y \setminus Y'). (x, y) \in R}}
+      R_{H \cup G}(\alpha, \beta)
       &
-      \text{def of $\compl{\cdot}$}
+      \text{(\localref{assume-iff})}
       \notag
       \\
+      \qedLocal
       &
-       = \set{x \in X \mid \nexists y \in (Y \setminus Y').(x, y) \in R}
+      R_{G}(\alpha, \beta)
       &
-      \text{$\compl{\cdot}$ negates predicate}
-      \notag
-      \\
-      &
-      = \preimageDualR_R(Y')
-      &
-      \text{def of $\preimageDualR_R$}
+      \text{$H \cup G = G$}
       \notag
    \end{flalign}
 \end{proof}
+
+\input{appendix/proof/conjugates/lemmas.tex}

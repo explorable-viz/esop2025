@@ -1,0 +1,106 @@
+\subsubsection{Some Lemmas}
+We will use the following lemma's.
+\begin{lemma}[Node reachable from a source]
+   Given a finite DAG $H$ we have that $\forall \beta \in \V(H)$ $\exists \alpha \in \sources{H}$ with $R_{H}(\alpha, \beta)$.
+\end{lemma}
+\begin{proof}
+   For a sketch of this fact, fix a $\beta$. If $\beta \in \sources{H}$,
+   in which case $R_{H}(\beta, \beta)$ trivially. If $\beta \notin \sources{H}$, then $\exists \alpha$
+   with $(\alpha,\beta) \in \E(H)$. Then we can repeeat this check with $\alpha$. Since $H$ is finite
+   we eventually reach a source.
+\end{proof}
+
+
+\begin{lemma}
+   \label{lem:partial-slice-sub-slice}
+   Given graphs $G,H,H'$, and nodes $X \subseteq \sources{G}$ if
+   $H, X, G \demandedByV{} H'$ then $H$ is a subgraph of $H'$.
+\end{lemma}
+\begin{proof}
+   Can proceed by induction on rules. For \ruleName{$\demandedByV{}$-done}, $H = H'$.
+   For \ruleName{$\demandedByV{}$-step}, we have that $H \subseteq H \cup \outE{G}(\alpha)$.
+   Then it holds by induction hypothesis
+\end{proof}
+
+\begin{lemma}
+   \label{lem:full-slice-sub-partial-unexplored}
+   Given graphs $G, H, H'$ and nodes $X \subseteq \V{G}$.
+   If $H, X, G \demandedByV{} H'$ then $H' \subseteq H \cup G$.
+\end{lemma}
+\begin{proof}
+   Induction on rules.
+   \begin{flalign}
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \strut
+            }
+            {
+               H, \emptyset, G \demandedByV{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      \qedLocal
+      &
+      H \subseteq H \cup G
+      &
+      \notag
+      \\
+      &
+      \caseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{E} \outE{G}(\alpha)
+               \demandedByV{}
+               H'
+            }
+            {
+               H, \alpha \cons X, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      H' \subseteq (H \cup \outE{G}(\alpha)) \cup (G \setminus_{E} \outE{G}(\alpha))
+      &
+      \text{assume IH}
+      \notag
+      \\
+      &
+      e \in \E(H')
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      e\in G \setminus_{E} \outE{G}(\alpha) \implies e \in G 
+      &
+      \notag
+      \\
+      &
+      e \in \E(H \cup \outE{G}(\alpha)) \implies e \in \E(H) \vee e \in \outE{G}(\alpha)
+      &
+      \\
+      &
+      e \in \E(H) \implies e \in \E(H) 
+      &
+      \\
+      &
+      e \in \outE{G}(\alpha) \implies e \in \E(G) \quad \Lowlight{G = (G \setminus_{E} \outE{G}(\alpha)) \cup \outE{G}(\alpha)}
+      &
+      \\
+      \qedLocal
+      &
+      H' \subseteq H \cup G
+      &
+      \notag
+   \end{flalign}
+\end{proof}
