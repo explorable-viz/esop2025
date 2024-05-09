@@ -1,15 +1,10 @@
 \subsection{\propref{demandedByAlg-computes-demandedBy}}
 \setcounter{equation}{0}
 
-\begin{proposition}
-   For any partial slice $H$ of $G$:
-   \[\demandedByR_G(\sinks{H}) = Y \iff \exists!H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y\]
-\end{proposition}
-
 \begin{proof}
    \begin{flalign}
       &
-      \caseName{$\Rightarrow$ direction}.
+      \caseName{$\Rightarrow$ direction:}
       \\
       &
       X \demandedByAlg{G} Y
@@ -25,7 +20,7 @@
                (X, \emptyset), G \demandedByV{} H
             }
             {
-               X \demandedByAlg{G} \sinks{H}
+               X \demandedByAlg{G} \sinks{H}\Lowlight{\;= Y}
             }
          \end{smathpar}
       }
@@ -34,11 +29,24 @@
       \notag
       \\
       &
-      (X, \emptyset)\text{ is a partial slice of }G
+      (X, \emptyset)\text{ a partial slice of }G
       &
       \text{def.~partial slice}
       \notag
+      \\
+      &
+      \qedLocal
+      \demandedByR_G(X) = Y
    \end{flalign}
 \end{proof}
 
-\subsection{\propref{demandedByAlg-computes-demandedBy}}
+\subsection{Correctness of $\demandedByV{}$}
+
+\begin{proposition}
+   \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
+   For any partial slice $H$ of $G$:
+   \[\demandedByR_G(\sinks{H}) = Y \iff \exists!H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y\]
+\end{proposition}
+
+\begin{proof}
+\end{proof}
