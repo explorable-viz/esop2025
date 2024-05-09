@@ -100,13 +100,99 @@
       \notag
       \\
       &
+      \text{By induction on derivation of $\demandedByV{}$}
+      &
+      \notag
+      \\
+      &
       \caseName{$\Leftarrow$ direction:}
+      \notag
+      \\
+      &
+      \text{By strong induction over $(\length{\E(G)}, \length{\sinks{H} \setminus \sinks{G}}) \subseteq \mathbb{N}^2$, lexicographically}
+      &
       \notag
       \\
       &
       H\text{ a partial slice of }G\text{ and }\demandedByR_G(\sinks{H}) = Y
       &
       \text{suppose $H, G, Y$}
+      \locallabel{assumption}
+      \\
+      \subcase{\length{\sinks{H} \setminus \sinks{G}} = 0}
+      \notag
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+            lab={\ruleName{done}},
+            right={$\sinks{H} \subseteq \sinks{G}$}
+            ]
+            {
+               \strut
+            }
+            {
+               H, G \demandedByV{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def.~$\demandedByV{}$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{H} = Y
+      &
+      (\localref{assumption})
+      \notag
+      \\
+      \subcase{\length{\sinks{H} \setminus \sinks{G}} > 0}
+      \notag
+      &
+      \alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset
+      &
+      \text{$\exists \alpha$, $\exists E$}
+      \notag
+      \\
+      &
+      \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
+      &
+      \notag
+      \\
+      &
+      H \cup E\text{ a partial slice of }G
+      &
+      \notag
+      \\
+      &
+      H \cup E, G \setminus_{\mathsf{E}} E \demandedByV{} H'
+      \text{ with }
+      \sinks{H'} = Y
+      &
+      \text{IH}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{extend}},
+               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H \cup E, G \setminus_{\mathsf{E}} E
+               \demandedByV{}
+               H'
+            }
+            {
+               H, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def.~$\demandedByV{}$}
       \notag
    \end{flalign}
 \end{proof}
