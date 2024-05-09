@@ -3,7 +3,6 @@
       {\small \flushleft \shadebox{$X \demandedByAlg{G} Y$}
          \begin{smathpar}
             \inferrule*[
-%              lab={\ruleName{$\demandedByAlg{}$}},
               right={$X \subseteq \sources{G}$}
             ]
             {
@@ -20,8 +19,7 @@
          {\small \flushleft \shadebox{$H, X, G \demandedByV{} H'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{done}},% $\demandedByV{}$-done}},
-         %   right=$G' \subseteq G$
+           lab={\ruleName{done}}
          ]
          {
             \strut
@@ -29,29 +27,9 @@
          {
             H, \emptyset, G \demandedByV{} H
          }
-         %
          \and
-         %
-         % \inferrule*[
-         %    lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
-         %    % right={$\alpha \in \V(G')$}
-         % ]
-         % {
-         %    G', X, G
-         %    \demandedByV{}
-         %    G^\twoPrime
-         %    \\
-         %    \alpha \in \V(G')
-         % }
-         % {
-         %    G', \alpha \cons X, G \demandedByV{} G^\twoPrime
-         % }
-         % %
-         % \and
-         % %
          \inferrule*[
-            lab={\ruleName{step}},% $\demandedByV{}$-extend}},
-            % right={$H = \set{\alpha \mapsto Y}$}
+            lab={\ruleName{extend}}
          ]
          {
             H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
