@@ -7,7 +7,7 @@
               right={$X \subseteq \sources{G}$}
             ]
             {
-               (\emptyset, \emptyset), X, G
+               (X, \emptyset), X, G
                \demandedByV{}
                G'
             }
@@ -17,7 +17,7 @@
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$G', X, G \demandedByV{} G^\twoPrime$}
+         {\small \flushleft \shadebox{$H, X, G \demandedByV{} H'$}
          \begin{smathpar}
          \inferrule*[
            lab={\ruleName{done}},% $\demandedByV{}$-done}},
@@ -27,7 +27,7 @@
             \strut
          }
          {
-            G', \emptyset, G \demandedByV{} G'
+            H, \emptyset, G \demandedByV{} H
          }
          %
          \and
@@ -54,12 +54,12 @@
             % right={$H = \set{\alpha \mapsto Y}$}
          ]
          {
-            G' \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
+            H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
             \demandedByV{}
-            G^\twoPrime
+            H'
          }
          {
-            G', \alpha \cons X, G \demandedByV{} G^\twoPrime
+            H, \alpha \cons X, G \demandedByV{} H'
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
