@@ -19,17 +19,19 @@
          {\small \flushleft \shadebox{$H, X, G \demandedByV{} H'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{done}}
+           lab={\ruleName{done}},
+           right={$\sinks{H} \subseteq \sinks{G}$}
          ]
          {
             \strut
          }
          {
-            H, \emptyset, G \demandedByV{} H
+            H, G \demandedByV{} H
          }
          \and
          \inferrule*[
-            lab={\ruleName{extend}}
+            lab={\ruleName{extend}},
+            right={$E = \outE{G}(\alpha) \neq \emptyset$}
          ]
          {
             H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
