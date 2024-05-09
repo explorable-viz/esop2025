@@ -5,11 +5,12 @@
    \begin{flalign}
       &
       \caseName{$\Rightarrow$ direction:}
+      \notag
       \\
       &
       X \demandedByAlg{G} Y
       &
-      \text{suppose}
+      \text{suppose $X, Y, G$}
       \notag
       \\
       &
@@ -37,6 +38,50 @@
       &
       \qedLocal
       \demandedByR_G(X) = Y
+      &
+      \text{\propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
+      \notag
+      \\
+      &
+      \caseName{$\Leftarrow$ direction:}
+      \notag
+      \\
+      &
+      \demandedByR_G(X) = Y\text{ with }X \subseteq \sources{G}
+      &
+      \text{suppose $X, Y$}
+      \notag
+      &
+      \\
+      &
+      (X, \emptyset)\text{ a partial slice of }G
+      &
+      \text{def.~partial slice}
+      \notag
+      \\
+      &
+      (X, \emptyset), G \demandedByV{} H
+      \text{ with }\sinks{H} = Y
+      &
+      \text{\propref{appendix:proof:conjugate:algorithms:correctness-demByV}; $\exists H$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               (X, \emptyset), G \demandedByV{} H
+            }
+            {
+               X \demandedByAlg{G} \sinks{H}\Lowlight{\;= Y}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def.~$\demandedByAlg{}$}
+      \notag
    \end{flalign}
 \end{proof}
 
@@ -45,8 +90,23 @@
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
    For any partial slice $H$ of $G$:
-   \[\demandedByR_G(\sinks{H}) = Y \iff \exists!H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y\]
+   \[(\exists!H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR_G(\sinks{H}) = Y\]
 \end{proposition}
 
 \begin{proof}
+   \begin{flalign}
+      &
+      \caseName{$\Rightarrow$ direction:}
+      \notag
+      \\
+      &
+      \caseName{$\Leftarrow$ direction:}
+      \notag
+      \\
+      &
+      H\text{ a partial slice of }G\text{ and }\demandedByR_G(\sinks{H}) = Y
+      &
+      \text{suppose $H, G, Y$}
+      \notag
+   \end{flalign}
 \end{proof}
