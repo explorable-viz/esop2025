@@ -85,3 +85,14 @@ interactive visualizations of relational database tables. Similar to \citet{nort
 their work is defined by its usage of relational databases, and the way they
 create a semantics for queries on visualizations using the model of relational
 database queries. 
+
+\JBnote{Database Provenance}
+Recent work in database provenance \citet{dietrich22} attempts to simultaneously
+explain both value and control dependencies in recursive queries and user-defined
+functions. Their work takes an SQL query and rewrites it into a pair of queries
+which compute not only the output table, but the provenance of the values it contains.
+Our approach could be modified to work in this setting, however it is possible that
+the dependency relation would need to be modified to respect the semantics of an
+SQL query or user-defined function, for example labelling edges in the graph 
+according to whether they have been created from a control-flow check such as
+pattern matching, or from producing a new value in the computation. 
