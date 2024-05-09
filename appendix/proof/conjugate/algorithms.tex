@@ -2,25 +2,14 @@
 \setcounter{equation}{0}
 
 \begin{proof}
-   Attempt to prove that \ref{prop:reachability-in-g''} implies each direction of the equivalence in \ref{prop:demandedByAlg-computes-demandedBy}.
    \begin{flalign}
       &
-      \forall \alpha \in X \; R_{G}(\alpha, \beta) \iff R_{H}(\alpha, \beta)
-      &
-      \text{(\ref{prop:reachability-in-g''})}
-      \notag
+      \caseName{$\Rightarrow$ direction}.
       \\
       &
-      \caseName{WTS: } X \demandedByAlg{G} Y\implies \demandedByR_{G}(X) = Y
+      X \demandedByAlg{G} Y
       &
-      \notag
-      \\
-      &
-      X \demandedByAlg{} Y
-      \quad
-      (\exists Y)
-      &
-      \text{(suppose)}
+      \text{suppose}
       \notag
       \\
       &
@@ -28,16 +17,21 @@
          \begin{smathpar}
             \inferrule*
             {
-               \exPair{X}{\emptyset}, X, G \demandedByV{} H
+               (X, \emptyset), G \demandedByV{} H
             }
             {
-               X \demandedByAlg{} \V(H) \cap \sinks{G} \Lowlight{(= Y)}
+               X \demandedByAlg{G} \sinks{H}
             }
          \end{smathpar}
       }
       &
-      \text{(def of $\demandedByAlg{}$)}
+      \text{inversion; $\exists H$}
       \notag
       \\
+      &
+      (X, \emptyset)\text{ is a partial slice of }G
+      &
+      \text{def.~partial slice}
+      \notag
    \end{flalign}
 \end{proof}
