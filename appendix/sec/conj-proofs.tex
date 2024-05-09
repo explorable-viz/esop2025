@@ -1,75 +1,13 @@
 \section{Section 3 Proofs}
 
-\input{appendix/proof/conjugates/im-preim-conjugate.tex}
-
-\input{appendix/proof/conjugates/galois-conjugate.tex}
-
-\input{appendix/proof/conjugates/conj-duality.tex}
+\input{appendix/proof/conjugate/im-preim-conjugate.tex}
+\input{appendix/proof/conjugate/galois-conjugate.tex}
+\input{appendix/proof/conjugate/conj-duality.tex}
+\input{appendix/proof/conjugate/algorithms.tex}
 
 \subsection{Correctness of $\demandedByAlg{}$}
 
 \subsubsection{Proof of \propref{demandedByAlg-computes-demandedBy}}
-To prove \propref{demandedByAlg-computes-demandedBy}, we begin by noting that
-any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (DAG).
-
-% \begin{lemma}
-%    \label{lem:edge-in-slice-not-in-g}
-%    For graphs $G, H, H'$ and $X \subseteq \V(G)$ with $H, X, G \demandedByV{} H'$ with $\beta \in X$
-%    $(\alpha,\beta) \in \E(H) \implies (\alpha,\beta) \notin \E(G)$
-% \end{lemma}
-% \begin{proof}
-%    Only way we can include an edge $(\alpha, \beta) \in \E(H)$ is by
-%    removing it from $\E(G)$. By induction:
-%    \begin{flalign}
-%       &
-%       \caseDerivation{\derivationWidth}{
-%          \begin{smathpar}
-%             \inferrule*
-%             {
-%                \strut
-%             }
-%             {
-%                H, \emptyset, G \demandedByV{} H'
-%             }
-%          \end{smathpar}
-%       }
-%       &
-%       \notag
-%       \\
-%       \qedLocal
-%       &
-%       \text{trivial, $X = \emptyset$}
-%       &
-%       \\
-%       &
-%       \caseDerivation{\derivationWidth}{
-%          \begin{smathpar}
-%             \inferrule*
-%             {
-%                H \cup \outE{G}(\alpha), X \cup \outE{G}(\alpha), G \setminus_{E}\outE{G}(\alpha) \demandedByV{} H'
-%             }
-%             {
-%                H, \alpha \cons X, G \demandedByV{} H'
-%             }
-%          \end{smathpar}
-%       }
-%       &
-%       \notag
-%       \\
-%       &
-%       \text{TODO}
-%       &
-%       \notag
-%    \end{flalign}
-% \end{proof}
-
-\begin{proposition}[Reachability in $G^{\twoPrime}$]
-   \label{prop:reachability-in-g''}
-   For graphs $G$, $H$ with $X \subseteq \sources{G}$, if $\exPair{X}{\emptyset}, X, G \demandedByV{} H$ then the following holds:
-   $$
-    \forall \alpha \in X \quad R_{G}(\alpha,\beta) \iff R_{H}(\alpha, \beta)
-   $$
-\end{proposition}
 
 \setcounter{equation}{0}
 \begin{theorem}
@@ -157,7 +95,7 @@ any graph $H$ computed by $\demandedByV{}$ is a finite directed acyclic graph (D
       \locallabel{beta-in-h-1}
       \\
       \qedLocal
-      & 
+      &
       \beta \in \V(H) \cap \sinks{G}
       &
       \text{(\localref{beta-in-sinks-g}, \localref{beta-in-h-1})}
@@ -474,5 +412,3 @@ We can prove \propref{reachability-in-g''} with the following:
       \notag
    \end{flalign}
 \end{proof}
-
-\input{appendix/proof/conjugates/lemmas.tex}
