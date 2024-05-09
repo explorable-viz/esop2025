@@ -105,7 +105,7 @@
       \notag
       \\
       &
-      \caseDerivation{\derivationWidth}{
+      \subcaseDerivation{\derivationWidth}{
          \begin{smathpar}
             \inferrule*[
             lab={\ruleName{done}},
@@ -130,11 +130,48 @@
       \notag
       \\
       &
+      \subcaseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{extend}},
+               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H \cup E, G \setminus_{\mathsf{E}} E
+               \demandedByV{}
+               H'
+            }
+            {
+               H, G \demandedByV{} H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      \demandedByR_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E}) = \sinks{H'}
+      &
+      \text{IH}
+      \notag
+      \\
+      &
+      (G \setminus_{\mathsf{E}} E) \cup (H \cup E) = G \cup H
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \demandedByR_{G}(\sinks{H}) = \sinks{H'}
+      &
+      \notag
+      \\
+      &
       \caseName{$\Leftarrow$ direction:}
       \notag
       \\
       &
-      \text{By strong induction over $(\length{\E(G)}, \length{\sinks{H} \setminus \sinks{G}}) \subseteq \mathbb{N}^2$, lexicographically}
+      \text{By strong lexicographical induction over $(\length{\E(G)}, \length{\sinks{H} \setminus \sinks{G}}) \subseteq \mathbb{N}^2$}
       &
       \notag
       \\
