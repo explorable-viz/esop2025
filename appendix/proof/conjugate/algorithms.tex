@@ -1,6 +1,7 @@
 \subsection{\propref{demandedByAlg-computes-demandedBy}}
 \setcounter{equation}{0}
 
+\proofContext{demandedByAlg-computes-demandedBy}
 \begin{proof}
    \begin{flalign}
       &
@@ -98,6 +99,7 @@
    \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR_G(\sinks{H}) = Y\]
 \end{proposition}
 
+\proofContext{correctness-demByV}
 \begin{proof}
    \begin{flalign}
       &
@@ -221,7 +223,7 @@
       \alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset
       &
       \text{$\exists \alpha$, $\exists E$}
-      \notag
+      \locallabel{exists-alpha}
       \\
       &
       \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
@@ -236,9 +238,19 @@
       &
       H \cup E, G \setminus_{\mathsf{E}} E \demandedByV{} H'
       \text{ with }
-      \sinks{H'} = Y
+      \sinks{H'} = \demandedByR_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
       &
       \text{IH; $\exists H'$}
+      \notag
+      \\
+      &
+      (G \setminus_{\mathsf{E}} E) \cup (H \cup E) = G \cup H
+      &
+      \notag
+      \\
+      &
+      \sinks{H'} = \demandedByR_{G}(\sinks{H})
+      &
       \notag
       \\
       &
