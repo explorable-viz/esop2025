@@ -109,6 +109,13 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
 
+\begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms:edge-conservation}
+   Suppose $\V(H) \subseteq \V(G)$ and $\E(H) \cap \E(G) = \emptyset$.
+   \[\forall E \in \E(G).\quad
+     \demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})\]
+\end{lemma}
+
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
    For any partial slice $H$ of $G$:
