@@ -123,7 +123,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
 
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
-   For any partial slice $H$ of $G$:
+   For any partial slice $H$ of $G$ and any $Y \subseteq \sinks{G}$:
    \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
@@ -132,7 +132,19 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
    \small
    \begin{flalign}
       &
+      H\text{ a partial slice of }G\text{ and }Y \subseteq \sinks{G}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
       \caseName{$\Rightarrow$ direction:}
+      \notag
+      \\
+      &
+      H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y
+      &
+      \text{suppose; $\exists H'$}
       \notag
       \\
       &
@@ -151,7 +163,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
                \strut
             }
             {
-               H, G \demandedByV{} H
+               H, G \demandedByV{} H\Lowlight{\;=H'}
             }
          \end{smathpar}
       }
@@ -214,7 +226,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \notag
       \\
       &
-      H\text{ a partial slice of }G\text{ with }\demandedByR^*_G(\sinks{H}) = Y
+      \demandedByR^*_G(\sinks{H}) = Y
       &
       \text{suppose}
       \locallabel{assumption}
