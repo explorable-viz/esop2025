@@ -98,15 +98,15 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
    \end{itemize}
 \end{definition}
 
-\begin{lemma}[$\demandedByR_{G}$ preserves top]
+\begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms:sinks-fixpoint}
-   $\demandedByR_{G}(\sinks{G}) = \sinks{G}$.
+   If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
 
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
    For any partial slice $H$ of $G$:
-   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR_G(\sinks{H}) = Y\]
+   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-demByV}
