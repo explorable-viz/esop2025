@@ -3,16 +3,19 @@
 
 \proofContext{demandedByAlg-computes-demandedBy}
 \begin{proof}
+   \small
    \begin{flalign}
       &
       \caseName{$\Rightarrow$ direction:}
       \notag
       \\
       &
+      X \subseteq \sources{G}
+      \text{ with }
       X \demandedByAlg{G} Y
       &
       \text{suppose}
-      \notag
+      \locallabel{X-sources}
       \\
       &
       \derivation{\derivationWidth}{
@@ -27,7 +30,7 @@
          \end{smathpar}
       }
       &
-      \text{inversion on $\demandedByAlg{}$; $\exists H$}
+      \text{inversion; $\exists H$}
       \notag
       \\
       &
@@ -38,9 +41,9 @@
       \\
       &
       \qedLocal
-      \demandedByR_G(X) = Y
+      \demandedByR_G(X) = \demandedByR^*_{G}(X) = Y
       &
-      \text{\propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
+      \text{(\localref{X-sources}); \propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
       \notag
       \\
       &
@@ -48,11 +51,10 @@
       \notag
       \\
       &
-      \demandedByR_G(X) = Y\text{ with }X \subseteq \sources{G}
+      X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \demandedByR^*_G(X) = Y
       &
       \text{suppose}
       \notag
-      &
       \\
       &
       (X, \emptyset)\text{ a partial slice of }G
@@ -99,6 +101,10 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
 \end{definition}
 
 \begin{lemma}
+   $\demandedByR_{G} \subseteq \demandedByR^*_{G}(X)$.
+\end{lemma}
+
+\begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms:sinks-fixpoint}
    If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
@@ -111,6 +117,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
 
 \proofContext{correctness-demByV}
 \begin{proof}
+   \small
    \begin{flalign}
       &
       \caseName{$\Rightarrow$ direction:}
