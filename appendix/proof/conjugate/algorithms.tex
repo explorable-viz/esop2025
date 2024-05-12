@@ -107,11 +107,18 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
 
+\begin{definition}[Partial slice]
+$H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap \E(G) = \emptyset$.
+\end{definition}
+
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms:edge-conservation}
-   Suppose $\V(H) \subseteq \V(G)$ and $\E(H) \cap \E(G) = \emptyset$. For any $\alpha \in \sinks{H}$ and any
-   $E = \outE{G}(\alpha) \neq \emptyset$ we have
-   \[\demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})\]
+   Suppose $H$ a partial slice of $G$. For any $\alpha \in \sinks{H}$ and any
+   $E = \outE{G}(\alpha) \neq \emptyset$:
+   \begin{enumerate}
+      \item $H \cup E$ is a partial slice of $G \setminus_{\mathsf{E}} E$
+      \item $\demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})$
+   \end{enumerate}
 \end{lemma}
 
 \begin{proposition}
