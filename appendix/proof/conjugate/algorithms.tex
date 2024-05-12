@@ -90,8 +90,8 @@
 
 \subsection{Correctness of $\demandedByV{}$}
 
-Define the \emph{output} relation of a graph $G$ with reachability relation $R$ to be $R \cap \V(G) \times
-\sinks{G}$. Then define the following extension of $\demandedByR_{G}$:
+The \emph{output} relation of a graph $G$ with reachability relation $R$, defined as $R \cap \V(G) \times
+\sinks{G}$, gives rise to the following extension of $\demandedByR_{G}$:
 
 \begin{definition}[$\demandedByR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
@@ -148,7 +148,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \\
       &
       \qedLocal
-      \demandedByR_G(\sinks{H}) = \sinks{H}
+      \demandedByR^*_G(\sinks{H}) = \sinks{H}
       &
       \text{$\sinks{H} \subseteq \sinks{G}$}
       \notag
@@ -174,7 +174,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \notag
       \\
       &
-      \demandedByR_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E}) = \sinks{H'}
+      \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E}) = \sinks{H'}
       &
       \text{IH}
       \notag
@@ -186,7 +186,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \\
       &
       \qedLocal
-      \demandedByR_{G}(\sinks{H}) = \sinks{H'}
+      \demandedByR^*_{G}(\sinks{H}) = \sinks{H'}
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}}
       \notag
@@ -196,12 +196,12 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \notag
       \\
       &
-      \text{By strong lexicographical induction over $(\length{\E(G)}, \length{\sinks{H} \setminus \sinks{G}}) \subseteq \mathbb{N}^2$}
+      \text{By strong induction (lexicographically) over $(\length{\E(G)}, \length{\sinks{H} \setminus \sinks{G}}) \subseteq \mathbb{N}^2$}
       &
       \notag
       \\
       &
-      H\text{ a partial slice of }G\text{ with }\demandedByR_G(\sinks{H}) = Y
+      H\text{ a partial slice of }G\text{ with }\demandedByR^*_G(\sinks{H}) = Y
       &
       \text{suppose}
       \locallabel{assumption}
@@ -229,7 +229,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \\
       &
       \qedLocal
-      \sinks{H} = \demandedByR_{G}(\sinks{H}) = Y
+      \sinks{H} = \demandedByR^*_{G}(\sinks{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}; (\localref{assumption})}
       \notag
@@ -255,7 +255,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       &
       H \cup E, G \setminus_{\mathsf{E}} E \demandedByV{} H'
       \text{ with }
-      \sinks{H'} = \demandedByR_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
+      \sinks{H'} = \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
       &
       \text{IH; $\exists H'$}
       \notag
@@ -266,7 +266,7 @@ Define the \emph{output} relation of a graph $G$ with reachability relation $R$ 
       \notag
       \\
       &
-      \sinks{H'} = \demandedByR_{G}(\sinks{H})
+      \sinks{H'} = \demandedByR^*_{G}(\sinks{H})
       &
       \notag
       \\
