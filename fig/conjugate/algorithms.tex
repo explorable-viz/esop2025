@@ -3,63 +3,41 @@
       {\small \flushleft \shadebox{$X \demandedByAlg{G} Y$}
          \begin{smathpar}
             \inferrule*[
-%              lab={\ruleName{$\demandedByAlg{}$}},
               right={$X \subseteq \sources{G}$}
             ]
             {
-               (X, \emptyset), X, G
-               \demandedByV{}
-               G'
+               (X, \emptyset), G \demandedByV{} H
             }
             {
-               X \demandedByAlg{G} \V(G') \cap \sinks{G}
+               X \demandedByAlg{G} \sinks{H}
             }
             \end{smathpar}
          }
          \vspace{1mm}
-         {\small \flushleft \shadebox{$H, X, G \demandedByV{} H'$}
+         {\small \flushleft \shadebox{$H, G \demandedByV{} H'$}
          \begin{smathpar}
          \inferrule*[
-           lab={\ruleName{done}},% $\demandedByV{}$-done}},
-         %   right=$G' \subseteq G$
+           lab={\ruleName{done}},
+           right={$\sinks{H} \subseteq \sinks{G}$}
          ]
          {
             \strut
          }
          {
-            H, \emptyset, G \demandedByV{} H
+            H, G \demandedByV{} H
          }
-         %
          \and
-         %
-         % \inferrule*[
-         %    lab={\ruleName{skip}},% $\demandedByV{}$-skip}},
-         %    % right={$\alpha \in \V(G')$}
-         % ]
-         % {
-         %    G', X, G
-         %    \demandedByV{}
-         %    G^\twoPrime
-         %    \\
-         %    \alpha \in \V(G')
-         % }
-         % {
-         %    G', \alpha \cons X, G \demandedByV{} G^\twoPrime
-         % }
-         % %
-         % \and
-         % %
          \inferrule*[
-            lab={\ruleName{step}},% $\demandedByV{}$-extend}},
-            % right={$H = \set{\alpha \mapsto Y}$}
+            lab={\ruleName{extend}},
+            right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
          ]
          {
-            H \cup \outE{G}(\alpha), X \cup \outN{G}(\alpha), G \setminus_{\mathsf{E}} \outE{G}(\alpha)
+            H \cup E, G \setminus_{\mathsf{E}} E
             \demandedByV{}
             H'
          }
          {
-            H, \alpha \cons X, G \demandedByV{} H'
+            H, G \demandedByV{} H'
          }
          \end{smathpar}}
          \caption{$\demandedByAlg{}$ algorithm}
