@@ -62,7 +62,7 @@
          X \sufficesAlg{G} \V(G') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G', H, E, G \sufficesE{} G^\twoPrime, H'$}}
+   {\small \flushleft \shadebox{$H, P, G \sufficesE{} G', H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
@@ -70,10 +70,10 @@
       ]
       {
          % \strut
-         \dom{G'} \subseteq \dom{G}
+         \forall \beta \in \V(G).\forall \alpha \in \V(H). \exPair{\alpha}{\beta} \notin \E(G)
       }
       {
-         G', H, \emptyset, G \sufficesE{} G', H
+         H, P, G \sufficesE{} H, P
       }
       %
       \and
