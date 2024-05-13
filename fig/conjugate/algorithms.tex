@@ -62,7 +62,7 @@
          X \sufficesAlg{G} \V(G') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$H, P, G \sufficesE{} G', H'$}}
+   {\small \flushleft \shadebox{$H, P, G \sufficesE{} H', P'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
@@ -80,41 +80,38 @@
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         right={$\exists \alpha \in \V(H). \exPair{\alpha}{\beta} \in \inE{G}(\beta)$}
       ]
       {
-         \inN{G}(\beta) \supset \set{\alpha}
+         \inN{G}(\beta) \supset \inN{P}(\beta)
          \\
-         G', H \cup \set{\exPair{\alpha}{\beta}}, E, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         H, P \cup \set{\exPair{\alpha}{\beta}}, G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H', P'
       }
       {
-         G', H, (\alpha, \beta) \cons E, G
+         H, P, G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H', P'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         right={$E = \inE{G}(\beta)$}
       ]
       {
-         \inN{G}(\beta) = \set{\alpha}
+         \inN{G}(\beta) = \inN{P}(\beta)
          \\
-         G' \cup \inE{H}(\beta) \cup \set{\exPair{\alpha}{\beta}},
-         H \setminus_{\mathsf{E}} \inE{H}(\beta),
-         \outE{G}(\beta) \cup E,
-         G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
-         \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H \cup \inE{P}(\beta),
+         P \setminus_{E} E,
+         G \setminus_{E} E,
       }
       {
-         G', H, (\alpha, \beta) \cons E, G
+         H, P, G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H', P'
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
