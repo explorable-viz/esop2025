@@ -58,7 +58,7 @@
          H
       }
       {
-         X \sufficesAlg{G} \V(H') \cap \sinks{G}
+         X \sufficesAlg{G} \sinks(H)
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$H, P, G \sufficesE{} H'$}}
@@ -79,7 +79,7 @@
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$\alpha \in \V(H) \wedge E = \outE{G}(\alpha)$}
+         right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha)$}
       ]
       {
          H, P \cup E, G \setminus_{\mathsf{E}} E
@@ -96,7 +96,7 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$E = \inE{P}(\alpha) \neq \emptyset \wedge \inN{P}(\alpha) \subset \V(H)$}
+         right={$E = \inE{P}(\alpha) \neq \emptyset \wedge \inN{G}(\alpha) = \emptyset$}
       ]
       {
          H \cup E,
