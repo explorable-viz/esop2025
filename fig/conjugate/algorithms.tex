@@ -79,12 +79,10 @@
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$\exists \alpha \in \V(H). \exPair{\alpha}{\beta} \in \inE{G}(\beta)$}
+         right={$\alpha \in \V(H) \wedge \exPair{\alpha}{\beta} \in \E(G)$}
       ]
       {
-         \inN{G}(\beta) \supset \inN{P}(\beta)
-         \\
-         H, P \cup \set{\exPair{\alpha}{\beta}}, G
+         H, P \cup \set{\exPair{\beta}{\alpha}}, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
          \sufficesE{}
          H', P'
       }
@@ -98,14 +96,14 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$E = \inE{G}(\beta)$}
+         right={$\beta \in \V(P) \wedge \forall \alpha \in \V(H).(\exPair{\alpha}{\beta} \notin \E(G))$}
       ]
       {
-         \inN{G}(\beta) = \inN{P}(\beta)
-         \\
-         H \cup \inE{P}(\beta),
-         P \setminus_{\mathsf{E}} E,
-         G \setminus_{\mathsf{E}} E,
+         H \cup \outE{P}(\beta),
+         P \setminus_{\mathsf{E}} \outE{P}(\beta),
+         G
+         \sufficesE{}
+         H', P'
       }
       {
          H, P, G
