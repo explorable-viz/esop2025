@@ -61,7 +61,7 @@
          X \sufficesAlg{G} \V(G') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$H, P, G \sufficesE{} H', P'$}}
+   {\small \flushleft \shadebox{$H, P, G \sufficesE{} H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
@@ -79,36 +79,36 @@
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$\alpha \in \V(H) \wedge \exPair{\alpha}{\beta} \in \E(G)$}
+         right={$\alpha \in \V(H) \wedge \exPair{\alpha}{\beta} \in \E(G) \wedge E = \inE{G}(\beta)$}
       ]
       {
-         H, P \cup \set{\exPair{\beta}{\alpha}}, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         H, P \cup \opGraph{E}, G \setminus_{\mathsf{E}} E
          \sufficesE{}
-         H', P'
+         H'
       }
       {
          H, P, G
          \sufficesE{}
-         H', P'
+         H'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$\beta \in \V(P) \wedge \forall \alpha \in \V(H).(\exPair{\alpha}{\beta} \notin \E(G))$}
+         right={$E = \outE{P}(\beta) \neq \emptyset \wedge \outN{P}(\beta) \subset \V(H)$}
       ]
       {
-         H \cup \outE{P}(\beta),
-         P \setminus_{\mathsf{E}} \outE{P}(\beta),
+         H \cup E,
+         P \setminus_{\mathsf{E}} E,
          G
          \sufficesE{}
-         H', P'
+         H'
       }
       {
          H, P, G
          \sufficesE{}
-         H', P'
+         H'
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
