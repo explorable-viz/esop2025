@@ -65,11 +65,10 @@
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
-         % right={$\dom{G'} \subseteq \dom{G}$}
+         % right={$$}
       ]
       {
-         % \strut
-         \forall \alpha \in \V(H). \outE{G}(\alpha) = \emptyset
+         \strut
       }
       {
          H, P, G \sufficesE{} H
@@ -96,7 +95,7 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$E = \inE{P}(\alpha) \neq \emptyset \wedge \inN{G}(\alpha) = \emptyset$}
+         right={$\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset$}
       ]
       {
          H \cup E,
