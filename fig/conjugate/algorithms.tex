@@ -55,10 +55,10 @@
          (\emptyset, \emptyset),
          G
          \sufficesE{}
-         G', H
+         H
       }
       {
-         X \sufficesAlg{G} \V(G') \cap \sinks{G}
+         X \sufficesAlg{G} \V(H') \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
    {\small \flushleft \shadebox{$H, P, G \sufficesE{} H'$}}
@@ -72,17 +72,17 @@
          \forall \alpha \in \V(H). \outE{G}(\alpha) = \emptyset
       }
       {
-         H, P, G \sufficesE{} H, P
+         H, P, G \sufficesE{} H
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         right={$\alpha \in \V(H) \wedge \exPair{\alpha}{\beta} \in \E(G) \wedge E = \inE{G}(\beta)$}
+         right={$\alpha \in \V(H) \wedge E = \outE{G}(\alpha)$}
       ]
       {
-         H, P \cup \opGraph{E}, G \setminus_{\mathsf{E}} E
+         H, P \cup E, G \setminus_{\mathsf{E}} E
          \sufficesE{}
          H'
       }
@@ -96,7 +96,7 @@
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         right={$E = \outE{P}(\beta) \neq \emptyset \wedge \outN{P}(\beta) \subset \V(H)$}
+         right={$E = \inE{P}(\alpha) \neq \emptyset \wedge \inN{P}(\alpha) \subset \V(H)$}
       ]
       {
          H \cup E,
