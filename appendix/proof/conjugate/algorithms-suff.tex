@@ -102,3 +102,57 @@
    For partial slices $H, P$ of $G$, and any $Y \subseteq \sinks{G}$:
    \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H'}) = Y\]
 \end{proposition}
+
+\proofContext{correctness-sufficesE}
+\begin{proof}
+   \small
+   \begin{flalign}
+      &
+      H,P \text{ partial slices of } G
+      \text{ and }
+      Y \subseteq \sinks{G}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \caseName{$\Rightarrow$ direction:}
+      \notag
+      \\
+      &
+      H, P, G \sufficesE{} H' \text{ with } \sinks{H'}=Y
+      &
+      \text{suppose, $\exists H'$}
+      \notag
+      \\
+      &
+      \text{By induction on derivation of $\sufficesE{}$.}
+      &
+      \notag
+      \\
+      &
+      \subcaseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{done}},
+               right={$\sinks{H} \subseteq \compl{\sources{G}}$}
+            ]
+            {
+               \strut
+            }
+            {
+               H, P, G \sufficesE{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sufficesR^*_G(\sinks{H}) = \sinks{H}
+      &
+      \text{incomplete lemma}
+      \notag
+   \end{flalign}
+\end{proof}
