@@ -1,0 +1,104 @@
+\subsection{\propref{sufficesAlg-computes-suffices}}
+\setcounter{equation}{0}
+
+\proofContext{sufficesAlg-suffices}
+\begin{proof}
+   \small
+   \begin{flalign}
+      &
+      \caseName{$\Rightarrow$ direction:}
+      &
+      \notag
+      \\
+      &
+      X \subseteq \sources{G}
+      \text{ with }
+      X \sufficesAlg{G} Y
+      &
+      \text{suppose}
+      % \locallabel{X-source-G}
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \exPair{X}{\emptyset}, \exPair{\emptyset}{\emptyset}, G \sufficesE{} H
+            }
+            {
+               X \sufficesAlg{G} \sinks{H} \Lowlight{\;=Y}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{inversion; $\exists H$}
+      \notag
+      \\
+      &
+      (X, \emptyset)\;(\emptyset, \emptyset)
+      \text{ partial slices of G}
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
+      &
+      \text{(1), \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
+      \notag
+      \\
+      &
+      \caseName{$\Leftarrow$ direction: }
+      \notag
+      \\
+      &
+      X \subseteq \sources{G}
+      \text{ with }
+      \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      (X, \emptyset),\;(\emptyset, \emptyset)
+      \text{ partial slices of } G
+      &
+      \notag
+      \\
+      &
+      (X, \emptyset), (\emptyset,\emptyset), G \sufficesE{} H
+      &
+      \text{\propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}; $\exists H$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*
+            {
+               \exPair{X}{\emptyset}, \exPair{\emptyset}{\emptyset}, G \sufficesE{} H
+            }
+            {
+               X \sufficesAlg{G} \sinks{H} \Lowlight{\;=Y}
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def.~$\sufficesAlg{}$}
+      \notag
+   \end{flalign}
+\end{proof}
+\subsection{Correctness of $\sufficesE{}$}
+
+\begin{definition}[$\sufficesR^*$ for a dependence graph]
+   For a graph $G$ with output relation $R$, define:
+   \[\sufficesR^*_G \eqdef \sufficesR_{R}: \powerset{\V(G)} \to \powerset{\sinks{G}}\]
+\end{definition}
+
+\begin{proposition}
+   \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
+   For partial slices $H, P$ of $G$, and any $Y \subseteq \sinks{G}$:
+   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H'}) = Y\]
+\end{proposition}
