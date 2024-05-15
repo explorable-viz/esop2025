@@ -16,7 +16,7 @@
       X \sufficesAlg{G} Y
       &
       \text{suppose}
-      % \locallabel{X-source-G}
+      \locallabel{X-source-G}
       \\
       &
       \derivation{\derivationWidth}{
@@ -35,17 +35,10 @@
       \notag
       \\
       &
-      (X, \emptyset)\;(\emptyset, \emptyset)
-      \text{ partial slices of G}
-      &
-      \text{def. partial slice}
-      \notag
-      \\
-      &
       \qedLocal
       \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
       &
-      \text{(1), \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
+      \text{(\localref{X-source-G}), \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
       \notag
       \\
       &
@@ -58,12 +51,6 @@
       \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
       &
       \text{suppose}
-      \notag
-      \\
-      &
-      (X, \emptyset),\;(\emptyset, \emptyset)
-      \text{ partial slices of } G
-      &
       \notag
       \\
       &
@@ -99,7 +86,7 @@
 
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
-   For partial slices $H, P$ of $G$, and any $Y \subseteq \sinks{G}$:
+   For $\V(H), \V(P) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
    \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H'}) = Y\]
 \end{proposition}
 
@@ -108,7 +95,7 @@
    \small
    \begin{flalign}
       &
-      H,P \text{ partial slices of } G
+      \V(H) \subseteq \V(G),\V(P) \subseteq \V(G)
       \text{ and }
       Y \subseteq \sinks{G}
       &

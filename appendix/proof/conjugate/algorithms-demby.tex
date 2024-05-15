@@ -34,12 +34,6 @@
       \notag
       \\
       &
-      (X, \emptyset)\text{ a partial slice of }G
-      &
-      \text{def.~partial slice}
-      \notag
-      \\
-      &
       \qedLocal
       \demandedByR_G(X) = \demandedByR^*_{G}(X) = Y
       &
@@ -54,12 +48,6 @@
       X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \demandedByR^*_G(X) = Y
       &
       \text{suppose}
-      \notag
-      \\
-      &
-      (X, \emptyset)\text{ a partial slice of }G
-      &
-      \text{def.~partial slice}
       \notag
       \\
       &
@@ -107,23 +95,18 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
 
-\begin{definition}[Partial slice]
-$H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap \E(G) = \emptyset$.
-\end{definition}
-
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms:edge-conservation}
-   Suppose $H$ a partial slice of $G$. For any $\alpha \in \sinks{H}$ and any
+   Suppose $\V(H) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any
    $E = \outE{G}(\alpha) \neq \emptyset$:
    \begin{enumerate}
-      \item $H \cup E$ is a partial slice of $G \setminus_{\mathsf{E}} E$
       \item $\demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})$
    \end{enumerate}
 \end{lemma}
 
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
-   For any partial slice $H$ of $G$ and any $Y \subseteq \sinks{G}$:
+   For $\V(H) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
    \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
@@ -132,7 +115,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
    \small
    \begin{flalign}
       &
-      H\text{ a partial slice of }G\text{ and }Y \subseteq \sinks{G}
+      \V(H)\subseteq \V(G)\text{ and }Y \subseteq \sinks{G}
       &
       \text{suppose}
       \notag
@@ -195,12 +178,6 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
          \end{smathpar}
       }
       &
-      \notag
-      \\
-      &
-      H \cup E\text{ a partial slice of }G \setminus_{\mathsf{E}} E
-      &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(i)}
       \notag
       \\
       &
@@ -274,12 +251,6 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       &
       \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
       &
-      \notag
-      \\
-      &
-      H \cup E\text{ a partial slice of }G \setminus_{\mathsf{E}} E
-      &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(i)}
       \notag
       \\
       &
