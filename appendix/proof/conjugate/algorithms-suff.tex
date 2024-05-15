@@ -154,5 +154,50 @@
       &
       \text{incomplete lemma}
       \notag
+      \\
+      &
+      \subcaseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{pending}},
+               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H, P \cup E, G \setminus_{\mathsf{E}} E
+               \sufficesE{}
+               H'
+            }
+            {
+               H, P, G
+               \sufficesE{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \\
+      &
+      \subcaseDerivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{extend}},
+               right={$\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H \cup E,
+               P \setminus_{\mathsf{E}} E,
+               G
+               \sufficesE{}
+               H'
+            }
+            {
+               H, P, G
+               \sufficesE{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \\
    \end{flalign}
 \end{proof}
