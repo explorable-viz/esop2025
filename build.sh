@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PLOTTER="../fluid/plot_bench.py"
+PLOTTER="../fluid/script/python/plot_bench.py"
 PDFLATEX="pdflatex -file-line-error -halt-on-error"
 TARGET=${1:-main}
 PYENV=venv
@@ -14,9 +14,9 @@ source $PYENV/bin/activate
    pip install -q --disable-pip-version-check -r requirements.txt
 
    echo "Generating benchmark figures."
-   rm -rf Benchmarks
-   mkdir Benchmarks
-   cp "../fluid/Benchmarks/benchmarks.csv" "Benchmarks/benchmarks.csv"
+   rm -rf benchmark
+   mkdir benchmark
+   cp "../fluid/benchmark/benchmarks.csv" "benchmark/benchmarks.csv"
 
    # python3 $PLOTTER -t expensive -b bwd -d fig/performance/expensive-bwd > /dev/null
    # python3 $PLOTTER -t expensive -b fwd -d fig/performance/expensive-fwd > /dev/null
