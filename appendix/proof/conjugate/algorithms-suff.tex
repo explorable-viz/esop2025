@@ -168,9 +168,19 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_G(\sinks{H}) = \sinks{H}
+      \sufficesR^*_{G \cup P}(\sinks{H}) = \sinks{H}
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sinks}}
+      \notag
+      \\
+      &
+      \text{The above will need to be a little more fleshed out, since we need to establish}
+      &
+      \notag
+      \\
+      &
+      \text{that in this situation unioning P and G will not create or lose sinks}
+      &
       \notag
       \\
       &
@@ -196,9 +206,16 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H}) = Y
+      \sufficesR^*_{(G \setminus_{\mathsf{E}} E) \cup (P \cup E)}(\sinks{H}) = Y
       &
       \text{IH}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(1)}
       \notag
       \\
       &
@@ -223,6 +240,39 @@
          \end{smathpar}
       }
       &
+      \notag
+      \\
+      &
+      \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      &
+      \text{IH}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sufficesR^*_{G \cup P}(\sinks{H})
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(2)}
+      \notag
+      \\
+      &
+      \caseName{$\Leftarrow$ direction}
+      \notag
+      \\
+      &
+      \text{By strong lexicographical induction over $\exPair{\length{\E(G)}}{\length{\E(P)}}$}
+      &
+      \notag
+      \\
+      &
+      \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{\sources{G} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{H}}
+      \notag
       \\
    \end{flalign}
 \end{proof}
