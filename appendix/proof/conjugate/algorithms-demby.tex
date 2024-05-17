@@ -99,9 +99,9 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    \label{lem:appendix:proof:conjugate:algorithms:edge-conservation}
    Suppose $\V(H) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any
    $E = \outE{G}(\alpha) \neq \emptyset$:
-   \begin{enumerate}
-      \item $\demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})$
-   \end{enumerate}
+   $$
+      \demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})
+   $$
 \end{lemma}
 
 \begin{proposition}
@@ -190,7 +190,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \qedLocal
       \demandedByR^*_{G}(\sinks{H}) = \sinks{H'}
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(ii)}
+      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}}
       \notag
       \\
       &
@@ -240,13 +240,9 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \\
       &
       \subcase{\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset}
-      \notag
-      \\
-      &
-      \alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset
       &
       \text{$\exists \alpha$, $\exists E$}
-      \locallabel{exists-alpha}
+      \notag
       \\
       &
       \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
@@ -264,7 +260,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       &
       \sinks{H'} = \demandedByR^*_{G}(\sinks{H})
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(ii)}
+      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}}
       \notag
       \\
       &
