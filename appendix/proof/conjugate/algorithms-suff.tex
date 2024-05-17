@@ -354,5 +354,46 @@
       \text{$\exists \alpha$, $\exists E$}
       \notag
       \\
+      &
+      \E(P \setminus_{\mathsf{E}} E) \subset \E(P)
+      &
+      \notag
+      \\
+      &
+      H \cup E, P \setminus_{\mathsf{E}} E, G \sufficesE{} H'
+      &
+      \text{IH, $\exists H'$}
+      \notag
+      \\
+      &
+      \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{extend}},
+               right={$\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H \cup E,
+               P \setminus_{\mathsf{E}} E,
+               G
+               \sufficesE{}
+               H'
+            }
+            {
+               H, P, G
+               \sufficesE{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \notag
    \end{flalign}
 \end{proof}
