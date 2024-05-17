@@ -85,6 +85,7 @@
 \end{definition}
 
 \begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:suff-subset-suffstar}
    $\sufficesR_G(X) \subseteq \sufficesR^*_{G}(X)$
 \end{lemma}
 
@@ -272,6 +273,36 @@
       \\
       &
       \subcase{\sources{G} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{H}}
+      \notag
+      \\
+      &
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{done}},
+               right={$\sources{G} \subseteq \sources{P} \wedge \sinks{H} \subseteq \sinks{G}$}
+            ]
+            {
+               \strut
+            }
+            {
+               H, P, G \sufficesE{} H
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def. $\sufficesE{}$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{H} = \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suff-subset-suffstar}}
+      \notag
+      \\
+      &
+      \subcase{\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset}
       \notag
       \\
    \end{flalign}
