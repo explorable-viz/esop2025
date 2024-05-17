@@ -107,10 +107,18 @@
 %    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{(G \cup P) \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
 %    $$
 % \end{lemma}
+\begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
+   Suppose $\V(H), \V(P) \subseteq \V(G)$
+   \begin{enumerate}
+      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \setminus_{\mathsf{E}} E \cup (P \cup E)}(\sinks{H})$
+      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})$
+   \end{enumerate}
+\end{lemma}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
    For $\V(H), \V(P) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
-   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H}) = Y\]
+   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_{G \cup P}(\sinks{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-sufficesE}
