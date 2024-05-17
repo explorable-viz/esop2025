@@ -23,7 +23,7 @@
          \begin{smathpar}
             \inferrule*
             {
-               \exPair{X}{\emptyset}, \exPair{\emptyset}{\emptyset}, G \sufficesE{} H
+               (X,\emptyset), (\emptyset,\emptyset), G \sufficesE{} H
             }
             {
                X \sufficesAlg{G} \sinks{H} \Lowlight{\;=Y}
@@ -65,7 +65,7 @@
          \begin{smathpar}
             \inferrule*
             {
-               \exPair{X}{\emptyset}, \exPair{\emptyset}{\emptyset}, G \sufficesE{} H
+               (X,\emptyset), (\emptyset,\emptyset), G \sufficesE{} H
             }
             {
                X \sufficesAlg{G} \sinks{H} \Lowlight{\;=Y}
@@ -81,7 +81,7 @@
 
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
-   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \nexists x \in \V(G)\setminus X.\; \exPair{x}{y} \in R}\]
+   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \nexists x \in \V(G)\setminus X.\; (x,y) \in R}\]
 \end{definition}
 
 \begin{lemma}
@@ -261,7 +261,7 @@
       \notag
       \\
       &
-      \text{By strong lexicographical induction over $\exPair{\length{\E(G)}}{\length{\E(P)}}$}
+      \text{By strong lexicographical induction over $(\length{\E(G)},\length{\E(P)})$}
       &
       \notag
       \\
