@@ -81,7 +81,7 @@
 
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
-   \[\sufficesR^*_G \eqdef \sufficesR_{R}: \powerset{\V(G)} \to \powerset{\sinks{G}}\]
+   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \nexists x \in \V(G)\setminus X.\; \exPair{x}{y} \in R}\]
 \end{definition}
 
 \begin{lemma}
@@ -89,13 +89,28 @@
 \end{lemma}
 
 \begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sinks}
    If $X \subseteq \sinks{G}$ then $\sufficesR^*_{G}(X) = X$
 \end{lemma}
 
+% \begin{lemma}
+%    \label{lem:appendix:proof:conjugate:algorithms-suff:grow-pending-works}
+%    If $\V(H), \V(P) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any $E = \outE{G}(\alpha) \neq \emptyset$:
+%    $$
+%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \setminus_{\mathsf{E}} E \cup (P \cup E)}(\sinks{H})
+%    $$
+% \end{lemma}
+% \begin{lemma}
+%    \label{lem:appendix:proof:conjugate:algorithms-suff:grow-slice-works}
+%    If $\V(H), \V(P) \subseteq \V(G)$, for any $\alpha \in \sources{G}$ with $E = \inE{P}(\alpha) \neq \emptyset$:
+%    $$
+%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{(G \cup P) \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
+%    $$
+% \end{lemma}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
    For $\V(H), \V(P) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
-   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H'}) = Y\]
+   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sufficesR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-sufficesE}
@@ -130,7 +145,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{done}},
-               right={$\sinks{H} \subseteq \compl{\sources{G}}$}
+               right={$\sources{G} \subseteq \sources{P} \wedge \sinks{H} \subseteq \sinks{G}$}
             ]
             {
                \strut
@@ -147,7 +162,7 @@
       \qedLocal
       \sufficesR^*_G(\sinks{H}) = \sinks{H}
       &
-      \text{incomplete lemma}
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sinks}}
       \notag
       \\
       &
@@ -170,6 +185,13 @@
          \end{smathpar}
       }
       &
+      \notag
+      \\
+      &
+      \sufficesR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H}) = Y
+      &
+      \text{IH}
+      \notag
       \\
       &
       \subcaseDerivation{\derivationWidth}{
