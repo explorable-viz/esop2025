@@ -216,7 +216,7 @@
       \qedLocal
       \sufficesR^*_{G \cup P}(\sinks{H}) = Y
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(1)}
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
       \notag
       \\
       &
@@ -253,7 +253,7 @@
       \qedLocal
       \sufficesR^*_{G \cup P}(\sinks{H})
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(2)}
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
       \notag
       \\
       &
@@ -318,9 +318,41 @@
       \text{IH; $\exists H'$}
       \notag
       \\
-      % &
-      % \sinks{H'} = \sufficesR^*_{G \cup P}(\sinks{H})
-      % &
-      % \\
+      &
+      \sinks{H'} = \sufficesR^*_{G \cup P}(\sinks{H})
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
+      \notag
+      \\
+      &
+      \qedLocal
+      \derivation{\derivationWidth}{
+         \begin{smathpar}
+            \inferrule*[
+               lab={\ruleName{pending}},
+               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+            ]
+            {
+               H, P \cup E, G \setminus_{\mathsf{E}} E
+               \sufficesE{}
+               H'
+            }
+            {
+               H, P, G
+               \sufficesE{}
+               H'
+            }
+         \end{smathpar}
+      }
+      &
+      \text{def. $\sufficesE{}$}
+      \notag
+      \\
+      &
+      \subcase{\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset}
+      &
+      \text{$\exists \alpha$, $\exists E$}
+      \notag
+      \\
    \end{flalign}
 \end{proof}
