@@ -308,7 +308,7 @@
       \notag
       \\
       &
-      \length{\E(G \setminus_{\mathsf{E}} E)} < \length{\E(G)}
+      (\length{\E(G \setminus_{\mathsf{E}} E)}, \length{\E(P)} )< (\length{\E(G)}, \length{\E(P |cup E)})
       &
       \notag
       \\
@@ -342,10 +342,16 @@
       \notag
       \\
       &
-      \qedLocal
-      \sinks{H'} = \sufficesR^*_{G \cup P}(\sinks{H})
+      \sufficesR^*_{(G \setminus_{\mathsf{E}} E) \cup (P \cup E)}(\sinks{H}) = \sufficesR^*_{G \cup P}(\sinks{H})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sufficesR^*_{G \cup P}(\sinks{H}) = \sinks{H'}\Lowlight{ = Y}
+      &
+      \text{IH}
       \notag
       \\
       &
