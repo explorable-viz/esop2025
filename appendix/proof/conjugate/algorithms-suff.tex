@@ -116,6 +116,61 @@
       \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})$
    \end{enumerate}
 \end{lemma}
+\proofContext{auxiliary-lemma}
+\begin{proof}
+   By calculation
+   \begin{flalign}
+      &
+      \V(H) \subseteq \V(G)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(P) \subseteq \V(G)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset
+      &
+      \text{suppose}
+      \locallabel{side-condition}
+      \\
+      &
+      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \subseteq \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})}
+      \notag
+      \\
+      &
+      y \in \sufficesR^*_{G \cup P}(\sinks{H})
+      &
+      \text{suppose}
+      \locallabel{y-in-set-1}
+      \\
+      &
+      (x, y) \notin R_{G \cup P}
+      &
+      \text{$\forall x \in \V(G \cup P)\setminus \sinks{H}$}
+      \notag
+      \\
+      &
+      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \supseteq \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})}
+      \notag
+      \\
+      &
+      y \in \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      &
+      \text{suppose}
+      \locallabel{y-in-set-2}
+      \\
+      &
+      (x, y) \notin R_{G \cup (P \setminus_{\mathsf{E}} E)}
+      &
+      \text{$\forall x \in \V(G \cup (P \setminus_{\mathsf{E}} E)) \setminus \sinks{H \cup E}$}
+      \notag
+   \end{flalign}
+\end{proof}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
    For $\V(H), \V(P) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
