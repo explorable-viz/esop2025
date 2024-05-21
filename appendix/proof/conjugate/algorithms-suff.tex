@@ -98,22 +98,22 @@
 %    \label{lem:appendix:proof:conjugate:algorithms-suff:grow-pending-works}
 %    If $\V(H), \V(P) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any $E = \outE{G}(\alpha) \neq \emptyset$:
 %    $$
-%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \setminus_{\mathsf{E}} E \cup (P \cup E)}(\sinks{H})
+%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \edgeMinus E \cup (P \cup E)}(\sinks{H})
 %    $$
 % \end{lemma}
 % \begin{lemma}
 %    \label{lem:appendix:proof:conjugate:algorithms-suff:grow-slice-works}
 %    If $\V(H), \V(P) \subseteq \V(G)$, for any $\alpha \in \sources{G}$ with $E = \inE{P}(\alpha) \neq \emptyset$:
 %    $$
-%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{(G \cup P) \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
+%    \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{(G \cup P) \edgeMinus E}(\sinks{H \cup E})
 %    $$
 % \end{lemma}
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
-   Suppose $\V(H), \V(P) \subseteq \V(G)$
+   Suppose $\V(H), \V(P) \subseteq \V(G)$, with $H,G,P$ edge-disjoint, then:
    \begin{enumerate}
-      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \setminus_{\mathsf{E}} E \cup (P \cup E)}(\sinks{H})$
-      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})$
+      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \edgeMinus E \cup (P \cup E)}(\sinks{H})$
+      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})$
    \end{enumerate}
 \end{lemma}
 \proofContext{auxiliary-lemma}
@@ -145,7 +145,7 @@
       \locallabel{oute-nonempty}
       \\
       &
-      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \subseteq \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})}
+      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \subseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})}
       \notag
       \\
       &
@@ -160,32 +160,75 @@
       (x, y) \notin R_{G \cup P}
       &
       \text{def. $\sufficesR^*$}
-      \notag
+      \locallabel{x-cant-reach-y-a}
       \\
       &
-      \text{Want to show: $y \in \sinks{G \cup (P \setminus_{\mathsf{E}} E)}$ and if so}
-      &
-      \notag
-      \\
-      &
-      \text{$\forall x \in \V(G \cup (P \setminus_{\mathsf{E}} E)) \setminus \sinks{H \cup E} \; (x, y) \notin R_{G \cup (P \setminus_{\mathsf{E}} E)}$}
+      \text{Want to show: $y \in \sinks{G \cup (P \edgeMinus E)}$ and if so}
       &
       \notag
       \\
       &
-      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \supseteq \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})}
+      \text{$\forall x \in \V(G \cup (P \edgeMinus E)) \setminus \sinks{H \cup E} \; (x, y) \notin R_{G \cup (P \edgeMinus E)}$}
+      &
       \notag
       \\
       &
-      y \in \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      \sinks{P} \subseteq \sinks{P \edgeMinus E}
+      &
+      \text{def. $\sinks{\cdot}$}
+      \notag
+      \\
+      &
+      y \in \sinks{G \cup P} \subseteq \sinks{G \cup (P \edgeMinus E)}
+      &
+      \text{def. $\sufficesR^*$}
+      \notag
+      \\
+      &
+      \V(G \cup P) = \V(G \cup (P \edgeMinus E))
+      &
+      \text{def. $\edgeMinus$}
+      \notag
+      \\
+      &
+      \V(G \cup (P \edgeMinus E)) \setminus \sinks{H \cup E} \subseteq \V(G \cup P)\setminus \sinks{H}
+      &
+      \text{def. $\setminus$}
+      \notag
+      \\
+      &
+      R_{G \cup (P \edgeMinus E)} \subseteq R_{G \cup P}
+      &
+      \text{def. reachability}
+      \locallabel{reachability-subset}
+      \\
+      &
+      (x, y) \notin R_{G \cup P}
+      &
+      \text{(\localref{x-cant-reach-y-a})}
+      \notag
+      \\
+      &
+      \qedLocal
+      (x, y) \notin R_{G \cup (P \edgeMinus E)}
+      &
+      \text{(\localref{reachability-subset})}
+      \notag
+      \\
+      &
+      \subcase{\sufficesR^*_{G \cup P}(\sinks{H}) \supseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})}
+      \notag
+      \\
+      &
+      y \in \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})
       &
       \text{suppose}
       \locallabel{y-in-set-2}
       \\
       &
-      \forall x \in \V(G \cup (P \setminus_{\mathsf{E}} E)) \setminus \sinks{H \cup E}
+      \forall x \in \V(G \cup (P \edgeMinus E)) \setminus \sinks{H \cup E}
       \;
-      (x, y) \notin R_{G \cup (P \setminus_{\mathsf{E}} E)}
+      (x, y) \notin R_{G \cup (P \edgeMinus E)}
       &
       \text{def. $\sufficesR^*$}
       \notag
@@ -277,7 +320,7 @@
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H, P \cup E, G \setminus_{\mathsf{E}} E
+               H, P \cup E, G \edgeMinus E
                \sufficesE{}
                H'
             }
@@ -292,7 +335,7 @@
       \notag
       \\
       &
-      \sufficesR^*_{(G \setminus_{\mathsf{E}} E) \cup (P \cup E)}(\sinks{H}) = Y
+      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E)}(\sinks{H}) = Y
       &
       \text{IH}
       \notag
@@ -313,7 +356,7 @@
             ]
             {
                H \cup E,
-               P \setminus_{\mathsf{E}} E,
+               P \edgeMinus E,
                G
                \sufficesE{}
                H'
@@ -329,7 +372,7 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})
       &
       \text{IH}
       \notag
@@ -393,12 +436,12 @@
       \notag
       \\
       &
-      (\length{\E(G \setminus_{\mathsf{E}} E)}, \length{\E(P)} )< (\length{\E(G)}, \length{\E(P |cup E)})
+      (\length{\E(G \edgeMinus E)}, \length{\E(P)} )< (\length{\E(G)}, \length{\E(P |cup E)})
       &
       \notag
       \\
       &
-      H, P \cup E, G \setminus_{\mathsf{E}} E \sufficesE{} H'
+      H, P \cup E, G \edgeMinus E \sufficesE{} H'
       &
       \text{IH; $\exists H'$}
       \notag
@@ -411,7 +454,7 @@
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H, P \cup E, G \setminus_{\mathsf{E}} E
+               H, P \cup E, G \edgeMinus E
                \sufficesE{}
                H'
             }
@@ -427,7 +470,7 @@
       \notag
       \\
       &
-      \sufficesR^*_{(G \setminus_{\mathsf{E}} E) \cup (P \cup E)}(\sinks{H}) = \sufficesR^*_{G \cup P}(\sinks{H})
+      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E)}(\sinks{H}) = \sufficesR^*_{G \cup P}(\sinks{H})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
       \notag
@@ -446,12 +489,12 @@
       \notag
       \\
       &
-      (\length{\E(G)},\length{\E(P \setminus_{\mathsf{E}} E)}) < (\length{\E(P)},\length{\E(P)})
+      (\length{\E(G)},\length{\E(P \edgeMinus E)}) < (\length{\E(P)},\length{\E(P)})
       &
       \notag
       \\
       &
-      H \cup E, P \setminus_{\mathsf{E}} E, G \sufficesE{} H'
+      H \cup E, P \edgeMinus E, G \sufficesE{} H'
       &
       \text{IH, $\exists H'$}
       \notag
@@ -465,7 +508,7 @@
             ]
             {
                H \cup E,
-               P \setminus_{\mathsf{E}} E,
+               P \edgeMinus E,
                G
                \sufficesE{}
                H'
@@ -482,7 +525,7 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \setminus_{\mathsf{E}} E)}(\sinks{H \cup E})
+      \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
       \\
