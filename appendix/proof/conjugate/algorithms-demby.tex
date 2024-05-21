@@ -100,7 +100,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    Suppose $\V(H) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any
    $E = \outE{G}(\alpha) \neq \emptyset$:
    $$
-      \demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})
+      \demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \edgeMinus E} (\sinks{H \cup E})
    $$
 \end{lemma}
 
@@ -168,7 +168,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H \cup E, G \setminus_{\mathsf{E}} E
+               H \cup E, G \edgeMinus E
                \demandedByV{}
                H'
             }
@@ -181,7 +181,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \notag
       \\
       &
-      \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E}) = \sinks{H'}
+      \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E}) = \sinks{H'}
       &
       \text{IH}
       \notag
@@ -245,14 +245,14 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \notag
       \\
       &
-      \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
+      \E(G \edgeMinus E) \subset \E(G)
       &
       \notag
       \\
       &
-      H \cup E, G \setminus_{\mathsf{E}} E \demandedByV{} H'
+      H \cup E, G \edgeMinus E \demandedByV{} H'
       \text{ with }
-      \sinks{H'} = \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
+      \sinks{H'} = \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E})
       &
       \text{IH; $\exists H'$}
       \notag
@@ -272,7 +272,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H \cup E, G \setminus_{\mathsf{E}} E
+               H \cup E, G \edgeMinus E
                \demandedByV{}
                H'
             }
