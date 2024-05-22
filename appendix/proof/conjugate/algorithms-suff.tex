@@ -145,6 +145,23 @@
       \locallabel{oute-nonempty}
       \\
       &
+      \compl{\sinks{P}} \subseteq \sinks{G}
+      &
+      \text{suppose}
+      \locallabel{p-non-sinks-g-sinks}
+      \\
+      &
+      \forall x \notin \V(H)\;\nexists (x,x') \in \E(G \cup P)\text{ with } x' \in \V(H)
+      &
+      \text{suppose}
+      \locallabel{cant-reach-into-h}
+      \\
+      &
+      \V(G \cup P) \setminus \V(H \cup E) \subseteq \V(G \cup P) \setminus \V(H)
+      &
+      \locallabel{h-cup-e-subset}
+      \\
+      &
       \subcase{\sufficesR^*_{G \cup P}(\V(H)) \subseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))}
       \notag
       \\
@@ -191,11 +208,6 @@
       \notag
       \\
       &
-      \V(G \cup P) \setminus \V(H \cup E) \subseteq \V(G \cup P) \setminus \V(H)
-      &
-      \notag
-      \\
-      &
       x \in \V(G \cup P) \setminus \V(H \cup E)
       &
       \text{suppose}
@@ -204,6 +216,7 @@
       &
       x \in \V(G \cup P) \setminus \V(H)
       &
+      \text{(\localref{h-cup-e-subset})}
       \notag
       \\
       &
@@ -241,7 +254,7 @@
       (x, y) \notin R_{G \cup (P \edgeMinus E)}
       &
       \text{def. $\sufficesR^*$}
-      \notag
+      \locallabel{x-cant-reach-y-b}
       \\
       &
       \text{Want to show: $y \in \sinks{G \cup P}$ and}
@@ -252,6 +265,67 @@
       \text{$\forall x \in \V(G \cup P)\setminus \V(H) \; (x, y) \notin R_{G \cup P}$}
       &
       \notag
+      \\
+      &
+      \sinks{G \cup P} = \sinks{G \cup (P \edgeMinus E)}
+      &
+      \text{(\localref{p-non-sinks-g-sinks})}
+      \notag
+      \\
+      &
+      y \in \sinks{G \cup P}
+      &
+      \notag
+      \\
+      &
+      x \in \V(G \cup P) \setminus \V(H)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{x \in \V(G \cup P) \setminus \V(H \cup E)}
+      \notag
+      \\
+      &
+      (x, y) \notin R_{G \cup (P \edgeMinus E)}
+      &
+      \text{(\localref{x-cant-reach-y-b})}
+      \notag
+      \\
+      &
+      (x,y) \in R_{G \cup P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      x' \in H
+      \text{ with }
+      (x,x') \in R_{G \cup (P \edgeMinus E)}
+      \text{ with }
+      (x',y) \in R_{G \cup P}
+      &
+      \text{$\exists x'$}
+      \locallabel{x-reaches-into-h}
+      \\
+      &
+      \qedLocal
+      \bot
+      &
+      \text{(\localref{cant-reach-into-h}, \localref{x-reaches-into-h}) contra}
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall x \in \V(G \cup P) \setminus \V(H)\;(x,y) \notin R_{G \cup P}
+      &
+      \notag
+      \\
+      &
+      \subcase{x = \alpha}
+      \notag
+      \\
    \end{flalign}
 \end{proof}
 \begin{proposition}
