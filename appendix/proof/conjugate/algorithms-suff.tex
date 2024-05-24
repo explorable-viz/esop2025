@@ -81,7 +81,7 @@
 
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
-   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \nexists x \in \V(G)\setminus X.\; (x,y) \in R}\]
+   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \forall x \in \V(G)\setminus \demandedByR^*_{G \cup P}(X).\; (x,y) \notin R}\]
 \end{definition}
 
 \begin{lemma}
@@ -156,11 +156,11 @@
       \text{suppose}
       \locallabel{cant-reach-into-h}
       \\
-      &
-      \V(G \cup P) \setminus \V(H \cup E) \subseteq \V(G \cup P) \setminus \V(H)
-      &
-      \locallabel{h-cup-e-subset}
-      \\
+      % &
+      % \V(G \cup P) \setminus \V(H \cup E) \subseteq \V(G \cup P) \setminus \V(H)
+      % &
+      % \locallabel{h-cup-e-subset}
+      % \\
       &
       \subcase{\sufficesR^*_{G \cup P}(\V(H)) \subseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))}
       \notag
@@ -172,23 +172,23 @@
       \locallabel{y-in-set-1}
       \\
       &
-      \forall x \in \V(G \cup P)\setminus \V(H)
+      \forall x \in \V(G \cup P)\setminus \demandedByR^*_{G \cup P}(H).
       \;
       (x, y) \notin R_{G \cup P}
       &
       \text{def. $\sufficesR^*$}
       \locallabel{x-cant-reach-y-a}
       \\
-      % &
-      % \text{Want to show: $y \in \sinks{G \cup (P \edgeMinus E)}$ and}
-      % &
-      % \notag
-      % \\
-      % &
-      % \text{$\forall x \in \V(G \cup (P \edgeMinus E)) \setminus \V(H \cup E) \; (x, y) \notin R_{G \cup (P \edgeMinus E)}$}
-      % &
-      % \notag
-      % \\
+      &
+      \text{Want to show: $y \in \sinks{G \cup (P \edgeMinus E)}$ and}
+      &
+      \notag
+      \\
+      &
+      \text{$\forall x \in \V(G \cup (P \edgeMinus E)) \setminus \demandedByR^*_{G \cup (P \edgeMinus E)}(H \cup E).\; (x, y) \notin R_{G \cup (P \edgeMinus E)}$}
+      &
+      \notag
+      \\
       &
       \sinks{P} \subseteq \sinks{P \edgeMinus E}
       &
@@ -202,22 +202,22 @@
       \notag
       \\
       &
-      \V(G \cup P) = \V(G \cup (P \edgeMinus E))
-      &
-      \text{def. $\edgeMinus$}
-      \notag
-      \\
-      &
-      x \in \V(G \cup P) \setminus \V(H \cup E)
+      x \in \V(G \cup P) \setminus \demandedByR^*_{G \cup P \edgeMinus E}(\V(H \cup E))
       &
       \text{suppose}
       \notag
       \\
       &
-      x \in \V(G \cup P) \setminus \V(H)
+      x \in \V(G \cup P) \setminus \demandedByR^*_{G \cup P}(\V(H))
       &
-      \text{(\localref{h-cup-e-subset})}
+      \text{(\ref{lem:appendix:proof:conjugate:algorithms:edge-conservation})}
       \notag
+      \\
+      &
+      (x, y) \notin R_{G \cup P}
+      &
+      \text{(\localref{x-cant-reach-y-a})}
+      \locallabel{x-cant-reach-y-a-2}
       \\
       &
       R_{G \cup (P \edgeMinus E)} \subseteq R_{G \cup P}
@@ -226,152 +226,146 @@
       \locallabel{reachability-subset}
       \\
       &
-      (x, y) \notin R_{G \cup P}
-      &
-      \text{(\localref{x-cant-reach-y-a})}
-      \notag
-      \\
-      &
       \qedLocal
       (x, y) \notin R_{G \cup (P \edgeMinus E)}
       &
-      \text{(\localref{reachability-subset})}
+      \text{(\localref{x-cant-reach-y-a-2}, \localref{reachability-subset})}
       \notag
       \\
-      &
-      \subcase{\sufficesR^*_{G \cup P}(\V(H)) \supseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))}
-      \notag
-      \\
-      &
-      y \in \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))
-      &
-      \text{suppose}
-      \locallabel{y-in-set-2}
-      \\
-      &
-      \forall x \in \V(G \cup (P \edgeMinus E)) \setminus \V(H \cup E)
-      \;
-      (x, y) \notin R_{G \cup (P \edgeMinus E)}
-      &
-      \text{def. $\sufficesR^*$}
-      \locallabel{x-cant-reach-y-b}
-      \\
-      &
-      \text{Want to show: $y \in \sinks{G \cup P}$ and}
-      &
-      \notag
-      \\
-      &
-      \text{$\forall x \in \V(G \cup P)\setminus \V(H) \; (x, y) \notin R_{G \cup P}$}
-      &
-      \notag
-      \\
-      &
-      \sinks{G \cup P} = \sinks{G \cup (P \edgeMinus E)}
-      &
-      \text{(\localref{p-non-sinks-g-sinks})}
-      \notag
-      \\
-      &
-      y \in \sinks{G \cup P}
-      &
-      \notag
-      \\
-      &
-      x \in \V(G \cup P) \setminus \V(H)
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      \subcase{x \in \V(G \cup P) \setminus \V(H \cup E)}
-      \notag
-      \\
-      &
-      (x, y) \notin R_{G \cup (P \edgeMinus E)}
-      &
-      \text{(\localref{x-cant-reach-y-b})}
-      \notag
-      \\
-      &
-      (x,y) \in R_{G \cup P}
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      (x,x') \in \E(G \cup P)
-      \text{ with }
-      (x',y) \in R_{G \cup P}
-      &
-      \text{$\exists x' \in \V(H)$}
-      \locallabel{x-reaches-into-h}
-      \\
-      &
-      \qedLocal
-      \bot
-      &
-      \text{(\localref{cant-reach-into-h}, \localref{x-reaches-into-h}) contra}
-      \notag
-      \\
-      &
-      \qedLocal
-      \forall x \in \V(G \cup P) \setminus \V(H)\;(x,y) \notin R_{G \cup P}
-      &
-      \notag
-      \\
-      &
-      \subcase{x = \alpha}
-      \notag
-      \\
-      &
-      (\alpha, y) \in R_{G \cup P}
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      (\alpha, \beta) \in \E(G \cup P)
-      \text{ with }
-      (\beta, y) \in R_{G \cup P}
-      &
-      \text{$\exists \beta$, def. reachability}
-      \\
-      &
-      \beta \notin \V(H)
-      &
-      \notag
-      \\
-      &
-      \qedLocal
-      (\beta, y) \in R_{G \cup (P \edgeMinus E)}
-      &
-      \text{(\localref{cant-reach-into-h})}
-      \locallabel{beta-reaches-y}
-      \\
-      &
-      \beta \in \V(G \cup P) \setminus \V(H \cup E)
-      &
-      \notag
-      \\
-      &
-      (\beta, y) \notin R_{G \cup {P \edgeMinus E}}
-      &
-      \text{(\localref{x-cant-reach-y-b})}
-      \locallabel{beta-contra}
-      \\
-      &
-      \qedLocal
-      \bot
-      &
-      \text{(\localref{beta-contra}, \localref{beta-reaches-y}) contra.}
-      \notag
-      \\
-      &
-      \qedLocal
-      \forall x \in \V(G \cup P) \setminus \V(H)\;(x, y) \notin R_{G \cup P}
-      &
-      \notag
+      % &
+      % \subcase{\sufficesR^*_{G \cup P}(\V(H)) \supseteq \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))}
+      % \notag
+      % \\
+      % &
+      % y \in \sufficesR^*_{G \cup (P \edgeMinus E)}(\V(H \cup E))
+      % &
+      % \text{suppose}
+      % \locallabel{y-in-set-2}
+      % \\
+      % &
+      % \forall x \in \V(G \cup (P \edgeMinus E)) \setminus \V(H \cup E)
+      % \;
+      % (x, y) \notin R_{G \cup (P \edgeMinus E)}
+      % &
+      % \text{def. $\sufficesR^*$}
+      % \locallabel{x-cant-reach-y-b}
+      % \\
+      % &
+      % \text{Want to show: $y \in \sinks{G \cup P}$ and}
+      % &
+      % \notag
+      % \\
+      % &
+      % \text{$\forall x \in \V(G \cup P)\setminus \V(H) \; (x, y) \notin R_{G \cup P}$}
+      % &
+      % \notag
+      % \\
+      % &
+      % \sinks{G \cup P} = \sinks{G \cup (P \edgeMinus E)}
+      % &
+      % \text{(\localref{p-non-sinks-g-sinks})}
+      % \notag
+      % \\
+      % &
+      % y \in \sinks{G \cup P}
+      % &
+      % \notag
+      % \\
+      % &
+      % x \in \V(G \cup P) \setminus \V(H)
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \subcase{x \in \V(G \cup P) \setminus \V(H \cup E)}
+      % \notag
+      % \\
+      % &
+      % (x, y) \notin R_{G \cup (P \edgeMinus E)}
+      % &
+      % \text{(\localref{x-cant-reach-y-b})}
+      % \notag
+      % \\
+      % &
+      % (x,y) \in R_{G \cup P}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % (x,x') \in \E(G \cup P)
+      % \text{ with }
+      % (x',y) \in R_{G \cup P}
+      % &
+      % \text{$\exists x' \in \V(H)$}
+      % \locallabel{x-reaches-into-h}
+      % \\
+      % &
+      % \qedLocal
+      % \bot
+      % &
+      % \text{(\localref{cant-reach-into-h}, \localref{x-reaches-into-h}) contra}
+      % \notag
+      % \\
+      % &
+      % \qedLocal
+      % \forall x \in \V(G \cup P) \setminus \V(H)\;(x,y) \notin R_{G \cup P}
+      % &
+      % \notag
+      % \\
+      % &
+      % \subcase{x = \alpha}
+      % \notag
+      % \\
+      % &
+      % (\alpha, y) \in R_{G \cup P}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % (\alpha, \beta) \in \E(G \cup P)
+      % \text{ with }
+      % (\beta, y) \in R_{G \cup P}
+      % &
+      % \text{$\exists \beta$, def. reachability}
+      % \\
+      % &
+      % \beta \notin \V(H)
+      % &
+      % \notag
+      % \\
+      % &
+      % \qedLocal
+      % (\beta, y) \in R_{G \cup (P \edgeMinus E)}
+      % &
+      % \text{(\localref{cant-reach-into-h})}
+      % \locallabel{beta-reaches-y}
+      % \\
+      % &
+      % \beta \in \V(G \cup P) \setminus \V(H \cup E)
+      % &
+      % \notag
+      % \\
+      % &
+      % (\beta, y) \notin R_{G \cup {P \edgeMinus E}}
+      % &
+      % \text{(\localref{x-cant-reach-y-b})}
+      % \locallabel{beta-contra}
+      % \\
+      % &
+      % \qedLocal
+      % \bot
+      % &
+      % \text{(\localref{beta-contra}, \localref{beta-reaches-y}) contra.}
+      % \notag
+      % \\
+      % &
+      % \qedLocal
+      % \forall x \in \V(G \cup P) \setminus \V(H)\;(x, y) \notin R_{G \cup P}
+      % &
+      % \notag
    \end{flalign}
 \end{proof}
 \begin{proposition}
