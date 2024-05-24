@@ -326,6 +326,48 @@
       \subcase{x = \alpha}
       \notag
       \\
+      &
+      (\alpha, y) \in R_{G \cup P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      (\alpha, \beta) \in \E(G \cup P)
+      \text{ with }
+      (\beta, y) \in R_{G \cup P}
+      &
+      \text{$\exists \beta$, def. reachability}
+      \\
+      &
+      \qedLocal
+      (\beta, y) \in R_{G \cup (P \edgeMinus E)}
+      &
+      \locallabel{beta-reaches-y}
+      \\
+      &
+      \beta \in \V(G \cup P) \setminus \V(H \cup E)
+      &
+      \notag
+      \\
+      &
+      (\beta, y) \notin R_{G \cup {P \edgeMinus E}}
+      &
+      \text{(\localref{x-cant-reach-y-b})}
+      \locallabel{beta-contra}
+      \\
+      &
+      \qedLocal
+      \bot
+      &
+      \text{(\localref{beta-contra}, \localref{beta-reaches-y}) contra.}
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall x \in \V(G \cup P) \setminus \V(H)\;(x, y) \notin R_{G \cup P}
+      &
+      \notag
    \end{flalign}
 \end{proof}
 \begin{proposition}
