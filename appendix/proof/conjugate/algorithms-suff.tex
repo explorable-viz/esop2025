@@ -300,13 +300,11 @@
       \notag
       \\
       &
-      x' \in H
-      \text{ with }
-      (x,x') \in R_{G \cup (P \edgeMinus E)}
+      (x,x') \in \E(G \cup P)
       \text{ with }
       (x',y) \in R_{G \cup P}
       &
-      \text{$\exists x'$}
+      \text{$\exists x' \in \V(H)$}
       \locallabel{x-reaches-into-h}
       \\
       &
@@ -340,9 +338,15 @@
       \text{$\exists \beta$, def. reachability}
       \\
       &
+      \beta \notin \V(H)
+      &
+      \notag
+      \\
+      &
       \qedLocal
       (\beta, y) \in R_{G \cup (P \edgeMinus E)}
       &
+      \text{(\localref{cant-reach-into-h})}
       \locallabel{beta-reaches-y}
       \\
       &
