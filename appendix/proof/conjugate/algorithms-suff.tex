@@ -80,8 +80,8 @@
 \subsection{Correctness of $\sufficesE{}$}
 
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
-   For a graph $G$ with output relation $R$, define:
-   \[\sufficesR^*_G(X) \eqdef \sufficesR_{R}(X) = \set{y \in \sinks{G} \mid \forall x \in \V(G)\setminus \demandedByR^*_{G \cup P}(X).\; (x,y) \notin R}\]
+   For graphs $G$, $H,P$ edge-disjoint, output relations $R$, vertices $\V(P), \V(H) \subseteq \V(G)$ and a set of input vertices $X \subseteq \V(H)$:
+   \[\sufficesR^*_{G,P,H}(X) \eqdef \sufficesR_{R}(X) = \set{y \in \demandedByR^*_{G \cup P \cup H}(X) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{G \cup P \cup H}(X).\; (x,y) \in R}\]
 \end{definition}
 
 \begin{lemma}
