@@ -35,9 +35,9 @@
       \\
       &
       \qedLocal
-      \demandedByR_G(X) = \demandedByR^*_{G}(X) = Y
+      \demandedByR_G(X) = \sinks{G} \cap \demandedByR^*_{G}(X) = Y
       &
-      \text{(\localref{X-sources}); \propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
+      \text{(\localref{X-sources}); \ref{lem:appendix:proof:conjugate:algorithms:demanded-cap-sinks}; \propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
       \notag
       \\
       &
@@ -45,7 +45,7 @@
       \notag
       \\
       &
-      X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \demandedByR^*_G(X) = Y
+      X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \sinks{G} \cap \demandedByR^*_G(X) = Y
       &
       \text{suppose}
       \notag
@@ -83,11 +83,12 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
 
 \begin{definition}[$\demandedByR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
-   \[\demandedByR^*_G \eqdef \demandedByR_{R}: \powerset{\V(G)} \to \powerset{\sinks{G}}\]
+   \[\demandedByR^*_G \eqdef \demandedByR_{R}: \powerset{\V(G)} \to \powerset{\V(G)}\]
 \end{definition}
 
 \begin{lemma}
-   $\demandedByR_{G} \subseteq \demandedByR^*_{G}(X)$.
+   \label{lem:appendix:proof:conjugate:algorithms:demanded-cap-sinks}
+   $\demandedByR_{G} = \sinks{G} \cap \demandedByR^*_{G}(X)$.
 \end{lemma}
 
 \begin{lemma}
@@ -107,7 +108,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
    For $\V(H) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
-   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR^*_G(\sinks{H}) = Y\]
+   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \sinks{H \cup G} \cap \demandedByR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-demByV}
@@ -155,7 +156,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \\
       &
       \qedLocal
-      \demandedByR^*_G(\sinks{H}) = \sinks{H}
+      \sinks{H \cup G} \cap \demandedByR^*_G(\sinks{H}) = \sinks{H} \cap \demandedByR^*_{G}(\sinks{H}) = \sinks{H}
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}}
       \notag
@@ -203,7 +204,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \notag
       \\
       &
-      \demandedByR^*_G(\sinks{H}) = Y
+      \sinks{G \cup H} \cap \demandedByR^*_G(\sinks{H}) = Y
       &
       \text{suppose}
       \locallabel{assumption}
@@ -233,7 +234,7 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       \\
       &
       \qedLocal
-      \sinks{H} = \demandedByR^*_{G}(\sinks{H}) = Y
+      \sinks{G \cup H} \cap \sinks{H} = \sinks{G \cup H} \cap \demandedByR^*_{G}(\sinks{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}; (\localref{assumption})}
       \notag
@@ -252,13 +253,13 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
       &
       H \cup E, G \edgeMinus E \demandedByV{} H'
       \text{ with }
-      \sinks{H'} = \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E})
+      \sinks{H'} = \sinks{(G \edgeMinus E) \cup (H \cup E)} \cap \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E})
       &
       \text{IH; $\exists H'$}
       \notag
       \\
       &
-      \sinks{H'} = \demandedByR^*_{G}(\sinks{H})
+      \sinks{H'} = \sinks{G\cup H} \cap \demandedByR^*_{G}(\sinks{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}}
       \notag
