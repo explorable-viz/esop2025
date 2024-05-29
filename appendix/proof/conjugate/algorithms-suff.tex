@@ -1,12 +1,6 @@
 \subsection{\propref{sufficesAlg-computes-suffices}}
 \setcounter{equation}{0}
-\begin{definition}[Partial Slice]
-   Graphs $H,P,G$ contribute a \textit{partial slice} iff:
-   \begin{itemize}
-      \item $H,P,G$ are edge-disjoint
-      \item $\forall (\alpha, \beta) \in \E(G) \cup \E(P)\; \beta \notin \V(H)$
-   \end{itemize}
-\end{definition}
+
 \proofContext{sufficesAlg-suffices}
 \begin{proof}
    \small
@@ -85,14 +79,26 @@
 \end{proof}
 \subsection{Correctness of $\sufficesE{}$}
 
+\begin{definition}[Partial Slice]
+   Graphs $H,P,G$ contribute a \textit{partial slice} iff:
+   \begin{itemize}
+      \item $H,P,G$ are edge-disjoint
+      \item $\forall (\alpha, \beta) \in \E(G) \cup \E(P)\; \beta \notin \V(H)$
+   \end{itemize}
+\end{definition}
+\begin{definition}[Input Relation]
+   For a graph $G$ with reachability relation $R$, define it's \text{input relation}
+   $R_{I} \eqdef (\sources{G} \times \V{G}) \cap R$
+\end{definition}
+
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
-   For graphs $G$, $H,P$ edge-disjoint, output relations $R$, vertices $\V(P), \V(H) \subseteq \V(G)$ and a set of input vertices $X \subseteq \V(H)$:
-   \[\sufficesR^*_{G,P,H}(X) \eqdef \sufficesR_{R}(X) = \set{y \in \demandedByR^*_{G \cup P \cup H}(X) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{G \cup P \cup H}(X).\; (x,y) \in R}\]
+   For a graph $G$, with an input relation $R_{I}$, and a set of input vertices $X = \subseteq \sources{G}$:
+   \[\sufficesR^*_{G}(X) \eqdef \sufficesR_{R_{I}}(X) = \set{y \in \V(G) \mid \nexists x \in \sources{G} \setminus X.\; (x,y) \in R_{I}}\]
 \end{definition}
 
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:suff-subset-suffstar}
-   $\sufficesR_G(X) \subseteq \sufficesR^*_{G}(X)$
+   $\sufficesR_G(X) = \sinks{G} \cap \sufficesR^*_{G}(X)$
 \end{lemma}
 
 \begin{lemma}
@@ -100,6 +106,10 @@
    If $X \subseteq \sinks{G}$ then $\sufficesR^*_{G}(X) = X$
 \end{lemma}
 
+\begin{lemma}
+   If $H,P,G$ a partial slice with $\sources{G} \subseteq \sources{P}$ and $\sinks{H} \subseteq \sinks{G}$:
+   \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
+\end{lemma}
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
    Suppose $\V(H), \V(P) \subseteq \V(G)$, with $H,G,P$ edge-disjoint, then:
@@ -165,8 +175,8 @@
 \end{proof}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
-   For $\V(H), \V(P) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
-   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\sinks{H'} = Y) \iff \sinks{G \cup P \cup H} \cap \sufficesR^*_{G,P,H}(\sinks{H}) = Y\]
+   Suppose $H,P,G$ a partial slice:
+   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\V(H') = Y) \iff \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-sufficesE}
