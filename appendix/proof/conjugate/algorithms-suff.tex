@@ -36,7 +36,7 @@
       \\
       &
       \qedLocal
-      \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
+      \sufficesR_{G}(X) = \sufficesR^*_{G}(X)= Y 
       &
       \text{(\localref{X-source-G}), \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
       \notag
@@ -48,10 +48,14 @@
       &
       X \subseteq \sources{G}
       \text{ with }
-      \sufficesR_{G}(X) = \sufficesR^*_{G}(X) = Y
+      \sufficesR^*_{G}(X) = Y
       &
       \text{suppose}
       \notag
+      \\
+      &
+      \sufficesR^*_{G}(X) = \sufficesR_{G}(X)
+      &
       \\
       &
       (X, \emptyset), (\emptyset,\emptyset), G \sufficesE{} H
@@ -80,95 +84,338 @@
 \subsection{Correctness of $\sufficesE{}$}
 
 \begin{definition}[Partial Slice]
-   Graphs $H,P,G$ contribute a \textit{partial slice} iff:
-   \begin{itemize}
+   \label{def:partial-slice}
+   Graphs $H,P,G$ constitute a \textit{partial slice} iff:
+   \begin{enumerate}
       \item $H,P,G$ are edge-disjoint
-      \item $\forall (\alpha, \beta) \in \E(G) \cup \E(P)\; \beta \notin \V(H)$
-   \end{itemize}
+      \item $\forall (\alpha,\beta) \in (\V(G \cup P) \setminus \V(H)) \times \V(H).\;(\alpha,\beta) \notin R_{G \cup P}$
+   \end{enumerate}
 \end{definition}
+\begin{corollary}
+   $H,P,G$ a partial slice $\iff$ $H,P,G$ edge disjoint and $\forall (\alpha,\beta) \in \E(G) \cup \E(P).\;\beta \notin \V(H)$ 
+\end{corollary}
 \begin{definition}[Input Relation]
    For a graph $G$ with reachability relation $R$, define it's \text{input relation}
    $R_{I} \eqdef (\sources{G} \times \V{G}) \cap R$
 \end{definition}
 
 \begin{definition}[$\sufficesR^*$ for a dependence graph]
-   For a graph $G$, with an input relation $R_{I}$, and a set of input vertices $X = \subseteq \sources{G}$:
+   For a graph $G$, with an input relation $R_{I}$, and a set of input vertices $X \subseteq \sources{G}$:
    \[\sufficesR^*_{G}(X) \eqdef \sufficesR_{R_{I}}(X) = \set{y \in \V(G) \mid \nexists x \in \sources{G} \setminus X.\; (x,y) \in R_{I}}\]
 \end{definition}
 
 \begin{lemma}
-   \label{lem:appendix:proof:conjugate:algorithms-suff:suff-subset-suffstar}
-   $\sufficesR_G(X) = \sinks{G} \cap \sufficesR^*_{G}(X)$
-\end{lemma}
-
-\begin{lemma}
-   \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sinks}
-   If $X \subseteq \sinks{G}$ then $\sufficesR^*_{G}(X) = X$
-\end{lemma}
-
-\begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sources}
    If $H,P,G$ a partial slice with $\sources{G} \subseteq \sources{P}$ and $\sinks{H} \subseteq \sinks{G}$:
    \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
 \end{lemma}
+\begin{proof}
+   \small
+   \begin{flalign}
+      &
+      H,P,G \text{ a partial slice}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \sources{G} \subseteq \sources{P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \sinks{H} \subseteq \sinks{G}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \caseName{$\subseteq$ direction}
+      \notag
+      \\
+      &
+      y \in \sufficesR^*_{G \cup P \cup H}(\sources{H})
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_I
+      &
+      \text{def. $\sufficesR^*$}
+      \notag
+      \\
+      &
+      \caseName{$\supseteq$ direction}
+      \notag
+      \\
+      &
+      y \in \V(H)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      y \in \V(G \cup P \cup H)
+      &
+      \notag
+      \\
+      &
+      \sources{G \cup P \cup H} \setminus \sources{H} \subset (\V(G \cup P) \setminus \V(H))
+      &
+      \notag
+      \\
+      &
+      \forall \alpha \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (\alpha,y) \notin R_{G \cup P \cup H}
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \qedLocal
+      y \in \sufficesR^*_{G \cup P \cup H}(\sources{H})
+      &
+      \notag
+   \end{flalign}
+\end{proof}
+\begin{lemma}
+   \begin{enumerate}
+      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$ then: \newline $H,P,G$ a partial slice $ \iff H,P \cup E,G \edgeMinus E$ a partial slice
+      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$, then: \newline $H,P,G$ a partial slice $\iff H \cup E, P \edgeMinus E, G$ a partial slice
+   \end{enumerate}
+\end{lemma}
+\proofContext{partial-slice-lem}
+\begin{proof}
+   \small
+   \begin{flalign}
+      &
+      \caseName{$\Rightarrow$ direction}
+      \notag
+      \\
+      &
+      H,P,G
+      \text{ a partial slice}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{(1)}
+      \notag
+      \\
+      &
+      \forall (\alpha, \beta) \in \E(G) \cup \E(P).\; \beta \notin \V(H)
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \E(G) \cup \E(P) = \E(G \edgeMinus E) \cup \E(P \cup E)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall (\alpha, \beta) \in \E(G \edgeMinus E) \cup \E(P \cup E).\; \beta \notin \V(H)
+      &
+      \notag
+      \\
+      &
+      \subcase{(2)}
+      \notag
+      \\
+      &
+      \forall \beta \in \V(G).\;\nexists (\beta, \alpha) \in \E(G)
+      &
+      \text{$\alpha \in \sources{G}$}
+      \locallabel{alpha-source}
+      \\
+      &
+      \forall (x,y) \in \E(G). y \notin \V(H \cup E)
+      &
+      \text{def. partial slice, \localref{alpha-source}}
+      \notag
+      \\
+      &
+      \V(H \cup E) = \V(H) \cup \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      (x, y) \in \E(P)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{(x,y) \in \E(P) \edgeMinus E}
+      \notag
+      \\
+      &
+      y \notin \V(H)
+      &
+      \notag
+      \\
+      &
+      y \neq \alpha
+      &
+      \text{$(x,y) \notin E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      y \notin \V(H \cup E)
+      &
+      \notag
+      \\
+      &
+      \subcase{(x,y) \in E}
+      \notag
+      \\
+      &
+      \qedLocal
+      (x,y) \notin \E(P) \edgeMinus E
+      &
+      \notag
+      \\
+      &
+      \caseName{$\Leftarrow$ direction}
+      \notag
+      \\
+      &
+      \subcase{(1)}
+      \notag
+      \\
+      &
+      H,P \cup E, G \edgeMinus E \text{ a partial slice}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \forall (\alpha, \beta) \in \E(G \edgeMinus E) \cup \E(P \cup E).\; \beta \notin \V(H)
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \E(G) \cup \E(P) = \E(G \edgeMinus E) \cup \E(P \cup E)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall (\alpha, \beta) \in \E(G) \cup \E(P).\; \beta \notin \V(H)
+      &
+      \\
+      &
+      \subcase{(2)}
+      \notag
+      \\
+      &
+      H \cup E, P \edgeMinus E, G \text{ a partial slice}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \forall (\alpha, \beta) \in \E(G) \cup \E(P \edgeMinus E).\; \beta \notin \V(H \cup E)
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \forall (\alpha, \beta) \in \E(G) \cup \E(P \edgeMinus E).\; \beta \notin \V(H)
+      &
+      \text{immediate}
+      \notag
+      \\
+      &
+      (\beta, \alpha) \in E \subset \E(P \edgeMinus E) \cup E = \E(P)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \alpha \notin \V(H)
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall (\alpha', \beta') \in \E(P)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall (\alpha', \beta') \in \E(G) \cup \E(P).\; \beta' \notin \V(H)
+      &
+      \notag
+   \end{flalign}
+\end{proof}
+
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
-   Suppose $\V(H), \V(P) \subseteq \V(G)$, with $H,G,P$ edge-disjoint, then:
+   Suppose $H,P,G$ a partial slice, then:
    \begin{enumerate}
-      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$ then \newline $\sufficesR^*_{G,P,H}(\V(H)) = \sufficesR^*_{G \edgeMinus E,P \cup E,H}(\sinks{H})$
-      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$, and $\inN{P}(\alpha) \subset \V(H)$, then \newline $\sufficesR^*_{G,P,H}(\V(H)) = \sufficesR^*_{G,P \edgeMinus E,H \cup E}(\V(H \cup E))$
+      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$  then $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})$
+      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})$
    \end{enumerate}
 \end{lemma}
 \proofContext{auxiliary-lemma}
 \begin{proof}
-   By calculation
+   \small
    \begin{flalign}
       &
-      \subcase{\ref{lem:appendix:proof:conjugate:algorithms-suff:aux}(i)}
+      H,P,G\text{ a partial slice}
+      &
+      \text{suppose}
       \notag
       \\
       &
-      G \cup P \cup H = (G \edgeMinus E) \cup (P \cup E) \cup H
+      \caseName{(1)}
+      \notag
+      \\
+      &
+      R_{G \cup P \cup H} = R_{(G \edgeMinus E) \cup (P \cup E) \cup H}
       &
       \text{immediate}
       \notag
       \\
       &
-      \sufficesR^*_{G,P,H}(\V(H)) = \set{y \in \demandedByR^*_{G \cup P \cup H}(\V(H)) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{G \cup P \cup H}(\V(H)).\; (x,y) \in R}
+      \qedLocal
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})
       &
       \notag
       \\
       &
-      = \set{y \in \demandedByR^*_{(G \edgeMinus) \cup (P \cup E) \cup H}(\V(H)) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{(G \edgeMinus E) \cup (P \cup E) \cup H}(\V(H)).\; (x,y) \in R}
+      \caseName{(2)}
+      \\
       &
+      \alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset
+      &
+      \text{suppose}
       \notag
       \\
       &
-      = \sufficesR^*_{G \edgeMinus E, P \cup E, H}(\V(H))
+      \sources{H \cup E} = \sources{H}
       &
+      \text{$\alpha \notin \sources{H}$}
       \notag
       \\
       &
-      \subcase{\ref{lem:appendix:proof:conjugate:algorithms-suff:aux}(ii)}
-      \notag
-      \\
-      &
-      \demandedByR^*_{G \cup P \cup H}(\V(H)) = \demandedByR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\V(H \cup E))
+      R_{G \cup P \cup H} = R_{G \cup (P \edgeMinus E) \cup (H \cup E)}
       &
       \text{immediate}
       \notag
       \\
       &
-      \sufficesR^*_{G,P,H}(\V(H)) = \set{y \in \demandedByR^*_{G \cup P \cup H}(\V(H)) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{G \cup P \cup H}(\V(H)).\; (x,y) \in R}
-      &
-      \notag
-      \\
-      &
-      = \set{y \in \demandedByR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\V(H \cup E)) \mid \nexists x \in \V(G)\setminus \demandedByR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\V(H \cup E)).\; (x,y) \in R}
-      &
-      \notag
-      \\
-      &
-      = \sufficesR^*_{G,P \edgeMinus E, H \cup E}(\V(H \cup E))
+      \qedLocal
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}{\sources{H \cup E}}
       &
       \notag
    \end{flalign}
@@ -226,19 +473,9 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P}(\sinks{H}) = \sinks{H}
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H)
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sinks}}
-      \notag
-      \\
-      &
-      \text{The above will need to be a little more fleshed out, since we need to establish}
-      &
-      \notag
-      \\
-      &
-      \text{that in this situation unioning P and G will not create or lose sinks}
-      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sources}}
       \notag
       \\
       &
@@ -264,14 +501,14 @@
       \notag
       \\
       &
-      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E)}(\sinks{H}) = Y
+      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E) \cup H}(\sources{H}) = Y
       &
       \text{IH}
       \notag
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
       \notag
@@ -301,14 +538,14 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})
+      \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})
       &
       \text{IH}
       \notag
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P}(\sinks{H})
+      \sufficesR^*_{G \cup P \cup H}(\sources{H})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
       \notag
@@ -323,13 +560,13 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y
       &
       \text{suppose}
       \notag
       \\
       &
-      \subcase{\sources{G} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{H}}
+      \subcase{\sources{G} \subseteq \sources{P} \wedge \sinks{H} \subseteq \sinks{G}}
       \notag
       \\
       &
@@ -353,9 +590,9 @@
       \\
       &
       \qedLocal
-      \sinks{H} = \sufficesR^*_{G \cup P}(\sinks{H}) = Y
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) =  Y
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suff-subset-suffstar}}
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sources}}
       \notag
       \\
       &
@@ -399,14 +636,14 @@
       \notag
       \\
       &
-      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E)}(\sinks{H}) = \sufficesR^*_{G \cup P}(\sinks{H})
+      \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E) \cup H}(\sources{H}) = \sufficesR^*_{G \cup P \cup H}(\sources{H})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
       \notag
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P}(\sinks{H}) = \sinks{H'}\;\Lowlight{ = Y}
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
       &
       \text{IH}
       \notag
@@ -454,13 +691,13 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup P}(\sinks{H}) = \sufficesR^*_{G \cup (P \edgeMinus E)}(\sinks{H \cup E})
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P}(\sinks{H}) = \sinks{H'}\;\Lowlight{ = Y}
+      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
       &
       \text{IH}
       \notag
