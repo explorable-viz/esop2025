@@ -16,7 +16,7 @@
       X \sufficesAlg{G} Y
       &
       \text{suppose}
-      \locallabel{X-source-G}
+      \notag
       \\
       &
       \derivation{\derivationWidth}{
@@ -36,9 +36,9 @@
       \\
       &
       \qedLocal
-      \sufficesR_{G}(X) = \sufficesR^*_{G}(X)= Y 
+      \sufficesR_{G}(X) = \sinks{G} \cap \sufficesR^*_{G}(X)= Y 
       &
-      \text{(\localref{X-source-G}), \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:star-intersect-sinks}, \propref{appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}}
       \notag
       \\
       &
@@ -48,14 +48,16 @@
       &
       X \subseteq \sources{G}
       \text{ with }
-      \sufficesR^*_{G}(X) = Y
+      \sufficesR_{G}(X) = Y
       &
       \text{suppose}
       \notag
       \\
       &
-      \sufficesR^*_{G}(X) = \sufficesR_{G}(X)
+      \sufficesR_{G}(X) = \sinks{G} \cap \sufficesR^*_{G}(X)
       &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:star-intersect-sinks}}
+      \notag
       \\
       &
       (X, \emptyset), (\emptyset,\emptyset), G \sufficesE{} H
@@ -105,6 +107,10 @@
 \end{definition}
 
 \begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:star-intersect-sinks}
+   $\sufficesR_{G}(X) = \sinks{G} \cap \sufficesR^*_{G}(X)$
+\end{lemma}
+\begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sources}
    If $H,P,G$ a partial slice with $\sources{G} \subseteq \sources{P}$ and $\sinks{H} \subseteq \sinks{G}$:
    \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
@@ -144,6 +150,11 @@
       \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_I
       &
       \text{def. $\sufficesR^*$}
+      \notag
+      \\
+      &
+      \text{Remains to show: } y \in \V(H)
+      &
       \notag
       \\
       &
@@ -190,7 +201,11 @@
    \small
    \begin{flalign}
       &
-      \caseName{$\Rightarrow$ direction}
+      \caseName{(1)}
+      \notag
+      \\
+      &
+      \subcase{\Rightarrow}
       \notag
       \\
       &
@@ -198,10 +213,6 @@
       \text{ a partial slice}
       &
       \text{suppose}
-      \notag
-      \\
-      &
-      \subcase{(1)}
       \notag
       \\
       &
@@ -222,7 +233,44 @@
       \notag
       \\
       &
-      \subcase{(2)}
+      \subcase{\Leftarrow}
+      \notag
+      \\
+      &
+      H,P \cup E, G \edgeMinus E \text{ a partial slice}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \forall (\alpha, \beta) \in \E(G \edgeMinus E) \cup \E(P \cup E).\; \beta \notin \V(H)
+      &
+      \text{def. partial slice}
+      \notag
+      \\
+      &
+      \E(G) \cup \E(P) = \E(G \edgeMinus E) \cup \E(P \cup E)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall (\alpha, \beta) \in \E(G) \cup \E(P).\; \beta \notin \V(H)
+      &
+      \\
+      &
+      \caseName{(2)}
+      \notag
+      \\
+      &
+      \subcase{\Rightarrow}
+      \notag
+      \\
+      &
+      H,P,G
+      \text{ a partial slice}
+      &
+      \text{suppose}
       \notag
       \\
       &
@@ -281,37 +329,7 @@
       \notag
       \\
       &
-      \caseName{$\Leftarrow$ direction}
-      \notag
-      \\
-      &
-      \subcase{(1)}
-      \notag
-      \\
-      &
-      H,P \cup E, G \edgeMinus E \text{ a partial slice}
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      \forall (\alpha, \beta) \in \E(G \edgeMinus E) \cup \E(P \cup E).\; \beta \notin \V(H)
-      &
-      \text{def. partial slice}
-      \notag
-      \\
-      &
-      \E(G) \cup \E(P) = \E(G \edgeMinus E) \cup \E(P \cup E)
-      &
-      \notag
-      \\
-      &
-      \qedLocal
-      \forall (\alpha, \beta) \in \E(G) \cup \E(P).\; \beta \notin \V(H)
-      &
-      \\
-      &
-      \subcase{(2)}
+      \subcase{\Leftarrow}
       \notag
       \\
       &
