@@ -147,10 +147,10 @@
       \notag
       \\
       &
-      \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_I
+      \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_{G \cup P \cup H}
       &
       \text{def. $\sufficesR^*$}
-      \notag
+      \locallabel{x-notin-h-cant-reach-h}
       \\
       &
       \text{Remains to show: } y \in \V(H)
@@ -165,7 +165,20 @@
       &
       x' \in \sources{G \cup P \cup H}.\;(x', y) \in R_{G \cup P \cup H}
       &
-      \text{$G \cup P \cup H$ a DAG}
+      \text{$G \cup P \cup H$ a DAG, $\exists x'$}
+      \locallabel{x'-reaches-y}
+      \\
+      &
+      x' \in \sources{H}
+      &
+      \text{(\localref{x-notin-h-cant-reach-h}, \localref{x'-reaches-y})}
+      \notag
+      \\
+      &
+      \qedLocal
+      y \in \V(H)
+      &
+      \text{$H,P,G$ edge-disjoint}
       \notag
       \\
       &
@@ -392,63 +405,16 @@
    \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
    Suppose $H,P,G$ a partial slice, then:
    \begin{enumerate}
-      \item If $\alpha \in \sinks{H}$ and $E = \outE{G}(\alpha) \neq \emptyset$  then $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})$
-      \item If $\alpha \in \sources{G}$ and $E = \inE{P}(\alpha) \neq \emptyset$ then $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})$
+      \item $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})$
+      \item $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})$
    \end{enumerate}
 \end{lemma}
 \proofContext{auxiliary-lemma}
 \begin{proof}
-   \small
-   \begin{flalign}
-      &
-      H,P,G\text{ a partial slice}
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      \caseName{(1)}
-      \notag
-      \\
-      &
-      R_{G \cup P \cup H} = R_{(G \edgeMinus E) \cup (P \cup E) \cup H}
-      &
-      \text{immediate}
-      \notag
-      \\
-      &
-      \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})
-      &
-      \notag
-      \\
-      &
-      \caseName{(2)}
-      \\
-      &
-      \alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset
-      &
-      \text{suppose}
-      \notag
-      \\
-      &
-      \sources{H \cup E} = \sources{H}
-      &
-      \text{$\alpha \notin \sources{H}$}
-      \notag
-      \\
-      &
-      R_{G \cup P \cup H} = R_{G \cup (P \edgeMinus E) \cup (H \cup E)}
-      &
-      \text{immediate}
-      \notag
-      \\
-      &
-      \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}{\sources{H \cup E}}
-      &
-      \notag
-   \end{flalign}
+   \begin{enumerate}
+      \item $G \cup P \cup H = (G \edgeMinus E) \cup (P \cup E) \cup H$
+      \item $G \cup P \cup H = G \cup (P \edgeMinus E) \cup (H \cup E)$, and $\sources{H} = \sources{H \cup E}$
+   \end{enumerate} 
 \end{proof}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
