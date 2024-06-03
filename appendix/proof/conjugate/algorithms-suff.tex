@@ -35,6 +35,13 @@
       \notag
       \\
       &
+      (X, \emptyset), (\emptyset,\emptyset), G
+      \text{ form a partial slice}
+      &
+      \text{immediate}
+      \notag
+      \\
+      &
       \qedLocal
       \sufficesR_{G}(X) = \sinks{G} \cap \sufficesR^*_{G}(X)= Y 
       &
@@ -57,6 +64,13 @@
       \sufficesR_{G}(X) = \sinks{G} \cap \sufficesR^*_{G}(X)
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:star-intersect-sinks}}
+      \notag
+      \\
+      &
+      (X, \emptyset), (\emptyset,\emptyset), G
+      \text{ form a partial slice}
+      &
+      \text{immediate}
       \notag
       \\
       &
@@ -112,7 +126,7 @@
 \end{lemma}
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sources}
-   If $H,P,G$ a partial slice with $\sources{P} \subseteq \sources{G}$ and $\sinks{H} \subseteq \sinks{G}$:
+   If $H,P,G$ a partial slice with $\sources{G} \cap \V(P) \subseteq \sources{P}$ and $\sinks{H} \subseteq \sinks{G}$:
    \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
 \end{lemma}
 \begin{proof}
@@ -125,16 +139,16 @@
       \notag
       \\
       &
-      \sources{P} \subseteq \sources{G}
+      \sources{G} \cap \V(P) \subseteq \sources{P}
       &
       \text{suppose}
-      \notag
+      \locallabel{sources-p-subset-sources-g}
       \\
       &
       \sinks{H} \subseteq \sinks{G}
       &
       \text{suppose}
-      \notag
+      \locallabel{sinks-h-subset-sinks-g}
       \\
       &
       \caseName{$\subseteq$ direction}
@@ -158,27 +172,15 @@
       \notag
       \\
       &
-      y \in \V(G \cup P \cup H)
+      \neg(\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset)
       &
+      \text{\localref{sources-p-subset-sources-g}}
       \notag
       \\
       &
-      x' \in \sources{G \cup P \cup H}.\;(x', y) \in R_{G \cup P \cup H}
+      \neg(\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset)
       &
-      \text{$G \cup P \cup H$ a DAG, $\exists x'$}
-      \locallabel{x'-reaches-y}
-      \\
-      &
-      x' \in \sources{H}
-      &
-      \text{(\localref{x-notin-h-cant-reach-h}, \localref{x'-reaches-y})}
-      \notag
-      \\
-      &
-      \qedLocal
-      y \in \V(H)
-      &
-      \text{$H,P,G$ edge-disjoint}
+      \text{\localref{sinks-h-subset-sinks-g}}
       \notag
       \\
       &
@@ -197,7 +199,7 @@
       \notag
       \\
       &
-      \sources{G \cup P \cup H} \setminus \sources{H} \subset (\V(G \cup P) \setminus \V(H))
+      \sources{G \cup P \cup H} \setminus \sources{H} \subseteq (\V(G \cup P) \setminus \V(H))
       &
       \notag
       \\
@@ -215,6 +217,8 @@
    \end{flalign}
 \end{proof}
 \begin{lemma}
+   \label{lem:appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}
+   \item
    \begin{enumerate}
       \item $H,P,G$ a partial slice $ \iff H,P \cup E,G \edgeMinus E$ a partial slice
       \item If $\alpha \in \sources{G}$ then: $H,P,G$ a partial slice $\iff H \cup E, P \edgeMinus E, G$ a partial slice
@@ -427,12 +431,10 @@
    \small
    \begin{flalign}
       &
-      \V(H) \subseteq \V(G),\V(P) \subseteq \V(G)
-      \text{ and }
-      Y \subseteq \sinks{G}
+      H, P, G
+      \text{ a partial slice}
       &
       \text{suppose}
-      \notag
       \\
       &
       \caseName{$\Rightarrow$ direction:}
@@ -454,7 +456,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{done}},
-               right={$\sources{P} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{G}$}
+               right={$\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \sinks{H} \subseteq \sinks{G}$}
             ]
             {
                \strut
@@ -497,6 +499,13 @@
       \notag
       \\
       &
+      H, P \cup E, G \edgeMinus E
+      \text{ a partial slice}
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
+      \notag
+      \\
+      &
       \sufficesR^*_{(G \edgeMinus E) \cup (P \cup E) \cup H}(\sources{H}) = Y
       &
       \text{IH}
@@ -534,6 +543,13 @@
       \notag
       \\
       &
+      H \cup E, P \edgeMinus E, G
+      \text{ a partial slice}
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
+      \notag
+      \\
+      &
       \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})
       &
       \text{IH}
@@ -562,7 +578,7 @@
       \notag
       \\
       &
-      \subcase{\sources{P} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{G}}
+      \subcase{\sources{G} \cap \V(P) \subseteq \sources{P}\wedge \sinks{H} \subseteq \sinks{G}}
       \notag
       \\
       &
@@ -570,7 +586,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{done}},
-               right={$\sources{P} \subseteq \sources{G} \wedge \sinks{H} \subseteq \sinks{G}$}
+               right={$\sources{G} \cap \V(P) \subseteq \sources{P}\wedge \sinks{H} \subseteq \sinks{G}$}
             ]
             {
                \strut
@@ -600,6 +616,13 @@
       &
       (\length{\E(G \edgeMinus E)}, \length{\E(P)} )< (\length{\E(G)}, \length{\E(P \cup E)})
       &
+      \notag
+      \\
+      &
+      H, P \cup E, G \edgeMinus E
+      \text{ a partial slice}
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
       \\
       &
@@ -653,6 +676,13 @@
       &
       (\length{\E(G)},\length{\E(P \edgeMinus E)}) < (\length{\E(P)},\length{\E(P)})
       &
+      \notag
+      \\
+      &
+      H \cup E, P \edgeMinus E, G
+      \text{ a partial slice}
+      &
+      \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
       \\
       &
