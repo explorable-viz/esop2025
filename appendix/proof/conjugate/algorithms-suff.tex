@@ -179,7 +179,7 @@
       \notag
       \\
       &
-      \neg(\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset)
+      \neg(\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset)
       &
       \text{\localref{sinks-h-subset-sinks-g}}
       \notag
@@ -503,7 +503,7 @@
       \notag
       \\
       &
-      H, P, G \sufficesE{} H' \text{ with } \sinks{H'}=Y
+      H, P, G \sufficesE{} H' \text{ with } \V(H')=Y
       &
       \text{suppose, $\exists H'$}
       \notag
@@ -518,7 +518,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{done}},
-               right={$\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \sinks{H} \subseteq \sinks{G}$}
+               right={$\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \V(H) \subseteq \sinks{G}$}
             ]
             {
                \strut
@@ -543,7 +543,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{pending}},
-               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+               right={$\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
                H, P \cup E, G \edgeMinus E
@@ -640,7 +640,7 @@
       \notag
       \\
       &
-      \subcase{\sources{G} \cap \V(P) \subseteq \sources{P}\wedge \sinks{H} \subseteq \sinks{G}}
+      \subcase{\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \V(H) \subseteq \sinks{G}}
       \notag
       \\
       &
@@ -648,7 +648,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{done}},
-               right={$\sources{G} \cap \V(P) \subseteq \sources{P}\wedge \sinks{H} \subseteq \sinks{G}$}
+               right={$\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \V(H) \subseteq \sinks{G}$}
             ]
             {
                \strut
@@ -670,7 +670,7 @@
       \notag
       \\
       &
-      \subcase{\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset}
+      \subcase{\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset}
       &
       \text{$\exists \alpha$, $\exists E$}
       \notag
@@ -698,7 +698,7 @@
          \begin{smathpar}
             \inferrule*[
                lab={\ruleName{pending}},
-               right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
+               right={$\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
                H, P \cup E, G \edgeMinus E
