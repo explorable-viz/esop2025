@@ -105,6 +105,7 @@
    \begin{enumerate}
       \item $H,P,G$ are edge-disjoint
       \item $\forall (\alpha,\beta) \in (\sources{G \cup P \cup H} \setminus \sources{H}) \times \V(H).\;(\alpha,\beta) \notin R_{G \cup P \cup H}$
+      \item Invariant: $\sources{G} \subseteq \V(H) \cup (\sources{G \cup P \cup H}\setminus\sources{H}) \cup (\sinks{P}\setminus \sources{P})$
    \end{enumerate}
 \end{definition}
 \begin{corollary}
@@ -126,7 +127,7 @@
 \end{lemma}
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sources}
-   If $H,P,G$ a partial slice with $\sources{G} \cap \V(P) \subseteq \sources{P}$ and $\sinks{H} \subseteq \sinks{G}$:
+   If $H,P,G$ a partial slice with $\sources{G} \cap \V(P) \subseteq \sources{P}$ and $\V(H) \subseteq \sinks{G}$:
    \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
 \end{lemma}
 \begin{proof}
@@ -145,7 +146,7 @@
       \locallabel{sources-p-subset-sources-g}
       \\
       &
-      \sinks{H} \subseteq \sinks{G}
+      \V(H) \subseteq \sinks{G}
       &
       \text{suppose}
       \locallabel{sinks-h-subset-sinks-g}
@@ -158,7 +159,7 @@
       y \in \sufficesR^*_{G \cup P \cup H}(\sources{H})
       &
       \text{suppose}
-      \notag
+      \locallabel{y-in-suffices}
       \\
       &
       \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_{G \cup P \cup H}
@@ -182,6 +183,67 @@
       &
       \text{\localref{sinks-h-subset-sinks-g}}
       \notag
+      \\
+      &
+      y \in \V(G)\setminus\sources{H}
+      &
+      \text{suppose}
+      \locallabel{y-not-in-h}
+      \\
+      &
+      \subcase{y \in \sources{G}}
+      \notag
+      \\
+      &
+      y \in \V(H) \implies \bot
+      &
+      \text{contra \localref{y-not-in-h}}
+      \notag
+      \\
+      &
+      y \in \sources{G \cup P \cup H}\setminus \sources{H} \implies \bot
+      &
+      \text{contra \localref{y-in-suffices}}
+      \notag
+      \\
+      &
+      y \in \sinks{P}\setminus \sources{P} \implies \bot
+      &
+      \text{contra \localref{sources-p-subset-sources-g}}
+      \notag
+      \\
+      &
+      \subcase{y \in \compl{\sources{G}}}
+      \notag
+      \\
+      &
+      \exists x \in \sources{G}.\; (x,y) \in R_{G}
+      &
+      \text{G a dag}
+      \locallabel{x-reaches-y}
+      \\
+      &
+      x \in \compl{\sinks{G}}
+      &
+      \text{def. reachability}
+      \locallabel{x-not-sink}
+      \\
+      &
+      x \in \sources{G \cup P \cup H}\setminus\sources{H} \implies \bot
+      &
+      \text{contra \localref{x-reaches-y} and \localref{y-in-suffices}}
+      \notag
+      \\
+      &
+      x \in \sinks{P}\setminus\sources{P} \implies \bot
+      &
+      \text{contra \localref{sources-p-subset-sources-g}}
+      \notag
+      \\
+      &
+      x \in \V(H) \implies \bot
+      &
+      \text{contra \localref{x-not-sink}, \localref{sinks-h-subset-sinks-g}}
       \\
       &
       \caseName{$\supseteq$ direction}
