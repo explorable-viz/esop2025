@@ -101,11 +101,13 @@
 
 \begin{definition}[Partial Slice]
    \label{def:partial-slice}
-   Graphs $H,P,G$ constitute a \textit{partial slice} iff:
+   Graphs $H,P,G$ constitute a \textit{partial slice} of the graph $G_0$ iff:
    \begin{enumerate}
+      \item $\V(H) \subseteq \V(P) \subseteq \V(G) = \V(G_0)$
       \item $H,P,G$ are edge-disjoint
-      \item $\forall (\alpha,\beta) \in (\sources{G \cup P \cup H} \setminus \sources{H}) \times \V(H).\;(\alpha,\beta) \notin R_{G \cup P \cup H}$
-      \item Invariant: $\sources{G} \subseteq \V(H) \cup (\sources{G \cup P \cup H}\setminus\sources{H}) \cup (\sinks{P}\setminus \sources{P})$
+      \item $H \cup P \cup G = G_0$
+      \item $\forall (\alpha,\beta) \in (\sources{G_0} \setminus \sources{H}) \times \V(H).\;(\alpha,\beta) \notin R_{G_0}$
+      \item $\sources{G} \subseteq \V(H) \cup (\sources{G_0}\setminus\sources{H}) \cup (\sinks{P}\setminus \sources{P})$
    \end{enumerate}
 \end{definition}
 \begin{corollary}
@@ -127,8 +129,8 @@
 \end{lemma}
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:suffices-sources}
-   If $H,P,G$ a partial slice with $\sources{G} \cap \V(P) \subseteq \sources{P}$ and $\V(H) \subseteq \sinks{G}$:
-   \[ \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) \]
+   If $H,P,G$ a partial slice of $G_0$ with $\sources{G} \cap \V(P) \subseteq \sources{P}$ and $\V(H) \subseteq \sinks{G}$:
+   \[ \sufficesR^*_{G_0}(\sources{H}) = \V(H) \]
 \end{lemma}
 \begin{proof}
    \small
@@ -156,13 +158,13 @@
       \notag
       \\
       &
-      y \in \sufficesR^*_{G \cup P \cup H}(\sources{H})
+      y \in \sufficesR^*_{G_0}(\sources{H})
       &
       \text{suppose}
       \locallabel{y-in-suffices}
       \\
       &
-      \forall x \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (x,y) \notin R_{G \cup P \cup H}
+      \forall x \in \sources{G_0} \setminus \sources{H}.\; (x,y) \notin R_{G_0}
       &
       \text{def. $\sufficesR^*$}
       \locallabel{x-notin-h-cant-reach-h}
@@ -173,77 +175,70 @@
       \notag
       \\
       &
-      \neg(\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset)
+      y \in \V(G)
       &
-      \text{\localref{sources-p-subset-sources-g}}
+      \locallabel{y-in-g}
+      \\
+      &
+      x \in \sources{G}.\;(x,y) \in R_{G}
+      &
+      \text{$\exists x$, $G$ acyclic}
       \notag
       \\
       &
-      \neg(\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset)
+      x \in \V(H) \cup \sources{G_0} \setminus \sources{H} \cup \sinks{P} \setminus \sources{P}
       &
-      \text{\localref{sinks-h-subset-sinks-g}}
+      \text{$H,P,G$ a partial slice}
       \notag
       \\
       &
-      y \in \V(G)\setminus\sources{H}
+      x \notin \sources{G_0} \setminus \sources{H}
+      &
+      \text{immediate}
+      \notag
+      \\
+      &
+      x \notin \sinks{P} \setminus \sources{P}
+      &
+      \text{contradicts \localref{sources-p-subset-sources-g}}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \V(H)
+      &
+      \text{$\sources{G}$ invariant}
+      \\
+      &
+      \subcase{y = x}
+      \notag
+      \\
+      &
+      \qedLocal
+      y \in \V(H)
+      &
+      \notag
+      \\
+      &
+      \subcase{y \neq x}
+      \notag
+      \\
+      &
+      y \notin \V(H)
       &
       \text{suppose}
-      \locallabel{y-not-in-h}
       \\
       &
-      \subcase{y \in \sources{G}}
-      \notag
-      \\
-      &
-      y \in \V(H) \implies \bot
-      &
-      \text{contra \localref{y-not-in-h}}
-      \notag
-      \\
-      &
-      y \in \sources{G \cup P \cup H}\setminus \sources{H} \implies \bot
-      &
-      \text{contra \localref{y-in-suffices}}
-      \notag
-      \\
-      &
-      y \in \sinks{P}\setminus \sources{P} \implies \bot
-      &
-      \text{contra \localref{sources-p-subset-sources-g}}
-      \notag
-      \\
-      &
-      \subcase{y \in \compl{\sources{G}}}
-      \notag
-      \\
-      &
-      \exists x \in \sources{G}.\; (x,y) \in R_{G}
-      &
-      \text{G a dag}
-      \locallabel{x-reaches-y}
-      \\
-      &
-      x \in \compl{\sinks{G}}
+      x \notin \sinks{G}
       &
       \text{def. reachability}
-      \locallabel{x-not-sink}
-      \\
-      &
-      x \in \sources{G \cup P \cup H}\setminus\sources{H} \implies \bot
-      &
-      \text{contra \localref{x-reaches-y} and \localref{y-in-suffices}}
       \notag
       \\
       &
-      x \in \sinks{P}\setminus\sources{P} \implies \bot
+      \qedLocal \bot
       &
-      \text{contra \localref{sources-p-subset-sources-g}}
+      \text{contradicts \localref{sinks-h-subset-sinks-g}}
       \notag
-      \\
-      &
-      x \in \V(H) \implies \bot
-      &
-      \text{contra \localref{x-not-sink}, \localref{sinks-h-subset-sinks-g}}
       \\
       &
       \caseName{$\supseteq$ direction}
@@ -256,24 +251,24 @@
       \notag
       \\
       &
-      y \in \V(G \cup P \cup H)
+      y \in \V(G_0)
       &
       \notag
       \\
       &
-      \sources{G \cup P \cup H} \setminus \sources{H} \subseteq (\V(G \cup P) \setminus \V(H))
+      \sources{G_0} \setminus \sources{H} \subseteq (\V(G \cup P) \setminus \V(H))
       &
       \notag
       \\
       &
-      \forall \alpha \in \sources{G \cup P \cup H} \setminus \sources{H}.\; (\alpha,y) \notin R_{G \cup P \cup H}
+      \forall \alpha \in \sources{G_0} \setminus \sources{H}.\; (\alpha,y) \notin R_{G_0}
       &
       \text{def. partial slice}
       \notag
       \\
       &
       \qedLocal
-      y \in \sufficesR^*_{G \cup P \cup H}(\sources{H})
+      y \in \sufficesR^*_{G_0}(\sources{H})
       &
       \notag
    \end{flalign}
@@ -282,8 +277,8 @@
    \label{lem:appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}
    \item
    \begin{enumerate}
-      \item $H,P,G$ a partial slice $ \iff H,P \cup E,G \edgeMinus E$ a partial slice
-      \item If $\alpha \in \sources{G}$ then: $H,P,G$ a partial slice $\iff H \cup E, P \edgeMinus E, G$ a partial slice
+      \item $H,P,G$ a partial slice  of $G_0$ $ \iff H,P \cup E,G \edgeMinus E$ a partial slice of $G_0$
+      \item If $\alpha \in \sources{G}$ then: $H,P,G$ a partial slice $G_0$ $\iff H \cup E, P \edgeMinus E, G$ a partial slice of $G_0$
    \end{enumerate}
 \end{lemma}
 \proofContext{partial-slice-lem}
@@ -469,7 +464,7 @@
 
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms-suff:aux}
-   Suppose $H,P,G$ a partial slice, then:
+   Suppose $H,P,G$ a partial slice of $G_0$, then:
    \begin{enumerate}
       \item $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{(G \edgeMinus E)\cup (P \cup E) \cup H}(\sources{H})$
       \item $\sufficesR^*_{G \cup P \cup H}(\sources{H}) = \sufficesR^*_{G \cup (P \edgeMinus E) \cup (H \cup E)}(\sources{H \cup E})$
@@ -478,14 +473,14 @@
 \proofContext{auxiliary-lemma}
 \begin{proof}
    \begin{enumerate}
-      \item $G \cup P \cup H = (G \edgeMinus E) \cup (P \cup E) \cup H$
-      \item $G \cup P \cup H = G \cup (P \edgeMinus E) \cup (H \cup E)$, and $\sources{H} = \sources{H \cup E}$
+      \item $\Lowlight{G_0 = }\; G \cup P \cup H = (G \edgeMinus E) \cup (P \cup E) \cup H$
+      \item $\Lowlight{G_0 = }\; G \cup P \cup H = G \cup (P \edgeMinus E) \cup (H \cup E)$, and $\sources{H} = \sources{H \cup E}$
    \end{enumerate} 
 \end{proof}
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms-suff:correctness-sufficesE}
-   Suppose $H,P,G$ a partial slice:
-   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\V(H') = Y) \iff \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y\]
+   Suppose $H,P,G$ a partial slice of $G_0$:
+   \[ (\exists H'. \; H,P,G \sufficesE{} H' \text{ with }\V(H') = Y) \iff \sufficesR^*_{G_0}(\sources{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-sufficesE}
@@ -533,7 +528,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H)
+      \sufficesR^*_{G_0}(\sources{H}) = \V(H)
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sources}}
       \notag
@@ -562,7 +557,7 @@
       \\
       &
       H, P \cup E, G \edgeMinus E
-      \text{ a partial slice}
+      \text{ a partial slice of } G_0
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
@@ -575,7 +570,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y
+      \sufficesR^*_{G_0}(\sources{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(i)}
       \notag
@@ -606,7 +601,7 @@
       \\
       &
       H \cup E, P \edgeMinus E, G
-      \text{ a partial slice}
+      \text{ a partial slice of } G_0
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
@@ -619,7 +614,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H})
+      \sufficesR^*_{G_0}(\sources{H})
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:aux}(ii)}
       \notag
@@ -634,7 +629,7 @@
       \notag
       \\
       &
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = Y
+      \sufficesR^*_{G_0}(\sources{H}) = Y
       &
       \text{suppose}
       \notag
@@ -664,7 +659,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H) =  Y
+      \sufficesR^*_{G_0}(\sources{H}) = \V(H) =  Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:suffices-sources}}
       \notag
@@ -682,7 +677,7 @@
       \\
       &
       H, P \cup E, G \edgeMinus E
-      \text{ a partial slice}
+      \text{ a partial slice of } G_0
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
@@ -724,7 +719,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
+      \sufficesR^*_{G_0}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
       &
       \text{IH}
       \notag
@@ -742,7 +737,7 @@
       \\
       &
       H \cup E, P \edgeMinus E, G
-      \text{ a partial slice}
+      \text{ a partial slice of } G_0
       &
       \text{\lemref{appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}}
       \notag
@@ -785,7 +780,7 @@
       \\
       &
       \qedLocal
-      \sufficesR^*_{G \cup P \cup H}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
+      \sufficesR^*_{G_0}(\sources{H}) = \V(H')\;\Lowlight{ = Y}
       &
       \text{IH}
       \notag
