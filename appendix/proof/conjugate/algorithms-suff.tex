@@ -12,6 +12,8 @@
       \\
       &
       X \subseteq \sources{G}
+      \text{ and }
+      Y \subseteq \sinks{G}
       \text{ with }
       X \sufficesAlg{G} Y
       &
@@ -36,7 +38,7 @@
       \\
       &
       (X, \emptyset), (\emptyset,\emptyset), G
-      \text{ form a partial slice}
+      \text{ form a partial slice of } G
       &
       \text{immediate}
       \notag
@@ -54,6 +56,8 @@
       \\
       &
       X \subseteq \sources{G}
+      \text{ and }
+      Y \subseteq \sinks{G}
       \text{ with }
       \sufficesR_{G}(X) = Y
       &
@@ -68,7 +72,7 @@
       \\
       &
       (X, \emptyset), (\emptyset,\emptyset), G
-      \text{ form a partial slice}
+      \text{ form a partial slice of } G
       &
       \text{immediate}
       \notag
@@ -107,7 +111,8 @@
       \item $H,P,G$ are edge-disjoint
       \item $H \cup P \cup G = G_0$
       \item $\forall (\alpha,\beta) \in (\sources{G_0} \setminus \sources{H}) \times \V(H).\;(\alpha,\beta) \notin R_{G_0}$
-      \item $\sources{G} \subseteq \V(H) \cup (\sources{G_0}\setminus\sources{H}) \cup (\sinks{P}\setminus \sources{P})$
+      \item $\V(H) \subseteq \sources{G}$ and $\sources{G_0}\setminus\sources{H} \subseteq \sources{G}$ -- unproven
+      \item $\sources{G} = \V(H) \uplus (\sources{G_0}\setminus\sources{H}) \uplus (\sinks{P}\setminus\sources{P})$ -- unproven
    \end{enumerate}
 \end{definition}
 \begin{corollary}
@@ -161,23 +166,18 @@
       y \in \sufficesR^*_{G_0}(\sources{H})
       &
       \text{suppose}
-      \locallabel{y-in-suffices}
+      \notag
       \\
       &
       \forall x \in \sources{G_0} \setminus \sources{H}.\; (x,y) \notin R_{G_0}
       &
       \text{def. $\sufficesR^*$}
-      \locallabel{x-notin-h-cant-reach-h}
-      \\
-      &
-      \text{Remains to show: } y \in \V(H)
-      &
       \notag
       \\
       &
       y \in \V(G)
       &
-      \locallabel{y-in-g}
+      \notag
       \\
       &
       x \in \sources{G}.\;(x,y) \in R_{G}
@@ -208,36 +208,23 @@
       x \in \V(H)
       &
       \text{$\sources{G}$ invariant}
+      \notag
       \\
       &
-      \subcase{y = x}
+      x \neq y \implies x \notin \sinks{H} \implies \bot
+      &
+      \text{contradicts \localref{sinks-h-subset-sinks-g}}
       \notag
       \\
       &
       \qedLocal
-      y \in \V(H)
+      x = y
       &
       \notag
       \\
       &
-      \subcase{y \neq x}
-      \notag
-      \\
+      \qedLocal y \in \V(H)
       &
-      y \notin \V(H)
-      &
-      \text{suppose}
-      \\
-      &
-      x \notin \sinks{G}
-      &
-      \text{def. reachability}
-      \notag
-      \\
-      &
-      \qedLocal \bot
-      &
-      \text{contradicts \localref{sinks-h-subset-sinks-g}}
       \notag
       \\
       &
@@ -277,8 +264,8 @@
    \label{lem:appendix:proof:conjugate:algorithms-suff:partial-slice-preserved}
    \item
    \begin{enumerate}
-      \item $H,P,G$ a partial slice  of $G_0$ $ \iff H,P \cup E,G \edgeMinus E$ a partial slice of $G_0$
-      \item If $\alpha \in \sources{G}$ then: $H,P,G$ a partial slice $G_0$ $\iff H \cup E, P \edgeMinus E, G$ a partial slice of $G_0$
+      \item If $\alpha \in \V(H)$, $E = \outE{G}(\alpha) \neq \emptyset$ then: \newline $H,P,G$ a partial slice of $G_0$ $ \iff H,P \cup E,G \edgeMinus E$ a partial slice of $G_0$
+      \item If $\alpha \in \sources{G}$, $E = \inE{P}(\alpha) \neq \emptyset$ then: $H,P,G$ a partial slice $G_0$ $\iff H \cup E, P \edgeMinus E, G$ a partial slice of $G_0$
    \end{enumerate}
 \end{lemma}
 \proofContext{partial-slice-lem}
@@ -290,7 +277,7 @@
       \notag
       \\
       &
-      \subcase{\Rightarrow}
+      \subcase{\Rightarrow,\;(4)}
       \notag
       \\
       &
@@ -318,7 +305,7 @@
       \notag
       \\
       &
-      \subcase{\Leftarrow}
+      \subcase{\Leftarrow,\;(4)}
       \notag
       \\
       &
@@ -344,12 +331,111 @@
       &
       \notag
       \\
+      % &
+      % \subcase{\Rightarrow,\;(5)}
+      % \notag
+      % \\
+      % &
+      % x \in \V(H) \subseteq \sources{G}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \sources{G} \subseteq \sources{G \edgeMinus E}
+      % &
+      % \locallabel{sources-g-subset-sources-g-minus-e}
+      % \\
+      % &
+      % \qedLocal
+      % x \in \sources{G \edgeMinus E}
+      % &
+      % \text{\localref{sources-g-subset-sources-g-minus-e}}
+      % \notag
+      % \\
+      % &
+      % x' \in \sources{G_0}\setminus\sources{H} \subseteq \sources{G}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \qedLocal
+      % x \in \sources{G \edgeMinus E}
+      % &
+      % \text{\localref{sources-g-subset-sources-g-minus-e}}
+      % \notag
+      % \\
+      % &
+      % \subcase{\Leftarrow,\;(5)}
+      % \notag
+      % \\
+      % &
+      % x \in \V(H) \subseteq \sources{G \edgeMinus E}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \subcase{\Rightarrow,\;(6)}
+      % \notag
+      % \\
+      % &
+      % \alpha \in \V(H)
+      % \text{ with }
+      % E = \outE{G}(\alpha) \neq \emptyset
+      % &
+      % \text{suppose}
+      % \\
+      % &
+      % \sources{G} \subseteq \V(H) \cup \sources{G_0}\setminus\sources{H} \cup \sinks{P}\setminus\sources{P}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \sources{G} \subseteq \sources{G \edgeMinus E}
+      % &
+      % \notag
+      % \\
+      % &
+      % x \in \sources{G \edgeMinus E} \setminus \sources{G}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % x \in \outN{G}(\alpha)
+      % &
+      % \notag
+      % \\
+      % &
+      % \qedLocal
+      % x \in \sinks{P \cup E} \setminus \sources{P \cup E}
+      % &
+      % \notag
+      % \\
+      % &
+      % \subcase{\Leftarrow,\;(6)}
+      % \notag
+      % \\
+      % &
+      % \sources{G \edgeMinus E} \subseteq \V(H) \cup \sources{G_0}\setminus{\sources{H}} \cup \sinks{P \cup E}\setminus \sources{P \cup E}
+      % &
+      % \text{suppose}
+      % \notag
+      % \\
+      % &
+      % \sources{G} = \sources{G \edgeMinus E} \setminus \set{\beta \in \outN{G}(\alpha) \mid \inN{G}(\beta) = \set{\alpha}}
+      % &
+      % \notag
+      % \\
       &
       \caseName{(2)}
       \notag
       \\
       &
-      \subcase{\Rightarrow}
+      \subcase{\Rightarrow,\;(4)}
       \notag
       \\
       &
@@ -415,7 +501,7 @@
       \notag
       \\
       &
-      \subcase{\Leftarrow}
+      \subcase{\Leftarrow,\;(4)}
       \notag
       \\
       &
