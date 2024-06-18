@@ -61,9 +61,12 @@ selections, and then ``forward trace'' to find related output selections in othe
 feature called \emph{linked brushing}. \JBnote{Move discussion of \citet{perera22} to page ~7, instead let's 
 bring in the notion of conjugacy here as a good primitive notion for dependency analysis. Then we can bring in
 Galois connections once we've established the idea of demands/demanded by.}
-\citet{perera22} implemented a similar approach for a general-purpose
+\sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficesR$ (suffices for), relating specific output and input selections. The formal guarantee that input
+$\sufficesR$ (suffices for), relating specific output and input selections.}
+\JBnote{We should mention that conjugacy is a good start but at first appears to be too permissive. We then
+introduce the fact that a pair of conjugate operators can be turned into a Galois connection, which also
+has nice guarantees for slicing.} The formal guarantee that input
 selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
 connection}, meaning they enjoy the following relationship of (near) mutual reciprocality:
 \[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
@@ -87,13 +90,14 @@ sufficient to reproduce a particular feature of a complex output.
 \JBnote{Need to excise mentions of \figref{overview:scatterplot} and include discussion of \figref{introduction:related-inputs}.
 Data transparency is a notion we can introduce here in reference to }.
 We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
-illustrate this in \figref{overview:scatterplot} using our implementation, which builds on these
+illustrate this in \JBnote{can use figure 2 here?} \figref{overview:scatterplot} using our implementation, which builds on these
 provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
-are many questions even a domain expert might have about these charts. For example, in renewable energy one
+are many questions even a domain expert might have about these charts. \JBnote{the essence of this text can remain
+but the contents should be changed to reflect the different figure.} \sout{For example, in renewable energy one
 must be careful not to confuse \emph{capacity} with \emph{output} -- which of these is being shown in the bar
 chart? What kinds of energy count as ``non-renewable''? In the scatter plot, the label on the x-axis suggests
 that it represents some kind of part-to-whole ratio (renewables to total energy capacity, perhaps), whereas
-the y-axis purports to represent the ``capacity factor'' of clean energy sources. But these labels are little
+the y-axis purports to represent the ``capacity factor'' of clean energy sources.} But these labels are little
 more than informal commentary. Moreover there are \emph{two} outputs here and so the question of if and how
 they might be related also arises.
 
