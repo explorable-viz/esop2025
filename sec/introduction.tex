@@ -102,8 +102,12 @@ directly with the artefacts. By selecting an interesting part of the output, the
 relevant data. On the left, the three bar segments highlighted with a dark border indicate such a selection;
 the table underneath shows the demanded data (computed using our version of the $\demandsR$ operator) and we
 are also able to automatically select any outputs in the other chart which demand any of the same data using
-an other operator $\demandedByR$ (``demanded by''). The overlapping demand , which we call the \emph{mediating
-input}, is highlighted using a darker shade of green in \figref{overview:scatterplot}. Perera et al
+an other operator $\demandedByR$ (``demanded by''). \JBnote{We can replace here with use of mediating output,
+maybe worth using different terminology than "mediating"} The overlapping demand , which we call the \emph{mediating
+input}, is highlighted using a darker shade of green in \figref{overview:scatterplot}. \JBnote{Here we will 
+have to have provided a definition of the notion of $\demandedByR$ first, rather than introducing it as the dual
+of $\sufficesR$}
+Perera et al
 defined such a $\demandedByR$ operator as the De Morgan dual of the ``suffices for'' operator $\sufficesR$;
 one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 dependence graphs.
@@ -124,6 +128,8 @@ that a graph-based approach factors the problem into a (language-specific) graph
 (language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and
 improves performance compared to approaches based on bidirectional interpretation.
 
+\JBnote{could be worth emphasizing not only the fact that prior works haven't implemented this, but 
+also the fact that it wasn't possible to construct in the setting of execution traces.}
 Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
 relevance which arises between inputs when they contribute to common features of the output. Users are able to
 formulate queries like ``What outputs use this data element, and what other data elements are used along with
@@ -146,11 +152,12 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   relation $R$.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
-  (parts of) values as vertices in the graph.
+  (parts of) values as vertices in the graph. \JBnote{Mention of environments as part of this section too, if/when 
+  we include them.}
 \item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
   implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
   building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
-  relative implementation burden of the two approaches.
+  relative implementation burden of the two approaches. 
 \item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
