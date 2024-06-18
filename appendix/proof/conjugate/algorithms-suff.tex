@@ -105,14 +105,14 @@
 
 \begin{definition}[Partial Slice]
    \label{def:partial-slice}
-   Graphs $H,P,G$ constitute a \textit{partial slice} of the graph $G_0$ iff:
-   \begin{enumerate}
+   Graphs $H,P,G$ constitute a \textit{partial slice} of the graph $G_0$ iff $H,P,G$ form a partition of $G_0$ and:
+   \begin{enumerate}[label=(\roman*)]
       \item $\V(H) \subseteq \V(P) \subseteq \V(G) = \V(G_0)$
-      \item $H,P,G$ are edge-disjoint
-      \item $H \cup P \cup G = G_0$
+      \item $\V(H) \supseteq \compl{\sinks{P}}$
+      \item $\V(H) = \sources{P}$
+      \item $\V(P) = \sources{P} \cap \sinks{P}$
       \item $\forall (\alpha,\beta) \in (\sources{G_0} \setminus \sources{H}) \times \V(H).\;(\alpha,\beta) \notin R_{G_0}$
-      \item $\V(H) \subseteq \sources{G}$ and $\sources{G_0}\setminus\sources{H} \subseteq \sources{G}$ -- unproven
-      \item $\sources{G} = \V(H) \uplus (\sources{G_0}\setminus\sources{H}) \uplus (\sinks{P}\setminus\sources{P})$ -- unproven
+      \item $\sources{G}\setminus(\sinks{P}\setminus\sources{P}) = \V(H) \uplus (\sources{G_0}\setminus\sources{H})$
    \end{enumerate}
 \end{definition}
 \begin{corollary}
@@ -273,11 +273,305 @@
    \small
    \begin{flalign}
       &
-      \caseName{(1)}
+      \caseName{(1.II), $\Rightarrow$}
       \notag
       \\
       &
-      \subcase{\Rightarrow,\;(4)}
+      E = \set{\alpha} \times B
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \compl{\sinks{P}} \subseteq \V(H)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \compl{\sinks{P \cup E}} = \compl{\sinks{P}} \cup \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \compl{\sinks{P \cup E}} \subseteq \V(H)
+      &
+      \text{$\alpha \in \V(H)$}
+      \notag
+      \\
+      &
+      \caseName{(1.II), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \compl{\sinks{P \cup E}} \subseteq \V(H)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \compl{\sinks{P}} \subseteq \compl{\sinks{P \cup E}}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \compl{\sinks{P}} \subseteq \V(H)
+      &
+      \notag
+      \\
+      &
+      \caseName{(1.III),$\Rightarrow$}
+      \notag
+      \\
+      &
+      E = \set{\alpha} \times {B}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(H) = \sources{P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \text{Need to show: }
+      \V(H) = \sources{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \sources{P \cup E} = \sources{P}\setminus(\sources{P}\cap B)
+      &
+      \notag
+      \\
+      &
+      \text{Need to show: }
+      \sources{P}\cap B = \emptyset
+      &
+      \notag
+      \\
+      &
+      (\alpha, \beta) \in \E(G)
+      &
+      \text{$\forall (\alpha,\beta) \in E$}
+      \notag
+      \\
+      &
+      \beta \in \sources{P} = \V(H) \implies \bot
+      &
+      \text{Contra partial slice(V)}
+      \notag
+      \\
+      &
+      \qedLocal
+      \beta \notin \sources{G}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} \cap \beta = \emptyset
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \V(H) = \sources{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \caseName{(1.III), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \V(H) = \sources{P \cup E}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      E = \set{\alpha} \times B
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \text{Want to show: }
+      \V(H) = \sources{P}
+      &
+      \notag
+      \\
+      &
+      \sources{P} = \sources{P \cup E} \setminus B
+      &
+      \notag
+      \\
+      &
+      \text{suffices to show: }
+      \sources{P \cup E} \cap B = \emptyset
+      &
+      \notag
+      \\
+      &
+      (\alpha, \beta) \in E.\; (\alpha,\beta) \in \E(G)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \beta \notin \V(H) = \sources{P \cup E}
+      &
+      \text{partial slice (V)}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P \cup E} \cap B = \emptyset
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} = \sources{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \V(H) = \sources{P}
+      &
+      \notag
+      \\
+      &
+      \caseName{(1.IV), $\Rightarrow$}
+      \notag
+      \\
+      &
+      \V(P) = \sources{P} \cup \sinks{P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      E = B \times \set{\alpha}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(P \cup E) = \V(P) \cup B
+      &
+      \notag
+      \\
+      &
+      \text{suffices to show that:}
+      \sources{P}\cup\sinks{P}\cup B = \sources{P \cup E} \cup \sinks{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \sources{P} = \sources{P \cup E}
+      &
+      \text{proved in proof of (iii)}
+      \notag
+      \\
+      &
+      \alpha \in \sources{P} = \sources{P \cup E}
+      &
+      \text{$\alpha \in \V(H)$}
+      \notag
+      \\
+      &
+      \sinks{P \cup E} = (\sinks{P} \cup B)\setminus {\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} \cup \sinks{P} \cup B = \sources{P \cup E} \cup ((\sinks{P} \cup B)\setminus \set{\alpha}) 
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} \cup \sinks{P} \cup B = \sources{P \cup E} \cup \sinks{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \caseName{(1.IV), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \V(P \cup E) = \sources{P \cup E} \cup \sinks{P \cup E}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(P \cup E) = \V(P) \cup B
+      &
+      \notag
+      \\
+      &
+      \sources{P \cup E} \cup \sinks{P \cup E} = \V(P) \cup B
+      &
+      \notag
+      \\
+      &
+      \sources{P \cup E} = \sources{P}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \sinks{P \cup E} = (\sinks{P} \cup B) \setminus \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      B \cap \sources{P} = \emptyset
+      &
+      \notag
+      \\
+      &
+      \sources{P} \setminus B = \sources{P}
+      &
+      \notag
+      \\
+      &
+      (\sources{P \cup E} \cup \sinks{P \cup E})\setminus B = \V(P)
+      &
+      \notag
+      \\
+      &
+      (\sources{P \cup E}\setminus B) \cup ((\sinks{P}\cup B \setminus \set{\alpha}) \setminus B) = \V(P)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} \cup (\sinks{P} \setminus \set{\alpha}) = \V(P)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P} \cup \sinks{P} = \V(P)
+      &
+      \text{$\alpha \in \sources{P}$}
+      \notag
+      \\
+      &
+      \caseName{(1.V), $\Rightarrow$}
       \notag
       \\
       &
@@ -305,7 +599,7 @@
       \notag
       \\
       &
-      \subcase{\Leftarrow,\;(4)}
+      \caseName{(1.V), $\Leftarrow$}
       \notag
       \\
       &
@@ -331,111 +625,474 @@
       &
       \notag
       \\
-      % &
-      % \subcase{\Rightarrow,\;(5)}
-      % \notag
-      % \\
-      % &
-      % x \in \V(H) \subseteq \sources{G}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % \sources{G} \subseteq \sources{G \edgeMinus E}
-      % &
-      % \locallabel{sources-g-subset-sources-g-minus-e}
-      % \\
-      % &
-      % \qedLocal
-      % x \in \sources{G \edgeMinus E}
-      % &
-      % \text{\localref{sources-g-subset-sources-g-minus-e}}
-      % \notag
-      % \\
-      % &
-      % x' \in \sources{G_0}\setminus\sources{H} \subseteq \sources{G}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % \qedLocal
-      % x \in \sources{G \edgeMinus E}
-      % &
-      % \text{\localref{sources-g-subset-sources-g-minus-e}}
-      % \notag
-      % \\
-      % &
-      % \subcase{\Leftarrow,\;(5)}
-      % \notag
-      % \\
-      % &
-      % x \in \V(H) \subseteq \sources{G \edgeMinus E}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % \subcase{\Rightarrow,\;(6)}
-      % \notag
-      % \\
-      % &
-      % \alpha \in \V(H)
-      % \text{ with }
-      % E = \outE{G}(\alpha) \neq \emptyset
-      % &
-      % \text{suppose}
-      % \\
-      % &
-      % \sources{G} \subseteq \V(H) \cup \sources{G_0}\setminus\sources{H} \cup \sinks{P}\setminus\sources{P}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % \sources{G} \subseteq \sources{G \edgeMinus E}
-      % &
-      % \notag
-      % \\
-      % &
-      % x \in \sources{G \edgeMinus E} \setminus \sources{G}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % x \in \outN{G}(\alpha)
-      % &
-      % \notag
-      % \\
-      % &
-      % \qedLocal
-      % x \in \sinks{P \cup E} \setminus \sources{P \cup E}
-      % &
-      % \notag
-      % \\
-      % &
-      % \subcase{\Leftarrow,\;(6)}
-      % \notag
-      % \\
-      % &
-      % \sources{G \edgeMinus E} \subseteq \V(H) \cup \sources{G_0}\setminus{\sources{H}} \cup \sinks{P \cup E}\setminus \sources{P \cup E}
-      % &
-      % \text{suppose}
-      % \notag
-      % \\
-      % &
-      % \sources{G} = \sources{G \edgeMinus E} \setminus \set{\beta \in \outN{G}(\alpha) \mid \inN{G}(\beta) = \set{\alpha}}
-      % &
-      % \notag
-      % \\
       &
-      \caseName{(2)}
+      \caseName{(1.VI)}
       \notag
       \\
       &
-      \subcase{\Rightarrow,\;(4)}
+      \text{Suffices to show: }
+      \sources{G}\setminus(\sinks{P}\setminus\sources{P}) = \sources{G \edgeMinus E}\setminus(\sinks{P \cup E}\setminus \sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \sources{G}\setminus(\sinks{P}\setminus\sources{P}) = \V(H) \uplus (\sources{G_0}\setminus\sources{H})
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      E = \set{\alpha} \times B
+      &
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{G}\setminus(\sinks{P}\setminus\sources{P})}
+      \notag
+      \\
+      &
+      x \in \sources{G} \subseteq \sources{G\edgeMinus E}
+      &
+      \notag
+      \\
+      &
+      x \notin \sinks{P}\setminus\sources{P}
+      &
+      \\
+      &
+      x \notin B
+      &
+      \text{$x \in \sources{G}$}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \notin \sinks{P\cup E}\setminus\sources{P\cup E}
+      &
+      \notag
+      \\
+      &
+      x \in \sources{G \edgeMinus E}\setminus(\sinks{P \cup E}\setminus \sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{G}\setminus{\sinks{P}\setminus\sources{P}} \subseteq \sources{G \edgeMinus E}\setminus(\sinks{P \cup E}\setminus \sources{P \cup E})
+      &
+      \locallabel{unmodified-subset-modified}
+      \\
+      &
+      \subcase{x \notin \sources{G}\setminus(\sinks{P}\setminus\sources{P})}
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{G}}
+      \notag
+      \\
+      &
+      x \in \sinks{P}\setminus\sources{P}
+      &
+      \\
+      &
+      x \in \sinks{P \cup E}\setminus\sources{P \cup E}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \notin \sources{G\edgeMinus E}\setminus(\sinks{P \cup E}\setminus\sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \subcase{x \notin \sources{G} \wedge x \in \sources{G \edgeMinus E}}
+      \notag
+      \\
+      &
+      x \notin \sources{G}\setminus(\sinks{P}\setminus\sources{P})
+      &
+      \notag
+      \\
+      &
+      (\alpha,x) \in E
+      &
+      \text{$x \in \sources{G \edgeMinus E}\setminus \sources{G}$}
+      \\
+      &
+      x \in (\sinks{P \cup E} \setminus \sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \notin \sources{G \edgeMinus E} \setminus (\sinks{P \cup E} \setminus \sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{G\edgeMinus E}\setminus(\sinks{P \cup E}\setminus\sources{P \cup E}) \subseteq \sources{G}\setminus(\sinks{P}\setminus\sources{P})
+      &
+      \\
+      &
+      \qedLocal
+      \sources{G}\setminus{\sinks{P}\setminus\sources{P}} = \sources{G \edgeMinus E}\setminus(\sinks{P \cup E}\setminus \sources{P \cup E})
+      &
+      \notag
+      \\
+      &
+      \caseName{(2.II), $\Rightarrow$}
+      \notag
+      \\
+      &
+      E = B \times \set{\alpha}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \compl{\sinks{P}} \subseteq \V(H)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(H \cup E) = \V(H) \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \compl{\sinks{P \edgeMinus E}} \cup B = \compl{\sinks{P}}
+      &
+      \notag
+      \\
+      &
+      B \subseteq \compl{\sinks{P}} \subseteq \V(H)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \compl{\sinks{P \edgeMinus E}} \subseteq \V(H) \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \caseName{(2.II), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \compl{\sinks{P \edgeMinus E}} \subseteq \V(H \cup E)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \compl{\sinks{P}} \subseteq \compl{\sinks{P \edgeMinus E}} \cup B
+      &
+      \notag
+      \\
+      &
+      \forall \beta \in B.\;\beta \in \V(H) \cup \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \forall \beta \in B.\; \beta \in \V(H)
+      &
+      \text{$\beta \neq \alpha$}
+      \notag
+      \\
+      &
+      \qedLocal 
+      \compl{\sinks{P \edgeMinus E}} \cup B \subseteq \V(H) \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \compl{\sinks{P}} \subseteq \V(H)
+      &
+      \\
+      &
+      \caseName{(2.III), $\Rightarrow$}
+      \notag
+      \\
+      &
+      \V(H) = \sources{P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \text{want to show: }
+      \V(H \cup E) = \sources{P \edgeMinus E} 
+      &
+      \notag
+      \\
+      &
+      \V(H \cup E) = \V(H) \cup \set{\alpha} = \sources{P} \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \sources{P \edgeMinus E} = \sources{P} \cup \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P \edgeMinus E} = \V(H \cup E) 
+      &
+      \notag
+      \\
+      &
+      \caseName{(2.III), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \V(H \cup E) = \sources{P \edgeMinus E}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \V(H) = \V(H \cup E) \setminus \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \sources{P \edgeMinus E} = \sources{P} \cup \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \sources{P \edgeMinus E} \setminus \set{\alpha} = \sources{P}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \V(H) = \sources{P}
+      &
+      \notag
+      \\
+      &
+      \caseName{(2.IV), $\Rightarrow$}
+      \notag
+      \\
+      &
+      \V(P) = \sources{P} \cup \sinks{P}
+      &
+      \text{suppose}
+      \locallabel{vp-equals-sources-sinks}
+      \\
+      &
+      \text{want to show: }
+      \V(P) = \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E}
+      &
+      \notag
+      \\
+      &
+      \sources{P} \subseteq \sources{P \edgeMinus E} \wedge \sinks{P} \subseteq \sinks{P \edgeMinus E}
+      &
+      \text{straightforward}
+      \notag
+      \\
+      &
+      \text{Remains to show: }
+      \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E} \subseteq \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      x \in \V(P \edgeMinus E)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      x \in \V(P)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sources{P} \cup \sinks{P}
+      &
+      \text{\localref{vp-equals-sources-sinks}}
+      \\
+      &
+      \subcase{x \in \sinks{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      x \in \V(P)
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sources{P} \cup \sinks{P}
+      &
+      \text{\localref{vp-equals-sources-sinks}}
+      \notag
+      \\
+      &
+      \caseName{(2.IV), $\Leftarrow$}
+      \notag
+      \\
+      &
+      \V(P) = \V(P \edgeMinus E) = \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \text{want to show: }
+      \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E} = \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \sources{P} \cup \sinks{P} \subseteq \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E}
+      &
+      \notag
+      \\
+      &
+      \text{remains to show: }
+      \sources{P \edgeMinus E} \cup \sinks{P \edgeMinus E} \subseteq \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      x \in \V(P)
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      \sources{P \edgeMinus E}\setminus \sources{P} = \set{\alpha}
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \subcase{x = \alpha}
+      \notag
+      \\
+      &
+      \alpha \notin \sinks{P}
+      &
+      \text{assume}
+      \notag
+      \\
+      &
+      \alpha \in \V(H)
+      &
+      \text{partial slice (II)}
+      \notag
+      \\
+      &
+      (\beta, \alpha) \in \E(P)
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \qedLocal
+      \bot
+      &
+      \text{contra partial slice (V)}
+      \\
+      &
+      \qedLocal
+      \alpha \in \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \qedLocal x \in \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{P}}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \in \sinks{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      \sinks{P \edgeMinus E} \setminus \sinks{P} \subseteq B
+      &
+      \text{def. $E$}
+      \notag
+      \\
+      &
+      \subcase{x \in B}
+      \notag
+      \\
+      &
+      B \subseteq \V(H \cup E)
+      &
+      \text{def. $E$}
+      \\
+      &
+      \alpha \notin B
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      B \in \sources{P}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sources{P} \subseteq \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \in \sinks{P}}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sources{P} \cup \sinks{P}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{P \edgeMinus E} \subseteq \sources{P} \cup \sinks{P}
+      &
+      \\
+      &
+      \caseName{(2.V), $\Rightarrow$}
       \notag
       \\
       &
@@ -501,7 +1158,7 @@
       \notag
       \\
       &
-      \subcase{\Leftarrow,\;(4)}
+      \caseName{(2.V), $\Leftarrow$}
       \notag
       \\
       &
@@ -542,7 +1199,154 @@
       \\
       &
       \qedLocal
-      \forall (\alpha', \beta') \in \E(G) \cup \E(P).\; \beta' \notin \V(H)
+      \forall (\alpha', \beta') \in \E(G) \cup \E(P).\; \beta \notin \V(H)
+      &
+      \notag
+      \\
+      &
+      \caseName{(2.VI)}
+      \notag
+      \\
+      &
+      \text{Suffices to show: }
+      \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha} = \sinks{P}\setminus\sources{P}
+      &
+      \notag
+      \\
+      &
+      E = \inN{P}(\alpha) \times \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \subcase{\sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha} \subseteq \sinks{P}\setminus\sources{P}}
+      \notag
+      \\
+      &
+      \subcase{x = \alpha}
+      \notag
+      \\
+      &
+      \alpha \notin \sources{P}
+      &
+      \text{$E \neq \emptyset$}
+      \notag
+      \\
+      &
+      \alpha \in \sinks{P}
+      &
+      \text{$P$ has depth 1}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sinks{P}\setminus\sources{P}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \neq \alpha \wedge x \in \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      \sinks{P \edgeMinus E}\setminus \sinks{P} \subseteq \inN{P}(\alpha)
+      &
+      \notag
+      \\
+      &
+      \inN{P}(\alpha) \subseteq \sources{P} \subseteq \sources{P \edgeMinus E}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sinks{P}
+      &
+      \text{$x \sinks{P \edgeMinus E} \wedge \in \notin \inN{P}(\alpha)$}
+      \notag
+      \\
+      &
+      \sources{P \edgeMinus E} \supseteq \sources{P}
+      &
+      % \text{def. $E$}
+      \notag
+      \\
+      &
+      x \notin \sources{P}
+      &
+      \text{$x \notin \sources{P \edgeMinus E}$}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sinks{P}\setminus \sources{P}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha} \subseteq \sinks{P}\setminus\sources{P}
+      &
+      \notag
+      \\
+      &
+      \subcase{\sinks{P}\setminus\sources{P} \subseteq \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha}}
+      \notag
+      \\
+      &
+      x \in \sinks{P}\setminus\sources{P}
+      &
+      \text{suppose}
+      \notag
+      \\
+      &
+      x \notin \sources{P}
+      &
+      \\
+      &
+      x \in \sinks{P} \subseteq \sinks{P \edgeMinus E}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \notin \sources{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      \qedLocal
+      x \in \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \subseteq \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \subcase{x \in \sources{P \edgeMinus E}}
+      \notag
+      \\
+      &
+      x \in \sources{P \edgeMinus E} \setminus \sources{P}
+      &
+      \notag
+      \\
+      &
+      \sources{P \edgeMinus E} \setminus \sources{P} = \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      x = \alpha \in \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{P}\setminus\sources{P} \subseteq \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha}
+      &
+      \notag
+      \\
+      &
+      \qedLocal
+      \sinks{P}\setminus\sources{P} = \sinks{P \edgeMinus E}\setminus \sources{P \edgeMinus E} \cup \set{\alpha}
       &
       \notag
    \end{flalign}
