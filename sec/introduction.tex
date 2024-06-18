@@ -76,14 +76,14 @@ sufficient to reproduce a particular feature of a complex output.
 
 \begin{figure}
    \centering
-   \includegraphics[width=0.9\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
+   \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
    \vspace{-2mm}
-   \caption{Data-transparent visualisations associate visual selections with demanded data}
-   \label{fig:introduction:scatterplot}
+   \caption{Related inputs are \emph{cognate} (have a common output dependency), \JBnote{Exchanged with \figref{overview:scatterplot}}}
+   \label{fig:introduction:related-inputs}
 \end{figure}
 
 We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
-illustrate this in \figref{introduction:scatterplot} using our implementation, which builds on these
+illustrate this in \figref{overview:scatterplot} using our implementation, which builds on these
 provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
 are many questions even a domain expert might have about these charts. For example, in renewable energy one
 must be careful not to confuse \emph{capacity} with \emph{output} -- which of these is being shown in the bar
@@ -99,7 +99,7 @@ relevant data. On the left, the three bar segments highlighted with a dark borde
 the table underneath shows the demanded data (computed using our version of the $\demandsR$ operator) and we
 are also able to automatically select any outputs in the other chart which demand any of the same data using
 an other operator $\demandedByR$ (``demanded by''). The overlapping demand , which we call the \emph{mediating
-input}, is highlighted using a darker shade of green in \figref{introduction:scatterplot}. Perera et al
+input}, is highlighted using a darker shade of green in \figref{overview:scatterplot}. Perera et al
 defined such a $\demandedByR$ operator as the De Morgan dual of the ``suffices for'' operator $\sufficesR$;
 one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 dependence graphs.
@@ -124,7 +124,7 @@ Second, we introduce a new kind of provenance query called \emph{related inputs}
 relevance which arises between inputs when they contribute to common features of the output. Users are able to
 formulate queries like ``What outputs use this data element, and what other data elements are used along with
 it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
-dual to the ``related outputs'' feature shown in \figref{introduction:scatterplot}, which can be understood as
+dual to the ``related outputs'' feature shown in \figref{overview:scatterplot}, which can be understood as
 cognacy in $\opGraph{G}$. In the graphical setting, these are both easy to compute, since they amount to the two
 ways of composing reachability in $G$ with its relational converse.
 
