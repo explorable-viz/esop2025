@@ -34,16 +34,10 @@
       \notag
       \\
       &
-      (X, \emptyset)\text{ a partial slice of }G
-      &
-      \text{def.~partial slice}
-      \notag
-      \\
-      &
       \qedLocal
-      \demandedByR_G(X) = \demandedByR^*_{G}(X) = Y
+      \demandedByR_G(X) = \sinks{G} \cap \demandedByR^*_{G}(X) = Y
       &
-      \text{(\localref{X-sources}); \propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
+      \text{(\localref{X-sources}); \ref{lem:appendix:proof:conjugate:algorithms:demanded-cap-sinks}; \propref{appendix:proof:conjugate:algorithms:correctness-demByV}}
       \notag
       \\
       &
@@ -51,15 +45,9 @@
       \notag
       \\
       &
-      X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \demandedByR^*_G(X) = Y
+      X \subseteq \sources{G}\text{ with }\demandedByR_G(X) = \sinks{G} \cap \demandedByR^*_G(X) = Y
       &
       \text{suppose}
-      \notag
-      \\
-      &
-      (X, \emptyset)\text{ a partial slice of }G
-      &
-      \text{def.~partial slice}
       \notag
       \\
       &
@@ -95,11 +83,12 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
 
 \begin{definition}[$\demandedByR^*$ for a dependence graph]
    For a graph $G$ with output relation $R$, define:
-   \[\demandedByR^*_G \eqdef \demandedByR_{R}: \powerset{\V(G)} \to \powerset{\sinks{G}}\]
+   \[\demandedByR^*_G \eqdef \demandedByR_{R}: \powerset{\V(G)} \to \powerset{\V(G)}\]
 \end{definition}
 
 \begin{lemma}
-   $\demandedByR_{G} \subseteq \demandedByR^*_{G}(X)$.
+   \label{lem:appendix:proof:conjugate:algorithms:demanded-cap-sinks}
+   $\demandedByR_{G} = \sinks{G} \cap \demandedByR^*_{G}(X)$.
 \end{lemma}
 
 \begin{lemma}
@@ -107,24 +96,19 @@ The \emph{output} relation of a graph $G$ with reachability relation $R$, define
    If $X \subseteq \sinks{G}$ then $\demandedByR^*_{G}(X) = X$.
 \end{lemma}
 
-\begin{definition}[Partial slice]
-$H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap \E(G) = \emptyset$.
-\end{definition}
-
 \begin{lemma}
    \label{lem:appendix:proof:conjugate:algorithms:edge-conservation}
-   Suppose $H$ a partial slice of $G$. For any $\alpha \in \sinks{H}$ and any
+   Suppose $\V(H) \subseteq \V(G)$. For any $\alpha \in \sinks{H}$ and any
    $E = \outE{G}(\alpha) \neq \emptyset$:
-   \begin{enumerate}
-      \item $H \cup E$ is a partial slice of $G \setminus_{\mathsf{E}} E$
-      \item $\demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \setminus_{\mathsf{E}} E} (\sinks{H \cup E})$
-   \end{enumerate}
+   $$
+      \demandedByR^*_G(\sinks{H}) = \demandedByR^*_{G \edgeMinus E} (\sinks{H \cup E})
+   $$
 \end{lemma}
 
 \begin{proposition}
    \label{prop:appendix:proof:conjugate:algorithms:correctness-demByV}
-   For any partial slice $H$ of $G$ and any $Y \subseteq \sinks{G}$:
-   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \demandedByR^*_G(\sinks{H}) = Y\]
+   For $\V(H) \subseteq \V(G)$, and any $Y \subseteq \sinks{G}$:
+   \[(\exists H'.\;H, G \demandedByV{} H'\text{ with }\sinks{H'} = Y) \iff \sinks{H \cup G} \cap \demandedByR^*_G(\sinks{H}) = Y\]
 \end{proposition}
 
 \proofContext{correctness-demByV}
@@ -132,7 +116,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
    \small
    \begin{flalign}
       &
-      H\text{ a partial slice of }G\text{ and }Y \subseteq \sinks{G}
+      \V(H)\subseteq \V(G)\text{ and }Y \subseteq \sinks{G}
       &
       \text{suppose}
       \notag
@@ -172,7 +156,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \\
       &
       \qedLocal
-      \demandedByR^*_G(\sinks{H}) = \sinks{H}
+      \sinks{H \cup G} \cap \demandedByR^*_G(\sinks{H}) = \sinks{H} \cap \demandedByR^*_{G}(\sinks{H}) = \sinks{H}
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}}
       \notag
@@ -185,7 +169,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H \cup E, G \setminus_{\mathsf{E}} E
+               H \cup E, G \edgeMinus E
                \demandedByV{}
                H'
             }
@@ -198,13 +182,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \notag
       \\
       &
-      H \cup E\text{ a partial slice of }G \setminus_{\mathsf{E}} E
-      &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(i)}
-      \notag
-      \\
-      &
-      \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E}) = \sinks{H'}
+      \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E}) = \sinks{H'}
       &
       \text{IH}
       \notag
@@ -213,7 +191,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \qedLocal
       \demandedByR^*_{G}(\sinks{H}) = \sinks{H'}
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(ii)}
+      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}}
       \notag
       \\
       &
@@ -226,13 +204,13 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \notag
       \\
       &
-      \demandedByR^*_G(\sinks{H}) = Y
+      \sinks{G \cup H} \cap \demandedByR^*_G(\sinks{H}) = Y
       &
       \text{suppose}
       \locallabel{assumption}
       \\
       &
-      \subcase{\length{\sinks{H} \setminus \sinks{G}} = 0}
+      \subcase{\sinks{H} \subseteq \sinks{G}}
       \notag
       \\
       &
@@ -256,44 +234,34 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
       \\
       &
       \qedLocal
-      \sinks{H} = \demandedByR^*_{G}(\sinks{H}) = Y
+      \sinks{G \cup H} \cap \sinks{H} = \sinks{G \cup H} \cap \demandedByR^*_{G}(\sinks{H}) = Y
       &
       \text{\lemref{appendix:proof:conjugate:algorithms:sinks-fixpoint}; (\localref{assumption})}
       \notag
       \\
       &
-      \subcase{\length{\sinks{H} \setminus \sinks{G}} > 0}
-      \notag
-      \\
-      &
-      \alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset
+      \subcase{\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset}
       &
       \text{$\exists \alpha$, $\exists E$}
-      \locallabel{exists-alpha}
+      \notag
       \\
       &
-      \E(G \setminus_{\mathsf{E}} E) \subset \E(G)
+      \E(G \edgeMinus E) \subset \E(G)
       &
       \notag
       \\
       &
-      H \cup E\text{ a partial slice of }G \setminus_{\mathsf{E}} E
-      &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(i)}
-      \notag
-      \\
-      &
-      H \cup E, G \setminus_{\mathsf{E}} E \demandedByV{} H'
+      H \cup E, G \edgeMinus E \demandedByV{} H'
       \text{ with }
-      \sinks{H'} = \demandedByR^*_{G \setminus_{\mathsf{E}} E}(\sinks{H \cup E})
+      \sinks{H'} = \sinks{(G \edgeMinus E) \cup (H \cup E)} \cap \demandedByR^*_{G \edgeMinus E}(\sinks{H \cup E})
       &
       \text{IH; $\exists H'$}
       \notag
       \\
       &
-      \sinks{H'} = \demandedByR^*_{G}(\sinks{H})
+      \sinks{H'} = \sinks{G\cup H} \cap \demandedByR^*_{G}(\sinks{H}) = Y
       &
-      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}(ii)}
+      \text{\lemref{appendix:proof:conjugate:algorithms:edge-conservation}}
       \notag
       \\
       &
@@ -305,7 +273,7 @@ $H$ is a \emph{partial slice} of $G$ iff $\V(H) \subseteq \V(G)$ and $\E(H) \cap
                right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
             ]
             {
-               H \cup E, G \setminus_{\mathsf{E}} E
+               H \cup E, G \edgeMinus E
                \demandedByV{}
                H'
             }

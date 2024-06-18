@@ -32,7 +32,7 @@
             right={$\alpha \in \sinks{H} \wedge E = \outE{G}(\alpha) \neq \emptyset$}
          ]
          {
-            H \cup E, G \setminus_{\mathsf{E}} E
+            H \cup E, G \edgeMinus E
             \demandedByV{}
             H'
          }
@@ -53,68 +53,61 @@
       {
          (X, \emptyset),
          (\emptyset, \emptyset),
-         \set{(\alpha', \beta) \mid \alpha' \in X, \beta \in \outN{G}(\alpha)},
          G
          \sufficesE{}
-         G', H
+         H
       }
       {
-         X \sufficesAlg{G} \V(G') \cap \sinks{G}
+         X \sufficesAlg{G} \V(H) \cap \sinks{G}
       }
    \end{smathpar}\vspace{1mm}
-   {\small \flushleft \shadebox{$G', H, E, G \sufficesE{} G^\twoPrime, H'$}}
+   {\small \flushleft \shadebox{$H, P, G \sufficesE{} H'$}}
    \begin{smathpar}
       \inferrule*[
          lab={\ruleName{done}},
-         % right={$\dom{G'} \subseteq \dom{G}$}
+         right={$\sources{G} \cap \V(P) \subseteq \sources{P} \wedge \V(H) \subseteq \sinks{G}$}
       ]
       {
-         % \strut
-         \dom{G'} \subseteq \dom{G}
+         \strut
       }
       {
-         G', H, \emptyset, G \sufficesE{} G', H
+         H, P, G \sufficesE{} H
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{pending}},
-         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         right={$\alpha \in \V(H) \wedge E = \outE{G}(\alpha) \neq \emptyset$}
       ]
       {
-         \inN{G}(\beta) \supset \set{\alpha}
-         \\
-         G', H \cup \set{\exPair{\alpha}{\beta}}, E, G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         H, P \cup E, G \edgeMinus E
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H'
       }
       {
-         G', H, (\alpha, \beta) \cons E, G
+         H, P, G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H'
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{extend}},
-         % right={$H' = H \cup \set{\bind{\beta}{\set{\alpha}}}$}
+         right={$\alpha \in \sources{G} \wedge E = \inE{P}(\alpha) \neq \emptyset$}
       ]
       {
-         \inN{G}(\beta) = \set{\alpha}
-         \\
-         G' \cup \inE{H}(\beta) \cup \set{\exPair{\alpha}{\beta}},
-         H \setminus_{\mathsf{E}} \inE{H}(\beta),
-         \outE{G}(\beta) \cup E,
-         G \setminus_{\mathsf{E}} \set{\exPair{\alpha}{\beta}}
+         H \cup E,
+         P \edgeMinus E,
+         G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H'
       }
       {
-         G', H, (\alpha, \beta) \cons E, G
+         H, P, G
          \sufficesE{}
-         G^\twoPrime, H^\twoPrime
+         H'
       }
    \end{smathpar}
    \caption{$\sufficesAlg{}$ algorithm}
