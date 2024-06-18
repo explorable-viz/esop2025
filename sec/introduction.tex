@@ -58,7 +58,10 @@ for inverting selections in visual space to obtain selections in the input data 
 \citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
 relational visualisation language, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature called \emph{linked brushing}. \citet{perera22} implemented a similar approach for a general-purpose
+feature called \emph{linked brushing}. \JBnote{Move discussion of \citet{perera22} to page ~7, instead let's 
+bring in the notion of conjugacy here as a good primitive notion for dependency analysis. Then we can bring in
+Galois connections once we've established the idea of demands/demanded by.}
+\citet{perera22} implemented a similar approach for a general-purpose
 functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
 $\sufficesR$ (suffices for), relating specific output and input selections. The formal guarantee that input
 selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
@@ -73,7 +76,7 @@ inequalities.) Galois connections lend themselves well to bidirectional reasonin
 because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of (fine-grained)
 reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one) is in fact
 sufficient to reproduce a particular feature of a complex output.
-
+\JBnote{end of edited section}
 \begin{figure}
    \centering
    \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
@@ -81,7 +84,8 @@ sufficient to reproduce a particular feature of a complex output.
    \caption{Related inputs are \emph{cognate} (have a common output dependency), \JBnote{Exchanged with \figref{overview:scatterplot}}}
    \label{fig:introduction:related-inputs}
 \end{figure}
-
+\JBnote{Need to excise mentions of \figref{overview:scatterplot} and include discussion of \figref{introduction:related-inputs}.
+Data transparency is a notion we can introduce here in reference to }.
 We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
 illustrate this in \figref{overview:scatterplot} using our implementation, which builds on these
 provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
@@ -103,7 +107,7 @@ input}, is highlighted using a darker shade of green in \figref{overview:scatter
 defined such a $\demandedByR$ operator as the De Morgan dual of the ``suffices for'' operator $\sufficesR$;
 one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 dependence graphs.
-
+\JBnote{End}
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
