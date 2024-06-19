@@ -50,7 +50,10 @@ features, and the consumer of the content now has the best of both worlds: the a
 as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
-sufficient''.
+sufficient''. \JBnote{From the perspective of a developer building such a visualization, or a data-scientist
+engaged in exploratory data analysis, the ability to identify relationships between datasets modulated
+by the outputs that combine information together. Wording poor, but we need to keep this idea primary
+so that we can use linked inputs as the first example.}
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data; this has lead to various techniques
@@ -58,28 +61,45 @@ for inverting selections in visual space to obtain selections in the input data 
 \citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
 relational visualisation language, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature called \emph{linked brushing}. \JBnote{Move discussion of \citet{perera22} to page ~7, instead let's 
-bring in the notion of conjugacy here as a good primitive notion for dependency analysis. Then we can bring in
-Galois connections once we've established the idea of demands/demanded by.}
-\sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
-functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
-$\sufficesR$ (suffices for), relating specific output and input selections.}
-\JBnote{We should mention that conjugacy is a good start but at first appears to be too permissive. We then
-introduce the fact that a pair of conjugate operators can be turned into a Galois connection, which also
-has nice guarantees for slicing.} The formal guarantee that input
-selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
-connection}, meaning they enjoy the following relationship of (near) mutual reciprocality:
-\[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
+feature called \emph{linked brushing}. \JBnote{\citet{perera22} follow a similar approach for a more
+general purpose language by explicitly constructing execution traces, and a backward evaluation function
+that lets them ``rewind'' a program and trace information from outputs back to inputs.}
+% \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
+% functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
+% $\sufficesR$ (suffices for), relating specific output and input selections.}
+\newline
+\JBnote{Start with introducing the example, and operators: "Lets consider \figref{introduction:related-inputs}.
+For context we imagine that we are a data
+scientist investigating nations efficiency in using their clean energy resources, with data spread across
+multiple tables -- in this case \textit{renewables} and \textit{nonRenewables} -- which are aggregated to
+compute the co-ordinates of the points in the scatter plot. We suppose the user is interested in how
+the capacity of Chinese bio-energy generation is used, and pick out the cell in the table (green selection).
+Then the $\demandedByR$ operator picks out the \textit{y} component of the point" etc
+\newline\newline
+Then, we introduce the notion of conjugacy as a simple requirement, if 2 sets of inputs are demanded by
+non-intersecting outputs, then the set of things those outputs demand must be non-intersecting:
+"Since each point represents a different nation, we would expect the inputs that each point demands to
+be non-overlapping, and similar for the set of outputs each nations inputs are demanded by. This idea
+is captured by \citet{jonsson51} notion of conjugacy"
+\newline\newline
+Then finish with mention of round-tripping and link to Galois connections: "conjugacy appears to be
+a fairly permissive notion, but combined with the De Morgan duality, we recover Galois connections
+between inputs and outputs, which have nice minimality properties. The Galois connection recovered
+is in fact the one described in prior work such as \citet{perera22}" }
+% The formal guarantee that input
+% selections are ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois
+% connection}, meaning they enjoy the following relationship of (near) mutual reciprocality:
+% \[\demandsR(Y) \leq X \iff Y \leq \sufficesR(X)\]
 
-\noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if outputs
-$Y$ demand inputs $X'$, then $X'$ is the smallest set of inputs which suffices for outputs which include $Y$;
-and conversely that if inputs $X$ suffice for $Y'$, then $Y'$ is the greatest set of outputs whose demand is
-included by $X$. (A Galois connection in this sense simply relaxes the usual isomorphism laws to
-inequalities.) Galois connections lend themselves well to bidirectional reasoning about resource consumption
-because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of (fine-grained)
-reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one) is in fact
-sufficient to reproduce a particular feature of a complex output.
-\JBnote{end of edited section}
+% \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if outputs
+% $Y$ demand inputs $X'$, then $X'$ is the smallest set of inputs which suffices for outputs which include $Y$;
+% and conversely that if inputs $X$ suffice for $Y'$, then $Y'$ is the greatest set of outputs whose demand is
+% included by $X$. (A Galois connection in this sense simply relaxes the usual isomorphism laws to
+% inequalities.) Galois connections lend themselves well to bidirectional reasoning about resource consumption
+% because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of (fine-grained)
+% reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one) is in fact
+% sufficient to reproduce a particular feature of a complex output.
+% \JBnote{end of edited section}
 \begin{figure}
    \centering
    \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
@@ -87,10 +107,9 @@ sufficient to reproduce a particular feature of a complex output.
    \caption{Related inputs are \emph{cognate} (have a common output dependency), \JBnote{Exchanged with \figref{overview:scatterplot}}}
    \label{fig:introduction:related-inputs}
 \end{figure}
-\JBnote{Need to excise mentions of \figref{overview:scatterplot} and include discussion of \figref{introduction:related-inputs}.
-Data transparency is a notion we can introduce here in reference to }.
+\JBnote{Need to excise mentions of \figref{overview:scatterplot} and include discussion of \figref{introduction:related-inputs}}.
 We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
-illustrate this in \JBnote{can use figure 2 here?} \figref{overview:scatterplot} using our implementation, which builds on these
+illustrate this in \JBnote{\figref{introduction:related-inputs}} \sout{\mbox{\figref{overview:scatterplot}}} using our implementation, which builds on these
 provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
 are many questions even a domain expert might have about these charts. \JBnote{the essence of this text can remain
 but the contents should be changed to reflect the different figure.} \sout{For example, in renewable energy one
@@ -115,7 +134,8 @@ Perera et al
 defined such a $\demandedByR$ operator as the De Morgan dual of the ``suffices for'' operator $\sufficesR$;
 one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 dependence graphs.
-\JBnote{End}
+\JBnote{By this point we want to have introduced the notion of conjugates semi-formally, and connected
+back to Galois connections, but not gone into the technical details of Galois connections.}
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
@@ -124,7 +144,7 @@ in a language-independent way, using \emph{dynamic dependence graphs}. This sepa
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
 slicing (mainly of imperative programs~\cite{ferrante87}), but have not yet been applied to data analyses
-based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$). These analyses
+based on adjoint pairs of operators (such as $\demandsR$ and $\sufficesR$) \todo{either remove or rephrase}. These analyses
 (e.g.~\citet{ricciotti17}) have instead utilised a bidirectional interpreter that builds an execution record
 in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
 a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show
