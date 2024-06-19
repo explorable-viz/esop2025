@@ -14,8 +14,6 @@ features to the infrastructure used to implement and host the visualisation.
 
 However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
 of performance and implementation burden.
-\JBnote{Refer to \citet{ricciotti17} first instead of \citet{perera22}? Roly worked on both however, so
-may not help with reducing the references to \citet{perera22}.}
 For example, the approach taken by \citet{perera22} to implement a
 ``related outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
 analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
@@ -65,9 +63,9 @@ inefficient, we also give a direct implementation of $\sufficesR_R$ which improv
 those cases.
 
 \subsection{Peer Provenance / Cognate Values}
-
+\label{sec:peers}
 Our second insight in this paper is that the graphical setting makes it straightforward to compose
-reachability in $G$ \JBnote{and/with} its converse the other way around, producing another provenance query called
+reachability in $G$ \note{and/with} its converse the other way around, producing another provenance query called
 \emph{related inputs} ($\relInputR$). \figref{introduction:related-inputs} illustrates related inputs,
 \JBnote{By this point we have introduced
 the notion of related-inputs. Instead, we will draw the parallel of composing our operators in the
