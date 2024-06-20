@@ -13,8 +13,9 @@ concern themselves purely with analysis and visualisation, and defer the provisi
 features to the infrastructure used to implement and host the visualisation.
 
 However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
-of performance and implementation burden. For example, the approach taken by \citet{perera22} to implement a
-``related outputs'' analysis like the one shown in \figref{introduction:scatterplot} requires two separate
+of performance and implementation burden.
+For example, the approach taken by \citet{perera22} to implement a
+``related outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
 analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
 ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
 that data. These analyses need to be defined separately and each depends on details of the language, imposing
@@ -25,9 +26,14 @@ computation regardless of whether all of the trace is relevant.
 
 Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
 for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
-problems are much easier to formulate in the graphical setting. For example ``related outputs'' simply amounts
+problems are much easier to formulate in the graphical setting.
+\JBnote{by this point we have already introduced the idea of conjugacy abstractly, and mentioned
+the link to Galois connections. Here we are going to give a more formal account of conjugacy, and tie it back
+to the example, ie $X$ is the set of cells in an input table, and $Y$ the set of vertices associated with
+components of the chart.}
+\sout{For example ``related outputs'' simply amounts
 to computing common ancestry, or \emph{cognacy}, in $G$, which turns out to be nicely captured by the concept
-of ``conjugate'' operators~\cite{jonsson51} between Boolean algebras. Switching to the concrete setting of
+of ``conjugate'' operators~\mbox{\cite{jonsson51}} between Boolean algebras.} Switching to the concrete setting of
 powersets, $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$ are \emph{conjugate} iff:
 %
 \[f(X) \cap Y = \emptyset \iff X \cap g(Y) = \emptyset\]
@@ -41,10 +47,10 @@ more detail in \secref{conjugate}).
 
 \begin{figure}
    \centering
-   \includegraphics[width=0.8\textwidth]{fig/example/linked-inputs-with-tooltip.png}
+   \includegraphics[width=0.8\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
    \vspace{-2mm}
-   \caption{Related inputs are \emph{cognate} (have a common output dependency)}
-   \label{fig:overview:related-inputs}
+   \caption{Data-transparent visualisations associate visual selections with demanded data \JBnote{Exchanged with \figref{introduction:related-inputs}}}
+   \label{fig:overview:scatterplot}
 \end{figure}
 
 If we now take $R$ to be reachability in $G$, then our setting technically only requires a single operator
@@ -56,35 +62,41 @@ the ``related outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1
 inefficient, we also give a direct implementation of $\sufficesR_R$ which improves on the derived version in
 those cases.
 
-\subsection{Related Inputs}
-
+\subsection{Peer Provenance / Cognate Values}
+\label{sec:peers}
 Our second insight in this paper is that the graphical setting makes it straightforward to compose
-reachability in $G$ and with its converse the other way around, producing another provenance query called
-\emph{related inputs} ($\relInputR$). \figref{overview:related-inputs} illustrates related inputs, again using
-our implementation. Here the user starts from one of the input data sets, expressing interest in the bioenergy
-capacity of China for 2018 by moving their mouse over the appropriate cell in the table
-(\figref{overview:related-inputs} step 1, green selection). The system generates two further selections in
-response. First, any scatter plot elements that demand the selected input are given a similar green highlight;
-here just one point is highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). We
-call this output selection the \emph{mediating output} because of its role in establishing a link between
-otherwise unrelated inputs.
+reachability in $G$ \note{and/with} its converse the other way around, producing another provenance query called
+\emph{related inputs} ($\relInputR$). \figref{introduction:related-inputs} illustrates related inputs,
+\JBnote{By this point we have introduced
+the notion of related-inputs. Instead, we will draw the parallel of composing our operators in the
+other direction, and how this recovers linked-brushing from prior works. We can in particular
+draw a connection to \citet{perera22} here, and talk about how "their" framework is similar,
+but cannot perform related inputs queries.}
+% \sout{again using
+% our implementation. Here the user starts from one of the input data sets, expressing interest in the bioenergy
+% capacity of China for 2018 by moving their mouse over the appropriate cell in the table
+% (\figref{introduction:related-inputs} step 1, green selection). The system generates two further selections in
+% response. First, any scatter plot elements that demand the selected input are given a similar green highlight;
+% here just one point is highlighted, and in fact only the $y$ coordinate of that point (step 2, tooltip). We
+% call this output selection the \emph{mediating output} because of its role in establishing a link between
+% otherwise unrelated inputs.
 
-Finally, any other inputs demanded by the mediating output (i.e.~that were needed to compute the $y$
-coordinate of that point) are highlighted in grey (steps 3a and 3b). (The grey is used to visually distinguish
-the \emph{answer} to the query from the selection that initiated the query in the first place.) The result of
-a related inputs query can be thought of as a unit of comprehension or unit of reuse. It picks out all the
-relevant data needed to understand or make use of the original selected input, and does so in a way that
-identifies the common output elements that explain why the inputs are related. Sometimes a single input is
-used in many different outputs, or different features of a single output, in which case the query result can
-be quite noisy (because lots of inputs turn out to be related); in \secref{conjugate} we also show how
-selectively projecting away irrelevant parts of the mediating output can refine the query and produce a more
-precise answer. The same approach can be used to discard irrelevant mediating inputs to obtain more precise
-results in a related outputs query.
+% Finally, any other inputs demanded by the mediating output (i.e.~that were needed to compute the $y$
+% coordinate of that point) are highlighted in grey (steps 3a and 3b). (The grey is used to visually distinguish
+% the \emph{answer} to the query from the selection that initiated the query in the first place.) The result of
+% a related inputs query can be thought of as a unit of comprehension or unit of reuse. It picks out all the
+% relevant data needed to understand or make use of the original selected input, and does so in a way that
+% identifies the common output elements that explain why the inputs are related. Sometimes a single input is
+% used in many different outputs, or different features of a single output, in which case the query result can
+% be quite noisy (because lots of inputs turn out to be related); in \secref{conjugate} we also show how
+% selectively projecting away irrelevant parts of the mediating output can refine the query and produce a more
+% precise answer. The same approach can be used to discard irrelevant mediating inputs to obtain more precise
+% results in a related outputs query.}
 
 \begin{figure}
    \small
    {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{introduction:scatterplot}}
+   \caption{Source code for scatter plot in \figref{overview:scatterplot}}
    \label{fig:overview:energy-query}
 \end{figure}
 
@@ -93,7 +105,7 @@ results in a related outputs query.
 We implement the abstract framework outlined above in a programming language called \OurLang, a pure
 functional language with a runtime implementing conjugate dependency operators. From the programmer's
 perspective the language is unremarkable; \figref{overview:energy-query} shows the source code for the scatter
-plot example from \figref{introduction:scatterplot}. The distinguishing feature of the language is a special
+plot example from \figref{overview:scatterplot}. The distinguishing feature of the language is a special
 semantics that interprets a program not as a plain output but as an output with a built-in query engine
 supporting the transparency features shown above. The author of a visualisation just expresses their chart as
 a pure function of the inputs, via a set of data types for common visualisations; a d3.js front end
