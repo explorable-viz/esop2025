@@ -45,14 +45,13 @@ the author to anticipate the queries a user might have and do not readily genera
 
 For these reasons, there has been recent interest in treating data transparency and exploration as a programming language infrastructure
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
-supported automatically. The author of the content no longer has to concern themselves with these tricky
-features, and the consumer of the content now has the best of both worlds: the ability to explore detail on an
+supported automatically. \textcolor{blue}{The author of the content no longer has to concern themselves with these tricky
+features, and in fact may find that they have an easier time exploring data, and building more complex models.
+Similarly, the consumer of the content now has the best of both worlds:} the ability to explore detail on an
 as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
-sufficient''. \JBnote{Also introduce the idea that these systems create challenges for the developer:
-when data from multiple sources, the relationships between those sources are useful to understand in the context
-of data analysis.}
+sufficient''. 
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data; this has lead to various techniques
@@ -60,9 +59,9 @@ for inverting selections in visual space to obtain selections in the input data 
 \citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
 relational visualisation language, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature called \emph{linked brushing}. \JBnote{\citet{perera22} follow a similar approach for a more
-general purpose language by explicitly constructing execution traces, and a backward evaluation function
-that lets them ``rewind'' a program and trace information from outputs back to inputs.}
+feature called \emph{linked brushing}. \textcolor{blue}{\citet{perera22} take this approach further by explicitly
+constructing execution traces for a general purpose functional language, and provide a backward evaluation function
+that lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.}
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 % functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
 % $\sufficesR$ (suffices for), relating specific output and input selections.}
@@ -87,20 +86,23 @@ that lets them ``rewind'' a program and trace information from outputs back to i
    \caption{Related inputs are \emph{cognate} (have a common output dependency), \JBnote{Exchanged with \figref{overview:scatterplot}}}
    \label{fig:introduction:related-inputs}
 \end{figure}
-\note{Need to integrate data transparency with discussion of \figref{introduction:related-inputs}}.
-We call this broad idea of fine-grained \emph{in situ} provenance queries \emph{data transparency}, and
-illustrate this in \JBnote{\figref{introduction:related-inputs}} \sout{\mbox{\figref{overview:scatterplot}}} using our implementation,
-\JBnote{which realizes the notion of these provenance queries in terms of graphs}.
+These examples help form half of the picture of a broader concept. We call this broad idea of
+fine-grained \emph{in situ} provenance queries \emph{data transparency}. We illustrate the other
+half of the concept in \figref{introduction:related-inputs}. \textcolor{blue}{For context, let us imagine that we
+are a data scientist investigating the efficiency of clean energy usage, broken down geographically.
+The data -- split across tables dedicated to both \textit{renewable} and \textit{non-renewable} energy sources --
+has been aggregated into a scatter plot by another scientist working on the same project. We can tell by
+the label on the y-axis that the $y$ component of each point is the ``capacity factor'' of clean energy resources.
+The chart alone doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+nation. The developer selects part of their input of interest by mousing over the cell in the table (\figref{introduction:related-inputs} step 1, green selection).
+The system, through an operator we call $\demandedByR$ traces the data contained in this cell to the point
+in the chart it was used to compute. In fact, it only picks out the $y$-coordinate.} \textcolor{red}{Note: unsure why we
+specified $y$ here, as the selected thing is used by both $x$ and $y$. We instead want to select output.}
+\textcolor{blue}{Now that we have selected the $y$-coordinate for China, our system uses a second operator,
+$\demandsR$, to identify the complete set of input values which were used to compute the point. (\figref{introduction:related-inputs}, grey selections).
+From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.}
 \newline
-\JBnote{Start with introducing the example, and operators: "Lets consider \figref{introduction:related-inputs}.
-For context we imagine that we are a data
-scientist investigating nations efficiency in using their clean energy resources, with data spread across
-multiple tables -- in this case \textit{renewables} and \textit{nonRenewables} -- which are aggregated to
-compute the co-ordinates of the points in the scatter plot. We suppose the user is interested in how
-the capacity of Chinese bio-energy generation is used, and pick out the cell in the table (green selection).
-Then the $\demandedByR$ operator picks out the \textit{y} component of the point". 
-Mention the questions about "renewable" versus "clean" energy, needs to not appear as a contrived question.
-\newline\newline
+\JBnote{
 Then, we introduce the notion of conjugacy as a simple requirement, if 2 sets of inputs are demanded by
 non-intersecting outputs, then the set of things those outputs demand must be non-intersecting:
 "Since each point represents a different nation, we would expect the inputs that each point demands to
