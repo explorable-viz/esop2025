@@ -96,7 +96,7 @@ the label on the y-axis that the $y$ component of each point is the ``capacity f
 The chart alone doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
 nation. The developer selects part of their input of interest by mousing over the cell in the table (\figref{introduction:related-inputs} step 1, green selection).
 The system, through an operator we write as $\demandedByR$ traces the data contained in this cell to the point
-in the chart it was used to compute. We read $\demandedByR$ as computing "what outputs is a piece of data \emph{demanded by}".
+in the chart it was used to compute. We read $\demandedByR$ as computing ``what outputs is a piece of data \emph{demanded by}';'.
 In fact, we see that it only picks out the $y$-coordinate. We call the elements of
 the output that are used by our input selection the \emph{mediating output(s)}, since they
 govern the relationships between sets of inputs.} \textcolor{red}{Note: unsure why we
@@ -104,16 +104,20 @@ specified $y$ here, as the selected thing is used by both $x$ and $y$. We instea
 Need to revisit the image for this example.}
 \textcolor{blue}{Now that we have selected the $y$-coordinate for China, our system uses a second operator,
 $\demandsR$, to identify the complete set of input values which were used to compute the point (\figref{introduction:related-inputs}, grey selections).
-We read this second operator as computing "what inputs does a piece of output data \emph{demand}".
-From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.}
+We read this second operator as computing ``what inputs does a piece of output data \emph{demand}''.
+From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
+\newline
+We would expect these operations to satisfy some nice sanity properties, and indeed they do. Informally,
+if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
+be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
+is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
+$x_2$. This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
+introduced by \citet{jonsson51}.
+\newline
+On the surface this property doesn't seem to say much about the relationship between these two
+operations, but we can use it to derive some useful soundness checks and round-tripping properties.}
 \newline
 \JBnote{
-Then, we introduce the notion of conjugacy as a simple requirement, if 2 sets of inputs are demanded by
-non-intersecting outputs, then the set of things those outputs demand must be non-intersecting:
-"Since each point represents a different nation, we would expect the inputs that each point demands to
-be non-overlapping, and similar for the set of outputs each nations inputs are demanded by. This idea
-is captured by \citet{jonsson51} notion of conjugacy"
-\newline\newline
 Then finish with mention of round-tripping and link to Galois connections: "conjugacy appears to be
 a fairly permissive notion, but combined with the De Morgan duality, we recover Galois connections
 between inputs and outputs, which have nice minimality properties." Need to introduce the $\sufficesR$ 
