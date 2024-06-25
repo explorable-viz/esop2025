@@ -112,17 +112,15 @@ if an input $x$ is not in the set of things an output $y$ demands, then the outp
 be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
 is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
 $x_2$. This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
-introduced by \citet{jonsson51}.
+introduced by \citet{jonsson51}, which we will return to in more detail later.
 \newline
-On the surface this property doesn't seem to say much about the relationship between these two
-operations, but we can use it to derive some useful soundness checks and round-tripping properties.}
-\newline
-\JBnote{
-Then finish with mention of round-tripping and link to Galois connections: "conjugacy appears to be
-a fairly permissive notion, but combined with the De Morgan duality, we recover Galois connections
-between inputs and outputs, which have nice minimality properties." Need to introduce the $\sufficesR$ 
-operation here. Do we want to mention that the Galois connection we obtain is the one from \citet{perera22},
-or do it later on in \secref{peers}}
+Pairs of conjugate functions
+are intimately tied to another concept that provides a few more guarantees about our analyses. 
+The idea of the outputs $x$ is demanded by gives rise to the idea of the outputs that $x$ is \emph{sufficient}
+for. Since $\demandedByR$ is a function between Boolean algebras, we can define it's \emph{De Morgan dual},
+which we write as $\sufficesR$. This function, along with $\demandsR$ form a \emph{Galois connection},
+that is, composing them together we get $\demandsR\!\sufficesR(X) \leq X$. We will return to the implications
+of this in later sections.}
 
 % provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
 % are many questions even a domain expert might have about these charts. \JBnote{the essence of this text can remain
@@ -151,7 +149,7 @@ or do it later on in \secref{peers}}
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
-In this paper, we develop the idea of data transparency in two new directions. First we approach the problem
+In this paper, we develop the idea of data transparency across two directions. First we approach the problem
 in a language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program. Dependence graphs are a proven technique which have been used extensively for program
