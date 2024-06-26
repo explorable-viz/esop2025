@@ -58,23 +58,29 @@ those cases.
 
 \subsection{Peer Provenance / Cognate Values}
 \label{sec:peers}
-Our second insight in this paper is that the graphical setting makes it straightforward to compose
-reachability in $G$ with its converse the other way around, producing the provenance query called
-\emph{related inputs} ($\relInputR$). \textcolor{blue}{We illustrated this in \figref{introduction:related-inputs},
+Our second insight in this paper is that \textcolor{blue}{in the graphical setting it is straightforward to compose
+reachability in $G$ with its converse, producing the provenance query we call \emph{related inputs}, and recovering
+the capability for ``linked brushing''. 
+We have already illustrated related inputs in \figref{introduction:related-inputs},
 by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
-remarkably similar in spirit to the ``linked brushing'' we mentioned earlier with respect to \citet{psallidas18}. We
-refer to queries like \emph{related inputs} and \emph{linked brushing} as computing ``peer provenance''. If some inputs
-are related to other inputs, they are ``peers'' in that they co-operate to produce some output. Similarly,
-if some outputs are related to others, they are ``peers'' in that they both make use of the same resources. We show
-how our system can be used to perform linked brushing in \figref{overview:scatterplot}. We extend the example illustrated
-earlier with another view of the data, here a stacked bar chart. The end-user can select parts of the stacked bars
+remarkably similar in spirit to the ``linked brushing'' we mentioned earlier with respect to \citet{psallidas18}.
+
+
+For an example of our systems implementation of linked brushing, we present \figref{overview:scatterplot}.
+This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
+another scatterplot. The end-user can select parts of the stacked bars
 individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
 $\demandsR$ to find the value used to produce the selected segment of the bar. We can see from the legend in the figure
 that each colour is for a different nation. The selected segments demand all the highlighted green data in the table,
 which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
 We note how some of the selections computed in the input table are highlighted a slightly different shade of green
 to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
-input values we care about when computing the related outputs.}
+input values we care about when computing the related outputs.
+
+In the graphical setting, the above computation is simply the composition of $\demandsR$ and $\demandedByR$ in the other
+order. We refer to queries like \emph{related inputs} and \emph{linked brushing} as computing ``peer provenance''. In the graph,
+collections of related inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
+that have been linked are ``peers'' in that they share ancestry in the graph. }
 
 \begin{figure}
    \small
