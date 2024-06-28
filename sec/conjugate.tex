@@ -93,7 +93,7 @@ The IO relation specifies how specific inputs (sources) are demanded by specific
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
 \textcolor{blue}{In \figref{conjugate:example:graph}, we show (a simplified form of) the dependence graph for
 the program pictured in \figref{conjugate:example:program}. Note how the node labelled \emph{5} -- associated
-with the result of $x1 * x2$ -- does not have incoming edge from the node labelled \empth{$x1$}, despite $x1$
+with the result of $x1 * x2$ -- does not have incoming edge from the node labelled \emph{$x1$}, despite $x1$
 being part of the expression. Because $x2 = 0$ the result of $x1 * x2$ does not depend on the value of $x1$,
 and so that edge is omitted.}
 
@@ -125,7 +125,10 @@ $\demandedByR_{R} = \demandsR_{R^{-1}}$
 
 When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
 element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
-element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
+element of $Y'$. \textcolor{blue}{In the example, $\demandedByR{R}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, $\demandsR_{R}(\set{5}) = \set{2}$, since -- because it equals
+$0$ -- only $x2$
+contributes to the value of $x1 * x2$.} If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
 connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
 pair}, in the sense of \citet{jonsson51}:
 
