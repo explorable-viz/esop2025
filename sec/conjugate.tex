@@ -90,7 +90,15 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 \end{definition}
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
-interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''. Clearly the IO relation of $G$ is the
+interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
+\textcolor{blue}{In \figref{conjugate:example:graph}, we show (a simplified form of) the dependence graph for
+the program pictured in \figref{conjugate:example:program}. Note how the node labelled \emph{5} -- associated
+with the result of $x1 * x2$ -- does not have incoming edge from the node labelled \empth{$x1$}, despite $x1$
+being part of the expression. Because $x2 = 0$ the result of $x1 * x2$ does not depend on the value of $x1$,
+and so that edge is omitted.}
+
+
+Clearly the IO relation of $G$ is the
 converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
 input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation
 $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
