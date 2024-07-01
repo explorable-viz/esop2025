@@ -191,8 +191,10 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. 
-We can, in fact, turn this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
+input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{3}$,
+not $\set{3,4}$ as before. Whilst the value at $1$ is necessary to compute the value at $4$, we have not picked out
+the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $4$.
+The two definitions are so similar that $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
 
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
@@ -201,12 +203,31 @@ We can, in fact, turn this query on sufficiency into $\demandedByR_R$, using the
    \[ \dual{f} \eqdef \neg_B \after f \after \neg_A \]
 \end{definition}
 
+\begin{lemma}[Duality of image and preimage functions]
+   \label{lem:conjugate:image-preimage-duality}
+   \item
+   \begin{enumerate}
+      \item $\dual{\demandedByR_R} = \sufficesR_R$
+      \item $\dual{\demandsR_R} = \preimageDualR_R$
+   \end{enumerate}
+\end{lemma}
+\begin{proof}
+   See \apdxsecref{apdx:conjugate:image-preimage-duality}
+\end{proof}
+
+\edit{Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, 
+we can read $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''.
+Then taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is 
+effectively asking the question ``what outputs do not use any of the information I have not
+selected?'', which is exactly the question of sufficiency.}
+
 \begin{definition}[Galois connection]
-\label{def:conjugate:galois-connection}
-Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
-connection} iff
-\[ f(x) \leq y \iff x \leq g(y) \]
+   \label{def:conjugate:galois-connection}
+   Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
+   connection} iff
+   \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
+   
 
 The following proposition is a well known result in the literature, see \citet{menni14}
 for a proof.
@@ -219,16 +240,6 @@ for a proof.
       \item $f$ and $\dual{g}$ form a Galois connection
    \end{enumerate}
 \end{proposition}
-
-\begin{lemma}[Duality of image and preimage functions]
-   \label{lem:conjugate:image-preimage-duality}
-   \item
-   \begin{enumerate}
-      \item $\dual{\demandedByR_R} = \sufficesR_R$
-      \item $\dual{\demandsR_R} = \preimageDualR_R$
-   \end{enumerate}
-\end{lemma}
-
 
 \subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
 \label{sec:conjugate:dependence-graph-algos}
