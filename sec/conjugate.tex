@@ -124,10 +124,7 @@ $\demandedByR_{R} = \demandsR_{R^{-1}}$
 
 When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
 element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
-element of $Y'$. \edit{In the example, $\demandedByR{R}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, $\demandsR_{R}(\set{5}) = \set{2}$, since -- because it equals
-$0$ -- only $x2$
-contributes to the value of $x1 * x2$.} If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
+element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
 connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
 pair}, in the sense of \citet{jonsson51}:
 
@@ -170,9 +167,7 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In \figref{conjugate:example:graph},
-$\sufficesR_{R}(\set{1}) = 3$, and $\sufficesR_{R}(\set{5})$, alone neither input suffices to compute
-$x1 + x2$. Instead we need both, that is $\sufficesR_{R}(\set{1,2}) = \set{3,4,5}$.}
+input set, rather than any ancestor to be in the input set. 
 We can, in fact, turn this query on sufficiency into $\demandedByR_R$, using the De Morgan Dual.
 
 \begin{definition}[De Morgan Dual]
@@ -210,9 +205,6 @@ for a proof.
    \end{enumerate}
 \end{lemma}
 
-\edit{For an intuition of sufficiency as the De Morgan Dual of demanded by, we 
-can read $\sufficesR_{R}(X)$ as "what can I not compute if I don't have
-the elements of $X$?"} 
 
 \subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
@@ -230,6 +222,19 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
+
+\edit{In \figref{conjugate:example:graph},
+$\sufficesR_{R}(\set{1}) = 3$, and $\sufficesR_{R}(\set{5})$, alone neither input suffices to compute
+$x1 + x2$. Instead we need both, that is $\sufficesR_{R}(\set{1,2}) = \set{3,4,5}$.}
+
+\edit{For an intuition of sufficiency as the De Morgan Dual of demanded by, we 
+can read $\sufficesR_{R}(X)$ as "what can I not compute if I don't have
+the elements of $X$?"} 
+
+\edit{In the example, $\demandedByR{R}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, $\demandsR_{R}(\set{5}) = \set{2}$, since -- because it equals
+$0$ -- only $x2$
+contributes to the value of $x1 * x2$.}
 
 \subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
 \label{sec:conjugate:dependence-graph-algos}
