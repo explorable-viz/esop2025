@@ -225,6 +225,20 @@ Need to revisit the image for this example.}
 % defined such a $\demandedByR$ operator as the De Morgan dual of the ``suffices for'' operator $\sufficesR$;
 % one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 % dependence graphs.
+
+Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
+In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
+introduced by \citet{jonsson51}.
+%We would expect these operations to satisfy some nice sanity properties, and indeed they do.
+Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
+be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
+is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
+$x_2$. %This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
+%introduced by \citet{jonsson51}, which
+We will return to the notion of conjugacy in more detail later.
+
+
+
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
@@ -253,17 +267,6 @@ cognacy in $\opGraph{G}$. We will discuss how this recovers an analysis similar 
 Moreover, in the graphical setting,} these are both easy to compute, since they amount to the two
 ways of composing reachability in $G$ with its relational converse.
 
-
-Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
-In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
-introduced by \citet{jonsson51}.
-%We would expect these operations to satisfy some nice sanity properties, and indeed they do.
-Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
-be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
-is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
-$x_2$. %This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
-%introduced by \citet{jonsson51}, which
-We will return to the notion of conjugacy in more detail later.
 
 
 
