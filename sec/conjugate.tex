@@ -283,13 +283,14 @@ An alternative presentation of graphs in terms of adjacency maps is useful notat
 
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
 Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read an algorithm directly from the
-inductive definition, treating it as a function with $V$ and index $G$ as inputs.\footnote{\note{This needs
-changing to reflect the new definitions} Any choice between
-\ruleName{skip} and \ruleName{extend} is made deterministic by the disjointness of $G$ and $H$ in
-\ruleName{extend} implying the opposite side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with
-termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
-leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
-to reach the base case of \ruleName{done}.} 
+inductive definition, treating it as a function with $V$ and index $G$ as inputs.
+% \footnote{\note{This needs
+% changing to reflect the new definitions} Any choice between
+% \ruleName{skip} and \ruleName{extend} is made deterministic by the disjointness of $G$ and $H$ in
+% \ruleName{extend} implying the opposite side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with
+% termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
+% leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
+% to reach the base case of \ruleName{done}.} 
 The auxiliary operation $G \demandedByV{}$ \edit{maintains a
 (partial) slice $H \subseteq G$. If there is a sink of $H$ that still has outgoing edges in $G$, then the
 targets of those edges are reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}).
