@@ -79,23 +79,22 @@ we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{
 filter/kernel matrices create subtly different dependency structures, we
 implemented a few different such kernels. Second, we include an example of a more
 involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
-We provide a view of this program in \figref{dtw-source}.
 Third, we developed a prototype of a graphics
 library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
 Finally, we test two linked examples
 (\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
-The rest of the benchmark code is listed in~\apdxsecref{evaluation-src-code}.
+\edit{The code for our test programs is presented in~\apdxsecref{evaluation-src-code}.}
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
 Runtimes are reported in milliseconds (to 2 decimal places). When we refer to \textit{speedup}
 or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{appendix/fig/example/compute-dtw.fld}}
-   \caption{Source code: \lstinline{compute-dtw}}
-   \label{fig:dtw-source}
-\end{figure}
+% \begin{figure}
+%    \small
+%    {\lstinputlisting[language=Fluid]{appendix/fig/example/compute-dtw.fld}}
+%    \caption{Source code: \lstinline{compute-dtw}}
+%    \label{fig:dtw-source}
+% \end{figure}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
