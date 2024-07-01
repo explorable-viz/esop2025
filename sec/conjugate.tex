@@ -94,7 +94,7 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
-\edit{In \figref{conjugate:example:graph}, the program is so simple that the reachability relation
+\edit{In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
 and the IO relation are identical.}
 
 Clearly the IO relation of $G$ is the
@@ -150,7 +150,31 @@ This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subse
 the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
-\subsubsection{Dual Image and Preimage Functions}
+\subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
+\label{sec:conjugate:dependence-graph-functions}
+
+We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its IO
+relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
+reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
+inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
+traversing the graph in the opposite direction, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
+
+\begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
+   For a graph $G$ with IO relation $R$, define:
+   \begin{enumerate}
+      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
+      \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
+   \end{enumerate}
+\end{definition}
+\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{3,4}) = \set{1, 2}$, since the
+value of $x2$ is also used in the construction of the value at node $4$.
+On the other hand, taking $\demandsR_{R}(\set{5})$ we only get $\set{2}$, despite the it representing
+the value of the expression $x1 * x2$. This is because $x2 = 0$, so the value of $x1$ has no effect
+on the result.}
+
+
+\subsection{Dual Image and Preimage Functions}
 
 If $R$ is an IO relation, then $\demandedByR_R(X)$ effectively asks ``what is $X$ necessary for?'' This
 naturally leads to the question ``what is $X$ \emph{sufficient} for?'' In fact, we can use the notion of
@@ -205,36 +229,6 @@ for a proof.
    \end{enumerate}
 \end{lemma}
 
-
-\subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
-\label{sec:conjugate:dependence-graph-functions}
-
-We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its IO
-relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
-reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
-inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
-traversing the graph in the opposite direction, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
-
-\begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
-   For a graph $G$ with IO relation $R$, define:
-   \begin{enumerate}
-      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
-      \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
-   \end{enumerate}
-\end{definition}
-
-\edit{In \figref{conjugate:example:graph},
-$\sufficesR_{R}(\set{1}) = 3$, and $\sufficesR_{R}(\set{5})$, alone neither input suffices to compute
-$x1 + x2$. Instead we need both, that is $\sufficesR_{R}(\set{1,2}) = \set{3,4,5}$.}
-
-\edit{For an intuition of sufficiency as the De Morgan Dual of demanded by, we 
-can read $\sufficesR_{R}(X)$ as "what can I not compute if I don't have
-the elements of $X$?"} 
-
-\edit{In the example, $\demandedByR{R}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, $\demandsR_{R}(\set{5}) = \set{2}$, since -- because it equals
-$0$ -- only $x2$
-contributes to the value of $x1 * x2$.}
 
 \subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
 \label{sec:conjugate:dependence-graph-algos}
