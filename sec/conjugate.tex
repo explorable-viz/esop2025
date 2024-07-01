@@ -320,13 +320,18 @@ slice by intersecting with $\sinks{G}$.
 \end{definition}
 
 For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
-$\sufficesE{}$ which builds a graph slice $G$', similar to $\demandsAlg{}$ except that the direction of the
-slice is inverted, i.e.~$G' \subseteq \opGraph{G}$. The judgement $\sufficesE{}$ takes the graph slice under
-construction $G'$, a ``pending'' subgraph $H \subseteq G$ with $\sources{H} \subseteq \sinks{G'}$, and the
-current set of edges under consideration $E$. For efficiency, the algorithm traverses each edge in the graph
-at most once.
-
-\edit{TODO: new explanation for \figref{suffices-algo-diagram}}
+$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
+\edit{takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
+we have discovered partial information, and the remaining unexplored graph $G$. \note{Maybe rename $G$ so
+we can give the subgraph relationships?}. We add vertices and edges to the pending graph whenever 
+we have a vertex in $H$ which still has outgoing edges in $G$. These edges and their endpoints are
+added to $P$ (\ruleName{pending}). A node $\alpha$ and its incoming edges can be moved from $P$ to $H$ when 
+it has no more incoming edges in $G$ as this can only happen when we have already moved every ancestor of
+$\alpha$ into $H$ (\ruleName{extend}). If neither of these are true, then we terminate with the
+(potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{}$
+takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
+it simply means that the input data $X$ was insufficient to compute any of the original programs outputs.
+We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}.}
 
 \input{fig/conjugate/suffices-algo-explanation}
 
