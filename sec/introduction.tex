@@ -39,7 +39,7 @@ data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
 
 \subsection{Data transparency as PL infrastructure}
 
-Features like these are valuable comprehension aids but are laborious to implement by hand. They also require
+Features like these are valuable comprehension aids but are laborious to implement by hand, as done in \cite{bremer15}. They also require
 the author to anticipate the queries a user might have and do not readily generalise: for example
 \citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
 
@@ -55,12 +55,12 @@ care about, ideally with some kind of formal guarantee that the revealed data is
 sufficient''. 
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
-lassoing, the intention is typically to manipulate the underlying data; this has lead to various techniques
+lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
-\citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
+\cd{This needs work: \citet{psallidas18} were the first to propose techniques based on fine-grained data provenance; for a
 relational visualisation language, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature called \emph{linked brushing}. \textcolor{blue}{\citet{perera22} take this approach further by explicitly
+feature called \emph{linked brushing}}. \textcolor{blue}{\citet{perera22} take this approach further by explicitly
 constructing execution traces for a general purpose functional language, and provide a backward evaluation function
 that lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.}
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
@@ -84,44 +84,82 @@ that lets them ``rewind'' a program and trace fine-grained dependency informatio
    \centering
    \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
    \vspace{-2mm}
-   \caption{Related inputs are \emph{cognate} (have a common output dependency), \JBnote{Exchanged with \figref{overview:scatterplot}}}
+   \caption{Related inputs are \emph{cognate} (have a common output dependency), \cd{change this legend}}
    \label{fig:introduction:related-inputs}
 \end{figure}
-These examples help form half of the picture of a broader concept. We call this broad idea of
-fine-grained \emph{in situ} provenance queries \emph{data transparency}. We illustrate the other
-half of the concept in \figref{introduction:related-inputs}. \textcolor{blue}{For context, let us imagine that we
-are a data scientist investigating the efficiency of clean energy usage, broken down geographically.
-The data -- split across tables dedicated to both \textit{renewable} and \textit{non-renewable} energy sources --
-has been aggregated into a scatter plot by another scientist working on the same project. We can tell by
-the label on the y-axis that the $y$ component of each point is the ``capacity factor'' of clean energy resources.
-The chart alone doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
-nation. The developer selects part of their input of interest by mousing over the cell in the table (\figref{introduction:related-inputs} step 1, green selection).
-The system, through an operator we write as $\demandedByR$ traces the data contained in this cell to the point
-in the chart it was used to compute. We read $\demandedByR$ as computing ``what outputs is a piece of data \emph{demanded by}';'.
-In fact, we see that it only picks out the $y$-coordinate. We call the elements of
-the output that are used by our input selection the \emph{mediating output(s)}, since they
-govern the relationships between sets of inputs.} \textcolor{red}{Note: unsure why we
-specified $y$ here, as the selected thing is used by both $x$ and $y$. We instead want to select an energy sources output field.
-Need to revisit the image for this example.}
-\textcolor{blue}{Now that we have selected the $y$-coordinate for China, our system uses a second operator,
-$\demandsR$, to identify the complete set of input values which were used to compute the point (\figref{introduction:related-inputs}, grey selections).
-We read this second operator as computing ``what inputs does a piece of output data \emph{demand}''.
-From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
-\newline
+
+%These examples help form half of the picture of a broader concept of
+%fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. We illustrate the other
+%half of the concept in \figref{introduction:related-inputs}. For context, let us imagine that we
+%are a data scientist investigating the efficiency of clean energy usage, broken down geographically.
+%The data -- split across tables dedicated to both \textit{renewable} and \textit{non-renewable} energy sources --
+%has been aggregated into a scatter plot. %by another scientist working on the same project.
+%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+%nation.
+
+Next, we use the example in Fig.~\ref{fig:introduction:related-inputs} to describe the concept we are concerned with in this paper, namely that of fine-grained in situ
+provenance queries, which we call \emph{data transparency}.
+For context, let us imagine that we are a data scientist investigating the efficiency of clean energy usage, broken down geographically.
+The data is split across the two tables dedicated to \textit{renewable} and \textit{non-renewable} energy sources, respectively.
+The data from the tables has been aggregated into a view, which is our case is represented by the scatter plot on the right hand side of the figure, where the x-axis represents the total renewables capacity over the total energy capacity, whereas the y-axis denotes the total green energy output over the total green energy capacity.
+An observer could either have access to both the data and the view, or only to the view (in which case, the data is only visible to the developer writing the application that generates the view).
+In this paper, we sometimes refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''. 
+There are three scenarios that illustrate data transparency:
+
+\paragraph{Fine-grained linking of the view back to the data}
+The dots in the scatter plot do not provide any details in terms of the data they were computed from.  For illustration, when selecting the dot highlighted in green
+in Fig.~\ref{fig:introduction:related-inputs}, an observer may want to identify all the values from the two tables that were used to compute its x and y coordinates (highlighted in grey in the figure). 
+
+%\paragraph{Fine-grained linking of the view to the data}
+\cd{We need either a different figure, or different colours for this selection.}
+Furthermore, an observer might be interested in more fine-grained data. For instance, they may want to only find the information about green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. In our design, by selecting the y-coordinate of the dot corresponding to China, the observer can see exactly the considered data. In particular, as shown in Fig.~\ref{}, we can see that nuclear power is counted as a clean energy source.  
+%
+As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
+%(\figref{introduction:related-inputs}, grey selections).
+We read this second operator as computing ``what input data  does an output \emph{demand}?''.
+%From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
+
+
+\paragraph{Fine-grained linking of the data to the view}
+A user (an observer or a developer) may also be interested in following the link between the input data and the output view. For instance, the user may select the China's bioenergy capacity
+(highlighted in green in Fig.~\ref{fig:introduction:related-inputs}). Then, our system, through an operator we write as $\demandedByR$ traces the data contained in this cell to the point
+in the chart it was used to compute (the green dot in the plot). We read $\demandedByR$ as computing ``what outputs is a piece of data \emph{demanded by}''.
+%In fact, we see that it only picks out the $y$-coordinate.
+%We call the elements of the output that are used by our input selection the \emph{mediating output(s)}, since they
+%govern the relationships between sets of inputs.
+%In our case, the mediating outputs are denoted by the green selection in the scatter plot.
+
+\paragraph{Linked inputs and linked outputs}
+The previous use cases only went in one direction, either from outputs back to inputs, or from inputs to outputs. However, there may be situations where we want to compose the two directions.
+One such scenario is illustrated in Fig.~\ref{overview:scatterplot}, where we have two outputs, the same scatter plot as in Fig.~\ref{fig:introduction:related-inputs}, and an additional bar chart
+denoting the non-renewables by country. Let's assume that an observer selects \cd{fix and describe selection} in the bar chart. As previously explained, this will highlight the corresponding
+data in the nonRenewables table that was used to produce those outputs. Additionally, it will also highlight the outputs in the scatter plot that were produced by the same data. 
+
+
+Second, we introduce a new kind of provenance query called linked inputs, a relation of mutual
+relevance which arises between inputs when they contribute to common features of the output.
+Users are able to formulate queries like “What outputs use this data element, and what other data
+elements are used along with it?”.
+
+%by another scientist working on the same project.
+%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+%nation.
+
+
 We would expect these operations to satisfy some nice sanity properties, and indeed they do. Informally,
 if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
 be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
 is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
 $x_2$. This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
 introduced by \citet{jonsson51}, which we will return to in more detail later.
-\newline
-Pairs of conjugate functions
-are intimately tied to another concept that provides a few more guarantees about our analyses. 
-The idea of the outputs $x$ is demanded by gives rise to the idea of the outputs that $x$ is \emph{sufficient}
-for. Since $\demandedByR$ is a function between Boolean algebras, we can define it's \emph{De Morgan dual},
-which we write as $\sufficesR$. This function, along with $\demandsR$ form a \emph{Galois connection},
-that is, composing them together we get $\demandsR\!\sufficesR(X) \leq X$. We will return to the implications
-of this in later sections.}
+
+%Pairs of conjugate functions
+%are intimately tied to another concept that provides a few more guarantees about our analyses. 
+%The idea of the outputs $x$ is demanded by gives rise to the idea of the outputs that $x$ is \emph{sufficient}
+%for. Since $\demandedByR$ is a function between Boolean algebras, we can define it's \emph{De Morgan dual},
+%which we write as $\sufficesR$. This function, along with $\demandsR$ form a \emph{Galois connection},
+%that is, composing them together we get $\demandsR\!\sufficesR(X) \leq X$. We will return to the implications
+%of this in later sections.
 
 % provenance-inspired approaches. Consider the two charts at the top of the figure. As with the histogram, there
 % are many questions even a domain expert might have about these charts. \JBnote{the essence of this text can remain
