@@ -226,46 +226,74 @@ Need to revisit the image for this example.}
 % one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 % dependence graphs.
 
-Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
-In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
-introduced by \citet{jonsson51}.
-%We would expect these operations to satisfy some nice sanity properties, and indeed they do.
-Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
-be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
-is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
-$x_2$. %This property of ``non-overlapping'' sets is characterized by the notion of \emph{conjugacy},
-%introduced by \citet{jonsson51}, which
-We will return to the notion of conjugacy in more detail later.
-
-
 
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
-%Previous works .....
-
-In this paper, we develop the idea of data transparency across two directions. First we approach the problem
-in a language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
+We introduce a new program analysis framework which supports
+interactive exploration of fine-grained I/O relationships, as those described in the previous section.
+Our approach is language-independent, %which means that changes to the underlying language will not affect the analysis (?).
+using \emph{dynamic dependence graphs}~\citet{ferrante87, agrawal90}. This separates the definition of
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
-for that program. Dependence graphs are a proven technique which have been used extensively for program
-slicing (mainly of imperative programs~\cite{ferrante87}, \edit{\cite{agrawal90}), but applying
-conjugate operators and Galois connections over these graphs is new. Analyses using adjoint operators similar to ours 
-(e.g.~\citet{ricciotti17})} instead utilised a bidirectional interpreter that builds an execution record
-in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
-a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show
-that a graph-based approach factors the problem into a (language-specific) graph-building interpreter plus
-(language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and
-improves performance compared to approaches based on bidirectional interpretation.
+for that program, which enables:
 
-Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
-relevance which arises between inputs when they contribute to common features of the output. Users are able to
-formulate queries like ``What outputs use this data element, and what other data elements are used along with
-it?''. \edit{We have briefly touched on this in the discussion of \figref{introduction:related-inputs}.
-Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
-dual to another query type, ``related outputs'' shown in \figref{overview:scatterplot}, which can be understood as
-cognacy in $\opGraph{G}$. We will discuss how this recovers an analysis similar in spirit to one from some related work.
-Moreover, in the graphical setting,} these are both easy to compute, since they amount to the two
-ways of composing reachability in $G$ with its relational converse.
+\begin{itemize}
+
+\item Easily updating the language, as well as adding new analyses. With respect to the latter, we are the first to propose the linked inputs analysis, a relation of mutual relevance or “cognacy” which arises between inputs when they contribute to common features of the output. The design of our framework makes it straightforward to implement this analysis by composing the available operands.
+
+\item Improved performance with respect to previous works. As shown in the experimental evaluation, we manage to answer queries \cd{Joe to add supporting data}. Fast response time is particularly important in the context of real-time systems, such as the one we target.
+
+\item Correctness checks that  take advantage of the duality of the proposed operators. For this purpose, we use the notions of conjugacy~\citet{jonsson51} and Galois connection \cd{add citation}.
+%Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
+%In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
+%introduced by.
+%Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
+%be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
+%is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
+%$x_2$. We will return to the notion of conjugacy in more detail later.
+ 
+\end{itemize}
+  
+
+These contributions are not available in previous works, such as
+hand-crafted solutions~\citet{bremer15}, and those proposing a general
+purpose language~\citet{perera22}. With respect to the latter, Perera
+et al. utilised a bidirectional interpreter that builds an execution
+record in the form of a \emph{trace} during a forwards execution,
+folding that trace back into a program slice during a backwards
+execution. The two directions of the interpreter need to be kept
+synchronised, which makes updating the language difficult as every
+change requires modifying each direction in a manner that maintains
+bidirectionality.  Every analysis implemented in their framework needs
+to be defined separately and depends on details of the language,
+imposing a significant burden on the implementor.  Moreover each runs
+over an execution record or trace of the entire computation regardless
+of whether all of the trace is relevant.
+
+
+
+%In this paper, we develop the idea of data transparency across two directions. First we approach the problem
+%in a language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
+%queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
+%for that program. Dependence graphs are a proven technique which have been used extensively for program
+%slicing (mainly of imperative programs~\cite{ferrante87}, \edit{\cite{agrawal90}), but applying
+%conjugate operators and Galois connections over these graphs is new. Analyses using adjoint operators similar to ours 
+%(e.g.~\citet{ricciotti17})} instead utilised a bidirectional interpreter that builds an execution record
+%in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
+%a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show
+%that a graph-based approach factors the problem into a (language-specific) graph-building interpreter plus
+%(language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and
+%improves performance compared to approaches based on bidirectional interpretation.
+
+%Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
+%relevance which arises between inputs when they contribute to common features of the output. Users are able to
+%formulate queries like ``What outputs use this data element, and what other data elements are used along with
+%it?''. \edit{We have briefly touched on this in the discussion of \figref{introduction:related-inputs}.
+%Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are formally
+%dual to another query type, ``related outputs'' shown in \figref{overview:scatterplot}, which can be understood as
+%cognacy in $\opGraph{G}$. We will discuss how this recovers an analysis similar in spirit to one from some related work.
+%Moreover, in the graphical setting,} these are both easy to compute, since they amount to the two
+%ways of composing reachability in $G$ with its relational converse.
 
 
 
