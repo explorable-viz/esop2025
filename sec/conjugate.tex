@@ -43,8 +43,8 @@ Often we will be considering a specific finite Boolean algebra, namely the power
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
 complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{1,2}}$
-and $\powerset{\set{3,4,5}}$ respectively.} 
+input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{1,2, 3}}$
+and $\powerset{\set{4,5,6}}$ respectively.} 
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -166,11 +166,11 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
-\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{3,4}) = \set{1, 2}$, since the
-value of $x2$ is also used in the construction of the value at node $4$.
-On the other hand, taking $\demandsR_{R}(\set{5})$ we only get $\set{2}$, despite the it representing
-the value of the expression $x1 * x2$. This is because $x2 = 0$, so the value of $x1$ has no effect
+\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{4, 5}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{4,5}) = \set{1, 2}$, since the
+value of $x2$ is also used in the construction of the value at node $5$.
+On the other hand, taking $\demandsR_{R}(\set{6})$ we only get $\set{2}$, despite the it representing
+the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.}
 
 
@@ -191,9 +191,9 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{3}$,
-not $\set{3,4}$ as before. Whilst the value at $1$ is necessary to compute the value at $4$, we have not picked out
-the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $4$.
+input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{4}$,
+not $\set{4,5}$ as before. Whilst the value at $1$ is necessary to compute the value at $5$, we have not picked out
+the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $5$.
 The two definitions are so similar that $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
 
 \begin{definition}[De Morgan Dual]
@@ -265,14 +265,6 @@ these are discussed in more detail in \secref{conclusion}. Our implementation ma
 $G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
 in-neighbours.
 
-An alternative presentation of graphs in terms of adjacency maps is useful notationally.
-
-\begin{definition}[Graph as adjacency map]
-   A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G: V \to \powerset{V}$ from vertices
-   to sets of out neighbours, where
-   \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
-\end{definition}
-
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
 
@@ -340,8 +332,10 @@ We provide an example of a run of the algorithm in \figref{suffices-algo-diagram
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
 \end{proposition}
-
-\newpage
+\begin{proof}
+   See \apdxsecref{apdx:suffices-alg}
+\end{proof}
+%\newpage
 \subsubsection{Derived algorithms}
 
 \proprefTwo{demandedByAlg-computes-demandedBy}{sufficesAlg-computes-suffices} justify treating
@@ -377,11 +371,11 @@ our outputs demand, and then computes the outputs that those inputs $\demandsR_{
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
 Neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is necessarily inflationary, as illustrated in
-\figref{relation-not-galois}. In \figref{relation-not-galois-1}, the uppermost vertex on the left is part of
+\figref{relation-not-galois}, using the graph from the example in \figref{conjugate:example:graph}.
+In \figref{relation-not-galois-1}, the uppermost vertex on the left is part of
 the initial input selection $X'$, but is not preserved by the $\demandsR_G \after \demandedByR_G$ round-trip
-because it is not demanded by any output. In \figref{relation-not-galois-2}, the uppermost vertex on the right
-is part of the initial output selection $Y'$, but is not preserved by the $\demandedByR_G \after \demandsR_G$
-round-trip because it does not demand any input.
+because it is not demanded by any output. It is not hard to see how the same concept arises using $\demandedByR_G \after \demandsR_G$
+on the graph of a program that outputs a constant.
 
 \input{fig/conjugate/relations-not-galois}
 

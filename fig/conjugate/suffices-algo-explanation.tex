@@ -3,7 +3,7 @@
 \definecolor{forest}{RGB}{0,144,21}
 
 \begin{figure}
-   \begin{subfigure}{0.24\textwidth}
+   \begin{subfigure}{0.24\textwidth} % Step 0
       \begin{tikzpicture}[scale=0.6,
                arrow/.style={->,black},
                set name/.style={font=\color{myblue}\tiny\bfseries\sf},
@@ -20,17 +20,17 @@
          \node[fill=myblue] (x7) at (5.0, 0.75) {};
          \node[circle, draw = black](step) at (4.25, 3.0) {1};
          \begin{scope}[arrow]
-            \draw[dashed] (x1.east) -- (x5);
-            \draw[dashed] (x2.east) -- (x5);
-            \draw[dashed] (x3.east) -- (x6);
-            \draw[dashed] (x3.east) -- (x7);
+            \draw (x1.east) -- (x5);
+            \draw (x2.east) -- (x5);
+            \draw (x3.east) -- (x6);
+            \draw (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
             \draw (x5.east) -- (x6);
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
-         \begin{tikzpicture}[scale=0.6,
+   \begin{subfigure}{0.24\textwidth} % 2
+      \begin{tikzpicture}[scale=0.6,
                arrow/.style={->,black},
                set name/.style={font=\color{myblue}\tiny\bfseries\sf},
                set/.style={thick, myblue},
@@ -45,23 +45,22 @@
          \node[fill=myblue] (x6) at (5.0, 2.0) {};
          \node[fill=myblue] (x7) at (5.0, 0.75) {};
          \node[circle, draw = black](step) at (4.25, 3.0) {2};
-
          \begin{scope}[arrow]
-            \draw[dotted, thick] (x5.west) -- (x1);
-            \draw[dashed] (x2.east) -- (x5);
-            \draw[dashed] (x3.east) -- (x6);
-            \draw[dashed] (x3.east) -- (x7);
+            \draw[dashed] (x1.east) -- (x5);
+            \draw (x2.east) -- (x5);
+            \draw (x3.east) -- (x6);
+            \draw (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
             \draw (x5.east) -- (x6);
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
+   \begin{subfigure}{0.24\textwidth} % 3
       \begin{tikzpicture}[scale=0.6,
                arrow/.style={->,black},
                set name/.style={font=\color{myblue}\tiny\bfseries\sf},
                set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
+               every node/.style={scale=0.6,circle},
                font=\sf
             ]
          \node[fill=forest] (x1) at (1.0, 3.0) {};
@@ -72,23 +71,22 @@
          \node[fill=myblue] (x6) at (5.0, 2.0) {};
          \node[fill=myblue] (x7) at (5.0, 0.75) {};
          \node[circle, draw = black](step) at (4.25, 3.0) {3};
-
          \begin{scope}[arrow]
-            \draw[dotted, thick] (x5.west) -- (x1);
-            \draw[dotted, thick] (x5.west) -- (x2);
-            \draw[dashed] (x3.east) -- (x6);
-            \draw[dashed] (x3.east) -- (x7);
+            \draw[dashed] (x1.east) -- (x5);
+            \draw[dashed] (x2.east) -- (x5);
+            \draw (x3.east) -- (x6);
+            \draw (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
             \draw (x5.east) -- (x6);
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
-         \begin{tikzpicture}[scale=0.6,
+   \begin{subfigure}{0.24\textwidth} % 4
+      \begin{tikzpicture}[scale=0.6,
                arrow/.style={->,black},
                set name/.style={font=\color{myblue}\tiny\bfseries\sf},
                set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
+               every node/.style={scale=0.6,circle},
                font=\sf
             ]
          \node[fill=forest] (x1) at (1.0, 3.0) {};
@@ -99,23 +97,74 @@
          \node[fill=myblue] (x6) at (5.0, 2.0) {};
          \node[fill=myblue] (x7) at (5.0, 0.75) {};
          \node[circle, draw = black](step) at (4.25, 3.0) {4};
-
          \begin{scope}[arrow]
-            \draw (x5.west) -- (x1);
-            \draw (x5.west) -- (x2);
+            \draw[thick] (x1.east) -- (x5);
+            \draw[thick] (x2.east) -- (x5);
+            \draw (x3.east) -- (x6);
+            \draw (x3.east) -- (x7);
+            \draw (x4.east) -- (x7);
+            \draw (x5.east) -- (x6);
+         \end{scope}
+      \end{tikzpicture}
+   \end{subfigure}
+   \begin{subfigure}{0.24\textwidth} % 5
+      \begin{tikzpicture}[scale=0.6,
+               arrow/.style={->,black},
+               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
+               set/.style={thick, myblue},
+               every node/.style={scale=0.6,circle},
+               font=\sf
+            ]
+         \node[fill=forest] (x1) at (1.0, 3.0) {};
+         \node[fill=forest] (x2) at (1.0, 2.0) {};
+         \node[fill=forest] (x3) at (1.0, 1.0) {};
+         \node[fill=myblue] (x4) at (1.0, 0.0) {};
+         \node[fill=forest] (x5) at (3.0, 2.5) {};
+         \node[fill=myblue] (x6) at (5.0, 2.0) {};
+         \node[fill=myblue] (x7) at (5.0, 0.75) {};
+         \node[circle, draw = black](step) at (4.25, 3.0) {5};
+         \begin{scope}[arrow]
+            \draw[thick] (x1.east) -- (x5);
+            \draw[thick] (x2.east) -- (x5);
+            \draw (x3.east) -- (x6);
+            \draw (x3.east) -- (x7);
+            \draw (x4.east) -- (x7);
+            \draw[dashed] (x5.east) -- (x6);
+         \end{scope}
+      \end{tikzpicture}
+   \end{subfigure}
+   \begin{subfigure}{0.24\textwidth} % 6
+      \begin{tikzpicture}[scale=0.6,
+               arrow/.style={->,black},
+               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
+               set/.style={thick, myblue},
+               every node/.style={scale=0.6,circle},
+               font=\sf
+            ]
+         \node[fill=forest] (x1) at (1.0, 3.0) {};
+         \node[fill=forest] (x2) at (1.0, 2.0) {};
+         \node[fill=forest] (x3) at (1.0, 1.0) {};
+         \node[fill=myblue] (x4) at (1.0, 0.0) {};
+         \node[fill=forest] (x5) at (3.0, 2.5) {};
+         \node[fill=myblue] (x6) at (5.0, 2.0) {};
+         \node[fill=myblue] (x7) at (5.0, 0.75) {};
+         \node[circle, draw = black](step) at (4.25, 3.0) {6};
+         \begin{scope}[arrow]
+            \draw[thick] (x1.east) -- (x5);
+            \draw[thick] (x2.east) -- (x5);
             \draw[dashed] (x3.east) -- (x6);
             \draw[dashed] (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
             \draw[dashed] (x5.east) -- (x6);
          \end{scope}
       \end{tikzpicture}
-   \end{subfigure}\vspace{5mm}
-   \begin{subfigure}{0.24\textwidth}
+   \end{subfigure}
+   \begin{subfigure}{0.24\textwidth} % 7
       \begin{tikzpicture}[scale=0.6,
                arrow/.style={->,black},
                set name/.style={font=\color{myblue}\tiny\bfseries\sf},
                set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
+               every node/.style={scale=0.6,circle},
                font=\sf
             ]
          \node[fill=forest] (x1) at (1.0, 3.0) {};
@@ -123,98 +172,16 @@
          \node[fill=forest] (x3) at (1.0, 1.0) {};
          \node[fill=myblue] (x4) at (1.0, 0.0) {};
          \node[fill=forest] (x5) at (3.0, 2.5) {};
-         \node[fill=burnt] (x6) at (5.0, 2.0) {};
-         \node[fill=myblue] (x7) at (5.0, 0.75) {};
-         \node[circle, draw = black](step) at (4.25, 3.0) {5};
-
+         \node[fill=myblue] (x6) at (5.0, 2.0) {};
+         \node[fill=forest] (x7) at (5.0, 0.75) {};
+         \node[circle, draw = black](step) at (4.25, 3.0) {7};
          \begin{scope}[arrow]
-            \draw (x5.west) -- (x1);
-            \draw (x5.west) -- (x2);
-            \draw[dotted, thick] (x6.west) -- (x3);
+            \draw[thick] (x1.east) -- (x5);
+            \draw[thick] (x2.east) -- (x5);
+            \draw[thick] (x3.east) -- (x6);
             \draw[dashed] (x3.east) -- (x7);
             \draw (x4.east) -- (x7);
-            \draw[dashed] (x5.east) -- (x6);
-         \end{scope}
-      \end{tikzpicture}
-   \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
-      \begin{tikzpicture}[scale=0.6,
-               arrow/.style={->,black},
-               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
-               set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
-               font=\sf
-            ]
-         \node[fill=forest] (x1) at (1.0, 3.0) {};
-         \node[fill=forest] (x2) at (1.0, 2.0) {};
-         \node[fill=forest] (x3) at (1.0, 1.0) {};
-         \node[fill=myblue] (x4) at (1.0, 0.0) {};
-         \node[fill=forest] (x5) at (3.0, 2.5) {};
-         \node[fill=burnt] (x6) at (5.0, 2.0) {};
-         \node[fill=burnt] (x7) at (5.0, 0.75) {};
-         \node[circle, draw = black](step) at (4.25, 3.0) {6};
-
-         \begin{scope}[arrow]
-            \draw (x5.west) -- (x1);
-            \draw (x5.west) -- (x2);
-            \draw[dotted, thick] (x6.west) -- (x3);
-            \draw[dotted, thick] (x7.west) -- (x3);
-            \draw (x4.east) -- (x7);
-            \draw[dashed] (x5.east) -- (x6);
-         \end{scope}
-      \end{tikzpicture}
-   \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
-      \begin{tikzpicture}[scale=0.6,
-               arrow/.style={->,black},
-               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
-               set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
-               font=\sf
-            ]
-         \node[fill=forest] (x1) at (1.0, 3.0) {};
-         \node[fill=forest] (x2) at (1.0, 2.0) {};
-         \node[fill=forest] (x3) at (1.0, 1.0) {};
-         \node[fill=myblue] (x4) at (1.0, 0.0) {};
-         \node[fill=forest] (x5) at (3.0, 2.5) {};
-         \node[fill=burnt] (x6) at (5.0, 2.0) {};
-         \node[fill=burnt] (x7) at (5.0, 0.75) {};
-         \node[circle, draw = black](step) at (4.25, 3.0) {7};
-
-         \begin{scope}[arrow]
-            \draw (x5.west) -- (x1);
-            \draw (x5.west) -- (x2);
-            \draw[dotted, thick] (x6.west) -- (x3);
-            \draw[dotted, thick] (x7.west) -- (x3);
-            \draw (x4.east) -- (x7);
-            \draw[dotted, thick] (x6.west) -- (x5);
-         \end{scope}
-      \end{tikzpicture}
-   \end{subfigure}
-   \begin{subfigure}{0.24\textwidth}
-      \begin{tikzpicture}[scale=0.6,
-               arrow/.style={->,black},
-               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
-               set/.style={thick, myblue},
-               every node/.style={scale=0.6, circle},
-               font=\sf
-            ]
-         \node[fill=forest] (x1) at (1.0, 3.0) {};
-         \node[fill=forest] (x2) at (1.0, 2.0) {};
-         \node[fill=forest] (x3) at (1.0, 1.0) {};
-         \node[fill=myblue] (x4) at (1.0, 0.0) {};
-         \node[fill=forest] (x5) at (3.0, 2.5) {};
-         \node[fill=forest] (x6) at (5.0, 2.0) {};
-         \node[fill=burnt] (x7) at (5.0, 0.75) {};
-         \node[circle, draw = black](step) at (4.25, 3.0) {8};
-
-         \begin{scope}[arrow]
-            \draw (x5.west) -- (x1);
-            \draw (x5.west) -- (x2);
-            \draw (x6.west) -- (x3);
-            \draw[dotted, thick] (x7.west) -- (x3);
-            \draw (x4.east) -- (x7);
-            \draw (x6.west) -- (x5);
+            \draw[thick] (x5.east) -- (x6);
          \end{scope}
       \end{tikzpicture}
    \end{subfigure}

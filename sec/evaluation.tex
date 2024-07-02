@@ -77,12 +77,13 @@ implemented in \OurLang and in the language of \citet{perera22}.  The benchmark 
 scientist may find useful in an exploratory data analysis scenario. First,
 we considered matrix convolution (\textbf{edgeDetect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of Code (LoC) each). Given that different
 filter/kernel matrices create subtly different dependency structures, we
-implemented a few different such kernels. Second, we include an example of a more
-involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
-Third, we developed a prototype of a graphics
+implemented a few different such kernels.
+% Second, we include an example of a more
+% involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
+Second, we developed a prototype of a graphics
 library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
 Finally, we test two linked examples
-(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
+(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{overview:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
 \edit{The code for our test programs is presented in~\apdxsecref{evaluation-src-code}.}
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
@@ -122,7 +123,8 @@ column \textbf{Bwd-Speedup}.
 
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
-ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
+% ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
+\edit{from 33.6x speedup for the stacked bar-chart}
 to more than 80x for \textbf{gaussian}.
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
@@ -146,7 +148,9 @@ and column \textbf{G-DemBy-Suff} contains the results obtained when computing \t
 Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-DemBy} compared to \textbf{T-DemBy},
 and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
-For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
+% For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
+\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.}
+
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
@@ -159,29 +163,18 @@ between the user and the system. Additionally, the fast response times for
 \textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
 translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
-%% \cd{I don't think this paragraph brings any new insights, potentially more questions.}
-%% Outside of evaluation, we generally see a consistent improvement to performance.
-%% The graph implementation of demands shows significant speedup on all examples,
-%% ranging from a 16 times speedup in the worst case -- \textbf{compute-dtw} --
-%% to over 70 times faster in the case of the \textbf{gaussian} convolution and
-%% \textbf{line-chart}. Most of our example programs also exhibit a great deal of
-%% speedup in the time it takes to compute \textit{demanded by} with one exception.
-%% We see that our linked examples -- \textbf{bar-chart-line-chart} and \textbf{stacked-bar-scatter-plot} --
-%% exhibit the greatest improvement when using the graph approach for \textit{demanded by}.
-%% Interestingly, despite making use of somewhat expensive set complementation
-%% operations there are cases where the implementation of \textit{demanded by} using
-%% the dual of the $\sufficesAlg{}$ algorithm are just as fast or slightly faster
-%% than the trace approach.
 
 %\cd{Maybe the explanation can use the ``graph slice'' that Roly is adding in sec 3.}
-Amongst our benchmarks, \textbf{compute-dtw} has the worst performance
-for both \textit{demands} and \textit{demanded by} (although
-\textit{demands} still shows a considerable speedup when compared to
-the trace approach--14.62x in~\tableref{demands-SpdUps}).  We hypothesize that this is because
-program inputs are often required during the computation of other intermediate values in the program
-(e.g., inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, l.25 in \figref{dtw-source}). Given that each reference to an input
-results in a dependency edge being added, the dependency graph will have
-many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
+% Amongst our benchmarks, \textbf{compute-dtw} has the worst performance
+% for both \textit{demands} and \textit{demanded by} (although
+% \textit{demands} still shows a considerable speedup when compared to
+% the trace approach--14.62x in~\tableref{demands-SpdUps}).  We hypothesize that this is because
+% program inputs are often required during the computation of other intermediate values in the program
+% (e.g., inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, l.25 in \figref{dtw-source}). Given that each reference to an input
+% results in a dependency edge being added, the dependency graph will have
+% many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
+\JBnote{HEre we need to mention that the structure of the graph may impact performance}
+
 %as many inputs are shared
 %computing values associated with vertices requires considering a large number of in-vertices.
 %Essentially, during the construction of the graph slice $G'$ (see section 3.5.1),
