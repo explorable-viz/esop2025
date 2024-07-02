@@ -191,9 +191,9 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{3}$,
-not $\set{3,4}$ as before. Whilst the value at $1$ is necessary to compute the value at $4$, we have not picked out
-the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $4$.
+input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{4}$,
+not $\set{4,5}$ as before. Whilst the value at $1$ is necessary to compute the value at $5$, we have not picked out
+the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $5$.
 The two definitions are so similar that $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
 
 \begin{definition}[De Morgan Dual]
@@ -264,14 +264,6 @@ without creating this intermediate graph, we anticipate use cases which will mak
 these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
 $G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
 in-neighbours.
-
-An alternative presentation of graphs in terms of adjacency maps is useful notationally.
-
-\begin{definition}[Graph as adjacency map]
-   A graph $G = (V,E)$ can also be specified as an \emph{adjacency map} $G: V \to \powerset{V}$ from vertices
-   to sets of out neighbours, where
-   \[G(\alpha) = V' \iff \alpha \in V\text{ and }\forall\beta \in V'.(\alpha, \beta) \in E\]
-\end{definition}
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
