@@ -43,8 +43,8 @@ Often we will be considering a specific finite Boolean algebra, namely the power
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
 complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{1,2}}$
-and $\powerset{\set{3,4,5}}$ respectively.} 
+input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{1,2, 3}}$
+and $\powerset{\set{4,5,6}}$ respectively.} 
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -166,11 +166,11 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
-\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{3, 4}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{3,4}) = \set{1, 2}$, since the
-value of $x2$ is also used in the construction of the value at node $4$.
-On the other hand, taking $\demandsR_{R}(\set{5})$ we only get $\set{2}$, despite the it representing
-the value of the expression $x1 * x2$. This is because $x2 = 0$, so the value of $x1$ has no effect
+\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{4, 5}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{4,5}) = \set{1, 2}$, since the
+value of $x2$ is also used in the construction of the value at node $5$.
+On the other hand, taking $\demandsR_{R}(\set{6})$ we only get $\set{2}$, despite the it representing
+the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.}
 
 
