@@ -332,7 +332,9 @@ We provide an example of a run of the algorithm in \figref{suffices-algo-diagram
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
 \end{proposition}
-
+\begin{proof}
+   See \apdxsecref{apdx:suffices-alg}
+\end{proof}
 %\newpage
 \subsubsection{Derived algorithms}
 
@@ -369,11 +371,11 @@ our outputs demand, and then computes the outputs that those inputs $\demandsR_{
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
 Neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is necessarily inflationary, as illustrated in
-\figref{relation-not-galois}. In \figref{relation-not-galois-1}, the uppermost vertex on the left is part of
+\figref{relation-not-galois}, using the graph from the example in \figref{conjugate:example:graph}.
+In \figref{relation-not-galois-1}, the uppermost vertex on the left is part of
 the initial input selection $X'$, but is not preserved by the $\demandsR_G \after \demandedByR_G$ round-trip
-because it is not demanded by any output. In \figref{relation-not-galois-2}, the uppermost vertex on the right
-is part of the initial output selection $Y'$, but is not preserved by the $\demandedByR_G \after \demandsR_G$
-round-trip because it does not demand any input.
+because it is not demanded by any output. It is not hard to see how the same concept arises using $\demandedByR_G \after \demandsR_G$
+on the graph of a program that outputs a constant.
 
 \input{fig/conjugate/relations-not-galois}
 
