@@ -84,7 +84,7 @@ data visualization. Their work lets them ``rewind'' a program and trace fine-gra
    \centering
    \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
    \vspace{-2mm}
-   \caption{Related inputs are \emph{cognate} (have a common output dependency), \cd{change this caption}}
+   \caption{linked inputs are \emph{cognate} (have a common output dependency), \cd{change this caption}}
    \label{fig:introduction:related-inputs}
 \end{figure}
 
@@ -184,9 +184,6 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 %In fact, we see that it only picks out the $y$-coordinate. We call the elements of
 %the output that are used by our input selection the \emph{mediating output(s)}, since they
 %govern the relationships between sets of inputs.}
-\textcolor{red}{Note: unsure why we
-specified $y$ here, as the selected thing is used by both $x$ and $y$. We instead want to select an energy sources output field.
-Need to revisit the image for this example.}
 %\edit{Now that we have selected the $y$-coordinate for China, our system uses a second operator,
 %$\demandsR$, to identify the complete set of input values which were used to compute the point (\figref{introduction:related-inputs}, grey selections).
 %We read this second operator as computing ``what inputs does a piece of output data \emph{demand}''.
@@ -286,7 +283,7 @@ of whether all of the trace is relevant.
 %(language-agnostic) adjoint analyses over the graph. This partitioning reduces the implementation burden and
 %improves performance compared to approaches based on bidirectional interpretation.
 
-%Second, we introduce a new kind of provenance query called \emph{related inputs}, a relation of mutual
+%Second, we introduce a new kind of provenance query called \emph{linked inputs}, a relation of mutual
 %relevance which arises between inputs when they contribute to common features of the output. Users are able to
 %formulate queries like ``What outputs use this data element, and what other data elements are used along with
 %it?''. \edit{We have briefly touched on this in the discussion of \figref{introduction:related-inputs}.
@@ -304,7 +301,7 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
 
 \begin{itemize}[leftmargin=*]
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
-  the cognacy operator $\relInputR$ (``related inputs'') and unpacking the intuitive relationship between its
+  the cognacy operator $\relInputR$ (``linked inputs'') and unpacking the intuitive relationship between its
   two components $\demandsR$ (``demands'') and $\demandedByR$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
   cognacy operator $\relOutputR$ (``related outputs'') and explain the relationship to Galois connections: $f$
