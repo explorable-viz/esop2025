@@ -105,7 +105,8 @@ compared to evaluating it to a trace.
 We report the ratio
 of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs
 to their dynamic dependence graph does indeed incur a higher overhead, being from
-3x to 14x slower than their trace-based counterparts.
+3x to 14x slower than their trace-based counterparts\edit{, however the performance does not exceeed the limit for keeping
+the users attention on the system.}
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
@@ -121,7 +122,9 @@ Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
 % ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
 \edit{from 33.6x speedup for the stacked bar-chart}
-to more than 80x for \textbf{gaussian}.
+to more than 80x for \textbf{gaussian}. \edit{In particular, every \textit{demands} query
+using the graph based approach is within the instantaneous category, whilst all but
+two of the examples using the trace approach are in the noticable delay category.}
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
 %
@@ -145,7 +148,8 @@ Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-De
 and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
 % For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
-\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.}
+\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two using
+the trace based approach.}
 
 
 {\small\input{fig/performance/equivalent-impls.tex}}
