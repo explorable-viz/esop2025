@@ -347,25 +347,25 @@ Morgan dual construction. All algorithms are summarised in \figref{conjugate:der
 
 \input{fig/conjugate/derived-algorithms}
 
-\noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations of $\demandedByR_{G}$, which is an essential component of the linked inputs and related outputs operators introduced in \secref{overview}.
+\noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations of $\demandedByR_{G}$, which is an essential component of the linked inputs and linked outputs operators introduced in \secref{overview}.
 
 \subsection{$\relInputR$ and $\relOutputR$ over dependence graphs}
 
-Now we can provide a formal account of the notions of linked inputs and related outputs.
+Now we can provide a formal account of the notions of linked inputs and linked outputs.
 
 \begin{definition}[linked inputs and Outputs]
    For a dependence graph $G$ define:
    \begin{enumerate}
       \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (linked inputs)
-      \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (related outputs)
+      \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (linked outputs)
    \end{enumerate}
 \end{definition}
 
-Intuitively, related outputs and linked inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
+Intuitively, linked outputs and linked inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
 $\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, linked inputs asks ``what other
 inputs are demanded by the outputs which demand X?'', and first finds all outputs $\demandedByR_{G}(X)$ that
 our inputs are demanded by, and then computes the inputs that those outputs demand,
-i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, related outputs asks
+i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, linked outputs asks
 ``what other outputs demand the inputs that Y demands'', and first finds all inputs $\demandsR_{G}(Y')$ that
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.

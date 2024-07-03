@@ -15,7 +15,7 @@ features to the infrastructure used to implement and host the visualisation.
 However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
 of performance and implementation burden.
 For example, the approach taken by \citet{perera22} to implement a
-``related outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
+``linked outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
 analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
 ``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
 that data. These analyses need to be defined separately and each depends on details of the language, imposing
@@ -45,7 +45,7 @@ $\demandsR_R$ (a ``demands'' relation) to support all the required queries. Its 
 $\demandsR_{R^{-1}}$ and its conjugate $\demandedByR_R$ as the De Morgan dual of $\demandsR_{R^{-1}}$. It is
 well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
 can also get the benefit of efficient procedures for all of them in terms of reachability. In particular
-the ``related outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
+the ``linked outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
 inefficient, we also give a direct implementation of $\sufficesR_R$ which improves on the derived version in
 those cases.
 
@@ -53,11 +53,11 @@ those cases.
 \label{sec:peers}
 Our second insight in this paper is that \edit{in the graphical setting it is straightforward to compose
 reachability in $G$ with its converse, producing the provenance query we call \emph{linked inputs}, and recovering
-the capability for ``linked brushing''. 
+the capability for ``linked outputs''. 
 We have already illustrated linked inputs in \figref{introduction:related-inputs},
 by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
-remarkably similar in spirit to the ``linked brushing'' we mentioned earlier with respect to \citet{psallidas18}.
-For an example of our systems implementation of linked brushing, we present \figref{overview:scatterplot}.
+remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
+For an example of our systems implementation of linked outputs, we present \figref{overview:scatterplot}.
 This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
 another scatterplot. The end-user can select parts of the stacked bars
 individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
@@ -67,9 +67,9 @@ which are then used to compute the $x$ components of some of the circles in the 
 \note{Unsure if we should keep the following:}
 We note how some of the selections computed in the input table are highlighted a slightly different shade of green
 to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
-input values we care about when computing the related outputs.
+input values we care about when computing the linked outputs.
 In the graphical setting, the above computation is simply the composition of $\demandsR$ and $\demandedByR$ in the other
-order. We refer to queries like \emph{linked inputs} and \emph{linked brushing} as computing ``peer provenance''. In the graph,
+order. We refer to queries like \emph{linked inputs} and \emph{linked outputs} as computing ``peer provenance''. In the graph,
 collections of linked inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
 that have been linked are ``peers'' in that they share ancestry in the graph. }
 
