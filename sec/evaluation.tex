@@ -23,21 +23,6 @@ respect to the dependency analysis.
 Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
 used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 
-%% we evaluate a program to a dynamic dependence graph
-%% and defer the specific dependency queries until the graph has been computed.
-%% The developer needs to implement the desired dynamic dependence graph only once,
-%% as part of their languages evaluation function. Then they can use the same procedure to
-%% compute both $\demandsR$ and $\demandedByR$ over the graph.
-
-%In \secref{conjugate}, we were able to give the underlying formalism without having to
-%mention any implementation details, or the specific choice of dependency relation.
-%Our ability to do so, combined with the prior remark regarding the need to implement
-%only a single construction of the graph contributes to ease of use.
-%% Secondly, our approach is less sensitive to changes in the semantics
-%% of the language than \citet{perera22}. By removing the need for a pair of evaluation functions which
-%% "agree", adding new constructs to a language is significantly easier: the
-%% only part of the language that is affected is the evaluation function, which
-%% the developer would anyway have to modify.
 
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
@@ -96,6 +81,17 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 %    \caption{Source code: \lstinline{compute-dtw}}
 %    \label{fig:dtw-source}
 % \end{figure}
+\subsubsection{Performance Standards}
+\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since 
+a user is likely to interact with a visualization multiple times in order to explore it. The standards we adhere to
+-- as suggested in \citet{nielsen93} -- are as follows:
+\begin{itemize}
+   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a users train of thought to remain uninterrupted, albeit they will notice a delay
+   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a users attention on the system
+\end{itemize}
+We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
+and the time taken to evaluate programs is within the limit for keeping a users attention.}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
@@ -125,7 +121,9 @@ Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
 % ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
 \edit{from 33.6x speedup for the stacked bar-chart}
-to more than 80x for \textbf{gaussian}.
+to more than 80x for \textbf{gaussian}. \edit{In particular, every \textit{demands} query
+using the graph based approach is within the instantaneous category, whilst all but
+two of the examples using the trace approach are in the noticable delay category.}
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
 %
@@ -149,7 +147,8 @@ Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-De
 and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
 % For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
-\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.}
+\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two using
+the trace based approach.}
 
 
 {\small\input{fig/performance/equivalent-impls.tex}}
@@ -158,7 +157,8 @@ and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff
 When comparing the performance of the graph and trace approaches, we observe that the only consistent performance
 loss for the graph approach is due to the increased cost of evaluating a program to a graph versus evaluating
 it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable, since the graph only
-needs to be constructed once, and it does not impact subsequent interactions
+needs to be constructed once, and it does not impact subsequent interactions\edit{, and program evaluation time 
+does not exceeed the limit for keeping the users attention on the system.}
 between the user and the system. Additionally, the fast response times for
 \textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
 translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
@@ -173,7 +173,7 @@ translate into quick responses to user queries. This is critical for the interac
 % (e.g., inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, l.25 in \figref{dtw-source}). Given that each reference to an input
 % results in a dependency edge being added, the dependency graph will have
 % many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
-\JBnote{HEre we need to mention that the structure of the graph may impact performance}
+
 
 %as many inputs are shared
 %computing values associated with vertices requires considering a large number of in-vertices.
@@ -182,11 +182,18 @@ translate into quick responses to user queries. This is critical for the interac
 %\textit{demanded by}.
 While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
 these experiments show that the shape of the graph may matter for performance. We defer more detailed discussion to \secref{conclusion}.
+\JBnote{It is as yet not apparent how the structure of the graph itself affects performance. 
+The more parallel programs (the three matrix convolutions) exhibit better performance in the
+\textit{demands} testing and worse performance in the \textit{demanded by} testing.
+Investigation into the structure of the graphs and their impact on performance is left to future
+work. A similar question is raised as to the efficacy of different graph representations.
+In our implementation, we use a simple adjacency map, and a more specialized representation
+could improve performance further.}
+
 
 Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which 
 takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, 
-\textbf{G-DemBy-Suff} performs significantly worse than \textbf{G-DemBy}. Interestingly, the case where it performs the best is \textbf{computeDTW},
-where \textbf{G-DemBy} suffers from the worst performance. We suspect
+\textbf{G-DemBy-Suff} performs significantly worse than \textbf{G-DemBy}. I We suspect
 that the generally bad performance of \textbf{G-DemBy-Suff} is at least partially caused by the expensive
 set complement operations performed before and after applying $\sufficesAlg{}$.
 Further investigation in how the shape of the graph impacts the performance of $\sufficesAlg{}$
