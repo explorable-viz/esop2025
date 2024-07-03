@@ -23,21 +23,6 @@ respect to the dependency analysis.
 Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
 used to compute both $\demandsR$ and $\demandedByR$ over the graph.
 
-%% we evaluate a program to a dynamic dependence graph
-%% and defer the specific dependency queries until the graph has been computed.
-%% The developer needs to implement the desired dynamic dependence graph only once,
-%% as part of their languages evaluation function. Then they can use the same procedure to
-%% compute both $\demandsR$ and $\demandedByR$ over the graph.
-
-%In \secref{conjugate}, we were able to give the underlying formalism without having to
-%mention any implementation details, or the specific choice of dependency relation.
-%Our ability to do so, combined with the prior remark regarding the need to implement
-%only a single construction of the graph contributes to ease of use.
-%% Secondly, our approach is less sensitive to changes in the semantics
-%% of the language than \citet{perera22}. By removing the need for a pair of evaluation functions which
-%% "agree", adding new constructs to a language is significantly easier: the
-%% only part of the language that is affected is the evaluation function, which
-%% the developer would anyway have to modify.
 
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
@@ -96,6 +81,17 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 %    \caption{Source code: \lstinline{compute-dtw}}
 %    \label{fig:dtw-source}
 % \end{figure}
+\subsubsection{Performance Standards}
+\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since 
+a user is likely to interact with a visualization multiple times in order to explore it. The standards we adhere to
+-- as suggested in \citet{nielsen93} -- are as follows:
+\begin{itemize}
+   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a users train of thought to remain uninterrupted, albeit they will notice a delay
+   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a users attention on the system
+\end{itemize}
+We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
+and the time taken to evaluate programs is within the limit for keeping a users attention.}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
