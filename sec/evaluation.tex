@@ -173,7 +173,7 @@ translate into quick responses to user queries. This is critical for the interac
 % (e.g., inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, l.25 in \figref{dtw-source}). Given that each reference to an input
 % results in a dependency edge being added, the dependency graph will have
 % many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
-\JBnote{Here we need to mention that the structure of the graph may impact performance}
+
 
 %as many inputs are shared
 %computing values associated with vertices requires considering a large number of in-vertices.
@@ -182,6 +182,14 @@ translate into quick responses to user queries. This is critical for the interac
 %\textit{demanded by}.
 While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
 these experiments show that the shape of the graph may matter for performance. We defer more detailed discussion to \secref{conclusion}.
+\JBnote{It is as yet not apparent how the structure of the graph itself affects performance. 
+The more parallel programs (the three matrix convolutions) exhibit better performance in the
+\textit{demands} testing and worse performance in the \textit{demanded by} testing.
+Investigation into the structure of the graphs and their impact on performance is left to future
+work. A similar question is raised as to the efficacy of different graph representations.
+In our implementation, we use a simple adjacency map, and a more specialized representation
+could improve performance further.}
+
 
 Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which 
 takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, 
