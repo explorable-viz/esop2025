@@ -152,17 +152,12 @@ From the analysis point of view, this requires applying $\demandsR$ to find the 
 associated with a given nation -- the selected segments demand all of  the highlighted green data in the table.
 Then, starting from the selected data, we apply $\demandedByR$ to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
 
-
-\cd{The following is a bit too complicated for this point in the paper:}
-We note how some of the selections computed in the input table are highlighted a slightly different shade of green
-to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
-input values we care about when computing the linked outputs.
-
 \paragraph{Linked inputs}
 Dually, we can start from an input, and want to determine all the ``linked inputs'', i.e. inputs that contribute to the same features of an output. This enables
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
 For illustration, if we go back to Fig.~\ref{fig:introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
 our system will apply $\demandedByR$ to trace the data contained in this cell to the point in the chart it was used to compute (the green dot in the plot).
+\edit{The bioenergy capacity contributes to both components of the dot.}
 Subsequently, it will apply $\demandsR$ to determine the rest of the data in the input tables that was used to compute the point in the point in the chart (highlighted in grey).
 
 
@@ -320,8 +315,8 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
   cognacy operator $\relOutputR$ (``linked outputs'') and explain the relationship to Galois connections: $f$
   and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
-  give procedures for computing $\demandsR_{R}$ and $\sufficesR_{R}$ over a directed graph with reachability
-  relation $R$.
+  give procedures for computing $\demandsR_{R}$ and \edit{$\demandedByR_{R}$, as well as an account of a related operator
+  written as $\sufficesR_{R}$}
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
   (parts of) values as vertices in the graph. \edit{We also show how our operators can follow information back to environments,
