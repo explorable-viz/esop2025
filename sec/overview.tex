@@ -45,47 +45,41 @@ $\demandsR_R$ (a ``demands'' relation) to support all the required queries. Its 
 $\demandsR_{R^{-1}}$ and its conjugate $\demandedByR_R$ as the De Morgan dual of $\demandsR_{R^{-1}}$. It is
 well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
 can also get the benefit of efficient procedures for all of them in terms of reachability. In particular
-the ``related outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
+the ``linked outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
 inefficient, we also give a direct implementation of $\sufficesR_R$ which improves on the derived version in
 those cases.
 
 \subsection{Peer Provenance / Cognate Values}
 \label{sec:peers}
 Our second insight in this paper is that \edit{in the graphical setting it is straightforward to compose
-reachability in $G$ with its converse, producing the provenance query we call \emph{related inputs}, and recovering
-the capability for ``linked brushing''. 
-We have already illustrated related inputs in \figref{introduction:related-inputs},
+reachability in $G$ with its converse, producing the provenance query we call \emph{linked inputs}, and recovering
+the capability for ``linked outputs''. 
+We have already illustrated linked inputs in \figref{introduction:related-inputs},
 by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
-remarkably similar in spirit to the ``linked brushing'' we mentioned earlier with respect to \citet{psallidas18}.
-For an example of our systems implementation of linked brushing, we present \figref{overview:scatterplot}.
+remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
+For an example of our systems implementation of linked outputs, we present \figref{overview:scatterplot}.
 This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
 another scatterplot. The end-user can select parts of the stacked bars
 individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
 $\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 associated with a given nation. The selected segments demand all of  the highlighted green data in the table,
 which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
-\note{Unsure if we should keep the following:}
-We note how some of the selections computed in the input table are highlighted a slightly different shade of green
-to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
-input values we care about when computing the related outputs.
+% \note{Unsure if we should keep the following:}
+% We note how some of the selections computed in the input table are highlighted a slightly different shade of green
+% to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
+% input values we care about when computing the linked outputs.
 In the graphical setting, the above computation is simply the composition of $\demandsR$ and $\demandedByR$ in the other
-order. We refer to queries like \emph{related inputs} and \emph{linked brushing} as computing ``peer provenance''. In the graph,
-collections of related inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
+order. We refer to queries like \emph{linked inputs} and \emph{linked outputs} as computing ``peer provenance''. In the graph,
+collections of linked inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
 that have been linked are ``peers'' in that they share ancestry in the graph. }
 
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{overview:scatterplot}}
-   \label{fig:overview:energy-query}
-\end{figure}
+% \input{fig/example/surface-examples.tex}
 
 \subsection{\OurLang: A Data-Transparent Programming Language}
 
 We implement the abstract framework outlined above in a programming language called \OurLang, a pure
 functional language with a runtime implementing conjugate dependency operators. From the programmer's
-perspective the language is unremarkable; \figref{overview:energy-query} shows the source code for the scatter
-plot example from \figref{overview:scatterplot}. The distinguishing feature of the language is a special
+perspective the language is unremarkable. The distinguishing feature of the language is a special
 semantics that interprets a program not as a plain output but as an output with a built-in query engine
 supporting the transparency features shown above. The author of a visualisation just expresses their chart as
 a pure function of the inputs, via a set of data types for common visualisations; a d3.js front end
@@ -93,5 +87,6 @@ automatically enriches the rendered outputs with support for visual selection an
 queries.
 
 In \secref{conjugate} we set out the formal graph framework and in \secref{core} show how the \OurLang
-interpreter implements that abstract framework. Our implementation is open source and available at [anonymised],
-which also has several interactive demos.
+interpreter implements that abstract framework, we also provide some examples of the surface 
+language in \secref{core}, and some larger examples can be found in \apdxsecref{apdx:evaluation-src-code}.
+Our implementation is open source and available at [anonymised], which also has several interactive demos. 
