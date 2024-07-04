@@ -1,26 +1,26 @@
 \section{Overview of Approach and Solution}
 \label{sec:overview}
 
-As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
-interactions that allow the user to query relationships between data sources and visualisations and other
-outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
-arise. Crucially, we want to make this feature automatic. Hand-crafted efforts like \citet{bremer15}'s are not
-only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
-and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
-analysis logic changes, the relationships between inputs and outputs also change. By shifting the
-responsibility for gathering this information into the programming language, the author or data scientist can
-concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-features to the infrastructure used to implement and host the visualisation.
+%As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
+%interactions that allow the user to query relationships between data sources and visualisations and other
+%outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
+%arise. Crucially, we want to make this feature automatic. Hand-crafted efforts like \citet{bremer15}'s are not
+%only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
+%and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
+%analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+%responsibility for gathering this information into the programming language, the author or data scientist can
+%concern themselves purely with analysis and visualisation, and defer the provision of these transparency
+%features to the infrastructure used to implement and host the visualisation.
 
-However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
-of performance and implementation burden.
-For example, the approach taken by \citet{perera22} to implement a
-``linked outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
-analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
-``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
-that data. These analyses need to be defined separately and each depends on details of the language, imposing
-a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire
-computation regardless of whether all of the trace is relevant.
+%However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
+%of performance and implementation burden.
+%For example, the approach taken by \citet{perera22} to implement a
+%``related outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
+%analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
+%``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
+%that data. These analyses need to be defined separately and each depends on details of the language, imposing
+%a significant burden on the implementor. Moreover each runs over an execution record or trace of the entire
+%5computation regardless of whether all of the trace is relevant.
 
 \subsection{Conjugate Operators over Dependence Graphs}
 

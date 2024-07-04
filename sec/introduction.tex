@@ -253,10 +253,22 @@ for that program, which enables:
 \end{itemize}
   
 
-These contributions are not available in previous works, such as
-hand-crafted solutions~\citet{bremer15}, and those proposing a general
-purpose language~\citet{perera22}. With respect to the latter, Perera
-et al. utilised a bidirectional interpreter that builds an execution
+%As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
+%interactions that allow the user to query relationships between data sources and visualisations and other
+%outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
+%arise. Crucially, we want to make this feature automatic.
+
+These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s are not
+only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
+and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
+analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+responsibility for gathering this information into the programming language, the author or data scientist can
+concern themselves purely with analysis and visualisation, and defer the provision of these transparency
+features to the infrastructure used to implement and host the visualisation.
+
+However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
+of performance and implementation burden.
+For example, the approach taken by \citet{perera22} utilised a bidirectional interpreter that builds an execution
 record in the form of a \emph{trace} during a forwards execution,
 folding that trace back into a program slice during a backwards
 execution. The two directions of the interpreter need to be kept
