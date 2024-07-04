@@ -73,18 +73,13 @@ order. We refer to queries like \emph{linked inputs} and \emph{linked outputs} a
 collections of linked inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
 that have been linked are ``peers'' in that they share ancestry in the graph. }
 
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/energy-query.fld}}
-   \caption{Source code for scatter plot in \figref{overview:scatterplot}}
-   \label{fig:overview:energy-query}
-\end{figure}
+\input{fig/example/surface-examples.tex}
 
 \subsection{\OurLang: A Data-Transparent Programming Language}
 
 We implement the abstract framework outlined above in a programming language called \OurLang, a pure
 functional language with a runtime implementing conjugate dependency operators. From the programmer's
-perspective the language is unremarkable; \figref{overview:energy-query} shows the source code for the scatter
+perspective the language is unremarkable; \figref{overview:surface-examples} shows the source code for the scatter
 plot example from \figref{overview:scatterplot}. The distinguishing feature of the language is a special
 semantics that interprets a program not as a plain output but as an output with a built-in query engine
 supporting the transparency features shown above. The author of a visualisation just expresses their chart as
