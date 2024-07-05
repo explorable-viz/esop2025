@@ -326,7 +326,11 @@ $\alpha$ into $H$ (\ruleName{extend}). If neither of these are true, then we ter
 (potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{}$
 takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
 it simply means that the input data $X$ was insufficient to compute any of the original programs outputs.
-We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}.}
+We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
+the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the 
+blue vertices and normal arrows are in $G$. In the figure, steps 2,3,5 and 6 correspond to applications
+of the rule \ruleName{pending}, and steps 4 and 7 correspond to applications of the rule \ruleName{extend}.
+After step 7, the run is complete.}
 
 \input{fig/conjugate/suffices-algo-explanation}
 
