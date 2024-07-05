@@ -47,11 +47,13 @@ For these reasons, there has been recent interest in treating data transparency 
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
 supported automatically. \edit{The author of the content no longer has to concern themselves with these tricky
 features, and in fact may find that they have an easier time exploring data, and building more complex models.
-Similarly, the consumer of the content now has the best of both worlds:} the ability to explore detail on an
+Similarly, the consumer of the content now has the best of both worlds  \MNnote{what are the "both worlds"? I see only one described.}:} the ability to explore detail on an
 as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
-sufficient''. 
+sufficient''.
+\MNnote{Minor: it's also not entirely clear to me how "exploring detail on an as-needed basis" (and the following sentence) is different from what Bremer and Ranzijn allow? perhaps some emphasis on contrast is needed (e.g. can be incrementally discovered -> can instead be incrementally discovered?).}
+
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
@@ -104,7 +106,7 @@ data visualization. Their work lets them ``rewind'' a program and trace fine-gra
 %are a data scientist investigating the efficiency of clean energy usage, broken down geographically.
 %The data -- split across tables dedicated to both \textit{renewable} and \textit{non-renewable} energy sources --
 %has been aggregated into a scatter plot. %by another scientist working on the same project.
-%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which
 %nation.
 
 Next, we use the example in Fig.~\ref{fig:introduction:related-inputs} to describe the concept we are concerned with in this paper, namely that of fine-grained in situ
@@ -113,15 +115,16 @@ For context{, the figure presents a simple piece of data visualization, investig
 The data is split across the two tables dedicated to \textit{renewable} and \textit{non-renewable} energy sources, respectively.
 The data from the tables has been aggregated into a view, which in our case is represented by the scatter plot on the right hand side of the figure,
 where the x-axis represents the total renewables capacity over the total energy capacity, whereas the y-axis denotes the total green energy output over the total green energy capacity.
-Below, a user may refer to either an observer that can only see the output views, or a developer that has access to both the input data and the output views.
-\edit{We often }refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''. 
-There are four scenarios we focus on to illustrate data transparency:
+
+
+There are four scenarios below we focus on to illustrate data transparency \MNnote{Perhaps add something like "we outline how our system (newly?) enables (new/novel?) support for all of these?". Or at least, this is a very good opportunity to make clear in each of the 4 scenarios if our system newly enables that kind of support/provides a new way of doing it. Right now, the following 4 scenarios read solely as  a kind of "documentation" of our system, and it's not entirely clear about the research contribution.}: When we say ``user'', this may refer to either an observer that can only see the output views, or a developer that has access to both the input data and the output views.
+\edit{We often }refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
 In Fig.~\ref{fig:introduction:related-inputs}, the dots in the scatter plot do not provide any details about the data they were computed from, which may be of interest to a user.
-For instance, when selecting the dot highlighted in green, a user may want to identify all the values from the two tables that were used to compute its x and y coordinates (this data is highlighted in grey in the figure). 
+For instance, when selecting the dot highlighted in green, a user may want to identify all the values from the two tables that were used to compute its x and y coordinates (this data is highlighted in grey in the figure).
 %\paragraph{Fine-grained linking of the view to the data}
-Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. In our design, by selecting the y-coordinate of the dot corresponding to China, the user can see exactly the considered data. In particular, as shown in Fig.~\ref{}, we can see that nuclear power is counted as a clean energy source.  
+Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. In our design \MNnote{Perhaps some emphasis e.g. ``\emph{in our design}'' would be beneficial, as well as clarity on if this kind of support is new.}, by selecting the y-coordinate of the dot corresponding to China, the user can see exactly the considered data. In particular, as shown in Fig.~\ref{}, we can see that nuclear power is counted as a clean energy source.
 \cd{We need either a different figure, or different colours for this selection.}
 %
 
@@ -142,28 +145,28 @@ in the chart it was used to compute (the green dot in the plot). We read $\deman
 
 \paragraph{Linked outputs}
 The previous use cases only went in one direction, either from outputs back to inputs, or from inputs to outputs. However, there may be situations where we want to compose the two directions.
-One such scenario is illustrated in \figref{overview:scatterplot}, where we have two output views, the same scatter plot as in Fig.~\ref{fig:introduction:related-inputs}, and an additional bar chart
+One such scenario is illustrated in \figref{overview:scatterplot} where we have two output views: the same scatter plot as in Fig.~\ref{fig:introduction:related-inputs}, and an additional bar chart
 denoting the non-renewables by country. Let's assume that a user selects \edit{the segments corresponding to India in 2017, and Egypt and Japan in 2018} in the bar chart. As previously explained, this will highlight the corresponding
-data in the nonRenewables table that was used to produce those outputs. Additionally, it will also highlight the outputs in the scatter plot that were produced by the same data. 
+data in the nonRenewables table that was used to produce those outputs. Additionally, it will also highlight the outputs in the scatter plot that were produced by the same data.
 We refer to the selected bars in the bar chart and the selected points in the scatter plot as ``linked outputs'', as they \edit{compete for the same input data.
-In the view of the scatterplot, we note that only two dots are selected, those for Egypt and Japan, indicating that the scatterplot is only a view of data from 2018.} 
+In the view of the scatterplot, we note that only two dots are selected, those for Egypt and Japan, indicating that the scatterplot is only a view of data from 2018.}
 
 From the analysis point of view, this requires applying $\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 associated with a given nation -- the selected segments demand all of  the highlighted green data in the table.
-Then, starting from the selected data, we apply $\demandedByR$ to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
+Then, starting from the selected data, we apply $\demandedByR$ to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles).
 
 \paragraph{Linked inputs}
 Dually, we can start from an input, and want to determine all the ``linked inputs'', i.e. inputs that contribute to the same features of an output. This enables
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
 For illustration, if we go back to Fig.~\ref{fig:introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
 our system will apply $\demandedByR$ to trace the data contained in this cell to the point in the chart it was used to compute (the green dot in the plot).
-\edit{The bioenergy capacity contributes to both components of the dot.}
+\edit{The bioenergy capacity contributes to both components of the dot.} \MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
 Subsequently, it will apply $\demandsR$ to determine the rest of the data in the input tables that was used to compute the point in the point in the chart (highlighted in grey).
 
 
 
 %by another scientist working on the same project.
-%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+%The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which
 %nation.
 
 
@@ -174,7 +177,7 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 %The data -- split across tables dedicated to both \textit{renewable} and \textit{non-renewable} energy sources --
 %has been aggregated into a scatter plot by another scientist working on the same project. We can tell by
 %the label on the y-axis that the $y$ component of each point is the ``capacity factor'' of clean energy resources.
-%The chart alone doesn't make it obvious what energy resources count as ``clean'', or which point represents which 
+%The chart alone doesn't make it obvious what energy resources count as ``clean'', or which point represents which
 %nation. The developer selects part of their input of interest by mousing over the cell in the table (\figref{introduction:related-inputs} step 1, green selection).
 %The system, through an operator we write as $\demandedByR$ traces the data contained in this cell to the point
 %in the chart it was used to compute. We read $\demandedByR$ as computing ``what outputs is a piece of data \emph{demanded by}';'.
@@ -189,7 +192,7 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 
 
 %Pairs of conjugate functions
-%are intimately tied to another concept that provides a few more guarantees about our analyses. 
+%are intimately tied to another concept that provides a few more guarantees about our analyses.
 %The idea of the outputs $x$ is demanded by gives rise to the idea of the outputs that $x$ is \emph{sufficient}
 %for. Since $\demandedByR$ is a function between Boolean algebras, we can define it's \emph{De Morgan dual},
 %which we write as $\sufficesR$. This function, along with $\demandsR$ form a \emph{Galois connection},
@@ -213,7 +216,7 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 % are also able to automatically select any outputs in the other chart which demand any of the same data using
 % an other operator $\demandedByR$ (``demanded by''). \note{Does "mediating" work when referring to outputs?}
 % The overlapping demand , which we call the \emph{mediating
-% input}, is highlighted using a darker shade of green in \figref{overview:scatterplot}. \JBnote{Here we will 
+% input}, is highlighted using a darker shade of green in \figref{overview:scatterplot}. \JBnote{Here we will
 % have to have provided a definition of the notion of $\demandedByR$ first, rather than introducing it as the dual
 % of $\sufficesR$}
 % Perera et al
@@ -243,12 +246,12 @@ for that program, which enables:
 %In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
 %introduced by.
 %Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
-%be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$ 
+%be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$
 %is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
 %$x_2$. We will return to the notion of conjugacy in more detail later.
- 
+
 \end{itemize}
-  
+
 
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
 %interactions that allow the user to query relationships between data sources and visualisations and other
@@ -284,7 +287,7 @@ of whether all of the trace is relevant.
 %queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 %for that program. Dependence graphs are a proven technique which have been used extensively for program
 %slicing (mainly of imperative programs~\cite{ferrante87}, \edit{\cite{agrawal90}), but applying
-%conjugate operators and Galois connections over these graphs is new. Analyses using adjoint operators similar to ours 
+%conjugate operators and Galois connections over these graphs is new. Analyses using adjoint operators similar to ours
 %(e.g.~\citet{ricciotti17})} instead utilised a bidirectional interpreter that builds an execution record
 %in the form of a \emph{trace} during a forwards execution, folding that trace back into a program slice during
 %a backwards execution. This method is quite inefficient and non-trivial to prove correct; instead, we show
@@ -324,8 +327,8 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
 \item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
   implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
   building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
-  relative implementation burden of the two approaches. 
-\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs.
+  relative implementation burden of the two approaches.
+\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs. \MNnote{The acronym "DDGs" has not previously been introduced; I also can't "ctrl-f" it anywhere else in the paper.}
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
 how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
