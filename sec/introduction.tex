@@ -47,12 +47,13 @@ For these reasons, there has been recent interest in treating data transparency 
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
 supported automatically. \edit{The author of the content no longer has to concern themselves with these tricky
 features, and in fact may find that they have an easier time exploring data, and building more complex models.
-Similarly, the consumer of the content now has the best of both worlds  \MNnote{what are the "both worlds"? I see only one described.}:} the ability to explore detail on an
-as-needed basis in the context of the high-level perspective offered by the visual summary. The relationship
+Similarly, the consumer of the content now has the ability to explore detail on an
+as-needed basis in the context of the high-level perspective offered by the visual summary. Conversely from \cite{bremer15}, the relationship
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
 sufficient''.
-\MNnote{Minor: it's also not entirely clear to me how "exploring detail on an as-needed basis" (and the following sentence) is different from what Bremer and Ranzijn allow? perhaps some emphasis on contrast is needed (e.g. can be incrementally discovered -> can instead be incrementally discovered?).}
+%\MNnote{Minor: it's also not entirely clear to me how "exploring detail on an as-needed basis" (and the following sentence) is different from what Bremer and Ranzijn allow? perhaps some emphasis on contrast is needed (e.g. can be incrementally discovered -> can instead be incrementally discovered?).
+}
 
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
@@ -61,10 +62,12 @@ for inverting selections in visual space to obtain selections in the input data 
 \edit{\citet{psallidas18smoke} propose techniques based on fine-grained data provenance; for a custom
 in-memory database engine, they describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature from data visualisation called \emph{linked brushing}. Moving forward, we refer to this feature
-as \emph{linked outputs} instead. \citet{perera22} take this further, applying the idea
+feature from data visualisation called \emph{linked brushing}.
+%Moving forward, we refer to this feature as \emph{linked outputs} instead.
+\citet{perera22} take this further, applying the idea
 of forwards and backards tracing to a general purpose functional language as opposed to a language for
-data visualization. Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.}
+data visualization.}
+
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 % functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
 % $\sufficesR$ (suffices for), relating specific output and input selections.}
@@ -117,15 +120,14 @@ The data from the tables has been aggregated into a view, which in our case is r
 where the x-axis represents the total renewables capacity over the total energy capacity, whereas the y-axis denotes the total green energy output over the total green energy capacity.
 
 
-There are four scenarios below we focus on to motivate data transparency. When we say ``user'', this may refer to either an observer that can only see the output views, or a developer that has access to both the input data and the output views.
+There are four scenarios below we focus on to motivate data transparency. When we say ``user'', this may refer to either a consumer that can only see the output views, or a developer that has access to both the input data and the output views.
 \edit{We also often }refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
 In Fig.~\ref{fig:introduction:related-inputs}, the dots in the scatter plot do not provide any details about the data they were computed from, which may be of interest to a user.
 For instance, when selecting the dot highlighted in green, a user may want to identify all the values from the two tables that were used to compute its x and y coordinates (this data is highlighted in grey in the figure).
 %\paragraph{Fine-grained linking of the view to the data}
-Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. In our design \MNnote{Perhaps some emphasis that we're moving from the motivation to the  solution provided for data transparency. e.g. ``\emph{By supporting fine-grained in situ provenance queries, in our design for example,}'' would be beneficial}, by selecting the y-coordinate of the dot corresponding to China, the user can see exactly the considered data. In particular, as shown in Fig.~\ref{}, we can see that nuclear power is counted as a clean energy source.
-\cd{We need either a different figure, or different colours for this selection.}
+Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. By supporting fine-grained in situ provenance queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot corresponding to China. This highlights \cd{can we use a border or something to differentiate this selection?}. In particular, we can see that nuclear power is counted as a clean energy source.
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
@@ -230,8 +232,8 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 
 We introduce a new program analysis framework which supports
 interactive exploration of fine-grained I/O relationships, as those described in the previous section.
-Our approach is language-independent, %which means that changes to the underlying language will not affect the analysis (?).
-using \emph{dynamic dependence graphs}~\citet{ferrante87, agrawal90}. This separates the definition of
+We make use of {dynamic dependence graphs}~\citet{ferrante87, agrawal90}, which enable our approach to be 
+language-independent. This separates the definition of
 queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
 for that program, which enables:
 
@@ -279,6 +281,7 @@ imposing a significant burden on the implementor.  Moreover each runs
 over an execution record or trace of the entire computation regardless
 of whether all of the trace is relevant.
 
+%Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.
 
 
 %In this paper, we develop the idea of data transparency across two directions. First we approach the problem
