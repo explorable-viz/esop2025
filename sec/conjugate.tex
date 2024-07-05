@@ -43,8 +43,8 @@ Often we will be considering a specific finite Boolean algebra, namely the power
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
 complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{1,2, 3}}$
-and $\powerset{\set{4,5,6}}$ respectively.} 
+input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.} 
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -60,7 +60,10 @@ the program, the partial value associated to $\beta$ \textit{depends on} on the 
 $\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
 somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
 dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
-dependent vertices, whereas in the literature the other direction is somewhat more common.
+dependent vertices, whereas in the literature the other direction is somewhat more common. \edit{In \figref{conjugate:example:graph},
+the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
+\figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
+the values of the arithmetic expression in the programs result.}
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -166,10 +169,10 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
-\edit{In the example, $\demandedByR_{G}(\set{1}) = \set{4, 5}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{4,5}) = \set{1, 2}$, since the
+\edit{In the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$, since the
 value of $x2$ is also used in the construction of the value at node $5$.
-On the other hand, taking $\demandsR_{R}(\set{6})$ we only get $\set{2}$, despite the it representing
+On the other hand, taking $\demandsR_{R}(\set{\alpha_6})$ we only get $\set{\alpha_2}$, despite the it representing
 the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.}
 
@@ -191,9 +194,9 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{1}) = \set{4}$,
-not $\set{4,5}$ as before. Whilst the value at $1$ is necessary to compute the value at $5$, we have not picked out
-the node $2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $5$.
+input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
+not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $1$ is necessary to compute the value at $5$, we have not picked out
+the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $5$.
 The two definitions are so similar that $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
 
 \begin{definition}[De Morgan Dual]
