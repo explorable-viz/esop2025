@@ -38,6 +38,7 @@ data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
 4,416 to 5,010 people per sq.~km.
 
 \subsection{Data transparency as PL infrastructure}
+\label{sec:introduction:data-transparency}
 
 Features like these are valuable comprehension aids but are laborious to implement by hand, as done by
 \citet{bremer15}. Manual implementations also requires the author to anticipate the queries a user might have
@@ -232,30 +233,28 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 \label{sec:introduction:contributions}
 
 We introduce a new birectional program analysis framework which supports interactive exploration of
-fine-grained I/O relationships, as described in the previous section. We make use of {dynamic dependence
-graphs}~\cite{ferrante87, agrawal90}, which enable our approach to be language-independent, separating the
-definition of queries over the I/O dependencies for a particular program, from the problem of generating a
+fine-grained I/O relationships, as described in the previous section. We make use of dynamic dependence
+graphs~\cite{ferrante87, agrawal90}; this enables our approach to be language-independent, separating the
+definition of queries over the dependence graph for a particular program, from the problem of deriving the
 dependence graph for that program. Our specific contributions are as follows:
 
 \begin{itemize}
 
-\item We define a novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
+\item A new formal framework for bidirectional provenance queries over dependence graphs, formalising the
+$\demandsR$ and $\demandedByR$ operators in introduced informally in \secref{introduction:data-transparency},
+which we show to be \emph{conjugate} in the sense of~\citet{jonsson51}. We relate our framework to other
+bidirectional analyses based on Galois connections (e.g.~\citet{ricciotti17,perera22}).
+
+\item A novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
 inputs when they contribute to common features of the output. The design of our framework makes it
-straightforward to implement this analysis by composing two simpler graph queries.
+straightforward to implement this analysis by composing $\demandsR$ and $\demandedByR$. We show how a dual
+\emph{linked outputs} analysis is easily obtained by transposing the two operators, and relate this formally
+to the ``linked brushing'' feature known from the data visualisation literature.
 
-\item Improved performance with respect to previous works. As shown in the experimental evaluation,
-\edit{$81\%$ of the queries we test over larger examples execute at a speed that appears instantaneous to a
-user, compared to $25\%$ using an implementation based on traces}. Fast response time is particularly
-important for the interactive data visualisations we target.
-
-\item Correctness checks that  take advantage of the duality of the proposed operators. For this purpose, we use the notions of conjugacy~\citet{jonsson51} and Galois connection \cd{add citation}.
-%Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
-%In particular, $\demandsR$ and $\demandedByR$ must adhere to the notion of \emph{conjugacy},
-%introduced by.
-%Informally, if an input $x$ is not in the set of things an output $y$ demands, then the output $y$ should not
-%be in the set of things $x$ is demanded by. Further, if we have 2 inputs $x_1$ and $x_2$, where $x_2$
-%is not in the set of inputs related to $x_1$, then $x_1$ should not be in the set of inputs related to
-%$x_2$. We will return to the notion of conjugacy in more detail later.
+\item Improved performance with respect to trace-based approaches. We find that $81\%$ of the queries we tested
+over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
+implementation based on traces. Fast response time is particularly important for the interactive data
+visualisations we target.
 
 \end{itemize}
 
@@ -273,18 +272,15 @@ responsibility for gathering this information into the programming language, the
 concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 features to the infrastructure used to implement and host the visualisation.
 
-However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
-of performance and implementation burden.
-For example, the approach taken by \citet{perera22} utilised a bidirectional interpreter that builds an execution
-record in the form of a \emph{trace} during a forwards execution,
-\edit{and then using that trace to guide backwards execution}. The two directions of the interpreter need to be kept
-synchronised, which makes updating the language difficult as every
-change requires modifying each direction in a manner that maintains
-bidirectionality.  Every analysis implemented in their framework needs
-to be defined separately and depends on details of the language,
-imposing a significant burden on the implementor.  Moreover each runs
-over an execution record or trace of the entire computation regardless
-of whether all of the trace is relevant.
+However, computing the bidirectional dependency information needed to realise this idea is costly both in
+terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
+\citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
+\emph{trace} during a forwards execution, \edit{and then using that trace to guide backwards execution}. The
+two directions of the interpreter need to be kept synchronised, which makes updating the language difficult as
+every change requires modifying each direction in a manner that maintains bidirectionality.  Every analysis
+implemented in their framework needs to be defined separately and depends on details of the language, imposing
+a significant burden on the implementor.  Moreover each runs over an execution record or trace of the entire
+computation regardless of whether all of the trace is relevant.
 
 %Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.
 
