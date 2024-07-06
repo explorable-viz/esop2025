@@ -68,7 +68,7 @@ feature from data visualisation called \emph{linked brushing}.
 %Moving forward, we refer to this feature as \emph{linked outputs} instead.
 \citet{perera22} take this further, applying the idea
 of forwards and backards tracing to a general purpose functional language as opposed to a language for
-data visualization.}
+data visualisation.}
 
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 % functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
@@ -116,10 +116,10 @@ data visualization.}
 
 Next, we use the example in~\figref{introduction:related-inputs} to describe the concept we are concerned with in this paper, namely that of fine-grained in situ
 provenance queries, which we call \emph{data transparency}.
-For context{, the figure presents a simple piece of data visualization, investigating} the efficiency of clean energy usage, broken down geographically.
-The data is split across the two tables dedicated to \textit{renewable} and \textit{non-renewable} energy sources, respectively.
-The data from the tables has been aggregated into a view, which in our case is represented by the scatter plot on the right hand side of the figure,
-where the x-axis represents the total renewables capacity over the total energy capacity, whereas the y-axis denotes the total green energy output over the total green energy capacity.
+For context{, the figure presents a simple piece of data visualisation, investigating} the efficiency of clean energy usage, broken down geographically.
+The data is split across two tables dedicated to \textit{renewable} and \textit{non-renewable} energy sources;
+tThe data from the tables has been aggregated into a view, namely the scatter plot on the right hand side of the figure,
+where the x-axis represents the total renewables capacity over the total energy capacity, and the y-axis denotes the total renewable energy output over the total renewable energy capacity.
 
 
 There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader that can only see the output views, or a developer that has access to both the input data and the output views.
@@ -129,7 +129,7 @@ There are four scenarios below we focus on to motivate the idea of data transpar
 In~\figref{introduction:related-inputs}, the dots in the scatter plot do not provide any details about the data they were computed from, which may be of interest to a user.
 For instance, when selecting the dot highlighted in green, a user may want to identify all the values from the two tables that were used to compute its x and y coordinates (this data is highlighted in grey in the figure).
 %\paragraph{Fine-grained linking of the view to the data}
-Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the green energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what green energy even refers to. By supporting fine-grained in situ provenance queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot corresponding to China. This highlights \cd{can we use a border or something to differentiate this selection?}. In particular, we can see that nuclear power is counted as a clean energy source.
+Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about the renewable energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it possible to understand what renewable energy even refers to. By supporting fine-grained in situ provenance queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot corresponding to China. This highlights \cd{can we use a border or something to differentiate this selection?}. In particular, we can see that nuclear power is counted as a clean energy source.
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
@@ -161,7 +161,7 @@ the scatter plot, we note that only two dots are selected, those for Egypt and J
 the scatter plot is only a view of data from 2018.}
 
 From the analysis point of view, this requires applying $\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
-associated with a given nation -- the selected segments demand all of  the highlighted green data in the table.
+associated with a given nation -- the selected segments demand all of the highlighted green data in the table.
 Then, starting from the selected data, we apply $\demandedByR$ to pick out the $x$ components of some of the circles in the scatter plot (green circles).
 
 \paragraph{Linked inputs}
