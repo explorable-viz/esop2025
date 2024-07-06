@@ -231,18 +231,22 @@ Subsequently, it will apply $\demandsR$ to determine the rest of the data in the
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
-We introduce a new program analysis framework which supports bidirectional
-interactive exploration of fine-grained I/O relationships, as described in the previous section.
-We make use of {dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which enable our approach to be
-language-independent. This separates the definition of
-queries over the I/O dependencies for a particular program from the problem of generating a dependence graph
-for that program, which enables:
+We introduce a new birectional program analysis framework which supports interactive exploration of
+fine-grained I/O relationships, as described in the previous section. We make use of {dynamic dependence
+graphs}~\cite{ferrante87, agrawal90}, which enable our approach to be language-independent, separating the
+definition of queries over the I/O dependencies for a particular program, from the problem of generating a
+dependence graph for that program. Our specific contributions are as follows:
 
 \begin{itemize}
 
-\item Easily updating the language, as well as adding new analyses \MNnote{I'm thinking it may be much better to split this into two contributions as separate bullet points (and elaborating slightly on ``easily updating the language'').}. With respect to the latter, we are the first to propose the linked inputs analysis, a relation of mutual relevance or “cognacy” which arises between inputs when they contribute to common features of the output. The design of our framework makes it straightforward to implement this analysis by composing the available operands.
+\item We define a novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
+inputs when they contribute to common features of the output. The design of our framework makes it
+straightforward to implement this analysis by composing two simpler graph queries.
 
-\item Improved performance with respect to previous works. As shown in the experimental evaluation, \edit{$81\%$ of the queries we test over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an implementation based on traces}. Fast response time is particularly important in the context of real-time systems\edit{, such as the interactive data visualizations we target}.
+\item Improved performance with respect to previous works. As shown in the experimental evaluation,
+\edit{$81\%$ of the queries we test over larger examples execute at a speed that appears instantaneous to a
+user, compared to $25\%$ using an implementation based on traces}. Fast response time is particularly
+important for the interactive data visualisations we target.
 
 \item Correctness checks that  take advantage of the duality of the proposed operators. For this purpose, we use the notions of conjugacy~\citet{jonsson51} and Galois connection \cd{add citation}.
 %Although conceptually some of the operations described above are duals, setting them up in a manner that is both formally rigorous and provides good performance is not trivial.
