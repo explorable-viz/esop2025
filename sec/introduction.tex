@@ -140,7 +140,7 @@ We read this operator as computing ``what input data  does an output \emph{deman
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance, the user may select China's bioenergy capacity
-(highlighted in green in Fig.~\ref{fig:introduction:related-inputs}). Then, our system, through an operator we write as $\demandedByR$, traces the data contained in this cell to the point
+(highlighted in green in~\figref{fig:introduction:related-inputs}). Then, our system, through an operator we write as $\demandedByR$, traces the data contained in this cell to the point
 in the chart it was used to compute (the green dot in the plot). We read $\demandedByR$ as computing ``what outputs is a piece of data \emph{demanded by}''.
 %In fact, we see that it only picks out the $y$-coordinate.
 %We call the elements of the output that are used by our input selection the \emph{mediating output(s)}, since they
@@ -148,12 +148,17 @@ in the chart it was used to compute (the green dot in the plot). We read $\deman
 %In our case, the mediating outputs are denoted by the green selection in the scatter plot.
 
 \paragraph{Linked outputs}
-The previous use cases only went in one direction, either from outputs back to inputs, or from inputs to outputs. However, there may be situations where we want to compose the two directions.
-One such scenario is illustrated in \figref{overview:scatterplot} where we have two output views: the same scatter plot as in Fig.~\ref{fig:introduction:related-inputs}, and an additional bar chart
-denoting the non-renewables by country. Let's assume that a user selects \edit{the segments corresponding to India in 2017, and Egypt and Japan in 2018} in the bar chart. As previously explained, this will highlight the corresponding
-data in the nonRenewables table that was used to produce those outputs. Additionally, it will also highlight any outputs in the scatter plot that demand any of those data.
-We refer to the selected bars in the bar chart and the selected points in the scatter plot as ``linked outputs'', as they \edit{compete for the same input data.
-In the scatter plot, we note that only two dots are selected, those for Egypt and Japan, indicating that the scatter plot is only a view of data from 2018.}
+The previous use cases only went in one direction, either from outputs back to inputs, or from inputs to
+outputs. However, there may be situations where we want to compose the two directions. One such scenario is
+illustrated in \figref{overview:scatterplot} where we have two output views: the same scatter plot as in
+\figref{fig:introduction:related-inputs}, and an additional bar chart denoting the non-renewables by country.
+Let's assume that a user selects \edit{the segments corresponding to India in 2017, and Egypt and Japan in
+2018} in the bar chart. As previously explained, this will highlight the corresponding data in the
+nonRenewables table that was used to produce those outputs. Additionally, it will also highlight any outputs
+in the scatter plot that demand any of those data. We refer to the selected bars in the bar chart and the
+selected points in the scatter plot as ``linked outputs'', as they \edit{compete for the same input data. In
+the scatter plot, we note that only two dots are selected, those for Egypt and Japan, reflecting the fact that
+the scatter plot is only a view of data from 2018.}
 
 From the analysis point of view, this requires applying $\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 associated with a given nation -- the selected segments demand all of  the highlighted green data in the table.
@@ -162,7 +167,7 @@ Then, starting from the selected data, we apply $\demandedByR$ to pick out the $
 \paragraph{Linked inputs}
 Dually, we can start from an input, and want to determine all the ``linked inputs'', i.e. inputs that contribute to the same features of an output. This enables
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
-For illustration, if we go back to Fig.~\ref{fig:introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
+For illustration, if we go back to~\figref{fig:introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
 our system will apply $\demandedByR$ to trace the data contained in this cell to the point in the chart it was used to compute (the green dot in the plot).
 \edit{The bioenergy capacity contributes to both components of the dot.} \MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
 Subsequently, it will apply $\demandsR$ to determine the rest of the data in the input tables that was used to compute the point in the point in the chart (highlighted in grey).
