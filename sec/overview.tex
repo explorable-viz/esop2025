@@ -1,4 +1,4 @@
-\section{Overview of Approach and Solution}
+\section{Informal Overview of the Solution}
 \label{sec:overview}
 
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
@@ -23,10 +23,15 @@
 %5computation regardless of whether all of the trace is relevant.
 
 \subsection{Conjugate Operators over Dependence Graphs}
-Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
-for data transparency that both improves performance and reduces the implementation burden. Moreover, input-output
-queries are much easier to formulate in the graphical setting. \edit{The operators we use to perform
-queries over the a dependence graph form what's called a ``conjugate pair''. Conjugate pairs -- which map
+Here, we provide an informal view of our framework for bidirectional provenance queries over dependence graphs, which will be followed by a formal account in \secref{conjugate}.
+As previosuly mentioned, our insight in this paper is that dependence graphs provide a language-agnostic foundation
+for data transparency that both improves performance and reduces the implementation burden.
+%Moreover, input-output
+%queries are much easier to formulate in the graphical setting.
+%
+\cd{Introduce the actual operators, e.g. ``In Sec 1, we discussed operators  $\demandsR$ and $\demandedByR$, which are used to answer provenance queries.''}
+\edit{The operators  we use to perform
+queries over a dependence graph form what's called a ``conjugate pair''. Conjugate pairs -- which map
 between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
 one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
 then applying the other member of the pair to $Y$ results in a set which does not overlap with $X'$.
@@ -41,18 +46,18 @@ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection (
 more detail in \secref{conjugate}).
 
 
-If we now take $R$ to be reachability in $G$, then \edit{the graphical} setting technically only requires a single operator
+If we now take $R$ to be reachability in $G$, then \edit{the graphical} \cd{I don't think the notion of ``graphical setting'' has been clearly described; maybe ``our setting'' or ``graph setting''?} setting technically only requires a single operator
 $\demandsR_R$ (a ``demands'' relation) to support all the required queries.
 \edit{Given a procedure to compute $\demandsR_{R}$, we can automatically derive a procedure to compute its conjugate
-$\demandedByR_{R}$ by simply using the oppposite graphs reachability relation $R^{-1}$. We can also derive
+$\demandedByR_{R}$ by simply using the oppposite graph's reachability relation, $R^{-1}$. We can also derive
 a second pair of operators which can be used to investigate questions of ``sufficiency'', using the De Morgan Dual.}
 It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
-also benefit from efficient procedures for all of them.\edit{Since going via the De Morgan dual can be
-inefficient, we also give a direct implementation of $\sufficesR_R$ which exhibits significantly better performance compared
-to the derived algorithm}.
+also benefit from efficient procedures for all of them. \edit{Since going via the De Morgan dual can be
+inefficient, we also give a direct implementation of $\sufficesR_R$ \cd{who is $\sufficesR_R$?}, which exhibits significantly better performance compared
+to the derived algorithm}.\cd{I find the last two sentences confusing with respect to what's efficient and what not; they just don't flow.}
 
-\edit{Graphically, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
-reachability in $G$ with reachability in $\opGraph{G}$, admitting an efficient implementation. For example, linked outputs
+\edit{Graphically \cd{What does ``graphically'' mean?``In the graph setting''?}, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
+reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example, linked outputs
 can be written as $\demandsR_{R \relcomp R^{-1}}$, and linked inputs can be written as $\demandedByR_{R \relcomp R^{-1}}$.
 In the graph, a pair of linked output values share some common ancestor whereas
 a pair of linked input nodes in the graph share some common descendant. Therefore we will sometimes refer to linked outputs/inputs
