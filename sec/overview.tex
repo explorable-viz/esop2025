@@ -26,12 +26,12 @@
 Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
 for data transparency that both improves performance and reduces the implementation burden. Moreover, input-output
 queries are much easier to formulate in the graphical setting. \edit{The operators we use to perform
-queries over the a dependence graph form what we call a ``conjugate pair''. Conjugate pairs -- which map
+queries over the a dependence graph form what's called a ``conjugate pair''. Conjugate pairs -- which map
 between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
 one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
 then applying the other member of the pair to $Y$ results in a set which does not overlap with $X'$.
-This property intuitively holds of our dependency queries, if no member of an input selection is demanded
-by a given subset of the outputs, then that subset of outputs will not demand any of the given inputs.}
+This property intuitively holds of our dependency queries: if no member of a given input selection is demanded
+by a given subset of the outputs, then that subset of outputs will not demand any memebr of the given inputs.}
 
 The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
 $\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
@@ -41,14 +41,16 @@ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection (
 more detail in \secref{conjugate}).
 
 
-If we now take $R$ to be reachability in $G$, then our setting technically only requires a single operator
-$\demandsR_R$ (a ``demands'' relation) to support all the required queries. Its adjoint $\sufficesR_R$ is readily computed as
-$\demandsR_{R^{-1}}$ and its conjugate $\demandedByR_R$ as the De Morgan dual of $\demandsR_{R^{-1}}$. It is
-well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
-can also get the benefit of efficient procedures for all of them in terms of reachability. In particular
-the ``linked outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. Since going via the De Morgan dual can be
-inefficient, we also give a direct implementation of $\sufficesR_R$ which improves on the derived version in
-those cases.
+If we now take $R$ to be reachability in $G$, then \edit{the graphical} setting technically only requires a single operator
+$\demandsR_R$ (a ``demands'' relation) to support all the required queries.
+\edit{Given a procedure to compute $\demandsR_{R}$, we can automatically derive a procedure to compute its conjugate
+$\demandedByR_{R}$ by simply using the oppposite graphs reachability relation $R^{-1}$. We can also derive
+a second pair of operators which can be used to investigate questions of ``sufficiency'', using the De Morgan Dual.}
+It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
+also benefit from efficient procedures for all of them. In particular
+the ``linked outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. \edit{Since going via the De Morgan dual can be
+inefficient, we also give a direct implementation of $\sufficesR_R$ which exhibits significantly better performance compared
+to the derived algorithm}.
 
 \subsection{Peer Provenance / Cognate Values}
 \label{sec:peers}
