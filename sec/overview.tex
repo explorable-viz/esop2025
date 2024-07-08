@@ -23,15 +23,16 @@
 %5computation regardless of whether all of the trace is relevant.
 
 \subsection{Conjugate Operators over Dependence Graphs}
-
 Our insight in this paper is that dependence graphs provide an alternative, more language-agnostic foundation
-for data transparency that both improves performance and reduces the implementation burden. Moreover, certain
-problems are much easier to formulate in the graphical setting. \edit{We begin by formally defining conjugacy.
-Consider the two sets $X$ of inputs and $Y$ of outputs. We say that $f: \powerset{X} \to \powerset{Y}$ and $g: \powerset{Y} \to \powerset{X}$
-are \emph{conjugate} iff:}
-%
-\[f(X) \cap Y = \emptyset \iff X \cap g(Y) = \emptyset\]
-%
+for data transparency that both improves performance and reduces the implementation burden. Moreover, input-output
+queries are much easier to formulate in the graphical setting. \edit{The operators we use to perform
+queries over the a dependence graph form what we call a ``conjugate pair''. Conjugate pairs -- which map
+between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
+one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
+then applying the other member of the pair to $Y$ results in a set which does not overlap with $X'$.
+This property intuitively holds of our dependency queries, if no member of an input selection is demanded
+by a given subset of the outputs, then that subset of outputs will not demand any of the given inputs.}
+
 The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
 $\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
 overlaps with $X'$ where $X' \subseteq X$ then necessarily $\image{R}{X'}$ overlaps with $Y'$ where $Y'
