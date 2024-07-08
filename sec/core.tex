@@ -51,7 +51,8 @@ either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
 trie-like objects \cite{hinze00} that specify
 how this pattern-matching is done and the subsequent continuation $\kappa$ to be executed under additional variable bindings. (These are what the piecewise function definitions of our surface-language, e.g. \lstinline{plot} in \figref{overview:energy-query}, desugar into; \citet{peytonjones2021} present a similar idea.)
 \edit{The use of eliminators in our language is a design decision, and was not informed by our dependency analysis. The ideas we have
-presented can be readily applied to a language based on a more traditional lambda calculus with datatypes.}
+presented can be readily applied to a language based on a more traditional lambda calculus using a different 
+approach to pattern matching.}
 
 A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as $\kappa$. A record
 eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$, and provides
