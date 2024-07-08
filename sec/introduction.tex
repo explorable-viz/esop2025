@@ -54,8 +54,7 @@ as-needed basis in the context of the high-level perspective offered by the visu
 to data can be incrementally discoverable, revealed as the user interacts with the parts of the output they
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
 sufficient''.
-%\MNnote{Minor: it's also not entirely clear to me how "exploring detail on an as-needed basis" (and the following sentence) is different from what Bremer and Ranzijn allow? perhaps some emphasis on contrast is needed (e.g. can be incrementally discovered -> can instead be incrementally discovered?).
-}
+
 
 
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
@@ -286,16 +285,18 @@ responsibility for gathering this information into the programming language, the
 concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 features to the infrastructure used to implement and host the visualisation.
 
-\MNnote{This paragraph feels very out of place (redundant even), and kills the momentum of the introduction. Can it be moved to evaluation/related work?}
-However, computing the bidirectional dependency information needed to realise this idea is costly both in
-terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
-\citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
-\emph{trace} during a forwards execution, \edit{and then using that trace to guide backwards execution}. The
-two directions of the interpreter need to be kept synchronised, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality.  Every analysis
-implemented in their framework needs to be defined separately and depends on details of the language, imposing
-a significant burden on the implementor.  Moreover each runs over an execution record or trace of the entire
-computation regardless of whether all of the trace is relevant.
+\edit{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
+difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that 
+need to agree. Execution traces also suffered from performance problems that our approach goes some way to mitigate.}
+% However, computing the bidirectional dependency information needed to realise this idea is costly both in
+% terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
+% \citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
+% \emph{trace} during a forwards execution, \edit{and then using that trace to guide backwards execution}. The
+% two directions of the interpreter need to be kept synchronised, which makes updating the language difficult as
+% every change requires modifying each direction in a manner that maintains bidirectionality.  Every analysis
+% implemented in their framework needs to be defined separately and depends on details of the language, imposing
+% a significant burden on the implementor.  Moreover each runs over an execution record or trace of the entire
+% computation regardless of whether all of the trace is relevant.
 
 %Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.
 
@@ -346,7 +347,7 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
   building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
   relative implementation burden of the two approaches.
-\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs. \MNnote{The acronym "DDGs" has not previously been introduced; I also can't "ctrl-f" it anywhere else in the paper.}
+\item \secref{related-work} reviews related work in more detail, including program slicing and \edit{dynamic dependence graphs}.
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
 how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
