@@ -47,36 +47,42 @@ $\demandsR_R$ (a ``demands'' relation) to support all the required queries.
 $\demandedByR_{R}$ by simply using the oppposite graphs reachability relation $R^{-1}$. We can also derive
 a second pair of operators which can be used to investigate questions of ``sufficiency'', using the De Morgan Dual.}
 It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
-also benefit from efficient procedures for all of them. In particular
-the ``linked outputs'' relation is simply given by $\demandsR_{R \relcomp R^{-1}}$. \edit{Since going via the De Morgan dual can be
+also benefit from efficient procedures for all of them.\edit{Since going via the De Morgan dual can be
 inefficient, we also give a direct implementation of $\sufficesR_R$ which exhibits significantly better performance compared
 to the derived algorithm}.
 
-\subsection{Peer Provenance / Cognate Values}
-\label{sec:peers}
+\edit{Graphically, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
+reachability in $G$ with reachability in $\opGraph{G}$, admitting an efficient implementation. For example, linked outputs
+can be written as $\demandsR_{R \relcomp R^{-1}}$, and linked inputs can be written as $\demandedByR_{R \relcomp R^{-1}}$.
+In the graph, a pair of linked output values share some common ancestor whereas
+a pair of linked input nodes in the graph share some common descendant. Therefore we will sometimes refer to linked outputs/inputs
+queries as computing ``peer'' values.}
 
-\cd{this should be integrated with previous sec 2.1}
-Our second insight in this paper is that \edit{in the graphical setting it is straightforward to compose
-reachability in $G$ with its converse, producing the provenance query we call \emph{linked inputs}, and recovering
-the capability for ``linked outputs''. 
-We have already illustrated linked inputs in \figref{introduction:related-inputs},
-by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
-remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
-%For an example of our systems implementation of linked outputs, we present \figref{overview:scatterplot}.
-%This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
-%another scatterplot. The end-user can select parts of the stacked bars
-%individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
-%$\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
-%associated with a given nation. The selected segments demand all of  the highlighted green data in the table,
-%which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
-% \note{Unsure if we should keep the following:}
-% We note how some of the selections computed in the input table are highlighted a slightly different shade of green
-% to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
-% input values we care about when computing the linked outputs.
-In the graphical setting, the above computation is simply the composition of $\demandsR$ and $\demandedByR$ in the other
-order. We refer to queries like \emph{linked inputs} and \emph{linked outputs} as computing ``peer provenance''. In the graph,
-collections of linked inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
-that have been linked are ``peers'' in that they share ancestry in the graph. }
+% \subsection{Peer Provenance / Cognate Values}
+% \label{sec:peers}
+
+% \cd{this should be integrated with previous sec 2.1}
+% Our second insight in this paper is that \edit{in the graphical setting it is straightforward to compose
+% reachability in $G$ with its converse, producing the provenance query we call \emph{linked inputs}, and recovering
+% the capability for ``linked outputs''. 
+% We have already illustrated linked inputs in \figref{introduction:related-inputs},
+% by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
+% remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
+% %For an example of our systems implementation of linked outputs, we present \figref{overview:scatterplot}.
+% %This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
+% %another scatterplot. The end-user can select parts of the stacked bars
+% %individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
+% %$\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
+% %associated with a given nation. The selected segments demand all of  the highlighted green data in the table,
+% %which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
+% % \note{Unsure if we should keep the following:}
+% % We note how some of the selections computed in the input table are highlighted a slightly different shade of green
+% % to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
+% % input values we care about when computing the linked outputs.
+% In the graphical setting, the above computation is simply the composition of $\demandsR$ and $\demandedByR$ in the other
+% order. We refer to queries like \emph{linked inputs} and \emph{linked outputs} as computing ``peer provenance''. In the graph,
+% collections of linked inputs are ``peers'' in the sense that they can all reach some common descendants, and output elements
+% that have been linked are ``peers'' in that they share ancestry in the graph. }
 
 % \input{fig/example/surface-examples.tex}
 
