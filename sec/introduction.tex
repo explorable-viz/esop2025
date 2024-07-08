@@ -45,7 +45,9 @@ Features like these are valuable comprehension aids but are laborious to impleme
 and do not always generalise well: for example \citeauthor{bremer15}'s visualisation only allows the user to
 select one point at a time.
 
-For these reasons, there has been recent interest in treating data transparency and exploration as a programming language infrastructure
+For these reasons, there has been recent interest in treating data
+%transparency and
+exploration as a programming language infrastructure
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
 supported automatically. \edit{The author of the content no longer has to concern themselves with these tricky
 features, and in fact may find that they have an easier time exploring data, and building more complex models.
@@ -120,7 +122,7 @@ For context{, the figure presents a simple piece of data visualisation, investig
 energy usage, broken down geographically. The data is split across two tables dedicated to \textit{renewable}
 and \textit{non-renewable} energy sources; the data from the tables has been aggregated into a view, namely
 the scatter plot on the right hand side of the figure, where the x-axis represents the total renewables
-capacity over total energy capacity, and the y-axis denotes the total clean energy output over total
+capacity over total energy capacity, and the y-axis denotes the clean capacity factor computed as the total clean energy output over the total
 clean energy capacity.
 
 There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader that can only see the output views, or a developer that has access to both the input data and the output views.
@@ -134,8 +136,10 @@ Furthermore, they may be interested in more fine-grained information, e.g. they 
 the clean energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it
 possible to understand what ``clean'' energy even refers to. By supporting fine-grained in situ provenance
 queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot
-corresponding to China. This highlights \cd{can we use a border or something to differentiate this
-selection?}. In particular, we can see that nuclear power is counted as a clean energy source.
+corresponding to China. This highlights the grey cells in the renewables table, and those corresponding to nuclear in the nonRenewables table.
+%\cd{can we use a border or something to differentiate this
+%selection?}.
+In particular, we can see that nuclear power is counted as a clean energy source.
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
@@ -177,7 +181,8 @@ Dually, we can start from an input, and want to determine all the ``linked input
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
 For illustration, if we go back to~\figref{introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
 our system will apply $\demandedByR$ to trace the data contained in this cell to the point in the chart it was used to compute (the green dot in the plot).
-\edit{The bioenergy capacity contributes to both components of the dot.} \MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
+\edit{The bioenergy capacity contributes to both components of the dot, namely the total renewables capacity over total energy capacity and the clean capacity factor.}
+%\MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
 Subsequently, it will apply $\demandsR$ to determine the rest of the data in the input tables that was used to compute the point in the point in the chart (highlighted in grey).
 
 
@@ -345,7 +350,7 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
   building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
   relative implementation burden of the two approaches.
-\item \secref{related-work} reviews related work in more detail, including program slicing and DDGs. \MNnote{The acronym "DDGs" has not previously been introduced; I also can't "ctrl-f" it anywhere else in the paper.}
+\item \secref{related-work} reviews related work in more detail, including program slicing and dynamic dependence graphs.
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
 how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
