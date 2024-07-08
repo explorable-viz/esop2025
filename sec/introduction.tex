@@ -134,8 +134,8 @@ Furthermore, they may be interested in more fine-grained information, e.g. they 
 the clean energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it
 possible to understand what ``clean'' energy even refers to. By supporting fine-grained in situ provenance
 queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot
-corresponding to China. This highlights \cd{can we use a border or something to differentiate this
-selection?}. In particular, we can see that nuclear power is counted as a clean energy source.
+corresponding to China. \edit{In the input data table the user will then be presented 
+with a set of highlighted cells whos contents were used to produce the selected output.}
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
@@ -177,7 +177,8 @@ Dually, we can start from an input, and want to determine all the ``linked input
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
 For illustration, if we go back to~\figref{introduction:related-inputs}, and start by selecting China's bioenergy capacity, then, as explained above,
 our system will apply $\demandedByR$ to trace the data contained in this cell to the point in the chart it was used to compute (the green dot in the plot).
-\edit{The bioenergy capacity contributes to both components of the dot.} \MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
+\edit{The bioenergy capacity, for example, contributes to both components of the dot, whereas in general an input
+selection may only contribute to one component of an output.}
 Subsequently, it will apply $\demandsR$ to determine the rest of the data in the input tables that was used to compute the point in the point in the chart (highlighted in grey).
 
 
