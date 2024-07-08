@@ -54,7 +54,7 @@ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.}
 We explain how we \edit{construct} dependence graphs in \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
 $V$ of \emph{vertices} and set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
-program, vertices $\alpha, \beta \in V$ represents \emph{parts} of values (either supplied to the program as
+program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as
 inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of
 the program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
 $\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
@@ -63,7 +63,7 @@ dependency) rather than separate data and control dependencies; moreover our edg
 dependent vertices, whereas in the literature the other direction is somewhat more common. \edit{In \figref{conjugate:example:graph},
 the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
 \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
-the values of the arithmetic expression in the programs result.}
+the values of the arithmetic expressions in the program's result.}
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -171,8 +171,8 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
 \end{definition}
 \edit{In the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$, because the value of $x1$ contributes
 to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$, since the
-value of $x2$ is also used in the construction of the value at node $5$.
-On the other hand, taking $\demandsR_{R}(\set{\alpha_6})$ we only get $\set{\alpha_2}$, despite the it representing
+value of $x2$ is also used in the construction of the value at node $\alpha_5$.
+On the other hand, taking $\demandsR_{R}(\set{\alpha_6})$ we only get $\set{\alpha_2}$, despite it representing
 the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.}
 
@@ -195,9 +195,10 @@ which also form a conjugate pair.
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
 input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
-not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $1$ is necessary to compute the value at $5$, we have not picked out
-the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $5$.
-The two definitions are so similar that $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
+not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not picked out
+the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $\alpha_5$.
+%The two definitions are so similar that
+Notably, $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
 
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
@@ -220,7 +221,7 @@ The two definitions are so similar that $\sufficesR_R$ can be transformed into $
 
 \edit{Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, 
 we can read $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''.
-Then taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is 
+Then, taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is 
 effectively asking the question ``what outputs do not use any of the information I have not
 selected?'', which is exactly the question of sufficiency.}
 
@@ -234,7 +235,8 @@ namely Galois connections.}
    \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
    
-\edit{They are so closely related, that every conjugate pair induces a Galois connection.}
+\edit{%They are so closely related, that
+  Every conjugate pair induces a Galois connection.}
 The following proposition is a well known result in the literature, see \citet{menni14}
 for a proof.
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
@@ -325,7 +327,7 @@ it has no more incoming edges in $G$ as this can only happen when we have alread
 $\alpha$ into $H$ (\ruleName{extend}). If neither of these are true, then we terminate with the
 (potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{}$
 takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
-it simply means that the input data $X$ was insufficient to compute any of the original programs outputs.
+it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the 
 blue vertices and normal arrows are in $G$. In the figure, steps 2,3,5 and 6 correspond to applications
