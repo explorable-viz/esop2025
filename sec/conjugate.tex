@@ -44,14 +44,14 @@ carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$.
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
 complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
 input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.} 
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.}
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
 
 \input{fig/conjugate/toy_example}
 
-We explain how we \edit{construct} dependence graphs in \secref{core}, and here just introduce the basic
+We explain how we construct dependence graphs later in \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
 $V$ of \emph{vertices} and set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
 program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as
@@ -219,9 +219,9 @@ Notably, $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De M
    See \apdxsecref{apdx:conjugate:image-preimage-duality}
 \end{proof}
 
-\edit{Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, 
+\edit{Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$,
 we can read $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''.
-Then, taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is 
+Then, taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is
 effectively asking the question ``what outputs do not use any of the information I have not
 selected?'', which is exactly the question of sufficiency.}
 
@@ -234,7 +234,7 @@ namely Galois connections.}
    connection} iff
    \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
-   
+
 \edit{%They are so closely related, that
   Every conjugate pair induces a Galois connection.}
 The following proposition is a well known result in the literature, see \citet{menni14}
@@ -287,7 +287,7 @@ inductive definition, treating it as a function with $V$ and index $G$ as inputs
 % \ruleName{extend} implying the opposite side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with
 % termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
 % leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
-% to reach the base case of \ruleName{done}.} 
+% to reach the base case of \ruleName{done}.}
 The auxiliary operation $G \demandedByV{}$ \edit{maintains a
 (partial) slice $H \subseteq G$. If there is a sink of $H$ that still has outgoing edges in $G$, then the
 targets of those edges are reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}).
@@ -320,16 +320,16 @@ For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an 
 $\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
 \edit{takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
 we have discovered partial information, and the remaining unexplored graph $G$. \note{Maybe rename $G$ so
-we can give the subgraph relationships?}. We add vertices and edges to the pending graph whenever 
+we can give the subgraph relationships?}. We add vertices and edges to the pending graph whenever
 we have a vertex in $H$ which still has outgoing edges in $G$. These edges and their endpoints are
-added to $P$ (\ruleName{pending}). A node $\alpha$ and its incoming edges can be moved from $P$ to $H$ when 
+added to $P$ (\ruleName{pending}). A node $\alpha$ and its incoming edges can be moved from $P$ to $H$ when
 it has no more incoming edges in $G$ as this can only happen when we have already moved every ancestor of
 $\alpha$ into $H$ (\ruleName{extend}). If neither of these are true, then we terminate with the
 (potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{}$
 takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
 it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
-the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the 
+the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the
 blue vertices and normal arrows are in $G$. In the figure, steps 2,3,5 and 6 correspond to applications
 of the rule \ruleName{pending}, and steps 4 and 7 correspond to applications of the rule \ruleName{extend}.
 After step 7, the run is complete.}
