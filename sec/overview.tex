@@ -56,7 +56,7 @@ also benefit from efficient procedures for all of them. \edit{Since going via th
 inefficient, we also give a direct implementation of $\sufficesR_R$ \cd{who is $\sufficesR_R$?}, which exhibits significantly better performance compared
 to the derived algorithm}.\cd{I find the last two sentences confusing with respect to what's efficient and what not; they just don't flow.}
 
-\edit{Graphically \cd{What does ``graphically'' mean?``In the graph setting''?}, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
+In the graph setting, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
 reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example, linked outputs
 can be written as $\demandsR_{R \relcomp R^{-1}}$, and linked inputs can be written as $\demandedByR_{R \relcomp R^{-1}}$.
 In the graph, a pair of linked output values share some common ancestor whereas
@@ -69,7 +69,7 @@ queries as computing ``peer'' values.}
 % \cd{this should be integrated with previous sec 2.1}
 % Our second insight in this paper is that \edit{in the graphical setting it is straightforward to compose
 % reachability in $G$ with its converse, producing the provenance query we call \emph{linked inputs}, and recovering
-% the capability for ``linked outputs''. 
+% the capability for ``linked outputs''.
 % We have already illustrated linked inputs in \figref{introduction:related-inputs},
 % by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
 % remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
@@ -79,7 +79,7 @@ queries as computing ``peer'' values.}
 % %individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
 % %$\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 % %associated with a given nation. The selected segments demand all of  the highlighted green data in the table,
-% %which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles). 
+% %which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles).
 % % \note{Unsure if we should keep the following:}
 % % We note how some of the selections computed in the input table are highlighted a slightly different shade of green
 % % to the others. The inputs we've highlighted in the stronger green are what we refer to as the ``mediating input'', the
@@ -103,6 +103,6 @@ automatically enriches the rendered outputs with support for visual selection an
 queries.
 
 In \secref{conjugate} we set out the formal graph framework and in \secref{core} show how the \OurLang
-interpreter implements that abstract framework, we also provide some examples of the surface 
+interpreter implements that abstract framework, we also provide some examples of the surface
 language in \secref{core}, and some larger examples can be found in \apdxsecref{apdx:evaluation-src-code}.
-Our implementation is open source and available at [anonymised], which also has several interactive demos. 
+Our implementation is open source and available at [anonymised], which also has several interactive demos.
