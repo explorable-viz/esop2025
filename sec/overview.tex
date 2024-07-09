@@ -29,8 +29,7 @@ for data transparency that both improves performance and reduces the implementat
 %Moreover, input-output
 %queries are much easier to formulate in the graphical setting.
 %
-\cd{Introduce the actual operators, e.g. ``In Sec 1, we discussed operators  $\demandsR$ and $\demandedByR$, which are used to answer provenance queries.''}
-\edit{The operators  we use to perform
+\edit{The operators $\demandsR$ and $\demandedByR$, introduced in \ref{sec:introduction}, are used to perform
 queries over a dependence graph form what's called a ``conjugate pair''. Conjugate pairs -- which map
 between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
 one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
@@ -52,9 +51,11 @@ $\demandsR_R$ (a ``demands'' relation) to support all the required queries.
 $\demandedByR_{R}$ by simply using the oppposite graph's reachability relation, $R^{-1}$. We can also derive
 a second pair of operators which can be used to investigate questions of ``sufficiency'', using the De Morgan Dual.}
 It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
-also benefit from efficient procedures for all of them. \edit{Since going via the De Morgan dual can be
-inefficient, we also give a direct implementation of $\sufficesR_R$ \cd{who is $\sufficesR_R$?}, which exhibits significantly better performance compared
-to the derived algorithm}.\cd{I find the last two sentences confusing with respect to what's efficient and what not; they just don't flow.}
+also benefit from efficient procedures for all of them. \edit{Questions about sufficiency make use 
+of a related operator $\sufficesR_R$. Whilst we could compute this operator using the De Morgan dual construction -- 
+complementing the initial selection, running $\demandedByR$ and complementing again -- it is in general
+inefficient to do so, since complement operations are expensive. Instead, we will provide a more efficient implementation, which exhibits significantly better performance compared
+to the derived algorithm}.
 
 In the graph setting, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
 reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example, linked outputs
