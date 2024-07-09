@@ -23,7 +23,8 @@ semantics using the execution trace, which propagates a selected output back
 to the program inputs. This approach is burdensome. The
 two directions of the interpreter need to be kept synchronised with
 respect to the dependency analysis, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality. \MNnote{\color{blue} Should this sentence be moved to to performance: ``Moreover, each analysis runs over an execution trace of the entire computation regardless of whether all of the trace is relevant.''} Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
+every change requires modifying each direction in a manner that maintains bidirectionality.
+Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
 used to compute both $\demandsR$ and $\demandedByR$ over the graph.\\
 \indent
 Secondly, our algorithm for computing $\demandsR$ and
@@ -136,7 +137,11 @@ We attribute this performance improvement to the fact that the
 trace approach requires the system to completely rewind the execution of the
 original program, in effect evaluating it in reverse. By contrast, in the current graph
 approach, one only needs to traverse the relevant part of the already-computed graph.
-
+\MNnote{Suggestion:
+   We attribute this performance improvement to the fact that, in the
+   trace approach, each new query requires the system to  rewind the \emph{entire} execution of the
+   original program, in effect evaluating it in reverse. This is regardless of whether all of that trace is relevant. By contrast, in the current graph
+   approach, one only needs to traverse the relevant part of the already-computed graph.}
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
