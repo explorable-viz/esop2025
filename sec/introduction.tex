@@ -57,20 +57,18 @@ to data can be incrementally discoverable, revealed as the user interacts with t
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
 sufficient''.
 
-
-
-In data visualisation it has long been recognised that when users interact with visual elements by clicking or
+\MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
 
-\MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
-in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
-selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature from data visualisation called \emph{linked brushing}.
+% \MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
+% in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
+% selections, and then ``forward trace'' to find related output selections in other views, to support a popular
+% feature from data visualisation called \emph{linked brushing}.
 %Moving forward, we refer to this feature as \emph{linked outputs} instead.
-\citet{perera22} take this further, applying the idea
-of forwards and backards tracing to a general purpose functional language as opposed to a language for
-data visualisation.}
+% \citet{perera22} take this further, applying the idea
+% of forwards and backards tracing to a general purpose functional language as opposed to a language for
+% data visualisation.}
 
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 % functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
@@ -277,10 +275,11 @@ straightforward to implement this analysis by composing $\demandsR$ and $\demand
 \emph{linked outputs} analysis is easily obtained by transposing the two operators, and relate this formally
 to the ``linked brushing'' feature from the data visualisation literature.
 
-\item Improved performance with respect to trace-based approaches. \edit{Using usability metrics from \citet{nielsen93},} we find that $81\%$ of the queries we tested
+\item \MNnote{Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.} \edit{Using usability metrics from \citet{nielsen93},} we find that $81\%$ of the queries we tested
 over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
 implementation based on traces. Fast response time is particularly important for the interactive data
 visualisations we target.
+
 
 \end{itemize}
 
@@ -314,7 +313,7 @@ involves re-running the entire program backwards, regardless of whether all of i
 % analysis logic changes, the relationships between inputs and outputs also change. By shifting the
 % responsibility for gathering this information into the programming language, the author or data scientist can
 % concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-% features to the infrastructure used to implement and host the visualisation.
+% features to the infrastructure used to implement and host the visualisaperera22tion.
 
 \JBnote{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
 difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that
