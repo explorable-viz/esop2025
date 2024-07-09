@@ -124,7 +124,7 @@ capacity over total energy capacity, and the y-axis denotes the clean capacity f
 clean energy capacity.
 
 There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader that can only see the output views, or a developer that has access to both the input data and the output views.
-\edit{We also often }refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
+We also often refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
 In~\figref{introduction:related-inputs}, the dots in the scatter plot do not provide any details about the data they were computed from, which may be of interest to a user.
@@ -181,7 +181,7 @@ where we have two output views: the same scatter plot as in
 denoting the non-renewables by country.  Let's assume that a user
 selects the segments corresponding to India in 2017, and Egypt
   and Japan in 2018 in the bar chart. This will highlight the
-corresponding data in the nonRenewables table that was used to produce
+corresponding data in the \textsf{nonRenewables} table that was used to produce
 those outputs. Additionally, it will also highlight any outputs in the
 scatter plot that demand any of those data. The selected bars in the
 bar chart and the selected points in the scatter plot are the linked
@@ -275,8 +275,12 @@ straightforward to implement this analysis by composing $\demandsR$ and $\demand
 \emph{linked outputs} analysis is easily obtained by transposing the two operators, and relate this formally
 to the ``linked brushing'' feature from the data visualisation literature.
 
+<<<<<<< HEAD
 \item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.
   Using usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested
+=======
+\item \MNnote{Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.} Using usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested
+>>>>>>> f36e3eb0c829e1f5eec1d7c1210f9f80245ff999
 over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
 implementation based on traces. Fast response time is particularly important for the interactive data
 visualisations we target.
@@ -368,7 +372,7 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   two components $\demandsR$ (``demands'') and $\demandedByR$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
   cognacy operator $\relOutputR$ (``linked outputs'') and explain the relationship to Galois connections: $f$
-  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
+  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. \MNnote{This is the first time the R subscript is used??:} We
   give procedures for computing $\demandsR_{R}$ and \edit{$\demandedByR_{R}$}.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
