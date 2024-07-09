@@ -302,17 +302,6 @@ responsibility for gathering this information into the programming language, the
 concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 features to the infrastructure used to implement and host the visualisation.
 
-\MNnote{This paragraph feels very out of place (redundant even), and kills the momentum of the introduction. Can it be moved to evaluation/related work?}
-However, computing the bidirectional dependency information needed to realise this idea is costly both in
-terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
-\citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
-\emph{trace} during a forwards execution, \edit{and then using that trace to guide backwards execution}. The
-two directions of the interpreter need to be kept synchronised, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality.  Every analysis
-implemented in their framework needs to be defined separately and depends on details of the language, imposing
-a significant burden on the implementor.  Moreover each runs over an execution record or trace of the entire
-computation regardless of whether all of the trace is relevant.
-
 %Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.
 
 
@@ -358,11 +347,10 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
   (parts of) values as vertices in the graph. \edit{We also show how our operators can follow information back to environments,
   with projections.}
-\item \secref{evaluation} compares the performance of our implementation based on graphs and conjugates with an
-  implementation due to \citet{perera22} based on traces and Galois connections, contrasting the overhead of
-  building trace vs.~building dependence graphs, computing $\demandsR$ and $\demandedByR$ over each, and the
-  relative implementation burden of the two approaches.
-\item \secref{related-work} reviews related work in more detail, including program slicing and dynamic dependence graphs.
+\item \secref{evaluation} evaluates our implementation based on graphs and conjugates against one based on traces and Galois connections. We contrast the
+ implementation burden of the two approaches, and the performance  of
+  building trace vs.~building dependence graphs and computing $\demandsR$ and $\demandedByR$ over~each.
+\item \secref{related-work} reviews related work in more detail, including program slicing and dynamic dependence~graphs.
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
 how output parts are related to input parts. We discuss extending this to more ``intensional'' forms
