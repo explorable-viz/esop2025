@@ -13,12 +13,12 @@ are concerned with the implementation of interactive data exploration systems.
 %as a built for purpose programming language.
 
 For a more generic perspective on program slicing, \citet{field98} consider dynamic dependence tracking in
-term-rewriting systems. Their approach allows them to perform graphical program slicing on a subset of Pascal,
+term-rewriting systems. Their approach allows them to perform graph-based program slicing on a subset of Pascal,
 but differs from our work in two ways. Firstly, they are concerned primarily with program slicing
 of imperative programs as opposed to building interactive visualizations, and secondly,
 they explicitly represent reduction steps in their dependence graphs. In
 contrast, we do not represent this sort of information in the graph at all, and instead of
-representing the semantics as a term-rewriting system, we present ours as 
+representing the semantics as a term-rewriting system, we present ours as
 an extended big-step relation.
 
 More recently there has been a body of work aimed at using dynamic dependence graphs
@@ -52,7 +52,7 @@ independence that makes slicing useful in the first place. Moreover, the backwar
 of lattice join ($\join$) to combine slicing information computed along different branches of the computation.
 Joining closure slices in particular becomes expensive because of the contained environments (which in turn
 contain closures), and these issues have made the approach prohibitively slow for interactive use. Compared to
-Galois slicing, our approach of decomposing the problem into a graphical semantics and a pair of analyses over the graph
+Galois slicing, our approach of decomposing the problem into a graph semantics and a pair of analyses over the graph
 significantly reduces the implementation burden on the developer, since the algorithms for the program analyses
 are language-agnostic and thus only need to be implemented once.
 
@@ -60,7 +60,7 @@ are language-agnostic and thus only need to be implemented once.
 \JBnote{Start of change}
 We are not the first to consider shifting the burden of interactive visualizations
 into the language runtime. Reactive Vega \citet{satyanarayan17},
-presents a system for building interactivity in visualizations. 
+presents a system for building interactivity in visualizations.
 Vega is a declarative DSL for constructing interactions with visualizations.
 The features of Vega allow for more complicated interactions than our own
 work at present, however these are hampered by requiring the designer to learn
@@ -84,7 +84,7 @@ Devise \citet{livny97} is another visualization framework for building
 interactive visualizations of relational database tables. Similar to \citet{north00},
 their work is defined by its usage of relational databases, and the way they
 create a semantics for queries on visualizations using the model of relational
-database queries. 
+database queries.
 \JBnote{Database Provenance}
 Recent work in database provenance \citet{dietrich22} attempts to simultaneously
 explain both value and control dependencies in recursive queries and user-defined
