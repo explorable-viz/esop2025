@@ -73,7 +73,9 @@ $\seq{c}$, where each $\kappa$ may specify how the arguments to  $c$  will be ma
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-We define addressed \emph{values} $v$ mutually inductively with \emph{raw values} $\raw{v}$, a raw value does not have an associated address. These addresses, explained in \secref{core:addresses}, will (later) form the vertices of the graphs that we build in the graph semantics.
+We define addressed \emph{values} $v$ mutually inductively with \emph{raw values} $\raw{v}$,
+a raw value does not have an associated address. These addresses, explained in \secref{core:addresses},
+will (later) form the vertices of the graphs that we build in the graph semantics.
 %, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
 
 
@@ -81,7 +83,11 @@ Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
-environment is defined as a finite~map.
+environment is defined as a finite~map. \edit{Environments can be equivalently viewed as n-ary products.
+From this perspective, environment lookup can be modeled using standard projection operations. Happily,
+a projection comes equipped with its own conjugate pair of functions which set
+selection information in the product to either $\top$ or $\bot$, so for example projecting the first element
+of a tuple could set the second elements selection to be $\top$.}
 
 % mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
 %, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
