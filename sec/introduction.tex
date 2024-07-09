@@ -297,12 +297,10 @@ and inputs into the same program.
 % responsibility for gathering this information into the programming language, the author or data scientist can
 % concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 % features to the infrastructure used to implement and host the visualisation.
-More automated solutions by \citet{ricciotti17} and
-\citet{perera22}, which shift that responsibility into the programming language,
-use a bidirectional interpreter that is costly both in terms of implementation effort and performance.
+Works based on execution traces like \citet{ricciotti17, perera22} do their best to move the burden into the programming language itself,  but are costly in terms of implementation effort and performance.
 % : recording an execution \emph{trace} during forward execution, \edit{and then using that trace to guide backwards execution}.
-For example, these languages are difficult to update, with
-each change requiring both directions of the interpreter to be modified in a way that maintains bidirectionality; and each new analysis
+For example, they rely on a bidirectional interpreter that makes the language difficult to update, with
+each change requiring both directions of the interpreter to be modified in a way that maintains bidirectionality; moreover, each new analysis
 involves re-running the entire program backwards, regardless of whether all of it is relevant.}
 % Moreover each runs over an execution record or trace of the entire
 %computation regardless of whether all of the trace is relevant. and each  analysis
