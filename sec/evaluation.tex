@@ -1,35 +1,35 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We now present a critical evaluation of our approach. We start by
-considering its qualitative advantage in terms of conceptual
-simplicity and ease of implementation with respect to the state of the art in the field, \citet{perera22}. Then, we provide
-an experimental comparison of the performance of our implementation and
-that of \citet{perera22}.
+
+\MNnote{We now present a critical evaluation of our framework, comparing with the
+popular \emph{trace-based} approach to bidirectional program analysis ~\cite{ricciotti17, psallidas18smoke}.
+In particular, we contrast with the state of the art in the field by \citet{perera22}. We start by
+considering our framework's qualitative advantage in terms of conceptual
+simplicity and ease of implementation. Then, we provide
+an experimental comparison of our implementation's performance.}
 
 \subsection{Qualitative Evaluation of Our Approach}
 
-Here, we consider the relative implementation burden of the current graph approach compared to the trace approach in \citet{perera22}.
-As explained below, we hypothesise that our approach is easier to implement and maintain compared to the trace approach.
-
-\MNnote{Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
-evaluation function (for computing bidirectional dependency information).  By contrast, the approach taken by
-\citet{perera22} use a bidirectional interpreter: building an execution
-\emph{trace} during forward execution, and then rewinding that trace to perform a backwards analysis such as
+\MNnote{Here, we consider the relative implementation burden of our graph approach compared to the trace approach in \citet{perera22},
+hypothesising that our graph one is easier to implement and maintain.\\
+\indent
+Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
+evaluation function.  By contrast, the trace approach taken by
+\citet{perera22} (and others) use a bidirectional interpreter: building an execution
+\emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency analysis such as
 $\demandsR$. Hence, the developer has to implement a separate backwards evaluation
 semantics using the execution trace, which propagates a selected output back
 to the program inputs. This approach is burdensome. The
 two directions of the interpreter need to be kept synchronised with
 respect to the dependency analysis, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality.  Moreover, each analysis runs over an execution trace of the entire
-computation regardless of whether all of the trace is relevant.
-Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
+every change requires modifying each direction in a manner that maintains bidirectionality. \MNnote{\color{blue} Should this sentence be moved to to performance: ``Moreover, each analysis runs over an execution trace of the entire computation regardless of whether all of the trace is relevant.''} Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
 used to compute both $\demandsR$ and $\demandedByR$ over the graph.\\
 \indent
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
 \secref{conjugate}), meaning that it is not affected by changes in the
-semantics of the language. Thus, as opposed to \edit{(check whether this citation belongs here: \citet{ricciotti17} and)} \citet{perera22} where each analysis
+semantics of the language. Thus, as opposed to \citet{perera22} where each analysis
 implemented needs to be defined separately and depends on details of the language, we
 only need to implement one language-specific algorithm.}
 
