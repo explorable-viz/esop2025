@@ -49,7 +49,7 @@ For these reasons, there has been recent interest in treating data
 %transparency and
 exploration as a programming language infrastructure
 problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
-supported automatically. The author of the content no longer has to concern themselves with these tricky
+supported automatically~\citet{ricciotti17,perera22}. The author of the content no longer has to concern themselves with these tricky
 features, and in fact may find that they have an easier time exploring data, and building more complex models.
 Similarly, the consumer of the content now has the ability to explore detail on an
 as-needed basis in the context of the high-level perspective offered by the visual summary. Conversely from \cite{bremer15}, the relationship
@@ -57,20 +57,18 @@ to data can be incrementally discoverable, revealed as the user interacts with t
 care about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
 sufficient''.
 
-
-
-In data visualisation it has long been recognised that when users interact with visual elements by clicking or
+\MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
 
-\MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
-in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
-selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-feature from data visualisation called \emph{linked brushing}.
+% \MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
+% in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
+% selections, and then ``forward trace'' to find related output selections in other views, to support a popular
+% feature from data visualisation called \emph{linked brushing}.
 %Moving forward, we refer to this feature as \emph{linked outputs} instead.
-\citet{perera22} take this further, applying the idea
-of forwards and backards tracing to a general purpose functional language as opposed to a language for
-data visualisation.}
+% \citet{perera22} take this further, applying the idea
+% of forwards and backards tracing to a general purpose functional language as opposed to a language for
+% data visualisation.}
 
 % \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose
 % functional language using a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and
@@ -126,7 +124,7 @@ capacity over total energy capacity, and the y-axis denotes the clean capacity f
 clean energy capacity.
 
 There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader that can only see the output views, or a developer that has access to both the input data and the output views.
-\edit{We also often }refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
+We also often refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
 In~\figref{introduction:related-inputs}, the dots in the scatter plot do not provide any details about the data they were computed from, which may be of interest to a user.
@@ -135,9 +133,9 @@ For instance, when selecting the dot highlighted in green, a user may want to id
 Furthermore, they may be interested in more fine-grained information, e.g. they may only want to know about
 the clean energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it
 possible to understand what ``clean'' energy even refers to. By supporting fine-grained in situ provenance
-queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot
-corresponding to China. \edit{In the input data table the user will then be presented
-with a set of highlighted cells whos contents were used to produce the selected output.}
+queries, in our design, by selecting the y-coordinate of the dot
+corresponding to China, the user will be presented
+with a set of highlighted cells in the input table whose contents were used to produce the selected output.
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
@@ -155,7 +153,7 @@ the parts of the chart it was used to compute (the green dot in the plot). The b
 contributes to both components of the dot, namely the total renewables capacity over total energy
 capacity and the clean capacity factor. We read $\demandedByR$ as computing
 ``what outputs is some input data \emph{demanded by}?''.
-\edit{Similar to $\demandsR_{R}$, we will often write $\demandedByR_{R}$.}
+Similar to $\demandsR_{R}$, we will often write $\demandedByR_{R}$.
 %In fact, we see that it only picks out the $y$-coordinate.
 %We call the elements of the output that are used by our input selection the \emph{mediating output(s)}, since they
 %govern the relationships between sets of inputs.
@@ -181,9 +179,9 @@ One such scenario is illustrated in \figref{overview:scatterplot}
 where we have two output views: the same scatter plot as in
 \figref{introduction:related-inputs}, and an additional bar chart
 denoting the non-renewables by country.  Let's assume that a user
-selects \edit{the segments corresponding to India in 2017, and Egypt
-  and Japan in 2018} in the bar chart. This will highlight the
-corresponding data in the nonRenewables table that was used to produce
+selects the segments corresponding to India in 2017, and Egypt
+  and Japan in 2018 in the bar chart. This will highlight the
+corresponding data in the \textsf{nonRenewables} table that was used to produce
 those outputs. Additionally, it will also highlight any outputs in the
 scatter plot that demand any of those data. The selected bars in the
 bar chart and the selected points in the scatter plot are the linked
@@ -277,10 +275,12 @@ straightforward to implement this analysis by composing $\demandsR$ and $\demand
 \emph{linked outputs} analysis is easily obtained by transposing the two operators, and relate this formally
 to the ``linked brushing'' feature from the data visualisation literature.
 
-\item Improved performance with respect to trace-based approaches. \edit{Using usability metrics from \citet{nielsen93},} we find that $81\%$ of the queries we tested
+\item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.
+  Using usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested
 over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
 implementation based on traces. Fast response time is particularly important for the interactive data
 visualisations we target.
+
 
 \end{itemize}
 
@@ -290,7 +290,7 @@ visualisations we target.
 %outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
 %arise. Crucially, we want to make this feature automatic.
 
-\MNnote{These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s are not
+These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s are not
 only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
 and inputs into the same program.
 %The validity of this metadata is fragile: whenever the visualisation or data
@@ -298,13 +298,13 @@ and inputs into the same program.
 % responsibility for gathering this information into the programming language, the author or data scientist can
 % concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 % features to the infrastructure used to implement and host the visualisation.
-More automated solutions by \citet{ricciotti17} and
+More automated, trace-based, solutions by \citet{ricciotti17} and
 \citet{perera22}, which shift that responsibility into the programming language,
 use a bidirectional interpreter that is costly both in terms of implementation effort and performance.
 % : recording an execution \emph{trace} during forward execution, \edit{and then using that trace to guide backwards execution}.
 For example, these languages are difficult to update, with
 each change requiring both directions of the interpreter to be modified in a way that maintains bidirectionality; and each new analysis
-involves re-running the entire program backwards, regardless of whether all of it is relevant.}
+involves re-running the entire program backwards, regardless of whether all of it is relevant.
 % Moreover each runs over an execution record or trace of the entire
 %computation regardless of whether all of the trace is relevant. and each  analysis
 % needing to be defined separately that is dependent on the details of the language.
@@ -314,11 +314,11 @@ involves re-running the entire program backwards, regardless of whether all of i
 % analysis logic changes, the relationships between inputs and outputs also change. By shifting the
 % responsibility for gathering this information into the programming language, the author or data scientist can
 % concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-% features to the infrastructure used to implement and host the visualisation.
+% features to the infrastructure used to implement and host the visualisaperera22tion.
 
-\JBnote{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
-difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that
-need to agree. Execution traces also suffered from performance problems that our approach goes some way to mitigate.}
+%\JBnote{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
+%difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that
+%need to agree. Execution traces also suffered from performance problems that our approach goes some way to mitigate.}
 % However, computing the bidirectional dependency information needed to realise this idea is costly both in
 % terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
 % \citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
@@ -368,8 +368,8 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
   two components $\demandsR$ (``demands'') and $\demandedByR$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
   cognacy operator $\relOutputR$ (``linked outputs'') and explain the relationship to Galois connections: $f$
-  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
-  give procedures for computing $\demandsR_{R}$ and \edit{$\demandedByR_{R}$}
+  and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. \MNnote{This is the first time the R subscript is used??:} We
+  give procedures for computing $\demandsR_{R}$ and \edit{$\demandedByR_{R}$}.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
   with a dynamic dependence graph suitable for computing $\demandsR$ and $\demandedByR$. We show how to represent
   (parts of) values as vertices in the graph. \edit{We also show how our operators can follow information back to environments,

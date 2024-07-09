@@ -7,7 +7,7 @@ Google Chome 118.0.5993.117, running Javascript V8 11.8.172.16.
 
 We assess the benefits of our solution by answering the following three research questions:
 \begin{itemize}
-    \item RQ1: How much does slicing performance improve in the graphical approach?
+    \item RQ1: How much does slicing performance improve in the graph approach?
     \item RQ2: How much overhead does the construction of the graph introduce?
     \item RQ3: How do the equivalent slicing implementations compare to each other?
 \end{itemize}
@@ -21,7 +21,7 @@ section are measured in milliseconds. We present the full suite of benchmarks in
 Table \ref{table:all-benches}.
 \todo{Need to further describe the range of benchmarks, and what they represent}
 
-\subsection{RQ1: How much does slicing performance improve in the graphical approach?}
+\subsection{RQ1: How much does slicing performance improve in the graph approach?}
 %\subsection{Slicing Performance}
 
 Compared to the Galois slicing approach of \citet{perera22} based on running adjoint analyses over an
@@ -30,7 +30,7 @@ a program to a DDG, and a pair of slicing operators for computing reachability a
 We show here that although the overhead of producing a DDG is comparable to that of producing a trace, the
 slicing algorithms run on average much faster than their trace-based counterparts, making them suitable for
 interactive applcations like the linked inputs and related outputs queries discussed in \secref{overview}. We
-have already established in \secref{graph} that slicing in the graphical setting is much simplified
+have already established in \secref{graph} that slicing in the graph setting is much simplified
 algorithmically. Since we are targeting interactive systems, we therefore feel the gain in slicing speed is
 worth the loss of performance in evaluation.
 
@@ -87,13 +87,13 @@ after the bit where we discuss the competing implementations we need.}
 
 \todo{This is confusing because the RQ talks about graph construction, whereas in the actual section, you talk about evaluation (this also relates to one of my comments above).}
 
-In both the trace-based and graphical approaches, we construct an auxiliary data
+In both the trace-based and grap approaches, we construct an auxiliary data
 structure during evaluation. In the trace-based approach, we construct what is
 in essence a simplified version of the AST of the program, only representing
 things such as the branch of a pattern match or conditional expression which
 was taken.
 
-In contrast, the graphical evaluation approach works by annotating values with
+In contrast, the graph evaluation approach works by annotating values with
 vertices, and building sets of neighbors. We collect the sets of vertices and
 edges produced at the end of evaluation, and only afterward construct the actual
 representation of the graph.
@@ -133,7 +133,7 @@ comparisons are contained in \tableref{equivalent-impls}.
 \subsection{Discussion}
 \todo{I think we still want to include some finishing discussion, but unsure if
 this is appropriate. Could be a conclusion?}
-We can see that whilst the graphical slicing paradigm can improve the performance
+We can see that whilst the graph slicing paradigm can improve the performance
 of program slicing dramatically, the increase in performance is varied. It
 initially appeared that speedup in slicing time was inherently tied to the
 size of the dynamic dependence graph and equivalent trace, but this is not true.

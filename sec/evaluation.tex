@@ -1,39 +1,41 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We now present a critical evaluation of our approach. We start by
-considering its qualitative advantage in terms of conceptual
-simplicity and ease of implementation with respect to the state of the art in the field, \citet{perera22}. Then, we provide
-an experimental comparison of the performance of our implementation and
-that of \citet{perera22}.
+
+\MNnote{We now present a critical evaluation of our framework, comparing with the
+popular \emph{trace-based} approach to bidirectional program analysis ~\cite{ricciotti17, psallidas18smoke}.
+In particular, we contrast with the state of the art in the field by \citet{perera22}. We start by
+considering our framework's qualitative advantage in terms of conceptual
+simplicity and ease of implementation. Then, we provide
+an experimental comparison of our implementation's performance.}
 
 \subsection{Qualitative Evaluation of Our Approach}
 
-Here, we consider the relative implementation burden of the current graph approach compared to the trace approach in \citet{perera22}.
-As explained below, we hypothesise that our approach is easier to implement and maintain compared to the trace approach.
-
-\MNnote{Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
-evaluation function (for computing bidirectional dependency information).  By contrast, the approach taken by
-\citet{perera22} use a bidirectional interpreter: building an execution
-\emph{trace} during forward execution, and then rewinding that trace to perform a backwards analysis such as
+\MNnote{Here, we consider the relative implementation burden of our graph approach compared to the trace approach in \citet{perera22},
+hypothesising that our graph one is easier to implement and maintain.\\
+\indent
+Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
+evaluation function.  By contrast, the trace approach taken by
+\citet{perera22} (and others) use a bidirectional interpreter: building an execution
+\emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency analysis such as
 $\demandsR$. Hence, the developer has to implement a separate backwards evaluation
 semantics using the execution trace, which propagates a selected output back
 to the program inputs. This approach is burdensome. The
 two directions of the interpreter need to be kept synchronised with
 respect to the dependency analysis, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality.  Moreover, each analysis runs over an execution trace of the entire
-computation regardless of whether all of the trace is relevant.
+every change requires modifying each direction in a manner that maintains bidirectionality.
 Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
 used to compute both $\demandsR$ and $\demandedByR$ over the graph.\\
 \indent
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
 \secref{conjugate}), meaning that it is not affected by changes in the
-semantics of the language. Thus, as opposed to \edit{(check whether this citation belongs here: \citet{ricciotti17} and)} \citet{perera22} where each analysis
-implemented needs to be defined separately and depends on details of the language, we
-only need to implement one language-specific algorithm.}
+semantics of the language. This is as opposed to works like \citet{perera22}, where
+analysis is implemented as part of (forward and backward) program evaluation, and hence heavily depends
+on the details of the language. Our analysis is run over a graph that is not language dependent --
+it only encodes the \emph{values produced} by (forward) program evaluation.}
 
- \subsection{Experimental Evaluation}
+\subsection{Experimental Evaluation}
 
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of PureScript, which we used to write a selection of
@@ -57,6 +59,16 @@ with the trace-based \cite{perera22}, refined to the following three research qu
    \item RQ3: How does the performance of the various implementations of \textit{demanded by} (i.e. trace-based, graph-based using $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$) compare?
 \end{itemize}
 
+Out of the three RQs above, RQ2 and RQ3 are those that matter for the performance of the interactions between an user and our system as the user explores a visualisation. In particular, we consider the following performance standards, as proposed in \citet{nielsen93}:
+\begin{itemize}
+   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a user's train of thought to remain uninterrupted, albeit they will notice a delay
+   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a user's attention on the system
+\end{itemize}
+We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
+and the time taken to evaluate programs is within the limit for keeping a users attention.
+
+
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
@@ -72,7 +84,7 @@ Second, we developed a prototype of a graphics
 library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
 Finally, we test two linked examples
 (\textbf{stacked-bar-scatter-plot} (corresponding to \figref{overview:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
-\edit{The code for our test programs is presented in~\apdxsecref{evaluation-src-code}.}
+\edit{The code for our benchmarks is given in~\apdxsecref{evaluation-src-code}.}
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
 Runtimes are reported in milliseconds (to 2 decimal places). When we refer to \textit{speedup}
@@ -84,17 +96,7 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 %    \caption{Source code: \lstinline{compute-dtw}}
 %    \label{fig:dtw-source}
 % \end{figure}
-\subsubsection{Performance Standards}
-\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since
-a user is likely to interact with a visualization multiple times in order to explore it. The standards we adhere to
--- as suggested in \citet{nielsen93} -- are as follows:
-\begin{itemize}
-   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
-   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a users train of thought to remain uninterrupted, albeit they will notice a delay
-   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a users attention on the system
-\end{itemize}
-We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
-and the time taken to evaluate programs is within the limit for keeping a users attention.}
+%\subsubsection{Performance Standards}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
@@ -123,20 +125,19 @@ column \textbf{Bwd-Speedup}.
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
 % ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
-\edit{from 33.6x speedup for the stacked bar-chart}
-to more than 80x for \textbf{gaussian}. \edit{In particular, every \textit{demands} query
-using the graph based approach is within the instantaneous category, whilst all but
-two of the examples using the trace approach are in the noticable delay category.}
+from 33x speedup for the stacked bar-chart,
+to more than 80x for \textbf{gaussian}. In particular, every \textit{demands} query
+using the graph based approach is within the ``instantaneous'' category, whilst all but
+two of the examples using the trace approach are in the ``noticable delay'' category.
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
 %
 %This is still a significant improvement in performance across all of our tested examples.
 %
-We attribute this performance improvement to the fact that the
-trace approach requires the system to completely rewind the execution of the
-original program, in effect evaluating it in reverse. By contrast, in the current graph
+We attribute this performance improvement to the fact that, in the
+trace approach, each new query requires the system to  rewind the \emph{entire} execution of the
+original program, in effect evaluating it in reverse. This is regardless of whether all of that trace is relevant. By contrast, in the current graph
 approach, one only needs to traverse the relevant part of the already-computed graph.
-
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
@@ -150,8 +151,10 @@ Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-De
 and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
 % For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
-\edit{For all benchmarks apart we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two using
-the trace based approach.}
+% \edit{
+For all benchmarks, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two for
+the trace based approach.
+% }
 
 
 {\small\input{fig/performance/equivalent-impls.tex}}
@@ -159,11 +162,11 @@ the trace based approach.}
 \subsubsection{Discussion of the results}
 When comparing the performance of the graph and trace approaches, we observe that the only consistent performance
 loss for the graph approach is due to the increased cost of evaluating a program to a graph versus evaluating
-it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable, since the graph only
-needs to be constructed once, and it does not impact subsequent interactions\edit{, and program evaluation time
-does not exceeed the limit for keeping the users attention on the system.}
-between the user and the system. Additionally, the fast response times for
-\textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
+it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable: the graph only
+needs to be constructed once and does not impact subsequent interactions; and program evaluation time
+does not exceed the limit for keeping the users attention on the system.
+ Additionally, the fast response times for
+\textit{demands} and \textit{demanded by} (according to RQ2 and RQ3), compared to the trace approach,
 translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
 
