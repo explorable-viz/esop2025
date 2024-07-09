@@ -62,8 +62,9 @@ sufficient''.
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
-\edit{\citet{psallidas18smoke} propose techniques based on fine-grained data provenance; for a custom
-in-memory database engine, they describe how to ``backward trace'' from output selections to input
+
+\MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
+in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
 selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 feature from data visualisation called \emph{linked brushing}.
 %Moving forward, we refer to this feature as \emph{linked outputs} instead.
@@ -135,13 +136,13 @@ Furthermore, they may be interested in more fine-grained information, e.g. they 
 the clean energy, reflected in the plot by the y-axis. This is particularly opaque as the plot doesn't make it
 possible to understand what ``clean'' energy even refers to. By supporting fine-grained in situ provenance
 queries, in our design, the user can see exactly the considered data by selecting the y-coordinate of the dot
-corresponding to China. \edit{In the input data table the user will then be presented 
+corresponding to China. \edit{In the input data table the user will then be presented
 with a set of highlighted cells whos contents were used to produce the selected output.}
 %
 
 As we will see later in the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data which was used to compute the selected output.
 %(\figref{introduction:related-inputs}, grey selections).
-We read this operator as computing ``what input data does an output \emph{demand}?''. {Since we compute $\demandsR$ using 
+We read this operator as computing ``what input data does an output \emph{demand}?''. {Since we compute $\demandsR$ using
 the reachability relation $R$ of a graph, we often write $\demandsR_{R}$.}
 %From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
 
@@ -289,16 +290,34 @@ visualisations we target.
 %outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
 %arise. Crucially, we want to make this feature automatic.
 
-These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s are not
+\MNnote{These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s are not
 only labour-intensive, but involve manually embedding metadata about the relationship between visual outputs
-and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
-analysis logic changes, the relationships between inputs and outputs also change. By shifting the
-responsibility for gathering this information into the programming language, the author or data scientist can
-concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-features to the infrastructure used to implement and host the visualisation.
+and inputs into the same program.
+%The validity of this metadata is fragile: whenever the visualisation or data
+% analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+% responsibility for gathering this information into the programming language, the author or data scientist can
+% concern themselves purely with analysis and visualisation, and defer the provision of these transparency
+% features to the infrastructure used to implement and host the visualisation.
+More automated solutions by \citet{ricciotti17} and
+\citet{perera22}, which shift that responsibility into the programming language,
+use a bidirectional interpreter that is costly both in terms of implementation effort and performance.
+% : recording an execution \emph{trace} during forward execution, \edit{and then using that trace to guide backwards execution}.
+For example, these languages are difficult to update, with
+each change requiring both directions of the interpreter to be modified in a way that maintains bidirectionality; and each new analysis
+involves re-running the entire program backwards, regardless of whether all of it is relevant.}
+% Moreover each runs over an execution record or trace of the entire
+%computation regardless of whether all of the trace is relevant. and each  analysis
+% needing to be defined separately that is dependent on the details of the language.
+% Moreover each runs over an execution record or trace of the entire
+%computation regardless of whether all of the trace is relevant.
+% and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
+% analysis logic changes, the relationships between inputs and outputs also change. By shifting the
+% responsibility for gathering this information into the programming language, the author or data scientist can
+% concern themselves purely with analysis and visualisation, and defer the provision of these transparency
+% features to the infrastructure used to implement and host the visualisation.
 
-\edit{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
-difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that 
+\JBnote{Works based on execution traces do their best to move the burden onto the lanugage itself, but are
+difficult to maintain or extend due to the necessity of maintaining a pair of intepreters that
 need to agree. Execution traces also suffered from performance problems that our approach goes some way to mitigate.}
 % However, computing the bidirectional dependency information needed to realise this idea is costly both in
 % terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
@@ -311,7 +330,8 @@ need to agree. Execution traces also suffered from performance problems that our
 % computation regardless of whether all of the trace is relevant.
 
 %Their work lets them ``rewind'' a program and trace fine-grained dependency information from outputs back to inputs.
-
+% The
+% two directions of the interpreter need to be kept synchronised, which makes updating t
 
 %In this paper, we develop the idea of data transparency across two directions. First we approach the problem
 %in a language-independent way, using \emph{dynamic dependence graphs}. This separates the definition of
