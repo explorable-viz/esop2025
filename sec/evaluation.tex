@@ -125,24 +125,19 @@ column \textbf{Bwd-Speedup}.
 Overall, we observe a significant speedup
 in the performance of \textit{demands} using the graph approach,
 % ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
-\edit{from 33.6x speedup for the stacked bar-chart}
-to more than 80x for \textbf{gaussian}. \edit{In particular, every \textit{demands} query
-using the graph based approach is within the instantaneous category, whilst all but
-two of the examples using the trace approach are in the noticable delay category.}
+from 33x speedup for the stacked bar-chart,
+to more than 80x for \textbf{gaussian}. In particular, every \textit{demands} query
+using the graph based approach is within the ``instantaneous'' category, whilst all but
+two of the examples using the trace approach are in the ``noticable delay'' category.
 %some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
 %\textbf{stacked-bar-scatter-plot} --
 %
 %This is still a significant improvement in performance across all of our tested examples.
 %
-We attribute this performance improvement to the fact that the
-trace approach requires the system to completely rewind the execution of the
-original program, in effect evaluating it in reverse. By contrast, in the current graph
+We attribute this performance improvement to the fact that, in the
+trace approach, each new query requires the system to  rewind the \emph{entire} execution of the
+original program, in effect evaluating it in reverse. This is regardless of whether all of that trace is relevant. By contrast, in the current graph
 approach, one only needs to traverse the relevant part of the already-computed graph.
-\MNnote{Suggestion:
-   We attribute this performance improvement to the fact that, in the
-   trace approach, each new query requires the system to  rewind the \emph{entire} execution of the
-   original program, in effect evaluating it in reverse. This is regardless of whether all of that trace is relevant. By contrast, in the current graph
-   approach, one only needs to traverse the relevant part of the already-computed graph.}
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
@@ -156,8 +151,10 @@ Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-De
 and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
 % For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
-\edit{For all benchmarks we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two using
-the trace based approach.}
+% \edit{
+For all benchmarks, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two for
+the trace based approach.
+% }
 
 
 {\small\input{fig/performance/equivalent-impls.tex}}
@@ -165,11 +162,11 @@ the trace based approach.}
 \subsubsection{Discussion of the results}
 When comparing the performance of the graph and trace approaches, we observe that the only consistent performance
 loss for the graph approach is due to the increased cost of evaluating a program to a graph versus evaluating
-it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable, since the graph only
-needs to be constructed once, and it does not impact subsequent interactions\edit{, and program evaluation time
-does not exceeed the limit for keeping the users attention on the system.}
-between the user and the system. Additionally, the fast response times for
-\textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
+it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable: the graph only
+needs to be constructed once and does not impact subsequent interactions; and program evaluation time
+does not exceed the limit for keeping the users attention on the system.
+ Additionally, the fast response times for
+\textit{demands} and \textit{demanded by} (according to RQ2 and RQ3), compared to the trace approach,
 translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
 
