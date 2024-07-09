@@ -57,6 +57,16 @@ with the trace-based \cite{perera22}, refined to the following three research qu
    \item RQ3: How does the performance of the various implementations of \textit{demanded by} (i.e. trace-based, graph-based using $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$) compare?
 \end{itemize}
 
+\edit{Out of the three RQs above, RQ2 and RQ3 are those that matter for the performance of the interactions between an user and our system as the user explores a visualisation. In particular, we consider the following performance standards, as proposed in \citet{nielsen93}:
+\begin{itemize}
+   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a users train of thought to remain uninterrupted, albeit they will notice a delay
+   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a users attention on the system
+\end{itemize}
+We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
+and the time taken to evaluate programs is within the limit for keeping a users attention.}
+
+
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
@@ -72,7 +82,7 @@ Second, we developed a prototype of a graphics
 library that demonstrates the performance on bespoke visualization code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
 Finally, we test two linked examples
 (\textbf{stacked-bar-scatter-plot} (corresponding to \figref{overview:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
-\edit{The code for our test programs is presented in~\apdxsecref{evaluation-src-code}.}
+\edit{The code for our benchmarks is given in~\apdxsecref{evaluation-src-code}.}
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (show in the results tables coloured {\textcolor{gray}{gray}} in brackets, separated by $\pm$).
 Runtimes are reported in milliseconds (to 2 decimal places). When we refer to \textit{speedup}
@@ -84,17 +94,7 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 %    \caption{Source code: \lstinline{compute-dtw}}
 %    \label{fig:dtw-source}
 % \end{figure}
-\subsubsection{Performance Standards}
-\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since
-a user is likely to interact with a visualization multiple times in order to explore it. The standards we adhere to
--- as suggested in \citet{nielsen93} -- are as follows:
-\begin{itemize}
-   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
-   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a users train of thought to remain uninterrupted, albeit they will notice a delay
-   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a users attention on the system
-\end{itemize}
-We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category,
-and the time taken to evaluate programs is within the limit for keeping a users attention.}
+%\subsubsection{Performance Standards}
 
 \subsubsection{RQ1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
