@@ -30,11 +30,12 @@ used to compute both $\demandsR$ and $\demandedByR$ over the graph.\\
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
 \secref{conjugate}), meaning that it is not affected by changes in the
-semantics of the language. Thus, as opposed to \citet{perera22} where each analysis
-implemented needs to be defined separately and depends on details of the language, we
-only need to implement one language-specific algorithm.}
+semantics of the language. This is as opposed to works like \citet{perera22}, where
+analysis is implemented as part of (forward and backward) program evaluation, and hence heavily depends
+on the details of the language. Our analysis is run over a graph that is not language dependent --
+it only encodes the \emph{values produced} by (forward) program evaluation.}
 
- \subsection{Experimental Evaluation}
+\subsection{Experimental Evaluation}
 
 In order to test the performance of our approach, we implemented our language
 from \secref{core} on top of PureScript, which we used to write a selection of
