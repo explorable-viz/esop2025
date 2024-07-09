@@ -49,8 +49,12 @@ where $\length{\seq{x}} = \Phi{(f)}$.
 A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
 either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are
 trie-like objects \cite{hinze00} that specify
-how this pattern-matching is done and the subsequent continuation $\kappa$ to be executed under additional variable bindings. (These are what the piecewise function definitions of our surface-language, e.g. \lstinline{plot} in \figref{overview:energy-query}, desugar into; \citet{peytonjones2021} present a similar idea.) A
-variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as $\kappa$. A record
+how this pattern-matching is done and the subsequent continuation $\kappa$ to be executed under additional variable bindings. (These are what the piecewise function definitions of our surface-language, e.g. \lstinline{plot} in \figref{overview:energy-query}, desugar into; \citet{peytonjones2021} present a similar idea.)
+\edit{The use of eliminators in our language makes extracting dependency information easier in our implementation,
+but their use is otherwise uninteresting -- the ideas we present in this paper are readily applicable to a language
+using a more traditional pattern matching mechanism.}
+
+A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as $\kappa$. A record
 eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$, and provides
 a continuation $\kappa$ for matching the values of those fields. Lastly, the eliminator $\elimConstr{\seq{c \mapsto
 \kappa}}$ provides a branch $c \mapsto \kappa$ for each constructor $c$ in
