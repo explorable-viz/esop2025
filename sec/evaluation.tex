@@ -12,23 +12,26 @@ that of \citet{perera22}.
 Here, we consider the relative implementation burden of the current graph approach compared to the trace approach in \citet{perera22}.
 As explained below, we hypothesise that our approach is easier to implement and maintain compared to the trace approach.
 
-Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
-evaluation function. By contrast, in \citet{perera22}, a
-program produces an execution trace that is rewound in order to perform a backwards analysis such as
-$\demandsR$. Consequently, the developer has to implement a separate backwards evaluation
+\MNnote{Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
+evaluation function (for computing bidirectional dependency information).  By contrast, the approaches taken by
+\citet{ricciotti17} and \citet{perera22} use a bidirectional interpreter: building an execution
+\emph{trace} during forward execution, and then rewinding that trace to perform a backwards analysis such as
+$\demandsR$. Hence, the developer has to implement a separate backwards evaluation
 semantics using the execution trace, which propagates a selected output back
-to the program inputs. This approach is burdensome since
-it requires the forwards and backwards evaluation functions to ``agree'' with
-respect to the dependency analysis.
+to the program inputs. This approach is burdensome. The
+two directions of the interpreter need to be kept synchronised with
+respect to the dependency analysis, which makes updating the language difficult as
+every change requires modifying each direction in a manner that maintains bidirectionality.  Moreover, each analysis runs over an execution trace of the entire
+computation regardless of whether all of the trace is relevant.
 Conversely, in our approach, once the dependence graph has been computed, forward evaluation is
-used to compute both $\demandsR$ and $\demandedByR$ over the graph.
-
-
+used to compute both $\demandsR$ and $\demandedByR$ over the graph.\\
+\indent
 Secondly, our algorithm for computing $\demandsR$ and
 $\demandedByR$ is language-agnostic (as described in
 \secref{conjugate}), meaning that it is not affected by changes in the
-semantics of the language. Thus, as opposed to \citet{perera22}, we
- only need to implement one language-specific algorithm.
+semantics of the language. Thus, as opposed to \edit{(check whether this citation belongs here: \citet{ricciotti17} and)} \citet{perera22} where each analysis
+implemented needs to be defined separately and depends on details of the language, we
+only need to implement one language-specific algorithm.}
 
  \subsection{Experimental Evaluation}
 
@@ -82,7 +85,7 @@ or \textit{slowdown} in reference to a pair of implementations, we mean the rati
 %    \label{fig:dtw-source}
 % \end{figure}
 \subsubsection{Performance Standards}
-\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since 
+\edit{With respect to performance, we concern ourselves mostly with the performance of interactions with the system, since
 a user is likely to interact with a visualization multiple times in order to explore it. The standards we adhere to
 -- as suggested in \citet{nielsen93} -- are as follows:
 \begin{itemize}
@@ -157,7 +160,7 @@ the trace based approach.}
 When comparing the performance of the graph and trace approaches, we observe that the only consistent performance
 loss for the graph approach is due to the increased cost of evaluating a program to a graph versus evaluating
 it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable, since the graph only
-needs to be constructed once, and it does not impact subsequent interactions\edit{, and program evaluation time 
+needs to be constructed once, and it does not impact subsequent interactions\edit{, and program evaluation time
 does not exceeed the limit for keeping the users attention on the system.}
 between the user and the system. Additionally, the fast response times for
 \textit{demands} and \textit{demanded by} compared to the trace approach (as shown by RQ2 and RQ3),
@@ -182,7 +185,7 @@ translate into quick responses to user queries. This is critical for the interac
 %\textit{demanded by}.
 While our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
 these experiments show that the shape of the graph may matter for performance. We defer more detailed discussion to \secref{conclusion}.
-\JBnote{It is as yet not apparent how the structure of the graph itself affects performance. 
+\JBnote{It is as yet not apparent how the structure of the graph itself affects performance.
 The more parallel programs (the three matrix convolutions) exhibit better performance in the
 \textit{demands} testing and worse performance in the \textit{demanded by} testing.
 Investigation into the structure of the graphs and their impact on performance is left to future
@@ -191,8 +194,8 @@ In our implementation, we use a simple adjacency map, and a more specialized rep
 could improve performance further.}
 
 
-Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which 
-takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, 
+Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which
+takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases,
 \textbf{G-DemBy-Suff} performs significantly worse than \textbf{G-DemBy}. I We suspect
 that the generally bad performance of \textbf{G-DemBy-Suff} is at least partially caused by the expensive
 set complement operations performed before and after applying $\sufficesAlg{}$.
