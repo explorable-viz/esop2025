@@ -104,7 +104,7 @@ Clearly the IO relation of $G$ is the
 converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
 input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation
 $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
-\textit{preimage} functions for $R$, which we will denote using $\demandedByR$ and $\demandsR$.
+\textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and $\demandsR_{R}$.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -153,10 +153,10 @@ This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subse
 the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
-\subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
+\subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
 
-We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its IO
+We now extend the notion of $\demandsR_{R}$ and $\demandedByR_{R}$ to a dependence graph $G$ via its IO
 relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
 reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
 inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
@@ -194,7 +194,7 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
+input set, rather than any ancestor to be in the input set. \MNnote{We include $\preimageDualR_R$ here for completeness; however, we so far find it unimportant for the purpose of IO-related queries, so ignore it hereon.} \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
 not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not picked out
 the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $\alpha_5$.
 %The two definitions are so similar that
@@ -249,11 +249,12 @@ for a proof.
    \end{enumerate}
 \end{proposition}
 
-\subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
+\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and their duals $\sufficesR_{G}$ and
-$\preimageDualR_{G}$ for a dependence graph $G$. One advantage of graphs over the trace-based approach of
+We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and \MNnote{one of their duals $\sufficesR_{G}$}
+%and t heir duals $\sufficesR_{G}$ and$\preimageDualR_{G}$
+for a dependence graph $G$. One advantage of graphs over the trace-based approach of
 \citet{perera22} is that a single algorithm can be readily adapted to compute all 4 operators; given a
 procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as
 $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
@@ -297,7 +298,7 @@ of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at onc
 When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the graph
 slice by intersecting with $\sinks{G}$.
 
-\begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR$]
+\begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
@@ -336,10 +337,10 @@ After step 7, the run is complete.}
 
 \input{fig/conjugate/suffices-algo-explanation}
 
-\begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
+\begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR_{G}$]
    \label{prop:sufficesAlg-computes-suffices}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
-   \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
+   \[X \sufficesAlg{G} Y \iff \sufficesR_{g}(X) = Y\]
 \end{proposition}
 \begin{proof}
    See \apdxsecref{apdx:suffices-alg}
