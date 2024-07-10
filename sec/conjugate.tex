@@ -194,7 +194,7 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \MNnote{We include $\preimageDualR_R$ here for completeness; however, we so far find it unimportant for the purpose of IO-related queries, so ignore it hereon.} \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
+input set, rather than any ancestor to be in the input set. We include $\preimageDualR_R$ here for completeness; however, we so far find it unimportant for the purpose of IO-related queries, so ignore it hereon. \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
 not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not picked out
 the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $\alpha_5$.
 %The two definitions are so similar that
@@ -252,7 +252,7 @@ for a proof.
 \subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and \MNnote{one of their duals $\sufficesR_{G}$}
+We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$
 %and t heir duals $\sufficesR_{G}$ and$\preimageDualR_{G}$
 for a dependence graph $G$. One advantage of graphs over the trace-based approach of
 \citet{perera22} is that a single algorithm can be readily adapted to compute all 4 operators; given a
@@ -261,8 +261,7 @@ $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and
 pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), allowing
-us to compute the other two operators via the opposite graph; this is in some situations more efficient than
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
 relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
 procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
 contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
