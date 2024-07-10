@@ -5,8 +5,8 @@ In this section we introduce Boolean algebras and other preliminaries (\secref{c
 dependence graphs (\secref{conjugate:dependence-graphs}), and the image and preimage functions for a relation
 and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
 graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation, and give algorithms for computing
-them over a given graph (\secref{conjugate:dependence-graph-algos}). \edit{Throughout the section, we will illustrate
-concepts using a toy example program alongside (a simplified version of) its dependence graph, shown in \figref{conjugate:example}.}
+them over a given graph (\secref{conjugate:dependence-graph-algos}). Throughout the section, we will illustrate
+concepts using a toy example program alongside (a simplified version of) its dependence graph, shown in \figref{conjugate:example}.
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -42,9 +42,9 @@ over each other and induce a partial order $\leq$ over $X$.
 Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
-complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
+complement, so that $\neg X' = X \setminus X'$. We will usually consider the powerset of nodes associated with
 input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.}
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -60,10 +60,10 @@ the program, the partial value associated to $\beta$ \textit{depends on} on the 
 $\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
 somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
 dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
-dependent vertices, whereas in the literature the other direction is somewhat more common. \edit{In \figref{conjugate:example:graph},
+dependent vertices, whereas in the literature the other direction is somewhat more common. In \figref{conjugate:example:graph},
 the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
 \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
-the values of the arithmetic expressions in the program's result.}
+the values of the arithmetic expressions in the program's result.
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
