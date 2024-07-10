@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 cases = [
     "slicing/dtw/compute-dtw",
-    "slicing/convolution/edgeDetect",
+    "slicing/convolution/edge-detect",
     "slicing/convolution/emboss",
     "slicing/convolution/gaussian",
     "slicing/linked-outputs/bar-chart-line-chart",
