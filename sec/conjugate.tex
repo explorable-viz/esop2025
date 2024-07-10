@@ -194,7 +194,7 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. We include $\preimageDualR_R$ here for completeness; however, we so far find it unimportant for the purpose of IO-related queries, so ignore it hereon.
+input set, rather than any ancestor to be in the input set. \MNnote{We include $\preimageDualR_R$ here only for completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so ignore it hereon.}
 
 In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
 contrasting with $\demandedByR_{R}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so have insufficient information to compute the value at $\alpha_5$.
@@ -252,11 +252,11 @@ called Galois connections. Specifically, a well known result in the literature~\
 
 We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$
 %and t heir duals $\sufficesR_{G}$ and$\preimageDualR_{G}$
-for a dependence graph $G$. \MNnote{One advantage of graphs, in comparison to the trace-based approach of
-\citet{perera22} eluded to in \secref{introduction}}, is that a single algorithm can be readily adapted to compute all 4 operators; given a
-procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as
+for a dependence graph $G$. One advantage of graphs, in comparison to the trace-based approach mentioned in \secref{introduction},
+is that a single algorithm can be readily adapted to compute all 3 operators; for example, given a
+procedure for $\demandedByR_{G}$, we can compute its conjugate $\demandsR_{G}$ as
 $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
-pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
+pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
