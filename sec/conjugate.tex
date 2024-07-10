@@ -5,8 +5,8 @@ In this section we introduce Boolean algebras and other preliminaries (\secref{c
 dependence graphs (\secref{conjugate:dependence-graphs}), and the image and preimage functions for a relation
 and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
 graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation, and give algorithms for computing
-them over a given graph (\secref{conjugate:dependence-graph-algos}). \edit{Throughout the section, we will illustrate
-concepts using a toy example program alongside (a simplified version of) its dependence graph, shown in \figref{conjugate:example}.}
+them over a given graph (\secref{conjugate:dependence-graph-algos}). Throughout the section, we will illustrate
+concepts using a toy example program alongside (a simplified version of) its dependence graph, shown in \figref{conjugate:example}.
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -42,9 +42,9 @@ over each other and induce a partial order $\leq$ over $X$.
 Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
-complement, so that $\neg X' = X \setminus X'$. \edit{We will usually consider the powerset of nodes associated with
+complement, so that $\neg X' = X \setminus X'$. We will usually consider the powerset of nodes associated with
 input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.}
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -60,10 +60,10 @@ the program, the partial value associated to $\beta$ \textit{depends on} on the 
 $\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
 somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
 dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
-dependent vertices, whereas in the literature the other direction is somewhat more common. \edit{In \figref{conjugate:example:graph},
+dependent vertices, whereas in the literature the other direction is somewhat more common. In \figref{conjugate:example:graph},
 the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
 \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
-the values of the arithmetic expressions in the program's result.}
+the values of the arithmetic expressions in the program's result.
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -97,14 +97,14 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
-\edit{In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
-and the IO relation are identical.}
+In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
+and the IO relation are identical.
 
 Clearly the IO relation of $G$ is the
 converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
 input and outputs \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation
 $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
-\textit{preimage} functions for $R$, which we will denote using $\demandedByR$ and $\demandsR$.
+\textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and $\demandsR_{R}$.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -153,10 +153,10 @@ This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subse
 the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
-\subsection{$\demandsR$ and $\demandedByR$ over Dependence Graphs}
+\subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
 
-We now extend the notion of $\demandsR$ and $\demandedByR$ to a dependence graph $G$ via its IO
+We now extend the notion of $\demandsR_{R}$ and $\demandedByR_{R}$ to a dependence graph $G$ via its IO
 relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
 reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
 inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
@@ -169,12 +169,12 @@ traversing the graph in the opposite direction, i.e.~the intersection of $\deman
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
    \end{enumerate}
 \end{definition}
-\edit{In the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, taking $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$, since the
+In the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$, because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$, since the
 value of $x2$ is also used in the construction of the value at node $\alpha_5$.
-On the other hand, taking $\demandsR_{R}(\set{\alpha_6})$ we only get $\set{\alpha_2}$, despite it representing
+On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$, despite $\alpha_6$ representing
 the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
-on the result.}
+on the result.
 
 
 \subsection{Dual Image and Preimage Functions}
@@ -194,11 +194,13 @@ which also form a conjugate pair.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set. \edit{In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
-not $\set{\alpha_4,\alpha_5}$ as before. Whilst the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not picked out
-the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so we do not have sufficient information to compute the value at $\alpha_5$.
+input set, rather than any ancestor to be in the input set. \MNnote{We include $\preimageDualR_R$ here only for completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so ignore it hereon.}
+
+In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
+contrasting with $\demandedByR_{R}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so have insufficient information to compute the value at $\alpha_5$.
 %The two definitions are so similar that
-Notably, $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De Morgan Dual.}
+
+Notably,  $\demandedByR_R$ can be transformed into $\sufficesR_R$ by using the De Morgan Dual:
 
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
@@ -219,14 +221,14 @@ Notably, $\sufficesR_R$ can be transformed into $\demandedByR_R$, using the De M
    See \apdxsecref{apdx:conjugate:image-preimage-duality}
 \end{proof}
 
-\edit{Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$,
+Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$,
 we can read $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''.
 Then, taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is
 effectively asking the question ``what outputs do not use any of the information I have not
-selected?'', which is exactly the question of sufficiency.}
+selected?'', which is exactly the question of sufficiency.
 
-\edit{Conjugate functions are related to another class of functions between Boolean algebras,
-namely Galois connections.}
+Conjugate functions are related to another class of functions between Boolean algebras,
+called Galois connections. Specifically, a well known result in the literature~\citet{menni14} is that every  conjugate pair of functions induces a Galois connection:
 
 \begin{definition}[Galois connection]
    \label{def:conjugate:galois-connection}
@@ -235,10 +237,6 @@ namely Galois connections.}
    \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
 
-\edit{%They are so closely related, that
-  Every conjugate pair induces a Galois connection.}
-The following proposition is a well known result in the literature, see \citet{menni14}
-for a proof.
 \begin{proposition}[Correspondence Between Conjugates and Galois Connections]
    \label{prop:conj-galois-correspond}
    Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
@@ -249,19 +247,19 @@ for a proof.
    \end{enumerate}
 \end{proposition}
 
-\subsection{Computing $\demandsR_G$ and $\demandedByR_G$ and their duals}
+\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandedByR_{G}$ and $\demandsR_{G}$ and their duals $\sufficesR_{G}$ and
-$\preimageDualR_{G}$ for a dependence graph $G$. One advantage of graphs over the trace-based approach of
-\citet{perera22} is that a single algorithm can be readily adapted to compute all 4 operators; given a
-procedure for $\demandedByR_{G}$, for example, we can compute its conjugate $\demandsR_{G}$ as
+We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$
+%and t heir duals $\sufficesR_{G}$ and$\preimageDualR_{G}$
+for a dependence graph $G$. One advantage of graphs, in comparison to the trace-based approach mentioned in \secref{introduction},
+is that a single algorithm can be readily adapted to compute all 3 operators; for example, given a
+procedure for $\demandedByR_{G}$, we can compute its conjugate $\demandsR_{G}$ as
 $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
-pre- and post-composing with negation (\defref{conjugate:de-morgan-dual}).
+pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), allowing
-us to compute the other two operators via the opposite graph; this is in some situations more efficient than
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
 relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
 procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
 contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
@@ -297,7 +295,7 @@ of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at onc
 When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the graph
 slice by intersecting with $\sinks{G}$.
 
-\begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR$]
+\begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
@@ -336,10 +334,10 @@ After step 7, the run is complete.}
 
 \input{fig/conjugate/suffices-algo-explanation}
 
-\begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR$]
+\begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR_{G}$]
    \label{prop:sufficesAlg-computes-suffices}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
-   \[X \sufficesAlg{G} Y \iff \sufficesR(X) = Y\]
+   \[X \sufficesAlg{G} Y \iff \sufficesR_{g}(X) = Y\]
 \end{proposition}
 \begin{proof}
    See \apdxsecref{apdx:suffices-alg}

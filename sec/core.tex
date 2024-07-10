@@ -4,11 +4,12 @@
 In \secref{conjugate}, we defined the abstract setting of dependence graphs and conjugate operators
 \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$) over such graphs. We now implement that
 graph abstraction for \OurLang, an untyped, pure functional programming language. This core calculus we
-go on to describe is what underlies the surface-language programs such as \figref{overview:energy-query}, used
-to generate and analyse the scatter plots from earlier. We first introduce the syntax of our core language
+go on to describe is what underlies the surface-language programs used to generate and analyse the scatter plots from earlier;
+we show some full examples of practical programs in \apdxsecref{apdx:evaluation-src-code}.
+First, we introduce the syntax of our core language
 constructs (\secref{core:syntax}). Then we define a big-step operational semantics that simultaneously (i)
 evaluates a term to a value and (ii) constructs an accompanying dependence graph for the evaluation of that
-term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual recursion.
+term (\secref{core:semantics}); we also address how we deal with pattern-matching and mutual~recursion.
 
 \subsection{Syntax}
 \label{sec:core:syntax}
@@ -51,17 +52,24 @@ after a value is pattern-matched, and is either a term $e$ or an
 \textit{eliminator} $\sigma$. Eliminators are trie-like objects
 \cite{hinze00} that specify how this pattern-matching is done and the
 subsequent continuation $\kappa$ to be executed under additional
-variable bindings. (These are what the piecewise function definitions
-of our surface-language, e.g. \lstinline{plot} in
-\figref{overview:energy-query}, desugar into; \citet{peytonjones2021}
-present a similar idea.)  \edit{The use of eliminators in our language
+variable bindings. These are what the piecewise function definitions
+of our surface-language, e.g. \lstinline{filter} in
+\figref{core:surface-examples:functions}, desugar into; \citet{peytonjones2021}
+present a similar idea.
+(The use of eliminators in our language
   makes extracting dependency information easier in our
-  implementation, but their use is otherwise uninteresting -- the
-  ideas we present in this paper are readily applicable to a language
-  using a more traditional pattern matching mechanism. Moreover, for
-  data science applications, we have found it useful to have records
-  and data types as core constructs and
-  this decision lends itself to the eliminator design.}
+  implementation, and goes well with records
+  and data types as core constructs useful for data science applications, but their use is otherwise uninteresting
+  -- the ideas in this paper are readily applicable to a language
+  using a more traditional pattern matching mechanism.)
+% \edit{The use of eliminators in our language
+%   makes extracting dependency information easier in our
+%   implementation, but their use is otherwise uninteresting -- the
+%   ideas we present in this paper are readily applicable to a language
+%   using a more traditional pattern matching mechanism. Moreover, for
+%   data science applications, we have found it useful to have records
+%   and data types as core constructs and
+%   this decision lends itself to the eliminator design.}
 
 A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as $\kappa$. A record
 eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$, and provides
@@ -83,10 +91,10 @@ Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
-environment is defined as a finite~map. \edit{We are often only interested in some strict subset of
+environment is defined as a finite~map. {(In our context, IO analysis of programs, we are often only interested in some strict subset of
 the environment $\Gamma' \subseteq \Gamma$. Happily, domain restriction of maps induces a pair of conjugate
-functions, one of them maps the unselected part of the environment ($\Gamma \setminus \Gamma'$) to $\top$,
-and the other conjugate maps the unslected values to $\bot$.}
+functions: one of them maps the unselected part of the environment ($\Gamma \setminus \Gamma'$) to $\top$,
+and the other  maps the unselected values to $\bot$.)}
 
 % mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
 %, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
@@ -176,10 +184,10 @@ Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetR
 Our implementation provides a surface language which desugars into the core language presented above; in
 particular the surface language supports piecewise function definitions (which desugar into eliminators) and
 conventional list comprehensions. The core and surface languages also both support matrices, using a
-comprehension-like syntax for matrix initialisation. \edit{The examples in \figref{core:surface-examples} illustrate
-some of these features: piecewise functions in \figref{core:surface-examples:functions}, matrices in \figref{core:surface-examples:matrix},
-list comprehensions in \figref{core:surface-examples:listcomps}, and dictionaries and records in \figref{core:surface-examples:dicts}.
-For more complex examples, we refer the reader to the listings in \apdxsecref{apdx:evaluation-src-code}.}
+comprehension-like syntax for matrix initialisation. The examples in \figref{core:surface-examples} illustrate
+some of these features; % piecewise functions in \figref{core:surface-examples:functions}, matrices in \figref{core:surface-examples:matrix},
+%list comprehensions in \figref{core:surface-examples:listcomps}, and dictionaries and records in \figref{core:surface-examples:dicts}.
+for more complex examples, we refer the reader to the listings in \apdxsecref{apdx:evaluation-src-code}.
 % \subsubsection{Mutual recursion}
 % \label{sec:core:semantics:mutual-recursion}
 % \MNnote{to complete}
