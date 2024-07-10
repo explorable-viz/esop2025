@@ -260,7 +260,7 @@ $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and
 pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in \figref{conjugate:algorithms}, where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
 relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
 procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
 contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
@@ -296,7 +296,7 @@ of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at onc
 When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the graph
 slice by intersecting with $\sinks{G}$.
 
-\begin{proposition}[$\demandedByAlg{}$ Computes $\demandedByR_{G}$]
+\begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
@@ -315,7 +315,7 @@ slice by intersecting with $\sinks{G}$.
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G$, the algorithm $\sufficesAlg{}$ also delegates to an auxiliary procedure
+For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary procedure
 $\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
 \edit{takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
 we have discovered partial information, and the remaining unexplored graph $G$. \note{Maybe rename $G$ so
@@ -335,7 +335,7 @@ After step 7, the run is complete.}
 
 \input{fig/conjugate/suffices-algo-explanation}
 
-\begin{proposition}[$\sufficesAlg{}$ Computes $\sufficesR_{G}$]
+\begin{proposition}[$\sufficesAlg{G}$ Computes $\sufficesR_{G}$]
    \label{prop:sufficesAlg-computes-suffices}
    For any dependence graph $G$, any $X \subseteq \sources{G}$ and any $Y \subseteq \sinks{G}$ we have:
    \[X \sufficesAlg{G} Y \iff \sufficesR_{g}(X) = Y\]
