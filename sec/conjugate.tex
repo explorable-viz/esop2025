@@ -287,14 +287,15 @@ inductive definition, treating it as a function with $V$ and index $G$ as inputs
 % termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
 % leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
 % to reach the base case of \ruleName{done}.}
-The auxiliary operation $G \demandedByV{}$ \edit{maintains a
+\MNnote{The auxiliary operation $H, G \demandedByV{}$ maintains a
 (partial) slice $H \subseteq G$. If there is a sink of $H$ that still has outgoing edges in $G$, then the
 targets of those edges are reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}).
 If $\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and
 so we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
-of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once.}
-When $\demandedByV{}$ is done, $\demandedByAlg{}$ extracts the output set from the graph
-slice by intersecting with $\sinks{G}$.
+of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once.
+When $\demandedByV{}$ is done, we can %$\demandedByAlg{G}$
+extract the final output set from the graph
+slice by intersecting with $\sinks{G}$. \edit{where is this done??}}
 
 \begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
@@ -315,16 +316,16 @@ slice by intersecting with $\sinks{G}$.
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary procedure
-$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The judgement $\sufficesE{}$
-\edit{takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
-we have discovered partial information, and the remaining unexplored graph $G$. \note{Maybe rename $G$ so
-we can give the subgraph relationships?}. We add vertices and edges to the pending graph whenever
-we have a vertex in $H$ which still has outgoing edges in $G$. These edges and their endpoints are
-added to $P$ (\ruleName{pending}). A node $\alpha$ and its incoming edges can be moved from $P$ to $H$ when
-it has no more incoming edges in $G$ as this can only happen when we have already moved every ancestor of
-$\alpha$ into $H$ (\ruleName{extend}). If neither of these are true, then we terminate with the
-(potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{}$
+For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation
+$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. \MNnote{The operation $H, P, G\sufficesE{}$
+takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
+we have discovered partial information, and the remaining unexplored graph $G$.
+%\note{Maybe rename $G$ so we can give the subgraph relationships?}.
+Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add those edges and their endpoints to the pending graph
+$P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges from $P$ to $H$,
+ as this can only happen when we have already moved every ancestor of $\alpha$ into $H$ (\ruleName{extend}).
+ If neither of these scenarios is the case, then we terminate with the
+(potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{G}$
 takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
 it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
