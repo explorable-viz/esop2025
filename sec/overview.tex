@@ -30,7 +30,7 @@ for data transparency that both improves performance and reduces the implementat
 %queries are much easier to formulate in the graphical setting.
 %
 
-The operators $\demandsR_{R}$ and $\demandedByR_{R}$, introduced in \secref{introduction} to perform
+The operators $\demandsR_{G}$ and $\demandedByR_{G}$, introduced in \secref{introduction} to perform
 queries over a dependence graph, form what's called a ``conjugate pair''. Conjugate pairs -- which map
 between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
 one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
@@ -46,21 +46,21 @@ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection (
 more detail in \secref{conjugate}).
 
 
-If we now take $R$ to be reachability in $G$, then technically, the graph setting only requires a single operator
-$\demandsR_R$ -- a ``demands'' relation (of outputs on inputs) -- to support all the required IO queries.
-Given a procedure to compute $\demandsR_{R}$, we can automatically derive a procedure to compute its conjugate
-$\demandedByR_{R}$ -- a ``demanded-by'' relation (of inputs for outputs) --  by simply using the opposite graph's reachability relation, $R^{-1}$.
+If we now take $R$ to be a reachability relation in a graph $G$, then technically, the graph setting only requires a single operator
+$\demandsR_G$ -- a ``demands'' relation (of outputs on inputs) -- to support all the required IO queries.
+Given a procedure to compute $\demandsR_{G}$, we can automatically derive a procedure to compute its conjugate
+$\demandedByR_{G}$ -- a ``demanded-by'' relation (of inputs for outputs) --  by simply using the opposite graph $G^{-1}$'s reachability relation, $\demandsR_{G^{-1}}$.
 By then using the De Morgan Dual, one can easily derive
-a new operator $\sufficesR_R$  which can be used to investigate all questions of ``sufficiency'' of inputs for outputs; that is, given some inputs, what outputs are they sufficient for computing.
+a new operator $\sufficesR_G$  which can be used to investigate all questions of ``sufficiency'' of inputs for outputs; that is, given some inputs, what outputs are they sufficient for computing.
 (It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
 also benefit from efficient procedures for all of them.) In practice however, using the De Morgan dual construction --
-i.e. complementing an initial input selection, running $\demandedByR_{R}$, and complementing the resulting output selection -- is in general
-inefficient, since complement operations are expensive. Instead, we will provide a more efficient implementation (of $\demandedByR_{R}$ and $\sufficesR_R$), which exhibits significantly better performance compared
+i.e. complementing an initial input selection, running $\demandedByR_{G}$, and complementing the resulting output selection -- is in general
+inefficient, since complement operations are expensive. Instead, we will provide a more efficient implementation (of $\demandedByR_{G}$ and $\sufficesR_G$), which exhibits significantly better performance compared
 to the derived algorithm.
 
 In the graph setting, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
-reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example, linked outputs
-can be written as $\demandsR_{R \relcomp R^{-1}}$, and linked inputs can be written as $\demandedByR_{R \relcomp R^{-1}}$.
+reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example,  linked inputs can be written as $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$ (i.e. $\demandsR_{G} \after \demandsR_{G^{-1}}$), and linked outputs
+can be written as $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$.
 In the graph, a pair of linked output values share some common ancestor whereas
 a pair of linked input nodes in the graph share some common descendant.
 %Therefore we will sometimes refer to linked outputs/inputs queries as computing ``peer'' values.

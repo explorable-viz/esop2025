@@ -139,20 +139,20 @@ corresponding to China, the user will be presented
 with a set of highlighted cells in the input table whose contents were used to produce the selected output.
 %
 
-As we will see later in the paper, our system uses an operator $\demandsR_{R}$, which identifies the complete set of input data which was used to compute the selected output.
+As we will see later in the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data which was used to compute the selected output.
 %(\figref{introduction:related-inputs}, grey selections).
 We read this operator as computing ``what input data does an output \emph{demand}?''.
-The subscript $R$ is short for ``reachable'', denoting that the computation is based on the reachability relation $R$ of a graph.
+The subscript $G$ is short for ``graph'', denoting that the computation is based on the reachability relation of a graph $G$.
 %From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
 
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
 the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs}).
-Then, our system, through an operator we write as $\demandedByR_{R}$, traces the data contained in this cell to
+Then, our system, through an operator we write as $\demandedByR_{G}$, traces the data contained in this cell to
 the parts of the chart it was used to compute (the green dot in the plot). The bioenergy capacity
 contributes to both components of the dot, namely the total renewables capacity over total energy
-capacity and the clean capacity factor. We read $\demandedByR_{R}$ as computing
+capacity and the clean capacity factor. We read $\demandedByR_{G}$ as computing
 ``what outputs is some input data \emph{demanded by}?''.
 %In fact, we see that it only picks out the $y$-coordinate.
 %We call the elements of the output that are used by our input selection the \emph{mediating output(s)}, since they
@@ -164,10 +164,10 @@ The previous use cases only went in one direction, either from outputs back to i
 outputs. However, there may be situations where we want to compose the two directions.
 For illustration, let's assume like before that a user starts by selecting China's bioenergy capacity.
 As previously explained,
-our system will apply $\demandedByR_{R}$ to trace the data contained in this cell to the point in the scatter plot it was used to compute (the green dot in the plot).
+our system will apply $\demandedByR_{G}$ to trace the data contained in this cell to the point in the scatter plot it was used to compute (the green dot in the plot).
 %The bioenergy capacity contributes to both components of the dot, namely the total renewables capacity over total energy capacity and the clean capacity factor.
 %\MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
-Additionally, our system will apply $\demandsR_{R}$ to determine the rest of the data in the input tables that was used to compute the point in the plot (data highlighted in grey in the tables).
+Additionally, our system will apply $\demandsR_{G}$ to determine the rest of the data in the input tables that was used to compute the point in the plot (data highlighted in grey in the tables).
 We refer to the highlighted data in the two input tables as ``linked inputs'', i.e. inputs that contribute to the same features of an output. This enables
 users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
 
@@ -189,9 +189,9 @@ outputs. In the scatter plot, we note that only two dots are selected,
 those for Egypt and Japan, reflecting the fact that the scatter plot
 is only a view of data from 2018.
 
-From the analysis point of view, this requires applying $\demandsR_{R}$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
+From the analysis point of view, this requires applying $\demandsR_{G}$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 associated with a given nation -- the selected segments demand all of the highlighted green data in the table.
-Then, starting from the selected data, we apply $\demandedByR_{R}$ to pick out the $x$ components of some of the circles in the scatter plot (green circles).
+Then, starting from the selected data, we apply $\demandedByR_{G}$ to pick out the $x$ components of some of the circles in the scatter plot (green circles).
 
 %by another scientist working on the same project.
 %The y-axis of the scatter plot refers to clean energy, but it doesn't make it obvious what energy resources count as ``clean'', or which point represents which
@@ -265,13 +265,13 @@ dependence graph for that program. Our specific contributions are as follows:
 \begin{itemize}
 
 \item A new formal framework for bidirectional provenance queries over dependence graphs, formalising the
-$\demandsR_{R}$ and $\demandedByR_{R}$ operators introduced informally in \secref{introduction:data-transparency},
+$\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in \secref{introduction:data-transparency},
 which we show to be \emph{conjugate} in the sense of~\citet{jonsson51}. We relate our framework to
 bidirectional analyses based on Galois connections (e.g.~\citet{ricciotti17,perera22}).
 
 \item A novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
 inputs when they contribute to common features of the output. The design of our framework makes it
-straightforward to implement this analysis by composing $\demandsR_{R}$ and $\demandedByR_{R}$. We show how a dual
+straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how a dual
 \emph{linked outputs} analysis, available in prior work \cite{perera22}, is easily obtained by transposing the two operators.
 %  \MNnote{I suggest taking this part out, because we don't actually do this:}, and relate this formally to the ``linked brushing'' feature from the data visualisation literature.
 
@@ -364,19 +364,19 @@ inputs'' queries from an end-user perspective. The rest of the paper is organise
 
 \begin{itemize}[leftmargin=*]
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
-  the cognacy operator $\relInputR$ (``linked inputs'') and unpacking the intuitive relationship between its
-  two components $\demandsR_{R}$ (``demands'') and $\demandedByR_{R}$ (``demanded by'') in terms of
+  the cognacy operator $\relInputR_G$ (``linked inputs'') and unpacking the intuitive relationship between its
+  two components $\demandsR_{G}$ (``demands'') and $\demandedByR_{G}$ (``demanded by'') in terms of
   \citeauthor{jonsson51}'s notion of conjugate operators over Boolean algebras. We also introduce the dual
-  cognacy operator $\relOutputR$ (``linked outputs'') and explain the relationship to Galois connections: $f$
+  cognacy operator $\relOutputR_G$ (``linked outputs'') and explain the relationship to Galois connections: $f$
   and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
-  give procedures for computing $\demandsR_{R}$ and $\demandedByR_{R}$.
+  give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$.
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
-  with a dynamic dependence graph suitable for computing $\demandsR_{R}$ and $\demandedByR_{R}$. We show how to represent
+  with a dynamic dependence graph suitable for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how to represent
   (parts of) values as vertices in the graph. We also show how our operators can follow information back to environments,
   with projections.
 \item \secref{evaluation} evaluates our implementation based on graphs and conjugates against one based on traces and Galois connections. We contrast the
  implementation burden of the two approaches, and the performance  of
-  building trace vs.~building dependence graphs and computing $\demandsR_{R}$ and $\demandedByR_{R}$ over~each.
+  building trace vs.~building dependence graphs and computing $\demandsR_{G}$ and $\demandedByR_{G}$ over~each.
 \item \secref{related-work} reviews related work in more detail, including program slicing and dynamic dependence~graphs.
 \item \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 infrastructure proposed in this paper is purely extensional and falls short of providing full explanations of
