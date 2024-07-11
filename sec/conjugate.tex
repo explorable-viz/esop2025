@@ -42,8 +42,8 @@ over each other and induce a partial order $\leq$ over $X$.
 Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
-complement, so that $\neg X' = X \setminus X'$. We will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs. In \figref{conjugate:example} these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
+complement, so that $\neg X' = X \setminus X'$. For a program, we will usually consider the powerset of nodes associated with
+input values and the powerset of nodes associated with outputs. In \figref{conjugate:example}, these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
 and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.
 
 \subsection{Dynamic Dependence Graphs}
@@ -53,7 +53,7 @@ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.
 
 We explain how we construct dependence graphs later in \secref{core}, and here just introduce the basic
 notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
-$V$ of \emph{vertices} and set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
+$V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
 program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as
 inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of
 the program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
