@@ -145,13 +145,13 @@ with a set of highlighted cells in the input table whose contents were used to p
 As we will see later in the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that was used to compute the selected output.
 %(\figref{introduction:related-inputs}, grey selections).
 We read this operator as computing ``what input data does an output \emph{demand}?''.
-The subscript $G$ is short for ``graph'', denoting that the computation is based on the reachability relation of a graph $G$.
+The subscript $G$ is short for ``graph'', denoting that the computation is based on the reachability relation of a dependency graph $G$.
 %From this information, we can see that our hypothetical colleague considers nuclear power to be a clean energy source.
 
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
-the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs}).
+the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs}, row 205 in the data on the figure's left).
 Then, our system, through an operator we write as $\demandedByR_{G}$, traces the data contained in this cell to
 the parts of the plot it was used to compute (the green dot in the plot). The bioenergy capacity
 contributes to both components of the dot, namely the total renewables capacity over total energy
@@ -274,7 +274,7 @@ bidirectional analyses based on Galois connections (e.g.~\citet{ricciotti17,pere
 
 \item A novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
 inputs when they contribute to common features of the output. The design of our framework makes it
-straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how a dual
+straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We also show how a dual
 \emph{linked outputs} analysis, available in prior work \cite{perera22}, is easily obtained by transposing the two operators.
 %  \MNnote{I suggest taking this part out, because we don't actually do this:}, and relate this formally to the ``linked brushing'' feature from the data visualisation literature.
 
