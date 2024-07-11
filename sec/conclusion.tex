@@ -8,14 +8,14 @@ visualisations are often bespoke solutions for a single application. By shifting
 the burden into a language
 runtime, time and effort can be saved by the developer, who needs only to express
 their data analysis as a program creating the relevant charts, and gets interaction
-functionality for free.
+functionality for free. However, prior systems that aimed at integrating these features
+proved to be sensitive to changes in the programming language, and made use of
+bidirectional analyses which were difficult to implement.
 
-Prior work that aimed at integrating these features proved to be sensitive to changes
-in the programming language, and made use of bidirectional analyses which were
-difficult to implement.
-By decomposing the system into an evaluator that builds a dependence graph, and a
-pair of language agnostic graph algorithms, we simplified the implementation of the analyses
-themselves, and separated the framework from the language. % which implements it, without negatively impacting the performance
+In this paper, we introduced a novel program analysis framework that
+decomposes the system into an evaluator that builds a dynamic dependence graph, and a
+pair of language agnostic graph algorithms. By doing so, we achieve a substantially simpler
+implementation of the analyses themselves, and a separation of the analyses from the language. % which implements it, without negatively impacting the performance
 %of interactive visualisations in most cases.
 
 \subsection{Future work}
