@@ -6,7 +6,7 @@ dependence graphs (\secref{conjugate:dependence-graphs}), and the image and prei
 and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
 graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation, and give algorithms for computing
 them over a given graph (\secref{conjugate:dependence-graph-algos}). Throughout the section, we will illustrate
-concepts using a toy example program alongside (a simplified version of) its dependence graph, shown in \figref{conjugate:example}.
+concepts using \figref{conjugate:example} as a running example, showing a toy program and (a simplified version of) its dynamic dependence graph that represents the program's execution.
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -43,8 +43,12 @@ Often we will be considering a specific finite Boolean algebra, namely the power
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
 complement, so that $\neg X' = X \setminus X'$. For a program, we will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs. In \figref{conjugate:example}, these are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.
+input values and the powerset of nodes associated with outputs.
+
+
+\paragraph{Example} In \figref{conjugate:example}, the powerset of input nodes and output nodes are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.\\
+
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
@@ -60,10 +64,14 @@ the program, the partial value associated to $\beta$ \textit{depends on} on the 
 $\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
 somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
 dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
-dependent vertices, whereas in the literature the other direction is somewhat more common. In \figref{conjugate:example:graph},
-the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
-\figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
-the values of the arithmetic expressions in the program's~result.
+dependent vertices, whereas in the literature the other direction is somewhat more common.
+
+
+\paragraph{Example}
+   In \figref{conjugate:example:graph},
+   the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
+   \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
+   the values of the arithmetic expressions in the program's~result.\\
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -97,8 +105,12 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
-In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
-and the IO relation are identical.
+
+\paragraph{Example}
+   In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
+   and the IO relation are identical.\\
+
+
 
 Clearly the IO relation of $G$ is the
 converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
@@ -173,13 +185,15 @@ reachable from $X$.
       \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
    \end{enumerate}
 \end{definition}
-If we first consider \emph{demanded by}, then in the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, if we subsequently analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$ since the
+
+\vspace{0.2cm}
+\paragraph{Example}
+If we first consider \emph{demanded by}, then in \figref{conjugate:example}, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, if we  analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$ since the
 value of $x2$ is also used in the construction of the value at node $\alpha_5$.
 On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$, despite $\alpha_6$ representing
 the value of the expression $x2 * x3$; this is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.
-
 
 \subsection{Dual Image and Preimage Functions}
 
@@ -201,8 +215,9 @@ This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs 
 input set, rather than any ancestor to be in the input set. We include $\preimageDualR_R$ here only for
 completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so  ignore it hereon.
 
-In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
-contrasting with $\demandedByR_{R}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so have insufficient information to compute the value at $\alpha_5$.
+\paragraph{Example}
+If we apply $\sufficesR_R$ to dependence graphs, i.e. $\sufficesR_G$, then in  \figref{conjugate:example} we have that $\sufficesR_{G}(\set{\alpha_1}) = \set{\alpha_4}$,
+contrasting with $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{G}$, and so have insufficient information to compute the value at $\alpha_5$.\\
 %The two definitions are so similar that
 
 Notably,  $\demandedByR_R$ can be transformed into $\sufficesR_R$ by using the De Morgan Dual:
@@ -409,5 +424,5 @@ $\bot$, and $\relInputR_{G}$ will preserve the original input selection:
 
 As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
 an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view,
-only showing inputs that are actually used in a program, which has the potential to make exploring a visualization
+only showing inputs that are actually used in a program, which has the potential to make exploring a visualisation
 a smoother experience for an end user.
