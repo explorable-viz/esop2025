@@ -54,12 +54,12 @@ Joining closure slices in particular becomes expensive because of the contained 
 contain closures), and these issues have made the approach prohibitively slow for interactive use. Compared to
 Galois slicing, our approach of decomposing the problem into a graph semantics and a pair of analyses over the graph
 significantly reduces the implementation burden on the developer, since the algorithms for the program analyses
-are language-agnostic and thus only need to be implemented once.
+are language-agnostic and thus only need to be implemented~once.
 
 \subsection{Interactive Visualization}
-\JBnote{Start of change}
+%\JBnote{Start of change}
 We are not the first to consider shifting the burden of interactive visualizations
-into the language runtime. Reactive Vega \citet{satyanarayan17},
+into the language runtime. Reactive Vega~\cite{satyanarayan17}
 presents a system for building interactivity in visualizations.
 Vega is a declarative DSL for constructing interactions with visualizations.
 The features of Vega allow for more complicated interactions than our own
@@ -70,10 +70,11 @@ a smaller set of interaction primitives it frees up the developer to focus on
 building their data analysis programs, leaving the burden of implementing selections
 to the language itself. The benefit of including everything into the base language
 is that it reduces the number of tools that a developer needs proficiency with.
- In future work it could be beneficial to provide more
-ways for a Fluid user to combine their selections, such as ranges and marquee
-selections, however we do not consider this to be our primary focus.
-\JBnote{end of change}
+ %In future work it could be beneficial to provide more
+%ways for a Fluid user to combine their selections, such as ranges and marquee
+%selections, however we do not consider this to be our primary focus.
+%\JBnote{end of change}
+
 Our linking of visualizations is similar in spirit to the work of \citet{north00}.
 In that work, the authors design a modular system for replacing visualizations of
 databases. Their system is modelled by relational database schema, and is designed
@@ -85,13 +86,14 @@ interactive visualizations of relational database tables. Similar to \citet{nort
 their work is defined by its usage of relational databases, and the way they
 create a semantics for queries on visualizations using the model of relational
 database queries.
-\JBnote{Database Provenance}
-Recent work in database provenance \citet{dietrich22} attempts to simultaneously
+
+%\JBnote{Database Provenance}
+More recent  database provenance  work~\citet{dietrich22}  attempts to simultaneously
 explain both value and control dependencies in recursive queries and user-defined
 functions. Their work takes an SQL query and rewrites it into a pair of queries
 which compute not only the output table, but the provenance of the values it contains.
-\JBnote{currently discussing including where versus why here, but could be moved to
-section 7}
+%\JBnote{currently discussing including where versus why here, but could be moved to
+%section 7}
 In order to modify our approach to work in this setting, we would need to encode
 extra information into the edges of the graph, specifically whether an edge is
 a control-flow edge -- coming from an if-else or a pattern match -- or a value

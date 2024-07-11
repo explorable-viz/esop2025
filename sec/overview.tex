@@ -24,18 +24,19 @@
 
 \subsection{Conjugate Operators over Dependence Graphs}
 Here, we provide an informal view of our framework for bidirectional provenance queries over dependence graphs, which will be followed by a formal account in \secref{conjugate}.
-As previosuly mentioned, our insight in this paper is that dependence graphs provide a language-agnostic foundation
+As previously mentioned, our insight in this paper is that dependence graphs provide a language-agnostic foundation
 for data transparency that both improves performance and reduces the implementation burden.
 %Moreover, input-output
 %queries are much easier to formulate in the graphical setting.
 %
-\edit{The operators $\demandsR$ and $\demandedByR$, introduced in \ref{sec:introduction}, are used to perform
-queries over a dependence graph form what's called a ``conjugate pair''. Conjugate pairs -- which map
+
+The operators $\demandsR_{R}$ and $\demandedByR_{R}$, introduced in \secref{introduction} to perform
+queries over a dependence graph, form what's called a ``conjugate pair''. Conjugate pairs -- which map
 between Boolean algebras -- have the property of maintaining ``overlap''. If the result of applying
 one member of the pair to some subset of inputs $X' \subseteq X$ does not overlap with $Y' \subseteq Y$,
 then applying the other member of the pair to $Y$ results in a set which does not overlap with $X'$.
 This property intuitively holds of our dependency queries: if no member of a given input selection is demanded
-by a given subset of the outputs, then that subset of outputs will not demand any memebr of the given inputs.}
+by a given subset of the outputs, then that subset of outputs will not demand any member of the given inputs.
 
 The canonical example of conjugate operations are the image and preimage functions $\imageF{R}$ and
 $\imageF{R^{-1}}$ for a relation $R \subseteq X \times Y$. It is not hard to see that if $\image{R^{-1}}{Y'}$
@@ -45,23 +46,24 @@ are conjugate, then $f$ and the De Morgan dual of $g$ form a Galois connection (
 more detail in \secref{conjugate}).
 
 
-If we now take $R$ to be reachability in $G$, then the graph setting technically only requires a single operator
-$\demandsR_R$ (a ``demands'' relation) to support all the required queries.
-\edit{Given a procedure to compute $\demandsR_{R}$, we can automatically derive a procedure to compute its conjugate
-$\demandedByR_{R}$ by simply using the oppposite graph's reachability relation, $R^{-1}$. We can also derive
-a second pair of operators which can be used to investigate questions of ``sufficiency'', using the De Morgan Dual.}
-It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
-also benefit from efficient procedures for all of them. \edit{Questions about sufficiency make use 
-of a related operator $\sufficesR_R$. Whilst we could compute this operator using the De Morgan dual construction -- 
-complementing the initial selection, running $\demandedByR$ and complementing again -- it is in general
-inefficient to do so, since complement operations are expensive. Instead, we will provide a more efficient implementation, which exhibits significantly better performance compared
-to the derived algorithm}.
+If we now take $R$ to be reachability in $G$, then technically, the graph setting only requires a single operator
+$\demandsR_R$ -- a ``demands'' relation (of outputs on inputs) -- to support all the required IO queries.
+Given a procedure to compute $\demandsR_{R}$, we can automatically derive a procedure to compute its conjugate
+$\demandedByR_{R}$ -- a ``demanded-by'' relation (of inputs for outputs) --  by simply using the opposite graph's reachability relation, $R^{-1}$.
+By then using the De Morgan Dual, one can easily derive
+a new operator $\sufficesR_R$  which can be used to investigate all questions of ``sufficiency'' of inputs for outputs; that is, given some inputs, what outputs are they sufficient for computing.
+(It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
+also benefit from efficient procedures for all of them.) In practice however, using the De Morgan dual construction --
+i.e. complementing an initial input selection, running $\demandedByR_{R}$, and complementing the resulting output selection -- is in general
+inefficient, since complement operations are expensive. Instead, we will provide a more efficient implementation (of $\demandedByR_{R}$ and $\sufficesR_R$), which exhibits significantly better performance compared
+to the derived algorithm.
 
 In the graph setting, the ``linked inputs'' and ``linked outputs'' relations can be computed by composing
 reachability in $G$ with reachability in $\opGraph{G}$, which enables an efficient implementation. For example, linked outputs
 can be written as $\demandsR_{R \relcomp R^{-1}}$, and linked inputs can be written as $\demandedByR_{R \relcomp R^{-1}}$.
 In the graph, a pair of linked output values share some common ancestor whereas
-a pair of linked input nodes in the graph share some common descendant. Therefore we will sometimes refer to linked outputs/inputs queries as computing ``peer'' values.
+a pair of linked input nodes in the graph share some common descendant.
+%Therefore we will sometimes refer to linked outputs/inputs queries as computing ``peer'' values.
 
 % \subsection{Peer Provenance / Cognate Values}
 % \label{sec:peers}
