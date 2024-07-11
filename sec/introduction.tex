@@ -115,7 +115,7 @@ sufficient''.
 %nation.
 
 We follow the direction of~\citet{ricciotti17} and \citet{perera22}, and propose a new bidirectional program analysis framework which supports
-such fine-grained in situ provenance queries, which we call \emph{data transparency}. Next, we use
+such fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. Next, we use
 the example in~\figref{introduction:related-inputs} to describe this concept.
 For context{, the figure presents a simple piece of data visualisation, investigating} the efficiency of clean
 energy usage, broken down geographically. The data is split across two tables dedicated to \textit{renewable}
@@ -171,13 +171,13 @@ our system will apply $\demandedByR_{G}$ to trace the data contained in this cel
 %The bioenergy capacity contributes to both components of the dot, namely the total renewables capacity over total energy capacity and the clean capacity factor.
 %\MNnote{I'm not sure if it should be obvious to me that it contributes to both components, or if this is simply something I'm  being told is true.}
 Additionally, our system will apply $\demandsR_{G}$ to determine the rest of the data in the input tables that was used to compute the point in the plot (data highlighted in grey in the tables).
-We refer to the highlighted data in the two input tables as ``linked inputs'', i.e. inputs that contribute to the same features of an output. This enables
-users to formulate queries like “What outputs use this data element, and what other data elements are used along with it?”.
+We refer to the highlighted data in the two input tables as ``linked inputs'', i.e., inputs that contribute to the same features of an output. This enables
+users to formulate queries like: “which outputs use this data element, and which other data elements are used along with it?”.
 
 
 \paragraph{Linked outputs}
 Dually, we can start from an output, and want to determine all the
-“linked outputs”, i.e. outputs that compete for the same input data.
+“linked outputs”, i.e., outputs that compete for the same input data.
 One such scenario is illustrated in \figref{introduction:scatterplot}
 where we have two output views: the same scatter plot as in
 \figref{introduction:related-inputs}, and an additional bar chart
