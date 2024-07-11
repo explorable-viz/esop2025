@@ -157,23 +157,27 @@ and in virtue of that, the elements ``on the left'' to which $Y'$ is related mus
 \label{sec:conjugate:dependence-graph-functions}
 
 We now extend the notion of $\demandsR_{R}$ and $\demandedByR_{R}$ to a dependence graph $G$ via its IO
-relation. The set of outputs \emph{demanded by} some inputs $X$ is simply the subset of the outputs of $G$
-reachable from $X$, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$. Conversely, the set of
-inputs that some outputs $Y$ \emph{demands} is simply the subset of the inputs of $G$ reachable from $Y$ by
-traversing the graph in the opposite direction, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
+relation. The set of
+inputs that some outputs $Y$ \emph{demands},  $\demandsR_{G}$, is simply the subset of the inputs of $G$ reachable from $Y$ (by
+traversing the graph in its opposite direction).
+Conversely, the set of outputs \emph{demanded by} some inputs $X$, $\demandedByR_{G}$, is simply the subset of the outputs of $G$
+reachable from $X$.
+%, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$.
 
-\begin{definition}[$\demandsR$ and $\demandedByR$ for a dependence graph]
+%, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
+
+\begin{definition}[$\demandsR_G$ and $\demandedByR_G$ for a dependence graph]
    For a graph $G$ with IO relation $R$, define:
    \begin{enumerate}
-      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
       \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
+      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
    \end{enumerate}
 \end{definition}
-In the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$, because the value of $x1$ contributes
-to the values associated at those nodes. Conversely, $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$, since the
+If we first consider \emph{demanded by}, then in the example, $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes
+to the values associated at those nodes. Conversely, if we subsequently analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) = \set{\alpha_1, \alpha_2}$ since the
 value of $x2$ is also used in the construction of the value at node $\alpha_5$.
 On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$, despite $\alpha_6$ representing
-the value of the expression $x2 * x3$. This is because $x2 = 0$, so the value of $x3$ has no effect
+the value of the expression $x2 * x3$; this is because $x2 = 0$, so the value of $x3$ has no effect
 on the result.
 
 
