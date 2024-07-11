@@ -124,7 +124,10 @@ the scatter plot on the right hand side of the figure, where the x-axis represen
 capacity over total energy capacity, and the y-axis denotes the clean capacity factor computed as the total clean energy output over the total
 clean energy capacity.
 
-There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader that can only see the output views, or a developer that has access to both the input data and the output views.
+There are four scenarios below we focus on to motivate the idea of data transparency as an end-user feature. When we say ``user'', this may refer to either a reader
+%that can only see the output views,
+or a developer.
+%that has access to both the input data and the output views.
 We also often refer to the input data as simply ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
@@ -139,7 +142,7 @@ corresponding to China, the user will be presented
 with a set of highlighted cells in the input table whose contents were used to produce the selected output.
 %
 
-As we will see later in the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data which was used to compute the selected output.
+As we will see later in the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that was used to compute the selected output.
 %(\figref{introduction:related-inputs}, grey selections).
 We read this operator as computing ``what input data does an output \emph{demand}?''.
 The subscript $G$ is short for ``graph'', denoting that the computation is based on the reachability relation of a graph $G$.
@@ -150,7 +153,7 @@ The subscript $G$ is short for ``graph'', denoting that the computation is based
 A user may also be interested in following the link between the input data and the output view. For instance,
 the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs}).
 Then, our system, through an operator we write as $\demandedByR_{G}$, traces the data contained in this cell to
-the parts of the chart it was used to compute (the green dot in the plot). The bioenergy capacity
+the parts of the plot it was used to compute (the green dot in the plot). The bioenergy capacity
 contributes to both components of the dot, namely the total renewables capacity over total energy
 capacity and the clean capacity factor. We read $\demandedByR_{G}$ as computing
 ``what outputs is some input data \emph{demanded by}?''.
