@@ -344,12 +344,14 @@ we have discovered partial information, and the remaining unexplored graph $G$.
 %\note{Maybe rename $G$ so we can give the subgraph relationships?}.
 Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add those edges and their endpoints to the pending graph
 $P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges
-from $P$ to $H$ (\ruleName{extend}), as this can only happen when we have already moved every ancestor of $\alpha$ into $H$.
- If neither of these scenarios is the case, then we terminate with the
-(potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{G}$
+from $P$ to $H$ (\ruleName{extend}), as this only happens when we have already moved every ancestor of $\alpha$ into $H$.
+ If neither scenario is the case, then we terminate with the
+(potentially incomplete) graph $H$~(\ruleName{done}).
+Once $\sufficesE{}$ has terminated, $\sufficesAlg{G}$
 takes $H$, and uses intersection to extract the vertices in $H$ that are also sinks in $G$. If this intersection is empty,
 it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
-We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
+
+We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. Here,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the
 blue vertices and normal arrows are in $G$. In the figure, steps 2, 3, 5 and 6 correspond to applications
 of the rule \ruleName{pending}, and steps 4 and 7 correspond to applications of the rule \ruleName{extend}.
