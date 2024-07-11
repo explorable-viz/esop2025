@@ -63,7 +63,7 @@ dependency) rather than separate data and control dependencies; moreover our edg
 dependent vertices, whereas in the literature the other direction is somewhat more common. In \figref{conjugate:example:graph},
 the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
 \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
-the values of the arithmetic expressions in the program's result.
+the values of the arithmetic expressions in the program's~result.
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -248,7 +248,7 @@ called Galois connections. Specifically, a well known result in the literature~\
    \end{enumerate}
 \end{proposition}
 
-\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$}
+\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
 We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$
@@ -359,11 +359,11 @@ Morgan dual construction. All algorithms are summarised in \figref{conjugate:der
 
 \noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations of $\demandedByR_{G}$, which is an essential component of the linked inputs and linked outputs operators introduced in \secref{overview}.
 
-\subsection{$\relInputR_G$ and $\relOutputR_G$ over dependence graphs}
+\subsection{$\relInputR_G$ and $\relOutputR_G$ for Dependence Graphs}
 
 Now we can provide a formal account of the notions of linked inputs and linked outputs.
 
-\begin{definition}[linked inputs and Outputs]
+\begin{definition}[Linked inputs and outputs]
    For a dependence graph $G$ define:
    \begin{enumerate}
       \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (linked inputs)
@@ -373,22 +373,20 @@ Now we can provide a formal account of the notions of linked inputs and linked o
 
 Intuitively, linked outputs and linked inputs are relations of \emph{cognacy} (common ancestry) in $G$ and
 $\opGraph{G}$ respectively. For a set of inputs $X \subseteq \sources{G}$, linked inputs asks ``what other
-inputs are demanded by the outputs which demand X?'', and first finds all outputs $\demandedByR_{G}(X)$ that
+inputs are demanded by the outputs which demand X?''; it first finds all outputs $\demandedByR_{G}(X)$ that
 our inputs are demanded by, and then computes the inputs that those outputs demand,
-i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. For a set of outputs $Y \subseteq \sinks{G}$, linked outputs asks
-``what other outputs demand the inputs that Y demands'', and first finds all inputs $\demandsR_{G}(Y')$ that
+i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. Conversely for a set of outputs $Y \subseteq \sinks{G}$, linked outputs asks
+``what other outputs demand the inputs that Y demands''; it first finds all inputs $\demandsR_{G}(Y')$ that
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
-Neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is necessarily inflationary, as illustrated in
-\figref{relation-not-galois}, using the graph from the example in \figref{conjugate:example:graph}.
-In the figure, the uppermost vertex on the left is part of
+In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ are necessarily monotonic. We illustrate this for linked inputs $\relInputR_{G}$ in
+\figref{relation-not-galois}, which uses the graph from the example in \figref{conjugate:example:graph}.
+In the figure, the top-left vertex is part of
 the initial input selection $X'$, but is not preserved by the $\demandsR_G \after \demandedByR_G$ round-trip
 because it is not demanded by any output. Thus we have neither $X' \subseteq \relInputR_{G}(X')$, nor
-$X' \supseteq \relInputR_{G}(X')$.
-
-It is not hard to see how the same concept arises using $\demandedByR_G \after \demandsR_G$
-on the graph of a program that outputs a constant.
+$X' \supseteq \relInputR_{G}(X')$. It is not hard to see how the same concept arises for linked outputs, by
+using $\demandedByR_G \after \demandsR_G$ on the graph of a program that outputs a constant.
 
 \input{fig/conjugate/relations-not-galois}
 
@@ -408,4 +406,4 @@ $\bot$, and $\relInputR_{G}$ will preserve the original input selection:
 As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
 an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view,
 only showing inputs that are actually used in a program, which has the potential to make exploring a visualization
-a smooother experience for an end user.
+a smoother experience for an end user.
