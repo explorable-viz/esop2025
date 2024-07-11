@@ -15,7 +15,7 @@
 %However, computing the bidirectional dependency information needed to realise this idea is costly both in terms
 %of performance and implementation burden.
 %For example, the approach taken by \citet{perera22} to implement a
-%``related outputs'' analysis like the one shown in \figref{overview:scatterplot} requires two separate
+%``related outputs'' analysis like the one shown in \figref{introduction:scatterplot} requires two separate
 %analyses: a backwards ``demands'' analysis to determine data needed by an output selection, and a forwards
 %``suffices for'' analysis whose De Morgan dual determines any parts of the other chart that also need any of
 %that data. These analyses need to be defined separately and each depends on details of the language, imposing
@@ -75,10 +75,10 @@ a pair of linked input nodes in the graph share some common descendant.
 % We have already illustrated linked inputs in \figref{introduction:related-inputs},
 % by demonstrating the way values distributed across multiple tables can be related. Whilst this analysis is new, it is
 % remarkably similar in spirit to the ``linked outputs'' we mentioned earlier with respect to \citet{psallidas18}.
-% %For an example of our systems implementation of linked outputs, we present \figref{overview:scatterplot}.
+% %For an example of our systems implementation of linked outputs, we present \figref{introduction:scatterplot}.
 % %This uses one of the datasets from \figref{introduction:related-inputs} to produce a stacked bar chart, and
 % %another scatterplot. The end-user can select parts of the stacked bars
-% %individually (\figref{overview:scatterplot}, step 1, selected bar segments), and our system will automatically apply
+% %individually (\figref{introduction:scatterplot}, step 1, selected bar segments), and our system will automatically apply
 % %$\demandsR$ to find the value used to produce the selected segment of the bar, with each set of coloured segments
 % %associated with a given nation. The selected segments demand all of  the highlighted green data in the table,
 % %which are then used to compute the $x$ components of some of the circles in the scatterplot (scatterplot, green circles).
@@ -105,6 +105,7 @@ automatically enriches the rendered outputs with support for visual selection an
 queries.
 
 In \secref{conjugate} we set out the formal graph framework and in \secref{core} show how the \OurLang
-interpreter implements that abstract framework, we also provide some examples of the surface
-language in \secref{core}, and some larger examples can be found in \apdxsecref{apdx:evaluation-src-code}.
-Our implementation is open source and available at [anonymised], which also has several interactive demos.
+interpreter implements that abstract framework, we also provide some examples of the surface language in
+\secref{core}, and some larger examples can be found in \apdxsecref{apdx:evaluation-src-code}. Our
+implementation is open source and available at [anonymised]; to support our claims about fast reponse times,
+we have also provided an anonymised interactive web demo hosted at \url{http://opencomputation.org/}.

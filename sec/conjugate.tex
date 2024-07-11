@@ -195,7 +195,7 @@ which also form a conjugate pair.
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
 input set, rather than any ancestor to be in the input set. We include $\preimageDualR_R$ here only for
-completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so ignore it hereon.
+completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so  ignore it hereon.
 
 In the example, $\sufficesR_{R}(\set{\alpha_1}) = \set{\alpha_4}$,
 contrasting with $\demandedByR_{R}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{R}$, and so have insufficient information to compute the value at $\alpha_5$.
@@ -287,15 +287,15 @@ inductive definition, treating it as a function with $V$ and index $G$ as inputs
 % termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
 % leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
 % to reach the base case of \ruleName{done}.}
-\MNnote{The auxiliary operation $H, G \demandedByV{}$ maintains a
+The auxiliary operation $H, G \demandedByV{}$ maintains a
 (partial) slice $H \subseteq G$. If there is a sink of $H$ that still has outgoing edges in $G$, then the
 targets of those edges are reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}).
 If $\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and
 so we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
 of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once.
-\edit{When $\demandedByV{}$ is done, $\demandedByAlg{G}$
-extracts the final output set from the graph
-slice by intersecting with $\sinks{G}$.}}
+When $\demandedByV{}$ is done, $\demandedByAlg{G}$
+returns the sinks $T(H)$ from the final graph
+slice $H$, representing the outputs that the original inputs are demanded by.
 
 \begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
@@ -317,22 +317,22 @@ slice by intersecting with $\sinks{G}$.}}
 \end{definition}
 
 For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation
-$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. \MNnote{The operation $H, P, G\sufficesE{}$
-takes the graph slice under construction $H$, a ``pending'' subgraph $P$ of nodes for which
+$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The operation $H, P, G\sufficesE{}$
+takes a graph slice $H$ under construction, a ``pending'' subgraph $P$ of nodes for which
 we have discovered partial information, and the remaining unexplored graph $G$.
 %\note{Maybe rename $G$ so we can give the subgraph relationships?}.
 Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add those edges and their endpoints to the pending graph
-$P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges from $P$ to $H$,
- as this can only happen when we have already moved every ancestor of $\alpha$ into $H$ (\ruleName{extend}).
+$P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges
+from $P$ to $H$ (\ruleName{extend}), as this can only happen when we have already moved every ancestor of $\alpha$ into $H$.
  If neither of these scenarios is the case, then we terminate with the
 (potentially incomplete) graph $H$ (\ruleName{done}). Once $\sufficesE{}$ has terminated, $\sufficesAlg{G}$
-takes $H$, and extracts the vertices in $H$ which are sinks in $G$. If this intersection is empty,
+takes $H$, and uses intersection to extract the vertices in $H$ that are also sinks in $G$. If this intersection is empty,
 it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. In that example run,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the
 blue vertices and normal arrows are in $G$. In the figure, steps 2,3,5 and 6 correspond to applications
 of the rule \ruleName{pending}, and steps 4 and 7 correspond to applications of the rule \ruleName{extend}.
-After step 7, the run is complete.}
+After step 7, the run is complete.
 
 \input{fig/conjugate/suffices-algo-explanation}
 
@@ -349,9 +349,10 @@ After step 7, the run is complete.}
 
 \proprefTwo{demandedByAlg-computes-demandedBy}{sufficesAlg-computes-suffices} justify treating
 $\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. Using \lemref{conjugate:image-preimage-duality} we can
-define direct algorithms for $\demandsR_{G}$ and $\preimageDualR_{G}$ from $\demandedByAlg{G}$ and
-$\sufficesAlg{G}$ by simply flipping the graph; using \lemref{conjugate:image-preimage-duality} and
-\defref{conjugate:de-morgan-dual} we can also define alternative algorithms for all 4 operators using the De
+define a direct algorithm  for $\demandsR_{G}$ from $\demandedByAlg{G}$ by simply flipping the graph.
+(The same could be done to acquire an algorithm for $\preimageDualR_{G}$ from $\sufficesAlg{G}$.)
+Using \lemref{conjugate:image-preimage-duality} and
+\defref{conjugate:de-morgan-dual} we can also define alternative algorithms for all 3 operators using the De
 Morgan dual construction. All algorithms are summarised in \figref{conjugate:derivate-algorithms}.
 
 \input{fig/conjugate/derived-algorithms}

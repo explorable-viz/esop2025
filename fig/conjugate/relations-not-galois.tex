@@ -1,43 +1,42 @@
 \newcommand\xsetpos{3}
 
 \begin{figure}
-   \begin{subfigure}{0.49\textwidth}
-      \begin{tikzpicture}[scale=.75,
+      \begin{tikzpicture}[scale=1,
                arrow/.style={thick,->,black},
                set name/.style={font=\color{darkgray}\bfseries\sf},
                set/.style={ultra thick,lightgray},
-               every node/.style={scale=0.6,circle},
+               every node/.style={circle},
                font=\sf
             ]
          % \draw[set] (0,0) rectangle ++(1, 2)
          %      (\xsetpos,0) rectangle ++(1, 2);
-         \node[set name] at (0.5, -1) {Inputs};
-         \node[set name] at (3.5, -1) {Outputs};
+         \node[set name] at (0.7, -1) {Inputs};
+         \node[set name] at (3.85, -1) {Outputs};
 
          \node (X') at (-1, 2.5) {$X'$};
          \node (X'') at (-1.5, 0.5) {$\demandsR_{R}(\demandedByR_{R}(X'))$};
-         \node (DX') at (5.75, 1.5) {$\demandedByR_{R}(X')$};
+         \node (DX') at (5.95, 1.5) {$\demandedByR_{R}(X')$};
 
          \begin{scope}[blend mode=difference]
-            \draw[rounded corners, fill=cyan, fill opacity= 0.75] (-0.4, 1.8) rectangle (1.4, -0.5);
-            \draw[rounded corners, fill=green, fill opacity=0.75] (-0.4, 3.5) rectangle (1.4, 1.2);
-            \draw[rounded corners, fill=purple, fill opacity = 0.75] (2.5, 3.5) rectangle (5.0, -0.5);
+            \draw[rounded corners, fill=cyan, fill opacity= 0.75] (-0.4, 2) rectangle (1.8, -0.5);
+            \draw[rounded corners, fill=green, fill opacity=0.75] (-0.4, 3.5) rectangle (1.8, 1.0);
+            \draw[rounded corners, fill=purple, fill opacity = 0.75] (2.5, 3.5) rectangle (5.25, -0.5);
          \end{scope}
 
-         \node (x1L) at (0.3, 0.0) {$x1 = 4$};
-         \node (x2L) at (0.3, 1.5) {$x2 = 0$};
-         \node (x3L) at (0.3, 3.0) {$x3 = 7$};
-         \node (y1L) at (3.9, 0.0) {$x1 + 1 = 5$};
-         \node (y2L) at (3.95, 1.5) {$x1 + x2 = 4$};
-         \node (y3L) at (3.95, 3.0) {$x2 * x3 = 0$};
-      
-         \node[fill=gray, font=\color{white}] (x1) at (1.0, 0.0) {$\alpha_1$};
-         \node[fill=gray, font=\color{white}] (x2) at (1.0, 1.5) {$\alpha_2$};
-         \node[fill=gray, font=\color{white}] (x3) at (1.0, 3.0) {$\alpha_3$};
+         \node (x1L) at (0.4, 0.0) {$x1 = 4$};
+         \node (x2L) at (0.4, 1.5) {$x2 = 0$};
+         \node (x3L) at (0.4, 3.0) {$x3 = 7$};
+         \node (y1L) at (4.2, 0.0) {$x1 + 1 = 5$};
+         \node (y2L) at (4.3, 1.5) {$x1 + x2 = 4$};
+         \node (y3L) at (4.3, 3.0) {$x2 * x3 = 0$};
+
+         \node[fill=gray, font=\color{white}] (x1) at (1.3, 0.0) {$\alpha_1$};
+         \node[fill=gray, font=\color{white}] (x2) at (1.3, 1.5) {$\alpha_2$};
+         \node[fill=gray, font=\color{white}] (x3) at (1.3, 3.0) {$\alpha_3$};
          \node[fill=gray, font=\color{white}] (y1) at (3.0 , 0.0) {$\alpha_4$};
          \node[fill=gray, font=\color{white}] (y2) at (3.0 , 1.5) {$\alpha_5$};
          \node[fill=gray, font=\color{white}] (y3) at (3.0 , 3.0) {$\alpha_6$};
-      
+
          \begin{scope}[arrow]
             \draw (x1.east) -- (y1);
             \draw (x1.east) -- (y2);
@@ -46,9 +45,8 @@
          \end{scope}
 
       \end{tikzpicture}
-      \caption{$\relInputR_{R}$}
+      \caption{$\relInputR_{R}$; In general neither $\relInputR_{R}$ nor $\relOutputR_{R}$ is inflationary}
       \label{fig:relation-not-galois-1}
-   \end{subfigure}
    % \hfill
    % \begin{subfigure}{0.49\textwidth}
    %    \begin{tikzpicture}[scale=.6,
@@ -86,6 +84,6 @@
    %    \caption{$\relOutputR_{R}$}
    %    \label{fig:relation-not-galois-2}
    % \end{subfigure}
-   \caption{In general neither $\relInputR_{R}$ nor $\relOutputR_{R}$ is inflationary}
+   \caption{}
    \label{fig:relation-not-galois}
 \end{figure}
