@@ -47,9 +47,9 @@ more detail in \secref{conjugate}).
 
 
 If we now take $R$ to be a reachability relation in a graph $G$, then technically, the graph setting only requires a single operator
-$\demandsR_G$ -- a ``demands'' relation (of outputs on inputs) -- to support all the required IO queries.
+$\demandsR_G$ -- the ``demands'' relation (of outputs on inputs) -- to support all the required IO queries.
 Given a procedure to compute $\demandsR_{G}$, we can automatically derive a procedure to compute its conjugate
-$\demandedByR_{G}$ -- a ``demanded-by'' relation (of inputs for outputs) --  by simply using the opposite graph $G^{-1}$'s reachability relation, $\demandsR_{G^{-1}}$.
+$\demandedByR_{G}$ -- the ``demanded-by'' relation (of inputs for outputs) --  by simply using the opposite graph $G^{-1}$'s reachability relation, $\demandsR_{G^{-1}}$.
 By then using the De Morgan Dual, one can easily derive
 a new operator $\sufficesR_G$  which can be used to investigate all questions of ``sufficiency'' of inputs for outputs; that is, given some inputs, what outputs are they sufficient for computing.
 (It is well-known that extensionally any one of these is enough to determine each other, but in the graph setting we
