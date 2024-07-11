@@ -5,7 +5,7 @@ In \secref{conjugate}, we defined the abstract setting of dependence graphs and 
 \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$) over such graphs. We now implement that
 graph abstraction for \OurLang, an untyped, pure functional programming language. This core calculus we
 go on to describe is what underlies the surface-language programs used to generate and analyse the scatter plots from earlier;
-we show some full examples of practical programs in \apdxsecref{apdx:evaluation-src-code}.
+we provide these programs and other practical examples in \apdxsecref{apdx:evaluation-src-code}.
 First, we introduce the syntax of our core language
 constructs (\secref{core:syntax}). Then we define a big-step operational semantics that simultaneously (i)
 evaluates a term to a value and (ii) constructs an accompanying dependence graph for the evaluation of that
@@ -91,13 +91,12 @@ Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually~defined. An
-environment is defined as a finite~map. In our context, IO analysis of programs, we are often only interested in some strict subset of
+environment is defined as a finite~map. {In our setting, IO analysis of programs, we are often only interested in some strict subset of
 the environment $\Gamma' \subseteq \Gamma$. Happily, domain restriction of maps induces a pair of conjugate
-functions, one of them maps the unselected part of the environment ($\Gamma \setminus \Gamma'$) to $\top$,
-and the other conjugate maps the unslected values to $\bot$. The act of mapping parts of an environment
-to $\top$ has the effect of disregarding dependencies associated with the other values in the environment.
-This can be used to implement ``focussed'' queries where we only care about some subset of the data
-that induces the linked inputs relationship.
+functions: one of them maps the unselected part of the environment ($\Gamma \setminus \Gamma'$) to $\top$,
+and the other  maps the unselected values to $\bot$. In practical terms, this mechanism could be used
+to allow for ``focussed'' queries -- the ability to restrict the parts of the output or input that the 
+user is interested in using to mediate the linked inputs or outputs query.}
 
 % mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$. These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build in the graph semantics.
 %, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific implementation uses an integer counter for generating fresh vertices). %The other language construct that corresponds to vertices are values $v$.
