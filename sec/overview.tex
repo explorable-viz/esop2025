@@ -93,6 +93,15 @@ a pair of linked input nodes in the graph share some common descendant.
 
 % \input{fig/example/surface-examples.tex}
 
+As a mnemonic device to remember the meaning of the symbols here, consider traces through a dependence graph $G$ from inputs coming it \emph{at the top} flowing down to outputs
+\emph{at the bottom}. Calculating the \emph{demands} $\demandsR{}_G$ relates
+one output at the bottom (the point
+of the triangle) to some inputs at the top (the flat base of the triangle)---the demands
+of an output.
+Dually, calculating \emph{demanded by} $\demandedByR{}_G$ relates
+a single input at the top (the point of the triangle) to some outputs
+at the bottom (the triangle base).
+
 \subsection{\OurLang: A Data-Transparent Programming Language}
 
 We implement the abstract framework outlined above in a programming language called \OurLang, a pure
