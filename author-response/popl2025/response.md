@@ -10,16 +10,16 @@ examples are rather simple relative to the richness of the language. We think th
 using the running example to illustrate both the language and how the presented semantics leads to interesting dependency
 relationships.
 
-C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing the graph-building semantics. We will this section back so that the role of these abstractions is clearer and there is less emphasis on standard constructions.
+C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing the graph-building semantics. We will pare this section back so that the role of these abstractions is clearer and there is less emphasis on standard constructions.
 
 ## Reviewer B
 
 C1. _Relationship to prior work in provenance and explainability/transparency._ Thank you for pointing out
-these omissions:
+these omissions.
 
-1) Multiverse analyses. The multiverse work is an important perspective that deserves discussion; we see
+1) Multiverse analyses. The multiverse work is an important perspective; we see
 our approach as complementary (for example different analysis choices would induce different selections on the
-input data, which could be informative).
+input data, which could be informative). We will discuss this in Related Work.
 
 2) Database provenance. We intended to include a discussion of related ideas in database provenance (beyond
 the brief mention in Section 6), but this fell by the wayside; we will be sure to expand the discussion in
@@ -31,7 +31,7 @@ highly relevant/complementary so we look forward to dicussing this as well.
 C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment. We
 will de-emphasise or remove motivation that isn't supported explicitly by our evaluation; for example we will
 set out the end-user scenarios we wish to support, without making specific claims about ergonomic benefits
-beyond responsiveness, and for developers simply point out that the interpreter only needs to be implemented
+beyond responsiveness, and for developers,simply point out that the interpreter only needs to be implemented
 in a single direction rather than bidirectionally, without suggesting that this is automatically "simpler"
 (which would be a claim in need of empirical support). We will then clarify that the primary motivation is a
 more responsive/performant UI, as supported by our evaluation.
@@ -40,13 +40,13 @@ more responsive/performant UI, as supported by our evaluation.
 
 C1. _Graph dependencies via conjugate operators is complicated_. Conjugacy is important because it is the
 formal framework for relating forward and backwards analysis over the graph, for example explaining why you
-can compute the same function (extensionally) in two different ways, with potentially different performance,
+can compute the same function (extensionally speaking) in two different ways, with potentially different performance,
 using the De Morgan dual. We will streamline this section and also reorganise things so that the graph
 semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators over the graph
 are presented afterwards, with a cleaner presentation.
 
 C2. _Graph algorithms don't pay attention to properties of operators_. By the time the graph algorithms are
-presented with a graph, that graph already captures the kind of information you are referring to; so in the
+given a graph, that graph already captures the kind of information you are referring to; so in the
 running example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends
 on x2 (because it is zero), not x3. Thus whereas the procedure that builds the graph must depend on facts like
 these, the algorithms that operate on the graph can act uniformly on the graph without having to consider
@@ -77,10 +77,10 @@ response to Reviewer A, a proper discussion of related work in database provenan
 sure to include this.
 
 C3. _Relationship to Visualization Linking and Provenance._ While provenance-based brushing and linking has
-been explored before in databases, as mentioned above, most real-world systems have substantial visualisation
-and analytics components written in general-purpose languages. Our contribution is to develop compositional
-provenance-based techniques for languages like these, which will be needed to interoperate with database-based
-solutions. Thanks for pointing us to more of the relevant literature.
+been explored before in databases, most real-world systems have substantial visualisation and analytics
+components written in general-purpose languages, as mentioned above. Our contribution is to develop
+compositional provenance-based techniques for such languages, which will be needed to interoperate with
+database-based solutions. Thanks for pointing us to more of the relevant literature.
 
 # List of Proposed Changes
 
