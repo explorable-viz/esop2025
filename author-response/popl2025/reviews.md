@@ -109,13 +109,11 @@ The major area where the paper can be improved is more carefully establishing it
 Perhaps, the definition of provenance in general programming languages is not well defined?  Or there is more performance to be gained?  Or this work expresses a richer set of visualizations or interactions that database approaches?   In either case, a deeper treatment of prior work would help.
 
 ### Provenance
-
 There is substantial work in the database literature on supporting provenance, varying from Dietrich's logging based approach, Glavic's query rewrite approach, and Psallidas and Mohammed's instrumentation based approaches.  In all, the focus is on the expressiveness of the underlying queries that can be instrumented, the space and latency overhead of capture, and the latency of provenance query execution.    Benchmarks are typically over TPC-H or analytic benchmarks and at a scale of at least 1GB.
 
 Since these works can generate provenance graphs, and most visualization applications are developed over SQL databases, I would expect a comparison with such systems.
 
 ### Visualization Linking and Provenance
-
 This paper's introduction describes provenance-powered linking as a new concept, but it has been developed and studied in the database community, particularly with Psallidas' works [1-4].   It has also been established that most visualizations are developed and/or executed on top of database systems, which is why collecting provenance at this layer is pragmatic.
 
 [1] Provenance in Interactive Visualizations.  HILDA18
