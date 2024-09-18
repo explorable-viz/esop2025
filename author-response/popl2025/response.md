@@ -1,17 +1,16 @@
 We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We address the
-specific comments (C) asked by each reviewer below, along with some proposed
-improvements to the paper.
+specific comments (C) asked by each reviewer below, along with some proposed improvements to the paper.
 
 # Responses to Reviewers
 
 ## Reviewer A
 
 C1. _Difficulty understanding graph construction from formalisation in Section 4._ We agree that the DDG
-examples are rather simple relative to the richness of the language and that overall this section could be
-improved by richer examples that show how the presented semantics leads to interesting dependency
-relationships. We think this would be improved by moving Section 4 (Graph Semantics) to follow Section 2, and
-using the running example to illustrate both the language and the graph semantics. We will then pare back the
-current Section 3 (Conjugate Operators over Graphs) so that the role of these abstractions is clearer.
+examples are rather simple relative to the richness of the language. We think this would be improved by moving Section 4 (Graph Semantics) to follow Section 2, and
+using the running example to illustrate both the language and how the presented semantics leads to interesting dependency
+relationships.
+
+C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing the graph-building semantics. We will this section back so that the role of these abstractions is clearer and there is less emphasis on standard constructions.
 
 ## Reviewer B
 
@@ -96,11 +95,11 @@ improvements to the paper.
 - Clarify novelty in relation to prior work in database provenance and brushing and linking over provenance
   graphs (Reviewer D, C1)
 
-### Sections 3 and 4 (Graph Semantics and Analysis Algorithms)
+### Sections 3 and 4 (Graph Semantics and Conjugate Operators over Graphs)
 
 - Move Section 4 (Graph Semantics) so it immediately follows Section 2 (Overview), and provide richer examples
   to give better intuition for graph semantics (Reviewer A, C1)
-- Streamline Section 3 (Conjugate Operators over Graphs) to simplify presentation (Reviewer C, C1)
+- Streamline Section 3 (Conjugate Operators over Graphs) to simplify presentation (Reviewer C, C1 and Reviewer A, C2)
 
 ### Sections 6 (Related Work)
 
