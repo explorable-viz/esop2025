@@ -1,5 +1,5 @@
 We thank our four reviewers for their detailed reviews and suggestions for improving the paper. We address the
-specific comments (C) and questions (Q) asked by each reviewer below, along with some proposed
+specific comments (C) asked by each reviewer below, along with some proposed
 improvements to the paper.
 
 ## Reviewer A
@@ -29,22 +29,40 @@ would be a claim in need of empirical support).
 
 ## Reviewer C
 
-C1. _Graph dependencies via conjugate operators was complicated_. The notion of conjugacy is important because
-it is the formal framework for relating forward and backwards analysis over the graph, and explains why you
-can compute the same function (extensionally) in two different ways, with potentially different performance.
-It is true that the current presentation is more complex than it needs to be.
+C1. _Graph dependencies via conjugate operators is complicated_. Conjugacy is important because it is the
+formal framework for relating forward and backwards analysis over the graph, for example explaining why you
+can compute the same function (extensionally) in two different ways, with potentially different performance,
+using the De Morgan dual. We will streamline this section and also reorganise things so that the graph
+semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators over the graph
+are presented afterwards, with a cleaner presentation.
 
 C3. _Graph algorithms don't pay attention to properties of operators_. By the time the graph algorithms are
- presented with a graph, that graph already captures the kind of information you are referring to (for example
- the specific behaviour of * in relation to 0). The algorithms can thus act uniformly on the graph without
- having to consider the specific semantics of the language or its primitive operators, which is one of the key
- benefits of factoring things this way.
+presented with a graph, that graph already captures the kind of information you are referring to (for example
+the specific behaviour of * in relation to 0). The algorithms can thus act uniformly on the graph without
+having to consider the specific semantics of the language or its primitive operators, which is one of the key
+benefits of factoring things this way.
 
 C4. _Would prefer shorter intro, omitting 1.1 but expanding on contributions/roadmap._ Indeed Section 2 is
- rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
- will considers a reorganisation along the lines you suggest.
+rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
+will considers a reorganisation along the lines you suggest.
 
 C5. _Inference rule presentation of algorithms._ This way of presenting algorithms (as inductively defined
 relations, which one may subsequently prove to be deterministic and/or total) is useful for establishing the
 required metatheory (for example Propositions 3.17 and 3.19). These theorems would be difficult to prove for
 pseudocode presentations of the algorithms.
+
+## Reviewer C
+
+C1. _Relationship to prior work in provenance graphs and query-based data visualisation._ As mentioned in our
+response to Reviewer A, we neglected to give a proper discussion of database provenance. We will make sure to
+remedy that, especially in relation to database provenance and data visualisation; thanks for pointing us to
+more of the relevant literature. Although brushing-and-linking has been explored before, we are not aware of
+such a feature being used to relate data sources to other data sources (as opposed to relate visualisations to
+other visualisations). Nor are we aware of other approaches where these two kinds of linking can be understood
+as formally dual. We will make sure to emphasise these as novel contributions of our approach.
+
+C2. _Collecting provenance at database layer._ It is true that many systems involve databases and that
+end-to-end provenance solutions for such systems will therefore inevitably involve database provenance
+techniques. It is also true that most such systems have substantial visualisation and analytics written in
+general-purpose languages like R and Python, which explains the importance of exploring compositional
+techniques for general-purpose languages.
