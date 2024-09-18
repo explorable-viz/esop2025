@@ -2,12 +2,16 @@ We thank our four reviewers for their detailed reviews and suggestions for impro
 specific comments (C) asked by each reviewer below, along with some proposed
 improvements to the paper.
 
+# Responses to Reviewers
+
 ## Reviewer A
 
 C1. _Difficulty understanding graph construction from formalisation in Section 4._ We agree that the DDG
-examples are rather simple relative to the richness of the language, and that overall this section could be
-improved by some richer examples that show how the presented semantics leads to interesting dependency
-relationships.
+examples are rather simple relative to the richness of the language and that overall this section could be
+improved by richer examples that show how the presented semantics leads to interesting dependency
+relationships. We think this would be improved by moving Section 4 (Graph Semantics) to follow Section 2, and
+using the running example to illustrate both the language and the graph semantics. We will then pare back the
+current Section 3 (Conjugate Operators over Graphs) so that the role of these abstractions is clearer.
 
 ## Reviewer B
 
@@ -67,13 +71,39 @@ other visualisations), nor are we aware of other approaches where these two kind
 as formally dual. We will make sure to emphasise these as novel contributions of our approach.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
-provenance solutions for such systems will also need to handle visualisation and analytics code written in
-general-purpose languages like R and Python. In this work we focus on supporting provenance-based linking in a
-general-purpose language rather than database, to close this gap in the literature. As mentioned in our
-response to Reviewer A, we will include a proper discussion of related work in database provenance.
+provenance solutions for real-world systems will also need to handle visualisation and analytics code written
+in general-purpose languages like R and Python. In this work we focus on supporting provenance-based linking
+in a general-purpose language rather than a database language, to address this gap. As mentioned in our
+response to Reviewer A, a proper discussion of related work in database provenance is needed and we will make
+sure to include this.
 
 C3. _Relationship to Visualization Linking and Provenance._ While provenance-based brushing and linking has
-been explored before in database settings, most real-world systems have substantial visualisation and
-analytics components written in general-purpose languages like R and Python. Our contribution is to develop
-compositional provenance-based techniques for languages like these, which will be needed to interoperate with
-database-based solutions. Thanks for pointing us to more of the relevant literature.
+been explored before in databases, as mentioned above, most real-world systems have substantial visualisation
+and analytics components written in general-purpose languages. Our contribution is to develop compositional
+provenance-based techniques for languages like these, which will be needed to interoperate with database-based
+solutions. Thanks for pointing us to more of the relevant literature.
+
+# List of Proposed Changes
+
+We will implement all the minor corrections provided, and in addition propose the following more significant
+improvements to the paper.
+
+### Sections 1 and 2 (Intro/Overview)
+
+- Emphasise primary motivation as performance-related and de-emphasise developer or end-user benefits
+  (Reviewer B, C2)
+- Move Section 1.1 from Introduction to Overview (Reviewer C, C3)
+- Clarify novelty in relation to prior work in database provenance and brushing and linking over provenance
+  graphs (Reviewer D, C1)
+
+### Sections 3 and 4 (Graph Semantics and Analysis Algorithms)
+
+- Move Section 4 (Graph Semantics) so it immediately follows Section 2 (Overview), and provide richer examples
+  to give better intuition for graph semantics (Reviewer A, C1)
+- Streamline Section 3 (Conjugate Operators over Graphs) to simplify presentation (Reviewer C, C1)
+
+### Sections 6 (Related Work)
+
+- New section on prior work in database provenance (Reviewer B, C1 and Reviewer D, C2)
+- Discuss related work on multiverses/explainability/transparency in visual analytics (Reviewer B, C1)
+- Incorporate discussion on Psallidas' work on database-based visualisation linking into 6.3 (Reviewer D, C3)
