@@ -67,11 +67,13 @@ pseudocode presentations of the algorithms.
 ## Reviewer D
 
 C1. _Claims of novelty_. Aas you point out, there is prior work on (1) generating provenance/dependency
-graphs, (2) brushing and linking over such graphs, and (3) database-based queries over such graphs. For (2),
-we are not aware of earlier work on brushing and linking that considers specifically the problem of linked
-selections between different inputs/data sources (as opposed to linking selections across visualisations), nor
-are we aware of other approaches where these two kinds of linking can be understood as formally dual. We will
-make sure to emphasise these as novel contributions of our approach.
+graphs, (2) brushing and linking over such graphs, and (3) database-based queries over such graphs. We do not
+claim specific novelty with respect to (1), but will do a better job of contextualising our work with respect
+to this in the Introduction and in Related Work. For (2), we are not aware of brushing and linking works that
+consider the problem of linked selections between different inputs/data sources (as opposed to linking
+selections across outputs/visualisations), nor are we aware of other approaches where these two kinds of
+linking (which can be understood as formally dual) are placed on a firm mathematical foundation. We will make
+sure to emphasise these as novel contributions of our approach.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
@@ -107,6 +109,7 @@ improvements to the paper.
 
 ### Sections 6 (Related Work)
 
-- New section on prior work in database provenance (Reviewer B, C1 and Reviewer D, C2)
+- New section on prior work on provenance graphs and database provenance (Reviewer B, C1 and Reviewer D, C1 &
+  C2)
 - Discuss related work on multiverses/explainability/transparency in visual analytics (Reviewer B, C1)
 - Incorporate discussion on Psallidas' work on database-based visualisation linking into 6.3 (Reviewer D, C3)
