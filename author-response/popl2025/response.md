@@ -41,19 +41,22 @@ more responsive/performant UI, as supported by our evaluation.
 
 ## Reviewer C
 
-C1. _Graph dependencies via conjugate operators is complicated_. Conjugacy is important because it is the
-formal framework for relating forward and backwards analysis over the graph, for example explaining why you
-can compute the same function (extensionally speaking) in two different ways, with potentially different performance,
-using the De Morgan dual. We will streamline this section and also reorganise things so that the graph
-semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators over the graph
-are presented afterwards, with a cleaner presentation.
+C1. _Graph dependencies via conjugate operators seem complicated_. We agree that the section on conjugate
+operators could be presented more clearly. Conjugacy is important because it is the formal framework for
+understanding the relationship between forwards and backwards analysis over the graph. For example, it
+explains why the same function can be computed in two different ways, with potentially different performance,
+using the De Morgan dual. We will streamline this section to make this clear, and also reorganise so that the
+graph semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators afterwards,
+with a cleaner presentation.
 
-C2. _Graph algorithms don't pay attention to properties of operators_. By the time the graph algorithms are
-given a graph, that graph already captures the kind of information you are referring to; so in the
-running example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends
-on x2 (because it is zero), not x3. Thus whereas the procedure that builds the graph must depend on facts like
-these, the algorithms that operate on the graph can act uniformly on the graph without having to consider
-those details, which is one of the key benefits of factoring things this way.
+C2. _Graph algorithms don't pay attention to properties of operators_. Correct. By the time the graph
+algorithms are given a graph, that graph already captures the kind of information you are referring to. So in
+the example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends on
+x2 (since x2=0), not x3.
+
+The key point is that, although the procedure that builds the graph must make use of facts like these, the
+algorithms that operate on the graph do not. This modularity is one of the key advantages of structuring the
+system this way.
 
 C3. _Would prefer shorter intro, omitting 1.1 but expanding on contributions/roadmap._ Indeed Section 2 is
 rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
