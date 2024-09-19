@@ -73,8 +73,8 @@ C1. _Claims of novelty_. Agreed, this needs clarification. While there is indeed
 provenance/dependency graphs, (2) brushing and linking over such graphs, and (3) database-based queries over
 such graphs, we believe we are the first to:
 
-- Consider the problem of linked selections between different inputs/data sources, rather than
-linking selections across outputs/visualisations; this is a key contribution of our approach.
+- Consider the problem of linked selections between different inputs (data sources), rather than linking
+selections across outputs (visualisations); this is a key contribution of our approach.
 - Show how this new flavour of brushing and linking can be understood as formally dual to the traditional one.
 
 We will make sure to emphasise these as novel contributions of our approach with respect to (2). We claim no
