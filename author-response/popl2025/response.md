@@ -66,14 +66,17 @@ pseudocode presentations of the algorithms.
 
 ## Reviewer D
 
-C1. _Claims of novelty_. As you point out, there is prior work on (1) generating provenance/dependency graphs,
-(2) brushing and linking over such graphs, and (3) database-based queries over such graphs. We claim no
-specific novelty with respect to (1), but will do a better job of contextualising our work with respect to
-this in the Introduction and in Related Work. For (2), we are not aware of brushing and linking work that
-consider the problem of linked selections between different inputs/data sources (rather than linking
-selections across outputs/visualisations), nor are we aware of other approaches where these two flavours of
-brushing and linking, which can be understood as formally dual, are placed on a firm mathematical foundation.
-We will make sure to emphasise these as novel contributions of our approach.
+C1. _Claims of novelty_. Agreed, this needs clarification. While there is indeed prior work on (1) generating
+provenance/dependency graphs, (2) brushing and linking over such graphs, and (3) database-based queries over
+such graphs, we believe we are the first to:
+
+- Consider the problem of linked selections between different inputs/data sources, rather than
+linking selections across outputs/visualisations; this is a key contribution of our approach.
+- Show how this new flavour of brushing and linking can be understood as formally dual to the traditional one.
+
+We will make sure to emphasise these as novel contributions of our approach with respect to (2). We claim no
+specific novelty with respect to (1) or (3), but will do a better job of contextualising our work with
+respect to these in the Introduction and in Related Work.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
