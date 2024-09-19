@@ -12,32 +12,32 @@ and how the presented semantics leads to interesting dependency relationships.
 
 C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation
 proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing
-the graph-building semantics. We will pare this section back so that the role of these abstractions is clearer
-and there is less emphasis on standard constructions.
+the graph-building semantics. We will also pare this section back so that the role of these abstractions is
+clearer and there is less emphasis on standard constructions.
 
 ## Reviewer B
 
 C1. _Relationship to prior work in provenance and explainability/transparency._ Thank you for pointing out
 these omissions.
 
-1) Multiverse analyses. The multiverse work is an important perspective; we see
-our approach as complementary (for example different analysis choices would induce different selections on the
-input data, which could be informative). We will discuss this in Related Work.
+1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary
+(for example, different analysis choices would induce different selections on the input data, which could be
+informative). We will discuss this in Related Work.
 
-2) Database provenance. We intended to include a discussion of related ideas in database provenance (beyond
-the brief mention in Section 6), but this fell by the wayside; we will be sure to expand the discussion in
-Section 6 and also use it to provide better context to the introduction/overview.
+2) Database provenance. We did indeed omit a discussion of related ideas in database provenance beyond the
+brief mention in Section 6; we will be sure to expand that discussion and also use it to provide better
+context to the introduction/overview.
 
 3) Explanation in visual analytics. We have looked at Wu's thesis and subsequent papers and this also seems
 highly relevant/complementary so we look forward to dicussing this as well.
 
 C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment. We
-will de-emphasise or remove motivation that isn't supported explicitly by our evaluation; for example we will
-set out the end-user scenarios we wish to support, without making specific claims about ergonomic benefits
-beyond responsiveness, and for developers,simply point out that the interpreter only needs to be implemented
-in a single direction rather than bidirectionally, without suggesting that this is automatically "simpler"
-(which would be a claim in need of empirical support). We will then clarify that the primary motivation is a
-more responsive/performant UI, as supported by our evaluation.
+will de-emphasise or remove motivation that isn't supported explicitly by our evaluation, for example setting
+out the end-user scenarios we wish to support, without making specific claims about ergonomic benefits beyond
+responsiveness, and for developers, simply pointing out that the interpreter only needs to be implemented in a
+single direction rather than bidirectionally, without implying that this is automatically "simpler" (which
+would be a claim in need of empirical support). We will clarify that the primary motivation is a more
+responsive/performant UI, as supported by our evaluation.
 
 ## Reviewer C
 
