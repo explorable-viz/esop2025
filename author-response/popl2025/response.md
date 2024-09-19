@@ -63,7 +63,7 @@ pseudocode presentations of the algorithms.
 
 ## Reviewer D
 
-C1. _Claims of novelty_. While there is prior work on (1) generating provenance/dependency graphs, (2)
+C1. _Claims of novelty_. While, as you mention, there is prior work on (1) generating provenance/dependency graphs, (2)
 brushing and linking over such graphs, and (3) database-based queries over such graphs, we are not aware of
 such a feature being used to relate data sources to other data sources (as opposed to relate visualisations to
 other visualisations), nor are we aware of other approaches where these two kinds of linking can be understood
