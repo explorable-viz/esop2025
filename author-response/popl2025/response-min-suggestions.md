@@ -71,9 +71,9 @@ and the conjugate operators over the graph afterwards, with a cleaner presentati
 ## Reviewer C: C2.
 
 > C2. _Graph algorithms don't pay attention to properties of operators_. By the time the graph algorithms are
-> given a graph, that graph already captures the kind of information you are referring to; so in the
-> running example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends
-> on x2 (because it is zero), not x3. Thus whereas the procedure that builds the graph must depend on facts like
+> given a graph, that graph already captures the kind of information you are referring to; so in the running
+> example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends on x2
+> (because it is zero), and not x3. Thus whereas the procedure that builds the graph must depend on facts like
 > these, the algorithms that operate on the graph can act uniformly on the graph without having to consider
 > those details, which is one of the key benefits of factoring things this way.
 

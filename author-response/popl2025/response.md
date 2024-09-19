@@ -6,51 +6,57 @@ specific comments (C) asked by each reviewer below, along with some proposed imp
 ## Reviewer A
 
 C1. _Difficulty understanding graph construction from formalisation in Section 4._ We agree that the DDG
-examples are rather simple relative to the richness of the language. We think this would be improved by moving Section 4 (Graph Semantics) to follow Section 2, and
-using the running example to illustrate both the language and how the presented semantics leads to interesting dependency
-relationships.
+examples are rather simple relative to the richness of the language. We think this would be improved by moving
+Section 4 (Graph Semantics) to follow Section 2, and using the running example to illustrate both the language
+and how the presented semantics leads to interesting dependency relationships.
 
-C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing the graph-building semantics. We will pare this section back so that the role of these abstractions is clearer and there is less emphasis on standard constructions.
+C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation
+proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing
+the graph-building semantics. We will also pare this section back so that the role of these abstractions is
+clearer and there is less emphasis on standard constructions.
 
 ## Reviewer B
 
 C1. _Relationship to prior work in provenance and explainability/transparency._ Thank you for pointing out
 these omissions.
 
-1) Multiverse analyses. The multiverse work is an important perspective; we see
-our approach as complementary (for example different analysis choices would induce different selections on the
-input data, which could be informative). We will discuss this in Related Work.
+1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary
+(for example, different analysis choices would induce different selections on the input data, which could be
+informative). We will discuss this in Related Work.
 
-2) Database provenance. We intended to include a discussion of related ideas in database provenance (beyond
-the brief mention in Section 6), but this fell by the wayside; we will be sure to expand the discussion in
-Section 6 and also use it to provide better context to the introduction/overview.
+2) Database provenance. We did indeed omit a discussion of related ideas in database provenance beyond the
+brief mention in Section 6; we will be sure to expand that discussion and also use it to provide better
+context to the introduction/overview.
 
 3) Explanation in visual analytics. We have looked at Wu's thesis and subsequent papers and this also seems
 highly relevant/complementary so we look forward to dicussing this as well.
 
-C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment. We
-will de-emphasise or remove motivation that isn't supported explicitly by our evaluation; for example we will
-set out the end-user scenarios we wish to support, without making specific claims about ergonomic benefits
-beyond responsiveness, and for developers,simply point out that the interpreter only needs to be implemented
-in a single direction rather than bidirectionally, without suggesting that this is automatically "simpler"
-(which would be a claim in need of empirical support). We will then clarify that the primary motivation is a
-more responsive/performant UI, as supported by our evaluation.
+C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment; we
+will de-emphasise or remove motivation that isn't supported explicitly by our evaluation. When setting out the
+end-user scenarios we wish to support, we will avoid any implied claims about ergonomic benefits beyond
+responsiveness, and when discussing implementation overhead, will simply point out that the interpreter only
+needs to be implemented in a single direction rather than bidirectionally, without implying that this is
+necessarily "simpler" (which would be a claim in need of empirical support). We will clarify that the primary
+motivation is a more responsive/performant UI, as supported by our evaluation.
 
 ## Reviewer C
 
-C1. _Graph dependencies via conjugate operators is complicated_. Conjugacy is important because it is the
-formal framework for relating forward and backwards analysis over the graph, for example explaining why you
-can compute the same function (extensionally speaking) in two different ways, with potentially different performance,
-using the De Morgan dual. We will streamline this section and also reorganise things so that the graph
-semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators over the graph
-are presented afterwards, with a cleaner presentation.
+C1. _Graph dependencies via conjugate operators seem complicated_. We agree that the section on conjugate
+operators could be presented more clearly. Conjugacy is important because it is the formal framework for
+understanding the relationship between forwards and backwards analysis over the graph. For example, it
+explains why the same function can be computed in two different ways, with potentially different performance,
+using the De Morgan dual. We will streamline this section to make this clear, and also reorganise so that the
+graph semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators afterwards,
+with a cleaner presentation.
 
-C2. _Graph algorithms don't pay attention to properties of operators_. By the time the graph algorithms are
-given a graph, that graph already captures the kind of information you are referring to; so in the
-running example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends
-on x2 (because it is zero), not x3. Thus whereas the procedure that builds the graph must depend on facts like
-these, the algorithms that operate on the graph can act uniformly on the graph without having to consider
-those details, which is one of the key benefits of factoring things this way.
+C2. _Graph algorithms don't pay attention to properties of operators_. Correct. By the time the graph
+algorithms are given a graph, that graph already captures the kind of information you are referring to. So in
+the example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends on
+x2 (since x2=0), not x3.
+
+The key point is that, although the procedure that builds the graph must make use of facts like these, the
+algorithms that operate on the graph do not. This modularity is one of the key advantages of structuring the
+system this way.
 
 C3. _Would prefer shorter intro, omitting 1.1 but expanding on contributions/roadmap._ Indeed Section 2 is
 rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
@@ -63,11 +69,17 @@ pseudocode presentations of the algorithms.
 
 ## Reviewer D
 
-C1. _Claims of novelty_. While, as you mention, there is prior work on (1) generating provenance/dependency graphs, (2)
-brushing and linking over such graphs, and (3) database-based queries over such graphs, we are not aware of
-such a feature being used to relate data sources to other data sources (as opposed to relate visualisations to
-other visualisations), nor are we aware of other approaches where these two kinds of linking can be understood
-as formally dual. We will make sure to emphasise these as novel contributions of our approach.
+C1. _Claims of novelty_. Agreed, this needs clarification. While there is indeed prior work on (1) generating
+provenance/dependency graphs, (2) brushing and linking over such graphs, and (3) database-based queries over
+such graphs, we believe we are the first to:
+
+- Consider the problem of linked selections between different inputs/data sources, rather than
+linking selections across outputs/visualisations; this is a key contribution of our approach.
+- Show how this new flavour of brushing and linking can be understood as formally dual to the traditional one.
+
+We will make sure to emphasise these as novel contributions of our approach with respect to (2). We claim no
+specific novelty with respect to (1) or (3), but will do a better job of contextualising our work with
+respect to these in the Introduction and in Related Work.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
@@ -103,6 +115,7 @@ improvements to the paper.
 
 ### Sections 6 (Related Work)
 
-- New section on prior work in database provenance (Reviewer B, C1 and Reviewer D, C2)
+- New section on prior work on provenance graphs and database provenance (Reviewer B, C1 and Reviewer D, C1 &
+  C2)
 - Discuss related work on multiverses/explainability/transparency in visual analytics (Reviewer B, C1)
 - Incorporate discussion on Psallidas' work on database-based visualisation linking into 6.3 (Reviewer D, C3)
