@@ -6,11 +6,14 @@ specific comments (C) asked by each reviewer below, along with some proposed imp
 ## Reviewer A
 
 C1. _Difficulty understanding graph construction from formalisation in Section 4._ We agree that the DDG
-examples are rather simple relative to the richness of the language. We think this would be improved by moving Section 4 (Graph Semantics) to follow Section 2, and
-using the running example to illustrate both the language and how the presented semantics leads to interesting dependency
-relationships.
+examples are rather simple relative to the richness of the language. We think this would be improved by moving
+Section 4 (Graph Semantics) to follow Section 2, and using the running example to illustrate both the language
+and how the presented semantics leads to interesting dependency relationships.
 
-C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing the graph-building semantics. We will pare this section back so that the role of these abstractions is clearer and there is less emphasis on standard constructions.
+C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation
+proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing
+the graph-building semantics. We will pare this section back so that the role of these abstractions is clearer
+and there is less emphasis on standard constructions.
 
 ## Reviewer B
 
@@ -63,11 +66,12 @@ pseudocode presentations of the algorithms.
 
 ## Reviewer D
 
-C1. _Claims of novelty_. While, as you mention, there is prior work on (1) generating provenance/dependency graphs, (2)
-brushing and linking over such graphs, and (3) database-based queries over such graphs, we are not aware of
-such a feature being used to relate data sources to other data sources (as opposed to relate visualisations to
-other visualisations), nor are we aware of other approaches where these two kinds of linking can be understood
-as formally dual. We will make sure to emphasise these as novel contributions of our approach.
+C1. _Claims of novelty_. Aas you point out, there is prior work on (1) generating provenance/dependency
+graphs, (2) brushing and linking over such graphs, and (3) database-based queries over such graphs. For (2),
+we are not aware of earlier work on brushing and linking that considers specifically the problem of linked
+selections between different inputs/data sources (as opposed to linking selections across visualisations), nor
+are we aware of other approaches where these two kinds of linking can be understood as formally dual. We will
+make sure to emphasise these as novel contributions of our approach.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
