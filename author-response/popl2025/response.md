@@ -71,9 +71,9 @@ C1. _Claims of novelty_. As you point out, there is prior work on (1) generating
 specific novelty with respect to (1), but will do a better job of contextualising our work with respect to
 this in the Introduction and in Related Work. For (2), we are not aware of brushing and linking work that
 consider the problem of linked selections between different inputs/data sources (rather than linking
-selections across outputs/visualisations), nor are we aware of other approaches where these two kinds of
-linking (which can be understood as formally dual) are placed on a firm mathematical foundation. We will make
-sure to emphasise these as novel contributions of our approach.
+selections across outputs/visualisations), nor are we aware of other approaches where these two flavours of
+brushing and linking, which can be understood as formally dual, are placed on a firm mathematical foundation.
+We will make sure to emphasise these as novel contributions of our approach.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
