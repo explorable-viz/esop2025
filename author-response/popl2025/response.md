@@ -34,8 +34,8 @@ highly relevant/complementary so we look forward to dicussing this as well.
 C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment; we
 will de-emphasise or remove motivation that isn't supported explicitly by our evaluation. When setting out the
 end-user scenarios we wish to support, we will avoid any implied claims about ergonomic benefits beyond
-responsiveness, and when discussing implementation overhead, will simply pointing out that the interpreter
-only needs to be implemented in a single direction rather than bidirectionally, without implying that this is
+responsiveness, and when discussing implementation overhead, will simply point out that the interpreter only
+needs to be implemented in a single direction rather than bidirectionally, without implying that this is
 necessarily "simpler" (which would be a claim in need of empirical support). We will clarify that the primary
 motivation is a more responsive/performant UI, as supported by our evaluation.
 
