@@ -31,13 +31,13 @@ context to the introduction/overview.
 3) Explanation in visual analytics. We have looked at Wu's thesis and subsequent papers and this also seems
 highly relevant/complementary so we look forward to dicussing this as well.
 
-C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment. We
-will de-emphasise or remove motivation that isn't supported explicitly by our evaluation, for example setting
-out the end-user scenarios we wish to support, without making specific claims about ergonomic benefits beyond
-responsiveness, and for developers, simply pointing out that the interpreter only needs to be implemented in a
-single direction rather than bidirectionally, without implying that this is automatically "simpler" (which
-would be a claim in need of empirical support). We will clarify that the primary motivation is a more
-responsive/performant UI, as supported by our evaluation.
+C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment; we
+will de-emphasise or remove motivation that isn't supported explicitly by our evaluation. When setting out the
+end-user scenarios we wish to support, we will avoid any implied claims about ergonomic benefits beyond
+responsiveness, and when discussing implementation overhead, will simply pointing out that the interpreter
+only needs to be implemented in a single direction rather than bidirectionally, without implying that this is
+necessarily "simpler" (which would be a claim in need of empirical support). We will clarify that the primary
+motivation is a more responsive/performant UI, as supported by our evaluation.
 
 ## Reviewer C
 
