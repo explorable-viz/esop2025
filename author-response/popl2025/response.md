@@ -5,22 +5,22 @@ specific comments (C) asked by each reviewer below, along with some proposed imp
 
 ## Reviewer A
 
-C1. _Difficulty understanding graph construction from formalisation in Section 4._ We agree that the DDG
-examples are rather simple relative to the richness of the language. We think this would be improved by moving
-Section 4 (Graph Semantics) to follow Section 2, and using the running example to illustrate both the language
-and how the presented semantics leads to interesting dependency relationships.
+C1. _Difficulty understanding graph construction from formalisation in Section 4 (Graph Semantics)._ We agree
+that the DDG examples are rather simple relative to the richness of the language. We think this would be
+improved by using the running example from Section 2 to illustrate both the language and semantics in Section
+4, and how the presented semantics leads to interesting dependency relationships.
 
-C2. _Dependency graph and algorithms are somewhat standard_. This will also be addressed by the reorganisation
-proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing
-the graph-building semantics. We will also pare this section back so that the role of these abstractions is
-clearer and there is less emphasis on standard constructions.
+C2. _Dependency graph and algorithms are somewhat standard_. We will simplify Section 3 (Conjugate Operators
+over Graphs) so that the role of these abstractions is clearer and there is less emphasis on standard
+constructions.
 
 ## Reviewer B
 
 C1. _Relationship to prior work in provenance and explainability/transparency._ Thank you for pointing out
 these omissions. We will include all of these. A few notes:
 
-1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary. For example, different analysis choices would induce different selections on the input data, which could be
+1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary.
+For example, different analysis choices would induce different selections on the input data, which could be
 informative. We will discuss this in Related Work.
 
 2) Database provenance. We did indeed omit a discussion of related ideas in database provenance beyond the
@@ -33,10 +33,10 @@ highly relevant/complementary so we look forward to dicussing this as well.
 C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment; we
 will de-emphasise or remove motivation that isn't supported explicitly by our evaluation. When setting out the
 end-user scenarios we wish to support, we will avoid any implied claims about ergonomic benefits beyond
-responsiveness and what can be shown, and when discussing implementation overhead, will simply point out that the interpreter only
-needs to be implemented in a single direction rather than bidirectionally, without implying that this is
-necessarily "simpler" (which would be a claim in need of empirical support). We will clarify that the primary
-motivation is a more responsive/performant UI, as supported by our evaluation.
+responsiveness and what can be shown, and when discussing implementation overhead, will simply point out that
+the interpreter only needs to be implemented in a single direction rather than bidirectionally, without
+implying that this is necessarily "simpler" (which would be a claim in need of empirical support). We will
+clarify that the primary motivation is a more responsive/performant UI, as supported by our evaluation.
 
 ## Reviewer C
 
@@ -48,23 +48,19 @@ using the De Morgan dual. We will streamline this section to make this clear, an
 graph semantics comes first (with richer examples, as per Reviewer A), and the conjugate operators afterwards,
 with a cleaner presentation.
 
-C2. _Graph algorithms don't pay attention to properties of operators_. Correct. By the time the graph
-algorithms are given a graph, that graph already captures the kind of information you are referring to. So in
-the example you mention, the dependence graph already captures the specific fact that x2 * x3 only depends on
-x2 (since x2=0), not x3.
-
-The key point is that, although the procedure that builds the graph must make use of facts like these, the
-algorithms that operate on the graph do not. This modularity is one of the key advantages of structuring the
-system this way.
+C2. _Graph algorithms don't pay attention to properties of operators_. Graph building depends on the semantics
+of the language, and thus can capture that x2 * x3 depends only x2 when x2 = 0, whereas graph queries are
+semantics-agnostic (what is being referred to in line 951). This modularity is one of the key advantages of
+structuring the system this way. We will clarify this in the paper.
 
 C3. _Would prefer shorter intro, omitting 1.1 but expanding on contributions/roadmap._ Indeed Section 2 is
 rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
 will reorganise along the lines you suggest.
 
-C4. _Inference rule presentation of algorithms (Fig 5)._ This way of presenting algorithms (as inductively defined
-relations, which one may subsequently prove to be deterministic and/or total) is useful for establishing the
-required metatheory (for example Propositions 3.17 and 3.19). These theorems would be difficult to prove for
-pseudocode presentations of the algorithms.
+C4. _Inference rule presentation of algorithms (Fig 5)._ This way of presenting algorithms (as inductively
+defined relations, which one may subsequently prove to be deterministic and/or total) is useful for
+establishing the required metatheory (for example Propositions 3.17 and 3.19). These theorems would be
+difficult to prove for pseudocode presentations of the algorithms.
 
 ## Reviewer D
 
@@ -107,9 +103,10 @@ We will implement all the minor corrections provided, and in addition propose th
 
 ### Sections 3 and 4 (Graph Semantics and Conjugate Operators over Graphs)
 
-- Move Section 4 (Graph Semantics) so it immediately follows Section 2 (Overview), and provide richer examples
-  to give better intuition for graph semantics (Reviewer A, C1)
-- Streamline Section 3 (Conjugate Operators over Graphs) to simplify presentation (Reviewer C, C1 and Reviewer A, C2)
+- In Section 4,  provide richer examples (reusing running example from Section 2) to give better intuition for
+  graph semantics (Reviewer A, C1)
+- Streamline Section 3 (Conjugate Operators over Graphs) to simplify presentation (Reviewer C, C1 and Reviewer
+  A, C2)
 
 ### Sections 6 (Related Work)
 
