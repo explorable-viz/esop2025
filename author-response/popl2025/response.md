@@ -10,7 +10,7 @@ examples are rather simple relative to the richness of the language. We think th
 Section 4 (Graph Semantics) to follow Section 2, and using the running example to illustrate both the language
 and how the presented semantics leads to interesting dependency relationships.
 
-C2. _Dependency graph and algorithms are somewhat trivial_. This will also be addressed by the reorganisation
+C2. _Dependency graph and algorithms are somewhat standard_. This will also be addressed by the reorganisation
 proposed above, as the current Section 3 (Conjugate Operators over Graphs) can be presented after introducing
 the graph-building semantics. We will also pare this section back so that the role of these abstractions is
 clearer and there is less emphasis on standard constructions.
@@ -18,11 +18,10 @@ clearer and there is less emphasis on standard constructions.
 ## Reviewer B
 
 C1. _Relationship to prior work in provenance and explainability/transparency._ Thank you for pointing out
-these omissions.
+these omissions. We will include all of these. A few notes:
 
-1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary
-(for example, different analysis choices would induce different selections on the input data, which could be
-informative). We will discuss this in Related Work.
+1) Multiverse analyses. The multiverse work is an important perspective; we see our approach as complementary. For example, different analysis choices would induce different selections on the input data, which could be
+informative. We will discuss this in Related Work.
 
 2) Database provenance. We did indeed omit a discussion of related ideas in database provenance beyond the
 brief mention in Section 6; we will be sure to expand that discussion and also use it to provide better
@@ -34,7 +33,7 @@ highly relevant/complementary so we look forward to dicussing this as well.
 C2. _Motivation leans too heavily on developer ease-of-use and end-user benefits._ This is a fair comment; we
 will de-emphasise or remove motivation that isn't supported explicitly by our evaluation. When setting out the
 end-user scenarios we wish to support, we will avoid any implied claims about ergonomic benefits beyond
-responsiveness, and when discussing implementation overhead, will simply point out that the interpreter only
+responsiveness and what can be shown, and when discussing implementation overhead, will simply point out that the interpreter only
 needs to be implemented in a single direction rather than bidirectionally, without implying that this is
 necessarily "simpler" (which would be a claim in need of empirical support). We will clarify that the primary
 motivation is a more responsive/performant UI, as supported by our evaluation.
@@ -62,7 +61,7 @@ C3. _Would prefer shorter intro, omitting 1.1 but expanding on contributions/roa
 rather short and Section 1 goes into a lengthy worked example before getting to contributions/roadmap, so we
 will reorganise along the lines you suggest.
 
-C4. _Inference rule presentation of algorithms._ This way of presenting algorithms (as inductively defined
+C4. _Inference rule presentation of algorithms (Fig 5)._ This way of presenting algorithms (as inductively defined
 relations, which one may subsequently prove to be deterministic and/or total) is useful for establishing the
 required metatheory (for example Propositions 3.17 and 3.19). These theorems would be difficult to prove for
 pseudocode presentations of the algorithms.
@@ -83,9 +82,9 @@ respect to these in the Introduction and in Related Work.
 
 C2. _Relationship to Database Provenance._ While it is true that many systems involve databases, end-to-end
 provenance solutions for real-world systems will also need to handle visualisation and analytics code written
-in general-purpose languages like R and Python. In this work we focus on supporting provenance-based linking
+in general-purpose languages like R and Python. In our work, we focus on supporting provenance-based linking
 in a general-purpose language rather than a database language, to address this gap. As mentioned in our
-response to Reviewer A, a proper discussion of related work in database provenance is needed and we will make
+response to Reviewer A, more discussion of related work in database provenance is needed and we will make
 sure to include this.
 
 C3. _Relationship to Visualization Linking and Provenance._ While provenance-based brushing and linking has
@@ -96,8 +95,7 @@ database-based solutions. Thanks for pointing us to more of the relevant literat
 
 # List of Proposed Changes
 
-We will implement all the minor corrections provided, and in addition propose the following more significant
-improvements to the paper.
+We will implement all the minor corrections provided, and in addition propose the following improvements to the paper.
 
 ### Sections 1 and 2 (Intro/Overview)
 
