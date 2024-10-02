@@ -1,46 +1,48 @@
 \section{Related work}
 \label{sec:related-work}
 
-\subsection{Applying Dynamic Dependence Graphs}
+\subsection{Applying Dynamic Dependence Graphs \todo{Applying?}}
 
-We are not the first to consider using dynamic dependence graphs for functional
-programming languages. For example, the compilation of a functional
-program to a graph has been used to implement incremental evaluation of programs in \citet{acar02, acar06b}.
-In contrast to their work, which focusses on efficiently propagating changes for inputs to computations, we
-are concerned with the implementation of interactive data exploration systems.
-%Additionally their work is
-%implemented as a library for Standard ML in contrast to our implementation existing
-%as a built for purpose programming language.
+We are not the first to consider using dynamic dependence graphs \todo{to do what?} for functional programming
+languages. For example, the compilation of a functional program to a graph has been used to implement
+incremental evaluation of programs in \citet{acar02, acar06b}. In contrast to their work, which focusses on
+efficiently propagating changes for inputs to computations, we are concerned with the implementation of
+interactive data exploration systems. \todo{What about DDGs for program slicing? Isn't that much more
+relevant?}
 
-For a more generic perspective on program slicing, \citet{field98} consider dynamic dependence tracking in
-term-rewriting systems. Their approach allows them to perform graph-based program slicing on a subset of Pascal,
-but differs from our work in two ways. Firstly, they are concerned primarily with program slicing
-of imperative programs as opposed to building interactive visualisations, and secondly,
-they explicitly represent reduction steps in their dependence graphs. In
-contrast, we do not represent this sort of information in the graph at all, and instead of
-representing the semantics as a term-rewriting system, we present ours as
-an extended big-step relation.
+For a more generic perspective on program slicing \todo{non-sequitous -- we haven't yet mentioned program
+slicing}, \citet{field98} consider dynamic dependence tracking in term-rewriting systems. Their approach
+allows them to perform graph-based program slicing on a subset of Pascal, but differs from our work in two
+ways. Firstly, they are concerned primarily with program slicing of imperative programs as opposed to building
+interactive visualisations \todo{but that's just an application -- how do the approaches/techniques differ?},
+and secondly, they explicitly represent reduction steps in their dependence graphs. In contrast, we do not
+represent this sort of information in the graph at all, and instead of representing the semantics as a
+term-rewriting system, we present ours as an extended big-step relation.
 
-More recently there has been a body of work aimed at using dynamic dependence graphs
-to assist in program fault localisation, but again these are not focussed on
-interactive visualisation systems, but rather on bug finding in programs.
-For a survey see \citet{Soremekun2021}.
+More recently there has been a body of work aimed at using dynamic dependence graphs to assist in program
+fault localisation, but again these are not focussed \todo{``focused'' is much more common nowadays, even in
+British English} on interactive visualisation systems, but rather on bug finding in programs. For a survey see
+\citet{Soremekun2021} \todo{focus on the difference in the information the graphs contain, rather than how
+they are used?}.
+
+\subsection{Provenance}
+
+\todo{Not sure how we forgot to mention provenance, but need to say something about database provenance, perhaps taint tracking, etc}
 
 \subsection{Galois Slicing}
 
 Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
 program analysis, cleanly characterising input-output relationships in terms of demand and sufficiency
-\cite{perera12a,perera16d,ricciotti17}. In these works, Galois connections are
-applied to the problem of program slicing. The upper adjoint -- which characterises
-forward slicing from inputs to outputs -- can be thought of as a \emph{sufficiency} operator,
-picking out all the outputs which can be computed using only a particular set of
-inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand} operator, picking out the
-specific inputs needed to compute a particular set of outputs. \citet{perera22} extended this approach to a
-setting where slices have complements and the slices of a particular program or value form a Boolean lattice;
-they then showed how the De Morgan dual of the upper adjoint can be used to pick out \emph{linked outputs},
-namely the other outputs that ``compete'' with a given set of outputs in the sense of demanding some of the
-same inputs, and proposed this as a framework for understanding the ``brushing and linking'' feature commonly
-used in data visualisation.
+\cite{perera12a,perera16d,ricciotti17}. In these works, Galois connections are applied to the problem of
+program slicing. The upper adjoint -- which characterises forward slicing from inputs to outputs -- can be
+thought of as a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a
+particular set of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand}
+operator, picking out the specific inputs needed to compute a particular set of outputs. \citet{perera22}
+extended this approach to a setting where slices have complements and the slices of a particular program or
+value form a Boolean lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick
+out \emph{linked outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense
+of demanding some of the same inputs, and proposed this as a framework for understanding the ``brushing and
+linking'' feature commonly used in data visualisation.
 
 However, implementations of Galois slicing efficient enough to support the kind of interactive applications
 considered here have proved elusive. To compute the two analyses, implementations have relied on a sequential
@@ -57,19 +59,19 @@ significantly reduces the implementation burden on the developer, since the algo
 are language-agnostic and thus only need to be implemented~once.
 
 \subsection{Interactive Visualisation}
-%\JBnote{Start of change}
-We are not the first to consider shifting the burden of interactive visualisations
-into the language runtime. Reactive Vega~\cite{satyanarayan17}
-presents a system for building interactivity in visualisations.
-Vega is a declarative DSL for constructing interactions with visualisations.
-The features of Vega allow for more complicated interactions than our own
-work at present, however these are hampered by requiring the designer to learn
-multiple separate languages. Further, the syntax of Vega for combining these
-interactions is non-obvious to a new user. In contrast, whilst our work provides
-a smaller set of interaction primitives it frees up the developer to focus on
-building their data analysis programs, leaving the burden of implementing selections
-to the language itself. The benefit of including everything into the base language
-is that it reduces the number of tools that a developer needs proficiency with.
+\todo{This is an odd framing because ``interactivity'' in data visualisation extends well beyond the provenance-related interactions that we have explored. A better entry point might be linked visualisations, e.g. the Psallidas et al, but also the work prior to that, Glue, etc.}
+
+We are not the first to consider shifting the burden of interactive visualisations into the language runtime.
+Reactive Vega~\cite{satyanarayan17} presents a system for building interactivity in visualisations. Vega is a
+declarative DSL for constructing interactions with visualisations. The features of Vega allow for more
+complicated interactions than our own work at present, however these are hampered by requiring the designer to
+learn multiple separate languages \todo{spurious}. Further, the syntax of Vega for combining these
+interactions is non-obvious to a new user \todo{also spurious}. In contrast, whilst our work provides a
+smaller set of interaction primitives \todo{we don't provide primitives that the programmer can use -- in that
+sense we don't support ``interactivity'' at all, rather interactivity is a built-in, but limited, featured} it
+frees up the developer to focus on building their data analysis programs, leaving the burden of implementing
+selections to the language itself. The benefit of including everything into the base language is that it
+reduces the number of tools that a developer needs proficiency with \todo{spurious, see above}.
  %In future work it could be beneficial to provide more
 %ways for a Fluid user to combine their selections, such as ranges and marquee
 %selections, however we do not consider this to be our primary focus.
@@ -86,34 +88,27 @@ their work is defined by its usage of relational databases, and the way they
 create a semantics for queries on visualisations using the model of relational
 database queries.
 
-\JBnote{Multiverse Analysis: Our approach is not the only one that aims to tackle
-the problem of explainable science. \citet{dragicevic19} introduce the idea of
-an explorable multiverse analysis,exposing the methodological choices made
-in designing a data analysis called analysis parameters. Since different choices made in design will
-impact the conclusions of the anaylsis, they exposes the choices made to
-users, and allows them to toggle between possible choices at given points in the analysis,
-observing how they impact the results.
-We view our work as complementary to theirs, since we are more concerned with the
-dependencies observed within a specific choice of analysis parameters, rather than
-the choices themselves. Toggling choices in their interactive artifacts updates the
-artifact globally, and it can be different to know the exact impact
-that one of these analysis parameters has on results. 
-It seems reasonable to package our dependency analysis alongside such a multiverse analysis,
-allowing the user to observe the dependencies on a methodological choice, as well
-as the underlying data dependencies used in the analysis.}
+\subsection{Multiverse Analysis \todo{Maybe ``transparent research outputs?''}}
 
-%\JBnote{Database Provenance}
-More recent  database provenance  work~\citet{dietrich22}  attempts to simultaneously
-explain both value and control dependencies in recursive queries and user-defined
-functions. Their work takes an SQL query and rewrites it into a pair of queries
-which compute not only the output table, but the provenance of the values it contains.
-%\JBnote{currently discussing including where versus why here, but could be moved to
-%section 7}
-In order to modify our approach to work in this setting, we would need to encode
-extra information into the edges of the graph, specifically whether an edge is
-a control-flow edge -- coming from an if-else or a pattern match -- or a value
-edge -- from producing a new value out of old ones. This information roughly
-corresponds to the "why" and "where" provenance described in the database setting.
-Further we would need to use a dependency relation which agrees with the semantics
-of an SQL query or user-defined functions, since a relational database is
-semantically distinct from our functional setting.
+Our approach is not the only one \todo{maybe avoid repeating this refrain} that aims to tackle the problem of
+explainable science. \citet{dragicevic19} introduce the idea of an explorable multiverse analysis,exposing the
+methodological choices made in designing a data analysis called analysis parameters. Since different choices
+made in design will impact the conclusions of the anaylsis, they exposes the choices made to users, and allows
+them to toggle between possible choices at given points in the analysis, observing how they impact the
+results. We view our work as complementary to theirs, since we are more concerned with the dependencies
+observed within a specific choice of analysis parameters, rather than the choices themselves. Toggling choices
+in their interactive artifacts updates the artifact globally, and it can be different to know the exact impact
+that one of these analysis parameters has on results. It seems reasonable to package our dependency analysis
+alongside such a multiverse analysis, allowing the user to observe the dependencies on a methodological
+choice, as well as the underlying data dependencies used in the analysis.
+
+\todo{Move earlier into database provenance}
+More recent database provenance work~\citet{dietrich22}  attempts to simultaneously explain both value and
+control dependencies in recursive queries and user-defined functions. Their work takes an SQL query and
+rewrites it into a pair of queries which compute not only the output table, but the provenance of the values
+it contains. In order to modify our approach to work in this setting, we would need to encode extra
+information into the edges of the graph, specifically whether an edge is a control-flow edge -- coming from an
+if-else or a pattern match -- or a value edge -- from producing a new value out of old ones. This information
+roughly corresponds to the ``why'' and ``where'' provenance described in the database setting. Further we
+would need to use a dependency relation which agrees with the semantics of an SQL query or user-defined
+functions, since a relational database is semantically distinct from our functional setting.
