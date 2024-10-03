@@ -63,7 +63,27 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   restricting the output selection to the y coordinate only, the reader has to imagine both the output and input
   selections being different from those shown in the figure.
 
-### Section 2
+### Section 2 spurious
 
 - [ ] 2.1 is too abstract to be useful and 2.2 too short to be useful. This section just adds to the sense
   that the paper isn't telling a clear story.
+
+### Sections 3 and 4 out-of-sequence
+
+- [ ] Section 3 doesn't follow well from Section 1. Assuming we extend Section 1 with an example program or
+  two (which I think is essential) then the most natural step from there is probably a formalisation of the
+  core language (with its graph representation) and its (graph-building) semantics. That will require a
+  minimum set up for DDGs (i.e. some of what is in 3.2) but that can move into what is now Section 4 and that
+  section moved before what is currently Section 3.
+- [ ] The running example and its use in Section 3 is quite problematic:
+   - We haven't introduced the language yet or the idea that values in the program have "addresses" that act
+     as vertices in the DDG.
+   - Given that DDGs are a standard concept, the example is overly simple, only really illustrating the
+  behaviour of primitive operations with an annihilator.
+   - The DDG shown is apparently a simplification of the actual DDG of the program, which (given the
+     triviality of the program) seems unfortunate and a further opportunity for confusion (what details are
+     omitted?).
+   - The various "Example" paragraphs that refer to the running example are too fragmentary and would be
+     better off collated into a single paragraph or two. The first Example paragraph makes a slightly odd
+     statement about powersets and the second is quite unclear. (What does it mean for a node to be "associated
+     to a value"?)
