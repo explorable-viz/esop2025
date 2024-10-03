@@ -71,9 +71,6 @@ We define addressed \emph{values} $v$ mutually inductively with \emph{raw values
 separated by comma} a raw value does not have an associated address. These addresses, explained in
 \secref{core:addresses}, will (later) \todo{weird forward-reference} form the vertices of the graphs that we
 build in the graph semantics.
-%, and can be implemented as any identifier that uniquely identifies (parts of) a term  (our specific
-%implementation uses an integer counter for generating fresh vertices). %The other language construct that
-%corresponds to vertices are values $v$.
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
@@ -87,12 +84,6 @@ $\bot$. In practical terms, this mechanism could be used to allow for ``focussed
 restrict the parts of the output or input that the user is interested in using to mediate the linked inputs or
 outputs query.
 \todo{Incongruous here -- discuss later in context of conjugate operators}
-
-% mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$.
-%These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build
-%in the graph semantics. , and can be implemented as any identifier that uniquely identifies (parts of) a term
-%(our specific implementation uses an integer counter for generating fresh vertices). %The other language
-%construct that corresponds to vertices are values $v$.
 
 \subsubsection{Addresses for partial values}
 \label{sec:core:addresses}
@@ -187,19 +178,19 @@ $\exLet{x}{e}{e'}$ simply unions the graphs of subterms $e$ and~$e'$, and simila
 
 To explain the last two rules, \ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}, we first explain how
 we support mutual recursion. \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V
-\closeDefs \gamma', G$, which takes an environment  $\rho$ of recursive definitions and evaluates \todo{not
-``evaluates''} it to a value environment $\gamma'$ of closures, while also building a dependence graph $G$.
-This works by turning each function definition $\rho(x_i) \in \rho$ into a newly allocated closure $(\gamma,
-\rho, \rho(x_i))_{\alpha_i}$ with fresh address ${\alpha_i}$, capturing $\rho$ and a copy of the original
-environment $\gamma$, where each closure depends on ambient inputs $V$. The final dependence graph is the
-union of the graphs associated with all the closures.
+\closeDefs \gamma', G$, which takes a set $\rho$ of recursive definitions and produces the corresponding
+environment $\gamma'$ of closures, along with a dependence graph $G$. This works by turning each function
+definition $\rho(x_i) \in \rho$ into a newly allocated closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$ with
+fresh address ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma$, where each fresh
+closure depends on ambient inputs $V$. The final dependence graph is the union of the graphs associated with
+each closure.
 
 Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
-is then the same as regular let-bindings, except using $\closeDefs$ to evaluate \todo{not ``evaluate''}
-recursive definitions $\seq{\bind{x}{\sigma}}$. The final rule, \ruleName{$\evalS$-app} for $\exApp{e}{e'}$,
-is especially important to the graph semantics, as it is during application that we grow the ambient inputs
-$V$  that a given evaluation step depends on \todo{no, we need to unpack a distinct $V'$ from the closure}.
-Here, we compute the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function
+is then the same as regular let-bindings, except using $\closeDefs$ to build the set of recursive definitions
+$\seq{\bind{x}{\sigma}}$. The final rule, \ruleName{$\evalS$-app} for $\exApp{e}{e'}$, is especially important
+to the graph semantics, as it is during application that we grow the ambient inputs $V$  that a given
+evaluation step depends on \todo{no, we need to unpack a distinct $V'$ from the closure}. Here, we compute the
+closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function
 $e$% (and use ($\closeDefs$) to evaluate $\rho$)
 , and use its eliminator $\sigma$ to pattern-match against the value $v$' \todo{fix prime} of argument $e'$.
 What is returned includes (i) the \emph{selected branch} $e^\twoPrime$ and (ii) the vertex set $V'$, where
