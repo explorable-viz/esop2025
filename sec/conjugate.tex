@@ -355,10 +355,9 @@ Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add t
 to the pending graph $P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can
 then move $\alpha$ and its incoming edges from $P$ to $H$ (\ruleName{extend}), as this only happens when we
 have already moved every ancestor of $\alpha$ into $H$. If neither scenario is the case, then we terminate
-with the (potentially incomplete) graph $H$~(\ruleName{done}). Once $\sufficesE{}$ has terminated,
-$\sufficesAlg{G}$ takes $H$, and uses intersection to extract \todo{returns?} the vertices in $H$ that are
-also sinks in $G$. If this intersection is empty, it simply means that the input data $X$ was insufficient to
-compute any of the original program's outputs.
+with the (potentially incomplete) graph $H$~(\ruleName{done}). Once $\sufficesE{}$ has terminated with $H$,
+$\sufficesAlg{G}$ returns just the vertices in $H$ that are also sinks in $G$. If there are no such vertices,
+it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. Here,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the
