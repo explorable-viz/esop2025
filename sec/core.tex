@@ -183,25 +183,26 @@ $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and builds the dependence graph $
 \seq{G}$. We make use of  this relation in the rules \ruleName{$\evalS$-record} for
 $\exRec{\seq{\bind{x}{e}}}$, \ruleName{$\evalS$-constr} for $c(\seq{e})$, and \ruleName{$\evalS$-foreign-app}
 for $f(\seq{e})$, which all involve evaluating a sequence $\seq{e}$ of subterms; in the last rule, $\hat{f}$
-is the
-%We also check that the arity of constructor $c$ or foreign function $f$ matches the number of arguments in $\seq{e}$; %and for foreign calls, $\hat{f}$ is the
-foreign implementation that provides a way to evaluate $f$ to a graph and value (as required in~\secref{core:foreign}).
-Of course, this pattern applies to subterms in general and not just those expressed as a sequence $\seq{e}$. For example, the  \ruleName{$\evalS$-let}  rule for $\exLet{x}{e}{e'}$ (which otherwise behaves as standard) simply unions the graphs of subterms $e$ and~$e'$, and similarly for  \ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}.
+is the foreign implementation that provides a way to evaluate $f$ to a graph and value (as required
+in~\secref{core:foreign}). Of course, this pattern applies to subterms in general and not just those expressed
+as a sequence $\seq{e}$. For example, the  \ruleName{$\evalS$-let}  rule for $\exLet{x}{e}{e'}$ (which
+otherwise behaves as standard) simply unions the graphs of subterms $e$ and~$e'$, and similarly for
+\ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}.
 
 % is similar to that of records evaluates the sequence of terms $\seq{e}$ associated
 % with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha}$ as a fresh vertex
 % $\alpha$; the dependence graph is then the dependencies of each $v_i \in v$ along with the dependencies of
 % $\annRec{\seq{\bind{x}{v}}}{\alpha}$.
 
-To fully explain the last two rules, \ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}, we first detail
-how our language deals with \emph{mutual recursion}. For this,  \figref{core:close-defs} defines the auxiliary
-relation $\gamma, \rho, V \closeDefs \gamma', G$, which takes an environment  $\rho$ of recursive definitions
-and evaluates \todo{not ``evaluates''} it to a value environment $\gamma'$ of closures, while also building a
-dependence graph $G$. This works by turning each function definition $\rho(x_i) \in \rho$ into a newly
-allocated closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$ \todo{doesn't the closure also capture $V$?} as
-a \todo{with} fresh vertex ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma$,
-where each closure depends on ambient inputs $V$ (like in evaluation) \todo{``like in evaluation'' may not be
-helpful}. The final dependence graph is the combination of each closure's subgraph (also like in evaluation).
+To explain the last two rules, \ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}, we first explain how
+we support mutual recursion. \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V
+\closeDefs \gamma', G$, which takes an environment  $\rho$ of recursive definitions and evaluates \todo{not
+``evaluates''} it to a value environment $\gamma'$ of closures, while also building a dependence graph $G$.
+This works by turning each function definition $\rho(x_i) \in \rho$ into a newly allocated closure $(\gamma,
+\rho, \rho(x_i))_{\alpha_i}$ \todo{doesn't the closure also capture $V$?} as a \todo{with} fresh vertex
+${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma$, where each closure depends on
+ambient inputs $V$ (like in evaluation) \todo{``like in evaluation'' may not be helpful}. The final dependence
+graph is the combination of each closure's subgraph (also like in evaluation).
 
 Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
 is then the same as regular let-bindings, except using $\closeDefs$ to evaluate \todo{not ``evaluate''}
