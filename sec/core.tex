@@ -190,14 +190,12 @@ is then the same as regular let-bindings, except using $\closeDefs$ to build the
 $\seq{\bind{x}{\sigma}}$. The final rule, \ruleName{$\evalS$-app} for $\exApp{e}{e'}$, is especially important
 to the graph semantics, as it is during application that we grow the ambient inputs $V$  that a given
 evaluation step depends on \todo{no, we need to unpack a distinct $V'$ from the closure}. Here, we compute the
-closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function
-$e$% (and use ($\closeDefs$) to evaluate $\rho$)
-, and use its eliminator $\sigma$ to pattern-match against the value $v$' \todo{fix prime} of argument $e'$.
-What is returned includes (i) the \emph{selected branch} $e^\twoPrime$ and (ii) the vertex set $V'$, where
-$V'$ represents the values in $v'$ consumed by pattern-matching in order to lead to $e^\twoPrime$. The last
-premise which executes \todo{evaluates} the branch then specifies its ambient dependencies as $V' \disjunion
-\set{\alpha}$; that is, the (closure of the) function that was applied, $\alpha$, and the (consumed values of
-the) argument it was applied to, $V'$.
+closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function $e$, and use its eliminator $\sigma$ to
+pattern-match against the value $v'$ of argument $e'$. What is returned includes (i) the \emph{selected
+branch} $e^\twoPrime$ and (ii) the vertex set $V'$, where $V'$ represents the values in $v'$ consumed by
+pattern-matching in order to lead to $e^\twoPrime$. The last premise which executes \todo{evaluates} the
+branch then specifies its ambient dependencies as $V' \disjunion \set{\alpha}$; that is, the (closure of the)
+function that was applied, $\alpha$, and the (consumed values of the) argument it was applied to, $V'$.
 
 \subsubsection{Surface Language}
 
