@@ -32,6 +32,7 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 - [ ] Fig. 2 example: maybe lead with something simpler (e.g. moving average) and either drop the more complex
   example entirely or use later.
 - [ ] 4 scenarios introducing data transparency: we use the highlighting in Fig. 2 to illustrate 3 of our 4
-  scenarios, but I think this is ambitious. The example is already difficult, the arrows in Fig. 2 illustrate
-  only one of these scenarios (linked inputs), and the colours only really make sense from a linked inputs
-  perspective too (because the grey inputs are the ``related inputs``).
+  scenarios, but I think this is ambitious. The arrows in Fig. 2 illustrate only one of these scenarios
+  (linked inputs), and the colours only really make sense from a linked inputs perspective too (because the
+  grey inputs are the ``related inputs``). When we talk about restricting the output selection to the y
+  coordinate, not only is the x rather than the y coordinate highlighted in the figure)
