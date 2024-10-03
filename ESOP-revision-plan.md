@@ -28,14 +28,21 @@ current graph-based approach, the writeup needs to be as compelling as possible.
 - [ ] Contributions: emphasise that our contribution (vis-a-vis Psallidas, for example) is for general-purpose
   languages.
 - [ ] Contributions: do we really need 3 separate citations of Perera et al. [2022], one in each bullet?
+- [ ] Contributions: comparison to Bremer and Ranzijn doesn't really work here, because theirs is a fully
+  manual approach (and therefore not a "solution" to our stated framing of data transparency as a
+  infrastructure problem). By this point in the introduction we should have restricted interest to automated
+  solutions. The concepts here are about _motivating_ the idea of an automated solution.
 
 ### Contextualising our work
 
-- [ ] "programming language infrastructure problem" in 1.1: it feels like we should reinstate Psallidas and Wu
+- [ ] [1.1, "programming language infrastructure problem"] It feels like we should reinstate Psallidas and Wu
 [2018] discussion here, and perhaps the more general point about prior work on relationship between selection
 in visualisation and data provenance, to better situate our work in a space that includes both work on
 general-purpose languages and work in data viz. Currently these two paragraphs read as though the only prior
 work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
+
+- [ ] [Contributions, closing paragraph] Also implies the only prior work in this space is Ricciotti et al.
+  [2017] and Perera et al. [2022].
 
 ## More significant changes
 
