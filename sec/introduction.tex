@@ -33,7 +33,7 @@ after all is that it presents the big picture at the expense of certain detail.
 
 \citeauthor{bremer15} implemented an interactive feature that allow a user to explore some of these questions
 themselves \emph{in situ}, i.e., directly from the chart. By selecting an individual point, they are able to
-bring up a view showing the data that point was calculated from. In this case the highlighted dot represents
+bring up a view showing the data that point was calculated from. In this case the highlighted point represents
 data for Chiang Mai and the plotted value of 10.9\% was derived from an increase in population density from
 4,416 to 5,010 people per sq.~km. \todo{Paragraph ends prematurely}
 
@@ -125,20 +125,20 @@ transparency as an end-user feature. When we say ``user'', this may refer to eit
 ``inputs'', and the corresponding views as ``outputs''.
 
 \paragraph{Fine-grained linking of the view back to the data}
-In~\figref{introduction:related-inputs}, the dots \todo{points?} in the scatter plot do not provide any
-details about the data they were computed from, which may be of interest to a user. For instance, when
-\todo{by?} selecting the dot highlighted in green, a user may want to \todo{is able to?} identify all the
-values from the two tables that were used to compute its x and y coordinates (this is denoted by all the
-highlighted data in the two tables). \todo{Confusing as diagram shows a ``related inputs'' query (arrows don't
-agree with scenario described here).} Furthermore, they may be interested in more fine-grained information,
-e.g.~they may only want to know about the clean energy, reflected in the plot by the y-axis. This is
-particularly opaque as the plot doesn't make it possible to understand \todo{doesn't explain?} what``clean''
-energy even refers to. By selecting the y-coordinate (visible when clicking the dot), the user will be
-presented with a set of highlighted cells in the input tables whose contents were used to produce the selected
-output (all the highlighted cells in renewables, and the cells corresponding to the nuclearCap and nuclearOut
-columns on row 52 in nonRenewables). \todo{Confusing as not shown in the diagram either -- also we shouldn't
-elaborate on this particular scenario as not supported in the implementation.} Notably, this clarifies that
-nuclear energy is considered clean energy.
+In~\figref{introduction:related-inputs}, the points in the scatter plot do not provide any details about the
+data they were computed from, which may be of interest to a user. For instance, when \todo{by?} selecting the
+point highlighted in green, a user may want to \todo{is able to?} identify all the values from the two tables
+that were used to compute its x and y coordinates (this is denoted by all the highlighted data in the two
+tables). \todo{Confusing as diagram shows a ``related inputs'' query (arrows don't agree with scenario
+described here).} Furthermore, they may be interested in more fine-grained information, e.g.~they may only
+want to know about the clean energy, reflected in the plot by the y-axis. This is particularly opaque as the
+plot doesn't make it possible to understand \todo{doesn't explain?} what``clean'' energy even refers to. By
+selecting the y-coordinate (visible when clicking on the point), the user will be presented with a set of
+highlighted cells in the input tables whose contents were used to produce the selected output (all the
+highlighted cells in renewables, and the cells corresponding to the nuclearCap and nuclearOut columns on row
+52 in nonRenewables). \todo{Confusing as not shown in the diagram either -- also we shouldn't elaborate on
+this particular scenario as not supported in the implementation.} Notably, this clarifies that nuclear energy
+is considered clean energy.
 %
 
 \todo{This paragraph incongruous; explain $\demandsR$ operator in context of diagram.} As we will see later in
@@ -152,7 +152,7 @@ A user may also be interested in following the link between the input data and t
 the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs},
 row 205 in the data on the figure's left). Then, our system, through an operator we write as
 $\demandedByR_{G}$, traces the data contained in this cell to the parts of the plot it was used to compute
-(the green dot in the plot). The bioenergy capacity contributes to both components of the dot, namely the
+(the green point in the plot). The bioenergy capacity contributes to both components of the point, namely the
 total renewables capacity over total energy capacity and the clean capacity factor. We read $\demandedByR_{G}$
 as computing ``what outputs is some input data \emph{demanded by}?''.
 
@@ -161,7 +161,7 @@ The previous use cases only went in one direction, either from outputs back to i
 outputs. However, there may be situations where we want to compose the two directions. For illustration, let's
 assume like before that a user starts by selecting China's bioenergy capacity. As previously explained, our
 system will apply $\demandedByR_{G}$ to trace the data contained in this cell to the point in the scatter plot
-it was used to compute (the green dot in the plot). Additionally \todo{under what circumstances? always?}, our
+it was used to compute (the green point in the plot). Additionally \todo{under what circumstances? always?}, our
 system will apply $\demandsR_{G}$ to determine the rest of the data in the input tables that was used to
 compute the point in the plot (all data highlighted in grey in the tables). \todo{Probably unwise to use a
 single figure with a single set of highlights to illustrate all three scenarios.} We refer to the highlighted
@@ -180,8 +180,8 @@ corresponding data in the \textsf{nonRenewables} table that was used to produce 
 it will also highlight any outputs in the scatter plot that demand any of those data. The selected bars in the
 bar chart and the selected points (specifically, their x-ccordinates as those are the ones using the
 considered input data) in the scatter plot are the linked outputs. In the scatter plot, we note that only two
-dots are selected, those for Egypt and Japan, reflecting the fact that the scatter plot is only a view of data
-from 2018.
+points are selected, those for Egypt and Japan, reflecting the fact that the scatter plot is only a view of
+data from 2018.
 
 From the analysis point of view, this requires applying $\demandsR_{G}$ to find the value used to produce the
 selected segment of the bar, with each set of coloured segments associated with a given nation -- the selected
@@ -371,5 +371,5 @@ program??}
 Our implementation is open source and available (given later in a deanonymised version). To support our claims
 about fast response times, we also host an anonymised interactive web demo at
 \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}} (the user interface doesn't yet
-support selecting individual coordinates for a dot in the scatter plot, although this is available in our core
-implementation).
+support selecting individual coordinates for points in the scatter plot, although the analyses do support
+this).
