@@ -64,6 +64,8 @@ current graph-based approach, the writeup needs to be compelling.
 - [ ] [4.2.2] Explanation of "ambient" V needs to be clearer, and make it clear that V doesn't always grow
   (which the current text seems to suggest).
 - [ ] [4.2.2 and Fig. 11] Direction of graph is opposite to that used in Section 3.
+- [ ] [Fig. 12] Fuse into Fig. 11?
+- [ ] [4.2.2 and Fig. 12] Uses different star-graph notation from that introduced in paragraph 1 of 4.2.2.
 
 ## More significant changes
 
