@@ -131,13 +131,14 @@ subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched 
 in $\sigma$.
 
 A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns no vertices, reflecting the fact
-that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The eliminator
-$\elimRecord{\seq{y}}{\kappa}$ matches a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the variables
-in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associated with the record; this
-condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$, which
-simultaneously projects out the corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, an eliminator with a
-branch $(\elimBind{c}{\kappa})$ matches a constructor value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning
-the vertex $\alpha$ associated with the constructor.
+that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The record eliminator
+$\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
+long as the variables in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associated with
+the record; this condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
+\exRec{\seq{\bind{x}{v}}}$, which simultaneously projects out the corresponding values of $\seq{u}$ from
+$\seq{v}$. Lastly, a constructor eliminator with a branch $(\elimBind{c}{\kappa})$ matches any constructor
+value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning the vertex $\alpha$ associated with the
+constructor.
 
 \subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language
