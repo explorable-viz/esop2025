@@ -61,7 +61,9 @@ current graph-based approach, the writeup needs to be compelling.
   pattern-matching to individual "shallow" elimination forms, and mention Peyton-Jones et al [2022] early as a
   precedent. Rehash overly defensive parenthetical sentence at end of paragraph.
 - [ ] [4.1.3] Drop reference to "filter"; use (new) example from Section 1 instead.
-- [ ] Explanation of "ambient" V needs to be clearer
+- [ ] [4.2.2] Explanation of "ambient" V needs to be clearer, and make it clear that V doesn't always grow
+  (which the current text seems to suggest).
+- [ ] [4.2.2 and Fig. 11] Direction of graph is opposite to that used in Section 3.
 
 ## More significant changes
 
@@ -142,3 +144,11 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### Graph semantics
 
+- [ ] Use of disjoint union/implicit freshness conditions: it's not clear what disjoint union means here. If
+  we're talking abot the adjacency-map presentation of graphs, then from the definition of "disjoint union" in
+  Section 3 we actually mean domain-disjointness, but it's very unlikely the reader will have remembered that.
+  (And mere disjointness-as-sets would be insufficient to avoid collisions, so this is important.)
+
+### Algorithms for ▽_G, etc
+- [ ] [3.6] Need to do a better job of making the importance of slicing the graph (as opposed to the IO
+  relation) clear, since "computing" ▽_G is completely trivial if it simply means ▽_R(G).
