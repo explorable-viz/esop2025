@@ -107,7 +107,12 @@ rules should make this explicit, although that would involve threading the graph
 constructing subgraphs independently and then trying to merge. Moreover the disjointness conditions surely
 don't work, because two graphs constructed in the same environment may share subgraphs.}
 
-% The point of the disjointness conditions on graph union was intended to achieve this, and does at least ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t much better than just saying this in plain English outside of the definition).
+% The point of the disjointness conditions on graph union was intended to achieve this, and does at least
+% ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid
+% problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a
+% newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs
+% a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t
+% much better than just saying this in plain English outside of the definition).
 
 \subsection{Evaluation and Graph Construction}
 \label{sec:core:semantics}
@@ -125,8 +130,8 @@ free variables in $e$, and the set $V$ of addresses found in the matched portion
 
 The \ruleName{$\match$-done} rule expresses exactly when using a \emph{term} $e$ as the continuation may
 succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be
-executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation \todo{not true -- see var
-rule} -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant
+executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation \todo{what about var
+rule?} -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant
 subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected
 in $\sigma$.
 

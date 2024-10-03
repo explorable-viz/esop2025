@@ -7,7 +7,7 @@ current graph-based approach, the writeup needs to be compelling.
 
 ### Section 1
 
-- [ ] Revisit title? (``Conjugate operators'' is a bit allusive.)
+- [ ] Revisit title? ("Conjugate operators" is a bit allusive.)
 - [ ] Flow between end of 1.0 and start of 1.1 is a bit broken -- 1.0 needs to wrap-up with some kind of
   take-away for the reader before 1.1 starts.
 - [ ] [1.1] "data exploration": probably not the right term -- it could be taken to connote exploratory
@@ -61,6 +61,7 @@ current graph-based approach, the writeup needs to be compelling.
   pattern-matching to individual "shallow" elimination forms, and mention Peyton-Jones et al [2022] early as a
   precedent. Rehash overly defensive parenthetical sentence at end of paragraph.
 - [ ] [4.1.3] Drop reference to "filter"; use (new) example from Section 1 instead.
+- [ ] Explanation of "ambient" V needs to be clearer
 
 ## More significant changes
 
@@ -90,7 +91,7 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 - [ ] 4 scenarios introducing data transparency: we use the highlighting in Fig. 2 to illustrate 3 of our 4
   scenarios, but I think this is ambitious. The arrows in Fig. 2 illustrate only one of these scenarios
   (linked inputs), and the colours only really make sense from a linked inputs perspective too (because the
-  grey inputs are the ``related inputs``). This is complicated further by the fact that when we talk about
+  grey inputs are the "related inputs"). This is complicated further by the fact that when we talk about
   restricting the output selection to the y coordinate only, the reader has to imagine both the output and input
   selections being different from those shown in the figure.
 
@@ -141,6 +142,3 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### Graph semantics
 
-- [ ] Somehow this version of the rules doesn't capture the fact that closures capture $V$, and the
-  application rule unpacks $V$ from the closure and evaluates the function body using $V$ rather than the
-  ``ambient'' $V'$.
