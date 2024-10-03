@@ -44,6 +44,14 @@ current graph-based approach, the writeup needs to be compelling.
   "inert" input, i.e. input that isn't used anywhere) so we can justify in that way. Even if that were not so
   I think it would be preferable to include it for symmetry, especially in Fig. 7, where its omission invites
   confusion.
+- [ ] [Fig. 8 and supporting paragraph] A number of problems here:
+  - [ ] The appropriate notion here is not monotonicity. (▽△ and its dual are composed of monotonic parts so
+    they are necessarily monotonic.) If x ⊆ f(x) for any x then f is said to be _increasing_ (or sometime
+    _extensive_ or _inflationary_).
+  - [ ] The colours here are confusing -- how do they relate to the colours used in Fig. 2? The sets and how
+    they overlap are hard to discern. Very little of the detail in the diagram seems to be in the service of
+    conveying the desired intuition.
+  - [ ] "It is not hard to see how the same concept arises for linked outputs...": missing intuition here.
 
 ## More significant changes
 
