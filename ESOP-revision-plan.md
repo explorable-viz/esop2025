@@ -18,6 +18,8 @@ current graph-based approach, the writeup needs to be as compelling as possible.
     is too speculative.
   - [ ] "the consumer of the content now has the ability..": but this is also the case with the manual
     solution. And perhaps "explore relationship to data" rather than "explore detail".
+- [ ] "our system uses an operator ▽_G": integrate into the explanation of the scenario (or just omit). The
+  subscript G is not short for graph; it's a metavariable (so probably doesn't belong at all in this section).
 
 ### Contextualising our work
 
