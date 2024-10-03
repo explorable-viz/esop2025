@@ -345,19 +345,17 @@ $T(H)$ from the final graph slice $H$, representing the outputs that the origina
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for dependence graph $G$.
 \end{definition}
 
-For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation
-$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The operation ``$H, P,
-G\sufficesE{}$'' \todo{notationally this doesn't really make sense} takes a graph slice $H$ under
-construction, a ``pending'' subgraph $P$ of nodes for which we have discovered partial information, and the
-remaining unexplored graph $G$.
-%\note{Maybe rename $G$ so we can give the subgraph relationships?}.
-Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add those edges and their endpoints
-to the pending graph $P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can
-then move $\alpha$ and its incoming edges from $P$ to $H$ (\ruleName{extend}), as this only happens when we
-have already moved every ancestor of $\alpha$ into $H$. If neither scenario is the case, then we terminate
-with the (potentially incomplete) graph $H$~(\ruleName{done}). Once $\sufficesE{}$ has terminated with $H$,
-$\sufficesAlg{G}$ returns just the vertices in $H$ that are also sinks in $G$. If there are no such vertices,
-it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
+Like $\demandsAlg{G}$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation $\sufficesE{}$
+which builds a slice of $G$. The operation $\sufficesE{}$ takes the graph slice $H$ under construction, a
+``pending'' subgraph $P$ of nodes for which we have discovered partial information, and the remaining
+unexplored graph $G$, and returns the final graph slice $H'$. Whenever we have a vertex in $H$ which still has
+outgoing edges in $G$, we add those edges and their endpoints to the pending graph $P$ (\ruleName{pending}).
+If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges from
+$P$ to $H$ (\ruleName{extend}), as this only happens when we have already moved every ancestor of $\alpha$
+into $H$. If neither scenario is the case, then we terminate with the (potentially incomplete) graph
+$H$~(\ruleName{done}). Once $\sufficesE{}$ has terminated with $H$, $\sufficesAlg{G}$ returns just the
+vertices in $H$ that are also sinks in $G$. If there are no such vertices, it simply means that the input data
+$X$ was insufficient to compute any of the original program's outputs.
 
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. Here,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the

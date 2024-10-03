@@ -150,5 +150,6 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   (And mere disjointness-as-sets would be insufficient to avoid collisions, so this is important.)
 
 ### Algorithms for ▽_G, etc
-- [ ] [3.6] Need to do a better job of making the importance of slicing the graph (as opposed to the IO
-  relation) clear, since "computing" ▽_G is completely trivial if it simply means ▽_R(G).
+- [ ] [3.6] Need to revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means
+  ▽_R(G), so somehow we have to put slicing the graph centre-stage (as opposed to simply deriving its IO
+  relation and going from there to ▽).
