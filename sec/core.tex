@@ -19,25 +19,22 @@ term (\secref{core:semantics}); we also address how we deal with pattern-matchin
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines the expressions $e$ of the language, which include variables $x, y, f$%
-; integer constants $n, m$%
-; let-bindings $\exLet{x}{e}{e'}$%
-; record construction $\exRec{\seq{\bind{x}{e}}}$%
-; and record projection $\exRecProj{e}{x}$. We also have (saturated) constructor expressions
-$\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors; we write $\datatype{c} = n$ to denote that
-$c$ takes $n \in \mathbb{N}$ arguments \todo{(or is $\datatype{}$ just a function from constructor names to
-natural numbers?)}. Function application comes in two forms: the usual $\exApp{e}{e'}$, and (saturated)
-\emph{foreign function application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions
-(\secref{core:foreign} below). The last two forms define anonymous functions $\exFun{\sigma}$ and (mutually)
-recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct
-called an \emph{eliminator} detailed further in \secref{core:continuations}.
+\figref{syntax} defines the expressions $e$ of the language, which include variables $x, y, f$; integer
+constants $n, m$; let-bindings $\exLet{x}{e}{e'}$; record construction $\exRec{\seq{\bind{x}{e}}}$; and record
+projection $\exRecProj{e}{x}$. We also have (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where
+$c$ ranges over data constructors; the language is parameterised by a finite map $\Sigma$ from constructors
+$c$ to constructor arities $\datatype{c} \in \mathbb{N}$. Function application comes in two forms: the usual
+$\exApp{e}{e'}$, and (saturated) \emph{foreign function application} $\exForeignApp{f}{\seq{e}}$ for calling
+foreign functions (\secref{core:foreign} below). The last two forms define anonymous functions
+$\exFun{\sigma}$ and (mutually) recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is
+a pattern-matching construct called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
-The language is parameterised by a finite map $\Phi(f) = n$ from variables $f$ to the arities $n \in \Nat$ of
-the foreign function they represent (analogous to $\Sigma(c) = n$ for constructors). For the graph semantics
-that will follow \todo{follows}, every foreign function $f$ is required to provide an interpretation
-$\interpret{f}$ that computes both $f$'s result and a suitable dependence graph \todo{capturing what?}.
+The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
+the foreign function they denote. For the graph semantics that will follow \todo{follows}, every foreign
+function $f$ is required to provide an interpretation $\interpret{f}$ that computes both $f$'s result and a
+suitable dependence graph \todo{capturing what?}.
 
 Foreign functions in the core language are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are
 saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$. In our implementation, which also provides a surface language
