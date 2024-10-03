@@ -5,6 +5,8 @@ current graph-based approach, the writeup needs to be as compelling as possible.
 
 ## Minor changes
 
+### Section 1
+
 - [ ] Revisit title? (``Conjugate operators'' is a bit allusive.)
 - [ ] Flow between end of 1.0 and start of 1.1 is a bit broken -- 1.0 needs to wrap-up with some kind of
   take-away for the reader before 1.1 starts.
@@ -22,7 +24,10 @@ current graph-based approach, the writeup needs to be as compelling as possible.
   subscript G is not short for graph; it's a metavariable (so probably doesn't belong at all in this section).
 - [ ] [Linked inputs] "Additionally, our system will apply ▽_G": under what circumstances? Needs to be
   clearer/better motivated.
-- [ ] [Linked outputs] Also needs better motivation.
+- [ ] [Linked outputs] Also needs better motivation. Second paragraph hard to understand.
+- [ ] Contributions: emphasise that our contribution (vis-a-vis Psallidas, for example) is for general-purpose
+  languages.
+- [ ] Contributions: do we really need 3 separate citations of Perera et al. [2022], one in each bullet?
 
 ### Contextualising our work
 
