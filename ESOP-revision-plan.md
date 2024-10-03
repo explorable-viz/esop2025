@@ -62,3 +62,8 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   grey inputs are the ``related inputs``). This is complicated further by the fact that when we talk about
   restricting the output selection to the y coordinate only, the reader has to imagine both the output and input
   selections being different from those shown in the figure.
+
+### Section 2
+
+- [ ] 2.1 is too abstract to be useful and 2.2 too short to be useful. This section just adds to the sense
+  that the paper isn't telling a clear story.
