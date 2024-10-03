@@ -39,9 +39,8 @@ $f$ and a dependence graph capturing how the result depends on the arguments sup
 Foreign functions in the core language are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are
 saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$. In our implementation, which also provides a surface language
 which desugars into the core, first-class foreign functions are supported via a top-level environment which
-maps every ${f}$ to the closure
-$\exClosure{\envEmpty}{\seqEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{\Phi{(f)}}}{\exForeignApp{f}{\seq{x}}}}}}$
-where $\length{\seq{x}} = \Phi{(f)}$.
+maps every ${f}$ of arity $n$ to the closure
+$\exClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}$.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
