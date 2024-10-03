@@ -151,6 +151,14 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   (And mere disjointness-as-sets would be insufficient to avoid collisions, so this is important.)
 
 ### Algorithms for ▽_G, etc
+
 - [ ] [3.6] Need to revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means
   ▽_R(G), so somehow we have to put slicing the graph centre-stage (as opposed to simply deriving its IO
   relation and going from there to ▽).
+
+### Surface language
+
+- [ ] [4.2.3] Not sure of the purpose of this section -- meaningful examples should have been introduced much
+  earlier, which will subsume anything conveyed here. Moreover, neither dictionaries nor matrices can be
+  understood as "surface syntax" that desugars into the core.
+
