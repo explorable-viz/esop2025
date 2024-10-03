@@ -201,8 +201,7 @@ we support mutual recursion. \figref{core:close-defs} defines the auxiliary rela
 This works by turning each function definition $\rho(x_i) \in \rho$ into a newly allocated closure $(\gamma,
 \rho, \rho(x_i))_{\alpha_i}$ \todo{doesn't the closure also capture $V$?} as a \todo{with} fresh vertex
 ${\alpha_i}$, capturing $\rho$ and a copy of the original environment $\gamma$, where each closure depends on
-ambient inputs $V$ (like in evaluation) \todo{``like in evaluation'' may not be helpful}. The final dependence
-graph is the combination of each closure's subgraph (also like in evaluation).
+ambient inputs $V$. The final dependence graph is the combination of each closure's subgraph.
 
 Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetRec{\seq{\bind{x}{\sigma}}}{e}$
 is then the same as regular let-bindings, except using $\closeDefs$ to evaluate \todo{not ``evaluate''}
