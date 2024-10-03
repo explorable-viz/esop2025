@@ -155,11 +155,10 @@ convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\se
 the other direction, no?}.
 
 The \ruleName{$\evalS$-var} rule for evaluating variables is standard, and the returned dependence graph is
-empty; that is, no new vertices are constructed \todo{``vertices are constructed?''} as a result of simply
-looking up values. The \ruleName{$\evalS$-record-project} is similar: if $e$ evalutes to a record
-$\annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}$, then $e.y$ evalutes to the value $u$ of field $y$,
-discarding address $\alpha$ of the record. Most of the other evaluation rules can generally be understood in
-terms of two recurring patterns.
+empty; no new addresses are allocated as a result of simply looking up a variable. The
+\ruleName{$\evalS$-record-project} is similar: if $e$ evalutes to a record $\annRec{\seq{\bind{x}{v}} \cons
+(\bind{y}{u})}{\alpha}$, then $e.y$ evalutes to the value $u$ of field $y$, discarding address $\alpha$ of the
+record. Most of the other evaluation rules can generally be understood in terms of two recurring patterns.
 
 First, for any introduction rule that creates a new (partial) value, there is no choice \todo{really?} but to
 assign that partial value a fresh address, which is then linked to each of the ambient vertices in $V$ in the
