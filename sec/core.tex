@@ -23,15 +23,14 @@ term (\secref{core:semantics}); we also address how we deal with pattern-matchin
 ; integer constants $n, m$%
 ; let-bindings $\exLet{x}{e}{e'}$%
 ; record construction $\exRec{\seq{\bind{x}{e}}}$%
-; and record projection $\exRecProj{e}{x}$. We also have \todo{saturated} constructor expressions
-$\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors and is fully saturated by arguments
-$\seq{e}$; we write $\datatype{c} = n$ to denote that $c$ takes $n \in \mathbb{N}$ arguments \todo{(or is
-$\datatype{}$ just a function from constructor names to natural numbers?)}. Application comes in two forms:
-standard application $\exApp{e}{e'}$, and \todo{saturated} \emph{foreign application}
-$\exForeignApp{f}{\seq{e}}$ for calling foreign functions which are explained in \secref{core:foreign}. The
-last two terms \todo{term forms?} define anonymous functions $\exFun{\sigma}$ and (mutually) recursive
-let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an
-\emph{eliminator} detailed further in \secref{core:continuations}.
+; and record projection $\exRecProj{e}{x}$. We also have (saturated) constructor expressions
+$\exConstr{c}{\seq{e}}$, where $c$ ranges over data constructors; we write $\datatype{c} = n$ to denote that
+$c$ takes $n \in \mathbb{N}$ arguments \todo{(or is $\datatype{}$ just a function from constructor names to
+natural numbers?)}. Function application comes in two forms: the usual $\exApp{e}{e'}$, and (saturated)
+\emph{foreign function application} $\exForeignApp{f}{\seq{e}}$ for calling foreign functions
+(\secref{core:foreign} below). The last two forms define anonymous functions $\exFun{\sigma}$ and (mutually)
+recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct
+called an \emph{eliminator} detailed further in \secref{core:continuations}.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}

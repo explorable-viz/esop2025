@@ -55,6 +55,11 @@ current graph-based approach, the writeup needs to be compelling.
   - [ ] "a smoother experience for an end user": bit of an amorphous claim; just stick to the facts. Perhaps
     we can connect this to the use of ▼ (see above).
 
+## Section 4
+
+- [ ] "fully saturated" is pleonastic; also odd to talk of metavariable "c" being saturated.
+- [ ] Rather than
+
 ## More significant changes
 
 ### Contextualising our work
