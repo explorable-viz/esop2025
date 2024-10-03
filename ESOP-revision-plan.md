@@ -34,5 +34,6 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 - [ ] 4 scenarios introducing data transparency: we use the highlighting in Fig. 2 to illustrate 3 of our 4
   scenarios, but I think this is ambitious. The arrows in Fig. 2 illustrate only one of these scenarios
   (linked inputs), and the colours only really make sense from a linked inputs perspective too (because the
-  grey inputs are the ``related inputs``). When we talk about restricting the output selection to the y
-  coordinate, not only is the x rather than the y coordinate highlighted in the figure)
+  grey inputs are the ``related inputs``). This is complicated further by the fact that when we talk about
+  restricting the output selection to the y coordinate only, the reader has to imagine both the output and input
+  selections being different from those shown in the figure.
