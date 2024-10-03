@@ -76,7 +76,6 @@ current graph-based approach, the writeup needs to be compelling.
 in visualisation and data provenance, to better situate our work in a space that includes both work on
 general-purpose languages and work in data viz. Currently these two paragraphs read as though the only prior
 work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
-
 - [ ] [Contributions, closing paragraph] Also implies the only prior work in this space is Ricciotti et al.
   [2017] and Perera et al. [2022].
 
