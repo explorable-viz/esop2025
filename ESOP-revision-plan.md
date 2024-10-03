@@ -57,8 +57,10 @@ current graph-based approach, the writeup needs to be compelling.
 
 ## Section 4
 
-- [ ] "fully saturated" is pleonastic; also odd to talk of metavariable "c" being saturated.
-- [ ] Rather than
+- [ ] [4.1.3] Make eliminators sound less controversial: be explicit about why we prefer "deep"
+  pattern-matching to individual "shallow" elimination forms, and mention Peyton-Jones et al [2022] early as a
+  precedent. Rehash overly defensive parenthetical sentence at end of paragraph.
+- [ ] [4.1.3] Drop reference to "filter"; use (new) example from Section 1 instead.
 
 ## More significant changes
 
@@ -75,9 +77,11 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### Example programs
 
-- [ ] Somehow we managed to omit any actual programs, which is fairly unforgivable in a PL paper (unless
-  purely theoretical). The "let" expression in Section 3 is too toy to count, as are the "surface language"
-  examples in Section 4 (which have their own problems).
+- [ ] Somehow we managed to omit any actual programs (unforgivable in a PL paper!). The "let" expression in
+  Section 3, and the "surface language" examples in Section 4 (which have problems of their own) are both too
+  toy to count as meaningful examples. If the claim is that the programmer can express visualisations as
+  functions of inputs and get "data transparent" outputs for free, then we need to show what that looks like,
+  not just punt to the appendix.
 
 ### Fig. 2 example
 
@@ -114,3 +118,17 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
      powersets) is oddly expressed and the second is quite unclear given that we don't know what it means for
      a node to be "associated to a value". The third Example paragraph says the example isn't complex enough
      to illustrate the distinction just made in the formalism (suggesting it's too simple as an example).
+
+### Addresses for partial values
+
+- [ ] This is a key topic of this section and the current treatment is a bit all over the place.
+  - [ ] [4.1.4] The double forward-reference ("These addresses, explained in § 4.1.5, will (later)") is clunky
+    and confusing. Introduce addresses and their role in the overview of Section 4. Neither does the sentence
+    "a raw value does not have an associated address" make a whole lot of sense as we have no idea what an
+    address is at this point.
+  - [ ] Probably want an example of (addressed) values early on.
+  - [ ] [4.1.5] This paragraph mostly unclear. Probably drop the freshness discussion and instead put an
+    appropriate side-condition directly into the graph semantics (given that the current formulation is
+    problematic anyway, see below).
+
+### Graph semantics

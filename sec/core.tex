@@ -79,14 +79,14 @@ Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
 (possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually defined. An
-environment \todo{italicise if this is where we are defining it} is defined as a finite map. {In our setting,
-IO analysis of programs, we are often only interested in some strict subset of the environment $\Gamma'
-\subseteq \Gamma$. Happily, domain restriction of maps induces a pair of conjugate functions: one of them maps
-the unselected part of the environment ($\Gamma \setminus \Gamma'$) to $\top$, and the other  maps the
-unselected values to $\bot$. In practical terms, this mechanism could be used to allow for ``focussed''
-queries -- the ability to restrict the parts of the output or input that the user is interested in using to
-mediate the linked inputs or outputs query.} \todo{Incongruous here -- discuss later in context of conjugate
-operators}
+\emph{environment} is defined as a finite map from variables to values. In our setting, IO analysis of
+programs, we are often only interested in some strict subset of the environment $\Gamma' \subseteq \Gamma$.
+Happily, domain restriction of maps induces a pair of conjugate functions: one of them maps the unselected
+part of the environment ($\Gamma \setminus \Gamma'$) to $\top$, and the other  maps the unselected values to
+$\bot$. In practical terms, this mechanism could be used to allow for ``focussed'' queries -- the ability to
+restrict the parts of the output or input that the user is interested in using to mediate the linked inputs or
+outputs query.
+\todo{Incongruous here -- discuss later in context of conjugate operators}
 
 % mutually inductively with \emph{raw terms} $\raw{e}$, pairing those $\raw{e}$'s with an address $\alpha$.
 %These addresses, explained in \todo{forward-ref}, will (later) form the vertices of the graphs that we build
@@ -119,26 +119,25 @@ don't work, because two graphs constructed in the same environment may share sub
 \subsubsection{Pattern matching}
 \label{sec:core:semantics:pattern-matching}
 \figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$.
-Rather than matching a single value $v$ against an eliminator $\sigma$, the judgement matches a ``{stack}'' of
-values $\seq{v}$ against a continuation $\kappa$. It then \todo{``then?''} returns the selected branch $e$, an
-environment $\gamma$ providing bindings for the free variables in $e$, and a \todo{the} set $V$ of vertices
-\todo{addresses? they aren't vertices yet} found in the matched portions of $\seq{v}$.
+Rather than matching a single value $v$, the judgement matches a ``stack'' of values $\seq{v}$ against a
+continuation $\kappa$, returning the selected branch $e$, an environment $\gamma$ providing bindings for the
+free variables in $e$, and the set $V$ of addresses found in the matched portions of $\seq{v}$.
 
 The \ruleName{$\match$-done} rule expresses exactly when using a \emph{term} $e$ as the continuation may
 succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be
-executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the
-head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant subvalues, and then push them onto the
-tail $\seq{v}$ to be recursively matched by the continuation selected in $\sigma$.
+executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation \todo{not true -- see var
+rule} -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant
+subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected
+in $\sigma$.
 
 A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns no vertices, reflecting the fact
 that no part of $v$ would need to be consumed to select $\kappa$ as the continuation. The eliminator
-$\elimRecord{\seq{y}}{\kappa}$ only matches with a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the
-variables in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associated with the record;
-this condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$,
-which simultaneously projects out the corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, an eliminator
-with a branch $(\elimBind{c}{\kappa})$ only matches a value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$
-constructed by $c$, and returns the vertex $\alpha$ associated with that particular instance of $c$
-\todo{meaning?}.
+$\elimRecord{\seq{y}}{\kappa}$ matches a record $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$  if the variables
+in $\seq{y}$ are also fields in $\seq{x}$, returning the vertex $\alpha$ associated with the record; this
+condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$, which
+simultaneously projects out the corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, an eliminator with a
+branch $(\elimBind{c}{\kappa})$ matches a constructor value $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning
+the vertex $\alpha$ associated with the constructor.
 
 \subsubsection{Evaluation}
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$ for the core language
