@@ -1,7 +1,7 @@
 # ESOP 2025 revision plan
 
 Given the relatively incremental contribution of this paper and the various technical issues surrounding our
-current graph-based approach, the writeup needs to be as compelling as possible.
+current graph-based approach, the writeup needs to be compelling.
 
 ## Minor changes
 
@@ -71,19 +71,19 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 ### Sections 3 and 4 out-of-sequence
 
 - [ ] Section 3 doesn't follow well from Section 1. Assuming we extend Section 1 with an example program or
-  two (which I think is essential) then the most natural step from there is probably a formalisation of the
-  core language (with its graph representation) and its (graph-building) semantics. That will require a
-  minimum set up for DDGs (i.e. some of what is in 3.2) but that can move into what is now Section 4 and that
-  section moved before what is currently Section 3.
-- [ ] The running example and its use in Section 3 is quite problematic:
+  two (which I think is essential) then the most natural step from there is probably Section 4, i.e. a
+  formalisation of the core language (including "values with addresses" and how these serve as vertices) and
+  its (graph-building) semantics. That will require a minimum set up for DDGs (i.e. some of what is in 3.2)
+  but that can move into what is now Section 4 and that section moved before what is currently Section 3.
+- [ ] The running example in Section 3 is quite problematic:
    - We haven't introduced the language yet or the idea that values in the program have "addresses" that act
      as vertices in the DDG.
-   - Given that DDGs are a standard concept, the example is overly simple, only really illustrating the
+   - Given that DDGs are a standard concept, the example is perhaps too simple: it only really illustrates the
   behaviour of primitive operations with an annihilator.
-   - The DDG shown is apparently a simplification of the actual DDG of the program, which (given the
-     triviality of the program) seems unfortunate and a further opportunity for confusion (what details are
-     omitted?).
+   - The DDG shown is apparently a simplification of the actual DDG of the program, which seems unfortunate
+     given the triviality of the program, and a further opportunity for confusion (what details are omitted?).
    - The various "Example" paragraphs that refer to the running example are too fragmentary and would be
-     better off collated into a single paragraph or two. The first Example paragraph makes a slightly odd
-     statement about powersets and the second is quite unclear. (What does it mean for a node to be "associated
-     to a value"?)
+     better off collated into a single paragraph or two. They are also quite confusing. The first (about
+     powersets) is oddly expressed and the second is quite unclear given that we don't know what it means for
+     a node to be "associated to a value". The third Example paragraph says the example isn't complex enough
+     to illustrate the distinction just made in the formalism (suggesting it's too simple as an example).
