@@ -33,6 +33,8 @@ current graph-based approach, the writeup needs to be as compelling as possible.
   infrastructure problem). By this point in the introduction we should have restricted interest to automated
   solutions. The concepts here are about _motivating_ the idea of an automated solution.
 
+## More significant changes
+
 ### Contextualising our work
 
 - [ ] [1.1, "programming language infrastructure problem"] It feels like we should reinstate Psallidas and Wu
@@ -44,7 +46,13 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 - [ ] [Contributions, closing paragraph] Also implies the only prior work in this space is Ricciotti et al.
   [2017] and Perera et al. [2022].
 
-## More significant changes
+### Example programs
+
+- [ ] Somehow we managed to omit any actual programs, which is fairly unforgivable in a PL paper (unless
+  purely theoretical). The "let" expression in Section 3 is too toy to count, as are the "surface language"
+  examples in Section 4 (which have their own problems).
+
+### Fig. 2 example
 
 - [ ] Fig. 2 example: maybe lead with something simpler (e.g. moving average) and either drop the more complex
   example entirely or use later.
