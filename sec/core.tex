@@ -177,21 +177,19 @@ evaluates a record $e$ to  $\annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alph
 $u$ associated to field $y$; while this indeed introduces a record value \todo{uh?} allocated with a new
 vertex $\alpha$, the record as a whole goes unused, and so $\alpha$ is omitted in the final dependence~graph.
 
-The second recurring pattern is that, for any rule which involves evaluating subterms (of a term), the
-corresponding subgraphs that are constructed must be disjoint \todo{not true, see above} -- reflecting that
-there is no overlap between their vertex addresses \todo{this isn't what graph disjointness means} -- and
-their union is the dependence graph of the overall term.  This general principle is captured by the auxiliary
-evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom of \figref{core:eval}), which is for
-evaluating a sequence of terms $\seq{e}$. Its single rule evaluates each term $e_i \in \seq{e}$ to a value
-$v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and builds the dependence graph $\textstyle{\bigdisjunion}
-\seq{G}$. We make use of  this relation in the rules \ruleName{$\evalS$-record} for
-$\exRec{\seq{\bind{x}{e}}}$, \ruleName{$\evalS$-constr} for $c(\seq{e})$, and \ruleName{$\evalS$-foreign-app}
-for $f(\seq{e})$, which all involve evaluating a sequence $\seq{e}$ of subterms; in the last rule, $\hat{f}$
-is the foreign implementation that provides a way to evaluate $f$ to a graph and value (as required
-in~\secref{core:foreign}). Of course, this pattern applies to subterms in general and not just those expressed
-as a sequence $\seq{e}$. For example, the  \ruleName{$\evalS$-let}  rule for $\exLet{x}{e}{e'}$ (which
-otherwise behaves as standard) simply unions the graphs of subterms $e$ and~$e'$, and similarly for
-\ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}.
+The second recurring pattern is that, for any rule which involves evaluating subterms of a term, the
+corresponding subgraphs will have disjoint domains (meaning any addresses allocated for those subgraphs do not
+overlap), and their union is the dependence graph for the overall term. This general principle is reflected in
+the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom of \figref{core:eval}), which
+evalutes $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and
+returns the dependence graph $\textstyle{\bigdisjunion} \seq{G}$. We make use of this judgement in the rules
+\ruleName{$\evalS$-record} for $\exRec{\seq{\bind{x}{e}}}$, \ruleName{$\evalS$-constr} for $c(\seq{e})$, and
+\ruleName{$\evalS$-foreign-app} for $f(\seq{e})$, which all involve evaluating a sequence $\seq{e}$ of
+subterms; in the last rule, $\hat{f}$ is the foreign implementation that provides a way to evaluate $f$ to a
+graph and value (as required in~\secref{core:foreign}). This general pattern of combining subgraphs also
+applies to evaluated subterms in other contexts; for example the \ruleName{$\evalS$-let} rule for
+$\exLet{x}{e}{e'}$ simply unions the graphs of subterms $e$ and~$e'$, and similarly for
+\ruleName{$\evalS$-let-rec} and \ruleName{$\evalS$-app}.
 
 % is similar to that of records evaluates the sequence of terms $\seq{e}$ associated
 % with its fields to $\seq{v}$, returning  value $\annRec{\seq{\bind{x}{v}}}{\alpha}$ as a fresh vertex

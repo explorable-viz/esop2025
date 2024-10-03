@@ -130,9 +130,9 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
     "a raw value does not have an associated address" make a whole lot of sense as we have no idea what an
     address is at this point.
   - [ ] Probably want an example of (addressed) values early on.
-  - [ ] [4.1.5] This paragraph (which mostly discussed freshness/address collisions) is unclear. Probably drop
-    the freshness discussion and instead put an appropriate side-condition directly into the graph semantics
-    (given that the current formulation is problematic anyway, see below).
+  - [ ] [4.1.5] This paragraph (which mostly discussed freshness/address collisions) is quite unclear. If we
+    believe the "domain-disjointness" condition that recurs throughout the semantics is sufficient to avoid
+    collisions, then just explain how this works instead.
 
 ### Environment restriction
 
