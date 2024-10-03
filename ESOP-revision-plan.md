@@ -8,10 +8,10 @@ current graph-based approach, the writeup needs to be as compelling as possible.
 - [ ] Revisit title? (``Conjugate operators'' is a bit allusive.)
 - [ ] Flow between end of 1.0 and start of 1.1 is a bit broken -- 1.0 needs to wrap-up with some kind of
   take-away for the reader before 1.1 starts.
-- [ ] 1.1, "data exploration": probably not the right term -- it could be taken to connote exploratory
+- [ ] [1.1] "data exploration": probably not the right term -- it could be taken to connote exploratory
   data analysis, whereas we specifically mean exploring the relationship between visualisations and underlying
   data.
-- [ ] 1.1, "the author of the content no longer...":
+- [ ] [1.1] "the author of the content no longer...":
   - [ ] This suggests that previously they did have to concern themselves with these transparency features,
   but more typically these sorts of features are not provided at all.
   - [ ] [The author] "may find that they have an easier time exploring data, and building more complex models"
@@ -20,6 +20,9 @@ current graph-based approach, the writeup needs to be as compelling as possible.
     solution. And perhaps "explore relationship to data" rather than "explore detail".
 - [ ] "our system uses an operator ▽_G": integrate into the explanation of the scenario (or just omit). The
   subscript G is not short for graph; it's a metavariable (so probably doesn't belong at all in this section).
+- [ ] [Linked inputs] "Additionally, our system will apply ▽_G": under what circumstances? Needs to be
+  clearer/better motivated.
+- [ ] [Linked outputs] Also needs better motivation.
 
 ### Contextualising our work
 
