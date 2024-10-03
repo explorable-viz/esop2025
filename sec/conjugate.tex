@@ -316,15 +316,15 @@ Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read 
 the inductive definition, i.e. treating it as a $G$-indexed function that takes $X$ as input \todo{bit too
 much explanation}.
 
-The algorithm defers to an auxiliary operation ``$H, G \demandedByV{}$'' \todo{notationally this doesn't
-really make sense}, which maintains a (partial) graph slice $H \subseteq G$, where $H$ initially contains only
-the original input vertices $X$ and no edges. It then proceeds as follows. If there is a sink of $H$ that
-still has outgoing edges in $G$, then the targets of those edges are reachable from the vertices of $H$, and
-so we must add them to $H$ and recurse (\ruleName{extend}). If $\sinks{H} \subseteq \sinks{G}$, then there are
-no unexplored nodes in $G$ that are reachable from $H$, and so we terminate with the current state of $H$
-(\ruleName{done}). We note that it is enough to consider the sinks of $H$, since we move every outgoing edge
-of a vertex from $G$ to $H$ all at once. When $\demandedByV{}$ is done, $\demandedByAlg{G}$ returns the sinks
-$T(H)$ from the final graph slice $H$, representing the outputs that the original inputs are demanded by.
+The algorithm defers to an auxiliary operation $\demandedByV{}$, which takes a (partial) graph slice $H
+\subseteq G$, initially containing only the original input vertices $X$ and no edges. It then proceeds as
+follows. If there is a sink of $H$ that still has outgoing edges in $G$, then the targets of those edges are
+reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}). If
+$\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and so
+we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
+of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once. When $\demandedByV{}$ is
+done, $\demandedByAlg{G}$ returns the sinks $T(H)$ from the final graph slice $H$, representing the outputs
+that the original inputs are demanded by.
 
 \begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
