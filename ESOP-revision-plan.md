@@ -131,4 +131,12 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
     appropriate side-condition directly into the graph semantics (given that the current formulation is
     problematic anyway, see below).
 
+### Environment restriction
+
+- [ ] Domain-restriction of environments and corresponding conjugate pair is out of place here, especially as
+  we now plan to introduce conjugate operators after the core language. The explanation is broken: the bot/top
+  behaviour mentioned actually refers to two different conjugate pairs (corresponding to the upper and lower
+  adjoints of projection). This needs to be fixed and made clearer, in the context of (what is currently)
+  Section 4. The explanation of why this is useful is also unclear and needs an example.
+
 ### Graph semantics
