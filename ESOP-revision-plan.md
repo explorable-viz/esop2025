@@ -33,6 +33,12 @@ current graph-based approach, the writeup needs to be compelling.
   infrastructure problem). By this point in the introduction we should have restricted interest to automated
   solutions. The concepts here are about _motivating_ the idea of an automated solution.
 
+### Section 3
+
+- [ ] [3.5] "we can use the notion of sufficiency as a test of correctness" doesn't really make sense.
+- [ ] [3.5] "This leads us to define the following pair of functions.." How are the definitions that follow
+  supposedly suggested by the intuition just given?
+
 ## More significant changes
 
 ### Contextualising our work

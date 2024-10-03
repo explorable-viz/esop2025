@@ -208,19 +208,19 @@ the following pair of functions, which also form a conjugate pair \todo{How are 
 suggested by the intuition just given?}.
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
-   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as the composition:
+   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and
+   $\preimageDualR_R: \powerset{Y} \to \powerset{X}$:
    \begin{enumerate}
       \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
       \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill (dual preimage)
    \end{enumerate}
 \end{definition}
 
-This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
-input set, rather than any ancestor to be in the input set \todo{clunky}. We include $\preimageDualR_R$ here
-only for completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its
-application unimportant for the purpose of IO-related queries, so  ignore it hereon \todo{Unconvincing --
-especially as we immediately go on to state a lemma about it. In the current implementation we do use it, so
-we can mention that.}.
+This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every (rather than any)
+ancestor to be in the input set. We include $\preimageDualR_R$ here only for completeness; although it is
+derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of
+IO-related queries, so  ignore it hereon \todo{Unconvincing -- especially as we immediately go on to state a
+lemma about it. In the current implementation we do use it, so we can mention that.}.
 
 \paragraph{Example}
 If we apply $\sufficesR_R$ to dependence graphs \todo{confusing to switch to graphs here}, i.e.
