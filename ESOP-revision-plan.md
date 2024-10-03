@@ -38,6 +38,12 @@ current graph-based approach, the writeup needs to be compelling.
 - [ ] [3.5] "we can use the notion of sufficiency as a test of correctness" doesn't really make sense.
 - [ ] [3.5] "This leads us to define the following pair of functions.." How are the definitions that follow
   supposedly suggested by the intuition just given?
+- [ ] [3.5] The decision to omit ▼ from subsequent discussion weakens the story a bit: why make a big point of
+  adjoint/conjugate pairs if one element of the pair is irrelevant? (And we do refer to it later: Lemma 3.13
+  mentions it.) As it happens, it does now have a role in the implementation (since ▼(bot) picks out the
+  "inert" input, i.e. input that isn't used anywhere) so we can justify in that way. Even if that were not so
+  I think it would be preferable to include it for symmetry, especially in Fig. 7, where its omission invites
+  confusion.
 
 ## More significant changes
 
