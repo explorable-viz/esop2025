@@ -52,6 +52,8 @@ current graph-based approach, the writeup needs to be compelling.
     they overlap are hard to discern. Very little of the detail in the diagram seems to be in the service of
     conveying the desired intuition.
   - [ ] "It is not hard to see how the same concept arises for linked outputs...": missing intuition here.
+  - [ ] "a smoother experience for an end user": bit of an amorphous claim; just stick to the facts. Perhaps
+    we can connect this to the use of ▼ (see above).
 
 ## More significant changes
 
