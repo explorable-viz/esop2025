@@ -184,4 +184,7 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### 6 Related work
 
-- [ ]
+- [ ] DDG section only mentions self-adjusting computation -- what about all the work on program slicing?
+  (Surely that is more pertinent.)
+- [ ] New section on [database] provenance
+- [ ] Rehash "interactive" visualisation as linked visualisations

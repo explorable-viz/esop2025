@@ -6,16 +6,12 @@
 Dynamic dependence graphs have been used previously in functional languages to implement incremental
 evaluation~\cite{acar02, acar06b}. In contrast to their work, which focuses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive data exploration systems.
-\todo{What about DDGs for program slicing? Isn't that much more relevant?}
-
-For a more generic perspective on program slicing \todo{non-sequitous -- we haven't yet mentioned program
-slicing}, \citet{field98} consider dynamic dependence tracking in term-rewriting systems. Their approach
-allows them to perform graph-based program slicing on a subset of Pascal, but differs from our work in two
-ways. Firstly, they are concerned primarily with program slicing of imperative programs as opposed to building
-interactive visualisations \todo{but that's just an application -- how do the approaches/techniques differ?},
-and secondly, they explicitly represent reduction steps in their dependence graphs. In contrast, we do not
-represent this sort of information in the graph at all, and instead of representing the semantics as a
-term-rewriting system, we present ours as an extended big-step relation.
+\citet{field98} use dynamic dependence graphs for program slicing on a subset of Pascal, but their work
+differs from our work in two ways. Firstly, they are concerned primarily with program slicing of imperative
+programs as opposed to building interactive visualisations \todo{that's just an application -- how do the
+approaches/techniques differ?}, and secondly, they explicitly represent reduction steps in their dependence
+graphs. In contrast, we do not represent this sort of information in the graph at all, and instead of
+representing the semantics as a term-rewriting system, we present ours as an extended big-step relation.
 
 More recently there has been a body of work aimed at using dynamic dependence graphs to assist in program
 fault localisation, but again these are not focussed \todo{``focused'' is much more common nowadays, even in
