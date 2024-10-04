@@ -184,7 +184,10 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### 6 Related work
 
-- [ ] DDG section only mentions self-adjusting computation -- what about all the work on program slicing?
-  (Surely that is more pertinent.)
+- [ ] Galois slicing: pare back and move performance-related discussion (e.g. observation about environment
+  join) to Section 5
 - [ ] New section on [database] provenance
-- [ ] Rehash "interactive" visualisation as linked visualisations
+- [ ] Rehash "interactive" visualisation section -- reframe around linked visualisations instead (e.g.
+  Psallidas' work, Glue, etc). Drop ad hoc/unsupported benefits/criticisms (e.g. hampered by requiring the
+  designer to learn multiple separate languages, syntax non-obvious to a new user, etc). Instead frame the discussion
+  around differences in techniques, supported use cases, etc.

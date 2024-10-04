@@ -18,14 +18,25 @@ fault localisation, but again these are not focused on interactive visualisation
 finding in programs. For a survey see \citet{Soremekun2021} \todo{focus on the difference in the information
 the graphs contain, rather than how they are used?}.
 
-\subsection{Provenance}
+\subsection{Provenance tracking}
 
-\todo{Not sure how we forgot to mention provenance, but need to say something about database provenance, perhaps taint tracking, etc}
+\todo{Other provenance approaches}
+
+\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
+queries and user-defined functions. Their work takes an SQL query and rewrites it into a pair of queries which
+compute not only the output table, but the provenance of the values it contains. In order to modify our
+approach to work in this setting, we would need to encode extra information into the edges of the graph,
+specifically whether an edge is a control-flow edge -- coming from an if-else or a pattern match -- or a value
+edge -- from producing a new value out of old ones. This information roughly corresponds to the ``why'' and
+``where'' provenance described in the database setting. Further we would need to use a dependency relation
+which agrees with the semantics of an SQL query or user-defined functions, since a relational database is
+semantically distinct from our functional setting.
 
 \subsection{Galois Slicing}
 
-Galois connections between lattices offer an appealing mathematical foundation for bidirectional dynamic
-program analysis, cleanly characterising input-output relationships in terms of demand and sufficiency
+\todo{This section feels long and overlaps a bit with earlier discussions about advantage of dependence graphs
+over traces.} Galois connections between lattices offer an appealing mathematical foundation for bidirectional
+dynamic program analysis, cleanly characterising input-output relationships in terms of demand and sufficiency
 \cite{perera12a,perera16d,ricciotti17}. In these works, Galois connections are applied to the problem of
 program slicing. The upper adjoint -- which characterises forward slicing from inputs to outputs -- can be
 thought of as a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a
@@ -44,15 +55,19 @@ trace to ``replay'' the computation, propagating information about resource avai
 outputs; the backwards analysis uses the trace to ``rewind'' the computation, propagating information about
 demand from outputs to inputs. This overly sequential approach makes the approach unable to exploit the very
 independence that makes slicing useful in the first place. Moreover, the backwards analysis makes frequent use
-of lattice join ($\join$) to combine slicing information computed along different branches of the computation.
-Joining closure slices in particular becomes expensive because of the contained environments (which in turn
-contain closures), and these issues have made the approach prohibitively slow for interactive use. Compared to
-Galois slicing, our approach of decomposing the problem into a graph semantics and a pair of analyses over the graph
-significantly reduces the implementation burden on the developer, since the algorithms for the program analyses
-are language-agnostic and thus only need to be implemented~once.
+of lattice join ($\join$) to combine slicing information computed along different branches of the computation
+\todo{mention this earlier when we're conjecturing why graph approach is faster}. Joining closure slices in
+particular becomes expensive because of the contained environments (which in turn contain closures), and these
+issues have made the approach prohibitively slow for interactive use. Compared to Galois slicing, our approach
+of decomposing the problem into a graph semantics and a pair of analyses over the graph significantly reduces
+the implementation burden on the developer, since the algorithms for the program analyses are
+language-agnostic and thus only need to be implemented~once.
 
 \subsection{Interactive Visualisation}
-\todo{This is an odd framing because ``interactivity'' in data visualisation extends well beyond the provenance-related interactions that we have explored. A better entry point might be linked visualisations, e.g. the Psallidas et al, but also the work prior to that, Glue, etc.}
+
+\todo{Interactivity in data visualisation extends well beyond the provenance-related interactions that we have
+explored. Reframe instead around linked visualisations, e.g. the Psallidas et al, but also the work prior to
+that, Glue, etc.}
 
 We are not the first to consider shifting the burden of interactive visualisations into the language runtime.
 Reactive Vega~\cite{satyanarayan17} presents a system for building interactivity in visualisations. Vega is a
@@ -74,27 +89,15 @@ relational database tables. Similar to \citet{north00}, their work is defined by
 databases, and the way they create a semantics for queries on visualisations using the model of relational
 database queries.
 
-\subsection{Multiverse Analysis \todo{Maybe ``transparent research outputs?''}}
+\subsection{Transparent research outputs}
 
-Our approach is not the only one \todo{maybe avoid repeating this refrain} that aims to tackle the problem of
-explainable science. \citet{dragicevic19} introduce the idea of an explorable multiverse analysis,exposing the
-methodological choices made in designing a data analysis called analysis parameters. Since different choices
-made in design will impact the conclusions of the anaylsis, they exposes the choices made to users, and allows
-them to toggle between possible choices at given points in the analysis, observing how they impact the
-results. We view our work as complementary to theirs, since we are more concerned with the dependencies
-observed within a specific choice of analysis parameters, rather than the choices themselves. Toggling choices
-in their interactive artifacts updates the artifact globally, and it can be different to know the exact impact
-that one of these analysis parameters has on results. It seems reasonable to package our dependency analysis
-alongside such a multiverse analysis, allowing the user to observe the dependencies on a methodological
-choice, as well as the underlying data dependencies used in the analysis.
-
-\todo{Move earlier into database provenance}
-More recent database provenance work~\citet{dietrich22}  attempts to simultaneously explain both value and
-control dependencies in recursive queries and user-defined functions. Their work takes an SQL query and
-rewrites it into a pair of queries which compute not only the output table, but the provenance of the values
-it contains. In order to modify our approach to work in this setting, we would need to encode extra
-information into the edges of the graph, specifically whether an edge is a control-flow edge -- coming from an
-if-else or a pattern match -- or a value edge -- from producing a new value out of old ones. This information
-roughly corresponds to the ``why'' and ``where'' provenance described in the database setting. Further we
-would need to use a dependency relation which agrees with the semantics of an SQL query or user-defined
-functions, since a relational database is semantically distinct from our functional setting.
+\citet{dragicevic19} also develop techniques for transparent research outputs, via explorable multiverse
+analysis, exposing \emph{analysis parameters}, the methodological choices made in designing a data analysis.
+Since different choices made in design will impact the conclusions of the anaylsis, they exposes the choices
+made to users, and allows them to toggle between possible choices at given points in the analysis, observing
+how they impact the results. We view our work as complementary to theirs, since we are more concerned with the
+dependencies observed within a specific choice of analysis parameters, rather than the choices themselves.
+Toggling choices in their interactive artifacts updates the artifact globally, and it can be different to know
+the exact impact that one of these analysis parameters has on results. It seems reasonable to package our
+dependency analysis alongside such a multiverse analysis, allowing the user to observe the dependencies on a
+methodological choice, as well as the underlying data dependencies used in the analysis.
