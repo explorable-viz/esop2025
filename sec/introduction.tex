@@ -17,7 +17,7 @@ to embark on such an activity. Perhaps more often than we would like, we end up 
    \centering
    \includegraphics[width=0.49\textwidth]{fig/example/bremer.png}
    \vspace{-2mm}
-   \caption{\raggedright Hand-crafted data-transparent visualisation \cite{bremer15}}
+   \caption{\raggedright Hand-crafted transparent visualisation \cite{bremer15}}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
 
@@ -31,32 +31,28 @@ the colour scheme indicate? Which of the points represent large cities or small 
 accompanying text can help, but some ambiguities inevitably remain. The entire value proposition of a summary
 after all is that it presents the big picture at the expense of certain detail.
 
-\citeauthor{bremer15} implemented an interactive feature that allow a user to explore some of these
-provenance-related questions themselves \emph{in situ}, i.e., directly from the chart. By selecting an
-individual point, they are able to bring up a view showing the data that point was calculated from. In this
-case the highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from an
-increase in population density from 4,416 to 5,010 people per sq.~km. \todo{Paragraph ends prematurely}
+\citeauthor{bremer15} approach was to implement an interactive feature that allows a user to explore some of
+these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting an individual
+point, they are able to bring up a view showing the data that point was calculated from. In the figure the
+highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
+in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable comprehension
+aids but are laborious to implement by hand. Manual implementations also require the author to anticipate the
+queries a user might have and do not always generalise well: for example \citeauthor{bremer15}'s visualisation
+only allows the user to select one point at a time.
 
 \subsection{Data transparency as PL infrastructure}
 \label{sec:introduction:data-transparency}
 
-Features like these are valuable comprehension aids but are laborious to implement by hand, as done by
-\citet{bremer15}. \todo{Needs to follow better from preceding paragraph.} Manual implementations also require
-the author to anticipate the queries a user might have and do not always generalise well: for example
-\citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
-
-For these reasons, there has been recent interest in treating data provenance features like these as a
-programming language infrastructure problem, baking dependency metadata directly into outputs so that
-interactive queries of this sort can be supported automatically~\cite{ricciotti17,perera22} \todo{Feels like
-we should reinstate \citet{psallidas18smoke} discussion here, and more general point about relationship
-between interaction and data selection.} The author of the content no longer has to concern themselves with
-these tricky features \todo{rephrase}, and in fact may find that they have an easier time exploring data, and
-building more complex models \todo{remove this claim}. Moreover the consumer of the content now \todo{but is
-was also true with the manual solution} has the ability to explore detail on an as-needed basis in the context
-of the high-level perspective offered by the visual summary. In contrast to \citet{bremer15}, the relationship
-to data is incrementally discoverable, revealed as the user interacts with the parts of the output they care
-about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
-sufficient''.
+An alternative approach is to treat data provenance features like these as a ``language infrastructure''
+problem, baking dependency metadata directly into outputs so that interactive queries of this sort can be
+supported automatically~\cite{psallidas18smoke,perera22} \todo{Reinstate Psallidas discussion here, and more
+general point about relationship between interaction and data selection.} The burden of implementing these
+features no longer falls on the author of the content, who can concentrate purely on data visualisation.
+Moreover the consumer of the content now \todo{but is was also true with the manual solution} has the ability
+to explore detail on an as-needed basis in the context of the high-level perspective offered by the visual
+summary. In contrast to \citet{bremer15}, the relationship to data is incrementally discoverable, revealed as
+the user interacts with the parts of the output they care about, ideally with some kind of formal guarantee
+that the revealed data is in some sense ``minimal and sufficient''.
 
 % \MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 % lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
@@ -67,25 +63,6 @@ sufficient''.
 % selections, and then ``forward trace'' to find related output selections in other views, to support a popular
 % feature from data visualisation called \emph{linked brushing}.
 %Moving forward, we refer to this feature as \emph{linked outputs} instead.
-% \citet{perera22} take this further, applying the idea
-% of forwards and backards tracing to a general purpose functional language as opposed to a language for
-% data visualisation.}
-
-% \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose functional language using
-% a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and $\sufficesR$ (suffices
-% for), relating specific output and input selections.} The formal guarantee that input selections are
-% ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois connection},
-% meaning they enjoy the following relationship of (near) mutual reciprocality: \[\demandsR(Y) \leq X \iff Y
-% \leq \sufficesR(X)\]
-
-% \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if outputs
-% $Y$ demand inputs $X'$, then $X'$ is the smallest set of inputs which suffices for outputs which include $Y$;
-% and conversely that if inputs $X$ suffice for $Y'$, then $Y'$ is the greatest set of outputs whose demand is
-% included by $X$. (A Galois connection in this sense simply relaxes the usual isomorphism laws to
-% inequalities.) Galois connections lend themselves well to bidirectional reasoning about resource consumption
-% because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of (fine-grained)
-% reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one) is in fact
-% sufficient to reproduce a particular feature of a complex output.
 
 \begin{figure}
    \centering
@@ -95,7 +72,7 @@ sufficient''.
    $\demandsR_G$ operator), ``What outputs is an input demanded by?'' (top arrow, $\demandedByR_G$ operator),
    and linking inputs that share a common output dependency. \todo{Simpler example, e.g.~moving average?}}
    \label{fig:introduction:related-inputs}
-   \vspace{-0.1cm}
+%   \vspace{-0.1cm}
 \end{figure}
 
 
