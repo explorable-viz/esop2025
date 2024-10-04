@@ -43,14 +43,10 @@ $\exClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{
 A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
 either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects~\cite{hinze00}
 \todo{make this sound less controversial; be explicit about why it is preferable to ``shallow'' elimination
-forms for our purposes and cite \citet{peytonjones2021} as precedent here} that specify how this
-pattern-matching is done and the subsequent continuation $\kappa$ to be executed under additional variable
-bindings. These are what the piecewise function definitions of our surface-language, e.g. \lstinline{filter}
-in \figref{core:surface-examples:functions} \todo{kill}, desugar into; \citet{peytonjones2021} present a
-similar idea. (The use of eliminators in our language makes extracting dependency information easier in our
-implementation, and goes well with records and data types as core constructs useful for data science
-applications, but their use is otherwise uninteresting -- the ideas in this paper are readily applicable to a
-language using a more traditional pattern matching mechanism. \todo{see above})
+forms for our purposes, e.g.~for matching dictionaries, and cite \citet{peytonjones2021} as precedent here}
+that specify how this pattern-matching is done and the subsequent continuation $\kappa$ to be executed under
+additional variable bindings. These are what the piecewise function definitions of our surface language
+desugar into; \citet{peytonjones2021} present a similar idea.
 
 A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as
 $\kappa$. A record eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$,
