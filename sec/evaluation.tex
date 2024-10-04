@@ -38,39 +38,37 @@ the language. Our analysis is run over a graph that is not language dependent --
 
 \subsection{Experimental Evaluation}
 
-In order to test the performance of our approach, we implemented our language from \secref{core} on top of
-PureScript \todo{on top of?}, which \todo{PureScript?} we used to write a selection of non-trivial \todo{say
-we} examples that reflect realistic \todo{say we} targets \todo{targets?} of dependency analyses
-(\secref{evaluation:choice-of-examples}). PureScript is a natural implementation language for this work as our
-focus on visualisations lends itself to building web-based interfaces \todo{uh?}. Additionally, PureScript is
-the implementation language used by~\citet{perera22} in their open-source implementation of the trace-based
-approach, thus enabling a more fair like-for-like comparison to our work here \todo{hmm. why not just say we
-reimplemented/adapted their system?}. We then benchmarked the implementations on an Intel Core i7-10850H
-2.70GHz with 16Gb of RAM, using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We
-instrumented both systems in order to extract performance numbers.
+To test the performance of our approach, we implemented our language from \secref{core} in PureScript. We used
+our implementation to write a number of benchmarks that reflect realistic \todo{say we} targets
+\todo{targets?} of dependency analyses (\secref{evaluation:choice-of-examples}). PureScript is a natural
+implementation language for this work as our focus on visualisations lends itself to building web-based
+interfaces \todo{uh?}. Additionally, PureScript is the implementation language used by~\citet{perera22} in
+their open-source implementation of the trace-based approach, thus enabling a more fair like-for-like
+comparison to our work here \todo{hmm. why not just say we reimplemented/adapted their system?}. We then
+benchmarked the implementations on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Google Chrome
+121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We instrumented both systems in order to extract
+performance numbers.
 
-In an interactive system, performance plays a critical role in a user's experience. We \todo{therefore?}
-compare \todo{or compared? we seem to have switched tenses} the performance of our graph-based approach with
-the trace-based \cite{perera22} \todo{can we stop mentioning this paper every paragraph?} by considering the
-following three research questions \todo{restate in terms of 3 things we want to measure/evaluate; i.e.~drop
-the ``why/how'' part}:
+In an interactive system, performance plays a critical role in a user's experience. We therefore compare the
+ performance of our graph-based approach with the trace-based \cite{perera22} \todo{can we stop mentioning
+ this paper every paragraph?} by measuring the following:
 
 \begin{itemize}
-   \item RQ1: What is the overhead of the \todo{the?} graph construction versus the \todo{the?} trace
-   construction?
-   \item RQ2: How does the performance of graph-based \textit{demands} compare against the performance of trace-based \textit{demands}?
-   \item RQ3: How does the performance of the various implementations of \textit{demanded by} (i.e. trace-based, graph-based using $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$) compare?
+   \item Q1: Overhead of building a dependence graph versus building a trace
+   \item Q2: Performance of graph-based \textit{demands} vs.~ performance of trace-based \textit{demands}
+   \item Q3: Performance of various implementations of \textit{demanded by}: trace-based, graph-based using
+   $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$) compare.
 \end{itemize}
 
 We judge performance according to the performance standards proposed in \todo{by?} \citet{nielsen93}:
 \begin{itemize}
-   \item $\mathbf{100}$\textbf{ms:} this is \todo{awkward to repeat ``this is'' each time} the limit for an
-   interaction feeling \emph{instantaneous}
-   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a user's train of thought to remain uninterrupted, albeit they will notice a delay
-   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a user's attention on the system
+   \item $\mathbf{100}$\textbf{ms:} limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} limit for a user's train of thought to remain uninterrupted, although
+   they may perceive a delay
+   \item $\mathbf{10000}$\textbf{ms:} limit to keep a user's attention on the system
 \end{itemize}
 We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category (captured
-by RQ2 and RQ3), and for the time taken to evaluate programs (corresponding to RQ1) to be within the limit for
+by Q2 and Q3), and for the time taken to evaluate programs (corresponding to Q1) to be within the limit for
 keeping a user's attention.
 
 \subsubsection{Choice of examples}
@@ -106,7 +104,7 @@ runtimes for a given benchmark.
 % \end{figure}
 %\subsubsection{Performance Standards}
 
-\subsubsection{RQ1: Overhead of graph construction vs. trace construction}
+\subsubsection{Q1: Overhead of graph construction vs. trace construction}
 In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the graph approach
 (\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace approach
 (\textbf{T-Eval}) of \citet{perera22} \todo{no need to keep citing this paper -- it's not that paper we're
@@ -123,7 +121,7 @@ user’s attention on the system.
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
-\subsubsection{RQ2: Graph-based demands vs. trace-based demands}
+\subsubsection{Q2: Graph-based demands vs. trace-based demands}
 In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} are the \todo{average?} times
 taken to compute \textit{demands} with the trace and graph approaches, respectively. The ratio of graph-based
 to trace-based performance is in the last column, \textbf{Bwd-Speedup}.
@@ -141,7 +139,7 @@ needs to traverse the relevant part of the already-computed graph \todo{why ``al
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{RQ3: Implementations of Demanded By}
+\subsubsection{Q3: Implementations of Demanded By}
 
 In \tableref{equivalent-impls}, we investigate the performance of \textit{demanded by} in different settings:
 column \textbf{T-DemBy} provides the results for the trace implementation, column \textbf{G-DemBy} contains
@@ -161,14 +159,14 @@ based benchmarks running instantaneously, as opposed to only two for the trace b
 \subsubsection{Discussion of the results}
 When comparing the performance of the graph and trace approaches, we observe that the only consistent
 performance loss for the graph approach is due to the increased cost of evaluating a program to a graph versus
-evaluating it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable: the graph
+evaluating it to a trace (according to \textit{Q1}). We argue that this overhead is reasonable: the graph
 only needs to be constructed once and does not impact subsequent interactions; and program evaluation time
 does not exceed the limit for keeping the users attention on the system. Additionally, the fast response times
-for \textit{demands} and \textit{demanded by} (according to RQ2 and RQ3), compared to the trace approach,
+for \textit{demands} and \textit{demanded by} (according to Q2 and Q3), compared to the trace approach,
 translate into quick responses to user queries. This is critical for the interactive exploration of digital
 media.
 
-Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which
+Another notable aspect, which is observed for \textit{Q3}, is the performance of \textbf{G-DemBy-Suff}, which
 takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, \textbf{G-DemBy-Suff} performs
 significantly worse than \textbf{G-DemBy}. We suspect that the generally bad performance of
 \textbf{G-DemBy-Suff} is at least partially caused by the expensive set complement operations performed before

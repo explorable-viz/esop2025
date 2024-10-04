@@ -69,19 +69,7 @@ current graph-based approach, the writeup needs to be compelling.
 
 ## Section 5
 
-- [ ] [5.1, Qualitative evaluation]. There isn't much in the way of evaluation here; we just assert that our
-  approach involves less work. (In the introduction we also prejudge the outcome, which further undermines any
-  claim to be an evaluation.) I think we probably do without this section and merely mention the qualitative
-  benefits in passing as part of the introduction.
-- [ ] The repeated citation of Perera et al. [2022] is painful -- six mentions on the first page alone. This
-  is difficult to read but also misrepresents what we actually do -- we don't compare our approach to an
-  existing implementation from 2022, but provide two implementations, one using DDgs, one using traces. Just
-  introduce ``trace-based approaches'' once (with multiple supporting citations).
-- [ ] [5.2, Experimental evaluation]
-  - [ ] PureScript paragraph: don't say we compare our system to Perera's 2022 open source implementation but
-    rather that we implemented a trace-based solution as well for comparison purposes. We chose PureScript as
-    the implementation language.
-  - [ ] Restate RQ1-3 in terms of the things we want to measure/evaluate (drop how/why bits).
+- [ ] Restate RQ1-3 in terms of the things we want to measure/evaluate (drop how/why bits).
 
 ## More significant changes
 
@@ -165,14 +153,31 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   Section 3 we actually mean domain-disjointness, but it's very unlikely the reader will have remembered that.
   (And mere disjointness-as-sets would be insufficient to avoid collisions, so this is important.)
 
-### Algorithms for ▽_G, etc
+### 3.6 Algorithms for ▽_G, etc
 
-- [ ] [3.6] Revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means ▽_R(G), so
+- [ ] Revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means ▽_R(G), so
   somehow we have to put slicing the graph centre-stage (as opposed to simply deriving its IO relation and
   going from there to ▽).
 
-### Surface language
+### 4.2.3 Surface language
 
-- [ ] [4.2.3] We can drop this section -- meaningful examples should have been introduced much earlier, which
-  will subsume anything conveyed here. Moreover, neither dictionaries nor matrices can be understood as
-  "surface syntax" that desugars into the core.
+- [ ] We can drop this section -- meaningful examples should have been introduced much earlier, which will
+  subsume anything conveyed here. Moreover, neither dictionaries nor matrices can be understood as "surface
+  syntax" that desugars into the core.
+
+### 5.1 Qualitative evaluation
+
+- [ ] There isn't much in the way of evaluation here; we just assert that our approach involves less work. (In
+  the introduction we also prejudge the outcome, which further undermines any claim to be an evaluation.) I
+  think we can probably do without this section and merely mention the qualitative benefits in passing as part
+  of the introduction to Section 5.
+- [ ] The repeated citation of Perera et al. [2022] is painful -- six mentions on the first page alone. This
+  is difficult to read but also misrepresents what we actually do -- we don't compare our approach to an
+  existing implementation from 2022, but provide two implementations, one using DDGs, one using traces.
+  Introduce ``trace-based approaches'' once (with multiple supporting citations).
+
+### 5.2 Experimental evaluation
+
+- [ ] PureScript paragraph: don't say we compare our system to Perera's 2022 open source implementation but
+   rather that we implemented a trace-based solution as well, for comparison purposes. We chose PureScript as
+   the implementation language.
