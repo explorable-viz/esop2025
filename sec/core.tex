@@ -7,6 +7,15 @@ graphs} (\secref{core:dependence-graphs}) give a big-step operational semantics 
 a value and constructs a dependence graph for the evaluation of that term (\secref{core:semantics}). The big
 step semantics uses auxiliary definitions that support pattern-matching and mutual recursion.
 
+First some notational preliminaries. We write to ${\seq{x}}$ denote a finite sequence of elements
+$\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences $\seq{x}$ and
+$\seq{x}'$ is written $\seq{x} \concat \seq{x}'$. We also write $x \cons \seq{x}$ for cons (prepend) and
+$\seq{x} \cons x$ for snoc (append). We write $\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of
+pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where keys $k_i$ are pairwise unique. If $X$ and $Y$ are
+sets, we write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also $x \cdot X$ or $X
+\cdot x$ to mean $X \disjunion \set{x}$. For finite maps $\phi, \psi$ we write $\phi \disjunion \psi$ to mean
+$\phi \cup \psi$ where $\dom{\phi}$ and $\dom{\psi}$ are disjoint.
+
 \subsection{Syntax}
 \label{sec:core:syntax}
 
