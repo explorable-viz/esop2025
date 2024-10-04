@@ -67,6 +67,22 @@ current graph-based approach, the writeup needs to be compelling.
 - [ ] [Fig. 12] Fuse into Fig. 11?
 - [ ] [4.2.2 and Fig. 12] Uses different star-graph notation from that introduced in paragraph 1 of 4.2.2.
 
+## Section 5
+
+- [ ] [5.1, Qualitative evaluation]. There isn't much in the way of evaluation here; we just assert that our
+  approach involves less work. (In the introduction we also prejudge the outcome, which further undermines any
+  claim to be an evaluation.) I think we probably do without this section and merely mention the qualitative
+  benefits in passing as part of the introduction.
+- [ ] The repeated citation of Perera et al. [2022] is painful -- six mentions on the first page alone. This
+  is difficult to read but also misrepresents what we actually do -- we don't compare our approach to an
+  existing implementation from 2022, but provide two implementations, one using DDgs, one using traces. Just
+  introduce ``trace-based approaches'' once (with multiple supporting citations).
+- [ ] [5.2, Experimental evaluation]
+  - [ ] PureScript paragraph: don't say we compare our system to Perera's 2022 open source implementation but
+    rather that we implemented a trace-based solution as well for comparison purposes. We chose PureScript as
+    the implementation language.
+  - [ ] Restate RQ1-3 in terms of the things we want to measure/evaluate (drop how/why bits).
+
 ## More significant changes
 
 ### Contextualising our work
