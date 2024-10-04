@@ -8,7 +8,8 @@ dependence graphs (\secref{conjugate:dependence-graphs}), and the image and prei
 and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
 graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation, and give algorithms for computing
 them over a given graph (\secref{conjugate:dependence-graph-algos}). Throughout the section, we will illustrate
-concepts using \figref{conjugate:example} as a running example, showing a toy program and (a simplified version of) its dynamic dependence graph that represents the program's execution.
+concepts using \figref{conjugate:example} as a running example, showing a toy program and (a simplified
+version of) its dynamic dependence graph that represents the program's execution.
 
 \subsection{Preliminaries}
 \label{sec:conjugate:notation}
@@ -44,13 +45,11 @@ over each other and induce a partial order $\leq$ over $X$.
 Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
 carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
 $\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
-complement, so that $\neg X' = X \setminus X'$. For a program, we will usually consider the powerset of nodes associated with
-input values and the powerset of nodes associated with outputs.
+complement, so that $\neg X' = X \setminus X'$. For a program, we will usually consider the powerset of nodes
+associated with input values and the powerset of nodes associated with outputs.
 
-
-\paragraph{Example} In \figref{conjugate:example}, the powerset of input nodes and output nodes are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively. \todo{Odd way to put this}\\
-
+\paragraph{Example} In \figref{conjugate:example}, the input and output Boolean algebras are
+$\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
