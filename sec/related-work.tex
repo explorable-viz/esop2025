@@ -1,14 +1,12 @@
 \section{Related work}
 \label{sec:related-work}
 
-\subsection{Applying Dynamic Dependence Graphs \todo{Applying?}}
+\subsection{Dynamic Dependence Graphs}
 
-We are not the first to consider using dynamic dependence graphs \todo{to do what?} for functional programming
-languages. For example, the compilation of a functional program to a graph has been used to implement
-incremental evaluation of programs in \citet{acar02, acar06b}. In contrast to their work, which focusses on
-efficiently propagating changes for inputs to computations, we are concerned with the implementation of
-interactive data exploration systems. \todo{What about DDGs for program slicing? Isn't that much more
-relevant?}
+Dynamic dependence graphs have been used previously in functional languages to implement incremental
+evaluation~\cite{acar02, acar06b}. In contrast to their work, which focuses on efficiently propagating changes
+for inputs to computations, we are concerned with the implementation of interactive data exploration systems.
+\todo{What about DDGs for program slicing? Isn't that much more relevant?}
 
 For a more generic perspective on program slicing \todo{non-sequitous -- we haven't yet mentioned program
 slicing}, \citet{field98} consider dynamic dependence tracking in term-rewriting systems. Their approach
@@ -71,21 +69,14 @@ smaller set of interaction primitives \todo{we don't provide primitives that the
 sense we don't support ``interactivity'' at all, rather interactivity is a built-in, but limited, featured} it
 frees up the developer to focus on building their data analysis programs, leaving the burden of implementing
 selections to the language itself. The benefit of including everything into the base language is that it
-reduces the number of tools that a developer needs proficiency with \todo{spurious, see above}.
- %In future work it could be beneficial to provide more
-%ways for a Fluid user to combine their selections, such as ranges and marquee
-%selections, however we do not consider this to be our primary focus.
-%\JBnote{end of change}
-Our linking of visualisations is similar in spirit to the work of \citet{north00}.
-In that work, the authors design a modular system for replacing visualisations of
-databases. Their system is modelled by relational database schema, and is designed
-to facilitate interactions with these modular visualisations, but is
-limited to data from relational databases, whereas ours can be applied to data
-of any shape, as long as it is supported by our language.
-Devise \citep{livny97} is another visualisation framework for building
-interactive visualisations of relational database tables. Similar to \citet{north00},
-their work is defined by its usage of relational databases, and the way they
-create a semantics for queries on visualisations using the model of relational
+reduces the number of tools that a developer needs proficiency with \todo{spurious, see above}. Our linking of
+visualisations is similar in spirit to the work of \citet{north00}. In that work, the authors design a modular
+system for replacing visualisations of databases. Their system is modelled by relational database schema, and
+is designed to facilitate interactions with these modular visualisations, but is limited to data from
+relational databases, whereas ours can be applied to data of any shape, as long as it is supported by our
+language. Devise \citep{livny97} is another visualisation framework for building interactive visualisations of
+relational database tables. Similar to \citet{north00}, their work is defined by its usage of relational
+databases, and the way they create a semantics for queries on visualisations using the model of relational
 database queries.
 
 \subsection{Multiverse Analysis \todo{Maybe ``transparent research outputs?''}}

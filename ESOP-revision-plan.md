@@ -181,3 +181,7 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 - [ ] PureScript paragraph: don't say we compare our system to Perera's 2022 open source implementation but
    rather that we implemented a trace-based solution as well, for comparison purposes. We chose PureScript as
    the implementation language.
+
+### 6 Related work
+
+- [ ]
