@@ -133,7 +133,7 @@ In \tableref{equivalent-impls}, we investigate the performance of \textit{demand
 column \textbf{T-DemBy} provides the results for the trace implementation, column \textbf{G-DemBy} contains
 the results for the graph approach using the $\demandedByAlg{}$ algorithm in
 \figref{conjugate:algorithms:demands}, and column \textbf{G-DemBy-Suff} contains the results obtained when
-computing \textit{demanded by} by taking the De Morgan dual of $\sufficesAlg{}$ from
+computing \textit{demanded by} using the De Morgan dual of $\sufficesAlg{}$ from
 \figref{conjugate:slicing:forward}. Additionally, in column \textbf{Speedup}, we provide the speedup of
 \textbf{G-DemBy} compared to \textbf{T-DemBy}, and in column \textbf{Suff-Speedup}, we give the speedup of
 \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
@@ -160,7 +160,6 @@ significantly worse than \textbf{G-DemBy}. We suspect that the generally bad per
 \textbf{G-DemBy-Suff} is at least partially caused by the expensive set complement operations performed before
 and after applying $\sufficesAlg{}$ \todo{why do we suspect this? couldn't it be because the complement graph
 is often much larger?}. Furthermore, while our algorithm for computing \textit{demanded by} is graph
-independent (as described in \secref{conjugate}), these experiments show that the shape of the graph may
-matter for performance. We defer more detailed discussion to \secref{future} \todo{why are we deferring our
-analysis of performance evaluation to the future work section?}.
-
+independent (as described in \secref{conjugate}), these experiments show that the shape \todo{and size?} of
+the graph may matter for performance. We defer more detailed discussion to \secref{future} \todo{why are we
+deferring our analysis of performance evaluation to the future work section?}.
