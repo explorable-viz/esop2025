@@ -45,19 +45,18 @@ Features like these are valuable comprehension aids but are laborious to impleme
 the author to anticipate the queries a user might have and do not always generalise well: for example
 \citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
 
-For these reasons, there has been recent interest in treating data
-%transparency and
-exploration \todo{not data exploration} as a programming language infrastructure problem, baking dependency
-metadata directly into outputs so that interactive queries of this sort can be supported
-automatically~\cite{ricciotti17,perera22} \todo{Feels like we should reinstate \citet{psallidas18smoke}
-discussion here, and more general point about relationship between interaction and data selection.} The author
-of the content no longer has to concern themselves with these tricky features \todo{rephrase}, and in fact may
-find that they have an easier time exploring data, and building more complex models \todo{remove this claim}.
-Moreover the consumer of the content now \todo{but is was also true with the manual solution} has the ability
-to explore detail on an as-needed basis in the context of the high-level perspective offered by the visual
-summary. In contrast to \citet{bremer15}, the relationship to data is incrementally discoverable, revealed as
-the user interacts with the parts of the output they care about, ideally with some kind of formal guarantee
-that the revealed data is in some sense ``minimal and sufficient''.
+For these reasons, there has been recent interest in treating transparency features like these as a
+programming language infrastructure problem, baking dependency metadata directly into outputs so that
+interactive queries of this sort can be supported automatically~\cite{ricciotti17,perera22} \todo{Feels like
+we should reinstate \citet{psallidas18smoke} discussion here, and more general point about relationship
+between interaction and data selection.} The author of the content no longer has to concern themselves with
+these tricky features \todo{rephrase}, and in fact may find that they have an easier time exploring data, and
+building more complex models \todo{remove this claim}. Moreover the consumer of the content now \todo{but is
+was also true with the manual solution} has the ability to explore detail on an as-needed basis in the context
+of the high-level perspective offered by the visual summary. In contrast to \citet{bremer15}, the relationship
+to data is incrementally discoverable, revealed as the user interacts with the parts of the output they care
+about, ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and
+sufficient''.
 
 % \MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 % lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
@@ -251,13 +250,13 @@ inputs when they contribute to common features of the output. The design of our 
 straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We also show
 how a dual \emph{linked outputs} analysis, available in prior work \cite{perera22}, is easily obtained by
 transposing the two operators.
-%  \MNnote{I suggest taking this part out, because we don't actually do this:}, and relate this formally to the ``linked brushing'' feature from the data visualisation literature.
 
-\item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.
-  Using usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested
-over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
-implementation based on traces. Fast response time is particularly important for the interactive data
-visualisations we~target.
+\item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the
+predominant techniques for achieving bidirectional program analysis. Using usability metrics from
+\citet{nielsen93}, we find that $81\%$ of the queries we tested over larger examples execute at a speed that
+appears instantaneous to a user, compared to $25\%$ using an implementation based on traces. Fast response
+time is particularly important for the interactive data visualisations we~target.
+
 \end{itemize}
 %
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
@@ -327,7 +326,7 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 %ways of composing reachability in $G$ with its relational converse.
 
 %\vspace{0.1cm}
-\paragraph{Roadmap} The  paper is organised as follows:
+\paragraph{Roadmap} The paper is organised as follows:
 
 \begin{itemize}[leftmargin=*]
   \item \secref{overview} presents an informal overview of our approach and language.
@@ -354,15 +353,12 @@ transparency and propose some other ways in which the present system could be im
 
 \end{itemize}
 
-%\vspace{0.2cm}
 \noindent
 We provide examples of practical programs written in our framework in\apdxsecref{apdx:evaluation-src-code},
 including those used to generate \figref{introduction:related-inputs} and \figref{introduction:scatterplot}
 \todo{We don't give a single example program in the entire paper, apart from the completely toy example to
 illustrate graphs and the other toy examples to illustrate surface syntax.}
 
-Our implementation is open source and available (given later in a deanonymised version). To support our claims
-about fast response times, we also host an anonymised interactive web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}} (the user interface doesn't yet
-support selecting individual coordinates for points in the scatter plot, although the analyses do support
-this).
+Our implementation is open source and available online (given later in a deanonymised version). To support our
+claims about fast response times, we also provide an anonymised interactive web demo at
+\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
