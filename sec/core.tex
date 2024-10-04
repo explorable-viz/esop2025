@@ -189,8 +189,8 @@ Returning to \figref{core:eval}, rule \ruleName{$\evalS$-let-rec}  for  $\exLetR
 is then the same as regular let-bindings, except using $\closeDefs$ to build the set of recursive definitions
 $\seq{\bind{x}{\sigma}}$. The final rule, \ruleName{$\evalS$-app} for $\exApp{e}{e'}$, is especially important
 to the graph semantics, as it is during application that we grow the ambient inputs $V$ that a given
-evaluation step depends on \todo{Not quite, application is actually where we discard the ambient inputs and
-instead start a new active function context}. Here, we compute the closure
+evaluation step depends on \todo{Not quite, application is actually where we discard the current $V$ and
+transition to a new active function context}. Here, we compute the closure
 $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ of function $e$, and use $\sigma$ to pattern-match against the
 value $v'$ of argument $e'$. Pattern-matching returns the selected branch $e^\twoPrime$ and the vertex set
 $V'$ representsing the partial values in $v'$ consumed by pattern-matching in order to select $e^\twoPrime$.
@@ -200,10 +200,9 @@ the) argument it was applied to, $V'$.
 
 \subsubsection{Surface Language}
 
-\todo{This section seems spurious -- too short to say anything useful, the programs don't convey anything
-interesting that shouldn't have already been conveyed by earlier examples, and both dictionaries and matrices
-have to be part of the core language if we are to mention them at all, since we don't express them via
-desugaring.}
+\todo{Delete -- too short to be useful, and the programs don't convey anything interesting that shouldn't have
+already been conveyed by earlier examples. Also both dictionaries and matrices have to be part of the core
+language if we are to mention them at all, since we don't express them via desugaring.}
 
 \input{fig/example/surface-examples.tex}
 
@@ -211,12 +210,8 @@ Our implementation provides a surface language which desugars into the core lang
 particular the surface language supports piecewise function definitions (which desugar into eliminators) and
 conventional list comprehensions. The core and surface languages also both support matrices, using a
 comprehension-like syntax for matrix initialisation. The examples in \figref{core:surface-examples} illustrate
-some of these features; % piecewise functions in \figref{core:surface-examples:functions}, matrices in \figref{core:surface-examples:matrix},
-%list comprehensions in \figref{core:surface-examples:listcomps}, and dictionaries and records in \figref{core:surface-examples:dicts}.
-for more complex examples, we refer the reader to the listings in \apdxsecref{apdx:evaluation-src-code}.
-
-% \subsubsection{Mutual recursion}
-% \label{sec:core:semantics:mutual-recursion}
+some of these features; for more complex examples, we refer the reader to the listings in
+\apdxsecref{apdx:evaluation-src-code}.
 
 % \subsubsection{Products of Projections of Views}
 % Consider the situation where we have two input tables, say $A$ and $B$, which

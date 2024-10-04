@@ -98,12 +98,11 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   restricting the output selection to the y coordinate only, the reader has to imagine both the output and input
   selections being different from those shown in the figure.
 
-### Section 2 spurious
+### Remove Section 2
 
-- [ ] 2.1 is too abstract to be useful and 2.2 too short to be useful. This section just adds to the sense
-  that the paper isn't telling a clear story.
+- [ ] 2.1 is too abstract to be useful and 2.2 too short to be useful.
 
-### Sections 3 and 4 out-of-sequence
+### Swap Sections 3 and 4
 
 - [ ] Section 3 doesn't follow well from Section 1. Assuming we extend Section 1 with an example program or
   two (which I think is essential) then the most natural step from there is probably Section 4, i.e. a
@@ -131,8 +130,8 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
     "a raw value does not have an associated address" make a whole lot of sense as we have no idea what an
     address is at this point.
   - [ ] Probably want an example of (addressed) values early on.
-  - [ ] [4.1.5] This paragraph (which mostly discussed freshness/address collisions) is quite unclear. If we
-    believe the "domain-disjointness" condition that recurs throughout the semantics is sufficient to avoid
+  - [ ] [4.1.5] This paragraph (which mostly discussed freshness/address collisions) is unclear. If we believe
+    the "domain-disjointness" condition that recurs throughout the semantics is sufficient to avoid
     collisions, then just explain how this works instead.
 
 ### Environment restriction
@@ -152,13 +151,12 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### Algorithms for ▽_G, etc
 
-- [ ] [3.6] Need to revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means
-  ▽_R(G), so somehow we have to put slicing the graph centre-stage (as opposed to simply deriving its IO
-  relation and going from there to ▽).
+- [ ] [3.6] Revisit the presentation here. "Computing" ▽_G is completely trivial if it simply means ▽_R(G), so
+  somehow we have to put slicing the graph centre-stage (as opposed to simply deriving its IO relation and
+  going from there to ▽).
 
 ### Surface language
 
-- [ ] [4.2.3] Not sure of the purpose of this section -- meaningful examples should have been introduced much
-  earlier, which will subsume anything conveyed here. Moreover, neither dictionaries nor matrices can be
-  understood as "surface syntax" that desugars into the core.
-
+- [ ] [4.2.3] We can drop this section -- meaningful examples should have been introduced much earlier, which
+  will subsume anything conveyed here. Moreover, neither dictionaries nor matrices can be understood as
+  "surface syntax" that desugars into the core.
