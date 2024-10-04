@@ -54,28 +54,54 @@ associated with input values and the powerset of nodes associated with outputs.
 \paragraph{Example} In \figref{conjugate:example}, the input and output Boolean algebras are
 $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.
 
-\subsection{Dynamic Dependence Graphs}
-\label{sec:conjugate:dependence-graphs}
+\subsection{Conjugate Image and Preimage Functions}
+\label{sec:conjugate:image-preimage}
 
-\input{fig/conjugate/toy_example}
+\begin{definition}[Image and Preimage Functions for a Relation]
+   For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
+   $\demandsR_R : \powerset{Y} \to \powerset{X}$ as:
+   \begin{enumerate}
+      \item $\demandedByR_{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in R}$ \hfill (image)
+      \item $\demandsR_{R}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in R}$ \hfill (preimage)
+   \end{enumerate}
+\end{definition}
 
-We explain how we construct dependence graphs later in \secref{core}, and here just introduce the basic
-notion. A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set
-$V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the dependence graph for a particular
-program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as
-inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of
-the program, the partial value associated to $\beta$ \textit{depends on} on the partial value associated to
-$\alpha$. (The notion of a ``part'' of a value will be made precise in \secref{core}.) This diverges
-somewhat from traditional approaches to dynamic dependence graphs in only considering one type of edge (data
-dependency) rather than separate data and control dependencies; moreover our edges point in the direction of
-dependent vertices, whereas in the literature the other direction is somewhat more common.
+\noindent Trivially, the image function for $R$ is the preimage function for its converse. Nevertheless this
+is important enough to state as a lemma:
 
+\begin{lemma}[Image as Preimage of Converse Relation]
+\label{lem:conjugate:image-preimage-converse}
+$\demandedByR_{R} = \demandsR_{R^{-1}}$
+\end{lemma}
 
-\paragraph{Example}
-   In \figref{conjugate:example:graph}, the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the
-   values of the input variables $x1,x2,x3$ in \figref{conjugate:example:program}, and the nodes
-   $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with the values of the arithmetic expressions in the
-   program's~result. \todo{not at all clear}\\
+When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
+element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
+element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
+connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
+pair}, in the sense of \citet{jonsson51}:
+
+\begin{definition}[Conjugate Functions]
+   For Boolean algebras $A$, $B$, functions $f: A \to B$ and $g: B \to A$ form a \textit{conjugate pair} iff:
+   $$
+   f(x) \meet y = \bot \iff x \meet g(y) = \bot
+   $$
+\end{definition}
+
+\noindent (\citeauthor{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
+between Boolean algebras.)
+
+\begin{lemma}[Preimage and Image of a relation are conjugate]
+\label{lem:im-preim-conjugate}
+For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
+\end{lemma}
+
+This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subseteq Y$, if the elements ``on
+the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
+and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
+
+\subsection{More graph preliminaries}
+
+\todo{Integrate this a bit better}
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -104,7 +130,8 @@ Reachability in $G$ induces a relation just between sources and sinks, which we 
 $G$.
 
 \begin{definition}[IO relation]
-For any dependence graph $G$ with reachability relation $R$, define the \emph{IO} relation of $G$ to be $R \cap (\sources{G} \times \sinks{G})$.
+For any dependence graph $G$ with reachability relation $R$, define the \emph{IO} relation of $G$ to be $R
+\cap (\sources{G} \times \sinks{G})$.
 \end{definition}
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
@@ -120,54 +147,6 @@ input and output \emph{selections} (namely sets of inputs and outputs), we now c
 $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
 \textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and $\demandsR_{R}$.
 
-\subsection{Conjugate Image and Preimage Functions}
-\label{sec:conjugate:image-preimage}
-
-\begin{definition}[Image and Preimage Functions for a Relation]
-   For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
-   $\demandsR_R : \powerset{Y} \to \powerset{X}$ as:
-   \begin{enumerate}
-      \item $\demandedByR_{R}(X') \eqdef \set{y \in Y \mid \exists x \in X'.(x,y) \in R}$ \hfill (image)
-      \item $\demandsR_{R}(Y') \eqdef \set{x \in X \mid \exists y \in Y'. (x,y) \in R}$ \hfill (preimage)
-   \end{enumerate}
-\end{definition}
-
-\noindent Trivially, the image function for $R$ is the preimage function for its converse. Nevertheless this
-is important enough to state as a lemma:
-
-\begin{lemma}[Image as Preimage of Converse Relation]
-\label{lem:conjugate:image-preimage-converse}
-$\demandedByR_{R} = \demandsR_{R^{-1}}$
-\end{lemma}
-
-When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
-element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
-element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
-connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
-pair}, in the sense of \citet{jonsson51}:
-
-%Notably, the set of outputs that a set of inputs is necessary for is a superset of the outputs it is
-%sufficient for.
-
-\begin{definition}[Conjugate Functions]
-   For Boolean algebras $A$, $B$, functions $f: A \to B$ and $g: B \to A$ form a \textit{conjugate pair} iff:
-   $$
-   f(x) \meet y = \bot \iff x \meet g(y) = \bot
-   $$
-\end{definition}
-
-\noindent (\citeauthor{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
-between Boolean algebras.)
-
-\begin{lemma}[Preimage and Image of a relation are conjugate]
-\label{lem:im-preim-conjugate}
-For any relation $R \subseteq X \times Y$ the functions $\demandedByR_{R}$ and $\demandsR_{R}$ are conjugate.
-\end{lemma}
-
-This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subseteq Y$, if the elements ``on
-the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
-and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
-
 \subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
 
@@ -176,9 +155,6 @@ relation. The set of inputs that some outputs $Y$ \emph{demands},  $\demandsR_{G
 the inputs of $G$ reachable from $Y$ (by traversing the graph in its opposite direction). Conversely, the set
 of outputs \emph{demanded by} some inputs $X$, $\demandedByR_{G}$, is simply the subset of the outputs of $G$
 reachable from $X$.
-%, i.e.~the intersection of $\demandedByR_{R}(X)$ with $\sinks{G}$.
-
-%, i.e.~the intersection of $\demandsR_{R}$ with $\sources{G}$.
 
 \begin{definition}[$\demandsR_G$ and $\demandedByR_G$ for a dependence graph]
    For a graph $G$ with IO relation $R$, define:

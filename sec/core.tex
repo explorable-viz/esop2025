@@ -66,9 +66,9 @@ build in the graph semantics.
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
-is the function (eliminator), $\gamma$ is its environment, and to support mutual recursion,  ${\rho}$ is the
-(possibly empty) environment of functions (eliminators) with which $\sigma$ was mutually defined. An
-\emph{environment} is defined as a finite map from variables to values.
+is the function body, $\gamma$ is its environment, and to support mutual recursion, ${\rho}$ is the (possibly
+empty) set of named functions with which $\sigma$ was mutually defined. An \emph{environment} is defined as a
+finite map from variables to values.
 
 \subsubsection{Addresses for partial values}
 \label{sec:core:addresses}
@@ -86,6 +86,26 @@ whenever a new address $\alpha$ is introduced. \todo{This paragraph unclear.}
 % newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs
 % a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t
 % much better than just saying this in plain English outside of the definition).
+
+\subsection{Dynamic Dependence Graphs}
+\label{sec:conjugate:dependence-graphs}
+
+\input{fig/conjugate/toy_example}
+
+A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set $V$ of
+\emph{vertices} and a set $E \subseteq V \times V$ of edges. In the dependence graph for a particular program,
+vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as inputs or
+produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the program,
+the partial value associated to $\beta$ \textit{depends on} on the partial value associated to $\alpha$. This
+diverges somewhat from traditional approaches to dynamic dependence graphs in only considering one type of
+edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
+direction of dependent vertices, whereas in the literature the other direction is somewhat more common.
+
+\paragraph{Example}
+   In \figref{conjugate:example:graph}, the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the
+   values of the input variables $x1,x2,x3$ in \figref{conjugate:example:program}, and the nodes
+   $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with the values of the arithmetic expressions in the
+   program's~result. \todo{not at all clear}
 
 \subsection{Evaluation and Graph Construction}
 \label{sec:core:semantics}
