@@ -121,11 +121,9 @@ Overall, we observe a significant speedup in the performance of \textit{demands}
 from 33x speedup for the \textbf{stacked-bar-chart}, to more than 80x for \textbf{gaussian}. In particular,
 every \textit{demands} query using the graph based approach is within the ``instantaneous'' category, whilst
 all but two of the examples using the trace approach are in the ``noticable delay'' category. We attribute
-this performance improvement to the fact that, in the trace approach, each new query requires the system to
-rewind the \emph{entire} execution of the original program, in effect evaluating it in reverse. This is
-regardless of whether all of that trace is relevant. By contrast, in the current graph approach, one only
-needs to traverse the relevant part of the already-computed graph \todo{why ``already-computed''? the trace is
-``already computed'' too}.
+this performance improvement to the fact that, in the trace approach, each query involves rewinding the entire
+execution of the original program, in effect evaluating it in reverse, regardless of whether all of the trace
+is relevant. In the graph approach, each query only traverses the relevant parts of the graph.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
