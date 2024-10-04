@@ -71,6 +71,10 @@ current graph-based approach, the writeup needs to be compelling.
 
 - [ ] Restate RQ1-3 in terms of the things we want to measure/evaluate (drop how/why bits).
 
+## Section 7
+
+- [ ] [7.0] Rehash around data transparency (the stated goal), not interactive visualisation.
+
 ## More significant changes
 
 ### Contextualising our work
@@ -191,3 +195,11 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
   Psallidas' work, Glue, etc). Drop ad hoc/unsupported benefits/criticisms (e.g. hampered by requiring the
   designer to learn multiple separate languages, syntax non-obvious to a new user, etc). Instead frame the discussion
   around differences in techniques, supported use cases, etc.
+
+### 7.1 Future work
+
+Replace the current (quite garbled) paragraphs with following discussion points:
+- [ ] Semantically justified dependency relation, but once which potentially separate e.g. control from data
+  dependencies
+- [ ] Executable graph slicing/intensional information, plus option to elide when not needed (vs. current
+  design where not needed at all)
