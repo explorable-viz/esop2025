@@ -11,23 +11,22 @@ an experimental comparison of our implementation's performance.
 
 \subsection{Qualitative Evaluation of Our Approach}
 
-Here, we consider the relative implementation burden \todo{burden? or overhead?} of our graph approach
-compared to the trace approach in \citet{perera22}, hypothesising \todo{?} that our graph one is easier to
-implement and~maintain. \todo{Reframe these two paragraphs a bit -- they make sense but not convinced that
-they constitute a ``qualitative evaluation'' or that a separate section devoted to these points belongs in
-\secref{evaluation}. Perhaps reimagine them as an introduction to the experimental evaluation.} \\
+Here, we consider the relative implementation effort required for our graph approach compared to the trace
+approach in \citet{perera22}, hypothesising \todo{?} that our graph one is easier to implement and~maintain.
+\todo{Reframe these two paragraphs a bit -- they make sense but not convinced that they constitute a
+``qualitative evaluation'' or that a separate section devoted to these points belongs in \secref{evaluation}.
+Perhaps reimagine them as an introduction to the experimental evaluation.} \\
 \indent
 Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards evaluation
-function.  By contrast, the trace approach taken by \citet{perera22} \todo{repeated citation} (and others) use
-a bidirectional interpreter: building an execution \emph{trace} during forward execution, and then rewinding
-that trace to perform a backwards dependency analysis such as $\demandsR_{R}$. Hence, the developer has to
-implement a separate backwards evaluation semantics using the execution trace, which propagates a selected
-output back to the program inputs. This approach is burdensome. The two directions of the interpreter need to
-be kept synchronised with respect to the dependency analysis, which makes updating the language difficult as
-every change requires modifying each direction in a manner that maintains bidirectionality. Conversely, in our
-approach, once the dependence graph has been computed, the algorithm described in
-\figref{conjugate:algorithms:demands} is used to compute both $\demandsR_{R}$ and $\demandedByR_{R}$ over the
-graph.\\
+function.  By contrast, the trace approach requires a bidirectional interpreter: building an execution
+\emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency
+analysis such as $\demandsR_{R}$. Hence, the developer has to implement a separate backwards evaluation
+semantics using the execution trace, which propagates a selected output back to the program inputs. This
+approach is burdensome. The two directions of the interpreter need to be kept synchronised with respect to the
+dependency analysis, which makes updating the language difficult as every change requires modifying each
+direction in a manner that maintains bidirectionality. Conversely, in our approach, once the dependence graph
+has been computed, the algorithm described in \figref{conjugate:algorithms:demands} is used to compute both
+$\demandsR_{R}$ and $\demandedByR_{R}$ over the graph.\\
 \indent
 Secondly, our algorithm for computing $\demandsR_{R}$ and $\demandedByR_{R}$ is language-agnostic (as
 described in \secref{conjugate}), meaning that it is not affected by changes in the semantics of the language.
@@ -80,12 +79,12 @@ considered matrix convolution (\textbf{edge-detect}, \textbf{emboss}, \textbf{ga
 implemented a few different such kernels.
 % Second, we include an example of a more
 % involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
-Second, we developed a prototype \todo{why a prototype?} of a graphics library that demonstrates the
-performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC,
-\textbf{stacked-bar-chart}, 136 LoC). Finally, we test two linked examples \todo{meaning?}
-(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from
-\secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC) \todo{these are based on D3.js graphics
-library instead, right?}. The code for our benchmarks is given in~\apdxsecref{apdx:evaluation-src-code}.
+Second, we developed a graphics library that demonstrates the performance on bespoke visualisation code
+(\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
+Finally, we test two linked examples \todo{meaning?} (\textbf{stacked-bar-scatter-plot} (corresponding to
+\figref{introduction:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC)
+\todo{these are based on D3.js graphics library instead, right?}. The code for our benchmarks is given
+in~\apdxsecref{apdx:evaluation-src-code}.
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
 (the latter is shown in the results tables coloured {\textcolor{gray}{gray}} in brackets). Runtimes are
