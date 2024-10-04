@@ -1,8 +1,5 @@
 # ESOP 2025 revision plan
 
-Given the relatively incremental contribution of this paper and the various technical issues surrounding our
-current graph-based approach, the writeup needs to be compelling.
-
 ## Minor changes
 
 ### Section 1
@@ -171,10 +168,10 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 
 ### 5.1 Qualitative evaluation
 
-- [ ] There isn't much in the way of evaluation here; we just assert that our approach involves less work. (In
-  the introduction we also prejudge the outcome, which further undermines any claim to be an evaluation.) I
-  think we can probably do without this section and merely mention the qualitative benefits in passing as part
-  of the introduction to Section 5.
+- [ ] Not much in the way of evaluation here; we just assert that our approach involves less work. (In the
+  introduction we also prejudge the outcome, which further undermines any claim to be an evaluation.) I think
+  we can probably do without this section and merely mention the (assumed) qualitative benefits in passing as
+  part of the introduction to Section 5.
 - [ ] The repeated citation of Perera et al. [2022] is painful -- six mentions on the first page alone. This
   is difficult to read but also misrepresents what we actually do -- we don't compare our approach to an
   existing implementation from 2022, but provide two implementations, one using DDGs, one using traces.
@@ -199,7 +196,7 @@ work in this space is Ricciotti et al. [2017] and Perera et al. [2022].
 ### 7.1 Future work
 
 Replace the current (quite garbled) paragraphs with following discussion points:
-- [ ] Semantically justified dependency relation, but once which potentially separate e.g. control from data
+- [ ] Semantically justified dependency relation, but once which potentially separates e.g. control from data
   dependencies
 - [ ] Executable graph slicing/intensional information, plus option to elide when not needed (vs. current
   design where not needed at all)
