@@ -47,22 +47,22 @@ An alternative approach is to treat data provenance features like these as a lan
 baking dependency metadata directly into outputs so that interactive queries of this sort can be supported
 automatically~\cite{psallidas18smoke,perera22} \todo{Reinstate Psallidas discussion here, and more general
 point about relationship between interaction and data selection.} The burden of implementing these features no
-longer falls on the author of the content, who can concentrate purely on data visualisation. Moreover the
-consumer of the content now \todo{but is was also true with the manual solution} has the ability to explore
-detail on an as-needed basis in the context of the high-level perspective offered by the visual summary. In
-contrast to \citet{bremer15}, the relationship to data is incrementally discoverable, revealed as the user
-interacts with the parts of the output they care about, ideally with some kind of formal guarantee that the
-revealed data is in some sense ``minimal and sufficient''.
+longer falls on the author of the content, who can concentrate purely on data visualisation, and the consumer
+of the content can formulate any query supported by the infrastructure. In contrast to \citet{bremer15}
+\todo{revisit}, the relationship to data is incrementally discoverable, revealed as the user interacts with
+the parts of the output they care about, ideally with some kind of formal guarantee that the revealed data is
+in some sense ``minimal and sufficient''.
 
-% \MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
-% lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
-% for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
+% In data visualisation it has long been recognised that when users interact with visual elements by clicking
+% or lassoing, the intention is typically to manipulate the underlying data. This has lead to various
+% techniques for inverting selections in visual space to obtain selections in the input data
+% space~\cite{north00, heer08}.
 
-% \MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
-% in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
-% selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-% feature from data visualisation called \emph{linked brushing}.
-%Moving forward, we refer to this feature as \emph{linked outputs} instead.
+% A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For
+% example, for a custom in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace''
+% from output selections to input selections, and then ``forward trace'' to find related output selections in
+% other views, to support a popular feature from data visualisation called \emph{linked brushing}. Moving
+% forward, we refer to this feature as \emph{linked outputs} instead.
 
 \begin{figure}
    \centering
@@ -80,7 +80,8 @@ revealed data is in some sense ``minimal and sufficient''.
    \centering
    \includegraphics[width=0.8\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
    \vspace{-2mm}
-   \caption{Data-transparency: ``What inputs does an output demand?'' (left arrow,  $\demandsR_G$ operator),  ``What outputs~is~an input demanded by?'' (right arrow, $\demandedByR_G$ operator), and linking outputs that share a common input~dependency.}
+   \caption{Data-transparency: \emph{demands} ($\demandsR_G$) and \emph{demanded by} ($\demandedByR_G$)
+   operators link outputs that share common input dependencies.}
    \label{fig:introduction:scatterplot}
   %  \vspace{-0.2cm}
 \end{figure}
@@ -115,8 +116,8 @@ is considered clean energy.
 \todo{This paragraph incongruous; explain $\demandsR$ operator in context of diagram.} As we will see later in
 the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that
 was used to compute the selected output. We read this operator as computing ``what input data does an output
-\emph{demand}?''. The subscript $G$ is short for ``graph'' \todo{$G$ is a metavariable -- probably better to
-omit here}, denoting that the computation is based on the reachability relation of a dependence graph $G$.
+\emph{demand}?''. The subscript $G$ indicates that the notion of dependency is with respect to a dependence
+graph $G$. \todo{Drop $G$ subscript from figure}
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
