@@ -49,9 +49,8 @@ benchmarked the implementations on an Intel Core i7-10850H 2.70GHz with 16Gb of 
 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We instrumented both systems in order to extract
 performance numbers.
 
-In an interactive system, performance plays a critical role in a user's experience. We therefore compare the
- performance of our graph-based approach with the trace-based \cite{perera22} \todo{can we stop mentioning
- this paper every paragraph?} by measuring the following:
+In an interactive system, performance plays a critical role in a user's experience. We therefore compared the
+performance of the graph-based and trace-based approaches by measuring the following:
 
 \begin{itemize}
    \item Q1: Overhead of building a dependence graph versus building a trace
@@ -60,12 +59,12 @@ In an interactive system, performance plays a critical role in a user's experien
    $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$.
 \end{itemize}
 
-We judge performance according to the performance standards proposed by \citet{nielsen93}:
+We judged performance according to the guidelines proposed by \citet{nielsen93}:
 \begin{itemize}
-   \item $\mathbf{100}$\textbf{ms:} limit for an interaction feeling \emph{instantaneous}
-   \item $\mathbf{1000}$\textbf{ms:} limit for a user's train of thought to remain uninterrupted, although
+   \item 100ms: limit for an interaction feeling \emph{instantaneous}
+   \item 1000ms: limit for a user's train of thought to remain uninterrupted, although
    they may perceive a delay
-   \item $\mathbf{10000}$\textbf{ms:} limit to keep a user's attention on the system
+   \item 10000ms: limit to keep a user's attention on the system
 \end{itemize}
 We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category (captured
 by Q2 and Q3), and for the time taken to evaluate programs (corresponding to Q1) to be within the limit for
@@ -74,13 +73,11 @@ keeping a user's attention.
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
-We tested \todo{test? be consistent with tense} our system on a range of benchmark examples %constituting the
-larger programs we implemented in \OurLang and in the language of \citet{perera22} \todo{misleading -- we
-didn't implement each program twice! just say we implemented a trace-based approach too for comparison
-purposes.}.  The benchmark programs represent a range of components a data scientist may find useful in an
-exploratory data analysis scenario. First, we considered matrix convolution (\textbf{edge-detect},
-\textbf{emboss}, \textbf{gaussian}, 31 Lines of Code (LoC) each). Given that different filter/kernel matrices
-create subtly different dependency structures, we implemented a few different such kernels.
+We tested our system on a range of benchmarks implemented in \OurLang. The benchmark programs represent a
+range of components a data scientist may find useful in an exploratory data analysis scenario. First, we
+considered matrix convolution (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of Code
+(LoC) each). Given that different filter/kernel matrices create subtly different dependency structures, we
+implemented a few different such kernels.
 % Second, we include an example of a more
 % involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
 Second, we developed a prototype \todo{why a prototype?} of a graphics library that demonstrates the
