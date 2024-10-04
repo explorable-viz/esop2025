@@ -117,7 +117,7 @@ is considered clean energy.
 the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that
 was used to compute the selected output. We read this operator as computing ``what input data does an output
 \emph{demand}?''. The subscript $G$ indicates that the notion of dependency is with respect to a dependence
-graph $G$. \todo{Drop $G$ subscript from figure}
+graph $G$.
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
@@ -209,12 +209,11 @@ circles). \todo{Last two paragraphs verbose}
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
-We introduce a new bidirectional program analysis framework which supports interactive exploration of
-fine-grained I/O relationships \todo{in a general-purpose language?}, as described in the previous section. We
-make use of dynamic dependence graphs~\cite{ferrante87, agrawal90}; this enables our approach to be
-language-independent, separating the definition of queries over the dependence graph for a particular program,
-from the problem of deriving the dependence graph for that program. Our specific contributions are as follows
-\todo{do we really need three citations of \cite{perera22} here?}:
+We introduce a new bidirectional program analysis framework for a general-purpose programming language which
+supports interactive exploration of fine-grained I/O relationships. We make use of dynamic dependence
+graphs~\cite{ferrante87, agrawal90}; this enables our approach to be language-independent, separating queries
+over dependence graphs from the problem of deriving the dependence graph for a particular program. Our
+specific contributions are as follows \todo{do we really need three citations of \cite{perera22} here?}:
 
 \begin{itemize}
 
@@ -332,11 +331,6 @@ transparency and propose some other ways in which the present system could be im
 \end{itemize}
 
 \noindent
-We provide examples of practical programs written in our framework in\apdxsecref{apdx:evaluation-src-code},
-including those used to generate \figref{introduction:related-inputs} and \figref{introduction:scatterplot}
-\todo{We don't give a single example program in the entire paper, apart from the completely toy example to
-illustrate graphs and the other toy examples to illustrate surface syntax.}
-
 Our implementation is open source and available online (given later in a deanonymised version). To support our
 claims about fast response times, we also provide an anonymised interactive web demo at
 \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
