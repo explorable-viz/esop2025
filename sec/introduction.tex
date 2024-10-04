@@ -331,6 +331,12 @@ transparency and propose some other ways in which the present system could be im
 \end{itemize}
 
 \noindent
-Our implementation is open source and available online (given later in a deanonymised version). To support our
-claims about fast response times, we also provide an anonymised interactive web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+We implement our framework in a programming language called \OurLang, a pure functional language with a
+runtime implementing conjugate dependency-tracking operators. From the programmer's perspective the language
+is unremarkable. The distinguishing feature of the language is a special semantics that interprets a program
+not as a plain output but as an output with a built-in query engine supporting the transparency features shown
+above. The author of a visualisation just expresses their chart as a pure function of the inputs, via a set of
+data types for common visualisations; a d3.js front end automatically enriches the rendered outputs with
+support for visual selection and various selection-based queries. Our implementation is open source and
+available online (given later in a deanonymised version). We also provide an anonymised interactive web demo
+at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
