@@ -13,10 +13,11 @@ an experimental comparison of our implementation's performance.
 
 Here, we consider the relative implementation effort required for our graph approach compared to the trace
 approach in \citet{perera22}, hypothesising \todo{?} that our graph one is easier to implement and~maintain.
-\todo{Reframe these two paragraphs a bit -- they make sense but not convinced that they constitute a
-``qualitative evaluation'' or that a separate section devoted to these points belongs in \secref{evaluation}.
-Perhaps reimagine them as an introduction to the experimental evaluation.} \\
-\indent
+\todo{Can probably pare these two paragraphs back to a couple of sentences in the introduction to this
+section. The claims make sense but I'm not convinced that they constitute a ``qualitative evaluation'' or that
+a separate section devoted to these points is needed, given that we don't really do anything to back up the
+claims.}
+
 Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards evaluation
 function.  By contrast, the trace approach requires a bidirectional interpreter: building an execution
 \emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency
@@ -30,10 +31,8 @@ $\demandsR_{R}$ and $\demandedByR_{R}$ over the graph.\\
 \indent
 Secondly, our algorithm for computing $\demandsR_{R}$ and $\demandedByR_{R}$ is language-agnostic (as
 described in \secref{conjugate}), meaning that it is not affected by changes in the semantics of the language.
-This is as opposed to works like \citet{perera22} \todo{repeated repeated citation}, where analysis is
-implemented as part of (forward and backward) program evaluation, and hence heavily depends on the details of
-the language. Our analysis is run over a graph that is not language dependent -- it only encodes the
-\emph{values produced} \todo{meaning?} by (forward) program evaluation.
+With the trace-based approach, the analyses are implemented as part of (forward and backward) program
+evaluation, and hence necessarily depend on the details of the language.
 
 \subsection{Experimental Evaluation}
 
