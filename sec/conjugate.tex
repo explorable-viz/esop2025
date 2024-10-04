@@ -1,8 +1,6 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
-\todo{Feels like it would make more sense to present language, dependence graphs and graph semantics before this.}
-
 In this section we introduce Boolean algebras and other preliminaries (\secref{conjugate:notation}); dynamic
 dependence graphs (\secref{conjugate:dependence-graphs}), and the image and preimage functions for a relation
 and their De Morgan duals (\secref{conjugate:image-preimage}). We then extend these operators to dependence
@@ -49,13 +47,11 @@ input values and the powerset of nodes associated with outputs.
 
 
 \paragraph{Example} In \figref{conjugate:example}, the powerset of input nodes and output nodes are $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$
-and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively. \todo{Odd way to put this}\\
+and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$~respectively.\\
 
 
 \subsection{Dynamic Dependence Graphs}
 \label{sec:conjugate:dependence-graphs}
-
-\todo{Move some of this to \secref{core} and move that section before \secref{conjugate}}
 
 \input{fig/conjugate/toy_example}
 
@@ -72,10 +68,10 @@ dependent vertices, whereas in the literature the other direction is somewhat mo
 
 
 \paragraph{Example}
-   In \figref{conjugate:example:graph}, the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the
-   values of the input variables $x1,x2,x3$ in \figref{conjugate:example:program}, and the nodes
-   $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with the values of the arithmetic expressions in the
-   program's~result. \todo{not at all clear}\\
+   In \figref{conjugate:example:graph},
+   the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the values of the input variables $x1,x2,x3$ in
+   \figref{conjugate:example:program}, and the nodes $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with
+   the values of the arithmetic expressions in the program's~result.\\
 
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
@@ -112,7 +108,9 @@ interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
 
 \paragraph{Example}
    In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
-   and the IO relation are identical. \todo{Maybe not a good example then?}\\
+   and the IO relation are identical.\\
+
+
 
 Clearly the IO relation of $G$ is the
 converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
@@ -132,8 +130,7 @@ $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \tex
    \end{enumerate}
 \end{definition}
 
-\noindent Trivially, the image function for $R$ is the preimage function for its converse. Nevertheless this
-is important enough to state as a lemma:
+\noindent It is well known that the image function for $R$ is the preimage function for its converse; this is important enough to state as a lemma:
 
 \begin{lemma}[Image as Preimage of Converse Relation]
 \label{lem:conjugate:image-preimage-converse}
@@ -202,34 +199,26 @@ on the result.
 
 If $R$ is an IO relation, then $\demandedByR_R(X)$ effectively asks ``what is $X$ necessary for?'' This
 naturally leads to the question ``what is $X$ \emph{sufficient} for?'' In fact, we can use the notion of
-sufficiency as a test of correctness \todo{doesn't really make sense}. If we begin by selecting an output of
-interest, we would expect the data it demands to also be sufficient to reconstruct it. This leads us to define
-the following pair of functions, which also form a conjugate pair \todo{How are these definitions supposedly
-suggested by the intuition just given?}.
+sufficiency as a test of correctness. If we begin by selecting an output of interest, we would expect the data
+it demands to also be sufficient to reconstruct it. This leads us to define the following pair of functions,
+which also form a conjugate pair.
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
-   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and
-   $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
+   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as the composition:
    \begin{enumerate}
       \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
       \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill (dual preimage)
    \end{enumerate}
 \end{definition}
 
-This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every (rather than any)
-ancestor to be in the input set. We include $\preimageDualR_R$ here only for completeness; although it is
-derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of
-IO-related queries, so  ignore it hereon \todo{Unconvincing -- especially as we immediately go on to state a
-lemma about it. In the current implementation we do use it, so we can mention that.}.
+This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every ancestor to be in the
+input set, rather than any ancestor to be in the input set. We include $\preimageDualR_R$ here only for
+completeness; although it is derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of IO-related queries, so  ignore it hereon.
 
 \paragraph{Example}
-If we apply $\sufficesR_R$ to dependence graphs \todo{confusing to switch to graphs here}, i.e.
-$\sufficesR_G$, then in  \figref{conjugate:example} we have that $\sufficesR_{G}(\set{\alpha_1}) =
-\set{\alpha_4}$, contrasting with $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before.
-Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the
-node $\alpha_2$ as an input to $\sufficesR_{G}$, and so have insufficient information to compute the value at
-$\alpha_5$. \todo{Not finding this example helpful -- maybe use a more meaningful example and combine the
-various fragments of explanation into a single paragraph near the figure} \\
+If we apply $\sufficesR_R$ to dependence graphs, i.e. $\sufficesR_G$, then in  \figref{conjugate:example} we have that $\sufficesR_{G}(\set{\alpha_1}) = \set{\alpha_4}$,
+contrasting with $\demandedByR_{G}(\set{\alpha_1}) = \set{\alpha_4,\alpha_5}$  before. Although the value at $\alpha_1$ is necessary to compute the value at $\alpha_5$, we have not selected the node $\alpha_2$ as an input to $\sufficesR_{G}$, and so have insufficient information to compute the value at $\alpha_5$.\\
+%The two definitions are so similar that
 
 Notably,  $\demandedByR_R$ can be transformed into $\sufficesR_R$ by using the De Morgan Dual:
 
@@ -249,18 +238,17 @@ Notably,  $\demandedByR_R$ can be transformed into $\sufficesR_R$ by using the D
    \end{enumerate}
 \end{lemma}
 \begin{proof}
-   See \apdxsecref{apdx:conjugate:image-preimage-duality} \todo{Don't need a proof of this one}
+   See \apdxsecref{apdx:conjugate:image-preimage-duality}
 \end{proof}
 
-Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, we can read
-$\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''. Then, taking the complement of
-this to get $\compl{\demandedByR_{R}(\compl{X})}$ is effectively asking the question ``what outputs do not use
-any of the information I have not selected?'' \todo{hard to understand}, which is exactly the question of
-sufficiency.
+Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$,
+we can read $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''.
+Then, taking the complement of this to get $\compl{\demandedByR_{R}(\compl{X})}$ is
+effectively asking the question ``what outputs do not use any of the information I have not
+selected?'', which is exactly the question of sufficiency.
 
-Conjugate functions are related to another class of functions between Boolean algebras, called Galois
-connections. Specifically, a well known result \todo{well known to whom?} in the literature~\citet{menni14} is
-that every  conjugate pair of functions induces a Galois connection:
+Conjugate functions are related to another class of functions between Boolean algebras,
+called Galois connections. Specifically, a well known result in the literature~\citet{menni14} is that every  conjugate pair of functions induces a Galois connection:
 
 \begin{definition}[Galois connection]
    \label{def:conjugate:galois-connection}
@@ -279,29 +267,26 @@ that every  conjugate pair of functions induces a Galois connection:
    \end{enumerate}
 \end{proposition}
 
-\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$ for Dependence Graphs \todo{Weird
-to omit $\preimageDualR_{G}$ having made a big deal about conjugate/adjoint pairs, especially as we also don't
-use $\demandedByR_G$}}
+\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$ for a dependence graph
-$G$. \todo{Super-weird because $\demandsR_{G}$ is completely trivial for the IO relation of $G$, which is how
-it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in comparison to the
-trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be readily adapted to
-compute all 3 \todo{4} operators; for example, given a procedure for $\demandedByR_{G}$, we can compute its
-conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and
-its dual $\sufficesR_{G}$ by pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
+We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$
+%and t heir duals $\sufficesR_{G}$ and$\preimageDualR_{G}$
+for a dependence graph $G$. One advantage of graphs, in comparison to the trace-based approach mentioned in \secref{introduction},
+is that a single algorithm can be readily adapted to compute all 3 operators; for example, given a
+procedure for $\demandedByR_{G}$, we can compute its conjugate $\demandsR_{G}$ as
+$\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by
+pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in
-\figref{conjugate:algorithms}, where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the
-opposite graph; this is in some situations more efficient than relying on the De Morgan dual, which can cause
-more graph to be traversed than would be otherwise. Both procedures factor through an auxiliary operation that
-computes a ``slice'' of the original graph, i.e.~a contiguous subgraph. While it is technically possible to
-compute the desired image/preimage of the IO relation without creating this intermediate graph, we anticipate
-use cases which will make use of the graph slice; these are discussed in more detail in \secref{conclusion}.
-Our implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we freely make use of both in the
-algorithms to access out-neighbours and in-neighbours.
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in \figref{conjugate:algorithms}, where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the opposite graph; this is in some situations more efficient than
+relying on the De Morgan dual, which can cause more graph to be traversed than would be otherwise. Both
+procedures factor through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
+contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
+without creating this intermediate graph, we anticipate use cases which will make use of the graph slice;
+these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
+$G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+in-neighbours.
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
@@ -312,19 +297,26 @@ algorithms to access out-neighbours and in-neighbours.
 \end{definition}
 
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
-Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read the algorithm directly from
-the inductive definition, i.e. treating it as a $G$-indexed function that takes $X$ as input \todo{bit too
-much explanation}.
+Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read the algorithm directly from the
+inductive definition, i.e. treating it as a $G$-indexed function that takes $X$ as input.
+% \footnote{\note{This needs
+% changing to reflect the new definitions} Any choice between
+% \ruleName{skip} and \ruleName{extend} is made deterministic by the disjointness of $G$ and $H$ in
+% \ruleName{extend} implying the opposite side condition to \ruleName{skip} ($\alpha \not\in \V(G)$), and with
+% termination implied by eventual saturation of the first argument by all of the edges in the indexing graph
+% leading from the vertices in second argument, after which a finite sequence of \ruleName{skip} can be applied
+% to reach the base case of \ruleName{done}.}
 
-The algorithm defers to an auxiliary operation $\demandedByV{}$, which takes a (partial) graph slice $H
-\subseteq G$, initially containing only the original input vertices $X$ and no edges. It then proceeds as
-follows. If there is a sink of $H$ that still has outgoing edges in $G$, then the targets of those edges are
-reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}). If
-$\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and so
-we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
-of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once. When $\demandedByV{}$ is
-done, $\demandedByAlg{G}$ returns the sinks $T(H)$ from the final graph slice $H$, representing the outputs
-that the original inputs are demanded by.
+The algorithm defers to an auxiliary operation ``$H, G \demandedByV{}$'', which maintains a
+(partial) graph slice $H \subseteq G$, where $H$ initially contains only the original input vertices $X$ and no edges.
+It then proceeds as follows. If there is a sink of $H$ that still has outgoing edges in $G$, then the
+targets of those edges are reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}).
+If $\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and
+so we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
+of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once.
+When $\demandedByV{}$ is done, $\demandedByAlg{G}$
+returns the sinks $T(H)$ from the final graph
+slice $H$, representing the outputs that the original inputs are demanded by.
 
 \begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
@@ -345,17 +337,19 @@ that the original inputs are demanded by.
 \figref{conjugate:slicing:forward} defines the family of relations $\sufficesAlg{G}$ for dependence graph $G$.
 \end{definition}
 
-Like $\demandsAlg{G}$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation $\sufficesE{}$
-which builds a slice of $G$. The operation $\sufficesE{}$ takes the graph slice $H$ under construction, a
-``pending'' subgraph $P$ of nodes for which we have discovered partial information, and the remaining
-unexplored graph $G$, and returns the final graph slice $H'$. Whenever we have a vertex in $H$ which still has
-outgoing edges in $G$, we add those edges and their endpoints to the pending graph $P$ (\ruleName{pending}).
-If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges from
-$P$ to $H$ (\ruleName{extend}), as this only happens when we have already moved every ancestor of $\alpha$
-into $H$. If neither scenario is the case, then we terminate with the (potentially incomplete) graph
-$H$~(\ruleName{done}). Once $\sufficesE{}$ has terminated with $H$, $\sufficesAlg{G}$ returns just the
-vertices in $H$ that are also sinks in $G$. If there are no such vertices, it simply means that the input data
-$X$ was insufficient to compute any of the original program's outputs.
+For a dependence graph $G$, the algorithm $\sufficesAlg{G}$ also delegates to an auxiliary operation
+$\sufficesE{}$ which builds a graph slice $H$, similar to $\demandsAlg{}$. The operation ``$H, P, G\sufficesE{}$''
+takes a graph slice $H$ under construction, a ``pending'' subgraph $P$ of nodes for which
+we have discovered partial information, and the remaining unexplored graph $G$.
+%\note{Maybe rename $G$ so we can give the subgraph relationships?}.
+Whenever we have a vertex in $H$ which still has outgoing edges in $G$, we add those edges and their endpoints to the pending graph
+$P$ (\ruleName{pending}). If a vertex $\alpha$ has no more incoming edges in $G$, we can then move $\alpha$ and its incoming edges
+from $P$ to $H$ (\ruleName{extend}), as this only happens when we have already moved every ancestor of $\alpha$ into $H$.
+ If neither scenario is the case, then we terminate with the
+(potentially incomplete) graph $H$~(\ruleName{done}).
+Once $\sufficesE{}$ has terminated, $\sufficesAlg{G}$
+takes $H$, and uses intersection to extract the vertices in $H$ that are also sinks in $G$. If this intersection is empty,
+it simply means that the input data $X$ was insufficient to compute any of the original program's outputs.
 
 We provide an example of a run of the algorithm in \figref{suffices-algo-diagram}. Here,
 the green vertices and thick edges are in $H$, the orange vertices and dashed arrows are in $P$, and the
@@ -409,15 +403,13 @@ i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. Conversely for a set of outputs $Y \
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
-In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ are necessarily monotonic \todo{but they are
-composed of monotonic parts, so this can't be true}. We illustrate this for linked inputs $\relInputR_{G}$ in
-\figref{relation-not-galois}, which uses the graph from the example in \figref{conjugate:example:graph}. In
-the figure, the top-left vertex is part of the initial input selection $X'$, but is not preserved by the
-$\demandsR_G \after \demandedByR_G$ round-trip because it is not demanded by any output. Thus we have neither
-$X' \subseteq \relInputR_{G}(X')$, nor $X' \supseteq \relInputR_{G}(X')$ \todo{neither of these properties is
-monotonicity}. It is not hard to see how the same concept \todo{concept?} arises for linked outputs, by using
-$\demandedByR_G \after \demandsR_G$ on the graph of a program that outputs a constant \todo{intuition missing
-here}.
+In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ are necessarily monotonic. We illustrate this for linked inputs $\relInputR_{G}$ in
+\figref{relation-not-galois}, which uses the graph from the example in \figref{conjugate:example:graph}.
+In the figure, the top-left vertex is part of
+the initial input selection $X'$, but is not preserved by the $\demandsR_G \after \demandedByR_G$ round-trip
+because it is not demanded by any output. Thus we have neither $X' \subseteq \relInputR_{G}(X')$, nor
+$X' \supseteq \relInputR_{G}(X')$. It is not hard to see how the same concept arises for linked outputs, by
+using $\demandedByR_G \after \demandsR_G$ on the graph of a program that outputs a constant.
 
 \input{fig/conjugate/relations-not-galois}
 
@@ -435,6 +427,6 @@ $\bot$, and $\relInputR_{G}$ will preserve the original input selection:
 \end{lemma}
 
 As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
-an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
-showing inputs that are actually used in a program, which has the potential to make exploring a visualisation
-a smoother experience for an end user \todo{avoid this sort of amorphous claim}. \todo{Perhaps connect to the use of $\preimageDualR{}_G$}
+an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view,
+only showing inputs that are actually used in a program, which has the potential to make exploring a visualisation
+a smoother experience for an end user.

@@ -2,91 +2,95 @@
 \label{sec:evaluation}
 
 
-We now present a critical evaluation of our framework, comparing with the popular \todo{popular?}
-\emph{trace-based} approach to bidirectional program analysis ~\cite{ricciotti17, psallidas18smoke}. In
-particular, we contrast with the state of the art in the field \todo{why ``state of the art''?} by
-\citet{perera22}. We start by considering our framework's qualitative advantage \todo{prejudging the
-evaluation in our favour here} in terms of conceptual simplicity and ease of implementation. Then, we provide
+We now present a critical evaluation of our framework, comparing with the
+popular \emph{trace-based} approach to bidirectional program analysis ~\cite{ricciotti17, psallidas18smoke}.
+In particular, we contrast with the state of the art in the field by \citet{perera22}. We start by
+considering our framework's qualitative advantage in terms of conceptual
+simplicity and ease of implementation. Then, we provide
 an experimental comparison of our implementation's performance.
 
 \subsection{Qualitative Evaluation of Our Approach}
 
-Here, we consider the relative implementation effort required for our graph approach compared to the trace
-approach in \citet{perera22}, hypothesising \todo{?} that our graph one is easier to implement and~maintain.
-\todo{Can probably pare these two paragraphs back to a couple of sentences in the introduction to this
-section. The claims make sense but I'm not convinced that they constitute a ``qualitative evaluation'' or that
-a separate section devoted to these points is needed, given that we don't really do anything to back up the
-claims.}
-
-Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards evaluation
-function.  By contrast, the trace approach requires a bidirectional interpreter: building an execution
-\emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency
-analysis such as $\demandsR_{R}$. Hence, the developer has to implement a separate backwards evaluation
-semantics using the execution trace, which propagates a selected output back to the program inputs. This
-approach is burdensome. The two directions of the interpreter need to be kept synchronised with respect to the
-dependency analysis, which makes updating the language difficult as every change requires modifying each
-direction in a manner that maintains bidirectionality. Conversely, in our approach, once the dependence graph
-has been computed, the algorithm described in \figref{conjugate:algorithms:demands} is used to compute both
-$\demandsR_{R}$ and $\demandedByR_{R}$ over the graph.\\
+Here, we consider the relative implementation burden of our graph approach compared to the trace approach in \citet{perera22},
+hypothesising that our graph one is easier to implement and~maintain.\\
 \indent
-Secondly, our algorithm for computing $\demandsR_{R}$ and $\demandedByR_{R}$ is language-agnostic (as
-described in \secref{conjugate}), meaning that it is not affected by changes in the semantics of the language.
-With the trace-based approach, the analyses are implemented as part of (forward and backward) program
-evaluation, and hence necessarily depend on the details of the language.
+Firstly, a key benefit of the graph approach is that it avoids the need to implement a backwards
+evaluation function.  By contrast, the trace approach taken by
+\citet{perera22} (and others) use a bidirectional interpreter: building an execution
+\emph{trace} during forward execution, and then rewinding that trace to perform a backwards dependency analysis such as
+$\demandsR_{R}$. Hence, the developer has to implement a separate backwards evaluation
+semantics using the execution trace, which propagates a selected output back
+to the program inputs. This approach is burdensome. The
+two directions of the interpreter need to be kept synchronised with
+respect to the dependency analysis, which makes updating the language difficult as
+every change requires modifying each direction in a manner that maintains bidirectionality.
+Conversely, in our approach, once the dependence graph has been computed, the algorithm described in
+\figref{conjugate:algorithms:demands} is
+used to compute both $\demandsR_{R}$ and $\demandedByR_{R}$ over the graph.\\
+\indent
+Secondly, our algorithm for computing $\demandsR_{R}$ and
+$\demandedByR_{R}$ is language-agnostic (as described in
+\secref{conjugate}), meaning that it is not affected by changes in the
+semantics of the language. This is as opposed to works like \citet{perera22}, where
+analysis is implemented as part of (forward and backward) program evaluation, and hence heavily depends
+on the details of the language. Our analysis is run over a graph that is not language dependent --
+it only encodes the \emph{values produced} by (forward) program evaluation.
 
 \subsection{Experimental Evaluation}
 
-To test the performance of our approach, we implemented our language from \secref{core} in PureScript. We used
-our implementation to write a number of benchmarks that reflect realistic \todo{say we} targets
-\todo{targets?} of dependency analyses (\secref{evaluation:choice-of-examples}). PureScript is a natural
-implementation language for this work as our focus on visualisations lends itself to building web-based
-interfaces \todo{uh?}. Additionally, PureScript is the implementation language used by~\citet{perera22} in
-their open-source implementation of the trace-based approach, thus enabling a more fair like-for-like
-comparison to our work here \todo{hmm. why not just say we reimplemented/adapted their system?}. We then
-benchmarked the implementations on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Google Chrome
-121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We instrumented both systems in order to extract
-performance numbers.
+In order to test the performance of our approach, we implemented our language
+from \secref{core} on top of PureScript, which we used to write a selection of
+non-trivial examples that reflect realistic targets of dependency analyses
+(\secref{evaluation:choice-of-examples}).
+PureScript is a natural implementation language for this work as our focus on visualisations lends itself to building web-based interfaces.
+Additionally, PureScript is the implementation language used
+by~\citet{perera22} in their open-source implementation of the trace-based
+approach, thus enabling a more fair like-for-like comparison to our work here.
+We then benchmarked the implementations on an
+Intel Core i7-10850H 2.70GHz with 16Gb of RAM,
+using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16.
+We instrumented both systems in order to extract performance numbers.
 
-In an interactive system, performance plays a critical role in a user's experience. We therefore compared the
-performance of the graph-based and trace-based approaches by measuring the following:
+In an interactive system, performance plays a critical role in a user's experience. We compare the performance of our graph-based approach
+with the trace-based \cite{perera22} by considering the following three research questions:
 
 \begin{itemize}
-   \item Q1: Overhead of building a dependence graph versus building a trace
-   \item Q2: Performance of graph-based \textit{demands} vs.~ performance of trace-based \textit{demands}
-   \item Q3: Performance of various implementations of \textit{demanded by}: trace-based, graph-based using
-   $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$.
+   \item RQ1: What is the overhead of the graph construction versus the trace construction?
+   \item RQ2: How does the performance of graph-based \textit{demands} compare against the performance of trace-based \textit{demands}?
+   \item RQ3: How does the performance of the various implementations of \textit{demanded by} (i.e. trace-based, graph-based using $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$) compare?
 \end{itemize}
 
-\noindent We assessed performance according to the guidelines proposed by \citet{nielsen93}:
+%Out of the three RQs above, RQ2 and RQ3 are those that matter for the performance of the interactive interactions between an user and our system as the user explores a visualisation. In particular, we consider the following performance standards, as proposed in \citet{nielsen93}:
+We judge performance according to the performance standards proposed in \citet{nielsen93}:
 \begin{itemize}
-   \item 100ms: limit for an interaction feeling \emph{instantaneous}
-   \item 1000ms: limit for a user's train of thought to remain uninterrupted, although
-   they may perceive a delay
-   \item 10000ms: limit to keep a user's attention on the system
+   \item $\mathbf{100}$\textbf{ms:} this is the limit for an interaction feeling \emph{instantaneous}
+   \item $\mathbf{1000}$\textbf{ms:} this is the limit for a user's train of thought to remain uninterrupted, albeit they will notice a delay
+   \item $\mathbf{10000}$\textbf{ms:} this is the limit to keep a user's attention on the system
 \end{itemize}
-We aimed for the interactive queries to stay as close as possible to the \emph{instantaneous} category
-(captured by Q2 and Q3), and for the time taken to evaluate programs (corresponding to Q1) to be within the
-limit for keeping a user's attention.
+We aim for the interactive queries to stay as close as possible to the \emph{instantaneous} category (captured by RQ2 and RQ3),
+and for the time taken to evaluate programs (corresponding to RQ1) to be within the limit for keeping a user's attention.
+
 
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
-We tested our system on a range of benchmarks implemented in \OurLang. The benchmark programs represent a
-range of components a data scientist may find useful in an exploratory data analysis scenario \todo{rehash}.
-First, we considered matrix convolution (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of
-Code (LoC) each). Given that different filter/kernel matrices create subtly different dependency structures,
-we implemented a few different such kernels. Second, we developed a graphics library that demonstrates the
-performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC,
-\textbf{stacked-bar-chart}, 136 LoC). Finally, we test two linked examples \todo{meaning?}
-(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from
-\secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC) \todo{these are based on D3.js graphics
-library instead, right?}. The code for our benchmarks is given in~\apdxsecref{apdx:evaluation-src-code}.
+We tested our system on a range of benchmark examples %constituting the larger programs we
+implemented in \OurLang and in the language of \citet{perera22}.  The benchmark programs represent a range of components a data
+scientist may find useful in an exploratory data analysis scenario. First,
+we considered matrix convolution (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of Code (LoC) each). Given that different
+filter/kernel matrices create subtly different dependency structures, we
+implemented a few different such kernels.
+% Second, we include an example of a more
+% involved algorithm with a deeper sequential dependency structure: an implementation of dynamic time warping~\cite{berndt94} known from time series analysis (\textbf{compute-dtw}, 37 LoC).
+Second, we developed a prototype of a graphics
+library that demonstrates the performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC).
+Finally, we test two linked examples
+(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from \secref{overview}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC).
+The code for our benchmarks is given in~\apdxsecref{apdx:evaluation-src-code}.
 
-In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
-(the latter is shown in the results tables coloured {\textcolor{gray}{grey}} in brackets). Runtimes are
-reported in milliseconds (to 2 decimal places \todo{maybe drop to 1 decimal place?}). When we refer to
-\textit{speedup} or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the
-runtimes for a given benchmark.
+In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (the latter is shown in the results tables coloured {\textcolor{gray}{gray}} in brackets).
+Runtimes are reported in milliseconds (to 2 decimal places). When we refer to \textit{speedup}
+or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the runtimes for a given benchmark.
 
 % \begin{figure}
 %    \small
@@ -96,70 +100,122 @@ runtimes for a given benchmark.
 % \end{figure}
 %\subsubsection{Performance Standards}
 
-\subsubsection{Q1: Overhead of graph construction vs. trace construction}
-In \tableref{eval-SpdUps}, we compare the average time taken to evaluate a program in the graph approach
-(\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace-based approach
-(\textbf{T-Eval}). Since the graph is a more complex data structure to build compared to the trace \todo{not
-really sure what this means}, we expect a larger overhead when evaluating a program to a graph compared to
-evaluating it to a trace.
+\subsubsection{RQ1: Overhead of graph construction vs. trace construction}
+In \tableref{eval-SpdUps}, we compare the time taken to evaluate a program in the
+graph approach (\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the
+trace approach (\textbf{T-Eval}) of \citet{perera22}. As previously explained,
+the graph and trace are built as part of the respective program evaluations.
+Since the graph is a more complex data structure to build compared to the trace,
+we expect a larger overhead when evaluating a program to a graph
+compared to evaluating it to a trace.
 
-We report the ratio of graph evaluation time to trace evaluation time in the third column
-(\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs to
-their dynamic dependence graph does indeed incur a higher overhead, being from 3x to 14x slower than their
-trace-based counterparts. For both approaches, program evaluation always stays within the limit to keep a
-user’s attention on the system.
+We report the ratio
+of graph evaluation time to trace evaluation time in the third column (\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs
+to their dynamic dependence graph does indeed incur a higher overhead, being from
+3x to 14x slower than their trace-based counterparts. For both approaches, program evaluation always stays within the limit to keep a user’s attention on the system.
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
-\subsubsection{Q2: Graph-based demands vs. trace-based demands}
-In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} show the average times taken
-to compute \textit{demands} with the trace and graph approaches, respectively. The ratio of graph-based to
-trace-based performance is in the last column, \textbf{Bwd-Speedup}.
+\subsubsection{RQ2: Graph-based demands vs. trace-based demands}
+%We now compare the performance of the graph and trace based implementations
+%when it comes to the computation of \textit{demands}.
+In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} are the times taken to compute \textit{demands}
+with the trace and graph approaches, respectively.
+The ratio of graph-based to trace-based performance is in the last
+column, \textbf{Bwd-Speedup}.
 
-Overall, we observe a significant speedup in the performance of \textit{demands} using the graph approach,
+Overall, we observe a significant speedup
+in the performance of \textit{demands} using the graph approach,
 % ranging from around 14.6x for the dynamic time warp example \textbf{compute-dtw}
-from 33x speedup for the \textbf{stacked-bar-chart}, to more than 80x for \textbf{gaussian}. In particular,
-every \textit{demands} query using the graph based approach is within the ``instantaneous'' category, whilst
-all but two of the examples using the trace approach are in the ``noticable delay'' category. We attribute
-this performance improvement to the fact that, in the trace approach, each query involves rewinding the entire
-execution of the original program, in effect evaluating it in reverse, regardless of whether all of the trace
-is relevant. In the graph approach, each query only traverses the relevant parts of the graph.
+from 33x speedup for the \textbf{stacked-bar-chart},
+to more than 80x for \textbf{gaussian}. In particular, every \textit{demands} query
+using the graph based approach is within the ``instantaneous'' category, whilst all but
+two of the examples using the trace approach are in the ``noticable delay'' category.
+%some examples -- most notably the two linked examples \textbf{bar-chart-line-chart} and
+%\textbf{stacked-bar-scatter-plot} --
+%
+%This is still a significant improvement in performance across all of our tested examples.
+%
+We attribute this performance improvement to the fact that, in the
+trace approach, each new query requires the system to  rewind the \emph{entire} execution of the
+original program, in effect evaluating it in reverse. This is regardless of whether all of that trace is relevant. By contrast, in the current graph
+approach, one only needs to traverse the relevant part of the already-computed graph.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{Q3: Implementations of Demanded By}
+\subsubsection{RQ3: Implementations of Demanded By}
 
 In \tableref{equivalent-impls}, we investigate the performance of \textit{demanded by} in different settings:
-column \textbf{T-DemBy} provides the results for the trace implementation, column \textbf{G-DemBy} contains
-the results for the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands}, and column \textbf{G-DemBy-Suff} contains the results obtained when
-computing \textit{demanded by} using the De Morgan dual of $\sufficesAlg{}$ from
-\figref{conjugate:slicing:forward}. Additionally, in column \textbf{Speedup}, we provide the speedup of
-\textbf{G-DemBy} compared to \textbf{T-DemBy}, and in column \textbf{Suff-Speedup}, we give the speedup of
-\textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
+column \textbf{T-DemBy} provides the results for the trace implementation,
+column \textbf{G-DemBy} contains the results for the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands},
+and column \textbf{G-DemBy-Suff} contains the results obtained when computing \textit{demanded by} by taking the De Morgan dual of $\sufficesAlg{}$ from \figref{conjugate:slicing:forward}.
+Additionally, in column \textbf{Speedup}, we provide the speedup of \textbf{G-DemBy} compared to \textbf{T-DemBy},
+and in column \textbf{Suff-Speedup}, we give the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
 
-For all benchmarks, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph
-based benchmarks running instantaneously, as opposed to only two for the trace based approach.
+% For all benchmarks apart from \textbf{compute-dtw}, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches.
+% \edit{
+For all benchmarks, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph based benchmarks running instantaneously, as opposed to only two for
+the trace based approach.
+% }
+
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion of the results}
-When comparing the performance of the graph and trace approaches, we observe that the only consistent
-performance loss for the graph approach is due to the increased cost of evaluating a program to a graph versus
-evaluating it to a trace (according to \textit{Q1}). We argue that this overhead is reasonable: the graph
-only needs to be constructed once and does not impact subsequent interactions; and program evaluation time
-does not exceed the limit for keeping the users attention on the system. Additionally, the fast response times
-for \textit{demands} and \textit{demanded by} (according to Q2 and Q3), compared to the trace approach,
-translate into quick responses to user queries. This is critical for the interactive exploration of digital
-media.
+When comparing the performance of the graph and trace approaches, we observe that the only consistent performance
+loss for the graph approach is due to the increased cost of evaluating a program to a graph versus evaluating
+it to a trace (according to \textit{RQ1}). We argue that this overhead is reasonable: the graph only
+needs to be constructed once and does not impact subsequent interactions; and program evaluation time
+does not exceed the limit for keeping the users attention on the system.
+ Additionally, the fast response times for
+\textit{demands} and \textit{demanded by} (according to RQ2 and RQ3), compared to the trace approach,
+translate into quick responses to user queries. This is critical for the interactive exploration of digital media.
 
-Another notable aspect, which is observed for \textit{Q3}, is the performance of \textbf{G-DemBy-Suff}, which
-takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, \textbf{G-DemBy-Suff} performs
-significantly worse than \textbf{G-DemBy}. We suspect that the generally bad performance of
-\textbf{G-DemBy-Suff} is at least partially caused by the expensive set complement operations performed before
-and after applying $\sufficesAlg{}$ \todo{why do we suspect this? couldn't it be because the complement graph
-is often much larger?}. Furthermore, while our algorithm for computing \textit{demanded by} is graph
-independent (as described in \secref{conjugate}), these experiments show that the shape \todo{and size?} of
-the graph may matter for performance. We defer more detailed discussion to \secref{future} \todo{why are we
-deferring our analysis of performance evaluation to the future work section?}.
+
+%\cd{Maybe the explanation can use the ``graph slice'' that Roly is adding in sec 3.}
+% Amongst our benchmarks, \textbf{compute-dtw} has the worst performance
+% for both \textit{demands} and \textit{demanded by} (although
+% \textit{demands} still shows a considerable speedup when compared to
+% the trace approach--14.62x in~\tableref{demands-SpdUps}).  We hypothesize that this is because
+% program inputs are often required during the computation of other intermediate values in the program
+% (e.g., inputs \texttt{seq1} and \texttt{seq2} in \texttt{computeDTW}, l.25 in \figref{dtw-source}). Given that each reference to an input
+% results in a dependency edge being added, the dependency graph will have
+% many vertices with a high number of in-edges, where the inputs are the shared source vertices for many of these edges. Thus, the difficulty with examples such as \textbf{compute-dtw} may arise from the sharing of values.
+
+
+%as many inputs are shared
+%computing values associated with vertices requires considering a large number of in-vertices.
+%Essentially, during the construction of the graph slice $G'$ (see section 3.5.1),
+%many vertices need to be explored, slowing down the computation of
+%\textit{demanded by}.
+
+%\JBnote{It is as yet not apparent how the structure of the graph itself affects performance.
+%The more parallel programs (the three matrix convolutions) exhibit better performance in the
+%\textit{demands} testing and worse performance in the \textit{demanded by} testing.
+%Investigation into the structure of the graphs and their impact on performance is left to future
+%work. A similar question is raised as to the efficacy of different graph representations.
+%In our implementation, we use a simple adjacency map, and a more specialized representation
+%could improve performance further.}
+
+
+Another notable aspect, which is observed for \textit{RQ3}, is the performance of \textbf{G-DemBy-Suff}, which
+takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases,
+\textbf{G-DemBy-Suff} performs significantly worse than \textbf{G-DemBy}. We suspect
+that the generally bad performance of \textbf{G-DemBy-Suff} is at least partially caused by the expensive
+set complement operations performed before and after applying $\sufficesAlg{}$.
+Furthermore, while our algorithm for computing \textit{demanded by} is graph independent (as described in \secref{conjugate}),
+these experiments show that the shape of the graph may matter for performance. We defer more detailed discussion to \secref{future}.
+
+%% \cd{Hmm.. I feel this might bring up more questions as well... Do we want that? I need to look at these examples..}
+%% The impact of the shape of the graph on performance needs to be further investigated.
+%% For example, in the convolution examples, a pixel of the input image is only related
+%% to its immediate neighborhood, and so the algorithms only traverse a small portion
+%% of the dependence graph. Despite this, the graph approach is not significantly more performant for these benchmarks than for others.
+
+%% \cd{I'd say that the first paragraph already covers this}
+%% We overall consider our results to be positive, since we find consistent performance
+%% benefits in two parts of the system -- barring one example -- as well as an improvement in the simplicity of
+%% the implementation itself. In our view, the loss of performance in evaluation is
+%% acceptable, since we generally find that the implementations of $\demandsR(\param)$
+%% and $\demandedByR(\param)$ are significantly faster, which translates to faster
+%% interactions with linked-examples
