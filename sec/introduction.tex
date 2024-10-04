@@ -17,7 +17,7 @@ to embark on such an activity. Perhaps more often than we would like, we end up 
    \centering
    \includegraphics[width=0.49\textwidth]{fig/example/bremer.png}
    \vspace{-2mm}
-   \caption{\raggedright Hand-crafted data-transparent visualisation \cite{bremer15}}
+   \caption{\raggedright Hand-crafted transparent visualisation \cite{bremer15}}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
 
@@ -31,62 +31,38 @@ the colour scheme indicate? Which of the points represent large cities or small 
 accompanying text can help, but some ambiguities inevitably remain. The entire value proposition of a summary
 after all is that it presents the big picture at the expense of certain detail.
 
-\citeauthor{bremer15} implemented an interactive feature that allow a user to explore some of these questions
-themselves \emph{in situ}, i.e., directly from the chart. By selecting an individual point, they are able to
-bring up a view showing the data that point was calculated from. In this case the highlighted point represents
-data for Chiang Mai and the plotted value of 10.9\% was derived from an increase in population density from
-4,416 to 5,010 people per sq.~km. \todo{Paragraph ends prematurely}
+\citeauthor{bremer15} approach was to implement an interactive feature that allows a user to explore some of
+these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting an individual
+point, they are able to bring up a view showing the data that point was calculated from. In the figure the
+highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
+in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable as comprehension
+aids, but are laborious to implement by hand and require the author to anticipate the queries a user might
+have. For these reasons they also tend not to generalise: for example \citeauthor{bremer15}'s visualisation
+only allows the user to select one point at a time.
 
 \subsection{Data transparency as PL infrastructure}
 \label{sec:introduction:data-transparency}
 
-Features like these are valuable comprehension aids but are laborious to implement by hand, as done by
-\citet{bremer15}. \todo{Needs to follow better from preceding paragraph.} Manual implementations also require
-the author to anticipate the queries a user might have and do not always generalise well: for example
-\citeauthor{bremer15}'s visualisation only allows the user to select one point at a time.
+An alternative approach is to treat data provenance features like these as a language infrastructure problem,
+baking dependency metadata directly into outputs so that interactive queries of this sort can be supported
+automatically~\cite{psallidas18smoke,perera22} \todo{Reinstate Psallidas discussion here, and more general
+point about relationship between interaction and data selection.} The burden of implementing these features no
+longer falls on the author of the content, who can concentrate purely on data visualisation, and the consumer
+of the content can formulate any query supported by the infrastructure. In contrast to \citet{bremer15}
+\todo{revisit}, the relationship to data is incrementally discoverable, revealed as the user interacts with
+the parts of the output they care about, ideally with some kind of formal guarantee that the revealed data is
+in some sense ``minimal and sufficient''.
 
-For these reasons, there has been recent interest in treating data
-%transparency and
-exploration \todo{not data exploration} as a programming language infrastructure problem, baking dependency
-metadata directly into outputs so that interactive queries of this sort can be supported
-automatically~\cite{ricciotti17,perera22} \todo{Feels like we should reinstate \citet{psallidas18smoke}
-discussion here, and more general point about relationship between interaction and data selection.} The author
-of the content no longer has to concern themselves with these tricky features \todo{rephrase}, and in fact may
-find that they have an easier time exploring data, and building more complex models \todo{remove this claim}.
-Moreover the consumer of the content now \todo{but is was also true with the manual solution} has the ability
-to explore detail on an as-needed basis in the context of the high-level perspective offered by the visual
-summary. In contrast to \citet{bremer15}, the relationship to data is incrementally discoverable, revealed as
-the user interacts with the parts of the output they care about, ideally with some kind of formal guarantee
-that the revealed data is in some sense ``minimal and sufficient''.
+% In data visualisation it has long been recognised that when users interact with visual elements by clicking
+% or lassoing, the intention is typically to manipulate the underlying data. This has lead to various
+% techniques for inverting selections in visual space to obtain selections in the input data
+% space~\cite{north00, heer08}.
 
-% \MNnote{Is this part redundant now?} In data visualisation it has long been recognised that when users interact with visual elements by clicking or
-% lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
-% for inverting selections in visual space to obtain selections in the input data space~\cite{north00, heer08}.
-
-% \MNnote{A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For example, for a custom
-% in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input
-% selections, and then ``forward trace'' to find related output selections in other views, to support a popular
-% feature from data visualisation called \emph{linked brushing}.
-%Moving forward, we refer to this feature as \emph{linked outputs} instead.
-% \citet{perera22} take this further, applying the idea
-% of forwards and backards tracing to a general purpose functional language as opposed to a language for
-% data visualisation.}
-
-% \sout{\mbox{\citet{perera22}} implemented a similar approach for a general-purpose functional language using
-% a pair of dependency-tracking operators, written here as $\demandsR$ (demands) and $\sufficesR$ (suffices
-% for), relating specific output and input selections.} The formal guarantee that input selections are
-% ``minimal and sufficient'' was captured by $\demandsR$ and $\sufficesR$ forming a \emph{Galois connection},
-% meaning they enjoy the following relationship of (near) mutual reciprocality: \[\demandsR(Y) \leq X \iff Y
-% \leq \sufficesR(X)\]
-
-% \noindent (Here $\leq$ is the inclusion order over sets $X, Y$ of data elements.) This says that if outputs
-% $Y$ demand inputs $X'$, then $X'$ is the smallest set of inputs which suffices for outputs which include $Y$;
-% and conversely that if inputs $X$ suffice for $Y'$, then $Y'$ is the greatest set of outputs whose demand is
-% included by $X$. (A Galois connection in this sense simply relaxes the usual isomorphism laws to
-% inequalities.) Galois connections lend themselves well to bidirectional reasoning about resource consumption
-% because the $\sufficesR$ direction (sufficiency) can be interpreted in terms of (fine-grained)
-% reproducibility: a way of verifying that a supplied data set (perhaps a subset of a larger one) is in fact
-% sufficient to reproduce a particular feature of a complex output.
+% A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For
+% example, for a custom in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace''
+% from output selections to input selections, and then ``forward trace'' to find related output selections in
+% other views, to support a popular feature from data visualisation called \emph{linked brushing}. Moving
+% forward, we refer to this feature as \emph{linked outputs} instead.
 
 \begin{figure}
    \centering
@@ -96,7 +72,7 @@ that the revealed data is in some sense ``minimal and sufficient''.
    $\demandsR_G$ operator), ``What outputs is an input demanded by?'' (top arrow, $\demandedByR_G$ operator),
    and linking inputs that share a common output dependency. \todo{Simpler example, e.g.~moving average?}}
    \label{fig:introduction:related-inputs}
-   \vspace{-0.1cm}
+%   \vspace{-0.1cm}
 \end{figure}
 
 
@@ -104,7 +80,8 @@ that the revealed data is in some sense ``minimal and sufficient''.
    \centering
    \includegraphics[width=0.8\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
    \vspace{-2mm}
-   \caption{Data-transparency: ``What inputs does an output demand?'' (left arrow,  $\demandsR_G$ operator),  ``What outputs~is~an input demanded by?'' (right arrow, $\demandedByR_G$ operator), and linking outputs that share a common input~dependency.}
+   \caption{Data-transparency: \emph{demands} ($\demandsR_G$) and \emph{demanded by} ($\demandedByR_G$)
+   operators link outputs that share common input dependencies.}
    \label{fig:introduction:scatterplot}
   %  \vspace{-0.2cm}
 \end{figure}
@@ -139,8 +116,8 @@ is considered clean energy.
 \todo{This paragraph incongruous; explain $\demandsR$ operator in context of diagram.} As we will see later in
 the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that
 was used to compute the selected output. We read this operator as computing ``what input data does an output
-\emph{demand}?''. The subscript $G$ is short for ``graph'' \todo{$G$ is a metavariable -- probably better to
-omit here}, denoting that the computation is based on the reachability relation of a dependence graph $G$.
+\emph{demand}?''. The subscript $G$ indicates that the notion of dependency is with respect to a dependence
+graph $G$.
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
@@ -232,12 +209,11 @@ circles). \todo{Last two paragraphs verbose}
 \subsection{Contributions}
 \label{sec:introduction:contributions}
 
-We introduce a new bidirectional program analysis framework which supports interactive exploration of
-fine-grained I/O relationships \todo{in a general-purpose language?}, as described in the previous section. We
-make use of dynamic dependence graphs~\cite{ferrante87, agrawal90}; this enables our approach to be
-language-independent, separating the definition of queries over the dependence graph for a particular program,
-from the problem of deriving the dependence graph for that program. Our specific contributions are as follows
-\todo{do we really need three citations of \cite{perera22} here?}:
+We introduce a new bidirectional program analysis framework for a general-purpose programming language which
+supports interactive exploration of fine-grained I/O relationships. We make use of dynamic dependence
+graphs~\cite{ferrante87, agrawal90}; this enables our approach to be language-independent, separating queries
+over dependence graphs from the problem of deriving the dependence graph for a particular program. Our
+specific contributions are as follows \todo{do we really need three citations of \cite{perera22} here?}:
 
 \begin{itemize}
 
@@ -251,13 +227,13 @@ inputs when they contribute to common features of the output. The design of our 
 straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We also show
 how a dual \emph{linked outputs} analysis, available in prior work \cite{perera22}, is easily obtained by
 transposing the two operators.
-%  \MNnote{I suggest taking this part out, because we don't actually do this:}, and relate this formally to the ``linked brushing'' feature from the data visualisation literature.
 
-\item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the predominant techniques for achieving bidirectional program analysis.
-  Using usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested
-over larger examples execute at a speed that appears instantaneous to a user, compared to $25\%$ using an
-implementation based on traces. Fast response time is particularly important for the interactive data
-visualisations we~target.
+\item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the
+predominant techniques for achieving bidirectional program analysis. Using usability metrics from
+\citet{nielsen93}, we find that $81\%$ of the queries we tested over larger examples execute at a speed that
+appears instantaneous to a user, compared to $25\%$ using an implementation based on traces. Fast response
+time is particularly important for the interactive data visualisations we~target.
+
 \end{itemize}
 %
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
@@ -327,10 +303,9 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 %ways of composing reachability in $G$ with its relational converse.
 
 %\vspace{0.1cm}
-\paragraph{Roadmap} The  paper is organised as follows:
+\paragraph{Roadmap} The paper is organised as follows:
 
 \begin{itemize}[leftmargin=*]
-  \item \secref{overview} presents an informal overview of our approach and language.
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
   the cognacy operator $\relInputR_G$ (``linked inputs'') and unpacking the intuitive relationship between its
   two components $\demandsR_{G}$ (``demands'') and $\demandedByR_{G}$ (``demanded by'') in terms of
@@ -354,15 +329,11 @@ transparency and propose some other ways in which the present system could be im
 
 \end{itemize}
 
-%\vspace{0.2cm}
 \noindent
-We provide examples of practical programs written in our framework in\apdxsecref{apdx:evaluation-src-code},
-including those used to generate \figref{introduction:related-inputs} and \figref{introduction:scatterplot}
-\todo{We don't give a single example program in the entire paper, apart from the completely toy example to
-illustrate graphs and the other toy examples to illustrate surface syntax.}
-
-Our implementation is open source and available (given later in a deanonymised version). To support our claims
-about fast response times, we also host an anonymised interactive web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}} (the user interface doesn't yet
-support selecting individual coordinates for points in the scatter plot, although the analyses do support
-this).
+We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
+visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
+common visualisations; a d3.js front end automatically enriches the rendered outputs with support for visual
+selection and the data transparency queries shown in
+\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
+available online (given later in a deanonymised version). We also provide an anonymised web demo at
+\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
