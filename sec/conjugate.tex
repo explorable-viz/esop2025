@@ -216,10 +216,7 @@ suggested by the intuition just given?}.
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every (rather than any)
-ancestor to be in the input set. We include $\preimageDualR_R$ here only for completeness; although it is
-derived/implemented as easily as $\sufficesR_R$, we so far find its application unimportant for the purpose of
-IO-related queries, so  ignore it hereon \todo{Unconvincing -- especially as we immediately go on to state a
-lemma about it. In the current implementation we do use it, so we can mention that.}.
+ancestor to be in the input set. \todo{Give intuition for $\preimageDualR_R$}
 
 Notably, $\demandedByR_R$ can be transformed into $\sufficesR_R$ using the De Morgan Dual:
 
@@ -238,9 +235,6 @@ Notably, $\demandedByR_R$ can be transformed into $\sufficesR_R$ using the De Mo
       \item $\dual{\demandsR_R} = \preimageDualR_R$
    \end{enumerate}
 \end{lemma}
-\begin{proof}
-   See \apdxsecref{apdx:conjugate:image-preimage-duality} \todo{Don't need a proof of this one}
-\end{proof}
 
 Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, we can read
 $\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''. Then, taking the complement of
