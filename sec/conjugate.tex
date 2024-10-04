@@ -262,18 +262,17 @@ Conjugate functions are related to another class of near-reciprocals between Boo
    \end{enumerate}
 \end{proposition}
 
-\subsection{Computing $\demandsR_G$, $\demandedByR_G$, and $\sufficesR_{G}$ for Dependence Graphs \todo{Weird
-to omit $\preimageDualR_{G}$ having made a big deal about conjugate/adjoint pairs, especially as we also don't
-use $\demandedByR_G$}}
+\subsection{Computing $\demandsR_G$, $\demandedByR_G$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, and $\sufficesR_{G}$ for a dependence graph
-$G$. \todo{Super-weird because $\demandsR_{G}$ is completely trivial for the IO relation of $G$, which is how
-it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in comparison to the
-trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be readily adapted to
-compute all 3 \todo{4} operators; for example, given a procedure for $\demandedByR_{G}$, we can compute its
-conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by \lemref{conjugate:image-preimage-converse}) and
-its dual $\sufficesR_{G}$ by pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
+We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
+a dependence graph $G$. \todo{Super-weird because $\demandsR_{G}$ is completely trivial for the IO relation of
+$G$, which is how it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in
+comparison to the trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be
+readily adapted to compute all 4 operators; for example, given a procedure for $\demandedByR_{G}$, we can
+compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by
+\lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by pre- and post-composing with
+negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in
