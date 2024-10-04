@@ -306,7 +306,6 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 \paragraph{Roadmap} The paper is organised as follows:
 
 \begin{itemize}[leftmargin=*]
-  \item \secref{overview} presents an informal overview of our approach and language.
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
   the cognacy operator $\relInputR_G$ (``linked inputs'') and unpacking the intuitive relationship between its
   two components $\demandsR_{G}$ (``demands'') and $\demandedByR_{G}$ (``demanded by'') in terms of
@@ -331,12 +330,10 @@ transparency and propose some other ways in which the present system could be im
 \end{itemize}
 
 \noindent
-We implement our framework in a programming language called \OurLang, a pure functional language with a
-runtime implementing conjugate dependency-tracking operators. From the programmer's perspective the language
-is unremarkable. The distinguishing feature of the language is a special semantics that interprets a program
-not as a plain output but as an output with a built-in query engine supporting the transparency features shown
-above. The author of a visualisation just expresses their chart as a pure function of the inputs, via a set of
-data types for common visualisations; a d3.js front end automatically enriches the rendered outputs with
-support for visual selection and various selection-based queries. Our implementation is open source and
-available online (given later in a deanonymised version). We also provide an anonymised interactive web demo
-at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
+visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
+common visualisations; a d3.js front end automatically enriches the rendered outputs with support for visual
+selection and the data transparency queries shown in
+\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
+available online (given later in a deanonymised version). We also provide an anonymised web demo at
+\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
