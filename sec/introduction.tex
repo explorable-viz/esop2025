@@ -204,7 +204,7 @@ circles). \todo{Last two paragraphs verbose}
 % one of our contributions here is to show that $\demandedByR$ can be computed in a more direct fashion using
 % dependence graphs.
 
-\subsection{Contributions}
+\subsection{Contributions and roadmap}
 \label{sec:introduction:contributions}
 
 We introduce a new bidirectional program analysis framework for a general-purpose programming language,
@@ -228,11 +228,11 @@ contributions are as follows:
    how a dual \emph{linked outputs} operator $\relOutputR_G$, supporting the ``linked visualisations'' of
    prior work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
 
-\item \secref{evaluation} shows that our implementation performs better than trace-based approaches, the
-   primary alternative implementation technique. Using usability metrics from \citet{nielsen93}, we find that
-   $81\%$ of the queries we tested execute at a speed that appears instantaneous to a user, compared to $25\%$
-   using an implementation based on traces. We also compare the overhead of building a trace vs.~building a
-   dependence graph for a given program.
+\item \secref{evaluation} shows that our implementation performs better than one based on traces and
+   bidirectional interpreters, the primary alternative implementation technique. Using usability metrics from
+   \citet{nielsen93}, we find that $81\%$ of the queries we tested execute at a speed that appears
+   instantaneous to a user, compared to $25\%$ using an implementation based on traces. We also compare the
+   overhead of building a trace vs.~building a dependence graph for a given program.
 
 \end{itemize}
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
@@ -241,33 +241,15 @@ contributions are as follows:
 %arise. Crucially, we want to make this feature automatic.
 
 \noindent These contributions are not available in previous work. In particular, although
-\citet{psallidas18smoke} supports fast queries for linked visualisations in a database settings, ours is (to
-be best of our knowledge) the first implementation for a general-purpose language which is fast enough for the
-interactive data visualisations we target.
+\citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, ours is (to the
+best of our knowledge) the first implementation for a general-purpose language which is fast enough for the
+interactive scenarios we target. \todo{Expand} Related work is discussed in more detail in
+\secref{related-work}.
 
-Hand-crafted efforts like \citet{bremer15}'s
-\todo{this comparison doesn't quite work here; by now we should already have restricted interest to automated
-solutions} are not only labour-intensive, but involve manually embedding metadata about the relationship
-between visual outputs and inputs into the same program.
-%The validity of this metadata is fragile: whenever the visualisation or data
-% analysis logic changes, the relationships between inputs and outputs also change. By shifting the
-% responsibility for gathering this information into the programming language, the author or data scientist can
-% concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-% features to the infrastructure used to implement and host the visualisation.
-More automated, trace-based, solutions like \citet{ricciotti17} and \citet{perera22}, which shift that
-responsibility into the programming language, use a bidirectional interpreter that is costly both in terms of
-implementation effort and performance.
-% : recording an execution \emph{trace} during forward execution, \edit{and then using that trace to guide backwards execution}.
-For example, these languages are difficult to update, with each change requiring both directions of the
-interpreter to be modified in a way that maintains bidirectionality; and each new analysis involves re-running
-the entire program backwards, regardless of whether all of it is relevant. \todo{This paragraph suggests
-\citet{ricciotti17,perera22} are the only relevant related work!}
-
-\secref{related-work} reviews related work in more detail, including linked visualisations and data
-provenance. \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of
-transparency considered in this paper is purely extensional and falls short of providing full explanations of
-how output parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose
-some other ways in which the present system could be improved.
+\secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
+considered in this paper is purely extensional and falls short of providing full explanations of how output
+parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose some other
+ways in which the present system could be improved.
 
 We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
 visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
@@ -276,6 +258,16 @@ interactive selection and the data transparency queries shown in
 \figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
 available online (given later in a deanonymised version). We also provide an anonymised web demo at
 \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+
+\todo{Relocate; by this point the rationale for automated solutions is already established.}
+
+\todo{Hand-crafted efforts like \citet{bremer15}'s are not only labour-intensive, but involve manually
+embedding metadata about the relationship between visual outputs and inputs into the same program. More
+automated, trace-based, solutions like \citet{ricciotti17} and \citet{perera22}, which shift that
+responsibility into the programming language, use a bidirectional interpreter that is costly both in terms of
+implementation effort and performance. For example, these languages are difficult to update, with each change
+requiring both directions of the interpreter to be modified in a way that maintains bidirectionality; and each
+new analysis involves re-running the entire program backwards, regardless of whether all of it is relevant.}
 
 % The validity of this metadata is fragile: whenever the visualisation or data analysis logic changes, the
 % relationships between inputs and outputs also change. By shifting the responsibility for gathering this
