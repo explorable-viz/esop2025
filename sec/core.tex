@@ -1,20 +1,24 @@
 \section{A Core Calculus for Transparent Outputs}
 \label{sec:core}
 
-\todo{Needs an intro.} We introduce the basic syntactic forms of the language (\secref{core:syntax}) and show
-how parts of values in our language are labelled with addresses. Then we define \emph{dynamic dependence
-graphs} (\secref{core:dependence-graphs}) give a big-step operational semantics that evaluates a term to
-a value and constructs a dependence graph for the evaluation of that term (\secref{core:semantics}). The big
-step semantics uses auxiliary definitions that support pattern-matching and mutual recursion.
+We start by introducing a core language for supporting transparent outputs of the kind shown in
+\secref{introduction}. The term syntax (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and
+provides datatypes, records and matrices (although we omit a presentation of matrices here). The syntax of
+values is less standard; each part of a value has a unique \emph{address} $\alpha$ which allows it to appear
+as a node in a graph. We give a big-step operational semantics that evaluates a term to both a value and a
+\emph{dynamic dependence graph} for that value (\secref{core:semantics}). The core language is expressive,
+supporting deep pattern-matching and mutual recursion; however our implementation also provides a surface
+language that desugars into the core, providing piecewise function definitions, list comprehensions and other
+conveniences, as shown in \todo{ref earlier code example}, which would otherwise complicate the core.
 
-First some notational preliminaries. We write to ${\seq{x}}$ denote a finite sequence of elements
-$\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences $\seq{x}$ and
-$\seq{x}'$ is written $\seq{x} \concat \seq{x}'$. We also write $x \cons \seq{x}$ for cons (prepend) and
-$\seq{x} \cons x$ for snoc (append). We write $\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of
-pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where keys $k_i$ are pairwise unique. If $X$ and $Y$ are
-sets, we write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also $x \cdot X$ or $X
-\cdot x$ to mean $X \disjunion \set{x}$. For finite maps $\phi, \psi$ we write $\phi \disjunion \psi$ to mean
-$\phi \cup \psi$ where $\dom{\phi}$ and $\dom{\psi}$ are disjoint.
+\paragraph{Notational preliminaries.} We write to ${\seq{x}}$ denote a finite sequence of elements
+$\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x}
+\concat \seq{x}'$; we also write $x \cons \seq{x}$ for cons (prepend) and $\seq{x} \cons x$ for snoc (append).
+We write $\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of pairs
+$\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where keys $k_i$ are pairwise unique. If $X$ and $Y$ are sets,
+we write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also $x \cdot X$ or $X \cdot
+x$ to mean $X \disjunion \set{x}$. If $X$ and $Y$ happen to be finite maps, we mean something more specific by
+$X \disjunion Y$, namely $X \cup Y$ where $\dom{X}$ and $\dom{Y}$ are disjoint.
 
 \subsection{Syntax}
 \label{sec:core:syntax}
