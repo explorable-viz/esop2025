@@ -73,7 +73,6 @@ that the revealed data is in some sense ``minimal and sufficient''.
    \label{fig:introduction:related-inputs}
 \end{figure}
 
-
 \begin{figure}
    \centering
 %   \includegraphics[width=0.9\textwidth]{fig/example/non-renewables.png}
@@ -305,6 +304,10 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 \paragraph{Roadmap} The paper is organised as follows:
 
 \begin{itemize}[leftmargin=*]
+\item \secref{core} defines a core functional language with an operational semantics that pairs every result
+  with a dynamic dependence graph suitable for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how to represent
+  (parts of) values as vertices in the graph. We also show how our operators can follow information back to environments,
+  with projections.
 \item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
   the cognacy operator $\relInputR_G$ (``linked inputs'') and unpacking the intuitive relationship between its
   two components $\demandsR_{G}$ (``demands'') and $\demandedByR_{G}$ (``demanded by'') in terms of
@@ -312,10 +315,6 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
   cognacy operator $\relOutputR_G$ (``linked outputs'') and explain the relationship to Galois connections: $f$
   and $g$ being conjugate is equivalent to $f$ and the De Morgan dual of $g$ forming a Galois connection. We
   give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$.
-\item \secref{core} defines a core functional language with an operational semantics that pairs every result
-  with a dynamic dependence graph suitable for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how to represent
-  (parts of) values as vertices in the graph. We also show how our operators can follow information back to environments,
-  with projections.
 \item \secref{evaluation} evaluates our implementation based on graphs and conjugates against one based on
  traces and Galois connections. We contrast the implementation burden of the two approaches, and the
  performance  of building trace vs.~building dependence graphs and computing $\demandsR_{G}$ and
