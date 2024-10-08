@@ -1,16 +1,16 @@
 \section{A Core Calculus for Transparent Outputs}
 \label{sec:core}
 
-We start by introducing a core language for supporting transparent outputs of the kind shown in
-\secref{introduction}. The term syntax (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and
-provides datatypes, records and matrices (although we omit a presentation of matrices here). The syntax of
-values is less standard: each part of a value has a unique \emph{address} $\alpha$ which serves to identify
-that part of the value in a dependence graph. We give a big-step operational semantics that evaluates a term
-to both a value and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how
-parts of that value depend on parts of the input. The core language is fairly expressive, supporting deep
-pattern-matching and mutual recursion; however our implementation also provides a surface language that
-desugars into the core, providing piecewise function definitions, list comprehensions and other conveniences,
-as shown in \todo{ref earlier code example}, which would otherwise complicate the core.
+We start by introducing a core language for supporting transparent outputs, which is the basis of \OurLang.
+The term syntax (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and provides datatypes,
+records and matrices (although we omit a presentation of matrices here). The syntax of values is less
+standard: each part of a value has a unique \emph{address} $\alpha$ which serves to identify that part of the
+value in a dependence graph. We give a big-step operational semantics that evaluates a term to both a value
+and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how parts of that
+value depend on parts of the input. The core language is fairly expressive, supporting deep pattern-matching
+and mutual recursion; however our implementation also provides a surface language that desugars into the core,
+providing piecewise function definitions, list comprehensions and other conveniences, as shown in \todo{ref
+earlier code example}, which would otherwise complicate the core.
 
 \paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements
 $\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x}

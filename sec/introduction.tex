@@ -213,39 +213,39 @@ graphs}~\cite{ferrante87, agrawal90}; this enables our approach to be language-i
 over the graph from the problem of deriving the dependence graph for a particular program. Our specific
 contributions are as follows:
 
-\begin{itemize}
+\begin{itemize}[leftmargin=*]
 
 \item \secref{core} defines a core calculus for transparent outputs, where parts of inputs and computed values
-are assigned unique labels called \emph{addresses}, and programs have an operational semantics that pairs
-every result with a dynamic dependence graph suitable for computing the \emph{demands} and \emph{demanded by}
-operators $\demandsR_{G}$ and $\demandedByR_{G}$ for that particular program.
+   are assigned unique labels called \emph{addresses}, and programs have an operational semantics that pairs
+   every result with a dynamic dependence graph capturing the fine-grained I/O relationships of that program.
 
-\item A new formal framework for bidirectional provenance queries over dependence graphs, formalising the
-$\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in \secref{introduction:data-transparency},
-which we show to be \emph{conjugate} in the sense of~\citet{jonsson51}. We relate our framework to
-bidirectional analyses based on Galois connections (e.g.~\citet{ricciotti17,perera22}).
+\item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over dependence
+   graphs, formalising the $\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in
+   \secref{introduction:data-transparency}. We show these to be \emph{conjugate} in the sense
+   of~\citet{jonsson51}, and give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how
+   a novel cognacy operator $\relInputR_G$ called \emph{linked inputs}, relating inputs when they contribute
+   to common features of the output, can be obtained by composing $\demandsR_{G}$ and $\demandedByR_{G}$, and
+   how a dual \emph{linked outputs} operator $\relOutputR_G$, supporting the ``linked visualisations'' of
+   prior work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
 
-\item A novel \emph{linked inputs} analysis, a relation of mutual relevance or ``cognacy'' which arises
-between inputs when they contribute to common features of the output. The design of our framework makes it
-straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We also show
-how a dual \emph{linked outputs} analysis, corresponding to the automated ``linked visualisations'' available
-in prior work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
-
-\item \secref{evaluation} shows that our implementation performs better than trace-based approaches, one of
-the predominant techniques for bidirectional program analysis~\cite{psallidas18smoke,perera22}. Using
-usability metrics from \citet{nielsen93}, we find that $81\%$ of the queries we tested execute at a speed that
-appears instantaneous to a user, compared to $25\%$ using an implementation based on traces. Fast response
-time is particularly important for the interactive data visualisations we target. We also compare the overhead
-of building a trace vs.~building a dependence graph.
+\item \secref{evaluation} shows that our implementation performs better than trace-based approaches, the
+   primary alternative implementation technique. Using usability metrics from \citet{nielsen93}, we find that
+   $81\%$ of the queries we tested execute at a speed that appears instantaneous to a user, compared to $25\%$
+   using an implementation based on traces. We also compare the overhead of building a trace vs.~building a
+   dependence graph for a given program.
 
 \end{itemize}
-%
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
 %interactions that allow the user to query relationships between data sources and visualisations and other
 %outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
 %arise. Crucially, we want to make this feature automatic.
-%
-These contributions are not available in previous works. Hand-crafted efforts like \citet{bremer15}'s
+
+\noindent These contributions are not available in previous work. In particular, although
+\citet{psallidas18smoke} supports fast queries for linked visualisations in a database settings, ours is (to
+be best of our knowledge) the first implementation for a general-purpose language which is fast enough for the
+interactive data visualisations we target.
+
+Hand-crafted efforts like \citet{bremer15}'s
 \todo{this comparison doesn't quite work here; by now we should already have restricted interest to automated
 solutions} are not only labour-intensive, but involve manually embedding metadata about the relationship
 between visual outputs and inputs into the same program.
@@ -254,24 +254,34 @@ between visual outputs and inputs into the same program.
 % responsibility for gathering this information into the programming language, the author or data scientist can
 % concern themselves purely with analysis and visualisation, and defer the provision of these transparency
 % features to the infrastructure used to implement and host the visualisation.
-More automated, trace-based, solutions like \citet{ricciotti17} and
-\citet{perera22}, which shift that responsibility into the programming language,
-use a bidirectional interpreter that is costly both in terms of implementation effort and performance.
+More automated, trace-based, solutions like \citet{ricciotti17} and \citet{perera22}, which shift that
+responsibility into the programming language, use a bidirectional interpreter that is costly both in terms of
+implementation effort and performance.
 % : recording an execution \emph{trace} during forward execution, \edit{and then using that trace to guide backwards execution}.
 For example, these languages are difficult to update, with each change requiring both directions of the
 interpreter to be modified in a way that maintains bidirectionality; and each new analysis involves re-running
 the entire program backwards, regardless of whether all of it is relevant. \todo{This paragraph suggests
 \citet{ricciotti17,perera22} are the only relevant related work!}
-% Moreover each runs over an execution record or trace of the entire
-%computation regardless of whether all of the trace is relevant. and each  analysis
-% needing to be defined separately that is dependent on the details of the language.
-% Moreover each runs over an execution record or trace of the entire
-%computation regardless of whether all of the trace is relevant.
-% and inputs into the same program. The validity of this metadata is fragile: whenever the visualisation or data
-% analysis logic changes, the relationships between inputs and outputs also change. By shifting the
-% responsibility for gathering this information into the programming language, the author or data scientist can
-% concern themselves purely with analysis and visualisation, and defer the provision of these transparency
-% features to the infrastructure used to implement and host the visualisaperera22tion.
+
+\secref{related-work} reviews related work in more detail, including linked visualisations and data
+provenance. \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of
+transparency considered in this paper is purely extensional and falls short of providing full explanations of
+how output parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose
+some other ways in which the present system could be improved.
+
+We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
+visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
+common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
+interactive selection and the data transparency queries shown in
+\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
+available online (given later in a deanonymised version). We also provide an anonymised web demo at
+\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+
+% The validity of this metadata is fragile: whenever the visualisation or data analysis logic changes, the
+% relationships between inputs and outputs also change. By shifting the responsibility for gathering this
+% information into the programming language, the author or data scientist can concern themselves purely with
+% analysis and visualisation, and defer the provision of these transparency features to the infrastructure
+% used to implement and host the visualisation.
 
 % However, computing the bidirectional dependency information needed to realise this idea is costly both in
 % terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
@@ -306,25 +316,3 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 %related work. Moreover, in the graphical setting,} these are both easy to compute, since they amount to the
 %two ways of composing reachability in $G$ with its relational converse.
 
-\begin{itemize}[leftmargin=*]
-\item \secref{conjugate} defines a new program analysis framework over dynamic dependence graphs, introducing
-  the cognacy operator $\relInputR_G$ (``linked inputs'') and unpacking the intuitive relationship between its
-  two components $\demandsR_{G}$ and $\demandedByR_{G}$ in terms of \citeauthor{jonsson51}'s notion of
-  conjugate operators over Boolean algebras. We also introduce the dual cognacy operator $\relOutputR_G$
-  (``linked outputs'') and give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$.
-\end{itemize}
-
-\secref{related-work} reviews related work in more detail, including linked visualisations and data
-provenance. \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of
-transparency considered in this paper is purely extensional and falls short of providing full explanations of
-how output parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose
-some other ways in which the present system could be improved.
-
-\noindent
-We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
-visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
-common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
-interactive selection and the data transparency queries shown in
-\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
-available online (given later in a deanonymised version). We also provide an anonymised web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
