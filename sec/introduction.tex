@@ -215,16 +215,20 @@ contributions are as follows \todo{do we really need three citations of \cite{pe
 
 \begin{itemize}
 
+\item A core calculus for transparent outputs, where parts of inputs and computed values are assigned unique
+labels called \emph{addresses} and programs evaluate not only to values but to \emph{dynamic dependence graphs}
+capturing the fine-grained dependencies associated with those values.
+
 \item A new formal framework for bidirectional provenance queries over dependence graphs, formalising the
 $\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in \secref{introduction:data-transparency},
 which we show to be \emph{conjugate} in the sense of~\citet{jonsson51}. We relate our framework to
 bidirectional analyses based on Galois connections (e.g.~\citet{ricciotti17,perera22}).
 
-\item A novel \emph{linked inputs} analysis, a relation of mutual relevance or “cognacy” which arises between
-inputs when they contribute to common features of the output. The design of our framework makes it
+\item A novel \emph{linked inputs} analysis, a relation of mutual relevance or ``cognacy'' which arises
+between inputs when they contribute to common features of the output. The design of our framework makes it
 straightforward to implement this analysis by composing $\demandsR_{G}$ and $\demandedByR_{G}$. We also show
-how a dual \emph{linked outputs} analysis, available in prior work \cite{perera22}, is easily obtained by
-transposing the two operators.
+how a dual \emph{linked outputs} analysis, corresponding to the automated ``linked visualisations'' available
+in prior work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
 
 \item Improved performance with respect to \emph{trace-based} approaches~\cite{perera22}, one of the
 predominant techniques for achieving bidirectional program analysis. Using usability metrics from
@@ -301,7 +305,7 @@ the entire program backwards, regardless of whether all of it is relevant. \todo
 %ways of composing reachability in $G$ with its relational converse.
 
 %\vspace{0.1cm}
-\paragraph{Roadmap} The paper is organised as follows:
+\paragraph{Roadmap} The paper is organised as follows \todo{not sure we need a roadmap as well}:
 
 \begin{itemize}[leftmargin=*]
 \item \secref{core} defines a core functional language with an operational semantics that pairs every result
