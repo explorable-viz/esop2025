@@ -184,16 +184,16 @@
    \begin{smathpar}
       \inferrule*[]
       {
-         v_i = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
+         \gamma'(x_i) = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
          \\
-         G_i = \set{\bind{\alpha_i}{V}}
+         G_i = \inStar{V}{\alpha_i}
          \quad
          (\forall i \numleq \length{\seq{x}})
       }
       {
          \gamma, \rho, V
          \closeDefs
-         \set{\seq{\bind{x}{v}}},
+         \gamma',
          \textstyle{\bigdisjunion}\seq{G}
       }
    \end{smathpar}
