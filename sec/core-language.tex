@@ -55,15 +55,15 @@ tries~\cite{hinze00,peytonjones2021}; for a language with rich structured values
 we find this makes for a cleaner presentation than a single shallow elimination form for each type. The
 piecewise function definitions of the surface language desugar into eliminators.
 
-An eliminator specifies how a value of a particular type is matched, and for a given value determines how any
-pattern variables get bound, and the continuation $\kappa$ which to be executed under those additional
-bindings. A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as variable $x$) and
-continue as $\kappa$. A record eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with
-fields $\seq{x}$, and provides a continuation $\kappa$ for matching the values of those fields. Lastly, the
-eliminator $\elimConstr{\seq{c \mapsto \kappa}}$ provides a branch $c \mapsto \kappa$ for each constructor $c$
-in $\seq{c}$, where each $\kappa$ specifies how any arguments to $c$  will be matched. (We assume that any
-constructors matched by an eliminator all belong to the same data type, but this is not enforced in the core
-language.)
+An eliminator specifies how values of a particular shape are matched, and for a given value, determines how
+any pattern variables get bound and the continuation $\kappa$ which will be executed under those bindings. A
+variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as variable $x$) and continue as
+$\kappa$. A record eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$,
+and provides a continuation $\kappa$ for sequentially matching the values of those fields. Lastly, a
+constructor eliminator $\elimConstr{\seq{c \mapsto \kappa}}$ provides a branch $c \mapsto \kappa$ for each
+constructor $c$ in $\seq{c}$, where each $\kappa$ specifies how any arguments to $c$ will be matched. (We
+assume that any constructors matched by an eliminator all belong to the same data type, but this is not
+enforced in the core language.)
 
 \subsubsection{Values and environments}
 \label{sec:core:values}
@@ -100,24 +100,35 @@ whenever a new address $\alpha$ is introduced. \todo{This paragraph unclear.}
 % a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t
 % much better than just saying this in plain English outside of the definition).
 
-\subsection{Dynamic Dependence Graphs}
+\subsection{Operational Semantics}
+\label{sec:core:semantics}
+
+We now give a big-step operational semantics for the core language, which evaluates terms to values and builds
+a dynamic dependence graph for any such value. First we introduce the idea of a dynamic dependence graph.
+
+\subsubsection{Dynamic Dependence Graphs}
 \label{sec:core:dependence-graphs}
 
-% \input{fig/conjugate/toy_example}
+A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence graph}) is a directed acyclic
+graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the
+dependence graph for a particular program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values
+(either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$
+indicate that, in the evaluation of the program, the partial value associated to $\beta$ \textit{depends on}
+on the partial value associated to $\alpha$. This diverges somewhat from traditional approaches to dynamic
+dependence graphs in only considering one type of edge (data dependency) rather than separate data and control
+dependencies; moreover our edges point in the direction of dependent vertices, whereas in the literature the
+other direction is somewhat more common.
 
-A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set $V$ of
-\emph{vertices} and a set $E \subseteq V \times V$ of edges. In the dependence graph for a particular program,
-vertices $\alpha, \beta \in V$ represent \emph{parts} of values (either supplied to the program as inputs or
-produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of the program,
-the partial value associated to $\beta$ \textit{depends on} on the partial value associated to $\alpha$. This
-diverges somewhat from traditional approaches to dynamic dependence graphs in only considering one type of
-edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
-direction of dependent vertices, whereas in the literature the other direction is somewhat more common.
+During evaluation, the output graph $G$ is built by specifying new graph fragments and then combining them;
+the following notation is convenient for specifying a graph fragment where a fresh vertex $\alpha$ depends on
+a set $V$ of preexisting vertices.
 
-\todo{Illustrate DDG, perhaps using moving average example?}
+\begin{definition}[In-star notation]
+Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V \times
+\set{\alpha})$.
+\end{definition}
 
-\subsection{Evaluation and Graph Construction}
-\label{sec:core:semantics}
+\todo{Illustrate dependence graphs, perhaps using moving average example?}
 
 \input{fig/core/match}
 \input{fig/core/eval}
@@ -156,9 +167,7 @@ input set $V$ corresponds to the inputs consumed by the current active function 
 evaluated, and can be thought of as the ``ambient'' set of  dependencies \todo{arising from what?}; this is
 initially empty for a top-level term, and may grow whenever a function is applied to an argument and
 pattern-matching occurs (i.e. in the \ruleName{$\evalS$-app} rule, which we explain later) \todo{and when it
-is discarded?}. The output graph $G$ is built by specifying new graph fragments and then combining them; for
-convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V
-\times \set{\alpha})$ indicating that vertex $\alpha$ depends on all vertices in $V$.
+is discarded?}.
 
 The \ruleName{$\evalS$-var} rule for evaluating variables is standard, and the returned dependence graph is
 empty; no new addresses are allocated as a result of simply looking up a variable. The
