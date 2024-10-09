@@ -156,7 +156,7 @@ evaluated, and can be thought of as the ``ambient'' set of  dependencies \todo{a
 initially empty for a top-level term, and may grow whenever a function is applied to an argument and
 pattern-matching occurs (i.e. in the \ruleName{$\evalS$-app} rule, which we explain later) \todo{and when it
 is discarded?}. The output graph $G$ is built by specifying new graph fragments and then combining them; for
-convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjointUnion V, V
+convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V
 \times \set{\alpha})$ indicating that vertex $\alpha$ depends on all vertices in $V$.
 
 The \ruleName{$\evalS$-var} rule for evaluating variables is standard, and the returned dependence graph is
@@ -170,11 +170,10 @@ assign that partial value a fresh address, which is then linked to each of the a
 resulting graph. These cases include \ruleName{$\evalS$-int}, \ruleName{$\evalS$-function},
 \ruleName{$\evalS$-record}, and \ruleName{$\evalS$-constr}. For example, \ruleName{$\evalS$-int} evaluates an
 integer $n$ to its value form $n_{\alpha}$ assigned a fresh address $\alpha$; the resulting dependence graph
-is then $\set{\bind{\alpha}{V}}$ \todo{what is this notation?}, denoting that evaluating to $n_\alpha$
-depended on any inputs that were found in $V$. Likewise, \ruleName{$\evalS$-function} evaluates an anonymous
-function $\exFun{\sigma}$ by constructing the closure $\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ with
-fresh address $\alpha$; here, the closure captures the current environment $\gamma$ and uses $\envEmpty$ as
-the set of mutually recursive definitions.
+is then $\inStar{V}{\alpha}$, denoting that evaluating to $n_\alpha$ depended on any inputs that were found in
+$V$. Likewise, \ruleName{$\evalS$-function} evaluates an anonymous function $\exFun{\sigma}$ by constructing
+the closure $\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ with fresh address $\alpha$; here, the closure
+captures the current environment $\gamma$ and uses $\envEmpty$ as the set of mutually recursive definitions.
 
 The second recurring pattern is that, for any rule which involves evaluating subterms of a term, the
 corresponding subgraphs will have disjoint domains (meaning any addresses allocated for those subgraphs do not
