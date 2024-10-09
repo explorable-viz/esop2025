@@ -1,9 +1,9 @@
-\section{Conjugate Operators For Dynamic Dependence Graphs}
+\section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-In this section we introduce some prelimaries: Boolean algebras (\defref{conjugate:Boolean-algebra}) and the
-image and preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}). We
-then extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
+We introduce some prelimaries -- Boolean algebras (\defref{conjugate:Boolean-algebra}) and the image and
+preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}) -- and then
+extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
 relation, and give algorithms for computing them over a given graph
 (\secref{conjugate:dependence-graph-algos}). \todo{Example needed?}
 
@@ -40,13 +40,8 @@ so that $\neg X' = X \setminus X'$.
 \end{definition}
 
 \noindent Trivially, the image function for $R$ is the preimage function for its \emph{converse} $R^{-1}
-\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$. Nevertheless this is important enough to
-state as a lemma:
-
-\begin{lemma}[Image as Preimage of Converse Relation]
-\label{lem:conjugate:image-preimage-converse}
-$\demandedByR_{R} = \demandsR_{R^{-1}}$
-\end{lemma}
+\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$; in other words $\demandedByR_{R} =
+\demandsR_{R^{-1}}$.
 
 When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
 element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
@@ -224,9 +219,8 @@ a dependence graph $G$. \todo{Super-weird because $\demandsR_{G}$ is completely 
 $G$, which is how it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in
 comparison to the trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be
 readily adapted to compute all 4 operators; for example, given a procedure for $\demandedByR_{G}$, we can
-compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by
-\lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by pre- and post-composing with
-negation~(\defref{conjugate:de-morgan-dual}).
+readily compute its conjugate $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$ and its dual
+$\sufficesR_{G}$ by pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in
