@@ -144,20 +144,18 @@ free variables in $e$, and the set $V$ of addresses found in the matched portion
 
 The \ruleName{$\match$-done} rule expresses exactly when using a \emph{term} $e$ as the continuation may
 succeed: when the stack of values to be matched is empty, and so $e$ is treated as the selected term to be
-executed. The other rules require an \emph{eliminator} $\sigma$ as the continuation \todo{what about var
-rule?} -- using this to match the head of a non-empty stack $v \cons \seq{v}$, unpack any of its relevant
-subvalues, and then push them onto the tail $\seq{v}$ to be recursively matched by the continuation selected
-in $\sigma$.
-
-A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and returns the empty set of addresses,
-reflecting the fact that no part of $v$ was consumed in order to select $\kappa$ as the continuation. The
-record eliminator $\elimRecord{\seq{y}}{\kappa}$ matches a record of the form
-$\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as long as the variables in $\seq{y}$ are also fields in
-$\seq{x}$, returning the address $\alpha$ associated with the record; this condition is specified by the
-premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$, which simultaneously projects out the
-corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, a constructor eliminator with a branch
-$(\elimBind{c}{\kappa})$ matches any constructor value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$,
-returning the address $\alpha$ associated with the constructor.
+executed. A variable eliminator $\elimVar{x}{\kappa}$ matches any value $v$ and and selects $\kappa$ as the
+continuation; the empty set of addresses is returned, reflecting the fact that no part of $v$ was consumed.
+The other two rules require an \emph{eliminator} $\sigma$ as the continuation, which is used to match the head
+of a non-empty stack $v \cons \seq{v}$; any relevant subvalues are unpacked and pushed onto the tail $\seq{v}$
+to be recursively matched by the continuation by $\sigma$. Specifically, the record eliminator
+$\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
+long as the variables in $\seq{y}$ are also fields in $\seq{x}$, returning the address $\alpha$ associated
+with the record; this condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
+\exRec{\seq{\bind{x}{v}}}$, which simultaneously projects out the corresponding values of $\seq{u}$ from
+$\seq{v}$. Lastly, a constructor eliminator with a branch $(\elimBind{c}{\kappa})$ matches any constructor
+value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning the address $\alpha$ associated with the
+constructor.
 
 \subsubsection{Evaluation}
 
