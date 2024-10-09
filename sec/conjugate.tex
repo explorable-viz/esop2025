@@ -1,56 +1,31 @@
 \section{Conjugate Operators For Dynamic Dependence Graphs}
 \label{sec:conjugate}
 
-In this section we introduce Boolean algebras and other preliminaries (\secref{conjugate:notation}), and the
+In this section we introduce some prelimaries: Boolean algebras (\defref{conjugate:Boolean-algebra}) and the
 image and preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}). We
 then extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
 relation, and give algorithms for computing them over a given graph
-(\secref{conjugate:dependence-graph-algos}). Throughout the section, we will illustrate concepts using
-\figref{conjugate:example} as a running example, showing a toy program and (a simplified version of) its
-dynamic dependence graph that represents the program's execution.
+(\secref{conjugate:dependence-graph-algos}). \todo{Example needed?}
 
-\subsection{Preliminaries}
-\label{sec:conjugate:notation}
-We give some notation used in the rest of the paper. $X, Y$ range over finite sets.
+\begin{definition}[Boolean algebra]
+\label{def:conjugate:Boolean-algebra}
+A \emph{Boolean algebra} is a 6-tuple $A = (A, \meet, \join, \bot, \top, \neg)$ with carrier $A$,
+distinguished elements bottom ($\bot$) and top ($\top$), commutative operations meet ($\meet$) and join
+($\join$) with $\top$ and $\bot$ as respective units, and a unary operation negate ($\neg$) satisfying $x
+\join \neg x = \top$ and $x \meet \neg x = \bot$. The operations $\meet$ and $\join$ distribute over each
+other and induce a partial order $\leq$ over $X$.
+\end{definition}
 
-\paragraph{Finite sequences}
-Write to ${\seq{x}}$ denote a finite sequence of elements $\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty
-sequence. Concatenation of two sequences $\seq{x}$ and $\seq{x}'$ is written $\seq{x} \concat \seq{x}'$. We
-also write $x \cons \seq{x}$ for cons (prepend) and $\seq{x} \cons x$ for snoc (append).
+We will often be considering the \emph{powerset} Boolean algebra $\powerset{X}$ whose carrier is the set of
+subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is the
+whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative complement $\setminus$,
+so that $\neg X' = X \setminus X'$.
 
-\paragraph{Finite maps}
-Write $\set{\seq{\bind{k}{x}}}$ to denote a set of pairs $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where
-keys $k_i$ are pairwise unique.
-
-\paragraph{Disjoint union}
-Write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also write $x \cdot X$ or $X
-\cdot x$ to mean $X \disjunion \set{x}$. For finite maps $\phi, \psi$ write $\phi \disjunion \psi$ to mean
-$\phi \cup \psi$ where $\dom{\phi}$ and $\dom{\psi}$ are disjoint.
-
-\paragraph{Relative complement}
-Write $X \setminus Y$ for the relative complement of $Y$ in $X$, i.e.~the set of elements of
-$X$ that are not in $Y$.
-
-\paragraph{Relational converse}
-Write ${\param}^{-1}$ for the involutive operation that takes a relation $R \subseteq X \times Y$ to its
-\emph{converse} $R^{-1} \subseteq Y \times X$ where $(y,x) \in R^{-1} \iff (x,y) \in R$.
-
-\subsubsection{Boolean algebras}
-
-A \emph{Boolean algebra} (or Boolean lattice) is a 6-tuple $A = (A, \meet, \join, \bot, \top, \neg)$ with
-carrier $A$, distinguished elements bottom ($\bot$) and top ($\top$), commutative operations meet ($\meet$)
-and join ($\join$) with $\top$ and $\bot$ as respective units, and a unary operation negate ($\neg$)
-satisfying $x \join \neg x = \top$ and $x \meet \neg x = \bot$. The operations $\meet$ and $\join$ distribute
-over each other and induce a partial order $\leq$ over $X$.
-
-Often we will be considering a specific finite Boolean algebra, namely the powerset $\powerset{X}$ whose
-carrier is the set of subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set
-$\emptyset$, top is the whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative
-complement, so that $\neg X' = X \setminus X'$. For a program, we will usually consider the powerset of nodes
-associated with input values and the powerset of nodes associated with outputs.
-
-\paragraph{Example} In \figref{conjugate:example}, the input and output Boolean algebras are
-$\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.
+% For a program, we will usually consider the powerset of nodes associated with input values and the powerset
+% of nodes associated with outputs.
+%
+% \paragraph{Example} In \figref{conjugate:example}, the input and output Boolean algebras are
+% $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -64,8 +39,9 @@ $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alp
    \end{enumerate}
 \end{definition}
 
-\noindent Trivially, the image function for $R$ is the preimage function for its converse. Nevertheless this
-is important enough to state as a lemma:
+\noindent Trivially, the image function for $R$ is the preimage function for its \emph{converse} $R^{-1}
+\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$. Nevertheless this is important enough to
+state as a lemma:
 
 \begin{lemma}[Image as Preimage of Converse Relation]
 \label{lem:conjugate:image-preimage-converse}
@@ -135,15 +111,15 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
 
-\paragraph{Example}
-   In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
-   and the IO relation are identical. \todo{Maybe not a good example then?}\\
-
-Clearly the IO relation of $G$ is the
-converse of the IO relation of $\opGraph{G}$. Since we are in fact interested in the relationship between
-input and output \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation
-$R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and
-\textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and $\demandsR_{R}$.
+%\paragraph{Example}
+%   In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
+%   and the IO relation are identical. \todo{Maybe not a good example then?}\\
+%
+Clearly the IO relation of $G$ is the converse of the IO relation of $\opGraph{G}$. Since we are in fact
+interested in the relationship between input and output \emph{selections} (namely sets of inputs and outputs),
+we now consider how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via
+the \textit{image} and \textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and
+$\demandsR_{R}$.
 
 \subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
 \label{sec:conjugate:dependence-graph-functions}
@@ -157,20 +133,23 @@ reachable from $X$.
 \begin{definition}[$\demandsR_G$ and $\demandedByR_G$ for a dependence graph]
    For a graph $G$ with IO relation $R$, define:
    \begin{enumerate}
-      \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill (demands)
-      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill (demanded by)
+      \item $\demandsR_G \eqdef \demandsR_{R}: \powerset{\sinks{G}} \to \powerset{\sources{G}}$ \hfill
+      (demands)
+      \item $\demandedByR_G \eqdef \demandedByR_{R}: \powerset{\sources{G}} \to \powerset{\sinks{G}}$ \hfill
+      (demanded by)
    \end{enumerate}
 \end{definition}
 
 \vspace{0.2cm}
 \paragraph{Example}
-In \figref{conjugate:example}, if we first consider \emph{demanded by}, then $\demandedByR_{G}(\set{\alpha_1})
-= \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes to the values associated at those nodes.
-Conversely, if we  analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) =
-\set{\alpha_1, \alpha_2}$ since the value of $x2$ is also used in the construction of the value at node
-$\alpha_5$. On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$,
-despite $\alpha_6$ representing the value of the expression $x2 * x3$; this is because $x2 = 0$, so the value
-of $x3$ has no effect on the result.
+
+% In \figref{conjugate:example}, if we first consider \emph{demanded by}, then $\demandedByR_{G}(\set{\alpha_1})
+% = \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes to the values associated at those nodes.
+% Conversely, if we  analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) =
+% \set{\alpha_1, \alpha_2}$ since the value of $x2$ is also used in the construction of the value at node
+% $\alpha_5$. On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$,
+% despite $\alpha_6$ representing the value of the expression $x2 * x3$; this is because $x2 = 0$, so the value
+% of $x3$ has no effect on the result.
 
 \subsection{Dual Image and Preimage Functions}
 

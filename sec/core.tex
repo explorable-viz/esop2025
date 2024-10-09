@@ -1,11 +1,25 @@
-\section{A Core Calculus for Transparent Research Outputs}
+\section{A Core Calculus for Transparent Outputs}
 \label{sec:core}
 
-\todo{Needs an intro.} We introduce the basic syntactic forms of the language (\secref{core:syntax}) and show
-how parts of values in our language are labelled with addresses. Then we define \emph{dynamic dependence
-graphs} (\secref{core:dependence-graphs}) give a big-step operational semantics that evaluates a term to
-a value and constructs a dependence graph for the evaluation of that term (\secref{core:semantics}). The big
-step semantics uses auxiliary definitions that support pattern-matching and mutual recursion.
+We start by introducing a core language for supporting transparent outputs, which is the basis of \OurLang.
+The term syntax (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and provides datatypes,
+records and matrices (although we omit a presentation of matrices here). The syntax of values is less
+standard: each part of a value has a unique \emph{address} $\alpha$ which serves to identify that part of the
+value in a dependence graph. We give a big-step operational semantics that evaluates a term to both a value
+and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how parts of that
+value depend on parts of the input. The core language is fairly expressive, supporting deep pattern-matching
+and mutual recursion; however our implementation also provides a surface language that desugars into the core,
+providing piecewise function definitions, list comprehensions and other conveniences, as shown in \todo{ref
+earlier code example}, which would otherwise complicate the core.
+
+\paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements
+$\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x}
+\concat \seq{x}'$; we also write $x \cons \seq{x}$ for cons (prepend) and $\seq{x} \cons x$ for snoc (append).
+We write $\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of pairs
+$\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where keys $k_i$ are pairwise unique. If $X$ and $Y$ are sets,
+we write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also $x \cdot X$ or $X \cdot
+x$ to mean $X \disjunion \set{x}$. If $X$ and $Y$ happen to be finite maps, we mean something more specific by
+$X \disjunion Y$, namely $X \cup Y$ where $\dom{X}$ and $\dom{Y}$ are disjoint.
 
 \subsection{Syntax}
 \label{sec:core:syntax}
@@ -90,7 +104,7 @@ whenever a new address $\alpha$ is introduced. \todo{This paragraph unclear.}
 \subsection{Dynamic Dependence Graphs}
 \label{sec:core:dependence-graphs}
 
-\input{fig/conjugate/toy_example}
+% \input{fig/conjugate/toy_example}
 
 A \emph{dynamic dependence graph}~\cite{agrawal90} is a directed acyclic graph $G = (V,E)$ with a set $V$ of
 \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the dependence graph for a particular program,
@@ -101,11 +115,7 @@ diverges somewhat from traditional approaches to dynamic dependence graphs in on
 edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
 direction of dependent vertices, whereas in the literature the other direction is somewhat more common.
 
-\paragraph{Example}
-   In \figref{conjugate:example:graph}, the nodes $\set{\alpha_1,\alpha_2,\alpha_3}$ are associated to the
-   values of the input variables $x1,x2,x3$ in \figref{conjugate:example:program}, and the nodes
-   $\set{\alpha_4,\alpha_5,\alpha_6}$ are associated with the values of the arithmetic expressions in the
-   program's~result. \todo{not at all clear}
+\todo{Illustrate DDG, perhaps using earlier example program?}
 
 \subsection{Evaluation and Graph Construction}
 \label{sec:core:semantics}
