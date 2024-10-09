@@ -76,12 +76,10 @@ build in the graph semantics.
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function body, $\gamma$ is its environment, and to support mutual recursion, ${\rho}$ is the (possibly
-empty) set of named functions with which $\sigma$ was mutually defined.
-
-An \emph{environment} is a finite map from variables to values. Because foreign functions in the core language
-are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$,
-the surface language provides a top-level environment which maps every foreign function ${f}$ of arity $n$ to
-the closure
+empty) set of named functions with which $\sigma$ was mutually defined. \emph{Environments} are finite maps
+from variables to values. Because foreign functions in the core language are not first-class and calls
+$\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$, the surface language provides
+a top-level environment which maps every foreign function name ${f}$ of arity $n$ to the closure
 $\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
 with $\alpha$ fresh, emulating first-class foreign functions.
 
