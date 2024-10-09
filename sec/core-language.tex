@@ -132,7 +132,6 @@ Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disju
 
 \input{fig/core/match}
 \input{fig/core/eval}
-\input{fig/core/close-defs}
 
 \subsubsection{Pattern matching}
 \label{sec:core:semantics:pattern-matching}
@@ -198,7 +197,7 @@ $\exLet{x}{e}{e'}$ simply unions the graphs of subterms $e$ and~$e'$, and simila
 \ruleName{$\evalS$-let-rec} and \ruleName{$\evalS$-app}.
 
 To explain the last two rules, \ruleName{$\evalS$-let-rec} and  \ruleName{$\evalS$-app}, we first explain how
-we support mutual recursion. \figref{core:close-defs} defines the auxiliary relation $\gamma, \rho, V
+we support mutual recursion. \figref{core:eval} also defines the auxiliary relation $\gamma, \rho, V
 \closeDefs \gamma', G$, which takes a set $\rho$ of recursive definitions and produces the corresponding
 environment $\gamma'$ of closures, along with a dependence graph $G$. This works by turning each function
 definition $\rho(x_i) \in \rho$ into a newly allocated closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$ with
