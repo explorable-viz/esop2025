@@ -156,9 +156,8 @@ evaluated, and can be thought of as the ``ambient'' set of  dependencies \todo{a
 initially empty for a top-level term, and may grow whenever a function is applied to an argument and
 pattern-matching occurs (i.e. in the \ruleName{$\evalS$-app} rule, which we explain later) \todo{and when it
 is discarded?}. The output graph $G$ is built by specifying new graph fragments and then combining them; for
-convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \cup V, V \times
-\set{\alpha})$ indicating that vertex $\alpha$ depends on all vertices in $V$ \todo{I think our edges point in
-the other direction, no?}.
+convenience, we write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjointUnion V, V
+\times \set{\alpha})$ indicating that vertex $\alpha$ depends on all vertices in $V$.
 
 The \ruleName{$\evalS$-var} rule for evaluating variables is standard, and the returned dependence graph is
 empty; no new addresses are allocated as a result of simply looking up a variable. The
