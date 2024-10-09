@@ -123,12 +123,12 @@
          lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
-         \gamma, \set{\seq{\bind{x}{\sigma}}}, V \closeDefs  \gamma', G
+         \gamma, \rho, V \closeDefs  \gamma', G
          \\
          \gamma \concat \gamma', e, V \evalS v, G'
       }
       {
-         \gamma, \exLetRec{\seq{\bind{x}{\sigma}}}{e}, V
+         \gamma, \exLetRec{\rho}{e}, V
          \evalS
          v,
          G \disjunion G'
@@ -179,7 +179,25 @@
       \and
       %
    \end{smathpar}}
+   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs \gamma', G$}
+   \begin{smathpar}
+      \inferrule*[]
+      {
+         \gamma'(x_i) = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
+         \\
+         G_i = \inStar{V}{\alpha_i}
+         \quad
+         (\forall i \numleq \length{\seq{x}})
+      }
+      {
+         \gamma, \rho, V
+         \closeDefs
+         \gamma',
+         \textstyle{\bigdisjunion}\seq{G}
+      }
+   \end{smathpar}
+   }
    \vspace{-0.5cm}
-   \caption{Operational semantics: evaluation and graph construction}
+   \caption{Operational semantics with dependence graphs}
    \label{fig:core:eval}
 \end{figure}

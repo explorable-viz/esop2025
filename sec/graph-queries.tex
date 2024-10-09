@@ -1,9 +1,9 @@
-\section{Conjugate Operators For Dynamic Dependence Graphs}
+\section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-In this section we introduce some prelimaries: Boolean algebras (\defref{conjugate:Boolean-algebra}) and the
-image and preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}). We
-then extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
+We introduce some prelimaries -- Boolean algebras (\defref{conjugate:Boolean-algebra}) and the image and
+preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}) -- and then
+extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
 relation, and give algorithms for computing them over a given graph
 (\secref{conjugate:dependence-graph-algos}). \todo{Example needed?}
 
@@ -40,13 +40,8 @@ so that $\neg X' = X \setminus X'$.
 \end{definition}
 
 \noindent Trivially, the image function for $R$ is the preimage function for its \emph{converse} $R^{-1}
-\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$. Nevertheless this is important enough to
-state as a lemma:
-
-\begin{lemma}[Image as Preimage of Converse Relation]
-\label{lem:conjugate:image-preimage-converse}
-$\demandedByR_{R} = \demandsR_{R^{-1}}$
-\end{lemma}
+\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$; in other words $\demandedByR_{R} =
+\demandsR_{R^{-1}}$.
 
 When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
 element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
@@ -224,9 +219,8 @@ a dependence graph $G$. \todo{Super-weird because $\demandsR_{G}$ is completely 
 $G$, which is how it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in
 comparison to the trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be
 readily adapted to compute all 4 operators; for example, given a procedure for $\demandedByR_{G}$, we can
-compute its conjugate $\demandsR_{G}$ as $\demandedByR_{\opGraph{G}}$ (by
-\lemref{conjugate:image-preimage-converse}) and its dual $\sufficesR_{G}$ by pre- and post-composing with
-negation~(\defref{conjugate:de-morgan-dual}).
+readily compute its conjugate $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$ and its dual
+$\sufficesR_{G}$ by pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
 
 For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in
@@ -248,19 +242,15 @@ algorithms to access out-neighbours and in-neighbours.
 \end{definition}
 
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
-Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. It is possible to read the algorithm directly from
-the inductive definition, i.e. treating it as a $G$-indexed function that takes $X$ as input \todo{bit too
-much explanation}.
-
-The algorithm defers to an auxiliary operation $\demandedByV{}$, which takes a (partial) graph slice $H
-\subseteq G$, initially containing only the original input vertices $X$ and no edges. It then proceeds as
-follows. If there is a sink of $H$ that still has outgoing edges in $G$, then the targets of those edges are
-reachable from the vertices of $H$, and so we must add them to $H$ and recurse (\ruleName{extend}). If
-$\sinks{H} \subseteq \sinks{G}$, then there are no unexplored nodes in $G$ that are reachable from $H$, and so
-we terminate with the current state of $H$ (\ruleName{done}). We note that it is enough to consider the sinks
-of $H$, since we move every outgoing edge of a vertex from $G$ to $H$ all at once. When $\demandedByV{}$ is
-done, $\demandedByAlg{G}$ returns the sinks $T(H)$ from the final graph slice $H$, representing the outputs
-that the original inputs are demanded by.
+Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. The algorithm defers to an auxiliary operation
+$\demandedByV{}$, which takes a (partial) graph slice $H \subseteq G$, initially containing only the original
+input vertices $X$ and no edges, and which proceeds as follows. If there is a sink of $H$ that still has
+outgoing edges in $G$, then the targets of those edges are reachable from the vertices of $H$, and so we must
+add them to $H$ and recurse (\ruleName{extend}). If $\sinks{H} \subseteq \sinks{G}$, then there are no
+unexplored nodes in $G$ that are reachable from $H$, and so we terminate with the current state of $H$
+(\ruleName{done}). We note that it is enough to consider the sinks of $H$, since we move every outgoing edge
+of a vertex from $G$ to $H$ all at once. When $\demandedByV{}$ is done, $\demandedByAlg{G}$ returns the sinks
+$T(H)$ from the final graph slice $H$, representing the outputs that the original inputs are demanded by.
 
 \begin{proposition}[$\demandedByAlg{G}$ Computes $\demandedByR_{G}$]
    \label{prop:demandedByAlg-computes-demandedBy}
