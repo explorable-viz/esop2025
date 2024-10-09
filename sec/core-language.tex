@@ -49,19 +49,19 @@ $f$ and a dependence graph capturing how the result depends on the arguments sup
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
-A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
-either a term $e$ or an \textit{eliminator} $\sigma$. Eliminators are trie-like objects~\cite{hinze00}
-\todo{make this sound less controversial; be explicit about why it is preferable to ``shallow'' elimination
-forms for our purposes, e.g.~for matching dictionaries, and cite \citet{peytonjones2021} as precedent here}
-that specify how this pattern-matching is done and the subsequent continuation $\kappa$ to be executed under
-additional variable bindings. These are what the piecewise function definitions of our surface language
-desugar into; \citet{peytonjones2021} present a similar idea.
+A \emph{continuation} $\kappa$  is either a term $e$ or a eliminator $\sigma$, and describes how an execution
+proceeds after a value is pattern-matched. An \emph{eliminator} is a deep pattern-matching construct based on
+tries~\cite{hinze00,peytonjones2021}; for a language with rich structured values like records and data types,
+we find this makes for a cleaner presentation than a single shallow elimination form for each type. The
+piecewise function definitions of the surface language desugar into eliminators.
 
-A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as  variable $x$) and continue as
-$\kappa$. A record eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with fields $\seq{x}$,
-and provides a continuation $\kappa$ for matching the values of those fields. Lastly, the eliminator
-$\elimConstr{\seq{c \mapsto \kappa}}$ provides a branch $c \mapsto \kappa$ for each constructor $c$ in
-$\seq{c}$, where each $\kappa$ may specify how the arguments to  $c$  will be matched. (We assume that any
+An eliminator specifies how a value of a particular type is matched, and for a given value determines how any
+pattern variables get bound, and the continuation $\kappa$ which to be executed under those additional
+bindings. A variable eliminator $\elimVar{x}{\kappa}$ says how to match any value (as variable $x$) and
+continue as $\kappa$. A record eliminator $\elimRecord{\seq{x}}{\kappa}$ says how to match a record with
+fields $\seq{x}$, and provides a continuation $\kappa$ for matching the values of those fields. Lastly, the
+eliminator $\elimConstr{\seq{c \mapsto \kappa}}$ provides a branch $c \mapsto \kappa$ for each constructor $c$
+in $\seq{c}$, where each $\kappa$ specifies how any arguments to $c$  will be matched. (We assume that any
 constructors matched by an eliminator all belong to the same data type, but this is not enforced in the core
 language.)
 
