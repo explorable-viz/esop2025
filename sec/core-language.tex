@@ -9,8 +9,9 @@ value in a dependence graph. We give a big-step operational semantics that evalu
 and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how parts of that
 value depend on parts of the input. The core language is fairly expressive, supporting deep pattern-matching
 and mutual recursion; however our implementation also provides a surface language that desugars into the core,
-providing piecewise function definitions, list comprehensions and other conveniences, as shown in \todo{ref
-earlier code example}, which would otherwise complicate the core.
+providing piecewise function definitions, list comprehensions and other conveniences, as shown in
+\figrefTwo{example:moving-average:source}{example:non-renewables:source}, which would otherwise complicate the
+core.
 
 \paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements
 $\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x}
@@ -50,7 +51,8 @@ Foreign functions in the core language are not first-class and calls $\exForeign
 saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$. In our implementation, which also provides a surface language
 which desugars into the core, first-class foreign functions are supported via a top-level environment which
 maps every ${f}$ of arity $n$ to the closure
-$\exClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}$.
+$\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
+with $\alpha$ fresh.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
