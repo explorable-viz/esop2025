@@ -47,13 +47,6 @@ the foreign function they denote. For the graph semantics in \secref{core:semant
 function $f$ is required to provide an interpretation $\interpret{f}$ that returns both the result of calling
 $f$ and a dependence graph capturing how the result depends on the arguments supplied to $f$.
 
-Foreign functions in the core language are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are
-saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$. In our implementation, which also provides a surface language
-which desugars into the core, first-class foreign functions are supported via a top-level environment which
-maps every ${f}$ of arity $n$ to the closure
-$\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
-with $\alpha$ fresh.
-
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
 A \emph{continuation} $\kappa$ describes how an execution proceeds after a value is pattern-matched, and is
@@ -83,8 +76,14 @@ build in the graph semantics.
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
 is the function body, $\gamma$ is its environment, and to support mutual recursion, ${\rho}$ is the (possibly
-empty) set of named functions with which $\sigma$ was mutually defined. An \emph{environment} is defined as a
-finite map from variables to values.
+empty) set of named functions with which $\sigma$ was mutually defined.
+
+An \emph{environment} is a finite map from variables to values. Because foreign functions in the core language
+are not first-class and calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$,
+the surface language provides a top-level environment which maps every foreign function ${f}$ of arity $n$ to
+the closure
+$\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
+with $\alpha$ fresh, emulating first-class foreign functions.
 
 \subsubsection{Addresses for partial values}
 \label{sec:core:addresses}
