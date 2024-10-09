@@ -31,14 +31,14 @@ the colour scheme indicate? Which of the points represent large cities or small 
 accompanying text can help, but some ambiguities inevitably remain. The entire point of a visual summary after
 all is that it presents the big picture at the expense of certain detail.
 
-\citeauthor{bremer15}'s approach was to implement an interactive feature that allows a user to explore some of
-these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting an individual
-point, they are able to bring up a view showing the data that point was calculated from. In the figure the
-highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from an increase
-in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable as comprehension
-aids, but are laborious to implement by hand and require the author to anticipate the queries a user might
-have. For these reasons they also tend not to generalise: for example \citeauthor{bremer15}'s visualisation
-only allows the user to select one point at a time.
+\citeauthor{bremer15}'s approach to this problem was to implement an interactive feature that allows a user to
+explore some of these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting
+an individual point, they are able to bring up a view showing the data that point was calculated from. In the
+figure the highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from
+an increase in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable as
+comprehension aids, but are laborious to implement by hand and require the author to anticipate the queries a
+user might have. For these reasons they also tend not to generalise: for example \citeauthor{bremer15}'s
+visualisation only allows the user to select one point at a time.
 
 \subsection{Data transparency as PL infrastructure}
 \label{sec:introduction:data-transparency}
@@ -46,32 +46,22 @@ only allows the user to select one point at a time.
 Hand-crafted efforts like \citet{bremer15}'s are not only labour-intensive, but involve manually embedding
 metadata about the relationship between visual outputs and inputs into the same program. The validity of this
 metadata is fragile, because if the visualisation or analysis logic changes, the relationship between inputs
-and outputs also change.
+and outputs also change. An alternative approach is to treat data provenance features like these as a language
+infrastructure problem, baking lineage or provenance metadata directly into outputs so that interactive
+queries of this sort can be supported automatically. For example, for a custom in-memory database engine,
+\citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
+then ``forward trace'' to find related output selections in other views, to support a popular feature from
+data visualisation called \emph{linked brushing}.
 
-% By shifting the responsibility for gathering this information into the programming language,and defer the provision of
-% these transparency features to the infrastructure used to implement and host the visualisation.
+~\cite{psallidas18,psallidas18smoke,perera22}
+\todo{Reinstate Psallidas discussion here.} The burden of implementing these features no longer falls on the author of the content, who
+can concentrate purely on data visualisation, and the consumer of the content can formulate any query
+supported by the infrastructure. In contrast to \citet{bremer15} \todo{revisit}, the relationship to data is
+incrementally discoverable, revealed as the user interacts with the parts of the output they care about,
+ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and sufficient''.
+\todo{These last couple of sentences don't quite follow.}
 
-An alternative approach is to treat data provenance features like these as a language infrastructure problem,
-baking lineage or provenance metadata directly into outputs so that interactive queries of this sort can be
-supported automatically~\cite{psallidas18,psallidas18smoke,perera22} \todo{Reinstate Psallidas discussion
-here, and more general point about relationship between interaction and data selection.} The burden of
-implementing these features no longer falls on the author of the content, who can concentrate purely on data
-visualisation, and the consumer of the content can formulate any query supported by the infrastructure. In
-contrast to \citet{bremer15} \todo{revisit}, the relationship to data is incrementally discoverable, revealed
-as the user interacts with the parts of the output they care about, ideally with some kind of formal guarantee
-that the revealed data is in some sense ``minimal and sufficient''. \todo{These last couple of sentences don't
-quite follow.}
-
-% In data visualisation it has long been recognised that when users interact with visual elements by clicking
-% or lassoing, the intention is typically to manipulate the underlying data. This has lead to various
-% techniques for inverting selections in visual space to obtain selections in the input data
-% space~\cite{north00, heer08}.
-
-% A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}. For
-% example, for a custom in-memory database engine, \citet{psallidas18smoke} describe how to ``backward trace''
-% from output selections to input selections, and then ``forward trace'' to find related output selections in
-% other views, to support a popular feature from data visualisation called \emph{linked brushing}. Moving
-% forward, we refer to this feature as \emph{linked outputs} instead.
+% A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}.
 
 \begin{figure}
    \centering
