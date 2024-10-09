@@ -66,8 +66,8 @@ that the revealed data is in some sense ``minimal and sufficient''.
 
 \begin{figure}
    \centering
-   \includegraphics[width=0.9\textwidth]{fig/example/linked-inputs-with-tooltip.png}
-   \vspace{-2mm}
+   \includegraphics[width=1.0\textwidth]{fig/example/moving-average.png}
+%   \vspace{-2mm}
    \caption{Data transparency: \emph{demanded by} ($\demandedByR_G$) and \emph{demands} ($\demandsR_G$)
    operators link inputs that share common output dependencies.}
    \label{fig:introduction:related-inputs}
@@ -77,7 +77,7 @@ that the revealed data is in some sense ``minimal and sufficient''.
    \centering
    \includegraphics[width=1.0\textwidth]{fig/example/non-renewables.png}
 %   \includegraphics[width=0.8\textwidth]{fig/example/stacked-bar-chart-scatter-plot.png}
-   \vspace{-2mm}
+%   \vspace{-2mm}
    \caption{Data transparency: \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$)
    operators link outputs that share common input dependencies.}
    \label{fig:introduction:scatterplot}
@@ -111,18 +111,17 @@ this particular scenario as not supported in the implementation.} Notably, this 
 is considered clean energy.
 
 \todo{This paragraph incongruous; explain $\demandsR$ operator in context of diagram.} As we will see later in
-the paper, our system uses an operator $\demandsR_{G}$, which identifies the complete set of input data that
+the paper, our system uses an operator $\demandsR$, which identifies the complete set of input data that
 was used to compute the selected output. We read this operator as computing ``what input data does an output
-\emph{demand}?''. The subscript $G$ indicates that the notion of dependency is with respect to a dependence
-graph $G$.
+\emph{demand}?''.
 
 \paragraph{Fine-grained linking of the data to the view}
 A user may also be interested in following the link between the input data and the output view. For instance,
 the user may select China's bioenergy capacity (highlighted in green in~\figref{introduction:related-inputs},
 row 205 in the data on the figure's left). Then, our system, through an operator we write as
-$\demandedByR_{G}$, traces the data contained in this cell to the parts of the plot it was used to compute
+$\demandedByR$, traces the data contained in this cell to the parts of the plot it was used to compute
 (the green point in the plot). The bioenergy capacity contributes to both components of the point, namely the
-total renewables capacity over total energy capacity and the clean capacity factor. We read $\demandedByR_{G}$
+total renewables capacity over total energy capacity and the clean capacity factor. We read $\demandedByR$
 as computing ``what outputs is some input data \emph{demanded by}?''.
 
 \paragraph{Linked inputs}
