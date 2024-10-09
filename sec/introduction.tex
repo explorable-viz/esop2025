@@ -48,20 +48,18 @@ metadata about the relationship between visual outputs and inputs into the same 
 metadata is fragile, because if the visualisation or analysis logic changes, the relationship between inputs
 and outputs also change. An alternative approach is to treat data provenance features like these as a language
 infrastructure problem, baking lineage or provenance metadata directly into outputs so that interactive
-queries of this sort can be supported automatically. For example, for a custom in-memory database engine,
+queries of this sort can be supported automatically. For example, for an in-memory database engine,
 \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
 then ``forward trace'' to find related output selections in other views, to support a popular feature from
-data visualisation called \emph{linked brushing}.
+data visualisation called \emph{linked brushing}. \cite{perera22} implemented a similar system for a
+general-purpose functional programming language, using execution traces to support bidirectional queries.
 
-~\cite{psallidas18,psallidas18smoke,perera22}
-\todo{Reinstate Psallidas discussion here.} The burden of implementing these features no longer falls on the author of the content, who
-can concentrate purely on data visualisation, and the consumer of the content can formulate any query
-supported by the infrastructure. In contrast to \citet{bremer15} \todo{revisit}, the relationship to data is
-incrementally discoverable, revealed as the user interacts with the parts of the output they care about,
-ideally with some kind of formal guarantee that the revealed data is in some sense ``minimal and sufficient''.
-\todo{These last couple of sentences don't quite follow.}
-
-% A popular technique is a bidirectional program analysis based on execution traces~\cite{ricciotti17}.
+The advantage of shifting the burden of implementing transparency features into the language runtime is that
+the author of the content can concentrate purely on data visualisation, and moreover the consumer of the
+content can formulate any query supported by the infrastructure. In contrast to \citet{bremer15}
+\todo{revisit}, the relationship to data is incrementally discoverable, revealed as the user interacts with
+the parts of the output they care about, ideally with some kind of formal guarantee that the revealed data is
+in some sense ``minimal and sufficient''. \todo{These last couple of sentences don't quite follow.}
 
 \begin{figure}
    \centering
