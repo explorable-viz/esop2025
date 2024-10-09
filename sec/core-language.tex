@@ -13,14 +13,14 @@ providing piecewise function definitions, list comprehensions and other convenie
 \figrefTwo{example:moving-average:source}{example:non-renewables:source}, which would otherwise complicate the
 core.
 
-\paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements
-$\seqRange{x_1}{x_n}$, with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x}
-\concat \seq{x}'$; we also write $x \cons \seq{x}$ for cons (prepend) and $\seq{x} \cons x$ for snoc (append).
-We write $\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of pairs
+\paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements $\seqRange{x_1}{x_n}$,
+with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x} \concat \seq{x}'$; we
+also write $x \cons \seq{x}$ for cons (prepend) and $\seq{x} \cons x$ for snoc (append). We write
+$\set{\seq{\bind{k}{x}}}$ to denote a finite map, i.e.~a set of pairs
 $\seqRange{\bind{k_1}{x_1}}{\bind{k_n}{x_n}}$ where keys $k_i$ are pairwise unique. If $X$ and $Y$ are sets,
 we write $X \disjunion Y$ to mean $X \cup Y$ where $X$ and $Y$ are disjoint, and also $x \cdot X$ or $X \cdot
-x$ to mean $X \disjunion \set{x}$. If $X$ and $Y$ happen to be finite maps, we mean something more specific by
-$X \disjunion Y$, namely $X \cup Y$ where $\dom{X}$ and $\dom{Y}$ are disjoint.
+x$ to mean $X \disjunion \set{x}$. If $X$ and $Y$ happen to be finite maps, we further constrain $X \disjunion
+Y$ to the case where $\dom{X}$ and $\dom{Y}$ are disjoint.
 
 \subsection{Syntax}
 \label{sec:core:syntax}
@@ -114,7 +114,7 @@ diverges somewhat from traditional approaches to dynamic dependence graphs in on
 edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
 direction of dependent vertices, whereas in the literature the other direction is somewhat more common.
 
-\todo{Illustrate DDG, perhaps using earlier example program?}
+\todo{Illustrate DDG, perhaps using moving average example?}
 
 \subsection{Evaluation and Graph Construction}
 \label{sec:core:semantics}
@@ -125,6 +125,7 @@ direction of dependent vertices, whereas in the literature the other direction i
 
 \subsubsection{Pattern matching}
 \label{sec:core:semantics:pattern-matching}
+
 \figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$.
 Rather than matching a single value $v$, the judgement matches a ``stack'' of values $\seq{v}$ against a
 continuation $\kappa$, returning the selected branch $e$, an environment $\gamma$ providing bindings for the
@@ -148,6 +149,7 @@ $(\elimBind{c}{\kappa})$ matches any constructor value of the form $\annot{\exCo
 returning the address $\alpha$ associated with the constructor.
 
 \subsubsection{Evaluation}
+
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$, stating that term $e$,
 under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The
 input set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being
