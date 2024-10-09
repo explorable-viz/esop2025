@@ -244,7 +244,7 @@ algorithms to access out-neighbours and in-neighbours.
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
 Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. The algorithm defers to an auxiliary operation
 $\demandedByV{}$, which takes a (partial) graph slice $H \subseteq G$, initially containing only the original
-input vertices $X$ and no edges. It then proceeds as follows. If there is a sink of $H$ that still has
+input vertices $X$ and no edges, and which proceeds as follows. If there is a sink of $H$ that still has
 outgoing edges in $G$, then the targets of those edges are reachable from the vertices of $H$, and so we must
 add them to $H$ and recurse (\ruleName{extend}). If $\sinks{H} \subseteq \sinks{G}$, then there are no
 unexplored nodes in $G$ that are reachable from $H$, and so we terminate with the current state of $H$

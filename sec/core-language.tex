@@ -150,21 +150,20 @@ of a non-empty stack $v \cons \seq{v}$; any relevant subvalues are unpacked and 
 to be recursively matched by the continuation by $\sigma$. Specifically, the record eliminator
 $\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
 long as the variables in $\seq{y}$ are also fields in $\seq{x}$, returning the address $\alpha$ associated
-with the record; this condition is specified by the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
-\exRec{\seq{\bind{x}{v}}}$, which simultaneously projects out the corresponding values of $\seq{u}$ from
-$\seq{v}$. Lastly, a constructor eliminator with a branch $(\elimBind{c}{\kappa})$ matches any constructor
-value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning the address $\alpha$ associated with the
-constructor.
+with the record; the premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$ projects out the
+corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, a constructor eliminator with a clause of the form
+$(\elimBind{c}{\kappa})$ matches any constructor value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$,
+returning the address $\alpha$ associated with the constructor.
 
 \subsubsection{Evaluation}
 
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$, stating that term $e$,
 under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The
-input set $V$ corresponds to the inputs consumed by the current active function call from which $e$ is being
-evaluated, and can be thought of as the ``ambient'' set of  dependencies \todo{arising from what?}; this is
-initially empty for a top-level term, and may grow whenever a function is applied to an argument and
-pattern-matching occurs (i.e. in the \ruleName{$\evalS$-app} rule, which we explain later) \todo{and when it
-is discarded?}.
+input set $V$ corresponds to the (partial) input values consumed by the current active function call providing
+the dynamic context in which $e$ is being evaluated; this is initially empty for a top-level term (because
+there is no dynamically containing function call). Whenever a function is applied to an argument, and
+pattern-matching occurs, any partial inputs consumed during that pattern-match become the new ambient value of
+$V$ for evaluating the function body.
 
 The \ruleName{$\evalS$-var} rule for evaluating variables is standard, and the returned dependence graph is
 empty; no new addresses are allocated as a result of simply looking up a variable. The
