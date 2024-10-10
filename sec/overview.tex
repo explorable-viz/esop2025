@@ -39,29 +39,23 @@ just the $y$) of the four highlighted points.
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\paragraph{2. Fine-grained linking of the view back to the data.}
+\paragraph{2. Linked inputs.}
 
-These kinds of IO queries relationship the other direction too; for this we turn to
-\figref{introduction:scatterplot}. Again the user has chosen to reveal the underlying data set, but this time
-the user interface is only showing rows with active data selections, rather than rows with data that is used
-somewhere in either of the charts. The provenance analysis at play here we write as $\demandedByR$ (``demanded
-by'').
-
-\paragraph{Linked inputs}
-
-The previous use cases only went in one direction, either from outputs back to inputs, or from inputs to
-outputs. However, there may be situations where we want to compose the two directions. For illustration, let's
-assume like before that a user starts by selecting China's bioenergy capacity. As previously explained, our
-system will apply $\demandedByR_{G}$ to trace the data contained in this cell to the point in the scatter plot
-it was used to compute (the green point in the plot). Additionally \todo{under what circumstances? always?}, our
-system will apply $\demandsR_{G}$ to determine the rest of the data in the input tables that was used to
-compute the point in the plot (all data highlighted in grey in the tables). \todo{Probably unwise to use a
-single figure with a single set of highlights to illustrate all three scenarios.} We refer to the highlighted
-data \todo{green, grey or both?} in the two input tables as ``linked inputs'', i.e., inputs that contribute to
-the same features of an output. This enables users to formulate queries like: “which outputs use this data
-element, and which other data elements are used along with it?”.
+These kinds of IO queries can run in the other direction too, via another provenance analysis written
+$\demandsR$ (``demands''). In \figref{introduction:related-inputs} the $\demandsR$ analysis is initiated
+automatically, and composed with the output of the $\demandedByR$ analysis; this shows that the $y$
+coordinates of the 4 highlighted points on the right together demand 5 emissions values from the input table,
+including the originally selected input 104.69. These are shown with the blue border on the left. These
+additional inputs we refer to as \emph{linked inputs}; they are the other inputs demanded by any output that
+demands our original input selection. Given that the initial input selection contributes to 3 points of the
+moving average, the ``window'' of related inputs in this case is 5 wide. These comprise all the data points
+needed to account for the selection on the right.
 
 \paragraph{Linked outputs}
+
+Again the user has chosen to reveal the underlying data set, but this time the user interface is only showing
+rows with active data selections, rather than rows with data that is used somewhere in either of the charts.
+The provenance analysis at play here we write as $\demandedByR$ (``demanded by'').
 
 Dually, we can start from an output, and want to determine all the “linked outputs”, i.e., outputs that
 compete for the same input data. \todo{a.k.a.~linked brushing} One such scenario is illustrated in
