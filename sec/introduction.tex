@@ -43,12 +43,12 @@ visualisation only allows the user to select one point at a time.
 \subsection{Data transparency as PL infrastructure}
 \label{sec:introduction:data-transparency}
 
-Hand-crafted efforts like \citet{bremer15}'s are not only labour-intensive, but involve manually embedding
-metadata about the relationship between visual outputs and inputs into the same program. The validity of this
-metadata is fragile, because if the visualisation or analysis logic changes, the relationship between inputs
-and outputs also change. An alternative approach is to treat data provenance features like these as a language
-infrastructure problem, baking lineage or provenance metadata directly into outputs so that interactive
-queries of this sort can be supported automatically. For example, for an in-memory database engine,
+Hand-crafted efforts like \citet{bremer15}'s are labour-intensive because they involve manually embedding
+metadata about the relationship between outputs and inputs into the same program. The validity of this
+metadata is then fragile, because if the visualisation or analysis logic changes, the relationship between
+inputs and outputs also change. A less costly and more robust approach is to treat data provenance features
+like these as a language infrastructure problem, baking lineage or provenance metadata directly into outputs
+so that provenance queries can be supported automatically. For example, for an in-memory database engine,
 \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
 then ``forward trace'' to find related output selections in other views, to support a popular feature from
 data visualisation called \emph{linked brushing}. \citet{perera22} implemented a similar system for a
@@ -56,22 +56,15 @@ general-purpose functional programming language, using execution traces to suppo
 
 The advantage of shifting the burden of implementing transparency features into the language runtime is that
 the author of the content can concentrate purely on data visualisation, and moreover the consumer of the
-content can formulate any query supported by the infrastructure. In contrast to \citet{bremer15}
-\todo{revisit}, the relationship to data is incrementally discoverable, revealed as the user interacts with
-the parts of the output they care about, ideally with some kind of formal guarantee that the revealed data is
-in some sense ``minimal and sufficient''. \todo{These last couple of sentences don't quite follow.}
+content can formulate any query supported by the infrastructure. As the infrastructure improves, the benefits
+are inherited automatically by end users, at no additional cost to the author. There are prospects for baking
+in formal guarantees, for example that the revealed data is in some sense minimal and sufficient.
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
 which supports fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. In
-contrast to this \todo{which?} prior work, we make use of \emph{dynamic dependence graphs}~\cite{ferrante87,
-agrawal90}, which enable our approach to be fast enough for interactive queries, and also
-language-independent, separating queries over the graph from the problem of deriving the dependence graph for
-a particular program.
-\JBnote{In this paper, and in contrast to prior work on interactive dependency queries, we make use of
-\emph{dynamic dependence graphs}~\cite{ferrante87,agrawal90}, which enables our approach to be fast enough to
-support interactive queries, facilitating the incremental discovery of data dependency. The approach has the added
-benefit of being language-independent, separating queries over the graph from the problem of deriving the
-dependence graph for a particular program.}
+contrast to prior work, we make use of \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
+enable our approach to be fast enough for interactive use and also language-independent, separating queries
+over the graph from the problem of deriving the dependence graph for a particular program.
 
 \subsection{Contributions and roadmap}
 \label{sec:introduction:contributions}
@@ -79,9 +72,10 @@ dependence graph for a particular program.}
 Our specific contributions are as follows:
 
 \begin{itemize}[leftmargin=*]
-   \item \secref{core} defines a core calculus for transparent outputs, where parts of inputs and computed values
-      are assigned unique labels called \emph{addresses}, and programs have an operational semantics that pairs
-      every result with a dynamic dependence graph capturing the fine-grained I/O relationships of that program.
+   \item \secref{core} defines a core calculus for data-transparent outputs, where parts of inputs and
+      computed values are assigned unique labels called \emph{addresses}, and programs have an operational
+      semantics that pairs every result with a dynamic dependence graph capturing fine-grained I/O
+      relationships between input addresses and output addresses.
 
    \item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over dependence
       graphs, formalising the $\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in
