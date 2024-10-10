@@ -33,13 +33,13 @@
 
 % These provided by acmart but not llncs
 \usepackage{etoolbox}
-\usepackage[numeric]{biblatex}
+\usepackage{biblatex}
 \usepackage{amssymb}
 \usepackage{booktabs}
 
-% Redefine \citet and \citep for numeric citations
-\renewcommand{\citet}[1]{\citeauthor{#1} \cite{#1}}
-\renewcommand{\citep}{\cite}
+% Define \citet and \citep for numeric citations
+\newcommand{\citet}[1]{\citeauthor{#1} \cite{#1}}
+\newcommand{\citep}{\cite}
 
 \newcommand*{\derivationWidth}{0.68\textwidth}
 \input{tex-common/proof-helpers}
