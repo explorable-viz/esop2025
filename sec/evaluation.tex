@@ -147,10 +147,5 @@ media.
 
 Another notable aspect, which is observed for \textit{Q3}, is the performance of \textbf{G-DemBy-Suff}, which
 takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, \textbf{G-DemBy-Suff} performs
-significantly worse than \textbf{G-DemBy}. We suspect that the generally bad performance of
-\textbf{G-DemBy-Suff} is at least partially caused by the expensive set complement operations performed before
-and after applying $\sufficesAlg{}$ \todo{why do we suspect this? couldn't it be because the complement graph
-is often much larger?}. Furthermore, while our algorithm for computing \textit{demanded by} is graph
-independent (as described in \secref{conjugate}), these experiments show that the shape \todo{and size?} of
-the graph may matter for performance. We defer more detailed discussion to \secref{future} \todo{why are we
-deferring our analysis of performance evaluation to the future work section?}.
+significantly worse than \textbf{G-DemBy}; this seems most likely due to the fact that the ``complement''
+subgraph traversed by the algorithm in this case is often much larger.
