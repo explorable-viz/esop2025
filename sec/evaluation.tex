@@ -21,15 +21,14 @@ for computing $\demandsR_{G}$ and $\demandedByR_{G}$ are language-agnostic and o
 
 \subsection{Experimental Evaluation}
 
-To test the performance of our approach, we implemented our language from \secref{core} in PureScript. We used
-our implementation to write a number of benchmarks that reflect realistic \todo{say we} targets of dependency
-analyses \todo{meaning?} (\secref{evaluation:choice-of-examples}). PureScript is a natural implementation
-language for this work as our focus on visualisations lends itself to building web-based interfaces
-\todo{uh?}. Additionally, PureScript is the implementation language used by~\citet{perera22} in their
-open-source implementation of the trace-based approach, thus enabling a more fair like-for-like comparison to
-our work here \todo{hmm. why not just say we reimplemented/adapted their system?}. We then benchmarked the
-implementations on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Google Chrome 121.0.6261.69 and
-JavaScript runtime V8 12.2.281.16. We instrumented both systems in order to extract performance numbers.
+For the performance evaluation, we compared two implementations of the dependency-tracking runtime of
+\OurLang, one based on the dependence graph design described in \secrefTwo{core}{conjugate}, and one based on
+evaluation traces and a bidirectional interpreter. The other system components were shared by the two
+implementations, including the parser, desugaring layer, visualisation layer and libraries. We wrote a number
+of benchmark programs taking examples from data analysis and data visualisation
+(\secref{evaluation:choice-of-examples}), which we then timed on an Intel Core i7-10850H 2.70GHz with 16Gb of
+RAM, using Google Chrome 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We used PureScript as the host
+language.
 
 In an interactive system, performance plays a critical role in a user's experience. We therefore compared the
 performance of the graph-based and trace-based approaches by measuring the following:
@@ -68,8 +67,7 @@ graphics library instead, right?}. The code for our benchmarks is given
 in~\apdxsecref{apdx:evaluation-src-code}.
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
-(the latter is shown in the results tables coloured {\textcolor{gray}{grey}} in brackets). Runtimes are
-reported in milliseconds (to 2 decimal places \todo{maybe drop to 1 decimal place?}). When we refer to
+(in parentheses, coloured grey). Runtimes are reported in milliseconds (to 1 decimal place). When we refer to
 \textit{speedup} or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the
 runtimes for a given benchmark.
 
