@@ -4,9 +4,9 @@
 Whether formulating national policy or making day-to-day decisions about our own lives, we increasingly rely
 on the charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions. However, most of the artefacts we encounter are
-\emph{opaque}: they are unable to reveal anything about how they relate to the data they were derived from.
-Whilst one could in principle try to use the source code and data sources to reverse engineer some of these
-relationships, this requires substantial expertise, as well as valuable time spent away from the
+\emph{opaque}, inasmuch as they are unable to reveal anything about how they relate to the data they were
+derived from. Whilst one could in principle try to use the source code and data sources to reverse engineer
+some of these relationships, this requires substantial expertise, as well as valuable time spent away from the
 ``comprehension context'' in which we encountered the output in question.  These difficulties are only
 compounded when the information presented draws on multiple data sources, such as medical
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
@@ -43,12 +43,12 @@ visualisation only allows the user to select one point at a time.
 \subsection{Data transparency as PL infrastructure}
 \label{sec:introduction:data-transparency}
 
-Hand-crafted efforts like \citet{bremer15}'s are not only labour-intensive, but involve manually embedding
-metadata about the relationship between visual outputs and inputs into the same program. The validity of this
-metadata is fragile, because if the visualisation or analysis logic changes, the relationship between inputs
-and outputs also change. An alternative approach is to treat data provenance features like these as a language
-infrastructure problem, baking lineage or provenance metadata directly into outputs so that interactive
-queries of this sort can be supported automatically. For example, for an in-memory database engine,
+Hand-crafted efforts like \citet{bremer15}'s are labour-intensive because they involve manually embedding
+metadata about the relationship between outputs and inputs into the same program. The validity of this
+metadata is then fragile, because if the visualisation or analysis logic changes, the relationship between
+inputs and outputs also change. A less costly and more robust approach is to treat data provenance features
+like these as a language infrastructure problem, baking lineage or provenance metadata directly into outputs
+so that provenance queries can be supported automatically. For example, for an in-memory database engine,
 \citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
 then ``forward trace'' to find related output selections in other views, to support a popular feature from
 data visualisation called \emph{linked brushing}. \citet{perera22} implemented a similar system for a
@@ -56,22 +56,15 @@ general-purpose functional programming language, using execution traces to suppo
 
 The advantage of shifting the burden of implementing transparency features into the language runtime is that
 the author of the content can concentrate purely on data visualisation, and moreover the consumer of the
-content can formulate any query supported by the infrastructure. In contrast to \citet{bremer15}
-\todo{revisit}, the relationship to data is incrementally discoverable, revealed as the user interacts with
-the parts of the output they care about, ideally with some kind of formal guarantee that the revealed data is
-in some sense ``minimal and sufficient''. \todo{These last couple of sentences don't quite follow.}
+content can formulate any query supported by the infrastructure. As the infrastructure improves, the benefits
+are inherited automatically by end users, at no additional cost to the author. There are prospects for baking
+in formal guarantees, for example that the revealed data is in some sense minimal and sufficient.
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
 which supports fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. In
-contrast to this \todo{which?} prior work, we make use of \emph{dynamic dependence graphs}~\cite{ferrante87,
-agrawal90}, which enable our approach to be fast enough for interactive queries, and also
-language-independent, separating queries over the graph from the problem of deriving the dependence graph for
-a particular program.
-\JBnote{In this paper, and in contrast to prior work on interactive dependency queries, we make use of
-\emph{dynamic dependence graphs}~\cite{ferrante87,agrawal90}, which enables our approach to be fast enough to
-support interactive queries, facilitating the incremental discovery of data dependency. The approach has the added
-benefit of being language-independent, separating queries over the graph from the problem of deriving the
-dependence graph for a particular program.}
+contrast to prior work, we make use of \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
+enable our approach to be fast enough for interactive use and also language-independent, separating queries
+over the graph from the problem of deriving the dependence graph for a particular program.
 
 \subsection{Contributions and roadmap}
 \label{sec:introduction:contributions}
@@ -79,22 +72,24 @@ dependence graph for a particular program.}
 Our specific contributions are as follows:
 
 \begin{itemize}[leftmargin=*]
-   \item \secref{core} defines a core calculus for transparent outputs, where parts of inputs and computed values
-      are assigned unique labels called \emph{addresses}, and programs have an operational semantics that pairs
-      every result with a dynamic dependence graph capturing the fine-grained I/O relationships of that program.
+   \item \secref{core} defines a core calculus for data-transparent outputs, where parts of inputs and
+      computed values are assigned unique labels called \emph{addresses}, and programs have an operational
+      semantics that pairs every result with a dynamic dependence graph capturing fine-grained IO
+      relationships between input addresses and output addresses.
 
-   \item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over dependence
-      graphs, formalising the $\demandsR_{G}$ and $\demandedByR_{G}$ operators introduced informally in
-      \secref{introduction:data-transparency}. We show these to be \emph{conjugate} in the sense
-      of~\citet{jonsson51}, and give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show how
-      a novel cognacy operator $\relInputR_G$ called \emph{linked inputs}, relating inputs when they contribute
-      to common features of the output, can be obtained by composing $\demandsR_{G}$ and $\demandedByR_{G}$, and
-      how a dual \emph{linked outputs} operator $\relOutputR_G$, supporting the ``linked visualisations'' of
-      prior work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
+   \item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over
+      dependence graphs, formalising two operators over such graphs, $\demandsR_{G}$ (\emph{demands}) and
+      $\demandedByR_{G}$ (\emph{demanded by}). We show these to be \emph{conjugate} in the sense
+      of~\citet{jonsson51}, and give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show
+      how a novel cognacy operator $\relInputR_G$ called \emph{linked inputs}, relating inputs when they
+      contribute to common features of the output, can be obtained by composing $\demandsR_{G}$ and
+      $\demandedByR_{G}$, and how a dual \emph{linked outputs} operator $\relOutputR_G$, supporting the
+      ``linked visualisations'' of prior work \cite{psallidas18smoke,perera22}, is easily obtained by
+      transposing the two operators.
 
    \item \secref{evaluation} shows that our implementation performs better than one based on traces and
-      bidirectional interpreters, the primary alternative implementation technique. Using usability metrics from
-      \citet{nielsen93}, we find that $81\%$ of the queries we tested execute at a speed that appears
+      bidirectional interpreters, the primary alternative implementation technique. Using usability metrics
+      from \citet{nielsen93}, we find that $81\%$ of the queries we tested execute at a speed that appears
       instantaneous to a user, compared to $25\%$ using an implementation based on traces. We also compare the
       overhead of building a trace vs.~building a dependence graph for a given program.
 \end{itemize}
@@ -104,45 +99,27 @@ Our specific contributions are as follows:
 %arise. Crucially, we want to make this feature automatic.
 
 \noindent These contributions are not available in previous work. In particular, although
-\citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, ours is (to the
-best of our knowledge) the first implementation for a general-purpose language which is fast enough for the
-interactive scenarios we target. \todo{Expand} Related work is discussed in more detail in
+\citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, and
+\citet{perera22} support linked outputs in a general-purpose languages, ours is (to the best of our knowledge)
+the first implementation for a general-purpose language which is fast enough for interactive use. Other
+related work in database provenance, program slicing and data visualisation are discussed in more detail in
 \secref{related-work}.
 
 \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
-considered in this paper is purely extensional and falls short of providing full explanations of how output
-parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose some other
-ways in which the present system could be improved.
+considered in this paper is purely extensional, and falls short of providing full explanations of how output
+parts are related to input parts. We discuss more intensional forms of transparency in \secref{conclusion} and
+propose some other ways in which the present system could be improved.
 
-We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
+We implement our approach in a pure functional programming language called \OurLang. The author of a
 visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
 common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
-interactive selection and the data transparency queries shown in
-\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
-available online (given later in a deanonymised version). We also provide an anonymised web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
-
-% However, computing the bidirectional dependency information needed to realise this idea is costly both in
-% terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
-% \citet{perera22} utilise a bidirectional interpreter that builds an execution record in the form of a
-% \emph{trace} during a forwards execution, \edit{and then using that trace to guide backwards execution}. The
-% two directions of the interpreter need to be kept synchronised, which makes updating the language difficult
-% as every change requires modifying each direction in a manner that maintains bidirectionality. Moreover each
-% runs over an execution record or trace of the entire computation regardless of whether all of the trace is
-% relevant.
-
-%Analyses using adjoint operators similar to ours (e.g.~\citet{ricciotti17})} instead utilised a bidirectional
-%interpreter that builds an execution record in the form of a \emph{trace} during a forwards execution,
-%folding that trace back into a program slice during a backwards execution. This method is quite inefficient
-%and non-trivial to prove correct; instead, we show that a graph-based approach factors the problem into a
-%(language-specific) graph-building interpreter plus (language-agnostic) adjoint analyses over the graph. This
-%partitioning reduces the implementation burden and improves performance compared to approaches based on
-%bidirectional interpretation.
+interactive selection and the data transparency queries introduced in the next section. Our implementation is
+open source and available online (given later in a deanonymised version). We also provide an anonymised web
+demo at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
 
 %Second, we introduce a new kind of provenance query called \emph{linked inputs}, a relation of mutual
 %relevance which arises between inputs when they contribute to common features of the output. Users are able
 %to formulate queries like ``What outputs use this data element, and what other data elements are used along
 %with it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are
 %formally dual to another query type, ``linked outputs'' shown in \figref{introduction:scatterplot}, which can
-%be understood as cognacy in $\opGraph{G}$. Moreover, in the graphical setting,} these are both easy to
-%compute, since they amount to the two ways of composing reachability in $G$ with its relational converse.
+%be understood as cognacy in $\opGraph{G}$.

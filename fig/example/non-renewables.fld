@@ -1,19 +1,25 @@
 let countries = ["BRA", "EGY", "IND", "JPN"];
 let totalFor year country =
-   let [ row ] = [ row | row $\leftarrow$ nonRenewables, row.year == year, row.country == country ]
+   let [ row ] =
+      [ row | row $\leftarrow$ nonRenewables, row.year == year, row.country == country ]
    in row.nuclearOut + row.gasOut + row.coalOut + row.petrolOut;
-let stack year = [ { y: country, z: totalFor year country } | country $\leftarrow$ countries ];
-let yearData year = [ row | row $\leftarrow$ nonRenewables, row.year == year, row.country `elem` countries ]
+let stack year =
+      [ { y: country, z: totalFor year country } | country $\leftarrow$ countries ];
+let yearData year =
+      [ row | row $\leftarrow$ nonRenewables,
+              row.year == year, row.country `elem` countries ]
 in MultiView {
-   bar-chart: BarChart {
+   barChart: BarChart {
       caption: "Non-renewables output",
       size: { width: 275, height: 185 },
-      stackedBars: [ { x: numToStr year, bars: stack year } | year $\leftarrow$ [2014..2018] ]
+      stackedBars:
+         [ { x: numToStr year, bars: stack year } | year $\leftarrow$ [2014..2018] ]
    },
-   scatter-plot: ScatterPlot {
+   scatterPlot: ScatterPlot {
       caption: "",
       points:
-        [ { x: sum [ row.nuclearCap | row $\leftarrow$ rows ], y: sum [ row.nuclearOut | row $\leftarrow$ rows ] }
+        [ { x: sum [ row.nuclearCap | row $\leftarrow$ rows ],
+            y: sum [ row.nuclearOut | row $\leftarrow$ rows ] }
         | year $\leftarrow$ [2014..2018], let rows = yearData year ],
       xlabel: "Nuclear capacity",
       ylabel: "Nuclear output"
