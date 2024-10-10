@@ -64,12 +64,16 @@ constructor $c$ in $\seq{c}$, where each $\kappa$ specifies how any arguments to
 assume that any constructors matched by an eliminator all belong to the same data type, but this is not
 enforced in the core language.)
 
-\subsubsection{Values and environments}
+\subsubsection{Addresses, values and environments}
 \label{sec:core:values}
 
 We define addressed \emph{values} $v$ mutually inductively with \emph{raw values} $\raw{v}$; a raw value
-does not have an associated address. These addresses, explained in \secref{core:addresses}, will (later)
-\todo{weird forward-reference} form the vertices of the graphs that we build in the graph semantics.
+is simply a value without an associated address. \JBnote{Each (partial) value is decorated with an address $\alpha$.
+Addresses act as identifiers, with each value's address corresponding to a vertex in a dependence graph.
+There are many sensible ways of assigning addresses (our implementation uses a simple integer counter) as
+long as a freshness condition is satisfied -- ensuring no collisions when considered as vertices in the
+values underlying graph. For simplicity, we elide the freshness condition from the graph semantics in 
+(next), and simply assume it will be satisified whenever a new address $\alpha$ is created.}
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
@@ -80,15 +84,6 @@ $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$, 
 a top-level environment which maps every foreign function name ${f}$ of arity $n$ to the closure
 $\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
 with $\alpha$ fresh, emulating first-class foreign functions.
-
-\subsubsection{Addresses for partial values}
-\label{sec:core:addresses}
-\todo{Introduce addresses early on.} The addresses $\alpha$ that decorate values act as identifiers, uniquely
-corresponding those values to specific vertices in a dependence graph. There are many sensible ways of
-assigning addresses (our particular implementation uses an integer counter to generate new ones) as long as
-some freshness condition is satisfied -- \JBnote{ensuring there are no collisions in a value's underlying graph}. For simplicity,
-we elide \JBnote{the freshness condition from the graph semantics (next), and simply assume it is satisfied whenever a 
-new address $\alpha$ is created.}
 
 % The point of the disjointness conditions on graph union was intended to achieve this, and does at least
 % ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid
