@@ -67,10 +67,9 @@ enforced in the core language.)
 \subsubsection{Values and environments}
 \label{sec:core:values}
 
-We define addressed \emph{values} $v$ mutually inductively with \emph{raw values} $\raw{v}$, \todo{sentences
-separated by comma} a raw value does not have an associated address. These addresses, explained in
-\secref{core:addresses}, will (later) \todo{weird forward-reference} form the vertices of the graphs that we
-build in the graph semantics.
+We define addressed \emph{values} $v$ mutually inductively with \emph{raw values} $\raw{v}$; a raw value
+does not have an associated address. These addresses, explained in \secref{core:addresses}, will (later)
+\todo{weird forward-reference} form the vertices of the graphs that we build in the graph semantics.
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
@@ -87,10 +86,9 @@ with $\alpha$ fresh, emulating first-class foreign functions.
 \todo{Introduce addresses early on.} The addresses $\alpha$ that decorate values act as identifiers, uniquely
 corresponding those values to specific vertices in a dependence graph. There are many sensible ways of
 assigning addresses (our particular implementation uses an integer counter to generate new ones) as long as
-some freshness condition is satisfied -- ensuring that there are no unwanted address collisions in a given
-value i.e.~graph \todo{``value i.e.~graph''? what would a ``wanted'' address collision be?}. For simplicity,
-we elide this side-condition \todo{what side condition?} in the graph semantics (next) and assume it is met
-whenever a new address $\alpha$ is introduced. \todo{This paragraph unclear.}
+some freshness condition is satisfied -- \JBnote{ensuring there are no collisions in a value's underlying graph}. For simplicity,
+we elide \JBnote{the freshness condition from the graph semantics (next), and simply assume it is satisfied whenever a 
+new address $\alpha$ is created.}
 
 % The point of the disjointness conditions on graph union was intended to achieve this, and does at least
 % ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid
