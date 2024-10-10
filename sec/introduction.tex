@@ -99,23 +99,23 @@ Our specific contributions are as follows:
 %arise. Crucially, we want to make this feature automatic.
 
 \noindent These contributions are not available in previous work. In particular, although
-\citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, ours is (to the
-best of our knowledge) the first implementation for a general-purpose language which is fast enough for the
-interactive scenarios we target. \todo{Expand} Related work is discussed in more detail in
+\citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, and
+\citet{perera22} support linked outputs in a general-purpose languages, ours is (to the best of our knowledge)
+the first implementation for a general-purpose language which is fast enough for interactive use. Other
+related work in database provenance, program slicing and data visualisation are discussed in more detail in
 \secref{related-work}.
 
 \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
-considered in this paper is purely extensional and falls short of providing full explanations of how output
-parts are related to input parts. We discuss more ``intensional'' forms of transparency and propose some other
-ways in which the present system could be improved.
+considered in this paper is purely extensional, and falls short of providing full explanations of how output
+parts are related to input parts. We discuss more intensional forms of transparency in \secref{conclusion} and
+propose some other ways in which the present system could be improved.
 
-We implement our approach in a pure functional programming language called \OurLang. The author of a \OurLang
+We implement our approach in a pure functional programming language called \OurLang. The author of a
 visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
 common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
-interactive selection and the data transparency queries shown in
-\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. Our implementation is open source and
-available online (given later in a deanonymised version). We also provide an anonymised web demo at
-\href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+interactive selection and the data transparency queries introduced in the next section. Our implementation is
+open source and available online (given later in a deanonymised version). We also provide an anonymised web
+demo at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
 
 % However, computing the bidirectional dependency information needed to realise this idea is costly both in
 % terms of performance and implementation effort. For example, the approaches taken by \citet{ricciotti17} and
