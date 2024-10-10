@@ -1,11 +1,12 @@
 \section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-We introduce some prelimaries -- Boolean algebras (\defref{conjugate:Boolean-algebra}) and the image and
-preimage functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}) -- and then
-extend these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO
-relation, and give algorithms for computing them over a given graph
-(\secref{conjugate:dependence-graph-algos}). \todo{Example needed?}
+\todo{Need an intro. And rehash this section so it's more goal-oriented. Currently a bit unfocused.} We
+introduce some prelimaries -- Boolean algebras (\defref{conjugate:Boolean-algebra}) and the image and preimage
+functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}) -- and then extend
+these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation,
+and give algorithms for computing them over a given graph (\secref{conjugate:dependence-graph-algos}).
+\todo{Example needed?}
 
 \begin{definition}[Boolean algebra]
 \label{def:conjugate:Boolean-algebra}
@@ -20,12 +21,6 @@ We will often be considering the \emph{powerset} Boolean algebra $\powerset{X}$ 
 subsets $X' \subseteq X$ ordered by inclusion $\subseteq$. Bottom is the empty set $\emptyset$, top is the
 whole set $X$, meet and join are given by $\cap$ and $\cup$ and negation by relative complement $\setminus$,
 so that $\neg X' = X \setminus X'$.
-
-% For a program, we will usually consider the powerset of nodes associated with input values and the powerset
-% of nodes associated with outputs.
-%
-% \paragraph{Example} In \figref{conjugate:example}, the input and output Boolean algebras are
-% $\powerset{\set{\alpha_1,\alpha_2, \alpha_3}}$ and $\powerset{\set{\alpha_4,\alpha_5,\alpha_6}}$ respectively.
 
 \subsection{Conjugate Image and Preimage Functions}
 \label{sec:conjugate:image-preimage}
@@ -106,10 +101,6 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
 
-%\paragraph{Example}
-%   In \figref{conjugate:example:graph}, the program is simple enough that the reachability relation
-%   and the IO relation are identical. \todo{Maybe not a good example then?}\\
-%
 Clearly the IO relation of $G$ is the converse of the IO relation of $\opGraph{G}$. Since we are in fact
 interested in the relationship between input and output \emph{selections} (namely sets of inputs and outputs),
 we now consider how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via
@@ -136,15 +127,6 @@ reachable from $X$.
 \end{definition}
 
 \vspace{0.2cm}
-\paragraph{Example}
-
-% In \figref{conjugate:example}, if we first consider \emph{demanded by}, then $\demandedByR_{G}(\set{\alpha_1})
-% = \set{\alpha_4, \alpha_5}$ because the value of $x1$ contributes to the values associated at those nodes.
-% Conversely, if we  analyse the \emph{demands} of those nodes, then $\demandsR_{G}(\set{\alpha_4,\alpha_5}) =
-% \set{\alpha_1, \alpha_2}$ since the value of $x2$ is also used in the construction of the value at node
-% $\alpha_5$. On the other hand, taking $\demandsR_{G}(\set{\alpha_6})$ would only return $\set{\alpha_2}$,
-% despite $\alpha_6$ representing the value of the expression $x2 * x3$; this is because $x2 = 0$, so the value
-% of $x3$ has no effect on the result.
 
 \subsection{Dual Image and Preimage Functions}
 
@@ -184,11 +166,9 @@ Notably, $\demandedByR_R$ can be transformed into $\sufficesR_R$ using the De Mo
    \end{enumerate}
 \end{lemma}
 
-Intuitively, since $\neg$ for powersets is just complementation, $\compl{\cdot}$, we can read
-$\demandedByR_{R}(\compl{X})$ as ``what outputs use unselected input data?''. Then, taking the complement of
-this to get $\compl{\demandedByR_{R}(\compl{X})}$ is effectively asking the question ``what outputs do not use
-any of the information I have not selected?'' \todo{hard to understand}, which is exactly the question of
-sufficiency.
+Since $\neg$ for $\powerset{X}$ is just relative complement $X \setminus \param$, this also has an intuitive
+reading: $\neg{\demandedByR_{R}(\neg X')}$ contains all the outputs that don't depend on anything outside of
+$X'$.
 
 Conjugate functions are related to another class of near-reciprocals between Boolean algebras, namely
 \emph{Galois connections}; in fact every conjugate pair induces a Galois connection~\cite{menni14}:

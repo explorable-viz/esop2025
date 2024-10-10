@@ -1,16 +1,4 @@
-\documentclass[acmsmall,screen]{acmart}
-
-\settopmatter{printacmref=false}
-
-\acmJournal{PACMPL}
-\acmVolume{1}
-%\acmNumber{POPL}
-\acmArticle{1}
-%\acmYear{2021}
-%\acmMonth{1}
-\acmDOI{}
-\startPage{1}
-%\setcopyright{none}
+\documentclass{llncs}
 
 \input{tex/packages}
 \input{tex/layout-tweaks}
@@ -19,9 +7,11 @@
 \lstset{language=Fluid}
 \input{tex/macros}
 
-\bibliographystyle{ACM-Reference-Format}
-\citestyle{acmauthoryear}
-\setcitestyle{nosort}
+%\bibliographystyle{splncs04}
+%\citestyle{acmauthoryear}
+%\setcitestyle{nosort}
+
+\bibliography{tex-common/bib}
 
 \begin{document}
 
@@ -38,7 +28,6 @@
   \input{sec/evaluation}
   \input{sec/related-work}
   \input{sec/conclusion}
-  \bibliography{tex-common/bib}
 \fi
 
 \ifappendices
