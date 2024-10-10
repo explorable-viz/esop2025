@@ -1,21 +1,16 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We compare our dependence graph approach with the main alternative style of
-implementation: a bidirectional interpreter producing an \emph{evaluation trace} during forward
-evaluation, which is then used by a backward interpreter to rewind the trace to perform backwards analysis~\cite{ricciotti17, psallidas18smoke,perera22}.
-%
-%We start by considering the relative implementation effort required for the two approaches, and then provide an experimental comparison of their performance.
-%
-%\subsection{Qualitative Evaluation}
-%
-%\todo{Rather than presenting this paragraph as an ``evaluation'', incorporate into the paragraph above as part
-%of the introduction to the performance evaluation.}
+We compare our dependence graph approach with the main alternative style of implementation: a bidirectional
+interpreter producing an \emph{evaluation trace} during forward evaluation, which is then used by a backward
+interpreter to rewind the trace to perform backwards analysis~\cite{ricciotti17, psallidas18smoke,perera22}.
 
-For a language implementator, the main benefit of our graph
-approach is that it removes the need to implement this backwards analysis and bidirectional interpreter. The two directions of such an interpreter must be kept synchronised with respect to
-the dependency analysis thus changing the language requires modifying each direction in a manner that maintains
-bidirectionality---a considerable effort. Instead, in our approach, the graph algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are language-agnostic and only have to be defined once.
+For a language implementor, the main benefit of our graph approach is that it removes the need to implement
+this backwards analysis and bidirectional interpreter. The two directions of such an interpreter must be kept
+synchronised with respect to the dependency analysis thus changing the language requires modifying each
+direction in a manner that maintains bidirectionality---a considerable effort. Instead, in our approach, the
+graph algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
+language-agnostic and only have to be defined once.
 
 For a user, our hypothesis is that our approach has better performance than existing
 techniques.
