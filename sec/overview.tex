@@ -2,24 +2,26 @@
 
 In this section, we introduce the main interactive data provenance features that wish to provide, using two
 \OurLang examples to illustrate. The line chart in \figref{introduction:related-inputs} shows projected
-methane emissions from agricultural sources under a global warming scenario called RCP8.5, with source code in
-\figref{example:moving-average:source}; the scatter plot and stacked bar chart in
-\figref{introduction:scatterplot} show non-renewable energy outputs and capacities for various years and
-countries, with source code in \figref{example:non-renewables:source}. The key idea of ``data transparent''
-outputs is that the original data sources are kept around and can be accessed (when a user so requests) from
-the output view, and the user is then able to interact with both the data and the view to explore how they are
-related.
+methane emissions from agricultural sources under a global warming scenario called RCP8.5; the scatter plot
+and stacked bar chart in \figref{introduction:scatterplot} show non-renewable energy outputs and capacities
+for various years and countries. The key idea of ``data transparent'' outputs is that the original data
+sources are kept around and can be accessed (when a user so requests) from the output view, and the user is
+then able to interact with both the data and the view to explore how they are related. Crucially the author of
+the visualisations did not to have to implement these features themselves; they just expressed the charts in
+question as pure functions of their inputs. The source code for the two examples are given in
+\figrefTwo{example:moving-average:source}{example:non-renewables:source}.
 
 \paragraph{1. Fine-grained linking of the data to the view.}
 
 In \figref{introduction:related-inputs}, the user has chosen to reveal the underlying data set, which is shown
 on the left; only rows relevant to the chart are shown, with the rest of the data hidden. This clarifies that
-only agricultural data is relevant, confirming what is claimed (informally) in the caption. The emissions
-values shown do contribute to the chart in some way, and the user can investigate this by interacting with
-individual entries. For example, by moving their mouse over the number 104.69, they can see that it
-contributes to \emph{one} points in the projected emissions curve, and \emph{three} points in the other curve,
-which plots the moving average of the projected emissions. The provenance analysis which underpins this we
-write as $\demandedByR$ (``demanded by'').
+only agricultural data is relevant, confirming the (informal) claim in the caption. The emissions values shown
+do contribute to the chart in some way, and the user can investigate this by interacting with individual
+entries. For example, moving their mouse over the number 104.69 highlights \emph{one} point in the projected
+emissions curve, and \emph{three} points in the other curve, which plots the moving average of the projected
+emissions. The provenance analysis which underpins this we write as $\demandedByR$ (``demanded by''), and here
+this tells us that that input value of interest is demanded by either the $x$ or $y$ coordinate (in this case
+just the $y$) of the four highlighted points.
 
 \begin{figure}
    \centering
@@ -29,8 +31,6 @@ write as $\demandedByR$ (``demanded by'').
    \label{fig:introduction:related-inputs}
 \end{figure}
 
-\input{fig/example/moving-average}
-
 \begin{figure}
    \centering
    \includegraphics[width=1.0\textwidth]{fig/example/non-renewables.png}
@@ -39,9 +39,10 @@ write as $\demandedByR$ (``demanded by'').
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\input{fig/example/non-renewables}
+\paragraph{2. Fine-grained linking of the view back to the data.}
 
-\paragraph{Fine-grained linking of the view back to the data}
+The user can play this game in the other direction, and this is best illustrated in
+\figref{introduction:scatterplot}.
 
 In~\figref{introduction:related-inputs}, the points in the scatter plot do not immediately offer any details
 about the data they were computed from, which may be key to understanding the visualisation. With a
@@ -97,5 +98,18 @@ segments demand all of the highlighted green data in the table. Then, starting f
 apply $\demandedByR_{G}$ to pick out the $x$ components of some of the circles in the scatter plot (green
 circles). \todo{Last two paragraphs verbose}
 
+\begin{figure}[H]
+   \small
+   \begin{subfigure}{\textwidth}
+      {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
+      \caption{Moving average source code}
+      \label{fig:example:moving-average:source}
+   \end{subfigure}
+   \begin{subfigure}{\textwidth}
+      {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
+      \caption{Non-renewable energy source code}
+      \label{fig:example:non-renewables:source}
+   \end{subfigure}
+\end{figure}
 
 % mediating input, mediating output
