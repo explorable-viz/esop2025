@@ -16,8 +16,11 @@ in interactive visualisations, we assume that the program has already executed, 
 for static error checking.}
 
 More recently there has been a body of work aimed at using dynamic dependence graphs to assist in program
-fault localisation, but again these are not focused on interactive visualisation systems, but rather on bug
-finding in programs. For a survey see \citet{Soremekun2021} \todo{focus on the difference in the information
+fault localisation. \JBnote{Generally, work that uses dependence graphs for this purpose are
+defined for imperative languages, identifying \emph{statements} which depend on each other. Our languages
+encodes much of its control flow via pattern matching on data. We can therefore encode much of the
+same information simply by considering data dependencies.}
+For a survey on other techniques, see \citet{Soremekun2021} \todo{focus on the difference in the information
 the graphs contain, rather than how they are used?}.
 
 \subsection{Provenance tracking}
