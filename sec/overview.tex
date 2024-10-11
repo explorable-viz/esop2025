@@ -14,14 +14,14 @@ question as pure functions of their inputs. The source code for the two examples
 \paragraph{1. Fine-grained linking of the data to the view.}
 
 In \figref{introduction:related-inputs}, the user has chosen to reveal the underlying data set, which is shown
-on the left; only rows relevant to the chart are shown, with the rest of the data hidden. This clarifies that
-only agricultural data is relevant, confirming the (informal) claim in the caption. The emissions values shown
-do contribute to the chart in some way, and the user can investigate this by interacting with individual
-entries. For example, moving their mouse over the number 104.69 highlights \emph{one} point in the projected
-emissions curve, and \emph{three} points in the other curve, which plots the moving average of the projected
-emissions. The provenance analysis which underpins this we write as $\demandedByR$ (``demanded by''), and here
-this tells us that that input value of interest is demanded by either the $x$ or $y$ coordinate (in this case
-just the $y$) of the four highlighted points.
+on the left; only rows relevant to the chart are shown, with the rest of the data hidden automatically. This
+clarifies that only agricultural data is relevant, confirming the (informal) claim in the caption. The
+emissions values shown do contribute to the chart in some way, and the user can investigate this by
+interacting with individual entries. For example, moving their mouse over the number 104.69 highlights
+\emph{one} point in the projected emissions curve, and \emph{three} points in the other curve, which plots the
+moving average of the projected emissions. The provenance analysis which underpins this we write as
+$\demandedByR$ (``demanded by''), and here this tells us that that input value of interest was needed to
+compute either the $x$ or $y$ coordinate (in this case just the $y$) of the four highlighted points.
 
 \begin{figure}
    \centering
@@ -31,6 +31,32 @@ just the $y$) of the four highlighted points.
    \label{fig:introduction:related-inputs}
 \end{figure}
 
+\begin{figure}[H]
+   \small
+   {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
+   \caption{Moving average source code}
+   \label{fig:example:moving-average:source}
+\end{figure}
+
+\paragraph{2. Linked inputs.}
+
+We want to support fine-grained IO queries that run in the other direction too, via another provenance
+analysis written $\demandsR$ (``demands''). In \figref{introduction:related-inputs} the $\demandsR$ analysis
+is initiated automatically, and composed with the output of the $\demandedByR$ analysis; this shows that
+calculating the $y$ coordinates of the 4 highlighted points on the right required 5 of the emissions values
+from the input table, including the value originally selected, namely 104.69. This group of related inputs is
+shown with the blue border on the left. These additional inputs we refer to the \emph{related inputs} of the
+original selection; they are the other inputs demanded by any output that demands our original input selection.
+Given that the initial input selection contributes to 3 points of the moving average, the ``window'' of
+related inputs in this case is 5 wide. These comprise all the data points needed to account for the selection
+on the right.
+
+\paragraph{Linked outputs}
+
+Again the user has chosen to reveal the underlying data set, but this time the user interface is only showing
+rows with active data selections, rather than rows with data that is used somewhere in either of the charts.
+The provenance analysis at play here we write as $\demandedByR$ (``demanded by'').
+
 \begin{figure}
    \centering
    \includegraphics[width=1.0\textwidth]{fig/example/non-renewables.png}
@@ -39,23 +65,12 @@ just the $y$) of the four highlighted points.
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\paragraph{2. Linked inputs.}
-
-These kinds of IO queries can run in the other direction too, via another provenance analysis written
-$\demandsR$ (``demands''). In \figref{introduction:related-inputs} the $\demandsR$ analysis is initiated
-automatically, and composed with the output of the $\demandedByR$ analysis; this shows that the $y$
-coordinates of the 4 highlighted points on the right together demand 5 emissions values from the input table,
-including the originally selected input 104.69. These are shown with the blue border on the left. These
-additional inputs we refer to as \emph{linked inputs}; they are the other inputs demanded by any output that
-demands our original input selection. Given that the initial input selection contributes to 3 points of the
-moving average, the ``window'' of related inputs in this case is 5 wide. These comprise all the data points
-needed to account for the selection on the right.
-
-\paragraph{Linked outputs}
-
-Again the user has chosen to reveal the underlying data set, but this time the user interface is only showing
-rows with active data selections, rather than rows with data that is used somewhere in either of the charts.
-The provenance analysis at play here we write as $\demandedByR$ (``demanded by'').
+\begin{figure}[H]
+   \small
+   {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
+   \caption{Non-renewable energy source code}
+   \label{fig:example:non-renewables:source}
+\end{figure}
 
 Dually, we can start from an output, and want to determine all the “linked outputs”, i.e., outputs that
 compete for the same input data. \todo{a.k.a.~linked brushing} One such scenario is illustrated in
@@ -74,19 +89,5 @@ selected segment of the bar, with each set of coloured segments associated with 
 segments demand all of the highlighted green data in the table. Then, starting from the selected data, we
 apply $\demandedByR_{G}$ to pick out the $x$ components of some of the circles in the scatter plot (green
 circles). \todo{Last two paragraphs verbose}
-
-\begin{figure}[H]
-   \small
-   \begin{subfigure}{\textwidth}
-      {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
-      \caption{Moving average source code}
-      \label{fig:example:moving-average:source}
-   \end{subfigure}
-   \begin{subfigure}{\textwidth}
-      {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
-      \caption{Non-renewable energy source code}
-      \label{fig:example:non-renewables:source}
-   \end{subfigure}
-\end{figure}
 
 % mediating input, mediating output
