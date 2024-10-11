@@ -68,8 +68,8 @@ in formal guarantees, for example that the revealed data is in some sense minima
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
 which supports fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. In
-contrast to prior work, we make use of \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
-enable our approach to be fast enough for interactive use and also language-independent, separating queries
+contrast to prior work, we use \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
+enable our approach to be fast enough for interactive use and language-independent, separating queries
 over the graph from the problem of deriving the dependence graph for a particular program.
 
 \subsection{Contributions and roadmap}
@@ -96,7 +96,7 @@ Our specific contributions are as follows:
    \item \secref{evaluation} shows that our implementation performs better than one based on traces and
       bidirectional interpreters, the primary alternative implementation technique. Using usability metrics
       from \citet{nielsen93}, we find that $81\%$ of the queries we tested execute at a speed that appears
-      instantaneous to a user, compared to $25\%$ using an implementation based on traces. We also compare the
+      instantaneous to a user, compared to $25\%$ using an implementation based on traces. We also compare
       overhead of building a trace vs.~building a dependence graph for a given program.
 \end{itemize}
 %As outlined in \secref{introduction}, the idea of data-transparent outputs is to enrich computed content with
