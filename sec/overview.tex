@@ -1,14 +1,14 @@
 \section{Overview: Fine-Grained Interactive Provenance}
 
-In this section, we introduce the main interactive data provenance features that wish to provide, using two
+In this section, we introduce the main interactive data provenance features that wish to support, using two
 \OurLang examples to illustrate. The line chart in \figref{introduction:related-inputs} shows projected
 methane emissions from agricultural sources under a global warming scenario called RCP8.5; the scatter plot
 and stacked bar chart in \figref{introduction:scatterplot} show non-renewable energy outputs and capacities
-for various years and countries. The key idea of ``data transparent'' outputs is that the original data
-sources are kept around and can be accessed (when a user so requests) from the output view, and the user is
-then able to interact with both the data and the view to explore how they are related. Crucially the author of
-the visualisations did not to have to implement these features themselves; they just expressed the charts in
-question as pure functions of their inputs. The source code for the two examples are given in
+for various years and countries. The key idea of transparent visualisations is that the original data sources
+are kept around and can be viewed (when a user so requests) alongside the visualisation, and the user is then
+able to interact with both the data and the view to explore how they are related. Crucially the author of the
+visualisation does not to have to implement these transparency features themselves; they just express the
+charts or plots as pure functions of their inputs. The source code for the two examples here are given in
 \figrefTwo{example:moving-average:source}{example:non-renewables:source}.
 
 \paragraph{1. Fine-grained linking of the data to the view.}
@@ -58,9 +58,11 @@ We would also like to support cognacy queries that start from the output rather 
 \figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, but this time
 they opt to only see rows with active data selections, rather than only rows with data that are used somewhere
 (i.e.~in either of the charts). Here we describe a slightly richer interaction made possible by allowing
-multiple concurrent queries. First, the user expresses interest in one of the points in the scatter plot; but
-rather than just moving their mouse over it, they click on it instead, which makes the selection
-\emph{persistent} (shown in green). The demands analysis $\demandedByR$ (``demanded by'').
+multiple concurrent queries. First, the user expresses interest in one of the points in the scatter plot, but
+by clicking on it (rather than just moving their mouse over it) they can make the selection \emph{persistent}
+(shown in green). The demands analysis $\demandsR$ reveals the inputs needed to compute both the $x$ and $y$
+coordinates of the point (also shown in green); this shows that the 2016 data for 4 countries was used,
+although it does not reveal how.
 
 % dually
 % linked brushing
