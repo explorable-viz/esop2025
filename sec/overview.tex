@@ -61,20 +61,19 @@ basis for a feature called \emph{linked brushing} (or \emph{brushing and linking
 \cite{becker87,buja91}, but here the goal is to implement a transparent version of this feature. In
 \figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, this time
 opting to see only rows with active data selections, rather than only rows with data that are used by any part
-of the output. They start by expressing interest in one of the points in the scatter plot; by clicking on it
-(rather than just moving their mouse over it) they have created what we call a \emph{persistent} selection
-(shown in green). The demands analysis $\demandsR$ reveals the inputs needed to compute both the $x$ and $y$
-coordinates of the point (also shown in green); this shows that the 2016 data for 4 countries was used,
-although it does not reveal how.
+of the output. They then express interest in one of the points in the scatter plot; by clicking on it (rather
+than just moving their mouse over it) they create what we call a \emph{persistent} selection (shown in green).
+The demands analysis $\demandsR$ reveals the inputs (also shown in green) needed to compute both the $x$ and
+$y$ coordinates of the point; this shows that the 2016 data for 4 countries was used, although it does not
+reveal how.
 
-\paragraph{4. Linked outputs}
+\paragraph{4. Linked outputs.}
 
-Now that the inputs demanded by the scatter plot point are determined, the $\demandedByR$ analysis is
-initiated automatically, and composed with the output of the $\demandsR$ analysis; this reveals that the data
-shaded green are also needed to compute 4 bar segments in the bar chart, namely those for 2016; these are
-displayed with cross-hatching. A persistent selection remains even when the mouse moves off the item of
-interest; this allows for subsequent transient interactions that can enable a transparent form of linked
-brushing.
+Now that the inputs demanded by the scatter plot point are determined, the $\demandedByR$ analysis runs
+automatically on the output of the $\demandsR$ analysis; this reveals that the inputs shaded green are also
+needed to compute 4 bar segments in the bar chart, namely those for 2016; these are displayed with
+cross-hatching. A persistent selection remains even when the mouse moves off the item of interest; this allows
+for subsequent transient interactions that can enable a transparent form of linked brushing.
 
 \begin{figure}
    \centering
