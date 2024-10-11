@@ -57,23 +57,22 @@ that captures how inputs are demanded by outputs.
 \paragraph{3. Fine-grained linking of the view to the data.}
 
 We would also like to support cognacy queries that start from the output rather than the input; this is the
-basis for a feature called \emph{linked brushing} (or \emph{brushing and linking}) in data visualisation
-\cite{becker87,buja91}, but here the goal is to implement a transparent version of this feature. In
-\figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, this time
-opting to see only rows with active data selections, rather than only rows with data that are used by any part
-of the output. They then express interest in one of the points in the scatter plot; by clicking on it (rather
-than just moving their mouse over it) they create what we call a \emph{persistent} selection (shown in green).
-The demands analysis $\demandsR$ reveals the inputs (also shown in green) needed to compute both the $x$ and
-$y$ coordinates of the point; this shows that the 2016 data for 4 countries was used, although it does not
-reveal how.
+basis of a feature called \emph{linked brushing} (or \emph{brushing and linking}) in data visualisation
+\cite{becker87,buja91}, but here we want to do this transparently. In \figref{introduction:scatterplot}, the
+user has again revealed the underlying data set, this time opting to see only rows with active data
+selections, rather than only rows with data that are used by any part of the output. They then express
+interest in one of the points in the scatter plot. By clicking on it, rather than just moving their mouse over
+it, they create what we call a \emph{persistent} selection (shown in green). The demands analysis $\demandsR$
+reveals the inputs (also shown in green) needed to compute both the $x$ and $y$ coordinates of the selected
+point; this shows that the 2016 data for 4 countries was used, although it does not reveal how.
 
 \paragraph{4. Linked outputs.}
 
-Now that the inputs demanded by the scatter plot point are determined, the $\demandedByR$ analysis runs
-automatically on the output of the $\demandsR$ analysis; this reveals that the inputs shaded green are also
-needed to compute 4 bar segments in the bar chart, namely those for 2016; these are displayed with
-cross-hatching. A persistent selection remains even when the mouse moves off the item of interest; this allows
-for subsequent transient interactions that can enable a transparent form of linked brushing.
+Now that the inputs demanded by the output selection are determined, the $\demandedByR$ analysis runs
+automatically on the output of $\demandsR$; this reveals that the selected inputs were also used to compute 4
+bar segments (displayed with cross-hatching) in the bar chart, namely those for 2016. A persistent selection
+remains even when the mouse moves off the item of interest; this allows for subsequent transient interactions
+that can enable a transparent form of linked brushing.
 
 \begin{figure}
    \centering
