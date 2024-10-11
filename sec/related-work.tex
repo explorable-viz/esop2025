@@ -7,11 +7,13 @@ Dynamic dependence graphs have been used previously in functional languages to i
 evaluation~\cite{acar02, acar06b}. In contrast to their work, which focuses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive data exploration systems.
 \JBnote{With respect to program slicing, \citet{field98} use dynamic dependence graphs on a subset of Pascal. In 
-their work, the authors demonstrate the application of dynamic dependence graphs to slice programs in languages
-implemented as term-rewriting systems, showing how this can be used to construct more elaborate error reporting
-for things like type errors. In contrast, our work is focused on allowing a user to incrementally explore
-the dependencies of their interactive data visualisation, under the assumption that it has already been successfully
-evaluated.}
+their work, the authors demonstrate the application of dynamic dependence graphs to in languages implemented as
+term-rewriting systems, showing how this can be used to construct elaborate error reporting for things like type
+errors. Internally, their dependence graphs represent a complete account of the reduction steps in a programs 
+execution -- as a term graph -- as opposed to our dependence graphs which only represent value-to-value
+dependencies. Our work is also distinct in that, by focussing on allowing the user to explore dependencies 
+in interactive visualisations, we assume that the program has already executed, rather than using the information
+for static error checking.}
 
 More recently there has been a body of work aimed at using dynamic dependence graphs to assist in program
 fault localisation, but again these are not focused on interactive visualisation systems, but rather on bug
