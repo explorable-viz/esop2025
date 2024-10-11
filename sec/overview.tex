@@ -57,23 +57,23 @@ Again the user has chosen to reveal the underlying data set, but this time the u
 rows with active data selections, rather than rows with data that is used somewhere in either of the charts.
 The provenance analysis at play here we write as $\demandedByR$ (``demanded by'').
 
-Dually, we can start from an output, and want to determine all the “linked outputs”, i.e., outputs that
+Dually, we can start from an output, and determine all the ``linked outputs'', i.e., outputs that
 compete for the same input data. \todo{a.k.a.~linked brushing} One such scenario is illustrated in
-\figref{introduction:scatterplot} where we have two output views: the same scatter plot as in
-\figref{introduction:related-inputs}, and an additional bar chart denoting the non-renewables by country. In
-the figure, the user has selected the segments corresponding to India in 2017, and Egypt and Japan in 2018 in
-the bar chart. This highlights the corresponding data in the \textsf{nonRenewables} table used to produce
-those outputs. Additionally, it also highlights any outputs in the scatter plot that demand any of those data.
+\figref{introduction:scatterplot} where we have two output views: a scatter plot of nuclear capacity vs. output
+and a bar chart denoting the non-renewables by country. In
+the bar chart, the user has selected the segment corresponding to India in 2016.
+This highlights the corresponding data in the \textsf{nonRenewables} table used to produce
+those outputs and highlights any outputs in the scatter plot that demand any of those data.
 The selected bars in the bar chart and the selected points (specifically, their x-ccordinates as those are the
-ones using the considered input data) in the scatter plot are the linked outputs. In the scatter plot, we note
-that only two points are selected, those for Egypt and Japan, reflecting the fact that the scatter plot is
-only a view of data from 2018.
+ones using the considered input data) in the scatter plot are the linked outputs. %In the scatter plot, we note
+%that only two points are selected, those for Egypt and Japan, reflecting that the scatter plot is
+%only a view of data from 2018.
 
-From the analysis point of view, this requires applying $\demandsR_{G}$ to find the value used to produce the
+To compute this, the analysis applies $\demandsR_{G}$ to find the value used to produce the
 selected segment of the bar, with each set of coloured segments associated with a given nation -- the selected
 segments demand all of the highlighted green data in the table. Then, starting from the selected data, we
-apply $\demandedByR_{G}$ to pick out the $x$ components of some of the circles in the scatter plot (green
-circles). \todo{Last two paragraphs verbose}
+apply $\demandedByR_{G}$ to pick out the $x$ components of the circles in the scatter plot (green
+circles). \marginpar{\todo{Last two paragraphs verbose}}
 
 \begin{figure}[H]
    \small
