@@ -2,14 +2,15 @@
 
 In this section, we introduce the main interactive data provenance features that wish to support, using two
 \OurLang examples to illustrate. The line chart in \figref{introduction:related-inputs} shows projected
-methane emissions from agricultural sources under a global warming scenario called RCP8.5; the scatter plot
-and stacked bar chart in \figref{introduction:scatterplot} show non-renewable energy outputs and capacities
-for various years and countries. The key idea of transparent visualisations is that the original data sources
-are kept around and can be viewed (when a user so requests) alongside the visualisation, and the user is then
-able to interact with both the data and the view to explore how they are related. Crucially the author of the
-visualisation does not to have to implement these transparency features themselves; they just express the
-charts or plots as pure functions of their inputs. The source code for the two examples here are given in
-\figrefTwo{example:moving-average:source}{example:non-renewables:source}.
+methane emissions from agricultural sources under a global warming scenario called RCP8.5, with source code in
+\figref{example:moving-average:source}; the scatter plot and stacked bar chart in
+\figref{introduction:scatterplot} show non-renewable energy outputs and capacities for various years and
+countries, with source code in \figref{example:non-renewables:source}. The key idea of transparent
+visualisations is that the original data sources are kept around and can be viewed (when a user so requests)
+alongside the visualisation, and the user is then able to interact with both the data and the view to explore
+how they are related. Crucially the author of the visualisation does not to have to implement these
+interactions themselves; they just express the charts or plots as pure functions of their inputs, and the
+transparent visualisation infrastructure takes care of everything else.
 
 \paragraph{1. Fine-grained linking of the data to the view.}
 
@@ -21,7 +22,8 @@ interacting with individual entries. For example, moving their mouse over the nu
 \emph{one} point in the projected emissions curve, and \emph{three} points in the other curve, which plots the
 moving average of the projected emissions. The provenance analysis which underpins this we write as
 $\demandedByR$ (``demanded by''), and here this tells us that that input value of interest was needed to
-compute either the $x$ or $y$ coordinate (in this case just the $y$) of the four highlighted points.
+compute either the $x$ or $y$ coordinate (in this case just the $y$ coordinate) of the four highlighted
+points.
 
 \begin{figure}
    \centering
@@ -44,31 +46,35 @@ We want to support fine-grained IO queries that run in the other direction too, 
 analysis written $\demandsR$ (``demands''). In \figref{introduction:related-inputs} the $\demandsR$ analysis
 is initiated automatically, and composed with the output of the $\demandedByR$ analysis; this reveals that
 calculating the $y$ coordinates of the 4 highlighted points on the right required 5 emissions values from the
-input table, including the 104.69 we started with. This group of related inputs is shown with the blue border
-on the left. These additional inputs we refer to as the \emph{related inputs} of the original input selection;
-they are the other inputs demanded by any output that demands our original input selection. Given that the
-initial input selection contributes to 3 points of the moving average, the ``window'' of related inputs in
-this case is 5 wide, comprising all the data points needed to account for the selection on the right. Related
-inputs is a \emph{cognacy} relation: two inputs are related if they have a common ancestor in a
-\emph{dependency graph} that captures how inputs are demanded by outputs.
+input table, including the 104.69 we started with, as indicated by the blue border on the left. These
+additional inputs we refer to as the \emph{related inputs} of the original input selection; they are the other
+inputs demanded by any output that demands our starting input. Given that the initial input selection here
+contributes to 3 points of the moving average, the ``window'' of related inputs in this case is 5 wide,
+comprising all the data points needed to account for the selection on the right. Related inputs is a
+\emph{cognacy} relation: two inputs are related if they have a common ancestor in a \emph{dependency graph}
+that captures how inputs are demanded by outputs.
 
 \paragraph{3. Fine-grained linking of the view to the data.}
 
 We would also like to support cognacy queries that start from the output rather than the input. In
-\figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, but this time
-they opt to only see rows with active data selections, rather than only rows with data that are used somewhere
-(i.e.~in either of the charts). Here we describe a slightly richer interaction made possible by allowing
-multiple concurrent queries. First, the user expresses interest in one of the points in the scatter plot, but
-by clicking on it (rather than just moving their mouse over it) they can make the selection \emph{persistent}
-(shown in green). The demands analysis $\demandsR$ reveals the inputs needed to compute both the $x$ and $y$
-coordinates of the point (also shown in green); this shows that the 2016 data for 4 countries was used,
-although it does not reveal how.
+\figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, this time
+opting to only see rows with active data selections, rather than only rows with data that are used by any part
+of the output. Here we describe a slightly richer interaction made possible by allowing multiple concurrent
+queries. First, the user expresses interest in one of the points in the scatter plot, but by clicking on it
+(rather than just moving their mouse over it) they make the selection \emph{persistent} (shown in green). The
+demands analysis $\demandsR$ reveals the inputs needed to compute both the $x$ and $y$ coordinates of the
+point (also shown in green); this shows that the 2016 data for 4 countries was used, although it does not
+reveal how.
 
 % dually
-% linked brushing
 
-\paragraph{Linked outputs}
+\paragraph{4. Linked outputs}
 
+Now that the inputs demanded by the scatter plot point are determined, the $\demandedByR$ analysis is
+initiated automatically, and composed with the output of the $\demandsR$ analysis; this reveals that the data
+shaded green are also needed to compute 4 bar segments in the bar chart, namely those for 2016; these are
+displayed with cross-hatching. This is a feature called \emph{linked brushing} (or \emph{brushing and
+linking}) in data visualisation, but here we can provide it in a transparent way.
 
 \begin{figure}
    \centering
