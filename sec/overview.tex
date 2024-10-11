@@ -48,7 +48,16 @@ input table, including the 104.69 we started with. This group of related inputs 
 on the left. These additional inputs we refer to as the \emph{related inputs} of the original input selection;
 they are the other inputs demanded by any output that demands our original input selection. Given that the
 initial input selection contributes to 3 points of the moving average, the ``window'' of related inputs in
-this case is 5 wide, comprising all the data points needed to account for the selection on the right.
+this case is 5 wide, comprising all the data points needed to account for the selection on the right. Related
+inputs is a \emph{cognacy} relation: two inputs are related if they have a common ancestor in a
+\emph{dependency graph} that captures how inputs are demanded by outputs.
+
+\paragraph{3. Fine-grained linking of the view to the data.}
+
+We would also like to support cognacy queries that start from the output rather than the input.
+
+% dually
+% linked brushing
 
 \paragraph{Linked outputs}
 
@@ -70,23 +79,5 @@ The provenance analysis at play here we write as $\demandedByR$ (``demanded by''
    \caption{Non-renewable energy source code}
    \label{fig:example:non-renewables:source}
 \end{figure}
-
-Dually, we can start from an output, and want to determine all the “linked outputs”, i.e., outputs that
-compete for the same input data. \todo{a.k.a.~linked brushing} One such scenario is illustrated in
-\figref{introduction:scatterplot} where we have two output views: the same scatter plot as in
-\figref{introduction:related-inputs}, and an additional bar chart denoting the non-renewables by country. In
-the figure, the user has selected the segments corresponding to India in 2017, and Egypt and Japan in 2018 in
-the bar chart. This highlights the corresponding data in the \textsf{nonRenewables} table used to produce
-those outputs. Additionally, it also highlights any outputs in the scatter plot that demand any of those data.
-The selected bars in the bar chart and the selected points (specifically, their x-ccordinates as those are the
-ones using the considered input data) in the scatter plot are the linked outputs. In the scatter plot, we note
-that only two points are selected, those for Egypt and Japan, reflecting the fact that the scatter plot is
-only a view of data from 2018.
-
-From the analysis point of view, this requires applying $\demandsR_{G}$ to find the value used to produce the
-selected segment of the bar, with each set of coloured segments associated with a given nation -- the selected
-segments demand all of the highlighted green data in the table. Then, starting from the selected data, we
-apply $\demandedByR_{G}$ to pick out the $x$ components of some of the circles in the scatter plot (green
-circles). \todo{Last two paragraphs verbose}
 
 % mediating input, mediating output
