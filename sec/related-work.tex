@@ -34,7 +34,6 @@ compute not only the output table, but the provenance of the values it contains.
 for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
 and -- despite integration with a general purpose language -- only supports provenance queries for an 
 embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
-
 Extending our work to support similar provenance queries would require revisiting the dependency relation,
 since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
 dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
@@ -44,33 +43,28 @@ NRC differ semantically from our core functional calculus.}
 \subsection{Galois Slicing}
 
 \todo{This section feels long and overlaps a bit with earlier discussions about advantage of dependence graphs
-over traces.} Galois connections between lattices offer an appealing mathematical foundation for bidirectional
-dynamic program analysis, cleanly characterising input-output relationships in terms of demand and sufficiency
-\cite{perera12a,perera16d,ricciotti17}. In these works, Galois connections are applied to the problem of
-program slicing. The upper adjoint -- which characterises forward slicing from inputs to outputs -- can be
-thought of as a \emph{sufficiency} operator, picking out all the outputs which can be computed using only a
-particular set of inputs; the lower adjoint, which characterises backward slicing, is a \emph{demand}
-operator, picking out the specific inputs needed to compute a particular set of outputs. \citet{perera22}
-extended this approach to a setting where slices have complements and the slices of a particular program or
-value form a Boolean lattice; they then showed how the De Morgan dual of the upper adjoint can be used to pick
-out \emph{linked outputs}, namely the other outputs that ``compete'' with a given set of outputs in the sense
-of demanding some of the same inputs, and proposed this as a framework for understanding the ``brushing and
-linking'' feature commonly used in data visualisation.
+over traces.} \JBnote{Galois connections have been previously studied with applications for slicing functional programs
+\cite{perera12a,perera16d,ricciotti17}, since they provide a clean characterisation of input-output relationships.
+In these works, the upper and lower adjoint are interpreted as \emph{sufficiency} and \emph{demand} queries. \citet{perera22}
+extends this approach to a setting where slices have complements and the slices of a particular program or
+value form a Boolean lattice; and shows how the De Morgan dual of the upper adjoint can be used to pick
+out \emph{linked outputs}, namely the other outputs which demand an overlapping set of inputs, and proposed this
+as a framework for understanding the ``brushing and linking'' feature commonly used in data visualisation.}
 
 However, implementations of Galois slicing efficient enough to support the kind of interactive applications
 considered here have proved elusive. To compute the two analyses, implementations have relied on a sequential
-execution record, usually taking the form of a big-step or small-step trace. The forward analysis uses the
+execution record, usually taking the form of an execution trace. The forward analysis uses the
 trace to ``replay'' the computation, propagating information about resource availability from inputs to
 outputs; the backwards analysis uses the trace to ``rewind'' the computation, propagating information about
-demand from outputs to inputs. This overly sequential approach makes the approach unable to exploit the very
+demand from outputs to inputs. This sequential approach is unable to exploit the very
 independence that makes slicing useful in the first place. Moreover, the backwards analysis makes frequent use
-of lattice join ($\join$) to combine slicing information computed along different branches of the computation
+of lattice join ($\join$) to combine slicing information from different branches of the computation
 \todo{mention this earlier when we're conjecturing why graph approach is faster}. Joining closure slices in
-particular becomes expensive because of the contained environments (which in turn contain closures), and these
-issues have made the approach prohibitively slow for interactive use. Compared to Galois slicing, our approach
-of decomposing the problem into a graph semantics and a pair of analyses over the graph significantly reduces
-the implementation burden on the developer, since the algorithms for the program analyses are
-language-agnostic and thus only need to be implemented~once.
+particular is expensive because of the contained environments (which in turn contain closures), and these
+issues make the approach prohibitively slow for interactive use, as covered in \secref{evaluation}.
+\JBnote{Beyond the performance improvement from using a graph representation, our work also reduces the 
+implementation burden on the developer, since the algorithms for our program analyses only need to be 
+implemented once.}
 
 \subsection{Linked Visualisation}
 
