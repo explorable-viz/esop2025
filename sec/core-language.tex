@@ -92,17 +92,18 @@ with $\alpha$ fresh, emulating first-class foreign functions.
 \label{sec:core:semantics}
 
 We now give a big-step operational semantics for the core language, which evaluates terms to values and builds
-a dynamic dependence graph for any such value. First we introduce the idea of a dynamic dependence graph.
+a dynamic dependence graph for any such value. %First we introduce the idea of a dynamic dependence graph.
 
 \subsubsection{Dynamic Dependence Graphs}
 \label{sec:core:dependence-graphs}
 
 A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence graph}) is a directed acyclic
 graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the
-dependence graph for a particular program, vertices $\alpha, \beta \in V$ represent \emph{parts} of values
+dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses
+associated to values
 (either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$
-indicate that, in the evaluation of the program, the partial value associated to $\beta$ \textit{depends on}
-on the partial value associated to $\alpha$. This diverges somewhat from traditional approaches to dynamic
+indicate that, in the evaluation of the program, the value associated to $\beta$ \textit{depends on}
+on the value associated to $\alpha$. Such values may be sub-terms of a larger value. This diverges somewhat from traditional approaches to dynamic
 dependence graphs in only considering one type of edge (data dependency) rather than separate data and control
 dependencies; moreover our edges point in the direction of dependent vertices, whereas in the literature the
 other direction is somewhat more common.
