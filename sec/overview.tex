@@ -58,7 +58,7 @@ that captures how inputs are demanded by outputs.
 
 We would also like to support cognacy queries that start from the output rather than the input; this is the
 basis for a feature called \emph{linked brushing} (or \emph{brushing and linking}) in data visualisation
-\cite{becker87,buja91}, but here the goal is to do this in a transparent way. In
+\cite{becker87,buja91}, but here the goal is to implement a transparent version of this feature. In
 \figref{introduction:scatterplot}, the user has again chosen to reveal the underlying data set, this time
 opting to see only rows with active data selections, rather than only rows with data that are used by any part
 of the output. They start by expressing interest in one of the points in the scatter plot; by clicking on it
@@ -66,8 +66,6 @@ of the output. They start by expressing interest in one of the points in the sca
 (shown in green). The demands analysis $\demandsR$ reveals the inputs needed to compute both the $x$ and $y$
 coordinates of the point (also shown in green); this shows that the 2016 data for 4 countries was used,
 although it does not reveal how.
-
-% dually
 
 \paragraph{4. Linked outputs}
 
@@ -86,11 +84,12 @@ brushing.
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
    \small
    {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
    \caption{Non-renewable energy source code}
    \label{fig:example:non-renewables:source}
 \end{figure}
 
+% dually
 % mediating input, mediating output

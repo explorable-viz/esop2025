@@ -1,8 +1,8 @@
 \section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-\todo{Need an intro. And rehash this section so it's more goal-oriented. Currently a bit unfocused.} 
-\JBnote{In order to give a full account of cognacy queries, we first introduce some preliminaries -- 
+\todo{Need an intro. And rehash this section so it's more goal-oriented. Currently a bit unfocused.}
+\JBnote{In order to give a full account of cognacy queries, we first introduce some preliminaries --
 Boolean algebras (\defref{conjugate:Boolean-algebra}) and the image and preimage
 functions for a relation and their De Morgan duals (\secref{conjugate:image-preimage}) -- and then extend
 these operators to dependence graphs (\secref{conjugate:dependence-graph-functions}) via their IO relation.
@@ -52,7 +52,7 @@ pair}, in the sense of \citet{jonsson51}:
    $$
 \end{definition}
 
-\noindent (\citeauthor{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
+\noindent (\citet{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
 between Boolean algebras.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]
@@ -99,7 +99,7 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 \cap (\sources{G} \times \sinks{G})$.
 \end{definition}
 
-The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we will
+The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we
 interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
 
 Clearly the IO relation of $G$ is the converse of the IO relation of $\opGraph{G}$. Since we are in fact
@@ -138,7 +138,7 @@ the following pair of functions, which also form a conjugate pair \todo{How are 
 suggested by the intuition just given?}.
 
 \begin{definition}[Dual Image and Preimage Functions for a Relation]
-   For any relation $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and
+   For relations $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and
    $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
    \begin{enumerate}
       \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
@@ -168,7 +168,7 @@ Notably, $\demandedByR_R$ can be transformed into $\sufficesR_R$ using the De Mo
 \end{lemma}
 
 Since $\neg$ for $\powerset{X}$ is just relative complement $X \setminus \param$, this also has an intuitive
-reading: $\neg{\demandedByR_{R}(\neg X')}$ contains all the outputs that don't depend on anything outside of
+reading: $\neg{\demandedByR_{R}(\neg X')}$ contains all the outputs that do not depend on anything outside of
 $X'$.
 
 Conjugate functions are related to another class of near-reciprocals between Boolean algebras, namely
@@ -239,7 +239,7 @@ $T(H)$ from the final graph slice $H$, representing the outputs that the origina
    \[X \demandedByAlg{G} Y \iff \demandedByR_G(X) = Y\]
 \end{proposition}
 \begin{proof}
-   See \apdxsecref{apdx:demandedBy}
+   See \apdxsecref{apdx:demandedBy}.
 \end{proof}
 
 \input{fig/conjugate/algorithms}
