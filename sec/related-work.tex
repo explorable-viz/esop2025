@@ -20,22 +20,26 @@ fault localisation. \JBnote{Generally, work that uses dependence graphs for this
 defined for imperative languages, identifying \emph{statements} which depend on each other. Our languages
 encodes much of its control flow via pattern matching on data. We can therefore encode much of the
 same information simply by considering data dependencies.}
-For a survey on other techniques, see \citet{Soremekun2021} \todo{focus on the difference in the information
-the graphs contain, rather than how they are used?}.
+For a survey on other techniques, see \citet{Soremekun2021}.
 
 \subsection{Provenance tracking}
 
 \todo{Other provenance approaches}
 
 \cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
-queries and user-defined functions. Their work takes an SQL query and rewrites it into a pair of queries which
-compute not only the output table, but the provenance of the values it contains. In order to modify our
-approach to work in this setting, we would need to encode extra information into the edges of the graph,
-specifically whether an edge is a control-flow edge -- coming from an if-else or a pattern match -- or a value
-edge -- from producing a new value out of old ones. This information roughly corresponds to the ``why'' and
-``where'' provenance described in the database setting. Further we would need to use a dependency relation
-which agrees with the semantics of an SQL query or user-defined functions, since a relational database is
-semantically distinct from our functional setting.
+queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries which
+compute not only the output table, but the provenance of the values it contains. 
+
+\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance 
+for the LINKS programming lanugage \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
+and -- despite integration with a general purpose language -- only supports provenance queries for an 
+embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
+
+Extending our work to support similar provenance queries would require revisiting the dependency relation,
+since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
+dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
+``where'' provenance described in the database setting. We would also need to consider how SQL queries and the 
+NRC differ semantically from our core functional calculus.}
 
 \subsection{Galois Slicing}
 
