@@ -61,16 +61,16 @@ data visualisation called \emph{linked brushing}. \citet{perera22} implemented a
 general-purpose functional programming language, using execution traces to support bidirectional queries.
 
 The advantage of shifting the burden of implementing transparency features into the language runtime is that
-the author of the content can concentrate purely on data visualisation, and moreover the consumer of the
-content can formulate any query supported by the infrastructure. As the infrastructure improves, the benefits
-are inherited automatically by end users, at no additional cost to the author. There are prospects for baking
-in formal guarantees, for example that the revealed data is in some sense minimal and sufficient.
+the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
+the benefits are inherited automatically by end users, at no additional cost to the author. For example if
+some kind of formal guarantees are provided (perhaps that data selections are in some sense minimal and
+sufficient), then those can be proved once for the infrastructure rather for each bespoke implementation.
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
-which supports fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. In
-contrast to prior work, we use \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
-enable our approach to be fast enough for interactive use and language-independent, separating queries
-over the graph from the problem of deriving the dependence graph for a particular program.
+which supports fine-grained \emph{in situ} provenance queries, an end-user feature we call \emph{data
+transparency}. In contrast to prior work, we use \emph{dynamic dependence graphs}~\cite{ferrante87,
+agrawal90}, which enable our approach to be fast enough for interactive use and language-independent,
+separating queries over the graph from the problem of deriving the dependence graph for a particular program.
 
 \subsection{Contributions and roadmap}
 \label{sec:introduction:contributions}
