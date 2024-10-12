@@ -99,14 +99,13 @@ a dynamic dependence graph for any such value. %First we introduce the idea of a
 
 A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence graph}) is a directed acyclic
 graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the
-dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses
-associated to values
+dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses associated to values
 (either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$
-indicate that, in the evaluation of the program, the value associated to $\beta$ \textit{depends on}
-on the value associated to $\alpha$. Such values may be sub-terms of a larger value. This diverges somewhat from traditional approaches to dynamic
-dependence graphs in only considering one type of edge (data dependency) rather than separate data and control
-dependencies; moreover our edges point in the direction of dependent vertices, whereas in the literature the
-other direction is somewhat more common.
+indicate that, in the evaluation of the program, the value associated to $\beta$ \textit{depends on} on the
+value associated to $\alpha$. Such values may be sub-terms of a larger value. This diverges somewhat from
+traditional approaches to dynamic dependence graphs in only considering one type of edge (data dependency)
+rather than separate data and control dependencies; moreover our edges point in the direction of dependent
+vertices, whereas in the literature the other direction is somewhat more common.
 
 During evaluation, the output graph $G$ is built by specifying graph fragments and then combining them;
 the following notation is convenient for specifying a graph fragment where a fresh vertex $\alpha$ depends on

@@ -19,13 +19,13 @@ themselves, and an overall improved performance for running~analyses.
 
 \subsection{Future work}
 \label{sec:future}
+
 In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is
 the same as that of \citet{perera22}; here, selections are pushed through evaluation if the selected parts of
 values are consumed during evaluation - either via pattern matching or the specific implementation provided
 for a primitive \todo{obscure}. However, the dependency relation used in that paper was not designed for
 application in a graph-based setting \todo{meaning?}.
 
-% Our results in \secref{evaluation} (in particular for benchmark \textbf{compute-dtw}) suggest that the structure of the graph plays an important
 Our results in \secref{evaluation} raise the question of how important the structure of the graph is in the
 performance of our analysis, and whether our framework would benefit from an alternative representation. For
 example, rather than representing all dependencies as value-to-value dependencies, it may be more useful for
