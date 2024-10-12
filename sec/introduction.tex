@@ -4,15 +4,11 @@
 Whether formulating national policy or making day-to-day decisions about our own lives, we increasingly rely
 on the charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions.   However, most of the artefacts we encounter are
-{% tex broke the page here!!!!
-\parfillskip=0pt
-\parskip=0pt
-\par}
 \begin{wrapfigure}{r}{0.53\textwidth}
    \centering
    \includegraphics[width=0.5\textwidth]{fig/example/bremer.png}
-   %\vspace{-2mm}
    \caption{A hand-crafted transparent visualisation due to \citet{bremer15}}
+   \vspace{-2mm}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
 \noindent
@@ -25,7 +21,6 @@ compounded when the information presented draws on multiple data sources, such a
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
 multiple database tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination
 to embark on such an activity. Perhaps more often than we would like, we end up taking things on trust.
-
 
 With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For digital
 media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
@@ -50,15 +45,15 @@ visualisation only allows the user to select one point at a time.
 \label{sec:introduction:data-transparency}
 
 Hand-crafted efforts like \citet{bremer15}'s are labour-intensive because they involve manually embedding
-metadata about the relationship between outputs and inputs into the same program. The validity of this
-metadata is then fragile, because if the visualisation or analysis logic changes, the relationship between
-inputs and outputs also change. A less costly and more robust approach is to treat data provenance features
-like these as a language infrastructure problem, baking lineage or provenance metadata directly into outputs
-so that provenance queries can be supported automatically. For example, for an in-memory database engine,
-\citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
-then ``forward trace'' to find related output selections in other views, to support a popular feature from
-data visualisation called \emph{linked brushing}. \citet{perera22} implemented a similar system for a
-general-purpose functional programming language, using execution traces to support bidirectional queries.
+metadata about the relationship between outputs and inputs into the same program. When the visualisation or
+analysis logic changes, the relationship between inputs and outputs also change, and the metadata must be
+manually updated. A less costly and more robust approach is to treat data provenance as a language
+infrastructure problem, baking lineage or provenance metadata directly into outputs so that provenance queries
+can be supported automatically. For example, for an in-memory database engine, \citet{psallidas18smoke}
+describe how to ``backward trace'' from output selections to input selections, and then ``forward trace'' to
+find related output selections in other views, to support a popular feature from data visualisation called
+\emph{linked brushing}. \citet{perera22} implemented a similar system for a general-purpose functional
+programming language, using execution traces to support bidirectional queries.
 
 The advantage of shifting the burden of implementing transparency features into the language runtime is that
 the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
