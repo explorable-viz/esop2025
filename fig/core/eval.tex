@@ -1,5 +1,5 @@
 \begin{figure}
-   {\small \flushleft \shadebox{$\gamma, e, V \evalS v, G$}%
+   {\small \flushleft \shadebox{$\gamma, e, V, G \evalS v, G'$}%
    \begin{smathpar}
       %
       \inferrule*[
@@ -72,7 +72,7 @@
       \and
       %
       \inferrule*[
-         lab={\ruleName{$\evalS$-record-project}}
+         lab={\ruleName{$\evalS$-project}}
       ]
       {
          \gamma, e, V \evalS \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}, G
@@ -159,10 +159,10 @@
       }
    \end{smathpar}}
    \\[2mm]
-   {\small \flushleft \shadebox{$\gamma, \seq{e}, V \evalS \seq{v}, G$}%
+   {\small \flushleft \shadebox{$\gamma, \seq{e}, V, G \evalS \seq{v}, G'$}%
    \begin{smathpar}
       \inferrule*[
-         lab={\ruleName{$\evalS$-seq}}
+%         lab={\ruleName{$\evalS$-seq}}
       ]
       {
          \gamma, e_i, V \evalS v_i, G_i
@@ -179,7 +179,7 @@
       \and
       %
    \end{smathpar}}
-   {\small \flushleft \shadebox{$\gamma, \rho, V \closeDefs \gamma', G$}
+   {\small \flushleft \shadebox{$\gamma, \rho, V, G \closeDefs \gamma', G'$}
    \begin{smathpar}
       \inferrule*[]
       {
@@ -198,6 +198,6 @@
    \end{smathpar}
    }
    \vspace{-0.5cm}
-   \caption{Operational semantics with dependence graphs}
+   \caption{Operational semantics with dependence graph}
    \label{fig:core:eval}
 \end{figure}
