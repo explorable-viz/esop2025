@@ -44,8 +44,10 @@ $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching const
 
 The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
 the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
-function $f$ is required to provide an interpretation $\interpret{f}$ that returns both the result of calling
-$f$ and a dependence graph capturing how the result depends on the arguments supplied to $f$.
+function $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
+$\seq{v}$ and dependence graph $G$, returns both the result of applying the foreign function named by $f$ to
+$\seq{v}$ and a dependence graph $G'$ which extends $G$ with information about how the result depends on
+$\seq{v}$.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
