@@ -70,9 +70,9 @@ enforced in the core language.)
 \label{sec:core:values}
 
 We define addressed \emph{values} $v$ mutually inductively with \emph{raw values}. A raw value is simply a
-value without an associated address. Each value decorates a raw value with an address $\alpha$. Addresses act
-as identifiers, with each value's address corresponding to a vertex in a dependence graph. Addresses are
-allocated during evaluation so that newly constructed parts of values have fresh addresses.
+value without an associated address; a value decorates a raw value with an address $\alpha$. Addresses are
+allocated during evaluation so that newly partial values have fresh addresses, which can then by used as
+vertices in a dependence graph.
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
 $\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
@@ -103,9 +103,8 @@ traditional approaches to dynamic dependence graphs in only considering one type
 rather than separate data and control dependencies; moreover our edges point in the direction of dependent
 vertices, whereas in the literature the other direction is somewhat more common.
 
-During evaluation, the output graph $G$ is built by specifying graph fragments and then combining them;
-the following notation is convenient for specifying a graph fragment where a fresh vertex $\alpha$ depends on
-a set $V$ of preexisting vertices.
+During evaluation, the dependence graph $G$ under construction is extended by graph fragments which specify
+that a fresh vertex $\alpha$ depends on a set $V$ of preexisting vertices, given by the following notation:
 
 \begin{definition}[In-star notation]
 Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V \times
