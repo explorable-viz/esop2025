@@ -9,10 +9,10 @@
          \strut
       }
       {
-         \gamma \cons (\bind{x}{v}), \exVar{x}, V
+         \gamma \cons (\bind{x}{v}), \exVar{x}, V, G
          \evalS
          v,
-         \emptyset
+         G
       }
       %
       \and
@@ -21,13 +21,13 @@
          lab={\ruleName{$\evalS$-int}}
       ]
       {
-         \strut
+         \fresh{a}{G}
       }
       {
-         \gamma, n, V
+         \gamma, n, V, G
          \evalS
          \annInt{n}{\alpha},
-         \inStar{V}{\alpha}
+         G \cup \inStar{V}{\alpha}
       }
       %
       \and
