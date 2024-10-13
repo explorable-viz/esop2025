@@ -29,17 +29,19 @@ x$ to mean $X \disjunion \set{x}$.
 \subsubsection{Terms}
 \label{sec:core:expressions}
 
-\figref{syntax} defines expressions $e$ of the language, which include variables $x$, integer constants
-$n$, let-bindings $\exLet{x}{e}{e'}$, record construction $\exRec{\seq{\bind{x}{e}}}$, record projection
-$\exRecProj{e}{x}$, and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges
-over data constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to
-constructor arities $\datatype{c} \in \mathbb{N}$. Function application comes in two forms: the usual
-$\exApp{e}{e'}$, and (saturated) \emph{foreign function applications} $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below). The final two expression forms are anonymous functions
-$\exFun{\sigma}$ and mutually recursive let-bindings $\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a
-pattern-matching construct called an \emph{eliminator} (\secref{core:continuations} below).
+\figref{syntax} defines expressions $e$ of the language, which include variables $x$, integer constants $n$,
+let-bindings $\exLet{x}{e}{e'}$, record construction $\exRec{\seq{\bind{x}{e}}}$, record projection
+$\exRecProj{e}{x}$, and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over
+data constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to constructor
+arities $\datatype{c} \in \mathbb{N}$. Function application comes in two forms: the usual $\exApp{e}{e'}$, and
+(saturated) \emph{foreign function applications} $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below).
+The final two expression forms are anonymous functions $\exFun{\sigma}$ and mutually recursive let-bindings
+$\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an
+\emph{eliminator} (\secref{core:continuations} below).
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
+
 The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
 the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
 function $f$ is required to provide an interpretation $\interpret{f}$ that returns both the result of calling
@@ -47,10 +49,12 @@ $f$ and a dependence graph capturing how the result depends on the arguments sup
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
-A \emph{continuation} $\kappa$  is a term $e$ or an eliminator $\sigma$, describing how an execution
-proceeds after a value is pattern-matched. An \emph{eliminator} is a deep pattern-matching construct based on
+
+A \emph{continuation} $\kappa$ is a term $e$ or an eliminator $\sigma$, describing how an execution proceeds
+after a value is pattern-matched. An \emph{eliminator} is a deep pattern-matching construct based on
 tries~\cite{hinze00,peytonjones2021}; for a language with rich structured values like records and data types,
- this makes for a cleaner presentation than a single shallow elimination form for each type. Piecewise function definitions in the surface language desugar into eliminators.
+this makes for a cleaner presentation than a single shallow elimination form for each type. Piecewise function
+definitions in the surface language desugar into eliminators.
 
 An eliminator specifies how values of a particular shape are matched, and for a given value, determines how
 any pattern variables get bound and the continuation $\kappa$ which will be executed under those bindings. A
@@ -65,10 +69,12 @@ enforced in the core language.)
 \subsubsection{Addresses, values and environments}
 \label{sec:core:values}
 
-We define addressed \emph{values} $v$ mutually inductively with \emph{raw values}. A raw value is simply a value without an associated address. Each value decorates a raw value with an address $\alpha$.
-Addresses act as identifiers, with each value's address corresponding to a vertex in a dependence graph.
-There are many sensible ways of assigning addresses (our implementation uses a simple integer counter) as
-long as a freshness condition is satisfied -- ensuring no collisions when considered as vertices in the underlying graph. For brevity, we elide the freshness condition from the graph semantics.
+We define addressed \emph{values} $v$ mutually inductively with \emph{raw values}. A raw value is simply a
+value without an associated address. Each value decorates a raw value with an address $\alpha$. Addresses act
+as identifiers, with each value's address corresponding to a vertex in a dependence graph. There are many
+sensible ways of assigning addresses (our implementation uses a simple integer counter) as long as a freshness
+condition is satisfied -- ensuring no collisions when considered as vertices in the underlying graph. For
+brevity, we elide the freshness condition from the graph semantics.
 %in (next), and simply assume it will be satisified whenever a new address $\alpha$ is created.}
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
