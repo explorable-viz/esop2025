@@ -84,13 +84,6 @@ a top-level environment which maps every foreign function name ${f}$ of arity $n
 $\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
 with $\alpha$ fresh, emulating first-class foreign functions.
 
-% The point of the disjointness conditions on graph union was intended to achieve this, and does at least
-% ensure that graph vertices don’t collide unexpectedly. However, I’m not sure that’s sufficient to avoid
-% problems. For example, there doesn’t seem to be anything in the closeDefs definition that prevents a
-% newly-created closure being allocated an address that is already in use somewhere in γ. This probably needs
-% a mention and isn’t likely to be easy to formalise (a side-condition which says “α_i fresh for all i” isn’t
-% much better than just saying this in plain English outside of the definition).
-
 \subsection{Operational Semantics}
 \label{sec:core:semantics}
 
