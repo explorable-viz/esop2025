@@ -1,6 +1,24 @@
 \section{Related work}
 \label{sec:related-work}
 
+\subsection{Data Provenance}
+
+There is a long history of provenance techniques, ranging from coarse-grained (document-level) provenance tracking [...] to fine-grained database provenance [...]. In terms of fine-grained techniques for structured outputs like visualisations, the two main areas of prior work are [psallidas] for query languages, and [perera] for general-purpose languages.
+
+\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
+queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries
+which compute not only the output table, but the provenance of the values it contains.
+
+\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance
+for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
+and -- despite integration with a general purpose language -- only supports provenance queries for an
+embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
+Extending our work to support similar provenance queries would require revisiting the dependency relation,
+since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
+dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
+``where'' provenance described in the database setting. We would also need to consider how SQL queries and the
+NRC differ semantically from our core functional calculus.}
+
 \subsection{Dynamic Dependence Graphs}
 
 Dynamic dependence graphs have been used previously in functional languages to implement incremental
@@ -22,49 +40,26 @@ encodes much of its control flow via pattern matching on data. We can therefore 
 same information simply by considering data dependencies.}
 For a survey on other techniques, see \citet{Soremekun2021}.
 
-\subsection{Provenance tracking}
-
-\todo{Other provenance approaches}
-
-\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
-queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries which
-compute not only the output table, but the provenance of the values it contains.
-
-\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance
-for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
-and -- despite integration with a general purpose language -- only supports provenance queries for an
-embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
-Extending our work to support similar provenance queries would require revisiting the dependency relation,
-since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
-dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
-``where'' provenance described in the database setting. We would also need to consider how SQL queries and the
-NRC differ semantically from our core functional calculus.}
-
 \subsection{Galois Slicing}
 
-\todo{This section feels long and overlaps a bit with earlier discussions about advantage of dependence graphs
-over traces.} \JBnote{Galois connections have been previously studied with applications for slicing functional programs
-\cite{perera12a,perera16d,ricciotti17}, since they provide a clean characterisation of input-output relationships.
-In these works, the upper and lower adjoint are interpreted as \emph{sufficiency} and \emph{demand} queries. \citet{perera22}
-extends this approach to a setting where slices have complements and the slices of a particular program or
-value form a Boolean lattice; and shows how the De Morgan dual of the upper adjoint can be used to pick
-out \emph{linked outputs}, namely the other outputs which demand an overlapping set of inputs, and proposed this
-as a framework for understanding the ``brushing and linking'' feature commonly used in data visualisation.}
+Although we do not consider program slices in the present work, our approach is closely related to program
+slicing techniques based on Galois connections \cite{perera12a,perera16d,ricciotti17}, a formalism that
+provides a clean characterisation of input-output relationships. In these works, the upper and lower adjoints
+of the Galois connections correspond to our \emph{sufficiency} () and \emph{demands} ($\demandsR$) queries.
+\citet{perera22} extends this approach to a setting where slices have complements and the slices of a
+particular program or value form a Boolean lattice; and shows how the De Morgan dual of the upper adjoint can
+be used to pick out \emph{linked outputs}, namely the other outputs which demand an overlapping set of inputs,
+and proposed this as a framework for understanding the ``brushing and linking'' feature commonly used in data
+visualisation.
 
-However, implementations of Galois slicing efficient enough to support the kind of interactive applications
-considered here have proved elusive. To compute the two analyses, implementations have relied on a sequential
-execution record, usually taking the form of an execution trace. The forward analysis uses the
-trace to ``replay'' the computation, propagating information about resource availability from inputs to
-outputs; the backwards analysis uses the trace to ``rewind'' the computation, propagating information about
-demand from outputs to inputs. This sequential approach is unable to exploit the very
-independence that makes slicing useful in the first place. Moreover, the backwards analysis makes frequent use
-of lattice join ($\join$) to combine slicing information from different branches of the computation
-\todo{mention this earlier when we're conjecturing why graph approach is faster}. Joining closure slices in
-particular is expensive because of the contained environments (which in turn contain closures), and these
-issues make the approach prohibitively slow for interactive use, as covered in \secref{evaluation}.
-\JBnote{Beyond the performance improvement from using a graph representation, our work also reduces the
-implementation burden on the developer, since the algorithms for our program analyses only need to be
-implemented once.}
+However, implementations of Galois slicing efficient enough to support interactive applications have proved
+elusive. To compute the two analyses, implementations have relied on a sequential execution trace, used by the
+forward analysis to ``replay'' the computation, propagating sufficiency information from inputs to outputs,
+and by the backwards analysis to ``rewind'' the computation, propagating demand from outputs to inputs. This
+sequential approach is unable to exploit the very independence that makes slicing useful in the first place,
+as discussed in \secref{evaluation}. \JBnote{Beyond the performance
+improvement from using a graph representation, our work also reduces the implementation burden on the
+developer, since the algorithms for our program analyses only need to be implemented once.}
 
 \subsection{Linked Visualisation}
 

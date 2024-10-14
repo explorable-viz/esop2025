@@ -91,10 +91,14 @@ evaluation.}
 Overall, we observe a significant speedup in the performance of \textit{demands} using the graph approach,
 from 33x speedup for the \textbf{stacked-bar-chart}, to more than 80x for \textbf{gaussian}. In particular,
 every graph-based \textit{demands} query is within the ``instantaneous'' category, whilst all but two of the
-examples using the trace approach are in the ``noticable delay'' category. We attribute this performance
-improvement to a couple of factors. First, in the trace approach, each query involves rewinding the entire
-execution, in effect evaluating in reverse, regardless of whether all of the trace is relevant. In the graph
-approach, each query only traverses the relevant parts of the graph. Second,
+examples using the trace approach are in the ``noticable delay'' category. We attribute this speedup to a
+couple of factors. First, in the trace approach, each backwards query involves rewinding the entire execution,
+regardless of whether all of the trace is relevant; graph queries only traverse the relevant parts of the
+graph. Second, in the trace approach, backwards evaluation makes frequent use of lattice join ($\join$) to
+combine slicing information from different branches of the computation; joining closure slices in particular
+has the potential to be expensive because closures contain environments (which in turn contain closures, and
+so on). In the graph approach, demands information accrues against vertices as the backwards analysis
+proceeds, with no need for separate join steps.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
