@@ -67,34 +67,28 @@ implementation burden on the developer, since the algorithms for our program ana
 implemented once.}
 
 \subsection{Linked Visualisation}
-
-\todo{Interactivity in data visualisation extends well beyond the provenance-related interactions that we have
-explored. Reframe instead around linked visualisations, e.g. the Psallidas et al, but also the work prior to
-that, Glue, etc.}
-
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
 
-We are not the first to consider shifting the burden of interactive visualisations into the language runtime.
-Reactive Vega~\cite{satyanarayan17} presents a system for building interactivity in visualisations. Vega is a
-declarative DSL for constructing interactions with visualisations. The features of Vega allow for more
-complicated interactions than our own work at present, however these are hampered by requiring the designer to
-learn multiple separate languages \todo{spurious}. Further, the syntax of Vega for combining these
-interactions is non-obvious to a new user \todo{also spurious}. In contrast, whilst our work provides a
-smaller set of interaction primitives \todo{we don't provide primitives that the programmer can use -- in that
-sense we don't support ``interactivity'' at all, rather interactivity is a built-in, but limited, featured} it
+\JBnote{Ours is not the first work to shift the burden of interactive visualisations into the language runtime.
+Reactive Vega~\cite{satyanarayan17} presents a system for declaratively building interactivity in visualisations.
+Vega provides a rich set of interaction features which can be combined to perform tasks such as brushing and
+linking, but these features come at the cost of a more complex language for designing the visualizations
+themselves. In contrast, whilst our work provides a includes a more limited set of interaction features,
+these are contained within the language itself, rather than forcing the user to build their own} it
 frees up the developer to focus on building their data analysis programs, leaving the burden of implementing
-selections to the language itself. The benefit of including everything into the base language is that it
-reduces the number of tools that a developer needs proficiency with \todo{spurious, see above}. Our linking of
-visualisations is similar in spirit to the work of \citet{north00}. In that work, the authors design a modular
-system for replacing visualisations of databases. Their system is modelled by relational database schema, and
-is designed to facilitate interactions with these modular visualisations, but is limited to data from
-relational databases, whereas ours can be applied to data of any shape, as long as it is supported by our
-language. Devise \citep{livny97} is another visualisation framework for building interactive visualisations of
-relational database tables. Similar to \citet{north00}, their work is defined by its usage of relational
-databases, and the way they create a semantics for queries on visualisations using the model of relational
-database queries.
+selections to the language itself. \JBnote{Both \citet{north00} and \citet{livny97} are similar in spirit
+to our work, describing systems for building interactive visualisations out of relational databases,
+modelling them with database schema and relational queries respectively. In both cases, their systems are
+limited to operating over relational database models, whereas our own work can be applied to data of any shape,
+provided it is supported by our language.}
+
+\JBnote{Glue \cite{beaumont13} is a python library for building linked visualisations for scientific applications.
+Glue's main advantage is its graphical user interface, allowing the user to build their visualisations via drag-and-drop
+rather than writing code, and to build complex interactions over the top of their visualisation. This broad scope
+comes at the cost of a complex user interface, as opposed to our own work, where limiting the focus of interaction
+to discovering data dependencies allows us to provide a tighter, simpler interface. Spurious(??)}
 
 \subsection{Transparent research outputs}
 
