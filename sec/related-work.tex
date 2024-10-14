@@ -56,31 +56,23 @@ computation, propagating demand from outputs to inputs. As discussed in \secref{
 to the graph approach presented here, this sequential approach is unable to exploit the very independence that
 makes slicing useful in the first place.
 
-\subsection{Linked Visualisation}
+\subsection{Linked Visualisations}
 
-The connection between ``visual selections'' and data selections has been substantially explored in the data
-visualisation literature; for example when a user interacts with a visual element by clicking or lassoing, the
-intention is typically to manipulate or select the underlying data. This has lead to various techniques for
-inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
-
-\JBnote{Ours is not the first work to shift the burden of interactive visualisations into the language runtime.
-Reactive Vega~\cite{satyanarayan17} presents a system for declaratively building interactivity in visualisations.
-Vega provides a rich set of interaction features which can be combined to perform tasks such as brushing and
-linking, but these features come at the cost of a more complex language for designing the visualizations
-themselves. In contrast, whilst our work provides a includes a more limited set of interaction features,
-these are contained within the language itself, rather than forcing the user to build their own} it
-frees up the developer to focus on building their data analysis programs, leaving the burden of implementing
-selections to the language itself. \JBnote{Both \citet{north00} and \citet{livny97} are similar in spirit
-to our work, describing systems for building interactive visualisations out of relational databases,
-modelling them with database schema and relational queries respectively. In both cases, their systems are
-limited to operating over relational database models, whereas our own work can be applied to data of any shape,
-provided it is supported by our language.}
-
-\JBnote{Glue \cite{beaumont13} is a python library for building linked visualisations for scientific applications.
-Glue's main advantage is its graphical user interface, allowing the user to build their visualisations via drag-and-drop
-rather than writing code, and to build complex interactions over the top of their visualisation. This broad scope
-comes at the cost of a complex user interface, as opposed to our own work, where limiting the focus of interaction
-to discovering data dependencies allows us to provide a tighter, simpler interface. Spurious(??)}
+The connection between visual selection (such as clicking or lasooing) and data ``selection'' has been
+explored in the data visualisation literature, leading to various techniques for inverting selections in
+visual space to obtain selections in the underlying data~\cite{north00, heer08}. There is also a substantial
+literature on linked brushing~\cite{becker87, livny97} as a way of connecting output selections via mediating
+data selections. Although this has long been recognised as an important visual tool, with \citet{roberts06}
+arguing it should be ubiquitous, there has been relatively little work in general-purpose infrastructure to
+support it. For example Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to
+support linked brushing, but no mechanism for automatically propagating selections through arbitrary
+intervening queries. Glue \cite{beaumont13} is a powerful Python library for building linked visualisations
+for scientific applications, but the developer is responsible for specifying the relationships between data
+sets that unpin the linking. More infrastructural approaches to linked brushing
+\cite{north00,livny97,psallidas18smoke}, similar in spirit to our work, have been developed mainly for
+relational languages for data visualisation. Relational languages are a promising direction in data
+visualisation, but general-purpose languages continue to be widely used too, so it is important to support
+linked brushing in this context as well.
 
 \subsection{Transparent research outputs}
 
