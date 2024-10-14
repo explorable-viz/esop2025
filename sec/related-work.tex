@@ -3,24 +3,19 @@
 
 \subsection{Data Provenance}
 
-There is a long history of provenance techniques, ranging from coarse-grained (document-level) provenance
-tracking [...] to fine-grained database provenance [...]. In terms of fine-grained techniques for structured
-outputs like visualisations, the two main areas of prior work are [psallidas] for query languages, and
-[perera] for general-purpose languages.
-
-\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
-queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries
-which compute not only the output table, but the provenance of the values it contains.
-
-\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance for the
-LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus
-(NRC)~\cite{BUNEMAN19953}, and -- despite integration with a general purpose language -- only supports
-provenance queries for an embedded SQL-like language, rather than dependency queries over the more general
-constructs in LINKS. Extending our work to support similar provenance queries would require revisiting the
-dependency relation, since we do not distinguish between control-flow -- coming from an if-else or a pattern
-match -- and value dependencies -- from producing new values out of old ones. This information roughly
-corresponds to the ``why'' and ``where'' provenance described in the database setting. We would also need to
-consider how SQL queries and the NRC differ semantically from our core functional calculus.}
+Data provenance research has a long history, ranging from document-level workflow provenance \cite{davidson08}
+to more fine-grained database techniques like \emph{where} provenance \cite{buneman01}. \citet{dietrich22}
+bridge the two worlds somewhat by tracking both value and control dependencies in recursive database queries
+and user-defined functions, implementing their approach by rewriting SQL queries to provenance-tracking
+counterparts. \citet{fehrenbach19} also connect provenance for query languages to general-purpose languages,
+extend the multi-tier language Links \cite{cooper06} with provenance tracking, but only for the embedded SQL
+part of the language. In terms of fine-grained techniques for structured outputs like visualisations, the most
+closely related lines of work are \citet{psallidas18smoke} for relational languages, and \citet{perera22} for
+general-purpose languages. These works both emphasise the importance of \emph{cognacy}, i.e.~common ancestry,
+albeit not in the context of dependence graphs, showing how to ``link'' outputs by tracing back from an output
+selection to a data selection and then forward to another output selection. These relationships of common
+ancestry seem to be largely unstudied in the data provenance literature, despite their importance in data
+visualisation.
 
 \subsection{Dynamic Dependence Graphs}
 
