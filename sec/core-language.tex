@@ -113,6 +113,8 @@ Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disju
 \set{\alpha})$.
 \end{definition}
 
+\todo{Move definition of $V(G)$ here.}
+
 \todo{Illustrate dependence graphs, perhaps using moving average example?}
 
 \input{fig/core/match}
@@ -149,36 +151,33 @@ extended dependence graph $G'$. The vertex set $V$ records the (partial) input v
 active function call providing the dynamic context in which $e$ is being evaluated; this is initially empty
 and changes whenever a function application is evaluated.
 
-The evaluation rule for variables is fairly standard; the returned dependence graph is empty, because no new
-addresses are allocated as a result of simply looking up a variable. The rule for record projections
+The evaluation rule for variables is fairly standard; the dependence graph is returned unmodified, because no
+new addresses are allocated as a result of simply looking up a variable. The rule for record projections
 $\exRecProj{e}{y}$ is similar: if $e$ evalutes to a record of the form $\annRec{\seq{\bind{x}{v}} \cons
 (\bind{y}{u})}{\alpha}$, then $\exRecProj{e}{y}$ evalutes to the value $u$ of field $y$, discarding the
-address $\alpha$ of the record. Most of the other evaluation rules can generally be understood in terms of two
-recurring patterns.
+address $\alpha$ of the record.
 
-First, any introduction rule, such as the rule for integers, functions, records or constructors, must assign a
-fresh address for the (partial) value being constructed, which in the resulting graph is then linked to each
-of the ambient input vertices in $V$. For example, the integer rule evaluates an expression $n$ to its value
-form $n_{\alpha}$ with fresh address $\alpha$; the resulting dependence graph is then $\inStar{V}{\alpha}$,
-denoting that evaluating to $n_\alpha$ depended on all matched partial inputs in $V$. Likewise, the rule for
-an anonymous function $\exFun{\sigma}$ constructs the closure $\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$
-with fresh address $\alpha$, capturing the current environment $\gamma$ and using $\envEmpty$ as the set of
-mutually recursive definitions associated with the function, and again establishing dependency edges from $V$
-to $\alpha$.
+Introduction rules, such as the rules for integers, functions, records and constructors, follow the pattern of
+assigning a fresh address for the (partial) value being constructed, and then extending $G$ with a set of
+dependency edges from the vertices in $V$ to $\alpha$. For example, the integer rule evaluates an expression
+$n$ to its value form $n_{\alpha}$; the $\alpha \notin \V(G)$ constraint ensures that $\alpha$ is fresh. The
+dependence graph is then extended with $\inStar{V}{\alpha}$, indicating that $n_\alpha$ depended on all
+matched partial inputs in $V$. Likewise, the rule for an anonymous function $\exFun{\sigma}$ constructs the
+closure $\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ with fresh address $\alpha$, capturing the current
+environment $\gamma$ and using $\envEmpty$ as the set of mutually recursive definitions associated with the
+function, and again establishing dependency edges from $V$ to $\alpha$.
 
-The second recurring pattern is that, for any rule which involves evaluating subterms of a term, the
-corresponding subgraphs will have disjoint domains (meaning any addresses allocated for those subgraphs do not
-overlap), and their union is the dependence graph for the overall term. This general structure is reflected in
-the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom of \figref{core:eval}), which
-evalutes $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i \in \seq{v}$ and graph $G_i \in \seq{G}$, and
-returns the dependence graph $\textstyle{\bigdisjunion} \seq{G}$, where $G \disjunion G'$ requires that
-$\dom{G}$ and $\dom{G'}$ are disjoint (\defref{core:graph-disjoint-union}). We make use of this judgement in
-the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign applications
-$f(\seq{e})$, which all involve evaluating a sequence $\seq{e}$ of subterms; in the last rule, $\hat{f}$ is
-the foreign implementation that is able to evaluate an application of $f$ to and value and dependence graph
-(as required in~\secref{core:foreign}). This general pattern of combining subgraphs also applies to evaluated
-subterms in other contexts; for example the rule for $\exLet{x}{e}{e'}$ simply unions the graphs of subterms
-$e$ and~$e'$, and similarly for the recursive form $\exLetRec{\rho}{e}$ and application $\exApp{e}{e'}$.
+Any rules which involve recursively evaluating subterms thread the graph under construction through the
+premises. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom of
+\figref{core:eval}), which evalutes $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i \in \seq{v}$ and
+graph $G_i \in \seq{G}$, has a premise for every $i \numleq \length{\seq{e}}$, and the output graph of each
+premise other than the last is passed to the next premise. We make use of this judgement in the rules for
+records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign applications $f(\seq{e})$, which
+all involve evaluating a sequence $\seq{e}$ of subterms; in the last rule, $\hat{f}$ is the foreign
+implementation that is able to evaluate an application of $f$ to and value and dependence graph (as required
+in~\secref{core:foreign}). This general pattern of combining subgraphs also applies to evaluated subterms in
+other contexts; for example the rule for $\exLet{x}{e}{e'}$ simply unions the graphs of subterms $e$ and~$e'$,
+and similarly for the recursive form $\exLetRec{\rho}{e}$ and application $\exApp{e}{e'}$.
 
 The last two rules may involve mutual recursion, so we explain how we support that next. \figref{core:eval}
 also defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$, which takes a set $\rho$ of
