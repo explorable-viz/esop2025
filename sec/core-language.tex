@@ -172,26 +172,23 @@ evaluation of those subterms. For example the auxiliary evaluation relation $\ga
 \seq{v}, G$ (bottom of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value
 $v_i$ and dependence graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make
 use of this judgement in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and
-foreign applications $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that is able to
-evaluate an application of $f$ to and value and dependence graph (as required in~\secref{core:foreign}). This
-general pattern of combining subgraphs also applies to evaluated subterms in other contexts; for example the
-rule for $\exLet{x}{e}{e'}$ simply unions the graphs of subterms $e$ and~$e'$, and similarly for the recursive
-form $\exLetRec{\rho}{e}$ and application $\exApp{e}{e'}$.
+foreign applications $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an
+application of $f$ to and value and dependence graph (\secref{core:foreign}).
 
-The last two rules may involve mutual recursion, so we explain how we support that next. \figref{core:eval}
-also defines the auxiliary relation $\gamma, \rho, V \closeDefs \gamma', G$, which takes a set $\rho$ of
-recursive definitions and produces the corresponding environment $\gamma'$ of closures and dependence graph
-$G$. Each function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho,
-\rho(x_i))_{\alpha_i}$ with fresh address ${\alpha_i}$, capturing $\gamma$ and $\rho$, where each new closure
-depends on the ambient input vertices $V$. The final dependence graph is the disjoint union of the graphs
-associated with the closures.
+The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, for which they
+rely on the auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of
+\figref{core:eval} (bottom). This judgement takes a set $\rho$ of recursive definitions, vertex set $V$ and
+dependence graph $G$, and returns an environment $\gamma'$ of closures derived from $\rho$ and extended
+dependence graph $G$. Each function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho,
+\rho(x_i))_{\alpha_i}$ capturing $\gamma$ and $\rho$, with fresh address ${\alpha_i}$, and extends the
+dependence graph with a set of edges from $V$ to $\alpha$.
 
 The evaluation rule for $\exLetRec{\rho}{e}$ is then similar to the rule for regular let-bindings, except for
 using $\closeDefs$ to build a set of closures $\gamma'$ which is used to extend $\gamma$. Finally, the rule
 for $\exApp{e}{e'}$ is notable because when the function body is evaluated, the ambient $V$ is discarded. We
 compute the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ from $e$, and use $\sigma$ to pattern-match
 against the value $v'$ of argument $e'$. If pattern-matching returns a selected branch $e^\twoPrime$ and
-vertex set $V'$ representing the partial values in $v'$ consumed by pattern-matching, then $V' \disjunion
+vertex set $V'$ representing the partial values in $v'$ consumed by pattern-matching, then $V' \cup
 \set{\alpha}$ becomes the new set of vertices representing the current active function call for the purposes
 of evaluating $e^\twoPrime$.
 
