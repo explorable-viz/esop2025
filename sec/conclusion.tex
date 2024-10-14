@@ -23,26 +23,22 @@ consequence of evaluating a field access expression $\exRecProj{e}{x}$. On the o
 information that is only relevant in certain contexts (for example when one is specifically concerned with
 where a value came from, rather than how it was computed). We would like to develop a more semantically
 justified dependence graph, along with a proof that the graph is ``complete'' in some formal sense (cf.~the
-\emph{dependency correctness} notion of \citet{cheney07}), but anticipate that to make this richer graph
-practical, we will also need to distinguish different kinds of query (e.g. ``how'' vs.~``where from'') for use
-in different contexts.
+\emph{dependency correctness} notion of \citet{cheney11b}), but anticipate that making this richer graph
+practical will require distinguishing different kinds of query (e.g.~``how'' vs.~``where from'') for use in
+different contexts.
 
-Second, the analyses presented in \secref{conjugate} are only sensitive to the \emph{extension} -- the IO
-relation -- of the graph. Two graphs which are \emph{intensionally} different will produce the same conjugate
-operators if their IO relation is the same. Using the intensional information present within a graph may allow
-us to derive more detailed information about the relationships between inputs and outputs \todo{how does this
-related to the points in the previous paragraph}. As an example, \citet{cheney11b} considers \todo{consider --
-more than one author} the use of dependency analysis to compute \textit{expression provenance} information
-about elements of a program. One use of this information is to synthesize a sub-expression \todo{is this a
-``use'' of expression provenance? or does it constitute expression provenance?} describing the derivation of a
-value at a given point. From the perspective of the graph approach, we suggest \todo{conjecture?} that access
-to intensional information could \todo{would?} allow us to take a graph slice and use it to synthesize
-\todo{extract? if it's a subexpression then it already exists and doesn't need to be ``synthesised''} a
-subexpression of the original program which can be executed to produce a subset of the outputs \todo{the
-selected outputs?}.
-
-If the user is entirely uninterested in the intensional information \todo{entirely? or only uninterested in
-some of the intensional information?} of their graph -- that transformations which elide internal nodes but
-preserve IO connectivity, such as the classical Y-$\Delta$ transform \cite{truemper89}, will produce an
-extensionally equivalent (but faster) analysis. We conjecture that applying this transform to throw away
-intensional information may be useful in future applications of our work.
+Second, although the graph algorithms presented in \secref{conjugate} compute graph slices as an interim data
+structure, the internal nodes of the graph are discarded at the outermost level. This is fine for the use
+cases we considered in \secref{overview}, which only concern ``extensional'' (IO) transparency. However, more
+intensional information would be highly informative: for example, if highlighting a point in the moving
+average could show not only that three emissions inputs were relevant, but that the three values summed and
+then divided by three, then the chart alone would act as a full ``explanation'' of the implementation of
+moving average. There are of course challenges in this direction too: in particular intensional explanations
+get potentially very large, so ways of reducing their complexity may be important. Again we turn to
+\citet{cheney11b} for inspiration: their idea of \textit{expression provenance} is a kind of minimal
+intensional information (containing only information about primitive arithmetic operations, eliding
+user-defined function calls and branches); this might be a useful starting point on the road to fully
+executable program slices \cite{field98}. And the user may only want intensional information for certain
+subcomputations, and would happy with fine-grained IO relationships for other parts -- thus transformations
+which elide internal nodes but preserve IO connectivity, such as the classical Y-$\Delta$ transform
+\cite{truemper89}, may be useful here
