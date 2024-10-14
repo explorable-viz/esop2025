@@ -1,16 +1,16 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-Visualisations are a important tool for communicating science and other data-driven claims, but can be hard to
-make sense of and trust. Visualisations and other outputs that are ``transparent'' -- that can reveal their
-relationship to data to an interested reader -- are more informative and trustworthy, but also difficult to
-produce. In this paper, we introduced a novel bidirectional program analysis framework for a general-purpose
-programming language that makes it easier to create transparent visualisations by shifting much of the burden
-to the programming language runtime. Relative to prior work based on execution traces and bidirectional
-interpreters, our approach also makes life easier for the language implementor, by decomposing the system into
-a single evaluator that builds a dependence graph, and a pair of language-agnostic bidirectional graph
-algorithms. We also showed an overall performance improvement for provenance queries, at the cost of some
-overhead in building the dependence graph.
+Visualisations are an essential tool for communicating science and other data-driven claims, but can be hard
+to make sense of and trust. Visualisations and other outputs that are ``transparent'' -- that can reveal to an
+interested reader how they are related to data -- are more informative and trustworthy, but are also difficult
+to produce. In this paper, we introduced a novel bidirectional program analysis framework for a
+general-purpose programming language that makes it easier to create transparent visualisations by shifting
+much of the burden to the programming language runtime. Relative to prior work based on execution traces and
+bidirectional interpreters, our approach also makes life easier for the language implementor, by decomposing
+the system into a single evaluator that builds a dependence graph, and a pair of language-agnostic
+bidirectional graph algorithms. We also showed an overall performance improvement for provenance queries, at
+the cost of some overhead in building the dependence graph.
 
 \subsection{Future work}
 \label{sec:future}
@@ -37,9 +37,9 @@ then the chart alone would serve as a full ``self-explanatory'' implementation o
 This would connect to work on \emph{executable program slicing} \cite{field98}, and there are substantial
 challenges that arise here as well: in particular, intensional explanations get potentially very large, so
 ways of reducing and managing their complexity will be important. Again \citet{cheney11b} offer inspiration:
-their idea of \textit{expression provenance} may be a way of presenting minimal but useful explanations (for
-example showing the tree of primitive arithmetic operations that computed a value, but omitting user-defined
-function calls and branches). And the user may only want intensional information for certain subcomputations,
-and would be happy with fine-grained IO relationships for others -- thus graph transformations which elide
-internal nodes but preserve IO connectivity, such as the Y-$\Delta$ transform \cite{truemper89}, may also have
-a role to play.
+their idea of \textit{expression provenance} may be a way of presenting pared-back but still useful
+explanations (for example showing the tree of primitive arithmetic operations that computed a value, but
+omitting user-defined function calls and branches). And the user may only want intensional information for
+certain subcomputations, and would be happy with just IO relationships for others -- in which case graph
+transformations which elide internal nodes but preserve IO connectivity, such as the Y-$\Delta$ transform
+\cite{truemper89}, may also have a role to play.
