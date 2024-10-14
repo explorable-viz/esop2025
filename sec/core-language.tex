@@ -168,29 +168,30 @@ environment $\gamma$ and using $\envEmpty$ as the set of mutually recursive defi
 function, and again establishing dependency edges from $V$ to $\alpha$.
 
 Any rules which involve recursively evaluating subterms thread the graph under construction through the
-evaluation of those subterms. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS
-\seq{v}, G$ (bottom of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value
-$v_i$ and dependence graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make
-use of this judgement in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and
-foreign applications $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an
-application of $f$ to and value and dependence graph (\secref{core:foreign}).
+evaluation of the subterms. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v},
+G$ (bottom of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i$ and
+dependence graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make use of this
+judgement in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign
+applications $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an
+application of $f$ to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and extended
+dependence graph $G'$ (\secref{core:foreign}).
 
-The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, for which they
-rely on the auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of
-\figref{core:eval} (bottom). This judgement takes a set $\rho$ of recursive definitions, vertex set $V$ and
-dependence graph $G$, and returns an environment $\gamma'$ of closures derived from $\rho$ and extended
-dependence graph $G$. Each function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho,
-\rho(x_i))_{\alpha_i}$ capturing $\gamma$ and $\rho$, with fresh address ${\alpha_i}$, and extends the
-dependence graph with a set of edges from $V$ to $\alpha$.
+The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, and rely on the
+auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of \figref{core:eval}.
+This judgement takes a set $\rho$ of recursive definitions, vertex set $V$ and dependence graph $G$, and
+returns an environment $\gamma'$ of closures derived from $\rho$ and extended dependence graph $G$. Each
+function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$
+capturing $\gamma$ and $\rho$, with fresh address ${\alpha_i}$, and extends the dependence graph with a set of
+edges from $V$ to $\alpha$.
 
-The evaluation rule for $\exLetRec{\rho}{e}$ is then similar to the rule for regular let-bindings, except for
-using $\closeDefs$ to build a set of closures $\gamma'$ which is used to extend $\gamma$. Finally, the rule
-for $\exApp{e}{e'}$ is notable because when the function body is evaluated, the ambient $V$ is discarded. We
+The evaluation rule for $\exLetRec{\rho}{e}$ is similar to the rule for regular let-bindings, except for using
+$\closeDefs$ to build a set of closures $\gamma'$ which is used to extend $\gamma$. Finally, the rule for
+$\exApp{e}{e'}$ is notable because when the function body is evaluated, the ambient $V$ is discarded. We
 compute the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ from $e$, and use $\sigma$ to pattern-match
 the value $v'$ of argument $e'$. If pattern-matching returns selected branch $e^\twoPrime$, with vertex set
-$V'$ representing the part of $v'$ which was consumed, then $e^\twoPrime$ is evaluated and becomes the result
-of the application with, $V' \cup \set{\alpha}$ serving as set of (partial) inputs associated with the new
-active function context.
+$V'$ representing the consumed part of $v'$, then $e^\twoPrime$ is evaluated and becomes the result of the
+application, with $V' \cup \set{\alpha}$ serving as set of (partial) inputs associated with the new active
+function context.
 
 % \subsubsection{Products of Projections of Views}
 
