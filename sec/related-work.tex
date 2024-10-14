@@ -1,17 +1,38 @@
 \section{Related work}
 \label{sec:related-work}
 
+\subsection{Data Provenance}
+
+There is a long history of provenance techniques, ranging from coarse-grained (document-level) provenance
+tracking [...] to fine-grained database provenance [...]. In terms of fine-grained techniques for structured
+outputs like visualisations, the two main areas of prior work are [psallidas] for query languages, and
+[perera] for general-purpose languages.
+
+\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
+queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries
+which compute not only the output table, but the provenance of the values it contains.
+
+\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance for the
+LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus
+(NRC)~\cite{BUNEMAN19953}, and -- despite integration with a general purpose language -- only supports
+provenance queries for an embedded SQL-like language, rather than dependency queries over the more general
+constructs in LINKS. Extending our work to support similar provenance queries would require revisiting the
+dependency relation, since we do not distinguish between control-flow -- coming from an if-else or a pattern
+match -- and value dependencies -- from producing new values out of old ones. This information roughly
+corresponds to the ``why'' and ``where'' provenance described in the database setting. We would also need to
+consider how SQL queries and the NRC differ semantically from our core functional calculus.}
+
 \subsection{Dynamic Dependence Graphs}
 
 Dynamic dependence graphs have been used previously in functional languages to implement incremental
 evaluation~\cite{acar02, acar06b}. In contrast to their work, which focuses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive data exploration systems.
-\JBnote{With respect to program slicing, \citet{field98} use dynamic dependence graphs on a subset of Pascal. In 
+\JBnote{With respect to program slicing, \citet{field98} use dynamic dependence graphs on a subset of Pascal. In
 their work, the authors demonstrate the application of dynamic dependence graphs to in languages implemented as
 term-rewriting systems, showing how this can be used to construct elaborate error reporting for things like type
-errors. Internally, their dependence graphs represent a complete account of the reduction steps in a programs 
+errors. Internally, their dependence graphs represent a complete account of the reduction steps in a programs
 execution -- as a term graph -- as opposed to our dependence graphs which only represent value-to-value
-dependencies. Our work is also distinct in that, by focussing on allowing the user to explore dependencies 
+dependencies. Our work is also distinct in that, by focussing on allowing the user to explore dependencies
 in interactive visualisations, we assume that the program has already executed, rather than using the information
 for static error checking.}
 
@@ -22,73 +43,39 @@ encodes much of its control flow via pattern matching on data. We can therefore 
 same information simply by considering data dependencies.}
 For a survey on other techniques, see \citet{Soremekun2021}.
 
-\subsection{Provenance tracking}
-
-\todo{Other provenance approaches}
-
-\cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
-queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries which
-compute not only the output table, but the provenance of the values it contains. 
-
-\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance 
-for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
-and -- despite integration with a general purpose language -- only supports provenance queries for an 
-embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
-Extending our work to support similar provenance queries would require revisiting the dependency relation,
-since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
-dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
-``where'' provenance described in the database setting. We would also need to consider how SQL queries and the 
-NRC differ semantically from our core functional calculus.}
-
 \subsection{Galois Slicing}
 
-\todo{This section feels long and overlaps a bit with earlier discussions about advantage of dependence graphs
-over traces.} \JBnote{Galois connections have been previously studied with applications for slicing functional programs
-\cite{perera12a,perera16d,ricciotti17}, since they provide a clean characterisation of input-output relationships.
-In these works, the upper and lower adjoint are interpreted as \emph{sufficiency} and \emph{demand} queries. \citet{perera22}
-extends this approach to a setting where slices have complements and the slices of a particular program or
-value form a Boolean lattice; and shows how the De Morgan dual of the upper adjoint can be used to pick
-out \emph{linked outputs}, namely the other outputs which demand an overlapping set of inputs, and proposed this
-as a framework for understanding the ``brushing and linking'' feature commonly used in data visualisation.}
+Although we do not consider program slices in the present work, our approach is closely related to program
+slicing techniques based on Galois connections \cite{perera12a,perera16d,ricciotti17}. In these works, which
+use a bidirectional interpreter, the forward and backward directions of the interpreter correspond to our
+\emph{sufficiency} ($\sufficesR$) and \emph{demands} ($\demandsR$) queries. \citet{perera22} extended this
+approach to a setting where slices have complements, and showed how composing the backward analysis with the
+De Morgan dual of the forward can be used to implement the ``brushing and linking'' feature commonly used in
+data visualisation. As well as requiring a bidirectional interpreter, the main difficulty with this approach
+has been achieving interactive performance. To provide the bidirectional interpreter, implementations have
+relied on a sequential execution trace, used in the forwards direction to ``replay'' the computation,
+propagating sufficiency information from inputs to outputs, and in the backwards direction to ``rewind'' the
+computation, propagating demand from outputs to inputs. As discussed in \secref{evaluation}, and in contrast
+to the graph approach presented here, this sequential approach is unable to exploit the very independence that
+makes slicing useful in the first place.
 
-However, implementations of Galois slicing efficient enough to support the kind of interactive applications
-considered here have proved elusive. To compute the two analyses, implementations have relied on a sequential
-execution record, usually taking the form of an execution trace. The forward analysis uses the
-trace to ``replay'' the computation, propagating information about resource availability from inputs to
-outputs; the backwards analysis uses the trace to ``rewind'' the computation, propagating information about
-demand from outputs to inputs. This sequential approach is unable to exploit the very
-independence that makes slicing useful in the first place. Moreover, the backwards analysis makes frequent use
-of lattice join ($\join$) to combine slicing information from different branches of the computation
-\todo{mention this earlier when we're conjecturing why graph approach is faster}. Joining closure slices in
-particular is expensive because of the contained environments (which in turn contain closures), and these
-issues make the approach prohibitively slow for interactive use, as covered in \secref{evaluation}.
-\JBnote{Beyond the performance improvement from using a graph representation, our work also reduces the 
-implementation burden on the developer, since the algorithms for our program analyses only need to be 
-implemented once.}
+\subsection{Linked Visualisations}
 
-\subsection{Linked Visualisation}
-In data visualisation it has long been recognised that when users interact with visual elements by clicking or
-lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
-for inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
-
-\JBnote{Ours is not the first work to shift the burden of interactive visualisations into the language runtime.
-Reactive Vega~\cite{satyanarayan17} presents a system for declaratively building interactivity in visualisations.
-Vega provides a rich set of interaction features which can be combined to perform tasks such as brushing and
-linking, but these features come at the cost of a more complex language for designing the visualizations
-themselves. In contrast, whilst our work provides a includes a more limited set of interaction features,
-these are contained within the language itself, rather than forcing the user to build their own} it
-frees up the developer to focus on building their data analysis programs, leaving the burden of implementing
-selections to the language itself. \JBnote{Both \citet{north00} and \citet{livny97} are similar in spirit
-to our work, describing systems for building interactive visualisations out of relational databases,
-modelling them with database schema and relational queries respectively. In both cases, their systems are
-limited to operating over relational database models, whereas our own work can be applied to data of any shape,
-provided it is supported by our language.}
-
-\JBnote{Glue \cite{beaumont13} is a python library for building linked visualisations for scientific applications.
-Glue's main advantage is its graphical user interface, allowing the user to build their visualisations via drag-and-drop
-rather than writing code, and to build complex interactions over the top of their visualisation. This broad scope
-comes at the cost of a complex user interface, as opposed to our own work, where limiting the focus of interaction
-to discovering data dependencies allows us to provide a tighter, simpler interface. Spurious(??)}
+The connection between visual selection (such as clicking or lasooing) and data ``selection'' has been
+explored in the data visualisation literature, leading to various techniques for inverting selections in
+visual space to obtain selections in the underlying data~\cite{north00, heer08}. There is also a substantial
+literature on linked brushing~\cite{becker87, livny97} as a way of connecting output selections via mediating
+data selections. Although this has long been recognised as an important visual tool, with \citet{roberts06}
+arguing it should be ubiquitous, there has been relatively little work in general-purpose infrastructure to
+support it. For example Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to
+support linked brushing, but no mechanism for automatically propagating selections through arbitrary
+intervening queries. Glue \cite{beaumont13} is a powerful Python library for building linked visualisations
+for scientific applications, but the developer is responsible for specifying the relationships between data
+sets that unpin the linking. More infrastructural approaches to linked brushing
+\cite{north00,livny97,psallidas18smoke}, similar in spirit to our work, have been developed mainly for
+relational languages for data visualisation. Relational languages are a promising direction in data
+visualisation, but general-purpose languages continue to be widely used too, so it is important to support
+linked brushing in this context as well.
 
 \subsection{Transparent research outputs}
 
