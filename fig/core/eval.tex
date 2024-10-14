@@ -21,7 +21,7 @@
          lab={\ruleName{$\evalS$-int}}
       ]
       {
-         \fresh{a}{G}
+         \fresh{\alpha}{G}
       }
       {
          \gamma, n, V, G
@@ -33,26 +33,28 @@
       \and
       \inferrule*[lab={\ruleName{$\evalS$-function}}]
       {
-         \strut
+         \fresh{\alpha}{G}
       }
       {
-         \gamma, \exFun{\sigma}, V
+         \gamma, \exFun{\sigma}, V, G
          \evalS
          \annClosure{\gamma}{\envEmpty}{\sigma}{\alpha},
-         \inStar{V}{\alpha}
+         G \cup \inStar{V}{\alpha}
       }
       %
       \and
       %
       \inferrule*[lab={\ruleName{$\evalS$-record}}]
       {
-         \gamma, \seq{e}, V \evalS \seq{v}, G
+         \gamma, \seq{e}, V, G \evalS \seq{v}, G'
+         \\
+         \fresh{\alpha}{G'}
       }
       {
-         \gamma, \exRec{\seq{\bind{x}{e}}}, V
+         \gamma, \exRec{\seq{\bind{x}{e}}}, V, G
          \evalS
          \annRec{\seq{\bind{x}{v}}}{\alpha},
-         G \disjunion \inStar{V}{\alpha}
+         G' \cup \inStar{V}{\alpha}
       }
       %
       \and
@@ -60,13 +62,15 @@
       \inferrule*[lab={\ruleName{$\evalS$-constr}}
       , right={$\Sigma(c) = |\seq{e}|$}]
       {
-         \gamma, \seq{e}, V \evalS \seq{v}, G
+         \gamma, \seq{e}, V, G \evalS \seq{v}, G'
+         \\
+         \fresh{\alpha}{G'}
       }
       {
-         \gamma, \exConstr{c}{\seq{e}}, V
+         \gamma, \exConstr{c}{\seq{e}}, V, G
          \evalS
          \annConstr{c}{\seq{v}}{\alpha},
-         G \disjunion \inStar{V}{\alpha}
+         G' \cup \inStar{V}{\alpha}
       }
       %
       \and
@@ -75,13 +79,13 @@
          lab={\ruleName{$\evalS$-project}}
       ]
       {
-         \gamma, e, V \evalS \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}, G
+         \gamma, e, V, G \evalS \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}, G'
       }
       {
-         \gamma, \exRecProj{e}{y}, V
+         \gamma, \exRecProj{e}{y}, V, G
          \evalS
          u,
-         G
+         G'
       }
       %
       \and
@@ -89,15 +93,15 @@
       \inferrule*[ lab={\ruleName{$\evalS$-foreign-app}}
       , right={$\Phi(f) = |\seq{e}|$}]
       {
-         \gamma, \seq{e}, V \evalS \seq{v}, G
+         \gamma, \seq{e}, V, G_1 \evalS \seq{v}, G_2
          \\
-         \interpret{f}(\seq{v}) = (u, G')
+         \interpret{f}(\seq{v}, G_2) = (u, G_3)
       }
       {
-         \gamma, \exForeignApp{f}{\seq{e}}, V
+         \gamma, \exForeignApp{f}{\seq{e}}, V, G_1
          \evalS
          u,
-         G \disjunion G'
+         G_3
       }
       %
       \and
@@ -106,15 +110,15 @@
          lab={\ruleName{$\evalS$-let}}
       ]
       {
-         \gamma, e, V \evalS v, G
+         \gamma, e, V, G_1 \evalS v, G_2
          \\
-         \gamma \cons (\bind{x}{v}), e', V \evalS v', G'
+         \gamma \cons (\bind{x}{v}), e', V, G_2 \evalS v', G_3
       }
       {
-         \gamma, \exLet{x}{e}{e'}, V
+         \gamma, \exLet{x}{e}{e'}, V, G_1
          \evalS
          v',
-         G \disjunion G'
+         G_3
       }
       %
       \and
@@ -123,39 +127,39 @@
          lab={\ruleName{$\evalS$-let-rec}}
       ]
       {
-         \gamma, \rho, V \closeDefs  \gamma', G
+         \gamma, \rho, V, G_1 \closeDefs  \gamma', G_2
          \\
-         \gamma \concat \gamma', e, V \evalS v, G'
+         \gamma \concat \gamma', e, V, G_2 \evalS v, G_3
       }
       {
-         \gamma, \exLetRec{\rho}{e}, V
+         \gamma, \exLetRec{\rho}{e}, V, G_1
          \evalS
          v,
-         G \disjunion G'
+         G_3
       }
       %
       \and
       %
       \inferrule*[
          lab={\ruleName{$\evalS$-app}},
-         width=4in,
+         width=5.5in,
       ]
       {
-         \gamma, e, V \evalS \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}, G_1
+         \gamma, e, V, G_1 \evalS \annClosure{\gamma_1}{\rho}{\sigma}{\alpha}, G_2
          \\
-         \gamma_1, \rho, \set{\alpha} \closeDefs \gamma_2, G_2
+         \gamma_1, \rho, \set{\alpha}, G_2 \closeDefs \gamma_2, G_3
          \\
-         \gamma, e', V \evalS v', G_3
-         \hspace{0.5cm}
+         \gamma, e', V, G_3 \evalS v', G_4
+         \\
          v', \sigma \match \gamma_3, e^\twoPrime, V'
-         \hspace{0.5cm}
-         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\twoPrime,  V' \disjunion \set{\alpha} \evalS u, G_4
+         \\
+         \gamma_1 \concat \gamma_2 \concat \gamma_3, e^\twoPrime,  V' \cup \set{\alpha}, G_4 \evalS u, G_5
       }
       {
-         \gamma, \exApp{e}{e'}, V
+         \gamma, \exApp{e}{e'}, V, G_1
          \evalS
          u,
-         \textstyle{\bigdisjunion}\set{\seqRange{G_1}{G_4}}
+         G_5
       }
    \end{smathpar}}
    \\[2mm]
@@ -163,17 +167,18 @@
    \begin{smathpar}
       \inferrule*[
 %         lab={\ruleName{$\evalS$-seq}}
+         right={$n = \length{\seq{e}}$}
       ]
       {
-         \gamma, e_i, V \evalS v_i, G_i
+         \gamma, e_i, V, G_i \evalS v_i, G_{i + 1}
          \\
-         (\forall i \numleq \length{\seq{e}})
+         (\forall i \numleq n)
       }
       {
-         \gamma, \seq{e}, V
+         \gamma, \seq{e}, V, G_1
          \evalS
          \seq{v},
-         \textstyle{\bigdisjunion} \seq{G}
+         G_{n + 1}
       }
       %
       \and
