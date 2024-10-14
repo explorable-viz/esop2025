@@ -128,17 +128,17 @@ free variables in $e$, and the set $V$ of addresses found in the matched portion
 
 A continuation which is just an expression $e$ matches only the empty stack of values
 (\ruleName{$\match$-done}), in which case pattern-matching is complete and $e$ is the selected branch. The
-other rules require an \emph{eliminator} $\sigma$ as the continuation -- using this to match the head of a
-non-empty stack $v \cons \seq{v}$, unpack any of its relevant subvalues, and then push them onto the tail
-$\seq{v}$ to be recursively matched by the continuation selected in $\sigma$. A variable eliminator
-$\elimVar{x}{\kappa}$ pops $v$ off the stack, selecting $\kappa$ as the continuation with which to compute
-further matches in the premise (\ruleName{$\match$-var}); no part of $v$ was consumed so the addresses of the
-remaining matches $V$ is returned as is. A record eliminator $\elimRecord{\seq{y}}{\kappa}$ matches a record
-of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as long as the variables in $\seq{y}$ are also fields
-in $\seq{x}$, returning the address $\alpha$ associated with the record (\ruleName{$\match$-record}); the
-premise $\exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}$ projects out the corresponding values
-of $\seq{u}$ from $\seq{v}$. Lastly, a constructor eliminator $(\elimBind{c}{\kappa})$ matches any constructor
-value of the form $\annot{\exConstr{c}{\seq{v}}}{\alpha}$, returning the address $\alpha$ associated with the
+other rules require an \emph{eliminator} $\sigma$ as the continuation and a non-empty stack $v \cons \seq{v}$;
+any relevant subvalues of $v$ are unpacked and pushed onto the tail $\seq{v}$ and then recursively matched
+using the continuation $\kappa$ selected from $\sigma$. A variable eliminator $\elimVar{x}{\kappa}$ pops $v$
+off the stack, using $\kappa$ to recurse (\ruleName{$\match$-var}); no part of $v$ was consumed so the
+addresses $V$ consumed by the recursive match is returned as is. A record eliminator
+$\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
+long as the variables in $\seq{y}$ are also fields in $\seq{x}$, argumenting $V$ with the address $\alpha$
+associated with the record (\ruleName{$\match$-record}); the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
+\exRec{\seq{\bind{x}{v}}}$ projects out the corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, a
+constructor eliminator $(\elimBind{c}{\kappa})$ matches any constructor value of the form
+$\annot{\exConstr{c}{\seq{v}}}{\alpha}$, argumenting $V$ with the address $\alpha$ associated with the
 constructor (\ruleName{$\match$-constr}).
 
 \subsubsection{Evaluation}
