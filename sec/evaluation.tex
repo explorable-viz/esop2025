@@ -64,11 +64,11 @@ In all our experiments, each benchmark is run 10 times, and we report the mean r
 runtimes for a given benchmark.
 
 \subsubsection{Q1: Overhead of graph construction vs. trace construction}
+
 In \tableref{eval-SpdUps}, we compare the average time taken to evaluate a program in the graph approach
 (\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace-based approach
-(\textbf{T-Eval}). Since the graph is a more complex data structure to build compared to the trace \todo{not
-really sure what this means}, we expect a larger overhead when evaluating a program to a graph compared to
-evaluating it to a trace.
+(\textbf{T-Eval}). Since building the graph involves maintaining a heap of allocated vertices, we expect a
+larger overhead when evaluating a program to a graph compared to evaluating it to a trace.
 
 We report the ratio of graph evaluation time to trace evaluation time in the third column
 (\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs to
@@ -79,6 +79,7 @@ user’s attention on the system.
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
 \subsubsection{Q2: Graph-based demands vs. trace-based demands}
+
 In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} show the average times taken
 to compute \textit{demands} with the trace and graph approaches, respectively. The ratio of graph-based to
 trace-based performance is in the last column, \textbf{Bwd-Speedup}. \todo{Most obvious thing missing here is
@@ -114,6 +115,7 @@ based benchmarks running instantaneously, as opposed to only two for the trace b
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion of the results}
+
 When comparing the performance of the graph and trace approaches, we observe that the only consistent
 performance loss for the graph approach is due to the increased cost of evaluating a program to a graph versus
 evaluating it to a trace (according to \textit{Q1}). We argue that this overhead is reasonable: the graph
