@@ -15,41 +15,34 @@ the cost of some overhead in building the dependence graph.
 \subsection{Future work}
 \label{sec:future}
 
-In order to enable a like-for-like comparison, the dependency relation we chose to represent in the graph is
-the same as that of \citet{perera22}; here, selections are pushed through evaluation if the selected parts of
-values are consumed during evaluation - either via pattern matching or the specific implementation provided
-for a primitive \todo{obscure}. However, the dependency relation used in that paper was not designed for
-application in a graph-based setting \todo{meaning?}.
+We identify two important directions for future work. First, the dependency relation captured by the
+dependence graph semantics in \secref{core} omits certain intuitively plausible edges, such as the
+\emph{projection} edge that one might expect to exist between a record and the value of a contained field as a
+consequence of evaluating a field access expression $\exRecProj{e}{x}$. On the other hand, recording
+\emph{all} structural dependencies of this nature would significantly bloat the dependence graph with
+information that is only relevant in certain contexts (for example when one is specifically concerned with
+where a value came from, rather than how it was computed). We would like to develop a more semantically
+justified dependence graph, along with a proof that the graph is ``complete'' in some formal sense (cf.~the
+\emph{dependency correctness} notion of \citet{cheney07}), but anticipate that to make this richer graph
+practical, we will also need to distinguish different kinds of query (e.g. ``how'' vs.~``where from'') for use
+in different contexts.
 
-Our results in \secref{evaluation} raise the question of how important the structure of the graph is in the
-performance of our analysis, and whether our framework would benefit from an alternative representation. For
-example, rather than representing all dependencies as value-to-value dependencies, it may be more useful for
-edges in the graph to represent causal relationships between steps in the program evaluation \todo{dependency
-edges are causal edges}. We suggest \todo{conjecture?} that a more semantically justified dependency relation
-\todo{non-sequitur -- what's being alluded to here?} could lead to improvements in the scalability of the
-system \todo{seems unlikely}, and allow for extended functionality \todo{what?} to be implemented.
+Second, the analyses presented in \secref{conjugate} are only sensitive to the \emph{extension} -- the IO
+relation -- of the graph. Two graphs which are \emph{intensionally} different will produce the same conjugate
+operators if their IO relation is the same. Using the intensional information present within a graph may allow
+us to derive more detailed information about the relationships between inputs and outputs \todo{how does this
+related to the points in the previous paragraph}. As an example, \citet{cheney11b} considers \todo{consider --
+more than one author} the use of dependency analysis to compute \textit{expression provenance} information
+about elements of a program. One use of this information is to synthesize a sub-expression \todo{is this a
+``use'' of expression provenance? or does it constitute expression provenance?} describing the derivation of a
+value at a given point. From the perspective of the graph approach, we suggest \todo{conjecture?} that access
+to intensional information could \todo{would?} allow us to take a graph slice and use it to synthesize
+\todo{extract? if it's a subexpression then it already exists and doesn't need to be ``synthesised''} a
+subexpression of the original program which can be executed to produce a subset of the outputs \todo{the
+selected outputs?}.
 
-The analyses in their current form are only sensitive to the \emph{extension} -- the IO relation -- of the
-graph. Two graphs which are \emph{intensionally} different will produce the same conjugate operators if their
-IO relation is the same. Using the intensional information present within a graph may allow us to derive more
-detailed information about the relationships between inputs and outputs \todo{how does this related to the
-points in the previous paragraph}. As an example, \citet{cheney11b} considers \todo{consider -- more than one
-author} the use of dependency analysis to compute \textit{expression provenance} information about elements of
-a program. One use of this information is to synthesize a sub-expression \todo{is this a ``use'' of expression
-provenance? or does it constitute expression provenance?} describing the derivation of a value at a given
-point. From the perspective of the graph approach, we suggest \todo{conjecture?} that access to intensional
-information could \todo{would?} allow us to take a graph slice and use it to synthesize \todo{extract? if it's
-a subexpression then it already exists and doesn't need to be ``synthesised''} a subexpression of the original
-program which can be executed to produce a subset of the outputs \todo{the selected outputs?}.
-
-A final point of inquiry is raised by the relative difference in performance between the implementations of
-\emph{demanded by}. It would be interesting to investigate if there are structural properties of the
-dependence graph that determine the efficiency \todo{efficiency or performance?} of the implementations of
-\textit{demanded by}. If these structural properties exist \todo{how could they not?}, we would like to know
-how they can be computed \todo{estimated for a given graph?}, and if they can be computed efficiently. It
-follows \todo{from what? this next bit is weirdly non-sequitous, doesn't it relate to the previous
-paragraph?}-- if the user is entirely uninterested in the intensional information \todo{entirely? or only
-uninterested in some of the intensional information?} of their graph -- that transformations which elide
-internal nodes but preserve IO connectivity, such as the classical Y-$\Delta$ transform \cite{truemper89},
-will produce an extensionally equivalent (but faster) analysis. We conjecture that applying this transform to
-throw away intensional information may be useful in future applications of our work.
+If the user is entirely uninterested in the intensional information \todo{entirely? or only uninterested in
+some of the intensional information?} of their graph -- that transformations which elide internal nodes but
+preserve IO connectivity, such as the classical Y-$\Delta$ transform \cite{truemper89}, will produce an
+extensionally equivalent (but faster) analysis. We conjecture that applying this transform to throw away
+intensional information may be useful in future applications of our work.
