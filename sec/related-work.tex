@@ -9,15 +9,15 @@ There is a long history of provenance techniques, ranging from coarse-grained (d
 queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries
 which compute not only the output table, but the provenance of the values it contains.
 
-\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance
-for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
-and -- despite integration with a general purpose language -- only supports provenance queries for an
-embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
-Extending our work to support similar provenance queries would require revisiting the dependency relation,
-since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
-dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
-``where'' provenance described in the database setting. We would also need to consider how SQL queries and the
-NRC differ semantically from our core functional calculus.}
+\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance for the
+LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus
+(NRC)~\cite{BUNEMAN19953}, and -- despite integration with a general purpose language -- only supports
+provenance queries for an embedded SQL-like language, rather than dependency queries over the more general
+constructs in LINKS. Extending our work to support similar provenance queries would require revisiting the
+dependency relation, since we do not distinguish between control-flow -- coming from an if-else or a pattern
+match -- and value dependencies -- from producing new values out of old ones. This information roughly
+corresponds to the ``why'' and ``where'' provenance described in the database setting. We would also need to
+consider how SQL queries and the NRC differ semantically from our core functional calculus.}
 
 \subsection{Dynamic Dependence Graphs}
 
@@ -58,9 +58,10 @@ makes slicing useful in the first place.
 
 \subsection{Linked Visualisation}
 
-In data visualisation it has long been recognised that when users interact with visual elements by clicking or
-lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
-for inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
+The connection between ``visual selections'' and data selections has been substantially explored in the data
+visualisation literature; for example when a user interacts with a visual element by clicking or lassoing, the
+intention is typically to manipulate or select the underlying data. This has lead to various techniques for
+inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
 
 \JBnote{Ours is not the first work to shift the burden of interactive visualisations into the language runtime.
 Reactive Vega~\cite{satyanarayan17} presents a system for declaratively building interactivity in visualisations.
