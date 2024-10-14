@@ -186,23 +186,27 @@
    \end{smathpar}}
    {\small \flushleft \shadebox{$\gamma, \rho, V, G \closeDefs \gamma', G'$}
    \begin{smathpar}
-      \inferrule*[]
+      \inferrule*[
+         right={$n = \length{\seq{x}}$}
+      ]
       {
          \gamma'(x_i) = \annClosure{\gamma}{\rho}{\rho(x_i)}{\alpha_i}
          \\
-         G_i = \inStar{V}{\alpha_i}
+         \alpha_i \notin \dom{G_i}
+         \\
+         G_{i+1} = G_i \cup \inStar{V}{\alpha_i}
          \quad
-         (\forall i \numleq \length{\seq{x}})
+         (\forall i \numleq n)
       }
       {
-         \gamma, \rho, V
+         \gamma, \rho, V, G_1
          \closeDefs
          \gamma',
-         \textstyle{\bigdisjunion}\seq{G}
+         G_{n+1}
       }
    \end{smathpar}
    }
-   \vspace{-0.5cm}
+%   \vspace{-0.5cm}
    \caption{Operational semantics with dependence graph}
    \label{fig:core:eval}
 \end{figure}
