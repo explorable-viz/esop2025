@@ -143,11 +143,11 @@ constructor (\ruleName{$\match$-constr}).
 
 \subsubsection{Evaluation}
 
-\figref{core:eval} defines a big-step evaluation relation $\gamma, e, V \evalS v, G$, stating that term $e$,
-under an environment $\gamma$ and vertex set $V$, evaluates to a value $v$ plus dependence graph~$G$. The
-vertex set $V$ records the (partial) input values consumed by the current active function call providing the
-dynamic context in which $e$ is being evaluated; this is initially empty and changes whenever a function
-application is evaluated.
+\figref{core:eval} defines a big-step evaluation relation $\gamma, e, V, G \evalS v, G'$, stating that term
+$e$, under an environment $\gamma$, vertex set $V$ and dependence graph $G$, evaluates to a value $v$ plus
+extended dependence graph $G'$. The vertex set $V$ records the (partial) input values consumed by the current
+active function call providing the dynamic context in which $e$ is being evaluated; this is initially empty
+and changes whenever a function application is evaluated.
 
 The evaluation rule for variables is fairly standard; the returned dependence graph is empty, because no new
 addresses are allocated as a result of simply looking up a variable. The rule for record projections
