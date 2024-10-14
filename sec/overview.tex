@@ -4,18 +4,19 @@ In this section, we introduce the main interactive data provenance features that
 \OurLang examples to illustrate. The line chart in \figref{introduction:related-inputs} shows projected
 methane emissions from agricultural sources under a global warming scenario called RCP8.5, with source code in
 \figref{example:moving-average:source}; the scatter plot and stacked bar chart in
-\figref{introduction:scatterplot} show non-renewable energy outputs and capacities for various years and
-countries, with source code in \figref{example:non-renewables:source}. The key idea of transparent
-visualisations is that the original data sources are kept around and can be viewed (when a user so requests)
-alongside the visualisation, and the user is then able to interact with both the data and the view to explore
-how they are related. Crucially the author of the visualisation does not to have to implement these
-interactions themselves; they just express the charts or plots as pure functions of their inputs, and the
-transparent visualisation infrastructure takes care of everything else.
+\figref{introduction:scatterplot} show changing non-renewable energy outputs and capacities for various
+countries, with source code in \figref{example:non-renewables:source}.
+
+The key idea of a transparent visualisation is that the original data sources are kept around and can be
+viewed (when a user so requests) alongside the visualisation, and the user is then able to interact with both
+the data and the view to explore how they are related. Crucially the author of the visualisation does not to
+have to implement any of these interactions themselves; they need only write the visualisation code and the
+language runtime and rendering infrastructure provides the interactions.
 
 \paragraph{1. Fine-grained linking of the data to the view.}
 
 In \figref{introduction:related-inputs}, the user has chosen to reveal the underlying data set, which is shown
-on the left; only rows relevant to the chart are shown, with the rest of the data hidden automatically. This
+on the left; only rows relevant to the chart are visible, with the other rows hidden automatically. This
 clarifies that only agricultural data is relevant, confirming the (informal) claim in the caption. The
 emissions values shown do contribute to the chart in some way, and the user can investigate this by
 interacting with individual entries. For example, moving their mouse over the number 104.69 highlights
@@ -44,11 +45,11 @@ points.
 
 We want to support fine-grained IO queries that run in the other direction too, via another provenance
 analysis written $\demandsR$ (``demands''). In \figref{introduction:related-inputs} the $\demandsR$ analysis
-is initiated automatically, and composed with the output of the $\demandedByR$ analysis; this reveals that
-calculating the $y$ coordinates of the 4 highlighted points on the right required 5 emissions values from the
-input table, including the 104.69 we started with, as indicated by the blue border on the left. These
-additional inputs we refer to as the \emph{related inputs} of the original input selection; they are the other
-inputs demanded by any output that demands our starting input. Given that the initial input selection here
+is initiated automatically on the output of $\demandedByR$; this reveals that calculating the $y$ coordinates
+of the points highlighted on the right required not only the 104.69 we started with, but 4 additional
+emissions values (blue border on the left). These additional inputs we refer to as the \emph{related inputs}
+of the original input selection; they are the other inputs demanded by any output that demands our starting
+input, and are computed using the composite operator $\relInputR$. Given that the initial input selection here
 contributes to 3 points of the moving average, the ``window'' of related inputs in this case is 5 wide,
 comprising all the data points needed to account for the selection on the right. Related inputs is a
 \emph{cognacy} relation: two inputs are related if they have a common ancestor in a \emph{dependency graph}
@@ -58,25 +59,26 @@ that captures how inputs are demanded by outputs.
 
 We would also like to support cognacy queries that start from the output rather than the input; this is the
 basis of a feature called \emph{linked brushing} (or \emph{brushing and linking}) in data visualisation
-\cite{becker87,buja91}, but here we want to do this transparently. In \figref{introduction:scatterplot}, the
-user has again revealed the underlying data set, this time opting to see only rows with active data
-selections, rather than only rows with data that are used by any part of the output. They then express
-interest in one of the points in the scatter plot. By clicking on it, rather than just moving their mouse over
-it, they create what we call a \emph{persistent} selection (shown in green). The demands analysis $\demandsR$
-reveals the inputs (also shown in green) needed to compute both the $x$ and $y$ coordinates of the selected
-point; this shows that the 2016 data for 4 countries was used, although it does not reveal how.
+\cite{becker87,buja91}, but here we would like to do this in a transparent way. In
+\figref{introduction:scatterplot}, the user has again revealed the underlying data set, this time opting to
+see only rows with active data selections, rather than only rows with data that are used by any part of the
+output. They then express interest in one of the points in the scatter plot. By clicking on it, rather than
+just moving their mouse over it, they create what we call a \emph{persistent} selection (shown in green). The
+demands analysis $\demandsR$ reveals (also in green) the inputs needed to compute both the $x$ and $y$
+coordinates of the selected point; this shows that the 2016 data for 4 countries was used, although it does
+not reveal how.
 
 \paragraph{4. Linked outputs.}
 
 Now that the inputs demanded by the output selection are determined, the $\demandedByR$ analysis runs
 automatically on the output of $\demandsR$; this reveals that those inputs were also needed for 4 of the bar
-segments (displayed with cross-hatching) in the bar chart, namely those for 2016. This is standard linked
+segments (highlighted with cross-hatching) in the bar chart, namely those for 2016. This is standard linked
 brushing, but here the user can investigate further, taking advantage of the fact that a persistent selection
-remains even when the mouse moves off the original item of interest. If they move their mouse over the yellow
-(IND) segment of the 2016 bar (which is then highlighted with a blue border), an orthogonal $\demandsR$ query
-is initiated which determines the data needed to compute the yellow segment (also with blue border). This
-reveals that the value 37.90 in the \tt{nuclearOut} column that is need \emph{both} to compute the
-non-renewables output of India in 2016 and the output-capacity ratio plotted on the left.
+remains active even when the mouse moves off the original item of interest. This allows them to move their
+mouse over the yellow (IND) segment of the 2016 bar (highlighted with blue border), initiating an orthogonal
+$\demandsR$ query which shows (with various blue borders) the data needed to compute the yellow segment. This
+reveals that the value 37.90 in the \kw{nuclearOut} column that is needed \emph{both} to compute the yellow
+bar segment \emph{and} the selected scatter plot, explaining why the selections are linked.
 
 \begin{figure}
    \centering
@@ -86,7 +88,7 @@ non-renewables output of India in 2016 and the output-capacity ratio plotted on 
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
    \small
    {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
    \caption{Non-renewable energy source code}

@@ -1,25 +1,23 @@
 \begin{abstract}
 Charts, figures, and text derived from data play an important role in decision making, from data-driven policy
-development to day-to-day choices informed by online articles. Making sense of, or fact-checking, outputs
-means understanding how they relate to the underlying data. Even for domain experts with access to the source
-code and data sets, this poses a significant challenge. In this paper we introduce a new program analysis
-framework which supports interactive exploration of fine-grained IO relationships directly through computed
-outputs, making use of dynamic dependence graphs. This framework enables a novel notion in data provenance
-which we call \emph{linked inputs}, a relation of mutual relevance or ``cognacy'' which arises between inputs
-when they contribute to common features of the output. Queries of this form allow readers to ask questions
-like ``What outputs use this data element, and what other data elements are used along with it?''. We show how
+development to day-to-day choices informed by online articles. Making sense of or fact-checking outputs means
+understanding how they relate to the underlying data. Even for domain experts with access to the source code
+and data sets, this poses a significant challenge. In this paper we introduce a new program analysis framework
+which supports interactive exploration of fine-grained IO relationships directly through computed outputs,
+making use of dynamic dependence graphs. This framework enables a novel notion in data provenance which we
+call \emph{linked inputs}, a relation of mutual relevance or ``cognacy'' which arises between inputs when they
+contribute to common features of the output. Queries of this form allow readers to ask questions like ``What
+outputs use this data element, and what other data elements are used along with it?''. We show how
 \citeauthor{jonsson51}'s concept of conjugate operators on Boolean algebras appropriately characterises the
 notion of cognacy in a dependence graph, and give a procedure for computing linked inputs over such a graph.
 
-To demonstrate the approach in practice, we present a functional programming language called \OurLang which
-automatically enriches visual outputs with interactions supporting linked inputs and similar fine-grained
-queries, and argue how these can aid comprehension using realistic examples. We show how to obtain more
-informative, contextualised queries via projection operators which factor out data contributed by specific
-inputs or demand associated with specific outputs. We also show how to derive a \emph{linked outputs}
-operator, capturing a dual cognacy relation between output features whenever they compete for common input
-data. Composed with suitable projections, this recovers a prior approach to linked outputs based on Galois
-connections and execution traces. As well as generalising and extending this prior work, the graph approach
-presented in this paper performs better (computationally) on most examples and is significantly simpler to
-implement, and thus easier to deploy to other languages.
-
+\hspace{5mm} To demonstrate the approach in practice, we present a functional programming language called
+\OurLang which automatically enriches visual outputs with interactions supporting linked inputs and similar
+fine-grained queries. We show how to obtain more informative, contextualised queries via projection operators
+which factor out data contributed by specific inputs or demand associated with specific outputs. We also show
+how to derive a \emph{linked outputs} operator, capturing a dual cognacy relation between output features
+whenever they compete for common input data. Composed with suitable projections, this recovers a prior
+approach to linked outputs based on execution traces and a bidirectional interpreter. However, the dependence
+graph approach presented in this paper performs better (computationally) on most examples than an
+implementation based on execution traces and is significantly simpler to implement.
 \end{abstract}

@@ -4,15 +4,11 @@
 Whether formulating national policy or making day-to-day decisions about our own lives, we increasingly rely
 on the charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions.   However, most of the artefacts we encounter are
-{% tex broke the page here!!!!
-\parfillskip=0pt
-\parskip=0pt
-\par}
 \begin{wrapfigure}{r}{0.53\textwidth}
    \centering
    \includegraphics[width=0.5\textwidth]{fig/example/bremer.png}
-   %\vspace{-2mm}
    \caption{A hand-crafted transparent visualisation due to \citet{bremer15}}
+   \vspace{-2mm}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
 \noindent
@@ -25,7 +21,6 @@ compounded when the information presented draws on multiple data sources, such a
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
 multiple database tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination
 to embark on such an activity. Perhaps more often than we would like, we end up taking things on trust.
-
 
 With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For digital
 media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
@@ -50,27 +45,28 @@ visualisation only allows the user to select one point at a time.
 \label{sec:introduction:data-transparency}
 
 Hand-crafted efforts like \citet{bremer15}'s are labour-intensive because they involve manually embedding
-metadata about the relationship between outputs and inputs into the same program. The validity of this
-metadata is then fragile, because if the visualisation or analysis logic changes, the relationship between
-inputs and outputs also change. A less costly and more robust approach is to treat data provenance features
-like these as a language infrastructure problem, baking lineage or provenance metadata directly into outputs
-so that provenance queries can be supported automatically. For example, for an in-memory database engine,
-\citet{psallidas18smoke} describe how to ``backward trace'' from output selections to input selections, and
-then ``forward trace'' to find related output selections in other views, to support a popular feature from
-data visualisation called \emph{linked brushing}. \citet{perera22} implemented a similar system for a
-general-purpose functional programming language, using execution traces to support bidirectional queries.
+metadata about the relationship between outputs and inputs into the same program. When the visualisation or
+analysis logic changes, the relationship between inputs and outputs also change, and the metadata must be
+manually updated. A less costly and more robust approach is to treat data provenance as a language
+infrastructure problem, baking lineage or provenance metadata directly into outputs so that provenance queries
+can be supported automatically. For example, for an in-memory database engine, \citet{psallidas18smoke}
+describe how to ``backward trace'' from output selections to input selections, and then ``forward trace'' to
+find related output selections in other views, to support a popular feature from data visualisation called
+\emph{linked brushing}. \citet{perera22} implemented a similar system for a general-purpose functional
+programming language, using execution traces to support bidirectional queries.
 
 The advantage of shifting the burden of implementing transparency features into the language runtime is that
-the author of the content can concentrate purely on data visualisation, and moreover the consumer of the
-content can formulate any query supported by the infrastructure. As the infrastructure improves, the benefits
-are inherited automatically by end users, at no additional cost to the author. There are prospects for baking
-in formal guarantees, for example that the revealed data is in some sense minimal and sufficient.
+the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
+the benefits are inherited automatically by end users, at no additional cost to the author. For example if
+some kind of formal guarantees are provided (perhaps that data selections are in some sense minimal and
+sufficient), then those can be proved once for the infrastructure rather for each bespoke implementation.
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
-which supports fine-grained \emph{in situ} provenance queries, which we call \emph{data transparency}. In
-contrast to prior work, we use \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}, which
-enable our approach to be fast enough for interactive use and language-independent, separating queries
-over the graph from the problem of deriving the dependence graph for a particular program.
+which supports fine-grained \emph{in situ} provenance queries, an end-user feature we call \emph{data
+transparency}. In contrast to prior work, we use \emph{dynamic dependence graphs}~\cite{ferrante87, agrawal90}
+to implement the analyses, which enables our approach to be fast enough for interactive use and also
+language-independent, by separating queries over the graph from the problem of deriving the dependence graph
+for a particular program.
 
 \subsection{Contributions and roadmap}
 \label{sec:introduction:contributions}
@@ -84,14 +80,13 @@ Our specific contributions are as follows:
       relationships between input addresses and output addresses.
 
    \item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over
-      dependence graphs, formalising two operators over such graphs, $\demandsR_{G}$ (\emph{demands}) and
-      $\demandedByR_{G}$ (\emph{demanded by}). We show these to be \emph{conjugate} in the sense
-      of~\citet{jonsson51}, and give procedures for computing $\demandsR_{G}$ and $\demandedByR_{G}$. We show
-      how a novel cognacy operator $\relInputR_G$ called \emph{linked inputs}, relating inputs when they
-      contribute to common features of the output, can be obtained by composing $\demandsR_{G}$ and
-      $\demandedByR_{G}$, and how a dual \emph{linked outputs} operator $\relOutputR_G$, supporting the
-      ``linked visualisations'' of prior work \cite{psallidas18smoke,perera22}, is easily obtained by
-      transposing the two operators.
+      dependence graphs, formalising two operators over such graphs, $\demandsR$ (\emph{demands}) and
+      $\demandedByR$ (\emph{demanded by}). We show these to be \emph{conjugate} in the sense
+      of~\citet{jonsson51}, and give procedures for computing $\demandsR$ and $\demandedByR$. We show how a
+      novel cognacy operator $\relInputR$ called \emph{linked inputs}, relating inputs when they contribute to
+      common features of the output, can be obtained by composing $\demandsR$ and $\demandedByR$, and how a
+      dual \emph{linked outputs} operator $\relOutputR$, supporting the ``linked visualisations'' of prior
+      work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
 
    \item \secref{evaluation} shows that our implementation performs better than one based on traces and
       bidirectional interpreters, the primary alternative implementation technique. Using usability metrics
@@ -108,7 +103,7 @@ Our specific contributions are as follows:
 \citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, and
 \citet{perera22} support linked outputs in a general-purpose languages, ours is (to the best of our knowledge)
 the first implementation for a general-purpose language which is fast enough for interactive use. Other
-related work in database provenance, program slicing and data visualisation are discussed in more detail in
+related work in database provenance, program slicing and data visualisation are discussed in
 \secref{related-work}.
 
 \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
@@ -122,10 +117,3 @@ common visualisations; a d3.js front end automatically enriches the rendered out
 interactive selection and the data transparency queries introduced in the next section. Our implementation is
 open source and available online (given later in a deanonymised version). We also provide an anonymised web
 demo at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
-
-%Second, we introduce a new kind of provenance query called \emph{linked inputs}, a relation of mutual
-%relevance which arises between inputs when they contribute to common features of the output. Users are able
-%to formulate queries like ``What outputs use this data element, and what other data elements are used along
-%with it?''. Such questions explore \emph{cognacy} (common ancestry) in a dependence graph $G$, and are
-%formally dual to another query type, ``linked outputs'' shown in \figref{introduction:scatterplot}, which can
-%be understood as cognacy in $\opGraph{G}$.
