@@ -67,8 +67,9 @@ runtimes for a given benchmark.
 
 In \tableref{eval-SpdUps}, we compare the average time taken to evaluate a program in the graph approach
 (\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace-based approach
-(\textbf{T-Eval}). Since building the graph involves maintaining a heap of allocated vertices, we expect a
-larger overhead when evaluating a program to a graph compared to evaluating it to a trace.
+(\textbf{T-Eval}). Since building the graph involves maintaining a heap of allocated vertices, and since we
+also build the inverse graph at the same time, we expect a larger overhead when evaluating a program to a
+graph compared to evaluating it to a trace.
 
 We report the ratio of graph evaluation time to trace evaluation time in the third column
 (\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs to
@@ -84,16 +85,16 @@ In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} 
 to compute \textit{demands} with the trace and graph approaches, respectively. The ratio of graph-based to
 trace-based performance is in the last column, \textbf{Bwd-Speedup}. \todo{Most obvious thing missing here is
 any account of the ``size'' of the query input. Are we demanding the whole output? None of the output?
-Something in between? Some kind of representative mixture of these? Some question arises for demanded-by
+Something in between? Some kind of representative mixture of these? Same question arises for demanded-by
 evaluation.}
 
 Overall, we observe a significant speedup in the performance of \textit{demands} using the graph approach,
 from 33x speedup for the \textbf{stacked-bar-chart}, to more than 80x for \textbf{gaussian}. In particular,
-every \textit{demands} query using the graph based approach is within the ``instantaneous'' category, whilst
-all but two of the examples using the trace approach are in the ``noticable delay'' category. We attribute
-this performance improvement to the fact that, in the trace approach, each query involves rewinding the entire
-execution of the original program, in effect evaluating it in reverse, regardless of whether all of the trace
-is relevant. In the graph approach, each query only traverses the relevant parts of the graph.
+every graph-based \textit{demands} query is within the ``instantaneous'' category, whilst all but two of the
+examples using the trace approach are in the ``noticable delay'' category. We attribute this performance
+improvement to a couple of factors. First, in the trace approach, each query involves rewinding the entire
+execution, in effect evaluating in reverse, regardless of whether all of the trace is relevant. In the graph
+approach, each query only traverses the relevant parts of the graph. Second,
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
@@ -127,5 +128,5 @@ media.
 
 Another notable aspect, which is observed for \textit{Q3}, is the performance of \textbf{G-DemBy-Suff}, which
 takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, \textbf{G-DemBy-Suff} performs
-significantly worse than \textbf{G-DemBy}; this seems most likely due to the fact that the ``complement''
-subgraph traversed by the algorithm in this case is often much larger.
+significantly worse than \textbf{G-DemBy}; this seems most likely due to the fact that the ``complement
+subgraph'' traversed by the algorithm in this case is often much larger.

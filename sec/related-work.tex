@@ -6,12 +6,12 @@
 Dynamic dependence graphs have been used previously in functional languages to implement incremental
 evaluation~\cite{acar02, acar06b}. In contrast to their work, which focuses on efficiently propagating changes
 for inputs to computations, we are concerned with the implementation of interactive data exploration systems.
-\JBnote{With respect to program slicing, \citet{field98} use dynamic dependence graphs on a subset of Pascal. In 
+\JBnote{With respect to program slicing, \citet{field98} use dynamic dependence graphs on a subset of Pascal. In
 their work, the authors demonstrate the application of dynamic dependence graphs to in languages implemented as
 term-rewriting systems, showing how this can be used to construct elaborate error reporting for things like type
-errors. Internally, their dependence graphs represent a complete account of the reduction steps in a programs 
+errors. Internally, their dependence graphs represent a complete account of the reduction steps in a programs
 execution -- as a term graph -- as opposed to our dependence graphs which only represent value-to-value
-dependencies. Our work is also distinct in that, by focussing on allowing the user to explore dependencies 
+dependencies. Our work is also distinct in that, by focussing on allowing the user to explore dependencies
 in interactive visualisations, we assume that the program has already executed, rather than using the information
 for static error checking.}
 
@@ -28,16 +28,16 @@ For a survey on other techniques, see \citet{Soremekun2021}.
 
 \cite{dietrich22} attempts to simultaneously explain both value and control dependencies in recursive database
 queries and user-defined functions. Their work takes SQL queries, and rewrites them into a pairs of queries which
-compute not only the output table, but the provenance of the values it contains. 
+compute not only the output table, but the provenance of the values it contains.
 
-\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance 
+\JBnote{In \cite{fehrenbach19}, the authors present a system for language-integrated data provenance
 for the LINKS programming language \cite{cooper06}. Their system is rooted in the nested relational calculus (NRC)~\cite{BUNEMAN19953},
-and -- despite integration with a general purpose language -- only supports provenance queries for an 
+and -- despite integration with a general purpose language -- only supports provenance queries for an
 embedded SQL-like language, rather than dependency queries over the more general constructs in LINKS.
 Extending our work to support similar provenance queries would require revisiting the dependency relation,
 since we do not distinguish between control-flow -- coming from an if-else or a pattern match -- and value
 dependencies -- from producing new values out of old ones. This information roughly corresponds to the ``why'' and
-``where'' provenance described in the database setting. We would also need to consider how SQL queries and the 
+``where'' provenance described in the database setting. We would also need to consider how SQL queries and the
 NRC differ semantically from our core functional calculus.}
 
 \subsection{Galois Slicing}
@@ -62,11 +62,12 @@ of lattice join ($\join$) to combine slicing information from different branches
 \todo{mention this earlier when we're conjecturing why graph approach is faster}. Joining closure slices in
 particular is expensive because of the contained environments (which in turn contain closures), and these
 issues make the approach prohibitively slow for interactive use, as covered in \secref{evaluation}.
-\JBnote{Beyond the performance improvement from using a graph representation, our work also reduces the 
-implementation burden on the developer, since the algorithms for our program analyses only need to be 
+\JBnote{Beyond the performance improvement from using a graph representation, our work also reduces the
+implementation burden on the developer, since the algorithms for our program analyses only need to be
 implemented once.}
 
 \subsection{Linked Visualisation}
+
 In data visualisation it has long been recognised that when users interact with visual elements by clicking or
 lassoing, the intention is typically to manipulate the underlying data. This has lead to various techniques
 for inverting selections in visual space to obtain selections in the input data~\cite{north00, heer08}.
