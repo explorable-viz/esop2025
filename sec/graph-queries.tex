@@ -100,10 +100,18 @@ $\preimageDualR_R(Y')$ picks out the inputs that are needed \emph{only} by eleme
 
 % \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
-\subsubsection{IO Relation for a Graph}
+\subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
+\label{sec:conjugate:dependence-graph-functions}
 
-Reachability in $G$ induces a relation just between sources and sinks, which we call the \emph{IO} relation of
-$G$.
+%\subsubsection{IO Relation for a Graph}
+
+Reachability in $G$ induces a relation just between \emph{sources} and \emph{sinks}, which we call the
+\emph{IO} relation of $G$.
+
+\begin{definition}[Sources and sinks]
+For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
+\end{definition}
 
 \begin{definition}[Reachability relation]
 Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
@@ -115,16 +123,13 @@ For any dependence graph $G$ with reachability relation $R$, define the \emph{IO
 \end{definition}
 
 The IO relation specifies how specific inputs (sources) are demanded by specific outputs (sinks); thus we
-interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''.
+interpret $(x, y) \in R$ as ``$x$ is \textit{demanded by} $y$''. Clearly the IO relation of $G$ is the
+converse of the IO relation of $\opGraph{G}$.
 
-Clearly the IO relation of $G$ is the converse of the IO relation of $\opGraph{G}$. Since we are in fact
-interested in the relationship between input and output \emph{selections} (namely sets of inputs and outputs),
-we now consider how such a relation $R \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via
-the \textit{image} and \textit{preimage} functions for $R$, which we will denote using $\demandedByR_{R}$ and
-$\demandsR_{R}$.
-
-\subsection{$\demandsR_G$ and $\demandedByR_G$ for Dependence Graphs}
-\label{sec:conjugate:dependence-graph-functions}
+% Since we are in fact interested in the relationship between
+% input and output \emph{selections} (namely sets of inputs and outputs), we now consider how such a relation $R
+% \subseteq X \times Y$ lifts to $\powerset{X}$ and $\powerset{Y}$ via the \textit{image} and \textit{preimage}
+% functions for $R$, which we will denote using $\demandedByR_{R}$ and $\demandsR_{R}$.
 
 We now extend the notion of $\demandsR_{R}$ and $\demandedByR_{R}$ to a dependence graph $G$ via its IO
 relation. The set of inputs that some outputs $Y$ \emph{demands},  $\demandsR_{G}(Y)$, is simply the subset of
@@ -173,11 +178,6 @@ graph notation:
 \begin{definition}[In-edges and out-edges]
 For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
 and $\outE{G}(\alpha)$ for its out-edges.
-\end{definition}
-
-\begin{definition}[Sources and sinks]
-For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
-in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
 \end{definition}
 
 \begin{definition}[Opposite graph]
