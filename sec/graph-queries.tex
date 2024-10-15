@@ -98,15 +98,8 @@ show that these are indeed the intended De Morgan duals.
 $\sufficesR_R(X')$ picks out the outputs that the elements of $X$ are \emph{sufficient} for.
 $\preimageDualR_R(Y')$ picks out the inputs that are needed \emph{only} by elements of $Y'$.
 
-\subsection{More graph preliminaries}
-
 \begin{definition}[Reachability relation]
 Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
-\end{definition}
-
-\begin{definition}[Opposite graph]
-For a graph $G$ define the \emph{opposite} graph $\opGraph{G} \eqdef (V,E^{-1})$ where $\param^{-1}$ denotes
-relational converse.
 \end{definition}
 
 \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
@@ -187,20 +180,26 @@ For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.
 in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
 \end{definition}
 
-With the trace-based approaches mentioned in \secref{introduction}, one can use the same algorithm to
-implement its De Morgan dual; for example given a procedure for $\demandedByR_{G}$ we can compute
-$\sufficesR_{G}$ by pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting we
-can also use the same algorithm to compute its conjugate: for example given a procedure for
-$\demandedByR_{G}$, we can compute $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
+\begin{definition}[Opposite graph]
+For a graph $G$ define the \emph{opposite} graph $\opGraph{G} \eqdef (V,E^{-1})$ where $\param^{-1}$ denotes
+relational converse.
+\end{definition}
+
+With the trace-based approaches mentioned in \secref{introduction}, one can use a given algorithm to implement
+its De Morgan dual; for example given a procedure for $\demandedByR_{G}$ we can compute $\sufficesR_{G}$ by
+pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting we can also use a given
+algorithm to compute its conjugate: for example given a procedure for $\demandedByR_{G}$, we can compute
+$\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
 
 For efficiency, however, we give direct procedures both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}), which can then be used to derive implementations of the other
-operators (\figref{conjugate:derivate-algorithms} below). Each procedure factors through an auxiliary
-operation that computes a ``slice'' of the original graph, i.e.~a contiguous subgraph. While it is technically
-possible to compute the desired image/preimage of the IO relation without creating this intermediate graph, we
-anticipate use cases which will make use of the graph slice; these are discussed in more detail in
-\secref{conclusion}. Our implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we freely make
-use of both in the algorithms to access out-neighbours and in-neighbours.
+(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), which
+can then be used to derive implementations of the other operators (\figref{conjugate:derivate-algorithms}
+below). Each procedure factors through an auxiliary operation that computes a ``slice'' of the original graph,
+i.e.~a contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO
+relation without creating this intermediate graph, we anticipate use cases which will make use of the graph
+slice; these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip
+between $G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+in-neighbours.
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
