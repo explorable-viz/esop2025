@@ -6,7 +6,7 @@ bidirectional interpreter with two components: a forward evaluator which perform
 produces an execution trace, and a backward evaluator which consumes the execution trace and performs a
 backwards analysis~\cite{ricciotti17,psallidas18smoke,perera22}.
 
-For a language implementor, the main benefit of the graph approach is that it removes the need to implement a
+For a language implementor, the main benefit of our graph approach is that it removes the need to implement a
 bidirectional interpreter. Otherwise, changing the language requires modifying each direction of the
 interpreter in a manner that maintains bidirectionality --- a considerable effort. In our approach the graph
 algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
@@ -23,18 +23,18 @@ In an interactive system, performance plays a critical role in a user's experien
 following:
 
 \begin{itemize}
-   \item Q1: Overhead of building a dependence graph versus building a trace
-   \item Q2: Performance of graph-based \textit{demands} vs.~trace-based \textit{demands}
+   \item Q1: Overhead of building a dependence graph versus building a trace;
+   \item Q2: Performance of computing \textit{demands} over a graph vs. a trace;
    \item Q3: Performance of various implementations of \textit{demanded by}: trace-based, graph-based using
    $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$.
 \end{itemize}
 
 \noindent We assessed performance according to the guidelines proposed by \citet{nielsen93}:
 \begin{itemize}
-   \item 100ms: limit for an interaction feeling \emph{instantaneous}
+   \item 100ms: limit for an interaction feeling \emph{instantaneous};
    \item 1000ms: limit for a user's train of thought to remain uninterrupted, although
-   they may perceive a delay
-   \item 10000ms: limit to keep a user's attention on the system
+   they may perceive a delay;
+   \item 10000ms: limit to keep a user's attention on the system.
 \end{itemize}
 
 \noindent Ideally, interactive queries would stay as close as possible to the \emph{instantaneous} category
@@ -46,7 +46,7 @@ attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of
 \label{sec:evaluation:choice-of-examples}
 
 We tested our system on a range of data analysis and visualisation benchmarks implemented in \OurLang. First,
-we considered matrix convolution; given that different kernels give rise to subtly different dependency
+we considered matrix convolution. Given that different kernels give rise to subtly different dependency
 structures, we implemented three different kernels (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian},
 31 lines of code (LOC) each). Second, we developed a full-featured graphics library based on SVG that
 demonstrates the performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LOC,
@@ -64,12 +64,13 @@ runtimes for that benchmark.
 \subsubsection{Q1: Overhead of graph construction vs. trace construction}
 
 \tableref{eval-SpdUps} compares the average time taken to evaluate a program in the graph approach
-(\textbf{G-Eval}) with the time taken in the trace-based approach (\textbf{T-Eval}). The ratio of the two is
+(\textbf{G-Eval}) with the time taken in the trace-based approach (\textbf{T-Eval}). The ratio of graph-based
+to trace-based time is
 shown in the third column (\textbf{Eval-Slowdown}). Since building the graph involves maintaining a heap of
 allocated vertices, and we also build the inverse graph at the same time, we expect a larger overhead for the
-graph approach; and as expected, we do see a higher overhead, being from 3x to 14x slower than their
+graph approach. As expected, we do see a higher overhead, being from 2.5x to 15x slower than their
 trace-based counterparts. For both approaches, program evaluation always stays within the limit to keep a
-user’s attention on the system.
+user’s attention on the system (10000ms).
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
@@ -77,10 +78,10 @@ user’s attention on the system.
 
 In \tableref{demands-SpdUps}, columns \textbf{T-Demands} and \textbf{G-Demands} show the average times taken
 to compute \textit{demands} with the trace and graph approaches, respectively. The ratio of graph-based to
-trace-based performance is in the last column, \textbf{Bwd-Speedup}. \todo{Most obvious thing missing here is
-any account of the ``size'' of the query input. Are we demanding the whole output? None of the output?
-Something in between? Some kind of representative mixture of these? Same question arises for demanded-by
-evaluation.}
+trace-based performance is in the last column, \textbf{Bwd-Speedup}. We compute \textit{demands} over
+the graph by running the algorithm for \textit{demBy} from \figref{conjugate:algorithms:demands} over the
+opposite graph. In these examples, we keep our query selections small, generally only selecting one or two
+output nodes.
 
 Overall, we observe a significant speedup in the performance of \textit{demands} using the graph approach,
 from 33x speedup for the \textbf{stacked-bar-chart}, to more than 80x for \textbf{gaussian}. In particular,
@@ -107,8 +108,11 @@ compared to \textbf{T-DemBy}, and column \textbf{S'} the speedup of \textbf{G-De
 \textbf{T-DemBy}.
 
 For all benchmarks, the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph
-based benchmarks running instantaneously, as opposed to only two for the trace based approach.
+\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph-based benchmarks running instantaneously, as opposed to only two for the trace-based approach.
+
+As with the benchmarks for \textit{demands}, we tend to make small selections. This means that in the
+versions of the algorithms which utilise the dual of $\sufficesAlg{}$, the ``complement subgraph'' traversed
+is often much larger than the subgraph traversed by the $\demandedByAlg{}$ algorithm.
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
@@ -123,5 +127,7 @@ to the trace approach (Q2 and Q3) are good enough for instantaneous queries.
 
 Also notable (observed for Q3), is the performance of \textbf{G-DemBy-Suff}, which uses the dual of the
 $\sufficesAlg{}$ algorithm. In the majority of cases, this performs significantly worse than \textbf{G-DemBy}.
-This seems most likely due to the fact that the ``complement subgraph'' traversed by the algorithm in this
-case is often much larger.
+The relative difference in performance can be explained by the size of selections: since the selection
+is complemented and thus the portion of the graph it traverses is much larger, the algorithm runs more slowly.
+It is also likely that some of this disparity can be explained by $\sufficesAlg{}$ requiring more operations
+and book-keeping than $\demandedByAlg{}$.
