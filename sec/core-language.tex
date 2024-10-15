@@ -166,16 +166,16 @@ dependence graph is then extended with $\inStar{V}{\alpha}$, indicating that $n_
 matched partial inputs in $V$. Likewise, the rule for an anonymous function $\exFun{\sigma}$ constructs the
 closure $\exClosure{\gamma}{\envEmpty}{\sigma}_\alpha$ with fresh address $\alpha$, capturing the current
 environment $\gamma$ and using $\envEmpty$ as the set of mutually recursive definitions associated with the
-function, and again establishing dependency edges from $V$ to $\alpha$.
+function, and again establishing dependency edges from $V$ to $\alpha_i$.
 
-Any rules which involve recursively evaluating subterms thread the graph under construction through the
-evaluation of the subterms. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v},
-G$ (bottom of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i$ and
-dependence graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make use of this
-judgement in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign
-applications $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an
-application of $f$ to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and extended
-dependence graph $G'$ (\secref{core:foreign}).
+Rules which involve recursively evaluating subterms thread the graph under construction through the evaluation
+of the subterms. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom
+of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i$ and dependence
+graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make use of this judgement
+in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign applications
+$f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an application of $f$
+to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and extended dependence graph $G'$
+(\secref{core:foreign}).
 
 The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, and rely on the
 auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of \figref{core:eval}.
