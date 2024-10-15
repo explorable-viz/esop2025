@@ -2,30 +2,29 @@
 \label{sec:evaluation}
 
 We now compare our dependence graph approach with the main alternative style of implementation, namely a
-bidirectional interpreter where a forward evaluator performs a forwards analysis and produces an
-\emph{execution trace}, and a backward evaluator which consumes an execution trace and performs a backwards
-analysis~\cite{ricciotti17, psallidas18smoke,perera22}.
+bidirectional interpreter with two components: a forward evaluator which performs a forwards analysis and
+produces an execution trace, and a backward evaluator which consumes the execution trace and performs a
+backwards analysis~\cite{ricciotti17,psallidas18smoke,perera22}.
 
-For a language implementor, the main benefit of our graph approach is that it removes the need to implement
-this backwards analysis and bidirectional interpreter. The two directions of such an interpreter must be kept
-synchronised with respect to the dependency analysis thus changing the language requires modifying each
-direction in a manner that maintains bidirectionality---a considerable effort. Instead, in our approach, the
-graph algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
+For a language implementor, the main benefit of the graph approach is that it removes the need to implement a
+bidirectional interpreter. Otherwise, changing the language requires modifying each direction of the
+interpreter in a manner that maintains bidirectionality --- a considerable effort. In our approach the graph
+algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
 language-agnostic and only have to be defined once.
 
-For a user, our hypothesis is that our approach has better performance than existing techniques. To assess
-this conjecture, we compare two implementations of the dependency-tracking runtime of \OurLang, one based on
-the dependence graph design described in \secrefTwo{core}{conjugate}, and one based on execution traces and a
-bidirectional interpreter. The other system components were shared by the two implementations, including the
-parser, desugaring layer, visualisation layer and libraries. We wrote various benchmark programs taking
-examples from data analysis and data visualisation (\secref{evaluation:choice-of-examples}).
+For a user, our hypothesis is that our approach has better performance than existing techniques. To test this,
+we compare two implementations of the dependency-tracking runtime of \OurLang, one based on the dependence
+graph design described in \secrefTwo{core}{conjugate}, and one based on execution traces and a bidirectional
+interpreter. The other system components were shared by the two implementations, including the parser,
+desugaring layer, visualisation layer and libraries. We wrote various benchmark programs taking examples from
+data analysis and data visualisation (\secref{evaluation:choice-of-examples} below).
 
-In an interactive system, performance plays a critical role in a user's experience. We therefore compared the
-performance of the graph-based and trace-based approaches by measuring the following:
+In an interactive system, performance plays a critical role in a user's experience. We therefore measured the
+following:
 
 \begin{itemize}
    \item Q1: Overhead of building a dependence graph versus building a trace
-   \item Q2: Performance of graph-based \textit{demands} vs.~ performance of trace-based \textit{demands}
+   \item Q2: Performance of graph-based \textit{demands} vs.~trace-based \textit{demands}
    \item Q3: Performance of various implementations of \textit{demanded by}: trace-based, graph-based using
    $\demandsAlg{}$, and graph-based using the dual of $\sufficesAlg{}$.
 \end{itemize}
