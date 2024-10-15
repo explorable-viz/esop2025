@@ -127,15 +127,15 @@ Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disju
 \figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$.
 Rather than matching a single value $v$, the judgement matches a ``stack'' of values $\seq{v}$ against a
 continuation $\kappa$, returning the selected branch $e$, an environment $\gamma$ providing bindings for the
-free variables in $e$, and the set $V$ of addresses found in the matched portions of $\seq{v}$.
+free variables of $e$, and the set $V$ of addresses found in the matched portions of $\seq{v}$.
 
 A continuation which is just an expression $e$ matches only the empty stack of values
 (\ruleName{$\match$-done}), in which case pattern-matching is complete and $e$ is the selected branch. The
 other rules require an \emph{eliminator} $\sigma$ as the continuation and a non-empty stack $v \cons \seq{v}$;
 any relevant subvalues of $v$ are unpacked and pushed onto the tail $\seq{v}$ and then recursively matched
 using the continuation $\kappa$ selected from $\sigma$. A variable eliminator $\elimVar{x}{\kappa}$ pops $v$
-off the stack, using $\kappa$ to recurse (\ruleName{$\match$-var}); no part of $v$ was consumed so the
-addresses $V$ consumed by the recursive match is returned as is. A record eliminator
+off the stack, using $\kappa$ to recurse (\ruleName{$\match$-var}); no part of $v$ is consumed so the
+addresses $V$ consumed by the recursive match is returned unmodified. A record eliminator
 $\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
 long as the variables in $\seq{y}$ are also fields in $\seq{x}$, argumenting $V$ with the address $\alpha$
 associated with the record (\ruleName{$\match$-record}); the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
@@ -147,10 +147,10 @@ constructor (\ruleName{$\match$-constr}).
 \subsubsection{Evaluation}
 
 \figref{core:eval} defines a big-step evaluation relation $\gamma, e, V, G \evalS v, G'$ stating that term
-$e$, under an environment $\gamma$, vertex set $V$ and dependence graph $G$, evaluates to a value $v$ plus
+$e$, under an environment $\gamma$, vertex set $V$ and dependence graph $G$, evaluates to a value $v$ and
 extended dependence graph $G'$. The vertex set $V$ records the (partial) input values consumed by the current
-active function call providing the dynamic context in which $e$ is being evaluated; this is initially empty
-and changes whenever a function application is evaluated.
+active function call providing the dynamic context in which $e$ is being evaluated; $V$ is initially empty and
+changes whenever a function application is evaluated.
 
 The evaluation rule for variables is fairly standard; the dependence graph is returned unmodified, because no
 new addresses are allocated as a result of simply looking up a variable. The rule for record projections
