@@ -1,17 +1,18 @@
 \section{A Core Calculus for Transparent Outputs}
 \label{sec:core}
 
-We start by introducing a core language for supporting transparent outputs, which is the basis of \OurLang.
-The term syntax (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and provides datatypes,
-records and matrices (although we omit a presentation of matrices here). The syntax of values is less
-standard: each part of a value has a unique \emph{address} $\alpha$ which serves to identify that part of the
-value in a dependence graph. We give a big-step operational semantics that evaluates a term to both a value
-and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how parts of the
-value depend on parts of the input. The core language is fairly expressive, supporting deep pattern-matching
-and mutual recursion; however our implementation also provides a surface language that desugars into the core,
-providing piecewise function definitions, list comprehensions and other conveniences, as shown in
-\figrefTwo{example:moving-average:source}{example:non-renewables:source}, which would otherwise complicate the
-core.
+We start by introducing a calculus for transparent outputs, which is the core of \OurLang. The core language
+is fairly expressive, supporting deep pattern-matching and mutual recursion; however \OurLang also provides a
+surface syntax that desugars into the core, providing piecewise function definitions, list comprehensions and
+other conveniences, as shown in \figrefTwo{example:moving-average:source}{example:non-renewables:source},
+which would otherwise complicate the core.
+
+The term syntax of the core language (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and
+provides datatypes, records and matrices (although we omit a presentation of matrices here). The syntax of
+values is less standard: each part of a value has a unique \emph{address} $\alpha$ which serves to identify
+that part of the value in a dependence graph. We give a big-step operational semantics that evaluates a term
+to both a value and a \emph{dynamic dependence graph} for that value (\secref{core:semantics}), capturing how
+parts of the value depend on parts of the input.
 
 \paragraph{Some notation.} We write to ${\seq{x}}$ denote a finite sequence of elements $\seqRange{x_1}{x_n}$,
 with $\seqEmpty$ as the empty sequence. Concatenation of sequences is written $\seq{x} \concat \seq{x}'$; we
@@ -34,19 +35,20 @@ let-bindings $\exLet{x}{e}{e'}$, record construction $\exRec{\seq{\bind{x}{e}}}$
 $\exRecProj{e}{x}$, and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over
 data constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to constructor
 arities $\datatype{c} \in \mathbb{N}$. Function application comes in two forms: the usual $\exApp{e}{e'}$, and
-(saturated) \emph{foreign function applications} $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below).
-The final two expression forms are anonymous functions $\exFun{\sigma}$ and mutually recursive let-bindings
-$\exLetRecElim{\seq{x : \sigma}}{e}$, where $\sigma$ is a pattern-matching construct called an
-\emph{eliminator} (\secref{core:continuations} below).
+(saturated) \emph{foreign function} applications $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below).
+The final two expression forms are anonymous functions $\exFun{\sigma}$, where $\sigma$ is a pattern-matching
+construct called an \emph{eliminator} (\secref{core:continuations} below), and sets of mutually recursive
+functions $\exLetRecElim{\rho}{e}$, where $\rho$ is a finite map $\seq{\bind{x}{\sigma}}$ from names to
+eliminators.
 
 \subsubsection{Foreign functions}
 \label{sec:core:foreign}
 
 The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
 the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
-function $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
+function name $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
 $\seq{v}$ and dependence graph $G$, returns both the result of applying the foreign function named by $f$ to
-$\seq{v}$ and a dependence graph $G'$ which extends $G$ with information about how the result depends on
+$\seq{v}$ plus a dependence graph $G'$ which extends $G$ with information about how the result depends on
 $\seq{v}$.
 
 \subsubsection{Continuations and eliminators}
@@ -123,7 +125,7 @@ for example, the calculation of the divisors for the averages.
 One might assume that the nodes labelled with $\div$ would be ordered
 (since division is noncommutative), however these labels are merely for presentation, in the actual graph,
 the ordering of inputs to a computation is ignored. Indeed the nodes themselves merely represent the values
-resulting from a computation, not the computation itself.  
+resulting from a computation, not the computation itself.
 
 \input{fig/conjugate/dependence-graph-example}
 
