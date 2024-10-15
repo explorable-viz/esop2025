@@ -46,18 +46,18 @@ attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of
 \label{sec:evaluation:choice-of-examples}
 
 We tested our system on a range of data analysis and visualisation benchmarks implemented in \OurLang. First,
-we considered matrix convolution; given that different filter/kernel matrices create subtly different
-dependency structures, we implemented a few different such kernels (\textbf{edge-detect}, \textbf{emboss},
-\textbf{gaussian}, 31 Lines of Code (LoC) each). Second, we developed a full-featured graphics library based
-on SVG that demonstrates the performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC,
-\textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC). Finally, we tested two examples that use a
-D3.js front end for visualisation (\textbf{stacked-bar-scatter-plot}, 26 LoC, and
-\textbf{bar-chart-line-chart}, 38 LoC), the same front end used for
-\figrefTwo{introduction:related-inputs}{introduction:scatterplot} from \secref{introduction}. The code for our
-benchmarks is given in~\apdxsecref{apdx:evaluation-src-code}.
+we considered matrix convolution; given that different kernels give rise to subtly different dependency
+structures, we implemented three different kernels (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian},
+31 lines of code (LOC) each). Second, we developed a full-featured graphics library based on SVG that
+demonstrates the performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LOC,
+\textbf{line-chart}, 143 LOC, \textbf{stacked-bar-chart}, 136 LOC). Finally, we tested two examples that use a
+D3.js front end for visualisation (\textbf{stacked-bar-scatter-plot}, 26 LOC, and
+\textbf{bar-chart-line-chart}, 38 LOC), the same front end used in
+\figrefTwo{introduction:related-inputs}{introduction:scatterplot}. The code for our benchmarks is given
+in~\apdxsecref{apdx:evaluation-src-code}.
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
-(in parentheses, coloured grey). Runtimes are reported in milliseconds (to 1 decimal place). When we refer to
+(in parentheses, coloured grey). Runtimes are reported in milliseconds, to 1 decimal place. When we refer to
 \textit{speedup} or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the
 runtimes for a given benchmark.
 
@@ -65,7 +65,7 @@ runtimes for a given benchmark.
 
 In \tableref{eval-SpdUps}, we compare the average time taken to evaluate a program in the graph approach
 (\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace-based approach
-(\textbf{T-Eval}). Since building the graph involves maintaining a heap of allocated vertices, and since we
+(\textbf{T-Eval}). Since building the graph involves maintaining a heap of alLOCated vertices, and since we
 also build the inverse graph at the same time, we expect a larger overhead when evaluating a program to a
 graph compared to evaluating it to a trace.
 
