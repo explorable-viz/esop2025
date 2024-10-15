@@ -56,22 +56,18 @@ D3.js front end for visualisation (\textbf{stacked-bar-scatter-plot}, 26 LOC, an
 \figrefTwo{introduction:related-inputs}{introduction:scatterplot}. The code for our benchmarks is given
 in~\apdxsecref{apdx:evaluation-src-code}.
 
-In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
-(in parentheses, coloured grey). Runtimes are reported in milliseconds, to 1 decimal place. When we refer to
-\textit{speedup} or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of the
-runtimes for a given benchmark.
+In the experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation (in
+parentheses, coloured grey). Runtimes are reported in milliseconds, to 1 decimal place. When we refer to
+\textit{speedup} or \textit{slowdown} in reference to a pair of implementations, we mean the ratio of average
+runtimes for that benchmark.
 
 \subsubsection{Q1: Overhead of graph construction vs. trace construction}
 
-In \tableref{eval-SpdUps}, we compare the average time taken to evaluate a program in the graph approach
-(\textbf{G-Eval}) of this paper with the time taken to evaluate a program with the trace-based approach
-(\textbf{T-Eval}). Since building the graph involves maintaining a heap of alLOCated vertices, and since we
-also build the inverse graph at the same time, we expect a larger overhead when evaluating a program to a
-graph compared to evaluating it to a trace.
-
-We report the ratio of graph evaluation time to trace evaluation time in the third column
-(\textbf{Eval-Slowdown}) of \tableref{eval-SpdUps}. We see that, as expected, the evaluation of programs to
-their dynamic dependence graph does indeed incur a higher overhead, being from 3x to 14x slower than their
+\tableref{eval-SpdUps} compares the average time taken to evaluate a program in the graph approach
+(\textbf{G-Eval}) with the time taken in the trace-based approach (\textbf{T-Eval}). The ratio of the two is
+shown in the third column (\textbf{Eval-Slowdown}). Since building the graph involves maintaining a heap of
+allocated vertices, and we also build the inverse graph at the same time, we expect a larger overhead for the
+graph approach; and as expected, we do see a higher overhead, being from 3x to 14x slower than their
 trace-based counterparts. For both approaches, program evaluation always stays within the limit to keep a
 user’s attention on the system.
 
