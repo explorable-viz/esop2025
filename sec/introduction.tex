@@ -13,11 +13,10 @@ summaries is essential to making informed decisions.   However, most of the arte
 \end{wrapfigure}
 \noindent
 \emph{opaque}, inasmuch as they are unable to reveal anything about how they relate to the data they were
-derived from.
-Whilst one could in principle try to use the source code and data to reverse engineer
-some of these relationships, this requires substantial expertise, as well as valuable time spent away from the
-``comprehension context'' in which we encountered the output in question.  These difficulties are
-compounded when the information presented draws on multiple data sources, such as medical
+derived from. Whilst one could in principle try to use the source code and data to reverse engineer some of
+these relationships, this requires substantial expertise, as well as valuable time spent away from the
+``comprehension context'' in which we encountered the output in question.  These difficulties are compounded
+when the information presented draws on multiple data sources, such as medical
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
 multiple database tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination
 to embark on such an activity. Perhaps more often than we would like, we end up taking things on trust.
@@ -29,16 +28,16 @@ Consider the histogram in \figref{introduction:bremer} showing urban population 
 period \cite{bremer15}. There are many questions a reader might have about what this chart represents --- in
 other words, how visual elements map to underlying data. Do the points represent individual cities? What does
 the colour scheme indicate? Which of the points represent large cities or small cities? Legends and other
-accompanying text can help, but some ambiguities inevitably remain. The entire point of a visual summary after
-all is that it presents the big picture at the expense of certain detail.
+accompanying text can help, but some ambiguities inevitably remain. The purpose of a visual summary after all
+is to present the big picture at the expense of certain detail.
 
 \citeauthor{bremer15}'s approach to this problem was to implement an interactive feature that allows a user to
 explore some of these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting
-an individual point, they are able to bring up a view showing the data that point was calculated from. In the
-figure the highlighted point represents data for Chiang Mai and the plotted value of 10.9\% was derived from
-an increase in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable as
-comprehension aids, but are laborious to implement by hand and require the author to anticipate the queries a
-user might have. For these reasons they also tend not to generalise: for example \citeauthor{bremer15}'s
+an individual point, the user is able to bring up a view showing the data the point was calculated from. In
+the figure the highlighted point represents Chiang Mai, and shows that the plotted value of 10.9\% was derived
+from an increase in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable
+as comprehension aids, but are laborious to implement by hand and require the author to anticipate the queries
+a user might have. For these reasons they also tend not to generalise: for example \citeauthor{bremer15}'s
 visualisation only allows the user to select one point at a time.
 
 \subsection{Data transparency as PL infrastructure}
@@ -55,7 +54,7 @@ find related output selections in other views, to support a popular feature from
 \emph{linked brushing}. \citet{perera22} implemented a similar system for a general-purpose functional
 programming language, using execution traces to support bidirectional queries.
 
-The advantage of shifting the burden of implementing transparency features into the language runtime is that
+The advantage of shifting the burden of implementing transparency features onto the language runtime is that
 the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
 the benefits are inherited automatically by end users, at no additional cost to the author. For example if
 some kind of formal guarantees are provided (perhaps that data selections are in some sense minimal and
