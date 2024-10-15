@@ -45,17 +45,16 @@ attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of
 \subsubsection{Choice of examples}
 \label{sec:evaluation:choice-of-examples}
 
-We tested our system on a range of benchmarks implemented in \OurLang. The benchmark programs represent a
-range of components a data scientist may find useful in an exploratory data analysis scenario \todo{rehash}.
-First, we considered matrix convolution (\textbf{edge-detect}, \textbf{emboss}, \textbf{gaussian}, 31 Lines of
-Code (LoC) each). Given that different filter/kernel matrices create subtly different dependency structures,
-we implemented a few different such kernels. Second, we developed a graphics library that demonstrates the
-performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC, \textbf{line-chart}, 143 LoC,
-\textbf{stacked-bar-chart}, 136 LoC). Finally, we test two linked examples \todo{meaning?}
-(\textbf{stacked-bar-scatter-plot} (corresponding to \figref{introduction:scatterplot} from
-\secref{introduction}), 26 LoC, and \textbf{bar-chart-line-chart}, 38 LoC) \todo{these are based on D3.js
-graphics library instead, right?}. The code for our benchmarks is given
-in~\apdxsecref{apdx:evaluation-src-code}.
+We tested our system on a range of data analysis and visualisation benchmarks implemented in \OurLang. First,
+we considered matrix convolution; given that different filter/kernel matrices create subtly different
+dependency structures, we implemented a few different such kernels (\textbf{edge-detect}, \textbf{emboss},
+\textbf{gaussian}, 31 Lines of Code (LoC) each). Second, we developed a full-featured graphics library based
+on SVG that demonstrates the performance on bespoke visualisation code (\textbf{grouped-bar-chart}, 140 LoC,
+\textbf{line-chart}, 143 LoC, \textbf{stacked-bar-chart}, 136 LoC). Finally, we tested two examples that use a
+D3.js front end for visualisation (\textbf{stacked-bar-scatter-plot}, 26 LoC, and
+\textbf{bar-chart-line-chart}, 38 LoC), the same front end used for
+\figrefTwo{introduction:related-inputs}{introduction:scatterplot} from \secref{introduction}. The code for our
+benchmarks is given in~\apdxsecref{apdx:evaluation-src-code}.
 
 In all our experiments, each benchmark is run 10 times, and we report the mean runtime and standard deviation
 (in parentheses, coloured grey). Runtimes are reported in milliseconds (to 1 decimal place). When we refer to
