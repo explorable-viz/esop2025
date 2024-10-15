@@ -61,8 +61,30 @@ This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subse
 the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
+Conjugate functions are related to another class of near-reciprocals between Boolean algebras, namely
+\emph{Galois connections}; in fact every conjugate pair induces a Galois connection~\cite{menni14}. This
+relates the present setting to previous work on program slicing with Galois
+connections~\cite{perera12a,perera16d,ricciotti17}.
+
+\begin{definition}[Galois connection]
+   \label{def:conjugate:galois-connection}
+   Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
+   connection} iff
+   \[ f(x) \leq y \iff x \leq g(y) \]
+\end{definition}
+
+\begin{proposition}%[Correspondence Between Conjugates and Galois Connections]
+   \label{prop:conj-galois-correspond}
+   Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
+   equivalent:
+   \begin{enumerate}
+      \item $f$ and $g$ form a conjugate pair
+      \item $f$ and $\dual{g}$ form a Galois connection
+   \end{enumerate}
+\end{proposition}
+
 It is also useful (both for performance reasons and as a user feature) to consider the \emph{De Morgan duals}
-of these operators, which we write as $\demandsR$ and $\demandedByR$, and which also form a conjugate pair.
+of these operators, which we write as $\sufficesR$ and $\preimageDualR$, and which also form a conjugate pair.
 
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
@@ -146,26 +168,6 @@ $G$ reachable from $X$.
       (demanded by)
    \end{enumerate}
 \end{definition}
-
-Conjugate functions are related to another class of near-reciprocals between Boolean algebras, namely
-\emph{Galois connections}; in fact every conjugate pair induces a Galois connection~\cite{menni14}:
-
-\begin{definition}[Galois connection]
-   \label{def:conjugate:galois-connection}
-   Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
-   connection} iff
-   \[ f(x) \leq y \iff x \leq g(y) \]
-\end{definition}
-
-\begin{proposition}[Correspondence Between Conjugates and Galois Connections]
-   \label{prop:conj-galois-correspond}
-   Suppose functions $f: A \to B$ and $g: B \to A$ between Boolean algebras. The following statements are
-   equivalent:
-   \begin{enumerate}
-      \item $f$ and $g$ form a conjugate pair
-      \item $f$ and $\dual{g}$ form a Galois connection
-   \end{enumerate}
-\end{proposition}
 
 \subsection{Computing $\demandsR_G$, $\demandedByR_G$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
 Dependence Graphs}
