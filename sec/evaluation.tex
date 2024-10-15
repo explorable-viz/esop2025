@@ -116,14 +116,12 @@ based benchmarks running instantaneously, as opposed to only two for the trace b
 
 When comparing the performance of the graph and trace approaches, we observe that the only consistent
 performance loss for the graph approach is due to the increased cost of evaluating a program to a graph versus
-evaluating it to a trace (according to \textit{Q1}). We argue that this overhead is reasonable: the graph
-only needs to be constructed once and does not impact subsequent interactions; and program evaluation time
-does not exceed the limit for keeping the users attention on the system. Additionally, the fast response times
-for \textit{demands} and \textit{demanded by} (according to Q2 and Q3), compared to the trace approach,
-translate into quick responses to user queries. This is critical for the interactive exploration of digital
-media.
+a trace (\textit{Q1}). For our applications, we argue that this overhead is worth paying; the graph need only
+be constructed once, and moreover evaluation time remains within the limit for keeping the user's attention on
+the system. More importantly, the fast response times for \textit{demands} and \textit{demanded by} compared
+to the trace approach (Q2 and Q3) are good enough for instantaneous queries.
 
-Another notable aspect, which is observed for \textit{Q3}, is the performance of \textbf{G-DemBy-Suff}, which
-takes the dual of the $\sufficesAlg{}$ algorithm. In the majority of cases, \textbf{G-DemBy-Suff} performs
-significantly worse than \textbf{G-DemBy}; this seems most likely due to the fact that the ``complement
-subgraph'' traversed by the algorithm in this case is often much larger.
+Also notable (observed for Q3), is the performance of \textbf{G-DemBy-Suff}, which uses the dual of the
+$\sufficesAlg{}$ algorithm. In the majority of cases, this performs significantly worse than \textbf{G-DemBy}.
+This seems most likely due to the fact that the ``complement subgraph'' traversed by the algorithm in this
+case is often much larger.
