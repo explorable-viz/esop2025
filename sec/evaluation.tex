@@ -1,9 +1,10 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We compare our dependence graph approach with the main alternative style of implementation: a bidirectional
-interpreter producing an \emph{execution trace} during forward evaluation, which is then used by a backward
-interpreter to rewind the trace to perform backwards analysis~\cite{ricciotti17, psallidas18smoke,perera22}.
+We now compare our dependence graph approach with the main alternative style of implementation, namely a
+bidirectional interpreter where a forward evaluator performs a forwards analysis and produces an
+\emph{execution trace}, and a backward evaluator which consumes an execution trace and performs a backwards
+analysis~\cite{ricciotti17, psallidas18smoke,perera22}.
 
 For a language implementor, the main benefit of our graph approach is that it removes the need to implement
 this backwards analysis and bidirectional interpreter. The two directions of such an interpreter must be kept
