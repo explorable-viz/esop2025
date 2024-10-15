@@ -105,14 +105,13 @@ implementation using the $\demandedByAlg{}$ algorithm from \figref{conjugate:alg
 \textbf{G-DemBy-Suff} shows the graph approach using using the De Morgan dual of the $\sufficesAlg{}$
 algorithm from \figref{conjugate:slicing:forward}. Column \textbf{S} shows the speedup of \textbf{G-DemBy}
 compared to \textbf{T-DemBy}, and column \textbf{S'} the speedup of \textbf{G-DemBy-Suff} compared to
-\textbf{T-DemBy}.
+\textbf{T-DemBy}. As with the \textit{demands} benchmarks, we tend to make small selections, and so the dual
+of the $\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger
+subgraph than $\demandedByAlg{}$.
 
 For all benchmarks, the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph-based benchmarks running instantaneously, as opposed to only two for the trace-based approach.
-
-As with the benchmarks for \textit{demands}, we tend to make small selections. This means that in the
-versions of the algorithms which utilise the dual of $\sufficesAlg{}$, the ``complement subgraph'' traversed
-is often much larger than the subgraph traversed by the $\demandedByAlg{}$ algorithm.
+\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the
+graph-based benchmarks running instantaneously, as opposed to only two for the trace-based approach.
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
@@ -127,7 +126,7 @@ to the trace approach (Q2 and Q3) are good enough for instantaneous queries.
 
 Also notable (observed for Q3), is the performance of \textbf{G-DemBy-Suff}, which uses the dual of the
 $\sufficesAlg{}$ algorithm. In the majority of cases, this performs significantly worse than \textbf{G-DemBy}.
-The relative difference in performance can be explained by the size of selections: since the selection
-is complemented and thus the portion of the graph it traverses is much larger, the algorithm runs more slowly.
-It is also likely that some of this disparity can be explained by $\sufficesAlg{}$ requiring more operations
-and book-keeping than $\demandedByAlg{}$.
+The relative difference in performance can perhaps be explained by the fact that our initial selections are
+small: since the selection is complemented, and the portion of the graph that the algorithm traverses is in
+geneneral much larger. It is also plausible that some of this disparity can be explained by $\sufficesAlg{}$
+requiring more book-keeping than $\demandedByAlg{}$.
