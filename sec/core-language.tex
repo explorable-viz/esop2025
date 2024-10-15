@@ -99,17 +99,15 @@ with a \emph{dynamic dependence graph} for that value.
 \label{sec:core:dependence-graphs}
 
 A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence graph}) is a directed acyclic
-graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. We sometimes
-write $\V(G)$ for $V$ $\E(G)$ for $E$.
-
-In the dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses associated to
-values (either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in
-E$ indicate that, in the evaluation of that program, the value associated to $\beta$ \textit{depends on} (is
-\emph{demanded by}, in the terminology of \secref{overview}) the value associated to $\alpha$. Such values may
-be sub-terms of a larger value. This diverges somewhat from traditional approaches to dynamic dependence
-graphs in only considering one type of edge (data dependency) rather than separate data and control
-dependencies; moreover our edges point in the direction of dependent vertices, whereas in the literature the
-other direction is somewhat more common.
+graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. When
+convenient we write $\V(G)$ for $V$ and $\E(G)$ for $E$. In the dependence graph for a particular program,
+vertices $\alpha, \beta \in V$ are addresses associated to values (either supplied to the program as inputs or
+produced during evaluation) and edges $(\alpha, \beta) \in E$ indicate that, in the evaluation of that
+program, the value associated to $\beta$ \textit{depends on} (is \emph{demanded by}, in the terminology of
+\secref{overview}) the value associated to $\alpha$. Such values may be sub-terms of a larger value. This
+diverges somewhat from traditional approaches to dynamic dependence graphs in only considering one type of
+edge (data dependency) rather than separate data and control dependencies; moreover our edges point in the
+direction of dependent vertices, whereas in the literature the other direction is somewhat more common.
 
 During evaluation, when a fresh vertex $\alpha$ is allocated for a constructed value, the dependence graph $G$
 is extended by a graph fragment specifying that $\alpha$ depends on a set $V$ of preexisting vertices, given
@@ -119,19 +117,6 @@ by the following notation:
 Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V \times
 \set{\alpha})$.
 \end{definition}
-
-In \figref{core:mavg}, we show a part of the dependence graph for the moving average
-example program we showed earlier. The graph shows the calculation of the first 3 output points, from
-entries in the \emph{emissions} table shown in \figref{example:non-renewables:source}.
-This figure is a simplified version of the graph -- since in practise they get very large -- that ommits,
-for example, the calculation of the divisors for the averages.
-One might assume that the nodes labelled with $\div$ would be ordered
-(since division is noncommutative), however these labels are merely for presentation, in the actual graph,
-the ordering of inputs to a computation is ignored. Indeed the nodes themselves merely represent the values
-resulting from a computation, not the computation itself.
-
-\input{fig/conjugate/dependence-graph-example}
-
 
 \input{fig/core/match}
 \input{fig/core/eval}
@@ -208,6 +193,19 @@ the value $v'$ of argument $e'$. If pattern-matching returns selected branch $e^
 $V'$ representing the consumed part of $v'$, then $e^\twoPrime$ is evaluated and becomes the result of the
 application, with $V' \cup \set{\alpha}$ serving as set of (partial) inputs associated with the new active
 function context.
+
+\subsubsection{Example}
+
+\input{fig/conjugate/dependence-graph-example}
+
+In \figref{core:mavg}, we show part of the dependence graph for the moving average example in
+\figref{example:moving-average:source}. The graph shows the calculation of the first 3 output points, from
+entries in the \emph{emissions} table shown in \figref{example:non-renewables:source}. This figure is a
+simplified version of the graph -- since in practise they get very large -- that ommits, for example, the
+calculation of the divisors for the averages. One might assume that the nodes labelled with $\div$ would be
+ordered (since division is noncommutative), however these labels are merely for presentation, in the actual
+graph, the ordering of inputs to a computation is ignored. Indeed the nodes themselves merely represent the
+values resulting from a computation, not the computation itself.
 
 % \subsubsection{Products of Projections of Views}
 
