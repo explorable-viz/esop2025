@@ -61,8 +61,8 @@ This should be intuitive enough: for any subsets $X' \subseteq X$ and $Y' \subse
 the right'' to which $X'$ is related are disjoint from $Y'$, then there are no edges in $R$ from $X'$ to $Y'$;
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
-For performance reasons and as a user feature, it is also useful to consider the \emph{De Morgan duals} of
-these operators, which we write as $\demandsR$ and $\demandedByR$, and which also form a conjugate pair.
+It is also useful (both for performance reasons and as a user feature) to consider the \emph{De Morgan duals}
+of these operators, which we write as $\demandsR$ and $\demandedByR$, and which also form a conjugate pair.
 
 \begin{definition}[De Morgan Dual]
    \label{def:conjugate:de-morgan-dual}
@@ -75,16 +75,17 @@ these operators, which we write as $\demandsR$ and $\demandedByR$, and which als
    For relations $R \subseteq X \times Y$, define $\sufficesR_R: \powerset{X} \to \powerset{Y}$ and
    $\preimageDualR_R: \powerset{Y} \to \powerset{X}$ as:
    \begin{enumerate}
-      \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill (dual image)
-      \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill (dual preimage)
+      \item $\sufficesR_R(X') \eqdef \set{y \in Y \mid \nexists x \in X \setminus X'.(x, y) \in R}$ \hfill
+      (dual image)
+      \item $\preimageDualR_R(Y') \eqdef \set{x \in X \mid \nexists y \in Y \setminus Y'.(x, y) \in R}$ \hfill
+      (dual preimage)
    \end{enumerate}
 \end{definition}
 
 This definition is similar to $\demandedByR_R$ except that $\sufficesR_R$ needs every (rather than any)
 ancestor to be in the input set; thus if $\demandedByR_R$ is a notion of necessity (what I am ``necessary
-for'', $\sufficesR_R$ is a notion of sufficiency (what I am sufficient for).
-
-Notably, $\demandedByR_R$ can be transformed into $\sufficesR_R$ using the De Morgan Dual:
+for'', $\sufficesR_R$ is a notion of sufficiency (what I am sufficient for). \todo{What about the other
+operator? And we haven't introduced yet the idea of ancestors, etc.}
 
 \begin{lemma}[Duality of image and preimage functions]
    \label{lem:conjugate:image-preimage-duality}
@@ -328,11 +329,11 @@ As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\empt
 an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
 showing inputs that are actually used in a program. \todo{Perhaps connect to the use of $\preimageDualR{}_G$}
 
-\subsubsection{Focused queries}
-
-\todo{If we want to keep this then some work required to contextualise.} We are often only interested in some
-domain-restriction of the environment $\Gamma' \subseteq \Gamma$. Happily, domain restriction of maps induces
-a pair of conjugate functions: one of them maps the unselected part of the environment ($\Gamma \setminus
-\Gamma'$) to $\top$, and the other  maps the unselected values to $\bot$. In practical terms, this mechanism
-could be used to allow for ``focused'' queries -- the ability to restrict the parts of the output or input
-that the user is interested in using to mediate the linked inputs or outputs query.
+% \subsubsection{Focused queries}
+%
+% \todo{If we want to keep this then some work required to contextualise.} We are often only interested in some
+% domain-restriction of the environment $\Gamma' \subseteq \Gamma$. Happily, domain restriction of maps induces
+% a pair of conjugate functions: one of them maps the unselected part of the environment ($\Gamma \setminus
+% \Gamma'$) to $\top$, and the other  maps the unselected values to $\bot$. In practical terms, this mechanism
+% could be used to allow for ``focused'' queries -- the ability to restrict the parts of the output or input
+% that the user is interested in using to mediate the linked inputs or outputs query.
