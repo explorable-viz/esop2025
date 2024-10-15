@@ -8,8 +8,7 @@ let movingAvg' rs window =
          (map (fun r $\rightarrow$ r.x) rs)
          (movingAvg (map (fun r $\rightarrow$ r.y) rs) window);
 let points =
-      [ { x: r.year, y: r.emissions }
-      | r $\leftarrow$ methane, r.type == "Agriculture" ]
+      [ { x: r.year, y: r.emissions } | r $\leftarrow$ methane, r.type == "Agriculture" ]
 in LineChart {
    tickLabels: { x: Rotated, y: Default },
    size: { width: 330, height: 285 },
@@ -17,5 +16,4 @@ in LineChart {
    plots: [
       LinePlot { name: "Original curve", points: points },
       LinePlot { name: "Moving average", points: movingAvg' points 1 }
-   ]
-}
+   ] }

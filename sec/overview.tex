@@ -21,14 +21,14 @@ on the left; only rows relevant to the chart are visible, with the other rows hi
 clarifies that only agricultural data is relevant, confirming the (informal) claim in the caption. The
 emissions values shown do contribute to the chart in some way, and the user can investigate this by
 interacting with individual entries. For example, moving their mouse over the number 104.69 highlights
-\emph{one} point in the projected emissions curve, and \emph{three} points in the other curve, which plots the
+\emph{one} point in the projected emfissions curve, and \emph{three} points in the other curve, which plots the
 moving average of the projected emissions. The provenance analysis which underpins this we write as
 $\demandedByR$ (``demanded by''), and here this tells us that 104.69 was needed to compute either the $x$ or
 $y$ coordinate (in this case just the $y$ coordinate) of the four highlighted points.
 
 \begin{figure}
    \centering
-   \includegraphics[width=1.0\textwidth]{fig/example/moving-average.png}
+   \includegraphics[width=0.95\textwidth]{fig/example/moving-average.png}
    \caption{Data transparency: \emph{demanded by} ($\demandedByR$) and \emph{demands} ($\demandsR$) operators
    link inputs that share common output dependencies.}
    \label{fig:introduction:related-inputs}
@@ -36,7 +36,8 @@ $y$ coordinate (in this case just the $y$ coordinate) of the four highlighted po
 
 \begin{figure}
    \small
-   {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
+       {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
+       \vspace{-0.5em}
    \caption{Moving average source code}
    \label{fig:example:moving-average:source}
 \end{figure}
@@ -83,17 +84,18 @@ needed to compute the yellow segment. Overlaid on the persistent selection, this
 \kw{nuclearOut} column is needed to compute \emph{both} the IND bar segment \emph{and} the selected scatter
 plot point, explaining why the two output selections are linked.
 
-\begin{figure}
+\begin{figure}[t]
    \centering
-   \includegraphics[width=1.0\textwidth]{fig/example/non-renewables.png}
+   \includegraphics[width=0.98\textwidth]{fig/example/non-renewables.png}
    \caption{Data transparency: \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$)
    operators link outputs that share common input dependencies.}
    \label{fig:introduction:scatterplot}
 \end{figure}
 
-\begin{figure}
-   \small
-   {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
+\begin{figure}[!h]
+  \small
+      {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
+      \vspace{-0.5em}
    \caption{Non-renewable energy source code}
    \label{fig:example:non-renewables:source}
 \end{figure}
