@@ -79,20 +79,20 @@ allocated during evaluation so that new partial values have fresh addresses, whi
 vertices in a dependence graph.
 
 Raw values $\raw{v}$ include integers $n, m$; records  $\exRecord{\seq{x \mapsto v}}$; and constructor values
-$\exConstr{c}{\seq{v}}$. We also define function closures as $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$
-is the function body, $\gamma$ is its environment, and to support mutual recursion, ${\rho}$ is the (possibly
-empty) set of named functions with which $\sigma$ was mutually defined. \emph{Environments} are finite maps
-from variables to values. Because foreign functions in the core language are not first-class and calls
-$\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$, the surface language provides
-a top-level environment which maps every foreign function name ${f}$ of arity $n$ to the closure
+$\exConstr{c}{\seq{v}}$. Raw values also include closures $\exClosure{\gamma}{\rho}{\sigma}$ where $\sigma$ is
+the function body, $\gamma$ the captured environment, and to support mutual recursion, ${\rho}$ is the
+(possibly empty) set of named functions with which $\sigma$ was mutually defined. \emph{Environments} are
+finite maps from variables to values. Because foreign functions in the core language are not first-class and
+calls $\exForeignApp{f}{\seq{e}}$ are saturated, i.e.~$\length{\seq{e}} = \Phi{(f)}$, the surface language
+provides a top-level environment which maps every foreign function name ${f}$ of arity $n$ to the closure
 $\annClosure{\envEmpty}{\envEmpty}{\elimVar{x_1}{\elimVar{\iter}{\elimVar{x_{n}}{\exForeignApp{f}{\seq{x}}}}}}{\alpha}$,
 with $\alpha$ fresh, emulating first-class foreign functions.
 
 \subsection{Operational Semantics}
 \label{sec:core:semantics}
 
-We now give a big-step operational semantics for the core language, which evaluates terms to values and builds
-a dynamic dependence graph for any such value. %First we introduce the idea of a dynamic dependence graph.
+We now give a big-step operational semantics for the core language, which evaluates a term to a value and and
+a \emph{dynamic dependence graph} for that value. %First we introduce the idea of a dynamic dependence graph.
 
 \subsubsection{Dynamic Dependence Graphs}
 \label{sec:core:dependence-graphs}
@@ -101,7 +101,7 @@ A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence g
 graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the
 dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses associated to values
 (either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$
-indicate that, in the evaluation of the program, the value associated to $\beta$ \textit{depends on} on the
+indicate that, in the evaluation of that program, the value associated to $\beta$ \textit{depends on} on the
 value associated to $\alpha$. Such values may be sub-terms of a larger value. This diverges somewhat from
 traditional approaches to dynamic dependence graphs in only considering one type of edge (data dependency)
 rather than separate data and control dependencies; moreover our edges point in the direction of dependent
