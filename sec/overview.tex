@@ -23,9 +23,8 @@ emissions values shown do contribute to the chart in some way, and the user can 
 interacting with individual entries. For example, moving their mouse over the number 104.69 highlights
 \emph{one} point in the projected emissions curve, and \emph{three} points in the other curve, which plots the
 moving average of the projected emissions. The provenance analysis which underpins this we write as
-$\demandedByR$ (``demanded by''), and here this tells us that that input value of interest was needed to
-compute either the $x$ or $y$ coordinate (in this case just the $y$ coordinate) of the four highlighted
-points.
+$\demandedByR$ (``demanded by''), and here this tells us that 104.69 was needed to compute either the $x$ or
+$y$ coordinate (in this case just the $y$ coordinate) of the four highlighted points.
 
 \begin{figure}
    \centering
@@ -53,19 +52,19 @@ of the original input selection; they are the other inputs demanded by any outpu
 input, and are computed using the composite operator $\relInputR$. Given that the initial input selection here
 contributes to 3 points of the moving average, the ``window'' of related inputs in this case is 5 wide,
 comprising all the data points needed to account for the selection on the right. Related inputs is a
-\emph{cognacy} relation: two inputs are related if they have a common ancestor in a \emph{dependency graph}
+\emph{cognacy} relation: two inputs are related if they have a common ancestor in a \emph{dependence graph}
 that captures how inputs are demanded by outputs.
 
 \paragraph{3. Fine-grained linking of the view to the data.}
 
 We would also like to support cognacy queries that start from the output rather than the input; this is the
 basis of a feature called \emph{linked brushing} (or \emph{brushing and linking}) in data visualisation
-\cite{becker87,buja91}, but here we would like to do this in a transparent way. In
-\figref{introduction:scatterplot}, the user has again revealed the underlying data set, this time opting to
-see only rows with active data selections, rather than only rows with data that are used by any part of the
-output. They then express interest in one of the points in the scatter plot. By clicking on it, rather than
-just moving their mouse over it, they create what we call a \emph{persistent} selection (shown in green). The
-demands analysis $\demandsR$ reveals (also in green) the inputs needed to compute both the $x$ and $y$
+\cite{becker87,buja91}. Here we would like to provide linked brushing in a way that is transparent to the
+user. In \figref{introduction:scatterplot}, the user has again revealed the underlying data set, this time
+opting to see only rows with active data selections, rather than only rows with data that are used by any part
+of the output. They then express interest in one of the points in the scatter plot. By clicking on it, rather
+than just moving their mouse over it, they create what we call a \emph{persistent} selection (shown in green).
+The demands analysis $\demandsR$ reveals (also in green) the inputs needed to compute both the $x$ and $y$
 coordinates of the selected point; this shows that the 2016 data for 4 countries was used, although it does
 not reveal how.
 
@@ -74,12 +73,15 @@ not reveal how.
 Now that the inputs demanded by the output selection are determined, the $\demandedByR$ analysis runs
 automatically on the output of $\demandsR$; this reveals that those inputs were also needed for 4 of the bar
 segments (highlighted with cross-hatching) in the bar chart, namely those for 2016. This is standard linked
-brushing, but here the user can investigate further, taking advantage of the fact that a persistent selection
-remains active even when the mouse moves off the original item of interest. This allows them to move their
-mouse over the yellow (IND) segment of the 2016 bar (highlighted with blue border), initiating an orthogonal
-$\demandsR$ query which shows (with various blue borders) the data needed to compute the yellow segment. This
-reveals that the value 37.90 in the \kw{nuclearOut} column is needed to compute \emph{both} the yellow
-bar segment \emph{and} the selected scatter plot, explaining why the selections are linked.
+brushing, and is implemented using the composite operator $\relOutputR$, which we call \emph{related outputs}.
+Related outputs is a ``co-cognacy'' relation, relating two outputs whenever they have a common descendant,
+rather than common ancestor, in the dependence graph. Here the user can take advantage of the fact that a
+persistent selection remains active even when the mouse moves off the original item of interest; this allows
+them to investigate further. Moving their mouse over the yellow IND segment of the 2016 bar (highlighted with
+blue border) initiates an orthogonal $\demandsR$ query which shows (also with various blue borders) the data
+needed to compute the yellow segment. Overlaid on the persistent selection, this reveals that the 37.90 in the
+\kw{nuclearOut} column is needed to compute \emph{both} the IND bar segment \emph{and} the selected scatter
+plot point, explaining why the two output selections are linked.
 
 \begin{figure}
    \centering
