@@ -199,13 +199,11 @@ function context.
 \input{fig/conjugate/dependence-graph-example}
 
 \figref{core:mavg} shows part of the dependence graph for the moving average example in
-\figref{example:moving-average:source}. The graph shows the calculation of the first 3 output points, from
-entries in the \emph{emissions} table in \figref{example:non-renewables:source}. This is a simplified version
-of the graph, since in practise they get very large; for example we omit the calculation of the divisors. One
-might assume that the nodes labelled with $\div$ would be ordered (since division is noncommutative), however
-these labels are merely for presentation, in the actual graph, the ordering of inputs to a computation is
-ignored. Indeed the nodes themselves merely represent the values resulting from a computation, not the
-computation itself.
+\figrefTwo{introduction:related-inputs}{example:moving-average:source}. The graph shows the calculation of the
+first 3 points in the moving average plot from entries in the \emph{emissions} table. This is a simplified
+version of the graph, since in practise they get very large; for example we omit closures, list cells and the
+calculation of the divisors. Also note that the node labels here are merely illustrative: the graph only
+stores value dependencies, and in particular the in-neighbours of a vertex are unordered.
 
 % \subsubsection{Products of Projections of Views}
 
