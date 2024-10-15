@@ -91,21 +91,20 @@ regardless of whether all of the trace is relevant; graph queries only traverse 
 graph. Second, in the trace approach, backwards evaluation makes frequent use of lattice join ($\join$) to
 combine slicing information from different branches of the computation; joining closure slices in particular
 has the potential to be expensive because closures contain environments (which in turn contain closures, and
-so on). In the graph approach, demands information accrues against vertices as the backwards analysis
-proceeds, with no need for separate join steps.
+so on). The graph approach lends itself to a more imperative implementation style, where demand information
+accrues against vertices as the backwards analysis proceeds, with no separate join steps.
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{Q3: Implementations of Demanded By}
+\subsubsection{Q3: Various Implementations of Demanded By}
 
-In \tableref{equivalent-impls}, we investigate the performance of \textit{demanded by} in different settings:
-column \textbf{T-DemBy} provides the results for the trace implementation, column \textbf{G-DemBy} contains
-the results for the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands}, and column \textbf{G-DemBy-Suff} contains the results obtained when
-computing \textit{demanded by} using the De Morgan dual of $\sufficesAlg{}$ from
-\figref{conjugate:slicing:forward}. Additionally, in column \textbf{S} we provide the speedup of
-\textbf{G-DemBy} compared to \textbf{T-DemBy}, and in column \textbf{S'}, we give the speedup of
-\textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}.
+In \tableref{equivalent-impls}, we investigate the performance of various implementations of \textit{demanded
+by}. Column \textbf{T-DemBy} shows the trace implementation, column \textbf{G-DemBy} shows the graph
+implementation using the $\demandedByAlg{}$ algorithm from \figref{conjugate:algorithms:demands}, and column
+\textbf{G-DemBy-Suff} shows the graph approach using using the De Morgan dual of the $\sufficesAlg{}$
+algorithm from \figref{conjugate:slicing:forward}. Column \textbf{S} shows the speedup of \textbf{G-DemBy}
+compared to \textbf{T-DemBy}, and column \textbf{S'} the speedup of \textbf{G-DemBy-Suff} compared to
+\textbf{T-DemBy}.
 
 For all benchmarks, we observe that the graph approach using the $\demandedByAlg{}$ algorithm in
 \figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph
