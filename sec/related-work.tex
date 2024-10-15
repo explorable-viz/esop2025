@@ -5,7 +5,7 @@
 
 Data provenance research has a long history, ranging from document-level workflow provenance
 \cite{callahan06,davidson08} to more fine-grained database techniques like \emph{where} provenance
-\cite{buneman01}, with relatively less emphasis on general-purpose languages. \citet{dietrich22} track both
+\cite{buneman01}, with comparatively less emphasis on general-purpose languages. \citet{dietrich22} track both
 value and control dependencies in recursive database queries and user-defined functions, implementing their
 approach by rewriting SQL queries to provenance-tracking counterparts; \citet{fehrenbach19} explore provenance
 for language-integrated query, extending the multi-tier language Links \cite{cooper06} with provenance
@@ -14,20 +14,19 @@ structured outputs like visualisations, the most closely related lines of work a
 for relational languages, and \citet{perera22} for general-purpose languages. These authors both emphasise the
 importance of \emph{cognacy}, i.e.~common ancestry, albeit not in the context of dependence graphs, showing
 how to ``link'' outputs by tracing back from an output selection to a data selection and then forward to
-another output selection. These relationships of common ancestry seem to be largely unstudied in the data
+another output selection. These relations of common ancestry seem to be largely unstudied in the data
 provenance literature, despite their importance in data visualisation.
 
 \subsection{Dynamic Dependence Graphs}
 
 Dynamic dependence graphs have been used extensively for program slicing \cite{field98,hammer06}, optimisation
-\cite{ferrante87}, incremental computation \cite{acar02} and fault localisation~\citet{Soremekun2021}. Most of
+\cite{ferrante87}, incremental computation \cite{acar02} and fault localisation~\cite{Soremekun2021}. Most of
 these applications are for imperative languages, where it is useful distinguish between control and data
 edges; because \OurLang is pure, we use somewhat simpler dependence graphs with a single kind of edge. However
 different kinds of edge are likely to be needed for future applications (\secref{future}). The main
-contribution of our work to the dependence graph paradigm are our cognacy operators, which allow the
-identification of minimally related sets of inputs ($\relInputR$) and minimally related sets of outputs
-($\relOutputR$), in a formal setting where we show these operators to be ``self-conjugate'' and related to
-Galois connections.
+contribution of our work to the dependence graph paradigm are cognacy operators which allow the identification
+of minimally related sets of inputs ($\relInputR$) and minimally related sets of outputs ($\relOutputR$), in a
+formal setting where we show these operators to be self-conjugate and related to Galois connections.
 
 \subsection{Galois Slicing}
 
