@@ -91,31 +91,34 @@ with $\alpha$ fresh, emulating first-class foreign functions.
 \subsection{Operational Semantics}
 \label{sec:core:semantics}
 
-We now give a big-step operational semantics for the core language, which evaluates a term to a value and and
-a \emph{dynamic dependence graph} for that value. %First we introduce the idea of a dynamic dependence graph.
+We now give a big-step operational semantics for the core language, which evaluates a term to a value paired
+with a \emph{dynamic dependence graph} for that value.
+%First we introduce the idea of a dynamic dependence graph.
 
 \subsubsection{Dynamic Dependence Graphs}
 \label{sec:core:dependence-graphs}
 
 A \emph{dynamic dependence graph}~\cite{agrawal90} (hereafter \emph{dependence graph}) is a directed acyclic
-graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. In the
-dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses associated to values
-(either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in E$
-indicate that, in the evaluation of that program, the value associated to $\beta$ \textit{depends on} on the
-value associated to $\alpha$. Such values may be sub-terms of a larger value. This diverges somewhat from
-traditional approaches to dynamic dependence graphs in only considering one type of edge (data dependency)
-rather than separate data and control dependencies; moreover our edges point in the direction of dependent
-vertices, whereas in the literature the other direction is somewhat more common.
+graph $G = (V,E)$ with a set $V$ of \emph{vertices} and a set $E \subseteq V \times V$ of edges. We sometimes
+write $\V(G)$ for $V$ $\E(G)$ for $E$.
 
-During evaluation, the dependence graph $G$ under construction is extended by graph fragments which specify
-that a fresh vertex $\alpha$ depends on a set $V$ of preexisting vertices, given by the following notation:
+In the dependence graph for a particular program, vertices $\alpha, \beta \in V$ are addresses associated to
+values (either supplied to the program as inputs or produced during evaluation) and edges $(\alpha, \beta) \in
+E$ indicate that, in the evaluation of that program, the value associated to $\beta$ \textit{depends on} (is
+\emph{demanded by}, in the terminology of \secref{overview}) the value associated to $\alpha$. Such values may
+be sub-terms of a larger value. This diverges somewhat from traditional approaches to dynamic dependence
+graphs in only considering one type of edge (data dependency) rather than separate data and control
+dependencies; moreover our edges point in the direction of dependent vertices, whereas in the literature the
+other direction is somewhat more common.
+
+During evaluation, when a fresh vertex $\alpha$ is allocated for a constructed value, the dependence graph $G$
+is extended by a graph fragment specifying that $\alpha$ depends on a set $V$ of preexisting vertices, given
+by the following notation:
 
 \begin{definition}[In-star notation]
 Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disjunion V, V \times
 \set{\alpha})$.
 \end{definition}
-
-\todo{Move definition of $V(G)$ here.}
 
 In \figref{core:mavg}, we show a part of the dependence graph for the moving average
 example program we showed earlier. The graph shows the calculation of the first 3 output points, from
