@@ -1,29 +1,37 @@
+\definecolor{myblue}{RGB}{172,216,235}
 \begin{figure}
    \begin{tikzpicture}
+      [scale=1.0,
+               arrow/.style={->,black},
+               set name/.style={font=\color{myblue}\tiny\bfseries\sf},
+               set/.style={thick, myblue},
+               every node/.style={circle},
+               font=\sf
+      ]
       \begin{scope}[name prefix = input-]
-         \node[fill=yellow, label={below:{18.17}}] (1) at (0, 0) {};
-         \node[fill=yellow, label={below:{22.13}}] (2) at  (3, 0) {};
-         \node[fill=yellow, label={below:{37.14}}] (3) at  (6, 0) {};
-         \node[fill=yellow, label={below:{61.27}}] (4) at (9, 0) {};
+         \node[fill=myblue, label={below:{18.17}}] (1) at (0, 0) {};
+         \node[fill=myblue, label={below:{22.13}}] (2) at  (3, 0) {};
+         \node[fill=myblue, label={below:{37.14}}] (3) at  (6, 0) {};
+         \node[fill=myblue, label={below:{61.27}}] (4) at (9, 0) {};
       \end{scope}
       
       \begin{scope}[name prefix = len-]
-         \node[fill=yellow, label=left:2] (div2) at (-0.5, 1.5) {};
-         \node[fill=yellow, label=right:3] (div3) at (6.5, 1.5) {};
+         \node[fill=myblue, label=left:2] (div2) at (-0.5, 1.5) {};
+         \node[fill=myblue, label=right:3] (div3) at (6.5, 1.5) {};
       \end{scope}
 
       \begin{scope}[name prefix = add-]
-         \node[fill=yellow, label={[label position = 0] $40.3$}] (1) at (1.5, 2) {+};
-         \node[fill=yellow, label={[label position = 0] $40.3$}] (2) at (3, 2) {+};
-         \node[fill=yellow, label={[label position = 180] $77.44$}] (3) at (4.5, 3) {+};
-         \node[fill=yellow, label={[label position = 0] $59.27$}] (4) at (5, 1.5) {+};
-         \node[fill=yellow, label={[label position = 0]$120.54$}] (5) at (7.5, 3) {+};
+         \node[fill=myblue, label={[label position = 0] $40.3$}] (1) at (1.5, 2) {+};
+         \node[fill=myblue, label={[label position = 0] $40.3$}] (2) at (3, 2) {+};
+         \node[fill=myblue, label={[label position = 180] $77.44$}] (3) at (4.5, 3) {+};
+         \node[fill=myblue, label={[label position = 0] $59.27$}] (4) at (5, 1.5) {+};
+         \node[fill=myblue, label={[label position = 0]$120.54$}] (5) at (7.5, 3) {+};
       \end{scope}
 
       \begin{scope}[name prefix = div-]
-         \node[fill=yellow, label={$20.15$}] (1) at (1.5, 4) {÷};
-         \node[fill=yellow, label={$25.81$}] (2) at (4.5, 4) {÷};
-         \node[fill=yellow, label={$40.18$}] (3) at (7.5, 4) {÷};
+         \node[fill=myblue, label={$20.15$}] (1) at (1.5, 4) {/};
+         \node[fill=myblue, label={$25.81$}] (2) at (4.5, 4) {/};
+         \node[fill=myblue, label={$40.18$}] (3) at (7.5, 4) {/};
       \end{scope}
       
       \begin{scope}
