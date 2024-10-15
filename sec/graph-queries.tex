@@ -98,16 +98,16 @@ show that these are indeed the intended De Morgan duals.
 $\sufficesR_R(X')$ picks out the outputs that the elements of $X$ are \emph{sufficient} for.
 $\preimageDualR_R(Y')$ picks out the inputs that are needed \emph{only} by elements of $Y'$.
 
-\begin{definition}[Reachability relation]
-Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
-\end{definition}
-
-\noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
+% \noindent (Taking the opposite graph has the effect of swapping sources and sinks.)
 
 \subsubsection{IO Relation for a Graph}
 
 Reachability in $G$ induces a relation just between sources and sinks, which we call the \emph{IO} relation of
 $G$.
+
+\begin{definition}[Reachability relation]
+Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
+\end{definition}
 
 \begin{definition}[IO relation]
 For any dependence graph $G$ with reachability relation $R$, define the \emph{IO} relation of $G$ to be $R
@@ -127,10 +127,10 @@ $\demandsR_{R}$.
 \label{sec:conjugate:dependence-graph-functions}
 
 We now extend the notion of $\demandsR_{R}$ and $\demandedByR_{R}$ to a dependence graph $G$ via its IO
-relation. The set of inputs that some outputs $Y$ \emph{demands},  $\demandsR_{G}$, is simply the subset of
+relation. The set of inputs that some outputs $Y$ \emph{demands},  $\demandsR_{G}(Y)$, is simply the subset of
 the inputs of $G$ reachable from $Y$ (by traversing the graph in its opposite direction). Conversely, the set
-of outputs \emph{demanded by} some inputs $X$, $\demandedByR_{G}$, is simply the subset of the outputs of $G$
-reachable from $X$.
+of outputs \emph{demanded by} some inputs $X$, $\demandedByR_{G}(X)$, is simply the subset of the outputs of
+$G$ reachable from $X$.
 
 \begin{definition}[$\demandsR_G$ and $\demandedByR_G$ for a dependence graph]
    For a graph $G$ with IO relation $R$, define:
