@@ -36,15 +36,9 @@ complement $\setminus$, so that $\neg X' = X \setminus X'$.
    \end{enumerate}
 \end{definition}
 
-\noindent Trivially, the image function for $R$ is the preimage function for its \emph{converse} $R^{-1}
-\subseteq Y \times X$ defined as $(y,x) \in R^{-1} \iff (x,y) \in R$; in other words $\demandedByR_{R} =
-\demandsR_{R^{-1}}$.
-
-When thinking of $R$ as an IO relation, the image $\demandedByR_{R}(X')$ consists of all outputs that any
-element of $X'$ is demanded by, and the preimage $\demandsR_{R}(Y')$ consists of all inputs demanded by any
-element of $Y'$. If $R$ happens to be a function, the image and preimage functions form a \emph{Galois
-connection} (\defref{conjugate:galois-connection} below); for a proper relation they form a \textit{conjugate
-pair}, in the sense of \citet{jonsson51}:
+\noindent Trivially, the image function for $R$ is the preimage function for its \emph{converse} $R^{-1}$;
+that is to say $\demandedByR_{R} = \demandsR_{R^{-1}}$. The image and preimage functions form a
+\textit{conjugate pair}, in the sense of \citet{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras $A$, $B$, functions $f: A \to B$ and $g: B \to A$ form a \textit{conjugate pair} iff:
@@ -53,8 +47,8 @@ pair}, in the sense of \citet{jonsson51}:
    $$
 \end{definition}
 
-\noindent (\citet{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
-between Boolean algebras.)
+% \noindent (\citet{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
+% between Boolean algebras.)
 
 \begin{lemma}[Preimage and Image of a relation are conjugate]
 \label{lem:im-preim-conjugate}
@@ -66,18 +60,6 @@ the right'' to which $X'$ is related are disjoint from $Y'$, then there are no e
 and in virtue of that, the elements ``on the left'' to which $Y'$ is related must also be disjoint from $X'$.
 
 \subsection{More graph preliminaries}
-
-\JBnote{We make frequent use of the following notation on graphs.}
-
-\begin{definition}[In-edges and out-edges]
-For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
-and $\outE{G}(\alpha)$ for its out-edges.
-\end{definition}
-
-\begin{definition}[Sources and sinks]
-For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
-in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
-\end{definition}
 
 \begin{definition}[Reachability relation]
 Define the \emph{reachability relation} for a graph $G=(V,E)$ to be the reflexive transitive closure of $E$.
@@ -197,23 +179,33 @@ Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
 We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
-a dependence graph $G$. \todo{Super-weird because $\demandsR_{G}$ is completely trivial for the IO relation of
-$G$, which is how it's defined. So we have to argue that we want the graph slice.} One advantage of graphs, in
-comparison to the trace-based approach mentioned in \secref{introduction}, is that a single algorithm can be
-readily adapted to compute all 4 operators; for example, given a procedure for $\demandedByR_{G}$, we can
-readily compute its conjugate $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$ and its dual
-$\sufficesR_{G}$ by pre- and post-composing with negation~(\defref{conjugate:de-morgan-dual}).
+a dependence graph $G$, via an intermediate graph slice which we then restrict to its IO relation. First some
+graph notation:
 
-For efficiency, however, we give a direct procedure both for $\demandedByR_{G}$
-(\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices})  in
-\figref{conjugate:algorithms}, where $\demandsR_G$ is easily computed by performing  $\demandedByR_{G}$ on the
-opposite graph; this is in some situations more efficient than relying on the De Morgan dual, which can cause
-more graph to be traversed than would be otherwise. Both procedures factor through an auxiliary operation that
-computes a ``slice'' of the original graph, i.e.~a contiguous subgraph. While it is technically possible to
-compute the desired image/preimage of the IO relation without creating this intermediate graph, we anticipate
-use cases which will make use of the graph slice; these are discussed in more detail in \secref{conclusion}.
-Our implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we freely make use of both in the
-algorithms to access out-neighbours and in-neighbours.
+\begin{definition}[In-edges and out-edges]
+For a graph $G=(V,E)$ and vertex $\alpha \in V$, write $\inE{G}(\alpha)$ for the in-edges of $\alpha$ in $G$
+and $\outE{G}(\alpha)$ for its out-edges.
+\end{definition}
+
+\begin{definition}[Sources and sinks]
+For a graph $G = (V,E)$, write $\sources{G}$ for the \emph{sources} of $G$ (i.e.~those vertices with no
+in-edges) and $\sinks{G}$ for the \emph{sinks} of $G$ (those with no out-edges).
+\end{definition}
+
+With the trace-based approaches mentioned in \secref{introduction}, one can use the same algorithm to
+implement its De Morgan dual; for example given a procedure for $\demandedByR_{G}$ we can compute
+$\sufficesR_{G}$ by pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting we
+can also use the same algorithm to compute its conjugate: for example given a procedure for
+$\demandedByR_{G}$, we can compute $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
+
+For efficiency, however, we give direct procedures both for $\demandedByR_{G}$
+(\secref{conjugate:algorithm:demandedBy}), which can then be used to derive implementations of the other
+operators (\figref{conjugate:derivate-algorithms} below). Each procedure factors through an auxiliary
+operation that computes a ``slice'' of the original graph, i.e.~a contiguous subgraph. While it is technically
+possible to compute the desired image/preimage of the IO relation without creating this intermediate graph, we
+anticipate use cases which will make use of the graph slice; these are discussed in more detail in
+\secref{conclusion}. Our implementation makes it easy to flip between $G$ and $\opGraph{G}$ so we freely make
+use of both in the algorithms to access out-neighbours and in-neighbours.
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
 \label{sec:conjugate:algorithm:demandedBy}
