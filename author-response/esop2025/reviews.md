@@ -16,15 +16,23 @@ Reviewer expertise
 
 Paper summary
 -------------
-The paper presents a general-purpose approach for "transparent visualizations". Technically the program generating the data is run to produce a heap augmented with dependency edges. This induces a lattice over the powerset of heap locations which can be traversed to answer / expose visualization questions.
+The paper presents a general-purpose approach for "transparent visualizations". Technically the program
+generating the data is run to produce a heap augmented with dependency edges. This induces a lattice over the
+powerset of heap locations which can be traversed to answer / expose visualization questions.
 
 Comments for authors
 --------------------
-Not being an expert, I found the paper quite creative, novel, and technically interesting. It is remarkable that fairly standard PL techniques can produce such an elegant system for transparent visualizations.
+Not being an expert, I found the paper quite creative, novel, and technically interesting. It is remarkable
+that fairly standard PL techniques can produce such an elegant system for transparent visualizations.
 
-There is a gap in my understanding that I hope the authors can clarify. My understanding is that the underlying program is run once to generate the heap / graph, and then further queries traverse the graph. So is the graph stored in memory with as many entry points as there are locations? There is never any re-execution of the program to re-generate parts of the graph on demand, right?
+There is a gap in my understanding that I hope the authors can clarify. My understanding is that the
+underlying program is run once to generate the heap / graph, and then further queries traverse the graph. So
+is the graph stored in memory with as many entry points as there are locations? There is never any
+re-execution of the program to re-generate parts of the graph on demand, right?
 
-A smaller technical question: it seems that one can make the semantics look even more conventional by using a store semantics. May be even use a state monad to separate the standard use of locations from the novel fragments of the implementation.
+A smaller technical question: it seems that one can make the semantics look even more conventional by using a
+store semantics. May be even use a state monad to separate the standard use of locations from the novel
+fragments of the implementation.
 
 
 
@@ -142,7 +150,12 @@ Reviewer expertise
 
 Paper summary
 -------------
-The paper introduces a new program analysis framework that uses dynamic dependence graphs to explore fine-grained input-output relationships, using the concept of “cognacy” to identify linked inputs and outputs. The approach supports interactive provenance queries, enabling transparent interactive visualisations. Benchmarking compares graph-based approach favourably to trace-based in a single implementation using a small selection of short programs. The graph-based approach’s performance is attributed to efficient graph traversal and avoidance of expensive join operations.
+The paper introduces a new program analysis framework that uses dynamic dependence graphs to explore
+fine-grained input-output relationships, using the concept of “cognacy” to identify linked inputs and outputs.
+The approach supports interactive provenance queries, enabling transparent interactive visualisations.
+Benchmarking compares graph-based approach favourably to trace-based in a single implementation using a small
+selection of short programs. The graph-based approach’s performance is attributed to efficient graph traversal
+and avoidance of expensive join operations.
 
 Comments for authors
 --------------------
@@ -157,23 +170,50 @@ Comments for authors
 
 # Discussion
 
-I enjoyed this paper a lot and I am impressed that it manages to cover a lot of different forms of contributions in relatively tight space. Implementing a programming language to address this problem instead of developing a library for a more well-known language such as Python is an interesting choice. Then again, I regularly meet people who implement their own Smalltalk’s so they can keep programming in their favourite language, and so it is not so surprising that at ESOP, new functional languages are developed motivated by needs such as in this paper.
+I enjoyed this paper a lot and I am impressed that it manages to cover a lot of different forms of
+contributions in relatively tight space. Implementing a programming language to address this problem instead
+of developing a library for a more well-known language such as Python is an interesting choice. Then again, I
+regularly meet people who implement their own Smalltalk’s so they can keep programming in their favourite
+language, and so it is not so surprising that at ESOP, new functional languages are developed motivated by
+needs such as in this paper.
 
-I found the demo at https://opencomputation.org/ almost unusable because it was so slow (on a modern laptop; Fig 4 worked much faster than Fig 2 for some reason — and presumably this is a JavaScript issue). Maybe I was using the wrong browser. I did not get the arrows pointing from the figure to the data. Maybe they were only part of the figures in the paper? If so that would have been good to state (or I missed this). However, it was a cool demo, and I clearly see the value of being able to generate this interactive artefact automatically. As a tool note, unrelated to the topic of the paper, it would be very cool to also reveal the source code that generates the figures and allow it to be edited. Manipulating something and see the effects always helps me understand and gain confidence in correctness.
+I found the demo at https://opencomputation.org/ almost unusable because it was so slow (on a modern laptop;
+Fig 4 worked much faster than Fig 2 for some reason — and presumably this is a JavaScript issue). Maybe I was
+using the wrong browser. I did not get the arrows pointing from the figure to the data. Maybe they were only
+part of the figures in the paper? If so that would have been good to state (or I missed this). However, it was
+a cool demo, and I clearly see the value of being able to generate this interactive artefact automatically. As
+a tool note, unrelated to the topic of the paper, it would be very cool to also reveal the source code that
+generates the figures and allow it to be edited. Manipulating something and see the effects always helps me
+understand and gain confidence in correctness.
 
-The definition of the language was well-written but I thought that the syntax, names and abbreviations could be improved. They are optimised for writing and fitting things on one line rather than for communicating clearly with a reader. I could not follow most of §4 so I have a hard time understanding some of the novelty claims.
+The definition of the language was well-written but I thought that the syntax, names and abbreviations could
+be improved. They are optimised for writing and fitting things on one line rather than for communicating
+clearly with a reader. I could not follow most of §4 so I have a hard time understanding some of the novelty
+claims.
 
-I am missing a discussion about possible limitations of this approach. Does the dependency graph approach ”fall over” at some point, or require any specific co-design with programming language constructs?
+I am missing a discussion about possible limitations of this approach. Does the dependency graph approach
+”fall over” at some point, or require any specific co-design with programming language constructs?
 
-I was very happy to see an implementation and an actual practical evaluation. EXCELLENT. I think the benchmark questions are well-chosen. Thank you also for clearly stating your hypothesis. Comparing two implementations of the dependency-tracking runtime where all system components are shared by the two implementations, and the only differences are the algorithms of interest is also very good. This seems to be a real apples to apples comparison.
+I was very happy to see an implementation and an actual practical evaluation. EXCELLENT. I think the benchmark
+questions are well-chosen. Thank you also for clearly stating your hypothesis. Comparing two implementations
+of the dependency-tracking runtime where all system components are shared by the two implementations, and the
+only differences are the algorithms of interest is also very good. This seems to be a real apples to apples
+comparison.
 
-The benchmarks are run 10 times each, but I don’t find any analysis or even argument for this number. We also don't know much of the implementation of this language, making it harder to evaluate the results — do we need warm-up for example? (I assume not.)
+The benchmarks are run 10 times each, but I don’t find any analysis or even argument for this number. We also
+don't know much of the implementation of this language, making it harder to evaluate the results — do we need
+warm-up for example? (I assume not.)
 
 The row for edge-detect in Table 2 seems to be broken. I suspect the T-Demands cell has lost a digit.
 
-It is clear from the benchmarks that graph construction has clear performance advantages over trace-based approaches, at least in this implementation. I was a little annoyed by using the most permissive ”SLA” for the results in Table 1 where graph-based is always slower and highlighting how both implementations always fit in this category whereas in Table 2 where graph-based is always faster, we talk about instantaneous. While this is all correct, it felt slightly fishy.
+It is clear from the benchmarks that graph construction has clear performance advantages over trace-based
+approaches, at least in this implementation. I was a little annoyed by using the most permissive ”SLA” for the
+results in Table 1 where graph-based is always slower and highlighting how both implementations always fit in
+this category whereas in Table 2 where graph-based is always faster, we talk about instantaneous. While this
+is all correct, it felt slightly fishy.
 
-I appreciated the discussion and analysis of the underlying reason for the performance results and it seems believable to me.
+I appreciated the discussion and analysis of the underlying reason for the performance results and it seems
+believable to me.
 
 
 # Minor
