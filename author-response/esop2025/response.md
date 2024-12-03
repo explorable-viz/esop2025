@@ -13,3 +13,7 @@ _Store semantics._ It does seem plausible that a notation suggestive of a store 
 make the heap-like allocation pattern more familiar -- thanks for the suggestion. We are planning to
 reimplement our current implementation with one that is explicitly imperative, so the intuition may actually
 end up reflecting the implementation.
+
+Reviewer B
+
+
