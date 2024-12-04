@@ -16,12 +16,15 @@ up being closer to the implementation.
 
 Reviewer B
 
-_Performance_.
-- notable delays -- explain these
-- potential optimisations
-  - start-up time: build graph imperatively
-  - hide internal nodes
-- scaling with program and data size
+_Performance, potential optimisations and scalability._ Fig. 2 demo is indeed sluggish for the _type_ column,
+which holds the value "Agriculture". Performance is snappy for the other columns, but unfortunately it is easy
+for the mouse to accidentally move into the _type_ column, which makes the whole example feel laggy. We have
+in mind a design which collapses parts of the graph (whilst preserving the overall fine-grained IO
+relationship) until the user needs information about specific interior vertices (perhaps those related to the
+execution of a particular function). The idea is alluded at the end of 7.1 (Future work), but given its
+relevance to the scalability question (which we agree also needs discussion), we will expand this a bit and
+move to the Performance discussion. The one-off (startup) cost is something we also hope to improve by
+building the graph imperatively, as discussed above.
 
 _Writing improvements._ These are good suggestions, which we will consider. On some specific points:
 
