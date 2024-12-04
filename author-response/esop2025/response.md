@@ -53,14 +53,13 @@ question; the Nested Relational Calculus (a quite different language, with multi
 similar treatment in Cheney et al [1], which provides some informal evidence that the same approach can
 support a wide variety of language features.
 
-_Warm-up._ Indeed, warm-up is not required in our implementation; the program is evaluated once to produce a
+_Warm-up._ Indeed, this is not required in our implementation; the program is evaluated once to produce a
 graph, which incurs a one-off cost, and then queries run on the graph.
 
 _Table 1 discussion._ We appreciate your point about our use of the more permissive performance band for the
 one-off (startup) overhead, where the graph is always slower. This is slightly artificial given that there are
-two cases where the trace-based approach stays within the middle (1000ms) band, where the graph approach does
-not. Although what we say is strictly correct, and all the information is in the table, it might be better to
-concede this point explicitly.
+two cases where the trace-based approach stays within the middle (1000ms) band, but the graph approach does
+not. It might be better to concede this point explicitly.
 
 [1] James Cheney, Amal Ahmed and Umut A. Acar. Provenance As Dependency Analysis (2018).
 https://arxiv.org/pdf/0708.2173
