@@ -1,5 +1,5 @@
 We thank our three reviewers for their useful feedback and suggestions for improving the paper. We address
-specific comments (C) of each reviewer below.
+specific comments of each reviewer below.
 
 Reviewer A
 
@@ -16,12 +16,15 @@ up being closer to the implementation.
 
 Reviewer B
 
-_Performance_.
-- notable delays -- explain these
-- potential optimisations
-  - start-up time: build graph imperatively
-  - hide internal nodes
-- scaling with program and data size
+_Performance, potential optimisations and scalability._ Fig. 2 demo is indeed sluggish for the _type_ column,
+which holds the value "Agriculture". Performance is snappy for the other columns, but unfortunately it is easy
+for the mouse to accidentally move into the _type_ column, which makes the whole example feel laggy. We have
+in mind a design which collapses parts of the graph (whilst preserving the overall fine-grained IO
+relationship) until the user needs information about specific interior vertices (perhaps those related to the
+execution of a particular function). The idea is alluded at the end of 7.1 (Future work), but given its
+relevance to the scalability question (which we agree also needs discussion), we will expand this a bit and
+move to the Performance discussion. The one-off (startup) cost is something we also hope to improve by
+building the graph imperatively, as discussed above.
 
 _Writing improvements._ These are good suggestions, which we will consider. On some specific points:
 
@@ -42,18 +45,24 @@ _Missing arrows in online demo_. Yes, these were only part of the figures in the
 drop shadows might actually be useful as a UI feature, perhaps for guiding a novice user through various UI
 features, but for now we will it clear that the arrows were added manually purely for the reader of the paper.
 
-_Syntax, names and abbreviations could be improved_
+_Syntax, names and abbreviations could be improved_. We will make a pass to see if there are any improvements
+we can make here; for example we could easily rename `suff` to `sufficesFor` and `demBy` to `demandedBy`
+without compromising the existing layout, so that seems like an easy win.
 
-_Possible limitations of this approach._
-- does dependency graph approach ”fall over” at some point, or require any specific co-design with programming
-language constructs?
+_Possible limitations of this approach._ We will include some more discussion of possible limitations,
+including potential scalability challenges (which would require some optimisation/design to address, as
+discussed in response to Reviewer B). Whether specific co-design with language constructs is needed a good
+question; the Nested Relational Calculus (a quite different language, with multisets) is given a somewhat
+similar treatment in Cheney et al [1], which provides some informal evidence that the same approach can
+support a wide variety of language features.
 
-_Running benchmarks 10 times each._
-- justification?
-- no warm-up (because graph created once, upfront)
+_Warm-up._ Indeed, this is not required in our implementation; the program is evaluated once to produce a
+graph, which incurs a one-off cost, and then queries run on the graph.
 
-We appreciate your point about using the more permissive performance band for the one-off (startup) overhead,
-where the graph is always slower. This is slightly artificial given that there are two cases where the
-trace-based approach stays within the middle (1000ms) band where the graph approach does not. Although what we
-do say is strictly correct, and all the information is in the table, it might be better to concede this point
-explicitly.
+_Table 1 discussion._ We appreciate your point about our use of the more permissive performance band for the
+one-off (startup) overhead, where the graph is always slower. This is slightly artificial given that there are
+two cases where the trace-based approach stays within the middle (1000ms) band, but the graph approach does
+not. It might be better to concede this point explicitly.
+
+[1] James Cheney, Amal Ahmed and Umut A. Acar. Provenance As Dependency Analysis (2018).
+https://arxiv.org/pdf/0708.2173
