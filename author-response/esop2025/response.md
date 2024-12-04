@@ -1,7 +1,7 @@
 We thank our three reviewers for their useful feedback and suggestions for improving the paper. We address
 specific comments of each reviewer below.
 
-Reviewer A
+# Reviewer A
 
 _Building and rebuilding of graph._ Your understanding is correct: the program is run once to generate the
 graph (which has as many nodes as there are partial values that arise during execution), and then queries happen
@@ -14,14 +14,14 @@ allocation pattern more familiar -- thanks for the suggestion. We are planning t
 interpreter with one that builds the graph in an explicitly imperative style, so this intuition may also end
 up being closer to the implementation in a future version.
 
-Reviewer B
+# Reviewer B
 
 _Performance, potential optimisations and scalability._ Fig. 2 demo is indeed sluggish for the _type_ column,
 which holds the value "Agriculture". Performance is snappy for the other columns, but unfortunately it is easy
 for the mouse to accidentally move into the _type_ column, which makes the whole example feel laggy. We have
 in mind a design which collapses parts of the graph (whilst preserving the overall fine-grained IO
 relationship) until the user needs information about specific interior vertices (perhaps those related to the
-execution of a particular function). The idea is alluded at the end of 7.1 (Future work), but given its
+execution of a particular function). The idea is alluded to at the end of 7.1 (Future work), but given its
 relevance to the scalability question (which we agree also needs discussion), we will expand this a bit and
 move to the Evaluation section. The one-off (startup) cost is something we also hope to improve by
 building the graph imperatively, as discussed above.
@@ -36,10 +36,9 @@ _Writing improvements._ These are good suggestions, which we will consider. On s
 2. _Algorithmic definition of defBy_. The reason for preferring the inductive derivation over pseudocode is
    simply that it allows the proof to proceed by induction, which would not be easy with pseudocode.
 
-Reviewer C
+# Reviewer C
 
-_Performance_. We would like to refer reviewer C to the discussion on performance of Fig. 2 above, since
-Reviewer B shared their concern.
+_Performance_. We would like to refer reviewer C to the discussion on performance of Fig. 2 above.
 
 _Missing arrows in online demo_. Yes, these were only part of the figures in the paper. Visual connectors with
 drop shadows might actually be useful as a UI feature, perhaps for guiding a novice user through various UI
