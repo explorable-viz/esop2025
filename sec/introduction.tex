@@ -18,22 +18,21 @@ these relationships, this requires substantial expertise, as well as valuable ti
 ``comprehension context'' in which we encountered the output in question.  These difficulties are compounded
 when the information presented draws on multiple data sources, such as medical
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
-multiple database tables~\citep{selinger79}. Even professional reviewers may lack the resources or inclination
-to embark on such an activity. Perhaps more often than we would like, we end up taking things on trust.
+multiple database tables~\citep{selinger79}. Perhaps more often than we would like, we end up taking things on trust.
 
 With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For digital
 media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
-``self-explanatory'' so they can reveal the relationship to the underlying data to an interested user.
+``self-explanatory'' revealing the relationship to the underlying data to an interested user.
 Consider the histogram in \figref{introduction:bremer} showing urban population growth in Asia over a 10-year
-period \cite{bremer15}. There are many questions a reader might have about what this chart represents --- in
+period \cite{bremer15}. There are many questions a reader might have about what this chart represents -- in
 other words, how visual elements map to underlying data. Do the points represent individual cities? What does
 the colour scheme indicate? Which of the points represent large cities or small cities? Legends and other
 accompanying text can help, but some ambiguities inevitably remain. The purpose of a visual summary after all
 is to present the big picture at the expense of certain detail.
 
 \citeauthor{bremer15}'s approach to this problem was to implement an interactive feature that allows a user to
-explore some of these provenance-related questions \emph{in situ}, i.e.~directly from the chart. By selecting
-an individual point, the user is able to bring up a view showing the data the point was calculated from. In
+explore some of these provenance-related questions \emph{in situ}, i.e.~directly from the chart. 
+Selecting an individual point shows the user a view of the data the point was calculated from. In
 the figure the highlighted point represents Chiang Mai, and shows that the plotted value of 10.9\% was derived
 from an increase in population density from 4,416 to 5,010 people per sq.~km. Features like these are valuable
 as comprehension aids, but are laborious to implement by hand and require the author to anticipate the queries
@@ -57,8 +56,8 @@ programming language, using execution traces to support bidirectional queries.
 The advantage of shifting the burden of implementing transparency features onto the language runtime is that
 the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
 the benefits are inherited automatically by end users, at no additional cost to the author. For example if
-some kind of formal guarantees are provided (perhaps that data selections are in some sense minimal and
-sufficient), then those can be proved once for the infrastructure rather for each bespoke implementation.
+formal guarantees (perhaps that data selections are in some sense minimal and
+sufficient) are provided, then those can be proved once for the infrastructure rather than for each bespoke implementation.
 
 In this paper, we propose a new bidirectional analysis framework for a general-purpose programming language,
 which supports fine-grained \emph{in situ} provenance queries, an end-user feature we call \emph{data
@@ -98,7 +97,7 @@ Our specific contributions are as follows:
 %outputs \emph{in situ}, i.e.~within the ``comprehension context'' in which these sorts of questions naturally
 %arise. Crucially, we want to make this feature automatic.
 
-\noindent These contributions are not available in previous work. In particular, although
+\noindent Although
 \citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, and
 \citet{perera22} support linked outputs in a general-purpose languages, ours is (to the best of our knowledge)
 the first implementation for a general-purpose language which is fast enough for interactive use. Other
