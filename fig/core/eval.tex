@@ -59,6 +59,20 @@
       }
       %
       \and
+      \inferrule*[
+         lab={\ruleName{$\evalS$-project}}
+      ]
+      {
+         \gamma, e, V, G \evalS \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}, G'
+      }
+      {
+         \gamma, \exRecProj{e}{y}, V, G
+         \evalS
+         u,
+         G'
+      }
+      %
+      \\
       %
       \inferrule*[lab={\ruleName{$\evalS$-constr}}
       , right={$\Sigma(c) = |\seq{e}|$}]
@@ -72,21 +86,6 @@
          \evalS
          \annConstr{c}{\seq{v}}{\alpha},
          G' \cup \inStar{V}{\alpha}
-      }
-      %
-      \and
-      %
-      \inferrule*[
-         lab={\ruleName{$\evalS$-project}}
-      ]
-      {
-         \gamma, e, V, G \evalS \annRec{\seq{\bind{x}{v}} \cons (\bind{y}{u})}{\alpha}, G'
-      }
-      {
-         \gamma, \exRecProj{e}{y}, V, G
-         \evalS
-         u,
-         G'
       }
       %
       \and
