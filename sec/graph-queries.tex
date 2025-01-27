@@ -68,7 +68,7 @@ connections~\cite{perera12a,perera16d,ricciotti17}.
 
 \begin{definition}[Galois connection]
    \label{def:conjugate:galois-connection}
-   Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
+   Suppose $A, B$ are partial orders, then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
    connection} iff
    \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
@@ -82,7 +82,7 @@ connections~\cite{perera12a,perera16d,ricciotti17}.
       \item $f$ and $\dual{g}$ form a Galois connection
    \end{enumerate}
 \end{proposition}
-
+%
 It is also useful (both for performance reasons and as a user feature) to consider the \emph{De Morgan duals}
 of $\demandsR$ and $\demandedByR$, which we write as $\sufficesR$ and $\preimageDualR$; these also form a
 conjugate pair.
@@ -104,7 +104,7 @@ conjugate pair.
       (dual preimage)
    \end{enumerate}
 \end{definition}
-
+%
 Bearing in mind that $\neg$ for $\powerset{X}$ is just relative complement $X \setminus \param$, it is easy to
 show that these are indeed the intended De Morgan duals.
 
@@ -172,7 +172,7 @@ $\demandedByR_{G}(X)$, is simply the subset of the outputs of $G$ reachable from
 Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
+We now show how to comput e$\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
 a dependence graph $G$, via an intermediate graph slice which we then restrict to its IO relation. First some
 graph notation:
 
@@ -188,8 +188,8 @@ relational converse.
 
 With the trace-based approaches mentioned in \secref{introduction}, one can use a given algorithm to implement
 its De Morgan dual; for example given a procedure for $\demandedByR_{G}$ we can compute $\sufficesR_{G}$ by
-pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting we can also use a given
-algorithm to compute its conjugate: for example given a procedure for $\demandedByR_{G}$, we can compute
+pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting, we can also use a given
+algorithm to compute its conjugate, e.g., given a procedure for $\demandedByR_{G}$, we can compute
 $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
 
 For efficiency, however, we give direct procedures both for $\demandedByR_{G}$
@@ -209,7 +209,7 @@ in-neighbours.
 \label{def:conjugate:algorithm:demandedBy}
 \figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for dependence graph $G$.
 \end{definition}
-
+%
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
 Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. The algorithm defers to an auxiliary operation
 $\demandedByV{}$, which takes a (partial) graph slice $H \subseteq G$, initially containing only the original
@@ -287,10 +287,10 @@ introduced in \secref{introduction}.
 
 \subsection{$\relInputR_G$ and $\relOutputR_G$ for Dependence Graphs}
 
-Now we can provide a formal account of the notions of linked inputs and linked outputs.
+Now we can provide a formal account of the notions of linked inputs and outputs.
 
 \begin{definition}[Linked inputs and outputs]
-   For a dependence graph $G$ define:
+   For a dependence graph $G$ let:
    \begin{enumerate}
       \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (linked inputs)
       \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (linked outputs)
