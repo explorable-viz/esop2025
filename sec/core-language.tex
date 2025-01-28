@@ -47,7 +47,7 @@ eliminators.
 The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
 the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
 function name $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
-$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function named by $f$ to
+$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function $f$ to
 $\seq{v}$ plus a dependence graph $G'$ which extends $G$ with information about how the result depends on
 $\seq{v}$.
 
@@ -55,9 +55,9 @@ $\seq{v}$.
 \label{sec:core:continuations}
 
 A \emph{continuation} $\kappa$ is a term $e$ or an eliminator $\sigma$, describing how an execution proceeds
-after a value is matched. An \emph{eliminator} is a deep pattern-matching construct based on
+after a value is matched. \emph{Eliminators} are a deep pattern-matching construct based on
 tries~\cite{hinze00,peytonjones2021}; for a language with rich structured values like records and data types,
-this makes for a cleaner presentation than a single shallow elimination form for each type. Piecewise function
+they make for a cleaner presentation than single shallow elimination forms for each type. Piecewise function
 definitions in the surface language desugar into eliminators.
 
 An eliminator specifies how values of a particular shape are matched, and for a given value, determines how

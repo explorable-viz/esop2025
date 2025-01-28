@@ -1,7 +1,7 @@
 \section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-We now turn to cognacy and ``co-cognacy'' queries over dependence graphs, which are expressed in terms of the
+We now turn to cognacy and ``co-cognacy'' queries over dependence graphs, expressed in terms of the
 $\demandsR$ and $\demandedByR$ operators introduced informally in \secref{overview}. Boolean algebras
 (\defref{conjugate:Boolean-algebra}) are used to represent selections; we then define $\demandsR$ and
 $\demandedByR$ and their De Morgan duals, first for an arbitrary relation (\secref{conjugate:image-preimage})
@@ -276,10 +276,11 @@ $\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. Using \lemref{conjugate:
 define a direct algorithm for $\demandsR_{G}$ from $\demandedByAlg{G}$ by simply flipping the graph, and the
 same can be done to acquire an algorithm for $\preimageDualR_{G}$ from $\sufficesAlg{G}$. Using
 \lemref{conjugate:image-preimage-duality} and \defref{conjugate:de-morgan-dual} we can also define alternative
-algorithms for all 4 operators using the De Morgan dual construction. All algorithms are summarised in
-\figref{conjugate:derivate-algorithms}.
+algorithms for all 4 operators using the De Morgan dual construction. 
+% All algorithms are summarised in
+% \figref{conjugate:derivate-algorithms}.
 
-\input{fig/conjugate/derived-algorithms}
+% \input{fig/conjugate/derived-algorithms}
 
 \noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations
 of $\demandedByR_{G}$, which is an essential component of the linked inputs and linked outputs operators
@@ -306,26 +307,26 @@ i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. Conversely for a set of outputs $Y \
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
-In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is inflationary; unputs which are not used anywhere
-are not preserved by the $\relInputR_{G}$ round-trip, and outputs which don't require any inputs are not
-preserved by the $\relOutputR_{G}$ round-trip. Thus in general we have neither $X' \subseteq
-\relInputR_{G}(X')$ nor $X' \subseteq \relOutputR_{G}(X')$. However if we constrain things so that there are
-no inputs which are unused, then $\demandsR_G$ will preserve $\bot$, i.e.~$\demandsR_G(\emptyset) =
-\emptyset$, and $\relOutputR_{G}$ will preserve the original output selection. Similarly, if we constrain
-things so that all outputs demand some input, then $\demandedByR_G$ will preserve $\bot$, and $\relInputR_{G}$
-will preserve the original input selection:
+% In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is inflationary; unputs which are not used anywhere
+% are not preserved by the $\relInputR_{G}$ round-trip, and outputs which don't require any inputs are not
+% preserved by the $\relOutputR_{G}$ round-trip. Thus in general we have neither $X' \subseteq
+% \relInputR_{G}(X')$ nor $X' \subseteq \relOutputR_{G}(X')$. However if we constrain things so that there are
+% no inputs which are unused, then $\demandsR_G$ will preserve $\bot$, i.e.~$\demandsR_G(\emptyset) =
+% \emptyset$, and $\relOutputR_{G}$ will preserve the original output selection. Similarly, if we constrain
+% things so that all outputs demand some input, then $\demandedByR_G$ will preserve $\bot$, and $\relInputR_{G}$
+% will preserve the original input selection:
 
-\begin{lemma}
-\item
-\begin{enumerate}
-   \item If $\demandedByR_G(\emptyset) = \emptyset$, then for all $X$ we have $\relInputR_{G}(X) \geq X$.
-   \item If $\demandsR_G(\emptyset) = \emptyset$, then for all $Y$ we have $\relOutputR_{G}(Y) \geq Y$.
-\end{enumerate}
-\end{lemma}
+% \begin{lemma}
+% \item
+% \begin{enumerate}
+%    \item If $\demandedByR_G(\emptyset) = \emptyset$, then for all $X$ we have $\relInputR_{G}(X) \geq X$.
+%    \item If $\demandsR_G(\emptyset) = \emptyset$, then for all $Y$ we have $\relOutputR_{G}(Y) \geq Y$.
+% \end{enumerate}
+% \end{lemma}
 
-As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
-an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
-showing inputs that are actually used in a program.
+% As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
+% an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
+% showing inputs that are actually used in a program.
 
 % \subsubsection{Focused queries}
 %
