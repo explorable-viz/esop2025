@@ -15,8 +15,8 @@ summaries is essential to making informed decisions.   However, most of the arte
 \emph{opaque}, inasmuch as they are unable to reveal anything about how they relate to the data they were
 derived from. Whilst one could in principle try to use the source code and data to reverse engineer some of
 these relationships, this requires substantial expertise, as well as valuable time spent away from the
-``comprehension context'' in which we encountered the output in question.  These difficulties are compounded
-when the information presented draws on multiple data sources, such as medical
+``comprehension context'' in which the output in question was encountered.  These difficulties are compounded
+when the information presented uses multiple data sources, such as medical
 meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
 multiple database tables~\citep{selinger79}. Perhaps more often than we would like, we end up taking things on trust.
 
@@ -51,7 +51,7 @@ can be supported automatically. For example, for an in-memory database engine, \
 describe how to ``backward trace'' from output selections to input selections, and then ``forward trace'' to
 find related output selections in other views, to support a popular feature from data visualisation called
 \emph{linked brushing}. \citet{perera22} implemented a similar system for a general-purpose functional
-programming language, using execution traces to support bidirectional queries.
+programming language, using execution traces for bidirectional queries.
 
 The advantage of shifting the burden of implementing transparency features onto the language runtime is that
 the author of the content can concentrate purely on data visualisation, and as the infrastructure improves,
@@ -80,11 +80,11 @@ Our specific contributions are as follows:
    \item \secref{conjugate} presents a new formal framework for bidirectional provenance queries over
       dependence graphs, formalising two operators over such graphs, $\demandsR$ (\emph{demands}) and
       $\demandedByR$ (\emph{demanded by}). We show these to be \emph{conjugate} in the sense
-      of~\citet{jonsson51}, and give procedures for computing $\demandsR$ and $\demandedByR$. We show how a
+      of~\citet{jonsson51}, and give procedures to compute $\demandsR$ and $\demandedByR$. We show how a
       novel cognacy operator $\relInputR$ called \emph{linked inputs}, relating inputs when they contribute to
-      common features of the output, can be obtained by composing $\demandsR$ and $\demandedByR$, and how a
+      common parts of the output, can be obtained by composing $\demandsR$ and $\demandedByR$, and how a
       dual \emph{linked outputs} operator $\relOutputR$, supporting the ``linked visualisations'' of prior
-      work \cite{psallidas18smoke,perera22}, is easily obtained by transposing the two operators.
+      work \cite{psallidas18smoke,perera22}, is obtained by transposing the two operators.
 
    \item \secref{evaluation} shows that our implementation performs better than one based on traces and
       bidirectional interpreters, the primary alternative implementation technique. Using usability metrics
@@ -100,9 +100,10 @@ Our specific contributions are as follows:
 \noindent Although
 \citet{psallidas18smoke} support fast queries for linked visualisations in a database setting, and
 \citet{perera22} support linked outputs in a general-purpose languages, ours is (to the best of our knowledge)
-the first implementation for a general-purpose language which is fast enough for interactive use. Other
-related work in database provenance, program slicing and data visualisation are discussed in
-\secref{related-work}.
+the first implementation for a general-purpose language which is fast enough for interactive use.
+\secref{related-work} discusses
+related work in database provenance, program slicing and data visualisation.
+
 
 \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 considered in this paper is purely extensional, and falls short of providing full explanations of how output
@@ -113,5 +114,5 @@ We implement our approach in a pure functional programming language called \OurL
 visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
 common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
 interactive selection and the data transparency queries introduced in the next section. Our implementation is
-open source and available online (given later in a deanonymised version). We also provide an anonymised web
+open source and available online. We also provide an anonymised web
 demo at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.

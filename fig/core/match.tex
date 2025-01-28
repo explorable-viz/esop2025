@@ -1,4 +1,4 @@
-\begin{figure}
+\begin{figure}[!b]
    {\small \flushleft \shadebox{$\seq{v}, \kappa \match \gamma, e, V$}\hfill
    \begin{smathpar}
       \inferrule*[
@@ -9,35 +9,6 @@
       }
       {
          \seqEmpty, e \match \envEmpty, e,  \emptyset
-      }
-      %
-      \and
-      %
-      \inferrule*[lab={\ruleName{$\match$-var}}]
-      {
-         \seq{v}, \kappa \match \gamma, e, V
-      }
-      {
-         v \cons \seq{v}, \elimVar{x}{\kappa}
-         \match
-         \gamma \cons (\bind{x}{v}), e, V
-      }
-      \\
-      \inferrule*[
-         lab={\ruleName{$\match$-record}}
-      ]
-      {
-         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
-         \\
-         \seq{u} \concat \seq{v}', \kappa
-         \match
-         \gamma, e, V
-      }
-      {
-         \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}',
-         \elimRecord{\seq{y}}{\kappa}
-         \match
-         \gamma, e, \alpha \cons V
       }
       %
       \and
@@ -54,8 +25,37 @@
          \match
          \gamma, e, \alpha \cons V
       }
+      \\
+      %
+      \inferrule*[lab={\ruleName{$\match$-var}}]
+      {
+         \seq{v}, \kappa \match \gamma, e, V
+      }
+      {
+         v \cons \seq{v}, \elimVar{x}{\kappa}
+         \match
+         \gamma \cons (\bind{x}{v}), e, V
+      }
+      \and
+      %
+      \inferrule*[
+         lab={\ruleName{$\match$-record}}
+      ]
+      {
+         \exRec{\seq{\bind{y}{u}}} \subseteq \exRec{\seq{\bind{x}{v}}}
+         \\
+         \seq{u} \concat \seq{v}', \kappa
+         \match
+         \gamma, e, V
+      }
+      {
+         \annot{\exRec{\seq{\bind{x}{v}}}}{\alpha} \cons \seq{v}',
+         \elimRecord{\seq{y}}{\kappa}
+         \match
+         \gamma, e, \alpha \cons V
+      }
    \end{smathpar}}
 \vspace{-0.5cm}
-\caption{Pattern-matching}
+\caption{Pattern matching}
 \label{fig:core:pattern-matching}
 \end{figure}
