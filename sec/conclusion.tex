@@ -3,7 +3,7 @@
 
 Visualisations are an essential tool for communicating science and other data-driven claims, but can be hard
 to make sense of and trust. Visualisations and other outputs that are ``transparent'' -- that can reveal to an
-interested reader how they are related to data -- are more informative and trustworthy, but are also difficult
+interested reader how they are related to data -- are more informative and trustworthy but are also difficult
 to produce. In this paper, we introduced a novel bidirectional program analysis framework for a
 general-purpose programming language that makes it easier to create transparent visualisations by shifting
 much of the burden to the language runtime. Relative to prior work based on execution traces and bidirectional
@@ -30,12 +30,12 @@ different contexts.
 Second, although the algorithms presented in \secref{conjugate} compute graph slices as an interim structure,
 the internal nodes of the graph slices are discarded. This is fine for the use cases in \secref{overview},
 which only concern ``extensional'' (IO) transparency. However, intensional information would be useful too:
-for example highlighting a point in the moving average in \figref{introduction:related-inputs} could show not
+for example, highlighting a point in the moving average in \figref{introduction:related-inputs} could show not
 only that 3 emissions inputs were relevant, but that those values were summed and divided by 3. This would
 connect to work on \emph{executable program slicing} \cite{field98}. One challenge here is managing the size
 and complexity of intensional explanations; again \citet{cheney11b} offer inspiration. Their idea of
 \textit{expression provenance} may be a way of presenting pared-back but still informative explanations (for
-example showing the tree of primitive arithmetic operations that computed a value, but omitting user-defined
+example, showing the tree of primitive arithmetic operations that computed a value but omitting user-defined
 function calls and branches). And the user may only want intensional information for certain subcomputations,
 in which case graph transformations which elide internal nodes but preserve IO connectivity, such as the
 Y-$\Delta$ transform \cite{truemper89}, may also have a role to play.
