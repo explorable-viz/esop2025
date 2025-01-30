@@ -6,7 +6,7 @@ one based on the dependence graph design described in \secrefTwo{core}{conjugate
 main alternative style of implementation, namely a
 bidirectional interpreter with two components: a forward evaluator which performs a forwards analysis and
 produces an execution trace, and a backward evaluator which consumes the execution trace and performs a
-backwards analysis~\cite{ricciotti17,psallidas18smoke,perera22}. Other \OurLang system components 
+backwards analysis~\cite{ricciotti17,psallidas18smoke,perera22}. Other \OurLang system components
 were shared by the two implementations, including the parser, desugaring and visualisation layers,
 and libraries.
 
@@ -16,9 +16,9 @@ interpreter in a manner that maintains bidirectionality --- a considerable effor
 algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
 language-agnostic and only have to be defined once.
 
-For a user, our hypothesis is that our approach has better performance than trace-based techniques.
-To test this, we wrote and evaluated a number benchmark programs taking
-examples from data analysis and data visualisation (\secref{evaluation:choice-of-examples} below).
+For a user, our hypothesis is that our approach has better performance than trace-based techniques. To test
+this, we evaluated a number benchmark programs taking examples from data analysis and data visualisation
+(\secref{evaluation:choice-of-examples} below).
 
 In an interactive system, performance plays a critical role in a user's experience. We therefore measured the
 following:
@@ -40,7 +40,7 @@ following:
 
 \noindent Ideally, interactive queries would stay as close as possible to the \emph{instantaneous} category
 (Q2 and Q3), and the time taken to evaluate programs (Q1) would stay within the limit for keeping a user's
-attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Google Chrome
+attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Chrome
 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We used PureScript as the host language.
 
 \subsubsection{Choice of examples}
