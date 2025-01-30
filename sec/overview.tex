@@ -8,6 +8,14 @@ methane emissions from agricultural sources under a global warming scenario call
 \figref{introduction:scatterplot} show changing non-renewable energy outputs and capacities for various
 countries, with source code in \figref{example:non-renewables:source}.
 
+\begin{figure}[t]
+   \centering
+   \includegraphics[width=0.95\textwidth]{fig/example/moving-average.png}
+   \caption{Data transparency: \emph{demanded by} ($\demandedByR$) and \emph{demands} ($\demandsR$) operators
+   link inputs that share common output dependencies.}
+   \label{fig:introduction:related-inputs}
+\end{figure}
+
 The key idea of a transparent visualisation is that the original data sources are kept around and can be
 viewed (when a user so requests) alongside the visualisation, and the user is then able to interact with both
 the data and the view to explore how they are related. Crucially the author of the visualisation does not to
@@ -21,20 +29,13 @@ on the left; only rows relevant to the chart are visible, with the other rows hi
 clarifies that only agricultural data is relevant, confirming the (informal) claim in the caption. The
 emissions values shown do contribute to the chart in some way, and the user can investigate this by
 interacting with individual entries. For example, moving their mouse over the number 104.69 highlights
-\emph{one} point in the projected emfissions curve, and \emph{three} points in the other curve, which plots the
-moving average (see Figure~\ref{fig:example:moving-average:source}) of the projected emissions. The provenance analysis which underpins this we write as
-$\demandedByR$ (``demanded by''), and here this tells us that 104.69 was needed to compute either the $x$ or
-$y$ coordinate (in this case just the $y$ coordinate) of the four highlighted points.
+\emph{one} point in the projected emissions curve, and \emph{three} points in the other curve, which plots
+the moving average (see Figure~\ref{fig:example:moving-average:source}) of the projected emissions. The
+provenance analysis which underpins this we write as $\demandedByR$ (``demanded by''), and here this tells us
+that 104.69 was needed to compute either the $x$ or $y$ coordinate (in this case just the $y$ coordinate) of
+the four highlighted points.
 
 \begin{figure}[t]
-   \centering
-   \includegraphics[width=0.95\textwidth]{fig/example/moving-average.png}
-   \caption{Data transparency: \emph{demanded by} ($\demandedByR$) and \emph{demands} ($\demandsR$) operators
-   link inputs that share common output dependencies.}
-   \label{fig:introduction:related-inputs}
-\end{figure}
-
-\begin{figure}
    \small
        {\lstinputlisting[language=Fluid]{fig/example/moving-average.fld}}
        \vspace{-0.5em}
@@ -69,6 +70,14 @@ The demands analysis $\demandsR$ reveals (also in green) the inputs needed to co
 coordinates of the selected point; this shows that the 2016 data for 4 countries was used, although it does
 not reveal how.
 
+\begin{figure}[t]
+   \centering
+   \includegraphics[width=0.98\textwidth]{fig/example/non-renewables.png}
+   \caption{Data transparency: \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$)
+   operators link outputs that share common input dependencies.}
+   \label{fig:introduction:scatterplot}
+\end{figure}
+
 \paragraph{4. Linked outputs.}
 
 Now that the inputs demanded by the output selection are determined, the $\demandedByR$ analysis runs
@@ -84,21 +93,10 @@ needed to compute the yellow segment. Overlaid on the persistent selection, this
 \kw{nuclearOut} column is needed to compute \emph{both} the IND bar segment \emph{and} the selected scatter
 plot point, explaining why the two output selections are linked.
 
-\begin{figure}[t]
-   \centering
-   \includegraphics[width=0.98\textwidth]{fig/example/non-renewables.png}
-   \caption{Data transparency: \emph{demands} ($\demandsR$) and \emph{demanded by} ($\demandedByR$)
-   operators link outputs that share common input dependencies.}
-   \label{fig:introduction:scatterplot}
-\end{figure}
-
-\begin{figure}[!h]
+\begin{figure}%[!h]
   \small
       {\lstinputlisting[language=Fluid]{fig/example/non-renewables.fld}}
       \vspace{-0.5em}
    \caption{Non-renewable energy source code}
    \label{fig:example:non-renewables:source}
 \end{figure}
-
-% dually
-% mediating input, mediating output
