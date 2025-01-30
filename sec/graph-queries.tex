@@ -194,12 +194,12 @@ $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
 
 For efficiency, however, we give direct procedures both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), which
-can then be used to derive implementations of the other operators (\figref{conjugate:derivate-algorithms}
-below). Each procedure factors through an auxiliary operation that computes a ``slice'' of the original graph,
-i.e.~a contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO
-relation without creating this intermediate graph, we anticipate use cases which will make use of the graph
-slice; these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip
-between $G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+can then be used to derive implementations of the other operators, as shown at the end of this section. Each
+procedure factors through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
+contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
+without creating this intermediate graph, we anticipate use cases which will make use of the graph slice;
+these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
+$G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
 in-neighbours.
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
@@ -276,11 +276,9 @@ $\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. Using \lemref{conjugate:
 define a direct algorithm for $\demandsR_{G}$ from $\demandedByAlg{G}$ by simply flipping the graph, and the
 same can be done to acquire an algorithm for $\preimageDualR_{G}$ from $\sufficesAlg{G}$. Using
 \lemref{conjugate:image-preimage-duality} and \defref{conjugate:de-morgan-dual} we can also define alternative
-algorithms for all 4 operators using the De Morgan dual construction. 
-% All algorithms are summarised in
-% \figref{conjugate:derivate-algorithms}.
+algorithms for all 4 operators using the De Morgan dual construction. These are summarised in the table below.
 
-% \input{fig/conjugate/derived-algorithms}
+\input{fig/conjugate/derived-algorithms}
 
 \noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations
 of $\demandedByR_{G}$, which is an essential component of the linked inputs and linked outputs operators
