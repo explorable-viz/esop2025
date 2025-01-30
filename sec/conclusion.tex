@@ -30,17 +30,14 @@ different contexts.
 Second, although the graph algorithms presented in \secref{conjugate} compute graph slices as an interim data
 structure, the internal nodes of the graph are eventually discarded. This is fine for the use cases in
 \secref{overview}, which only concern ``extensional'' (IO) transparency. However, intensional information
-would be highly informative too: if highlighting a point in the moving average in
+would be highly informative too: for example highlighting a point in the moving average in
 \figref{introduction:related-inputs} could show not only that three emissions inputs were relevant, but that
-those values were summed and then divided by three, then the chart alone would serve as a full
-``self-explanatory'' implementation of moving average.
-
-This would connect to work on \emph{executable program slicing} \cite{field98}, and there are substantial
-challenges that arise here as well: in particular, intensional explanations get potentially very large, so
-ways of reducing and managing their complexity will be important. Again \citet{cheney11b} offer inspiration:
-their idea of \textit{expression provenance} may be a way of presenting pared-back but still informative
-explanations (for example showing the tree of primitive arithmetic operations that computed a value, but
-omitting user-defined function calls and branches). And the user may only want intensional information for
-certain subcomputations, and would be happy with just IO relationships for others --- in which case graph
-transformations which elide internal nodes but preserve IO connectivity, such as the Y-$\Delta$ transform
-\cite{truemper89}, may also have a role to play.
+those values were summed and then divided by three. This would connect to work on \emph{executable program
+slicing} \cite{field98}. There are substantial challenges that arise here as well: in particular, intensional
+explanations get potentially very large, so ways of reducing and managing their complexity will be important.
+Again \citet{cheney11b} offer inspiration: their idea of \textit{expression provenance} may be a way of
+presenting pared-back but still informative explanations (for example showing the tree of primitive arithmetic
+operations that computed a value, but omitting user-defined function calls and branches). And the user may
+only want intensional information for certain subcomputations, and would be happy with just IO relationships
+for others --- in which case graph transformations which elide internal nodes but preserve IO connectivity,
+such as the Y-$\Delta$ transform \cite{truemper89}, may also have a role to play.
