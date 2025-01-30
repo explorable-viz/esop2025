@@ -97,15 +97,14 @@ accrues against vertices as the backwards analysis proceeds, with no separate jo
 
 \subsubsection{Q3: Implementations of Demanded By}
 
-\tableref{equivalent-impls} summarises various implementations of \textit{demanded by}. \textbf{T-DemBy} gives
-average times for the trace implementation; \textbf{G-DemBy} is the graph implementation using the
-$\demandedByAlg{}$ algorithm from \figref{conjugate:algorithms:demands}; \textbf{G-DemBy-Suff} is the graph
-approach using using the De Morgan dual of the $\sufficesAlg{}$ algorithm from
-\figref{conjugate:slicing:forward}. \textbf{S} is the speedup of \textbf{G-DemBy} compared to
-\textbf{T-DemBy}, and \textbf{S'} is the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}. As
-with the \textit{demands} benchmarks, we tend to make small selections, and so the dual of the
-$\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger subgraph
-than $\demandedByAlg{}$.
+\tableref{equivalent-impls} contrasts average times for the trace implementation \textit{demanded by}
+(\textbf{T-DemBy}) with times for the graph-based algorithm from \figref{conjugate:algorithms:demands} and the
+graph-based approach using using the De Morgan dual of the $\sufficesAlg{}$ algorithm from
+\figref{conjugate:slicing:forward} (\textbf{G-DemBy-Suff}). \textbf{S} is the speedup of \textbf{G-DemBy}
+compared to \textbf{T-DemBy}, and \textbf{S'} is the speedup of \textbf{G-DemBy-Suff} compared to
+\textbf{T-DemBy}. As with the \textit{demands} benchmarks, we tend to make small selections, and so the dual
+of the $\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger
+subgraph than $\demandedByAlg{}$.
 
 For all benchmarks, the graph $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs
 better than the other two approaches, with five of the graph benchmarks running instantaneously, as opposed to
