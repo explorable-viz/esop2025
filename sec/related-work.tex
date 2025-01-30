@@ -30,35 +30,35 @@ formal setting where we show these operators to be self-conjugate and related to
 
 \subsection{Galois Slicing}
 
-Although we do not consider program slices in the present work, our formal setting is closely related to
+Although we do not consider program slices here, our formal setting is closely related to bidirectional
 program slicing techniques based on Galois connections \cite{perera12a,perera16d,ricciotti17}. In these works,
-which use a bidirectional interpreter, the forward and backward directions of the interpreter correspond to
-our \emph{sufficiency} ($\sufficesR$) and \emph{demands} ($\demandsR$) queries. \citet{perera22} extended this
-approach to a setting where slices have complements, and showed how composing the backward analysis with the
-De Morgan dual of the forwards analysis can be used to implement linked brushing. As well as requiring a
-bidirectional interpreter, the main difficulty with this approach has been achieving interactive performance.
-Implementations have relied on a sequential execution trace, used in the forwards direction to ``replay'' the
-computation, propagating sufficiency information from inputs to outputs, and in the backwards direction to
-``rewind'' the computation, propagating demand from outputs to inputs. As discussed in \secref{evaluation},
-and in contrast to the graph approach presented here, this approach is overly sequential and unable to exploit
-the independence of some subcomputations that makes slicing useful in the first place.
+the forward and backward directions of the interpreter correspond to our \emph{sufficiency} ($\sufficesR$) and
+\emph{demands} ($\demandsR$) queries. \citet{perera22} extended this approach to a setting where slices have
+complements, and showed how composing the backward analysis with the De Morgan dual of the forwards analysis
+can be used to implement linked brushing. As well as requiring a bidirectional interpreter, the main
+difficulty with this approach has been achieving interactive performance. Implementations have relied on a
+sequential execution trace, used in the forwards direction to ``replay'' the computation, propagating
+sufficiency information from inputs to outputs, and in the backwards direction to ``rewind'' the computation,
+propagating demand from outputs to inputs. As discussed in \secref{evaluation}, and in contrast to the graph
+approach presented here, this approach is overly sequential and unable to exploit the independence of some
+subcomputations that makes slicing useful in the first place.
 
 \subsection{Linked Visualisations}
 
 The connection between visual selection (such as clicking or lasooing) and data ``selection'' has been
-explored in the data visualisation literature, leading to various techniques for inverting selections in
-visual space to obtain selections in the underlying data~\cite{north00, heer08}. There is also a substantial
-literature on linked brushing~\cite{becker87, livny97} as a way of connecting output selections via mediating
-data selections. Although this has long been recognised as an important visual tool, with \citet{roberts06}
-arguing it should be ubiquitous, there is relatively little work on general-purpose infrastructure to support
-it. For example Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to support
-linked brushing, but no mechanism for automatically propagating selections through arbitrary intervening
-queries; Glue \cite{beaumont13} is a powerful Python library for building linked visualisations for scientific
-applications, but the developer is responsible for specifying the relationships between data sets that unpin
-the linking. More infrastructural approaches to linked brushing \cite{north00,livny97,psallidas18smoke},
-similar in spirit to our work, have been developed mainly for relational languages. Relational languages are a
-promising direction in data visualisation, but general-purpose languages continue to be widely used too, so it
-is important to support linked brushing in this context as well.
+explored in the visualisation literature, leading to various techniques for inverting selections in visual
+space to obtain selections in the underlying data~\cite{north00, heer08}. There is also a literature on linked
+brushing~\cite{becker87, livny97} as a way of connecting output selections via mediating data selections.
+Although this has long been recognised as an important visual tool, with \citet{roberts06} arguing it should
+be ubiquitous, there is relatively little work on general-purpose infrastructure to support it. For example
+Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to support linked brushing,
+but no mechanism for automatically propagating selections through arbitrary intervening queries; Glue
+\cite{beaumont13} is a powerful Python library for building linked visualisations for scientific applications,
+but the developer is responsible for specifying the relationships between data sets that unpin the linking.
+More infrastructural approaches to linked brushing \cite{north00,livny97,psallidas18smoke}, similar in spirit
+to our work, have been developed mainly for relational languages. Relational languages are a promising
+direction in data visualisation, but general-purpose languages continue to be widely used too, so it is
+important to support linked brushing in this context as well.
 
 \subsection{Transparent research outputs}
 
