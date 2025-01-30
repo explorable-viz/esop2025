@@ -16,12 +16,10 @@ interpreter in a manner that maintains bidirectionality --- a considerable effor
 algorithms for computing $\demandsR_{G}$ and $\demandedByR_{G}$ (\figref{conjugate:algorithms}) are
 language-agnostic and only have to be defined once.
 
-For a user, our hypothesis is that our approach has better performance than trace-based techniques. To test
+For a user, our hypothesis is that our approach has better performance than trace-based techniques; to test
 this, we evaluated a number benchmark programs taking examples from data analysis and data visualisation
-(\secref{evaluation:choice-of-examples} below).
-
-In an interactive system, performance plays a critical role in a user's experience. We therefore measured the
-following:
+(\secref{evaluation:choice-of-examples} below). Because interactive performance plays a critical role for the
+user, we measured the following:
 
 \begin{itemize}
    \item Q1: Overhead of building a dependence graph versus building a trace;
@@ -38,8 +36,8 @@ following:
    \item 10000ms: limit to keep a user's attention on the system.
 \end{itemize}
 
-\noindent Ideally, interactive queries would stay as close as possible to the \emph{instantaneous} category
-(Q2 and Q3), and the time taken to evaluate programs (Q1) would stay within the limit for keeping a user's
+\noindent Ideally, interactive queries (Q2 and Q3) would stay as close as possible to the \emph{instantaneous}
+category, and the time taken to evaluate programs (Q1) would stay within the limit for keeping a user's
 attention. Expriments were timed on an Intel Core i7-10850H 2.70GHz with 16Gb of RAM, using Chrome
 121.0.6261.69 and JavaScript runtime V8 12.2.281.16. We used PureScript as the host language.
 
@@ -110,9 +108,9 @@ compared to \textbf{T-DemBy}, and column \textbf{S'} the speedup of \textbf{G-De
 of the $\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger
 subgraph than $\demandedByAlg{}$.
 
-For all benchmarks, the graph approach using the $\demandedByAlg{}$ algorithm in
-\figref{conjugate:algorithms:demands} performs better than the other two approaches, with five of the graph
-benchmarks running instantaneously, as opposed to only two for the trace approach.
+For all benchmarks, the graph $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs
+better than the other two approaches, with five of the graph benchmarks running instantaneously, as opposed to
+only two for the trace-based approach.
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
