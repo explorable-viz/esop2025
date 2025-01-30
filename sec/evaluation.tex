@@ -64,12 +64,11 @@ runtimes for that benchmark.
 
 \tableref{eval-SpdUps} compares the average time taken to evaluate a program in the graph approach
 (\textbf{G-Eval}) with the time taken in the trace-based approach (\textbf{T-Eval}). The ratio of graph-based
-to trace-based time is
-shown in the third column (\textbf{Eval-Slowdown}). Since building the graph involves maintaining a heap of
-allocated vertices, and we also build the inverse graph at the same time, we expect a larger overhead for the
-graph approach. As expected, we do see a higher overhead, being from 2.5x to 15x slower than their
-trace-based counterparts. For both approaches, program evaluation always stays within the limit to keep a
-user’s attention on the system (10000ms).
+to trace-based time is shown in the third column (\textbf{Eval-Slowdown}). Since building the graph involves
+maintaining a heap of allocated vertices, and we also build the inverse graph at the same time, we expect a
+larger overhead for the graph approach. As expected, we do see a higher overhead, being from 2.5x to 15x
+slower than their trace-based counterparts. For both approaches, program evaluation always stays within the
+limit to keep a user’s attention on the system (10000ms).
 
 {\small\input{fig/performance/eval-SpdUp.tex}}
 
@@ -96,17 +95,17 @@ accrues against vertices as the backwards analysis proceeds, with no separate jo
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{Q3: Various Implementations of Demanded By}
+\subsubsection{Q3: Implementations of Demanded By}
 
-\tableref{equivalent-impls} summarises various implementations of \textit{demanded by}. Column
-\textbf{T-DemBy} shows average times for the trace implementation, column \textbf{G-DemBy} shows the graph
-implementation using the $\demandedByAlg{}$ algorithm from \figref{conjugate:algorithms:demands}, and column
-\textbf{G-DemBy-Suff} shows the graph approach using using the De Morgan dual of the $\sufficesAlg{}$
-algorithm from \figref{conjugate:slicing:forward}. Column \textbf{S} shows the speedup of \textbf{G-DemBy}
-compared to \textbf{T-DemBy}, and column \textbf{S'} the speedup of \textbf{G-DemBy-Suff} compared to
-\textbf{T-DemBy}. As with the \textit{demands} benchmarks, we tend to make small selections, and so the dual
-of the $\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger
-subgraph than $\demandedByAlg{}$.
+\tableref{equivalent-impls} summarises various implementations of \textit{demanded by}. \textbf{T-DemBy} gives
+average times for the trace implementation; \textbf{G-DemBy} is the graph implementation using the
+$\demandedByAlg{}$ algorithm from \figref{conjugate:algorithms:demands}; \textbf{G-DemBy-Suff} is the graph
+approach using using the De Morgan dual of the $\sufficesAlg{}$ algorithm from
+\figref{conjugate:slicing:forward}. \textbf{S} is the speedup of \textbf{G-DemBy} compared to
+\textbf{T-DemBy}, and \textbf{S'} is the speedup of \textbf{G-DemBy-Suff} compared to \textbf{T-DemBy}. As
+with the \textit{demands} benchmarks, we tend to make small selections, and so the dual of the
+$\sufficesAlg{}$ (because it traverses a ``complement'' subgraph) potentially explores a much larger subgraph
+than $\demandedByAlg{}$.
 
 For all benchmarks, the graph $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs
 better than the other two approaches, with five of the graph benchmarks running instantaneously, as opposed to
