@@ -4,6 +4,14 @@
 Whether formulating national policy or making day-to-day decisions about our own lives, we increasingly rely
 on the charts, figures and text created by scientists and journalists. Interpreting these visual and textual
 summaries is essential to making informed decisions.   However, most of the artefacts we encounter are
+\emph{opaque}, inasmuch as they are unable to reveal anything about how they relate to the data they were
+derived from. Whilst one could in principle try to use the source code and data to reverse engineer some of
+these relationships, this requires substantial expertise, as well as valuable time spent away from the
+``comprehension context'' in which the output in question was encountered.  These difficulties are compounded
+when the information presented uses multiple data sources, such as medical
+meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
+multiple database tables~\citep{selinger79}. Perhaps more often than we would like, we end up taking things on
+trust.
 \begin{wrapfigure}{r}{0.53\textwidth}
    \centering
    \includegraphics[width=0.5\textwidth]{fig/example/bremer.png}
@@ -11,23 +19,15 @@ summaries is essential to making informed decisions.   However, most of the arte
    \vspace{-2mm}
    \label{fig:introduction:bremer}
 \end{wrapfigure}
-\noindent
-\emph{opaque}, inasmuch as they are unable to reveal anything about how they relate to the data they were
-derived from. Whilst one could in principle try to use the source code and data to reverse engineer some of
-these relationships, this requires substantial expertise, as well as valuable time spent away from the
-``comprehension context'' in which the output in question was encountered.  These difficulties are compounded
-when the information presented uses multiple data sources, such as medical
-meta-analyses~\citep{dersimonian86}, ensemble models in climate science~\citep{murphy04}, or queries that span
-multiple database tables~\citep{selinger79}. Perhaps more often than we would like, we end up taking things on trust.
-
-With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For digital
-media, other options are open to us. One way to improve things is to engineer visual artefacts to be more
-``self-explanatory'', revealing the relationship to the underlying data to an interested user.
-Consider the histogram in \figref{introduction:bremer} showing urban population growth in Asia over a decade~\cite{bremer15}. A reader might have many questions about what this chart represents -- in
-other words, how visual elements map to underlying data. Do the points represent individual cities? What does
-the colour scheme indicate? Which of the points represent large cities or small cities? Legends and other
-accompanying text can help, but some ambiguities inevitably remain. The purpose of a visual summary after all
-is to present the big picture at the expense of certain detail.
+\indent With traditional print media, a ``disconnect'' between outputs and underlying data is unavoidable. For
+digital media, other options are open to us. One way to improve things is to engineer visual artefacts to be
+more ``self-explanatory'', revealing the relationship to the underlying data to an interested user. Consider
+the histogram in \figref{introduction:bremer} showing urban population growth in Asia over a
+decade~\cite{bremer15}. A reader might have many questions about what this chart represents -- in other words,
+how visual elements map to underlying data. Do the points represent individual cities? What does the colour
+scheme indicate? Which of the points represent large cities or small cities? Legends and other accompanying
+text can help, but some ambiguities inevitably remain. The purpose of a visual summary after all is to present
+the big picture at the expense of certain detail.
 
 \citeauthor{bremer15}'s approach to this problem is an interactive feature that allows a user to
 explore some of these provenance-related questions \emph{in situ}, i.e.~directly from the chart.
@@ -103,7 +103,6 @@ the first implementation for a general-purpose language which is fast enough for
 \secref{related-work} discusses
 other related work in database provenance, program slicing and data visualisation.
 
-
 \secref{conclusion} wraps up with a discussion of some limitations. In particular, the sort of transparency
 considered in this paper is purely extensional, and falls short of providing full explanations of how output
 parts are related to input parts. We discuss more intensional forms of transparency in \secref{conclusion} and
@@ -113,5 +112,4 @@ We implement our approach in a pure functional programming language called \OurL
 visualisation expresses their chart as a pure function of the inputs, using a set of built-in data types for
 common visualisations; a d3.js front end automatically enriches the rendered outputs with support for
 interactive selection and the data transparency queries introduced in the next section. Our implementation is
-open source and available online. We also provide an anonymised web
-demo at \href{http://opencomputation.org/}{\textsf{http://opencomputation.org/}}.
+available at \href{https://github.com/explorable-viz/fluid}{\textsf{https://github.com/explorable-viz/fluid}}.
