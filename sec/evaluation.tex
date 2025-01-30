@@ -95,33 +95,30 @@ accrues against vertices as the backwards analysis proceeds, with no separate jo
 
 {\small\input{fig/performance/demands-SpdUp.tex}}
 
-\subsubsection{Q3: Implementations of Demanded By}
+\subsubsection{Q3: Demanded By}
 
 \tableref{equivalent-impls} contrasts average times for the trace implementation of \textit{demanded by}
 (\textbf{T-DemBy}) with the graph-based algorithm from \figref{conjugate:algorithms:demands}
-(\textbf{G-DemBy})
-and the graph-based approach using using the De Morgan dual of the $\sufficesAlg{}$ algorithm from
-\figref{conjugate:slicing:forward} (\textbf{G-DemBy-Suff}). \textbf{S} is the speedup of \textbf{G-DemBy}
-compared to \textbf{T-DemBy}, and \textbf{S'} is the speedup of \textbf{G-DemBy-Suff} compared to
-\textbf{T-DemBy}. Again, we tend to make small selections, and so the dual of $\sufficesAlg{}$ (because it
-traverses a ``complement'' subgraph) potentially explores a much larger subgraph than $\demandedByAlg{}$.
-
-For all benchmarks, the graph $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs
-better than the other two approaches, with five of the graph benchmarks running instantaneously, as opposed to
-only two for the trace-based approach.
+(\textbf{G-DemBy}) and the graph-based approach using using the De Morgan dual of the $\sufficesAlg{}$
+algorithm from \figref{conjugate:slicing:forward} (\textbf{G-DemBy-Suff}). \textbf{S} is the speedup of
+\textbf{G-DemBy} compared to \textbf{T-DemBy}, and \textbf{S'} is the speedup of \textbf{G-DemBy-Suff}
+compared to \textbf{T-DemBy}. Again, because our selections are small, the dual of $\sufficesAlg{}$, which
+traverses a ``complement'' subgraph, potentially explores a much larger subgraph than $\demandedByAlg{}$. For
+all benchmarks, the graph $\demandedByAlg{}$ algorithm in \figref{conjugate:algorithms:demands} performs
+better than the other two approaches, with five benchmarks running instantaneously, as opposed to only two for
+the trace-based approach.
 
 {\small\input{fig/performance/equivalent-impls.tex}}
 
 \subsubsection{Discussion}
 
-When comparing the graph and trace approaches, we observe that the main shortcoming of the graph approach is
-the increased cost of evaluating a program to a graph versus a trace (\textit{Q1}). We propose that this
-overhead is worth paying; the graph need only be constructed once, and evaluation time still remains within
-the limit for keeping the user's attention on the system. More importantly, the fast response times for
-\textit{demands} and \textit{demanded by} compared to the trace approach (Q2 and Q3) are good enough for
-instantaneous queries. Also notable (for Q3), is the performance of \textbf{G-DemBy-Suff}, which uses the dual
-of the $\sufficesAlg{}$ algorithm, and which tends to perofmr significantly worse than \textbf{G-DemBy}. This
-can perhaps be explained by the fact that our selections are small: since the selection is complemented, and
-the portion of the graph that the algorithm traverses is in geneneral much larger. It is also plausible that
-some of this disparity can be explained by $\sufficesAlg{}$ requiring more book-keeping than
-$\demandedByAlg{}$.
+When comparing the graph and trace approaches, the main shortcoming of the graph approach is the increased
+cost of evaluating a program to a graph versus a trace (\textit{Q1}). We propose that this overhead is worth
+paying; the graph is only constructed once, and evaluation time still remains within the limit for keeping the
+user's attention. More importantly, the fast response times for \textit{demands} and \textit{demanded by}
+compared to the trace approach (Q2 and Q3) are good enough for instantaneous queries. Also notable (for Q3),
+is the performance of \textbf{G-DemBy-Suff}, which uses the dual of the $\sufficesAlg{}$ algorithm, and which
+tends to perofmr significantly worse than \textbf{G-DemBy}. This can perhaps be explained by the fact that our
+selections are small: since the selection is complemented, and the portion of the graph that the algorithm
+traverses is in geneneral much larger. It is also plausible that some of this disparity can be explained by
+$\sufficesAlg{}$ requiring more book-keeping than $\demandedByAlg{}$.
