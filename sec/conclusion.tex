@@ -3,7 +3,7 @@
 
 Visualisations are an essential tool for communicating science and other data-driven claims, but can be hard
 to make sense of and trust. Visualisations and other outputs that are ``transparent'' -- that can reveal to an
-interested reader how they are related to data -- are more informative and trustworthy but are also difficult
+interested reader how they are related to data -- are more informative and trustworthy but are also more difficult
 to produce. In this paper, we introduced a novel bidirectional program analysis framework for a
 general-purpose programming language that makes it easier to create transparent visualisations by shifting
 much of the burden to the language runtime. Relative to prior work based on execution traces and bidirectional
@@ -20,7 +20,7 @@ dependence graph semantics in \secref{core} omits certain intuitively plausible 
 \emph{projection} edge that one might expect to exist between a record and the value of a contained field as a
 consequence of evaluating a field access expression $\exRecProj{e}{x}$. On the other hand, recording
 \emph{all} structural dependencies of this nature would significantly bloat the dependence graph with
-information that is only relevant in certain contexts (for example when one is specifically concerned with
+information that is only relevant in certain contexts (for example, when one is specifically concerned with
 where a value came from, rather than how it was computed). We would like to develop a more semantically
 justified dependence graph, along with a proof that the graph is ``complete'' in some formal sense (cf.~the
 \emph{dependency correctness} notion of \citet{cheney11b}), but anticipate that making this richer graph
@@ -28,7 +28,7 @@ practical will require distinguishing different kinds of query (e.g.~``how'' vs.
 different contexts.
 
 Second, although the algorithms presented in \secref{conjugate} compute graph slices as an interim structure,
-the internal nodes of the graph slices are discarded. This is fine for the use cases in \secref{overview},
+the internal nodes of the graph slices are discarded. This is adequate for the use cases in \secref{overview},
 which only concern ``extensional'' (IO) transparency. However, intensional information would be useful too:
 for example, highlighting a point in the moving average in \figref{introduction:related-inputs} could show not
 only that 3 emissions inputs were relevant, but that those values were summed and divided by 3. This would
