@@ -31,23 +31,22 @@ x$ to mean $X \disjunion \set{x}$.
 
 \figref{syntax} defines expressions $e$ of the language, which include variables $x$, integer constants $n$,
 let-bindings $\exLet{x}{e}{e'}$, record construction $\exRec{\seq{\bind{x}{e}}}$, record projection
-$\exRecProj{e}{x}$ and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over
-data constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to
-arities $\datatype{c} \in \mathbb{N}$. Function application has two forms: the usual $\exApp{e}{e'}$ and
-(saturated) \emph{foreign function} application $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below).
-Lastly, expressions include anonymous functions $\exFun{\sigma}$, where $\sigma$ is a pattern-matching
-construct called an \emph{eliminator} (\secref{core:continuations}), and sets of mutually recursive
-functions $\exLetRecElim{\rho}{e}$, where $\rho$ is a finite map $\seq{\bind{x}{\sigma}}$ from names to
-eliminators.
+$\exRecProj{e}{x}$ and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data
+constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to arities
+$\datatype{c} \in \mathbb{N}$. Function application has two forms: the usual $\exApp{e}{e'}$ and (saturated)
+\emph{foreign function} application $\exForeignApp{f}{\seq{e}}$ (described below). Lastly, expressions include
+anonymous functions $\exFun{\sigma}$, where $\sigma$ is a pattern-matching construct called an
+\emph{eliminator} (\secref{core:continuations}), and sets of mutually recursive functions
+$\exLetRecElim{\rho}{e}$, where $\rho$ is a finite map $\seq{\bind{x}{\sigma}}$ from names to eliminators.
 
 %\subsubsection{Foreign functions}
 %\label{sec:core:foreign}
 
-The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
+The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
+the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
 function name $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
-$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function $f$ to
-$\seq{v}$ plus a dependence graph $G'$ which extends $G$ with information about how the result depends on
-$\seq{v}$.
+$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function $f$ to $\seq{v}$ plus
+a dependence graph $G'$ which extends $G$ with information about how the result depends on $\seq{v}$.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
@@ -172,7 +171,7 @@ graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. 
 in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign applications
 $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an application of $f$
 to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and extended dependence graph $G'$
-(\secref{core:foreign}).
+(\secref{core:expressions}).
 
 The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, and rely on the
 auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of \figref{core:eval}.
