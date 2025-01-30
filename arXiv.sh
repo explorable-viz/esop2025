@@ -21,12 +21,12 @@ zip -d $NAME \*.gitmodules
 zip -d $NAME \*.purs-repl
 zip -d $NAME $FOLDER/appendix.tex
 zip -d $NAME $FOLDER/main-full.tex
-zip -d $NAME $FOLDER/main.tex
-zip -d $NAME $FOLDER/paper.tex
+# zip -d $NAME $FOLDER/main.tex
+# zip -d $NAME $FOLDER/paper.tex
 zip -d $NAME $FOLDER/inductive-graphs.tex
 zip -d $NAME $FOLDER/author-response/\*
 zip -d $NAME $FOLDER/Benchmarks/\*
-zip -d $NAME $FOLDER/tex-common/bib.bib
+# zip -d $NAME $FOLDER/tex-common/bib.bib
 zip -d $NAME $FOLDER/.git/\*
 zip -d $NAME $FOLDER/venv/\*
 zip -d $NAME $FOLDER/mechanisation/\*
