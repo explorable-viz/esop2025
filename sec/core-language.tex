@@ -179,10 +179,10 @@ to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and e
 The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, and rely on the
 auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of \figref{core:eval}.
 This judgement takes a set $\rho$ of recursive definitions, vertex set $V$ and dependence graph $G$, and
-returns an environment $\gamma'$ of closures derived from $\rho$ and extended dependence graph $G$. Each
+returns an environment $\gamma'$ of closures derived from $\rho$ and extended dependence graph $G'$. Each
 function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$
 capturing $\gamma$ and $\rho$, with fresh address ${\alpha_i}$, and extends the dependence graph with a set of
-edges from $V$ to $\alpha$.
+edges from $V$ to $\alpha_i$.
 
 The evaluation rule for $\exLetRec{\rho}{e}$ is similar to the rule for regular let-bindings, except for using
 $\closeDefs$ to build a set of closures $\gamma'$ which extends $\gamma$. Finally, the rule for
