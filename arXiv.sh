@@ -2,12 +2,15 @@
 set -xe
 
 NAME=arXiv.zip
-TARGET=arXiv
+TARGET=main
 FOLDER=esop2025
 ARCHIVE="../$NAME"
 
 pdflatex $TARGET
-biber $TARGET
+bibtex $TARGET
+pdflatex $TARGET
+pdflatex $TARGET
+
 rm -f $TARGET.aux $TARGET.dvi $TARGET.log $TARGET.blg $TARGET.out $TARGET.pag $TARGET.cb $TARGET.cb2 $TARGET.toc $TARGET.bcf $TARGET.run.xml
 
 # pushd ..
