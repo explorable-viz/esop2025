@@ -2,10 +2,10 @@
 \label{sec:core}
 
 We start by introducing a calculus for transparent outputs, which is the core of \OurLang. The core language
-is fairly expressive, supporting deep pattern-matching and mutual recursion; however \OurLang also provides a
-surface syntax that desugars into the core, providing piecewise function definitions, list comprehensions and
-other conveniences, as shown in \figrefTwo{example:moving-average:source}{example:non-renewables:source},
-which would otherwise complicate the core.
+supports deep pattern-matching and mutual recursion. \OurLang also provides a surface syntax that desugars
+into the core, providing piecewise function definitions, list comprehensions and other conveniences, as shown
+in \figrefTwo{example:moving-average:source}{example:non-renewables:source}, which would otherwise complicate
+the core.
 
 The term syntax of the core language (\secref{core:syntax}) is uncontroversial: it is pure and untyped, and
 provides datatypes, records and matrices (although we omit a presentation of matrices here). The syntax of
@@ -32,32 +32,30 @@ x$ to mean $X \disjunion \set{x}$.
 
 \figref{syntax} defines expressions $e$ of the language, which include variables $x$, integer constants $n$,
 let-bindings $\exLet{x}{e}{e'}$, record construction $\exRec{\seq{\bind{x}{e}}}$, record projection
-$\exRecProj{e}{x}$, and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over
-data constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to constructor
-arities $\datatype{c} \in \mathbb{N}$. Function application comes in two forms: the usual $\exApp{e}{e'}$, and
-(saturated) \emph{foreign function} applications $\exForeignApp{f}{\seq{e}}$ (\secref{core:foreign} below).
-The final two expression forms are anonymous functions $\exFun{\sigma}$, where $\sigma$ is a pattern-matching
-construct called an \emph{eliminator} (\secref{core:continuations} below), and sets of mutually recursive
-functions $\exLetRecElim{\rho}{e}$, where $\rho$ is a finite map $\seq{\bind{x}{\sigma}}$ from names to
-eliminators.
+$\exRecProj{e}{x}$ and (saturated) constructor expressions $\exConstr{c}{\seq{e}}$, where $c$ ranges over data
+constructors. The language is parameterised by a finite map $\Sigma$ from constructors $c$ to arities
+$\datatype{c} \in \mathbb{N}$. Function application has two forms: the usual $\exApp{e}{e'}$ and (saturated)
+\emph{foreign function} application $\exForeignApp{f}{\seq{e}}$ (described below). Lastly, expressions include
+anonymous functions $\exFun{\sigma}$, where $\sigma$ is a pattern-matching construct called an
+\emph{eliminator} (\secref{core:continuations}), and sets of mutually recursive functions
+$\exLetRecElim{\rho}{e}$, where $\rho$ is a finite map $\seq{\bind{x}{\sigma}}$ from names to eliminators.
 
-\subsubsection{Foreign functions}
-\label{sec:core:foreign}
+%\subsubsection{Foreign functions}
+%\label{sec:core:foreign}
 
 The language is also parameterised by a finite map $\Phi$ from variables $f$ to arities $\Phi(f) \in \Nat$ of
 the foreign function they denote. For the graph semantics in \secref{core:semantics} below, every foreign
 function name $f$ is required to provide an interpretation $\interpret{f}$ that, for a sequence of arguments
-$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function named by $f$ to
-$\seq{v}$ plus a dependence graph $G'$ which extends $G$ with information about how the result depends on
-$\seq{v}$.
+$\seq{v}$ and dependence graph $G$, returns the result of applying the foreign function $f$ to $\seq{v}$ plus
+a dependence graph $G'$ which extends $G$ with information about how the result depends on $\seq{v}$.
 
 \subsubsection{Continuations and eliminators}
 \label{sec:core:continuations}
 
 A \emph{continuation} $\kappa$ is a term $e$ or an eliminator $\sigma$, describing how an execution proceeds
-after a value is matched. An \emph{eliminator} is a deep pattern-matching construct based on
+after a value is matched. \emph{Eliminators} are a deep pattern-matching construct based on
 tries~\cite{hinze00,peytonjones2021}; for a language with rich structured values like records and data types,
-this makes for a cleaner presentation than a single shallow elimination form for each type. Piecewise function
+they make for a cleaner presentation than single shallow elimination forms for each type. Piecewise function
 definitions in the surface language desugar into eliminators.
 
 An eliminator specifies how values of a particular shape are matched, and for a given value, determines how
@@ -124,24 +122,25 @@ Write $\inStar{V}{\alpha}$ as shorthand for the star graph $(\set{\alpha} \disju
 \subsubsection{Pattern matching}
 \label{sec:core:semantics:pattern-matching}
 
+Evaluation relies on pattern matching, which is defined by a separate judgement form,
+computing a vertex set.
 \figref{core:pattern-matching} defines the pattern-matching judgement $\seq{v}, \kappa \match \gamma, e, V$.
 Rather than matching a single value $v$, the judgement matches a ``stack'' of values $\seq{v}$ against a
 continuation $\kappa$, returning the selected branch $e$, an environment $\gamma$ providing bindings for the
 free variables of $e$, and the set $V$ of addresses found in the matched portions of $\seq{v}$.
 
 A continuation which is just an expression $e$ matches only the empty stack of values
-(\ruleName{$\match$-done}), in which case pattern-matching is complete and $e$ is the selected branch. The
-other rules require an \emph{eliminator} $\sigma$ as the continuation and a non-empty stack $v \cons \seq{v}$;
+(\ruleName{$\match$-done}), in which case pattern-matching is complete and $e$ is the selected branch. Other rules require an \emph{eliminator} $\sigma$ as the continuation and a non-empty stack $v \cons \seq{v}$;
 any relevant subvalues of $v$ are unpacked and pushed onto the tail $\seq{v}$ and then recursively matched
 using the continuation $\kappa$ selected from $\sigma$. A variable eliminator $\elimVar{x}{\kappa}$ pops $v$
 off the stack, using $\kappa$ to recurse (\ruleName{$\match$-var}); no part of $v$ is consumed so the
-addresses $V$ consumed by the recursive match is returned unmodified. A record eliminator
+addresses $V$ consumed by the recursive match are returned unmodified. A record eliminator
 $\elimRecord{\seq{y}}{\kappa}$ matches a record of the form $\annot{\exRec{\seq{\bind{x}{v}}}}{\alpha}$ as
-long as the variables in $\seq{y}$ are also fields in $\seq{x}$, argumenting $V$ with the address $\alpha$
+long as the variables in $\seq{y}$ are also fields in $\seq{x}$, augmenting $V$ with the address $\alpha$
 associated with the record (\ruleName{$\match$-record}); the premise $\exRec{\seq{\bind{y}{u}}} \subseteq
 \exRec{\seq{\bind{x}{v}}}$ projects out the corresponding values of $\seq{u}$ from $\seq{v}$. Lastly, a
 constructor eliminator $(\elimBind{c}{\kappa})$ matches any constructor value of the form
-$\annot{\exConstr{c}{\seq{v}}}{\alpha}$, argumenting $V$ with the address $\alpha$ associated with the
+$\annot{\exConstr{c}{\seq{v}}}{\alpha}$, augmenting $V$ with the address $\alpha$ associated with the
 constructor (\ruleName{$\match$-constr}).
 
 \subsubsection{Evaluation}
@@ -154,8 +153,8 @@ changes whenever a function application is evaluated.
 
 The evaluation rule for variables is fairly standard; the dependence graph is returned unmodified, because no
 new addresses are allocated as a result of simply looking up a variable. The rule for record projections
-$\exRecProj{e}{y}$ is similar: if $e$ evalutes to a record of the form $\annRec{\seq{\bind{x}{v}} \cons
-(\bind{y}{u})}{\alpha}$, then $\exRecProj{e}{y}$ evalutes to the value $u$ of field $y$, discarding the
+$\exRecProj{e}{y}$ is similar: if $e$ evaluates to a record of the form $\annRec{\seq{\bind{x}{v}} \cons
+(\bind{y}{u})}{\alpha}$, then $\exRecProj{e}{y}$ evaluates to the value $u$ of field $y$, discarding the
 address $\alpha$ of the record.
 
 Introduction rules, such as for integers, functions, records and constructors, follow the pattern of
@@ -169,24 +168,24 @@ environment $\gamma$ and using $\envEmpty$ as the set of mutually recursive defi
 function, and again establishing dependency edges from $V$ to $\alpha_i$.
 
 Rules which involve recursively evaluating subterms thread the graph under construction through the evaluation
-of the subterms. For example the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom
-of \figref{core:eval}), evalutes each $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i$ and dependence
+of the subterms. For example, the auxiliary evaluation relation $\gamma, \seq{e}, V \evalS \seq{v}, G$ (bottom
+of \figref{core:eval}), evaluates each $e_i$ in a sequence of terms $\seq{e}$ to a value $v_i$ and dependence
 graph $G_{i + 1}$, which is used as the input graph for evaluating $e_{i + 1}$. We make use of this judgement
 in the rules for records $\exRec{\seq{\bind{x}{e}}}$, constructors $c(\seq{e})$, and foreign applications
 $f(\seq{e})$; in the last rule, $\hat{f}$ is the foreign implementation that evaluates an application of $f$
 to a sequence of values $\seq{v}$ and dependence graph $G$ to a result $v$ and extended dependence graph $G'$
-(\secref{core:foreign}).
+(\secref{core:expressions}).
 
 The rules for $\exLet{x}{e}{e'}$ and application $\exApp{e}{e'}$ may involve mutual recursion, and rely on the
 auxiliary relation $\gamma, \rho, V, G \closeDefs \gamma', G'$  defined at the bottom of \figref{core:eval}.
 This judgement takes a set $\rho$ of recursive definitions, vertex set $V$ and dependence graph $G$, and
-returns an environment $\gamma'$ of closures derived from $\rho$ and extended dependence graph $G$. Each
+returns an environment $\gamma'$ of closures derived from $\rho$ and extended dependence graph $G'$. Each
 function definition $\rho(x_i) \in \rho$ generates a new closure $(\gamma, \rho, \rho(x_i))_{\alpha_i}$
 capturing $\gamma$ and $\rho$, with fresh address ${\alpha_i}$, and extends the dependence graph with a set of
-edges from $V$ to $\alpha$.
+edges from $V$ to $\alpha_i$.
 
 The evaluation rule for $\exLetRec{\rho}{e}$ is similar to the rule for regular let-bindings, except for using
-$\closeDefs$ to build a set of closures $\gamma'$ which is used to extend $\gamma$. Finally, the rule for
+$\closeDefs$ to build a set of closures $\gamma'$ which extends $\gamma$. Finally, the rule for
 $\exApp{e}{e'}$ is notable because this is where the active function context changes and the ambient $V$ is
 discarded. We compute the closure $\annClosure{\gamma_1}{\rho}{\sigma}{\alpha}$ from $e$ and the argument $v'$
 from $e'$, and then use $\sigma$ to match $v'$. If pattern-matching returns selected branch $e^\twoPrime$,
@@ -201,7 +200,7 @@ new active function context.
 \figref{core:mavg} shows part of the dependence graph for the moving average example in
 \figrefTwo{introduction:related-inputs}{example:moving-average:source}. The graph shows the calculation of the
 first 3 points in the moving average plot from entries in the \emph{emissions} table. This is a simplified
-version of the graph, since in practise they get very large; for example we omit closures, list cells and the
+version of the graph, since in practice they get very large; for example, we omit closures, list cells and the
 calculation of the divisors. Also note that the node labels here are merely illustrative: the graph only
 stores value dependencies, and in particular the in-neighbours of a vertex are unordered.
 

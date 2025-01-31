@@ -3,7 +3,7 @@
 
 Visualisations are an essential tool for communicating science and other data-driven claims, but can be hard
 to make sense of and trust. Visualisations and other outputs that are ``transparent'' -- that can reveal to an
-interested reader how they are related to data -- are more informative and trustworthy, but are also difficult
+interested reader how they are related to data -- are more informative and trustworthy but are also more difficult
 to produce. In this paper, we introduced a novel bidirectional program analysis framework for a
 general-purpose programming language that makes it easier to create transparent visualisations by shifting
 much of the burden to the language runtime. Relative to prior work based on execution traces and bidirectional
@@ -12,35 +12,35 @@ a single evaluator that builds a dependence graph, and a pair of language-agnost
 algorithms. We also showed an overall performance improvement for provenance queries, at the cost of some
 overhead in building the dependence graph.
 
-\subsection{Future work}
-\label{sec:future}
+%\paragraph{Future work}
+%\label{sec:future}
 
 We identify two important directions for future work. First, the dependency relation captured by the
 dependence graph semantics in \secref{core} omits certain intuitively plausible edges, such as the
 \emph{projection} edge that one might expect to exist between a record and the value of a contained field as a
 consequence of evaluating a field access expression $\exRecProj{e}{x}$. On the other hand, recording
 \emph{all} structural dependencies of this nature would significantly bloat the dependence graph with
-information that is only relevant in certain contexts (for example when one is specifically concerned with
+information that is only relevant in certain contexts (for example, when one is specifically concerned with
 where a value came from, rather than how it was computed). We would like to develop a more semantically
 justified dependence graph, along with a proof that the graph is ``complete'' in some formal sense (cf.~the
-\emph{dependency correctness} notion of \citet{cheney11b}), but anticipate that making this richer graph
-practical will require distinguishing different kinds of query (e.g.~``how'' vs.~``where from'') for use in
-different contexts.
+\emph{dependency correctness} notion of Cheney et al.~\cite{cheney11b}), but anticipate that making this
+richer graph practical will require distinguishing different kinds of query (e.g.~``how'' vs.~``where from'')
+for use in different contexts.
 
-Second, although the graph algorithms presented in \secref{conjugate} compute graph slices as an interim data
-structure, the internal nodes of the graph are eventually discarded. This is fine for the use cases in
-\secref{overview}, which only concern ``extensional'' (IO) transparency. However, intensional information
-would be highly informative too: if highlighting a point in the moving average in
-\figref{introduction:related-inputs} could show not only that three emissions inputs were relevant, but that
-those values were summed and then divided by three, then the chart alone would serve as a full
-``self-explanatory'' implementation of moving average.
+Second, although the algorithms presented in \secref{conjugate} compute graph slices as an interim structure,
+the internal nodes of the graph slices are discarded. This is adequate for the use cases in \secref{overview},
+which only concern ``extensional'' (IO) transparency. However, intensional information would be useful too:
+for example, highlighting a point in the moving average in \figref{introduction:related-inputs} could show not
+only that 3 emissions inputs were relevant, but that those values were summed and divided by 3. This would
+connect to work on \emph{executable program slicing} \cite{field98}. One challenge here is managing the size
+and complexity of intensional explanations; again Cheney et al.~\cite{cheney11b} offer inspiration. Their idea
+of \textit{expression provenance} may be a way of presenting pared-back but still informative explanations
+(for example, showing the tree of primitive arithmetic operations that computed a value but omitting
+user-defined function calls and branches). And the user may only want intensional information for certain
+subcomputations, in which case graph transformations which elide internal nodes but preserve IO connectivity,
+such as the Y-$\Delta$ transform \cite{truemper89}, may also have a role to play.
 
-This would connect to work on \emph{executable program slicing} \cite{field98}, and there are substantial
-challenges that arise here as well: in particular, intensional explanations get potentially very large, so
-ways of reducing and managing their complexity will be important. Again \citet{cheney11b} offer inspiration:
-their idea of \textit{expression provenance} may be a way of presenting pared-back but still informative
-explanations (for example showing the tree of primitive arithmetic operations that computed a value, but
-omitting user-defined function calls and branches). And the user may only want intensional information for
-certain subcomputations, and would be happy with just IO relationships for others --- in which case graph
-transformations which elide internal nodes but preserve IO connectivity, such as the Y-$\Delta$ transform
-\cite{truemper89}, may also have a role to play.
+\paragraph{Acknowledgments}
+
+This research received support through Schmidt Sciences, LLC via the Institute of Computing for Climate
+Science (Perera and Orchard).

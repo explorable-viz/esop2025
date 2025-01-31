@@ -3,19 +3,19 @@
 
 \subsection{Data Provenance}
 
-Data provenance research has a long history, ranging from document-level workflow provenance
+Provenance research has a long history, ranging from scientific workflow provenance
 \cite{callahan06,davidson08} to more fine-grained database techniques like \emph{where} provenance
-\cite{buneman01}, with comparatively less emphasis on general-purpose languages. \citet{dietrich22} track both
-value and control dependencies in recursive database queries and user-defined functions, implementing their
-approach by rewriting SQL queries to provenance-tracking counterparts; \citet{fehrenbach19} explore provenance
-for language-integrated query, extending the multi-tier language Links \cite{cooper06} with provenance
-tracking, but only for the embedded SQL part of the language. In terms of fine-grained techniques for
-structured outputs like visualisations, the most closely related lines of work are \citet{psallidas18smoke}
-for relational languages, and \citet{perera22} for general-purpose languages. These authors all emphasise the
+\cite{buneman01}, with comparatively less emphasis on general-purpose languages. Dietrich et
+al.~\cite{dietrich22} track both value and control dependencies in recursive database queries and user-defined
+functions by rewriting SQL queries to provenance-tracking counterparts; Fehrenbach and
+Cheney~\cite{fehrenbach19} explore provenance for language-integrated query, extending the SQL fragment of the
+multi-tier language Links \cite{cooper06} with provenance tracking. For structured outputs like
+visualisations, the most closely related lines of work are Psallidas and Wu~\cite{psallidas18b} for relational
+languages, and Perera et al.~\cite{perera22} for general-purpose languages. These authors all emphasise the
 importance of \emph{cognacy}, i.e.~common ancestry, albeit not in the context of dependence graphs, showing
 how to ``link'' outputs by tracing back from an output selection to a data selection and then forward to
-another output selection. These relations of common ancestry seem to be largely unstudied in the data
-provenance literature, despite their importance in data visualisation.
+another output selection. This seems to be largely unstudied in the provenance literature, despite its
+importance in data visualisation.
 
 \subsection{Dynamic Dependence Graphs}
 
@@ -30,44 +30,44 @@ formal setting where we show these operators to be self-conjugate and related to
 
 \subsection{Galois Slicing}
 
-Although we do not consider program slices in the present work, our formal setting is closely related to
+Although we do not consider program slices here, our formal setting is closely related to bidirectional
 program slicing techniques based on Galois connections \cite{perera12a,perera16d,ricciotti17}. In these works,
-which use a bidirectional interpreter, the forward and backward directions of the interpreter correspond to
-our \emph{sufficiency} ($\sufficesR$) and \emph{demands} ($\demandsR$) queries. \citet{perera22} extended this
-approach to a setting where slices have complements, and showed how composing the backward analysis with the
-De Morgan dual of the forwards analysis can be used to implement linked brushing. As well as requiring a
-bidirectional interpreter, the main difficulty with this approach has been achieving interactive performance.
-Implementations have relied on a sequential execution trace, used in the forwards direction to ``replay'' the
-computation, propagating sufficiency information from inputs to outputs, and in the backwards direction to
-``rewind'' the computation, propagating demand from outputs to inputs. As discussed in \secref{evaluation},
-and in contrast to the graph approach presented here, this approach is overly sequential and unable to exploit
-the independence of some subcomputations that makes slicing useful in the first place.
+the forward and backward directions of the interpreter correspond to our \emph{sufficiency} ($\sufficesR$) and
+\emph{demands} ($\demandsR$) queries. Perera et al.~\cite{perera22} extended this approach to a setting where
+slices have complements, and showed how composing the backward analysis with the De Morgan dual of the
+forwards analysis can be used to implement linked brushing. As well as requiring a bidirectional interpreter,
+the main difficulty with this approach has been achieving interactive performance. Implementations have relied
+on a sequential execution trace, used in the forwards direction to ``replay'' the computation, propagating
+sufficiency information from inputs to outputs, and in the backwards direction to ``rewind'' the computation,
+propagating demand from outputs to inputs. As discussed in \secref{evaluation}, and in contrast to the graph
+approach presented here, this approach is overly sequential and unable to exploit the independence of some
+subcomputations that makes slicing useful in the first place.
 
 \subsection{Linked Visualisations}
 
 The connection between visual selection (such as clicking or lasooing) and data ``selection'' has been
-explored in the data visualisation literature, leading to various techniques for inverting selections in
-visual space to obtain selections in the underlying data~\cite{north00, heer08}. There is also a substantial
-literature on linked brushing~\cite{becker87, livny97} as a way of connecting output selections via mediating
-data selections. Although this has long been recognised as an important visual tool, with \citet{roberts06}
+explored in the visualisation literature, leading to various techniques for inverting selections in visual
+space to obtain selections in the underlying data~\cite{north00,heer08}. There is also a literature on linked
+brushing~\cite{becker87,livny97} as a way of connecting output selections via mediating data selections.
+Although this has long been recognised as an important visual tool, with Roberts and Wright~\cite{roberts06}
 arguing it should be ubiquitous, there is relatively little work on general-purpose infrastructure to support
-it. For example Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to support
+it. For example, Reactive Vega~\cite{satyanarayan17} provides a rich set of interactivity features to support
 linked brushing, but no mechanism for automatically propagating selections through arbitrary intervening
 queries; Glue \cite{beaumont13} is a powerful Python library for building linked visualisations for scientific
 applications, but the developer is responsible for specifying the relationships between data sets that unpin
-the linking. More infrastructural approaches to linked brushing \cite{north00,livny97,psallidas18smoke},
-similar in spirit to our work, have been developed mainly for relational languages. Relational languages are a
+the linking. More infrastructural approaches to linked brushing \cite{north00,livny97,psallidas18b}, similar
+in spirit to our work, have been developed mainly for relational languages. Relational languages are a
 promising direction in data visualisation, but general-purpose languages continue to be widely used too, so it
 is important to support linked brushing in this context as well.
 
-\subsection{Transparent research outputs}
+\subsection{Transparent Research Outputs}
 
-\citet{dragicevic19} also develop techniques for transparent research outputs, via explorable multiverse
-analysis, exposing \emph{analysis parameters}, the methodological choices made in designing a data analysis.
-Since different methodological choices will impact the conclusions of the analysis, they expose these choices
-to users, and allow them to switch between different choices and observe the impact on the results. Our work
-is potentially complementary: we are concerned with surfacing the dependencies that arise within a specific
-choice of analysis parameters, whereas multiverse analyses are about exploring how things change under
-different choices. It might be useful to package our dependency analysis as part of such a multiverse
-analysis, allowing the user to observe the different dependency structures that arise from different
-methodological decisions.
+Dragicevic et al.~\cite{dragicevic19} also develop techniques for transparent research outputs, via explorable
+multiverse analysis, exposing \emph{analysis parameters}, the methodological choices made in designing a data
+analysis. Since different methodological choices will impact the conclusions of the analysis, they expose
+these choices to users and allow them to switch between different choices and observe the impact on the
+results. Our work is potentially complementary: we are concerned with surfacing the dependencies that arise
+within a specific choice of analysis parameters, whereas multiverse analyses are about exploring how things
+change under different choices. It might be useful to package our dependency analysis as part of such a
+multiverse analysis, allowing the user to observe the different dependency structures that arise from
+different methodological decisions.

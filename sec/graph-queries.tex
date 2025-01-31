@@ -1,7 +1,7 @@
 \section{Cognacy Queries Over Dependence Graphs}
 \label{sec:conjugate}
 
-We now turn to cognacy and ``co-cognacy'' queries over dependence graphs, which are expressed in terms of the
+We now turn to cognacy and ``co-cognacy'' queries over dependence graphs, expressed in terms of the
 $\demandsR$ and $\demandedByR$ operators introduced informally in \secref{overview}. Boolean algebras
 (\defref{conjugate:Boolean-algebra}) are used to represent selections; we then define $\demandsR$ and
 $\demandedByR$ and their De Morgan duals, first for an arbitrary relation (\secref{conjugate:image-preimage})
@@ -28,7 +28,10 @@ $\setminus$, so that $\neg X' = X \setminus X'$.
 \label{sec:conjugate:image-preimage}
 
 The $\demandsR$ and $\demandedByR$ operators sketched earlier are simply the image and preimage functions for
-a particular relation $R$.
+a particular dependency relation $R$. A mnemonic device may help with reading the symbols; if $R$ is a
+dependency relation oriented with outputs at the top and inputs at the bottom, then \emph{demanded by}
+$\demandedByR$ can be read as an arrow pointing from inputs to outputs, and \emph{demands} $\demandsR$ as an
+arrow pointing from outputs to inputs.
 
 \begin{definition}[Image and Preimage Functions for a Relation]
    For a relation $R \subseteq X \times Y$, define $\demandedByR_R: \powerset{X} \to \powerset{Y}$ and
@@ -40,7 +43,7 @@ a particular relation $R$.
 \end{definition}
 
 \noindent Trivially $\demandedByR_{R} = \demandsR_{R^{-1}}$. The image and preimage functions form a
-\textit{conjugate pair}, in the sense of \citet{jonsson51}:
+\textit{conjugate pair}, in the sense of Jonsson and Tarski~\cite{jonsson51}:
 
 \begin{definition}[Conjugate Functions]
    For Boolean algebras $A$, $B$, functions $f: A \to B$ and $g: B \to A$ form a \textit{conjugate pair} iff:
@@ -49,8 +52,8 @@ a particular relation $R$.
    $$
 \end{definition}
 
-% \noindent (\citet{jonsson51} consider only endofunctions; here we extend the idea of conjugacy to maps
-% between Boolean algebras.)
+\noindent (Jonsson and Tarski~\cite{jonsson51} consider only endofunctions; here we extend the idea of
+conjugacy to maps between Boolean algebras.)
 
 \begin{lemma}
 \label{lem:im-preim-conjugate}
@@ -68,7 +71,7 @@ connections~\cite{perera12a,perera16d,ricciotti17}.
 
 \begin{definition}[Galois connection]
    \label{def:conjugate:galois-connection}
-   Suppose $A, B$ are partial orders. Then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
+   Suppose $A, B$ are partial orders, then monotone functions $f: A \to B$ and $g: B \to A$ form a \textit{Galois
    connection} iff
    \[ f(x) \leq y \iff x \leq g(y) \]
 \end{definition}
@@ -82,7 +85,7 @@ connections~\cite{perera12a,perera16d,ricciotti17}.
       \item $f$ and $\dual{g}$ form a Galois connection
    \end{enumerate}
 \end{proposition}
-
+%
 It is also useful (both for performance reasons and as a user feature) to consider the \emph{De Morgan duals}
 of $\demandsR$ and $\demandedByR$, which we write as $\sufficesR$ and $\preimageDualR$; these also form a
 conjugate pair.
@@ -104,7 +107,7 @@ conjugate pair.
       (dual preimage)
    \end{enumerate}
 \end{definition}
-
+%
 Bearing in mind that $\neg$ for $\powerset{X}$ is just relative complement $X \setminus \param$, it is easy to
 show that these are indeed the intended De Morgan duals.
 
@@ -172,7 +175,7 @@ $\demandedByR_{G}(X)$, is simply the subset of the outputs of $G$ reachable from
 Dependence Graphs}
 \label{sec:conjugate:dependence-graph-algos}
 
-We now show how to compute $\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
+We now show how to compute e$\demandsR_{G}$, $\demandedByR_{G}$, $\sufficesR_{G}$ and $\preimageDualR_{G}$ for
 a dependence graph $G$, via an intermediate graph slice which we then restrict to its IO relation. First some
 graph notation:
 
@@ -187,19 +190,19 @@ relational converse.
 \end{definition}
 
 With the trace-based approaches mentioned in \secref{introduction}, one can use a given algorithm to implement
-its De Morgan dual; for example given a procedure for $\demandedByR_{G}$ we can compute $\sufficesR_{G}$ by
-pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting we can also use a given
-algorithm to compute its conjugate: for example given a procedure for $\demandedByR_{G}$, we can compute
+its De Morgan dual; for example, given a procedure for $\demandedByR_{G}$ we can compute $\sufficesR_{G}$ by
+pre- and post-composing with negation~\cite{perera22}. In the dependence graph setting, we can also use a given
+algorithm to compute its conjugate, e.g., given a procedure for $\demandedByR_{G}$, we can compute
 $\demandsR_{G}$ simply as $\demandedByR_{\opGraph{G}}$.
 
 For efficiency, however, we give direct procedures both for $\demandedByR_{G}$
 (\secref{conjugate:algorithm:demandedBy}) and $\sufficesR_{G}$ (\secref{conjugate:algorithm:suffices}), which
-can then be used to derive implementations of the other operators (\figref{conjugate:derivate-algorithms}
-below). Each procedure factors through an auxiliary operation that computes a ``slice'' of the original graph,
-i.e.~a contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO
-relation without creating this intermediate graph, we anticipate use cases which will make use of the graph
-slice; these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip
-between $G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
+can then be used to derive implementations of the other operators, as shown at the end of this section. Each
+procedure factors through an auxiliary operation that computes a ``slice'' of the original graph, i.e.~a
+contiguous subgraph. While it is technically possible to compute the desired image/preimage of the IO relation
+without creating this intermediate graph, we anticipate use cases which will make use of the graph slice;
+these are discussed in more detail in \secref{conclusion}. Our implementation makes it easy to flip between
+$G$ and $\opGraph{G}$ so we freely make use of both in the algorithms to access out-neighbours and
 in-neighbours.
 
 \subsubsection{Direct algorithm for $\demandedByR_{G}$ (\emph{demanded by})}
@@ -209,7 +212,7 @@ in-neighbours.
 \label{def:conjugate:algorithm:demandedBy}
 \figref{conjugate:algorithms:demands} defines the family of relations $\demandedByAlg{G}$ for dependence graph $G$.
 \end{definition}
-
+%
 For a dependence graph $G$ and inputs $X \subseteq \sources{G}$, the judgement $X\; \smash{\demandedByAlg{G}}
 Y$ says that $X$ is demanded by $Y \subseteq \sinks{G}$. The algorithm defers to an auxiliary operation
 $\demandedByV{}$, which takes a (partial) graph slice $H \subseteq G$, initially containing only the original
@@ -276,21 +279,19 @@ $\demandedByAlg{G}$ and $\sufficesAlg{G}$ as functions. Using \lemref{conjugate:
 define a direct algorithm for $\demandsR_{G}$ from $\demandedByAlg{G}$ by simply flipping the graph, and the
 same can be done to acquire an algorithm for $\preimageDualR_{G}$ from $\sufficesAlg{G}$. Using
 \lemref{conjugate:image-preimage-duality} and \defref{conjugate:de-morgan-dual} we can also define alternative
-algorithms for all 4 operators using the De Morgan dual construction. All algorithms are summarised in
-\figref{conjugate:derivate-algorithms}.
+algorithms for all 4 operators using the De Morgan dual construction. These are summarised in the table below.
 
 \input{fig/conjugate/derived-algorithms}
 
 \noindent In \secref{evaluation} we contrast the performance of the direct and De Morgan dual implementations
-of $\demandedByR_{G}$, which is an essential component of the linked inputs and linked outputs operators
-introduced in \secref{introduction}.
+of $\demandedByR_{G}$, used to implement linked inputs/outputs as shown in \secref{introduction}.
 
 \subsection{$\relInputR_G$ and $\relOutputR_G$ for Dependence Graphs}
 
-Now we can provide a formal account of the notions of linked inputs and linked outputs.
+Now we can provide a formal account of the notions of linked inputs and outputs.
 
 \begin{definition}[Linked inputs and outputs]
-   For a dependence graph $G$ define:
+   For a dependence graph $G$ let:
    \begin{enumerate}
       \item $\relInputR_{G} \eqdef \demandsR_{G} \after \demandedByR_{G}$\hfill (linked inputs)
       \item $\relOutputR_{G} \eqdef \demandedByR_{G} \after \demandsR_{G}$\hfill (linked outputs)
@@ -306,26 +307,26 @@ i.e.~$\demandsR_{G}(\demandedByR_{G}(X'))$. Conversely for a set of outputs $Y \
 our outputs demand, and then computes the outputs that those inputs $\demandsR_{G}(Y)$ demand,
 i.e.~$\demandedByR_{G}(\demandsR_{G}(Y))$.
 
-In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is inflationary; unputs which are not used anywhere
-are not preserved by the $\relInputR_{G}$ round-trip, and outputs which don't require any inputs are not
-preserved by the $\relOutputR_{G}$ round-trip. Thus in general we have neither $X' \subseteq
-\relInputR_{G}(X')$ nor $X' \subseteq \relOutputR_{G}(X')$. However if we constrain things so that there are
-no inputs which are unused, then $\demandsR_G$ will preserve $\bot$, i.e.~$\demandsR_G(\emptyset) =
-\emptyset$, and $\relOutputR_{G}$ will preserve the original output selection. Similarly, if we constrain
-things so that all outputs demand some input, then $\demandedByR_G$ will preserve $\bot$, and $\relInputR_{G}$
-will preserve the original input selection:
+% In general, neither $\relInputR_{G}$ nor $\relOutputR_{G}$ is inflationary; inputs which are not used anywhere
+% are not preserved by the $\relInputR_{G}$ round-trip, and outputs which don't require any inputs are not
+% preserved by the $\relOutputR_{G}$ round-trip. Thus in general we have neither $X' \subseteq
+% \relInputR_{G}(X')$ nor $X' \subseteq \relOutputR_{G}(X')$. However if we constrain things so that there are
+% no inputs which are unused, then $\demandsR_G$ will preserve $\bot$, i.e.~$\demandsR_G(\emptyset) =
+% \emptyset$, and $\relOutputR_{G}$ will preserve the original output selection. Similarly, if we constrain
+% things so that all outputs demand some input, then $\demandedByR_G$ will preserve $\bot$, and $\relInputR_{G}$
+% will preserve the original input selection:
 
-\begin{lemma}
-\item
-\begin{enumerate}
-   \item If $\demandedByR_G(\emptyset) = \emptyset$, then for all $X$ we have $\relInputR_{G}(X) \geq X$.
-   \item If $\demandsR_G(\emptyset) = \emptyset$, then for all $Y$ we have $\relOutputR_{G}(Y) \geq Y$.
-\end{enumerate}
-\end{lemma}
+% \begin{lemma}
+% \item
+% \begin{enumerate}
+%    \item If $\demandedByR_G(\emptyset) = \emptyset$, then for all $X$ we have $\relInputR_{G}(X) \geq X$.
+%    \item If $\demandsR_G(\emptyset) = \emptyset$, then for all $Y$ we have $\relOutputR_{G}(Y) \geq Y$.
+% \end{enumerate}
+% \end{lemma}
 
-As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
-an antitone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
-showing inputs that are actually used in a program.
+% As an easy corollary, if $\demandsR_G$ and $\demandedByR_G$ both preserve $\emptyset$ then in fact they form
+% an anti-tone Galois connection. In practical terms, it is possible to use this to produce a filtered view, only
+% showing inputs that are actually used in a program.
 
 % \subsubsection{Focused queries}
 %
