@@ -1,14 +1,13 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-We now compare two implementations of the dependency-tracking runtime of \OurLang,
-one based on the dependence graph design described in \secrefTwo{core}{conjugate} and one based on the
-main alternative style of implementation, namely a
-bidirectional interpreter with two components: a forward evaluator which performs a forwards analysis and
-produces an execution trace, and a backward evaluator which consumes the execution trace and performs a
-backwards analysis~\cite{ricciotti17,psallidas18smoke,perera22}. Other \OurLang system components
-were shared by the two implementations, including the parser, desugaring and visualisation layers,
-and libraries.
+We now compare two implementations of the dependency-tracking runtime of \OurLang, one based on the dependence
+graph design described in \secrefTwo{core}{conjugate} and one based on the main alternative style of
+implementation, namely a bidirectional interpreter with two components: a forward evaluator which performs a
+forwards analysis and produces an execution trace, and a backward evaluator which consumes the execution trace
+and performs a backwards analysis~\cite{ricciotti17,psallidas18b,perera22}. Other \OurLang system components
+were shared by the two implementations, including the parser, desugaring and visualisation layers, and
+libraries.
 
 For a language implementor, the main benefit of our graph approach is that it removes the need to implement a
 bidirectional interpreter. Otherwise, changing the language requires modifying each direction of the
